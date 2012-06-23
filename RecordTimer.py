@@ -316,6 +316,13 @@ class RecordTimerEntry(timer.TimerEntry, object):
 						RecordTimerEntry.TryQuitMainloop() # start shutdown handling without screen
 					else:
 						Notifications.AddNotificationWithCallback(self.sendTryQuitMainloopNotification, MessageBox, _("A finished record timer wants to shut down\nyour Dreambox. Shutdown now?"), timeout = 20)
+			# vvv Ensure shutdown after AUTO timer if no key has been pressed
+			elif self.afterEvent == AFTEREVENT.AUTO:
+				if not Screens.Standby.inTryQuitMainloop: # not a shutdown messagebox is open
+					timerStart = open("/proc/stb/fp/was_timer_wakeup").read()
+					if timerStart[:1] == "1":
+						Notifications.AddNotificationWithCallback(self.sendTryQuitMainloopNotification, MessageBox, _("A finished record timer wants to shut down\nyour Dreambox. Shutdown now?"), timeout = 20) 
+			# ^^^ Ensure shutdown after AUTO timer if no key has been pressed
 			return True
 
 	def setAutoincreaseEnd(self, entry = None):

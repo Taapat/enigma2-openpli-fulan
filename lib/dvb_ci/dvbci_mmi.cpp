@@ -19,18 +19,34 @@ return list;
 
 eDVBCIMMISession::eDVBCIMMISession(eDVBCISlot *tslot)
 {
+#ifdef __sh__
+	eDebug("%s >", __func__);
+#endif
 	slot = tslot;
 	slot->setMMIManager(this);
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 }
 
 eDVBCIMMISession::~eDVBCIMMISession()
 {
+#ifdef __sh__
+	eDebug("%s >", __func__);
+	slot->mmiClosed();
+#endif	
 	slot->setMMIManager(NULL);
 	eDVBCI_UI::getInstance()->mmiSessionDestroyed(slot->getSlotID());
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 }
 
 int eDVBCIMMISession::receivedAPDU(const unsigned char *tag, const void *data, int len)
 {
+#ifdef __sh__
+	eDebug("eDVBCIMMISession::%s >", __func__);
+#endif
 	eDebugNoNewLine("SESSION(%d)/MMI %02x %02x %02x: ", session_nb, tag[0], tag[1],tag[2]);
 	for (int i=0; i<len; i++)
 		eDebugNoNewLine("%02x ", ((const unsigned char*)data)[i]);
@@ -40,14 +56,23 @@ int eDVBCIMMISession::receivedAPDU(const unsigned char *tag, const void *data, i
 		if (eDVBCI_UI::getInstance()->processMMIData(slot->getSlotID(), tag, data, len) == 1)
 		{
 			state=stateDisplayReply;
+#ifdef __sh__
+			eDebug("%s <", __func__);
+#endif
 			return 1;
 		}
 
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 	return 0;
 }
 
 int eDVBCIMMISession::doAction()
 {
+#ifdef __sh__
+	eDebug("%s >", __func__);
+#endif
 	switch (state)
 	{
 	case stateStarted:
@@ -76,6 +101,9 @@ int eDVBCIMMISession::doAction()
 	default:
 		break;
 	}
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 	return 0;
 }
 
@@ -87,6 +115,9 @@ int eDVBCIMMISession::stopMMI()
 	unsigned char data[]={0x00};
 	sendAPDU(tag, data, 1);
 	
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 	return 0;
 }
 
@@ -99,6 +130,9 @@ int eDVBCIMMISession::answerText(int answer)
 	data[0] = answer & 0xff;
 	sendAPDU(tag, data, 1);
 	
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 	return 0;
 }
 
@@ -114,6 +148,9 @@ int eDVBCIMMISession::answerEnq(char *answer)
 	unsigned char tag[]={0x9f, 0x88, 0x08};
 	sendAPDU(tag, data, len+1);
 
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 	return 0;
 }
 
@@ -125,6 +162,9 @@ int eDVBCIMMISession::cancelEnq()
 	unsigned char data[]={0x00}; // canceled
 	sendAPDU(tag, data, 1);
 	
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 	return 0;
 }
 

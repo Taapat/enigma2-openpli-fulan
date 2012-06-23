@@ -121,6 +121,52 @@ inline int atomic_decrement(int * pw)
 	);
 	return rv;
 }
+#elif defined(__sh__)
+inline void atomic_increment(int * pw)
+{
+	/* ++*pw; */
+
+	int tmp;
+	__asm__ __volatile__
+	(
+		"   .align 2              \n\t"
+		"   mova    1f,   r0      \n\t"
+		"   mov    r15,   r1      \n\t"
+		"   mov    #-6,   r15     \n\t"
+		"   mov.l  @%1,   %0      \n\t"
+		"   add     #1,   %0      \n\t"
+		"   mov.l   %0,   @%1     \n\t"
+		"1: mov     r1,   r15     \n\t"
+		: "=&r" (tmp),
+		"+r"  (pw)
+		:
+		: "memory" , "r0", "r1"
+	);
+}
+
+inline int atomic_decrement(int * pw)
+{
+	/* return --*pw; */
+
+	int rv;
+
+	__asm__ __volatile__
+	(
+		"   .align 2              \n\t"
+		"   mova    1f,   r0      \n\t"
+		"   mov    r15,   r1      \n\t"
+		"   mov    #-6,   r15     \n\t"
+		"   mov.l  @%1,   %0      \n\t"
+		"   add    #-1,   %0      \n\t"
+		"   mov.l   %0,   @%1     \n\t"
+		"1: mov     r1,   r15     \n\t"
+		: "=&r" (rv),
+		"+r"  (pw)
+		:
+		: "memory" , "r0", "r1"
+	);
+	return rv;
+}
 #elif defined(__i386__) || defined(__x86_64__)
 inline int atomic_exchange_and_add(int * pw, int dv)
 {
@@ -203,7 +249,7 @@ inline int atomic_decrement(int * pw)
 				if (!ref) \
 					delete this; \
 			}
-	#elif defined(__mips__) || defined(__ppc__) || defined(__powerpc__) || defined(__i386__) || defined(__x86_64__)
+	#elif defined(__mips__) || defined(__ppc__) || defined(__powerpc__) || defined(__i386__) || defined(__x86_64__) || defined(__sh__)
 		#define DECLARE_REF(x) 			\
 			public: void AddRef(); 		\
 					void Release();		\

@@ -778,6 +778,9 @@ RESULT eDVBTSRecorder::start()
 		eDebug("FAILED to open dvr (%s) in ts recoder (%m)", filename);
 		return -3;
 	}
+#if defined(__sh__) // we need to set the correct buffer size for some reason ;-)
+	setBufferSize(256*1024);
+#endif
 #else
 	snprintf(filename, 128, "/dev/dvb/adapter%d/demux%d", m_demux->adapter, m_demux->demux);
 
@@ -823,6 +826,15 @@ RESULT eDVBTSRecorder::start()
 	
 	::ioctl(m_source_fd, DMX_START);
 	
+#endif 
+
+#ifdef HAVE_ADD_PID
+	///ADD PIDS before start filter
+	while (i != m_pids.end()) {
+		eDebug("eDVBTSRecorder::start() - calling startPID for PID=0x%04x",i->first);
+		startPID(i->first);
+		++i;
+	}
 #endif
 
 	if (!m_target_filename.empty())
@@ -831,11 +843,13 @@ RESULT eDVBTSRecorder::start()
 	m_thread->start(m_source_fd);
 	m_running = 1;
 
+#ifndef HAVE_ADD_PID
 	while (i != m_pids.end()) {
 		startPID(i->first);
 		++i;
 	}
 
+#endif
 	return 0;
 }
 
@@ -910,6 +924,10 @@ RESULT eDVBTSRecorder::stop()
 	if (!m_running)
 		return -1;
 
+#ifdef HAVE_ADD_PID
+	m_thread->stop();
+#endif
+
 #if HAVE_DVB_API_VERSION >= 5
 	/* workaround for record thread stop */
 	if (m_source_fd >= 0)
@@ -927,7 +945,9 @@ RESULT eDVBTSRecorder::stop()
 	}
 #endif
 
+#ifndef HAVE_ADD_PID
 	m_thread->stop();
+#endif
 
 	if (state & 3)
 	{

@@ -5,6 +5,7 @@ gdi_libenigma_gdi_CXXFLAGS = $(LIBSDL_CFLAGS)
 gdi_libenigma_gdi_a_SOURCES = \
 	gdi/accel.cpp \
 	gdi/bcm.cpp \
+	gdi/stmfb.cpp \
 	gdi/compositing.cpp \
 	gdi/epng.cpp \
 	gdi/erect.cpp \
