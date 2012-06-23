@@ -44,6 +44,10 @@ from RecordTimer import RecordTimerEntry, RecordTimer
 # hack alert!
 from Menu import MainMenu, mdom
 
+#+++>
+txtIsStarting = False
+#+++<
+
 def isStandardInfoBar(self):
 	return ".InfoBar'>" in `self`
 
@@ -166,6 +170,9 @@ class InfoBarShowHide:
 	STATE_HIDING = 1
 	STATE_SHOWING = 2
 	STATE_SHOWN = 3
+#+++>
+	STATE_EPG = 4
+#+++<
 
 	def __init__(self):
 		self["ShowHideActions"] = ActionMap( ["InfobarShowHideActions"] ,
@@ -253,6 +260,14 @@ class InfoBarShowHide:
 		if self.__state == self.STATE_SHOWN:
 			self.hide()
 
+#+++>
+	def epg(self): 
+		self.__state = self.STATE_EPG 
+		self.hide() 
+		self.hideTimer.stop() 
+		self.openEventView() 
+#+++<
+
 	def toggleShow(self):
 		if self.__state == self.STATE_HIDDEN:
 			self.show()
@@ -261,9 +276,18 @@ class InfoBarShowHide:
 		elif self.secondInfoBarScreen and config.usage.show_second_infobar.value and not self.secondInfoBarScreen.shown:
 			self.secondInfoBarScreen.show()
 			self.startHideTimer()
-		else:
-			self.hide()
-			self.hideTimer.stop()
+#--->
+#-		else:
+#-			self.hide()
+#-			self.hideTimer.stop()
+#---<
+#+++>
+		elif self.__state == self.STATE_SHOWN: 
+			self.epg() 
+		elif self.__state == self.STATE_EPG: 
+			self.hide() 
+			self.hideTimer.stop() 
+#+++<
 
 	def lockShow(self):
 		self.__locked = self.__locked + 1
@@ -1467,7 +1491,12 @@ class InfoBarExtensions:
 
 	def updateExtensions(self):
 		self.extensionsList = []
-		self.availableKeys = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "red", "green", "yellow", "blue" ]
+#--->
+#-		self.availableKeys = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "red", "green", "yellow", "blue" ]
+#---<
+#+++>
+		self.availableKeys = [ "red", "green", "yellow", "blue", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" ]
+#+++<
 		self.extensionKeys = {}
 		for x in self.list:
 			if x[0] == self.EXTENSION_SINGLE:
@@ -1929,16 +1958,43 @@ class InfoBarSubserviceSelection:
 				idx += 1
 
 			if self.bouquets and len(self.bouquets):
-				keys = ["red", "blue", "",  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ] + [""] * n
+#--->
+#-				keys = ["red", "blue", "",  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ] + [""] * n
+#---<
+#+++>
+				keys = ["red", "blue", "yellow", "",  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ] + [""] * n
+#+++<
 				if config.usage.multibouquet.value:
-					tlist = [(_("Quickzap"), "quickzap", service.subServices()), (_("Add to bouquet"), "CALLFUNC", self.addSubserviceToBouquetCallback), ("--", "")] + tlist
+#--->
+#-					tlist = [(_("Quickzap"), "quickzap", service.subServices()), (_("Add to bouquet"), "CALLFUNC", self.addSubserviceToBouquetCallback), ("--", "")] + tlist
+#---<
+#+++>
+					tlist = [(_("Quickzap"), "quickzap", service.subServices()), (_("Add to bouquet"), "CALLFUNC", self.addSubserviceToBouquetCallback), ("Exit", "exit"), ("--", "")] + tlist
+#+++<
 				else:
-					tlist = [(_("Quickzap"), "quickzap", service.subServices()), (_("Add to favourites"), "CALLFUNC", self.addSubserviceToBouquetCallback), ("--", "")] + tlist
-				selection += 3
+#--->
+#-					tlist = [(_("Quickzap"), "quickzap", service.subServices()), (_("Add to favourites"), "CALLFUNC", self.addSubserviceToBouquetCallback), ("--", "")] + tlist
+#---<
+#+++>
+					tlist = [(_("Quickzap"), "quickzap", service.subServices()), (_("Add to favourites"), "CALLFUNC", self.addSubserviceToBouquetCallback), ("Exit", "exit"), ("--", "")] + tlist
+#+++<
+#--->
+#-				selection += 3
+#---<
+#+++>
+				selection += 4
+#+++<
 			else:
-				tlist = [(_("Quickzap"), "quickzap", service.subServices()), ("--", "")] + tlist
-				keys = ["red", "",  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ] + [""] * n
-				selection += 2
+#--->
+#-				tlist = [(_("Quickzap"), "quickzap", service.subServices()), ("--", "")] + tlist
+#-				keys = ["red", "",  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ] + [""] * n
+#-				selection += 2
+#---<
+#+++>
+				tlist = [(_("Quickzap"), "quickzap", service.subServices()), ("Exit", "exit"), ("--", "")] + tlist
+				keys = ["red", "yellow", "",  "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ] + [""] * n
+				selection += 3
+#+++<
 
 			self.session.openWithCallback(self.subserviceSelected, ChoiceBox, title=_("Please select a subservice..."), list = tlist, selection = selection, keys = keys, skin_name = "SubserviceSelection")
 
@@ -2339,7 +2395,22 @@ class InfoBarTeletextPlugin:
 			print "no teletext plugin found!"
 
 	def startTeletext(self):
-		self.teletext_plugin(session=self.session, service=self.session.nav.getCurrentService())
+#--->
+#		self.teletext_plugin(session=self.session, service=self.session.nav.getCurrentService())
+#---<
+#+++>
+		global txtIsStarting
+		if txtIsStarting is False:
+			self.teletext_plugin(session=self.session, service=self.session.nav.getCurrentService())
+			txtIsStarting = True
+			self.txtIsStartingTimer = eTimer()
+			self.txtIsStartingTimer.callback.append(self.txtIsStartingEnd)
+			self.txtIsStartingTimer.start(10000, True)
+
+	def txtIsStartingEnd(self):
+		global txtIsStarting
+		txtIsStarting = False
+#+++<
 
 class InfoBarSubtitleSupport(object):
 	def __init__(self):

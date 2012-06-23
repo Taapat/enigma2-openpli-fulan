@@ -5,6 +5,17 @@
 #include <lib/gdi/esize.h>
 #include <lib/gdi/erect.h>
 
+#ifdef __sh__
+#include <glcdgraphics/bitmap.h>
+#include <glcdgraphics/glcd.h>
+#include <glcdgraphics/image.h>
+#include <glcddrivers/config.h>
+#include <glcddrivers/driver.h>
+#include <glcddrivers/drivers.h>
+#include <glcdgraphics/extformats.h>
+#include <byteswap.h>
+#endif
+
 #define LCD_CONTRAST_MIN 0
 #define LCD_CONTRAST_MAX 63
 #define LCD_BRIGHTNESS_MIN 0
@@ -24,6 +35,7 @@ protected:
 	int _stride;
 	int locked;
 #endif
+
 public:
 	int lock();
 	void unlock();
@@ -48,6 +60,15 @@ class eDBoxLCD: public eLCD
 	unsigned char inverted;
 	bool flipped;
 	int is_oled;
+
+#ifdef __sh__
+	GLCD::cDriver * lcd;
+	GLCD::cBitmap * bitmap;
+	int displayNumber;
+	int depth;
+	int width, height;
+#endif
+
 #ifdef SWIG
 	eDBoxLCD();
 	~eDBoxLCD();

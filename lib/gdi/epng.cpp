@@ -1,6 +1,8 @@
 #define PNG_SKIP_SETJMP_CHECK
-#include <zlib.h>
 #include <png.h>
+#if (PNG_LIBPNG_VER > 10500)
+#include <zlib.h>
+#endif
 #include <stdio.h>
 #include <lib/gdi/epng.h>
 #include <unistd.h>
@@ -53,7 +55,11 @@ int loadPNG(ePtr<gPixmap> &result, const char *filename, int accel)
 		fclose(fp);
 		return 0;
 	 }
+#if (PNG_LIBPNG_VER < 10500)
+	if (setjmp(png_ptr->jmpbuf))
+#else
 	if (setjmp(png_jmpbuf(png_ptr)))
+#endif
 	{
 		eDebug("das war wohl nix");
 		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
@@ -269,7 +275,11 @@ int savePNG(const char *filename, gPixmap *pixmap)
 		PNG_COLOR_TYPE_RGB_ALPHA, 
 		PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
 
+#if (PNG_LIBPNG_VER < 10500)
+	if (setjmp(png_ptr->jmpbuf))
+#else
 	if (setjmp(png_jmpbuf(png_ptr)))
+#endif
 	{
 		eDebug("error :/");
 		png_destroy_write_struct(&png_ptr, &info_ptr);

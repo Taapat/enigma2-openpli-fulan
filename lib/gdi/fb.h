@@ -4,10 +4,22 @@
 #include <lib/base/eerror.h>
 #include <linux/fb.h>
 
+#if defined(__sh__) 
+	#include <linux/stmfb.h> 
+#endif
 class fbClass
 {
 	int fbFd;
 	int xRes, yRes, stride, bpp;
+#if defined(__sh__) 
+	struct stmfbio_output_configuration outcfg;
+	struct stmfbio_outputinfo outinfo;
+	struct stmfbio_planeinfo planemode;
+	struct stmfbio_var_screeninfo_ex infoex;
+	
+	int xResSc, yResSc;
+	int topDiff, leftDiff, rightDiff, bottomDiff; 
+#endif
 	int available;
 	struct fb_var_screeninfo screeninfo;
 	fb_cmap cmap;

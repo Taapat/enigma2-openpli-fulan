@@ -6,6 +6,17 @@
 #include <sys/ioctl.h>
 #include <sys/mman.h>
 
+#if defined(__sh__) // this allows filesystem tasks to be prioritised
+#include <sys/vfs.h>
+
+#define USBDEVICE_SUPER_MAGIC 0x9fa2 
+#define EXT2_SUPER_MAGIC      0xEF53 
+#define EXT3_SUPER_MAGIC      0xEF53 
+#define SMB_SUPER_MAGIC       0x517B 
+#define NFS_SUPER_MAGIC       0x6969 
+#define MSDOS_SUPER_MAGIC     0x4d44            /* MD */
+#endif
+
 #define PVR_COMMIT 1
 
 //#define SHOW_WRITE_TIME 1
@@ -47,6 +58,7 @@ void eFilePushThread::thread()
 	size_t bytes_read = 0;
 	off_t current_span_offset = 0;
 	size_t current_span_remaining = 0;
+
 	eDebug("FILEPUSH THREAD START");
 	
 		/* we set the signal to not restart syscalls, so we can detect our signal. */
@@ -57,7 +69,16 @@ void eFilePushThread::thread()
 	
 	hasStarted();
 
+#if defined(__sh__) // opens video device for the reverse playback workaround
+//Changes in this file are cause e2 doesnt tell the player to play reverse
+//No idea how this is handeld in dm drivers
+	int fd_video = open("/dev/dvb/adapter0/video0", O_RDONLY);
+#endif
 		/* m_stop must be evaluated after each syscall. */
+		
+// vvv Fix to ensure that event evtEOF is called at end of playbackl part 1/3
+	bool already_empty=false;
+// ^^^ Fix to ensure that event evtEOF is called at end of playbackl part 1/3
 	while (!m_stop)
 	{
 			/* first try flushing the bufptr */
@@ -132,6 +153,19 @@ void eFilePushThread::thread()
 			
 		if (m_sg && !current_span_remaining)
 		{
+#if defined (__sh__) // tells the player to play in reverse
+#define VIDEO_DISCONTINUITY                   _IO('o',  84)
+#define DVB_DISCONTINUITY_SKIP                0x01
+#define DVB_DISCONTINUITY_CONTINUOUS_REVERSE  0x02
+			if((m_sg->getSkipMode() != 0))
+			{
+				// inform the player about the jump in the stream data
+				// this only works if the video device allows the discontinuity ioctl in read-only mode (patched)
+				int param = DVB_DISCONTINUITY_SKIP; // | DVB_DISCONTINUITY_CONTINUOUS_REVERSE;
+				int rc = ioctl(fd_video, VIDEO_DISCONTINUITY, (void*)param);
+				//eDebug("VIDEO_DISCONTINUITY (fd %d, rc %d)", fd_video, rc);
+			}
+#endif
 			m_sg->getNextSourceSpan(m_current_position, bytes_read, current_span_offset, current_span_remaining);
 			ASSERT(!(current_span_remaining % m_blocksize));
 			m_current_position = current_span_offset;
@@ -184,7 +218,17 @@ void eFilePushThread::thread()
 				{
 					case 0:
 						eDebug("wait for driver eof timeout");
-						continue;
+// vvv Fix to ensure that event evtEOF is called at end of playbackl part 2/3
+						if(already_empty)
+						{
+							break;
+						}
+						else
+						{
+							already_empty=true;
+							continue;
+						}
+// ^^^ Fix to ensure that event evtEOF is called at end of playbackl	part 2/3
 					case 1:
 						eDebug("wait for driver eof ok");
 						break;
@@ -216,6 +260,9 @@ void eFilePushThread::thread()
 		} else
 		{
 			eofcount = 0;
+// vvv Fix to ensure that event evtEOF is called at end of playbackl part 3/3
+			already_empty=false;
+// ^^^ Fix to ensure that event evtEOF is called at end of playbackl part 3/3
 			m_current_position += m_buf_end;
 			bytes_read += m_buf_end;
 			if (m_sg)
@@ -223,6 +270,9 @@ void eFilePushThread::thread()
 		}
 //		printf("FILEPUSH: read %d bytes\n", m_buf_end);
 	}
+#if defined(__sh__) // closes video device for the reverse playback workaround
+	close(fd_video);
+#endif
 	sendEvent(evtStopped);
 	eDebug("FILEPUSH THREAD STOP");
 }
