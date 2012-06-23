@@ -13,6 +13,11 @@ class iFilePushScatterGather
 public:
 	virtual void getNextSourceSpan(off_t current_offset, size_t bytes_read, off_t &start, size_t &size)=0;
 	virtual ~iFilePushScatterGather() {}
+#if defined(__sh__)
+	//Changes in this file are cause e2 doesnt tell the player to play reverse
+	//No idea how this is handeld in dm drivers
+	virtual int getSkipMode() = 0;
+#endif
 };
 
 class eFilePushThread: public eThread, public Object
@@ -23,6 +28,9 @@ public:
 	void thread();
 	void stop();
 	void start(int sourcefd, int destfd);
+#if defined(__sh__) // our own thread to prioritise and split the files
+	void start(int sourcefd, int destfd, const char *filename);
+#endif
 	int start(const char *filename, int destfd);
 
 	void start(ePtr<iTsSource> &source, int destfd);

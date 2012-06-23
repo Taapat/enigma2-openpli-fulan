@@ -10,7 +10,7 @@ from Components.Sources.StaticText import StaticText
 from Components.MenuList import MenuList
 from Plugins.Plugin import PluginDescriptor
 from Components.config import config
-from Tools.Directories import resolveFilename, SCOPE_PLUGINS
+from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN
 from os import path, walk
 from enigma import eEnv
 
@@ -85,7 +85,7 @@ class SkinSelector(Screen):
 		for x in names:
 			if x == "skin.xml":
 				if dirname <> self.root:
-					subdir = dirname[19:]
+					subdir = dirname[len(resolveFilename(SCOPE_SKIN)):]
 					self.skinlist.append(subdir)
 				else:
 					subdir = "Default Skin"

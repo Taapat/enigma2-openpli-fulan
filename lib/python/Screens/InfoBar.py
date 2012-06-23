@@ -6,7 +6,12 @@ import Screens.MovieSelection
 from Screen import Screen
 
 profile("LOAD:enigma")
-from enigma import iPlayableService
+#--->
+#-from enigma import iPlayableService
+#---<
+#+++>
+from enigma import iServiceInformation, iPlayableService 
+#+++<
 
 profile("LOAD:InfoBarGenerics")
 from Screens.InfoBarGenerics import InfoBarShowHide, \
@@ -46,6 +51,11 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 				"showMovies": (self.showMovies, _("Play recorded movies...")),
 				"showRadio": (self.showRadio, _("Show the radio player...")),
 				"showTv": (self.showTv, _("Show the tv player...")),
+#+++>
+				"toogleTvRadio": (self.toogleTvRadio, _("toggels betwenn tv and radio...")), 
+				"volumeUp": (self._volUp, _("...")), 
+				"volumeDown": (self._volDown, _("...")), 
+#+++<
 			}, prio=2)
 		
 		self.allowPiP = True
@@ -72,6 +82,18 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 		assert InfoBar.instance is None, "class InfoBar is a singleton class and just one instance of this class is allowed!"
 		InfoBar.instance = self
 
+#+++>
+	def _volUp(self):
+		print "_volUp"
+		from Components.VolumeControl import VolumeControl
+		VolumeControl.instance.volUp()
+
+	def _volDown(self):
+		print "_volDown"
+		from Components.VolumeControl import VolumeControl
+		VolumeControl.instance.volDown()
+#+++<
+
 	def __onClose(self):
 		InfoBar.instance = None
 
@@ -89,6 +111,24 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 	def __checkServiceStarted(self):
 		self.__serviceStarted(True)
 		self.onExecBegin.remove(self.__checkServiceStarted)
+
+#+++>
+	def toogleTvRadio(self): 
+		service = self.session.nav.getCurrentService() 
+		info = service.info() 
+		AudioPID = info.getInfo(iServiceInformation.sAudioPID) 
+		VideoPID = info.getInfo(iServiceInformation.sVideoPID) 
+
+		print "sAudioPID", AudioPID 
+		print "sVideoPID", VideoPID 
+               
+		if VideoPID == -1: 
+			print "radio->tv" 
+			self.showTv2() 
+		else: 
+			print "tv->radio" 
+			self.showRadio2() 
+#+++<
 
 	def serviceStarted(self):  #override from InfoBarShowHide
 		new = self.servicelist.newServicePlayed()
@@ -112,6 +152,21 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 			self.rds_display.hide() # in InfoBarRdsDecoder
 			from Screens.ChannelSelection import ChannelSelectionRadio
 			self.session.openWithCallback(self.ChannelSelectionRadioClosed, ChannelSelectionRadio, self)
+
+#+++>
+	def showTv2(self):
+		self.showTvChannelList(False)
+		self.openServiceList()
+
+	def showRadio2(self):
+		if config.usage.e1like_radio_mode.value:
+			self.showRadioChannelList(False)
+			self.openServiceList()
+		else:
+			self.rds_display.hide() # in InfoBarRdsDecoder
+			from Screens.ChannelSelection import ChannelSelectionRadio
+			self.session.openWithCallback(self.ChannelSelectionRadioClosed, ChannelSelectionRadio, self)
+#+++<
 
 	def ChannelSelectionRadioClosed(self, *arg):
 		self.rds_display.show()  # in InfoBarRdsDecoder
@@ -238,11 +293,21 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 					return
 
 		if answer in ("quit", "quitanddeleteconfirmed"):
+#+++> 
+                        # make sure that playback is unpaused otherwise the  
+                        # player driver might stop working 
+                        self.setSeekState(self.SEEK_STATE_PLAY) 
+#+++<
 			self.close()
 		elif answer == "movielist":
 			ref = self.session.nav.getCurrentlyPlayingServiceReference()
 			self.returning = True
 			self.session.openWithCallback(self.movieSelected, Screens.MovieSelection.MovieSelection, ref)
+#+++> 
+                        # make sure that playback is unpaused otherwise the  
+                        # player driver might stop working 
+                        self.setSeekState(self.SEEK_STATE_PLAY) 
+#+++<
 			self.session.nav.stopService()
 		elif answer == "restart":
 			self.doSeek(0)

@@ -5,7 +5,12 @@
 
 int eDVBCIResourceManagerSession::receivedAPDU(const unsigned char *tag,const void *data, int len)
 {
+#ifdef __sh__
+	eDebug("eDVBCIResourceManagerSession::%s >", __func__);
+	eDebugNoNewLine("SESSION(%d) %02x %02x %02x (len = %d): ", session_nb, tag[0], tag[1], tag[2], len);
+#else
 	eDebugNoNewLine("SESSION(%d) %02x %02x %02x: ", session_nb, tag[0], tag[1], tag[2]);
+#endif
 	for (int i=0; i<len; i++)
 		eDebugNoNewLine("%02x ", ((const unsigned char*)data)[i]);
 	eDebug("");
@@ -16,6 +21,9 @@ int eDVBCIResourceManagerSession::receivedAPDU(const unsigned char *tag,const vo
 		case 0x10:  // profile enquiry
 			eDebug("cam fragt was ich kann.");
 			state=stateProfileEnquiry;
+#ifdef __sh__
+			eDebug("%s <", __func__);
+#endif
 			return 1;
 			break;
 		case 0x11: // Tprofile
@@ -28,6 +36,9 @@ int eDVBCIResourceManagerSession::receivedAPDU(const unsigned char *tag,const vo
 
 			if (state == stateFirstProfileEnquiry)
 			{
+#ifdef __sh__
+				eDebug("%s <", __func__);
+#endif
 				// profile change
 				return 1;
 			}
@@ -38,11 +49,17 @@ int eDVBCIResourceManagerSession::receivedAPDU(const unsigned char *tag,const vo
 		}
 	}
 	
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 	return 0;
 }
 
 int eDVBCIResourceManagerSession::doAction()
 {
+#ifdef __sh__
+	eDebug("%s >", __func__);
+#endif
 	switch (state)
 	{
 	case stateStarted:
@@ -50,6 +67,9 @@ int eDVBCIResourceManagerSession::doAction()
 		const unsigned char tag[3]={0x9F, 0x80, 0x10}; // profile enquiry
 		sendAPDU(tag);
 		state = stateFirstProfileEnquiry;
+#ifdef __sh__
+		eDebug("%s <", __func__);
+#endif
 		return 0;
 	}
 	case stateFirstProfileEnquiry:
@@ -57,6 +77,9 @@ int eDVBCIResourceManagerSession::doAction()
 		const unsigned char tag[3]={0x9F, 0x80, 0x12}; // profile change
 		sendAPDU(tag);
 		state=stateProfileChange;
+#ifdef __sh__
+		eDebug("%s <", __func__);
+#endif
 		return 0;
 	}
 	case stateProfileChange:
@@ -86,5 +109,8 @@ int eDVBCIResourceManagerSession::doAction()
 	default:
 		break;
 	}
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 	return 0;
 }

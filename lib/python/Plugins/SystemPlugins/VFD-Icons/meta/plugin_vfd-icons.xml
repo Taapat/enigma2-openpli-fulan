@@ -1,0 +1,20 @@
+<default>
+	  <prerequisites>
+                    <hardware type="dm8000" />
+                    <tag type="System" />
+	  </prerequisites>
+          <info>
+                    <author>Team Ducktales</author>
+                    <name>VFD-Icons</name>
+                    <packagename>enigma2-plugin-systemplugins-vfd-icons</packagename>
+		    <packagetype>public</packagetype> <!-- internal/public , public is default, internal metas are not displayed inside plugin manager -->
+                    <shortdescription>Displays text on vfd</shortdescription>
+                    <description>Displays text on vfd.
+                    </description>
+	  </info>
+
+	  <files type="package"> <!-- without version, without .ipk -->
+		<file type="package" name="enigma2-plugin-systemplugins-vfd-icons" />
+	</files>
+
+</default>

@@ -304,6 +304,10 @@ class Session:
 
 		self.pushCurrent()
 		dlg = self.current_dialog = self.instantiateDialog(screen, *arguments, **kwargs)
+#+++> # If the dialog can not be found return instead of crashing
+		if dlg is None:
+			return
+#+++<
 		dlg.isTmp = True
 		dlg.callback = None
 		self.execBegin()
@@ -513,10 +517,17 @@ def runScreenTest():
 	if wakeupList:
 		from time import strftime
 		startTime = wakeupList[0]
-		if (startTime[0] - nowTime) < 270: # no time to switch box back on
-			wptime = nowTime + 30  # so switch back on in 30 seconds
-		else:
-			wptime = startTime[0] - 240
+#+++> # Unfortunatly sometimes it takes longer to boot (filesystemcheck, ...) so start earlier
+#-		if (startTime[0] - nowTime) < 270: # no time to switch box back on
+#-			wptime = nowTime + 30  # so switch back on in 30 seconds
+#-		else:
+#-			wptime = startTime[0] - 240
+
+	        if (startTime[0] - nowTime) < 330: # no time to switch box back on
+		       wptime = nowTime + 30  # so switch back on in 30 seconds
+	        else:
+		       wptime = startTime[0] - 300
+#+++<
 		if not config.misc.useTransponderTime.value:
 			print "dvb time sync disabled... so set RTC now to current linux time!", strftime("%Y/%m/%d %H:%M", localtime(nowTime))
 			setRTCtime(nowTime)
