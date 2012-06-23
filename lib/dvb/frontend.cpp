@@ -1294,7 +1294,7 @@ static void fillDictWithTerrestrialData(ePyObject dict, struct dtv_property *p, 
 			{
 			default:
 			case SYS_DVBT: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T; break;
-			case SYS_DVBT2: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T2; break;
+		//doenst work?	case SYS_DVBT2: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T2; break;
 			}
 			PutToDict(dict, "system", tmp);
 			break;
@@ -2106,7 +2106,7 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			{
 			default:
 			case eDVBFrontendParametersTerrestrial::System_DVB_T: p[cmdseq.num].u.data = SYS_DVBT; break;
-			case eDVBFrontendParametersTerrestrial::System_DVB_T2: p[cmdseq.num].u.data = SYS_DVBT2; break;
+		//doesnt work	case eDVBFrontendParametersTerrestrial::System_DVB_T2: p[cmdseq.num].u.data = SYS_DVBT2; break;
 			}
 			cmdseq.num++;
 
@@ -2208,7 +2208,7 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			{
 			default:
 			case eDVBFrontendParametersATSC::System_ATSC: p[cmdseq.num].u.data = SYS_DVBT; break;
-			case eDVBFrontendParametersATSC::System_DVB_C_ANNEX_B: p[cmdseq.num].u.data = SYS_DVBT2; break;
+		//doesnt work	case eDVBFrontendParametersATSC::System_DVB_C_ANNEX_B: p[cmdseq.num].u.data = SYS_DVBT2; break;
 			}
 			cmdseq.num++;
 
