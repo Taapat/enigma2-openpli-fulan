@@ -10,6 +10,10 @@ dist_install_DATA = \
 	dm7025.info \
 	dm8000.info \
 	dm800.info \
+	spark.info \
+	spark7162.info \
+	settings.spark \
+	settings.spark7162 \
 	settings.800se \
 	settings.500hd \
 	settings.7020hd \
