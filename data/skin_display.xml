@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--  Skin: LCD from Magic by MiLo -->
+<!-- LCD/OLED Summarys from Skin "AmikoSkin" by schpuntik & weter71 -->
 <skin>
-	<windowstyle id="1" type="skinned">
+	  <windowstyle id="1" type="skinned">
 		<color color="#000000" name="Background"/>
 		<color color="#ffffff" name="LabelForeground"/>
 		<color color="#000000" name="ListboxBackground"/>
@@ -15,208 +14,170 @@
 		<color color="#ffffff" name="WindowTitleForeground"/>
 		<color color="#000000" name="WindowTitleBackground"/>
 	</windowstyle>
+	<!-- Fonts -->
 	<fonts>
-		<!-- pick a funky name for the font, so we don't conflict  -->
-		<font filename="nmsbd.ttf" name="FdLcD" scale="90"/>
+		<font filename="nmsbd.ttf" name="AmikoSkin_UserSkinFont" scale="90" />
+		<font filename="lcd.ttf" name="AmikoSkin_Digital" scale="90" />
 	</fonts>
-
-<!-- template -->
-	<screen name="SummaryClockPanel">
-		<widget source="global.CurrentTime" render="Label" position="right" size="60,*" font="FdLcD;24" halign="right" valign="top" noWrap="1">
-			<convert type="ClockToText"></convert>
+	<!-- LCD/OLED -->
+	<screen name="InfoBarSummary" position="fill">
+	        <!-- Channellogo (Picon) -->
+		<widget source="session.CurrentService" render="Picon" position="5,5" zPosition="1" size="100,60" alphatest="on">
+			<convert type="ServiceName">Reference</convert>
 		</widget>
-		<widget source="session.RecordState" render="FixedLabel" text="Rec" position="4,12" size="24,12" font="FdLcD;12" zPosition="1" noWrap="1">
+	  	<widget source="global.CurrentTime" render="Label" position="115,5" size="173,70" font="AmikoSkin_UserSkinFont;70" halign="left" valign="top">
+			<convert type="ClockToText">Format:%H:%M</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="280,10" zPosition="1" size="34,34" font="AmikoSkin_UserSkinFont;32" valign="top" foregroundColor="#d20808">
+			<convert type="ClockToText">Format:%S</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Label" position="2,70" size="316,88" font="AmikoSkin_UserSkinFont;48" halign="center" valign="center" >
+			<convert type="ServiceName">Name</convert>
+		</widget>
+		<widget source="session.Event_Now" render="Progress" position="2,160" size="316,15" borderWidth="1" >
+			<convert type="EventTime">Progress</convert>
+		</widget>
+		<widget source="session.Event_Now" render="Label" position="2,177" size="318,40" font="AmikoSkin_UserSkinFont;19" halign="center" valign="center" >
+			<convert type="EventName">Name</convert>
+		</widget>
+		<widget source="session.Event_Now" render="Label" position="4,215" size="69,25" font="AmikoSkin_UserSkinFont;24" halign="left" >
+			<convert type="EventTime">Duration</convert>
+			<convert type="ClockToText">InMinutes</convert>
+		</widget>
+		<widget source="session.Event_Now" render="Label" position="245,215" size="69,25" font="AmikoSkin_UserSkinFont;24" halign="right" >
+			<convert type="EventTime">Remaining</convert>
+			<convert type="RemainingToText">InMinutes</convert>
+		</widget>
+		<widget source="session.RecordState" render="FixedLabel" text="record" position="110,215" size="120,25" font="AmikoSkin_UserSkinFont;24" foregroundColor="#d20808" halign="center" zPosition="1" >
+			<convert type="ConfigEntryTest">config.usage.blinking_display_clock_during_recording,True,CheckSourceBoolean</convert>
 			<convert type="ConditionalShowHide">Blink</convert>
 		</widget>
 	</screen>
-
-<!-- main-->
-	<screen name="InfoBarSummary" position="fill">
-		<panel position="top" size="*,90">
-			<widget source="session.CurrentService" render="Picon" position="0,2" zPosition="1" size="130,90" alphatest="on">
-				<convert type="ServiceName">Reference</convert>
-			</widget>
-			<widget source="global.CurrentTime" render="Label" position="180,20" size="120,45" font="FdLcD;45" halign="right" valign="top">
-				<convert type="ClockToText">Format:%H:%M</convert>
-			</widget>
-		</panel>
-		<widget source="session.CurrentService" render="Label" position="top" size="*,42" font="FdLcD;42" halign="left" noWrap="1">
+	<!-- LCD/OLED ChannelSelection-->		
+	<screen name="ChannelSelection_summary" 	position="fill">
+		<widget source="parent.ServiceEvent" render="Label" position="4,0" size="316,19" font="AmikoSkin_UserSkinFont;19" noWrap="1" >
 			<convert type="ServiceName">Name</convert>
 		</widget>
-		<widget source="session.Event_Now" render="Label" position="top" size="*,33" font="FdLcD;33" halign="left" noWrap="1">
+		<widget source="parent.ServiceEvent" render="Label" position="4,20" size="316,19" font="AmikoSkin_UserSkinFont;19" noWrap="1" >
 			<convert type="EventName">Name</convert>
 		</widget>
-		<widget source="session.Event_Now" render="Progress" position="bottom" size="*,14" borderWidth="1" >
+		<widget source="parent.ServiceEvent" render="Progress" position="4,39" size="316,7" borderWidth="1" >
 			<convert type="EventTime">Progress</convert>
 		</widget>
-		<panel position="bottom" size="*,40">
-			<widget source="session.Event_Now" render="Label" position="220,0" size="100,33" font="FdLcD;33" halign="right" noWrap="1">
-				<convert type="EventTime">Remaining</convert>
-				<convert type="RemainingToText">NoSeconds</convert>
-			</widget>
-		</panel>
-	</screen>
-    
-  
-<!-- channelselection-->
-	<screen name="ChannelSelection_summary" position="fill">
-		<panel position="top" size="*,70">
-			<widget source="global.CurrentTime" render="Label" position="180,20" size="120,45" font="FdLcD;45" halign="right" valign="top">
-				<convert type="ClockToText">Format:%H:%M</convert>
-			</widget>
-		</panel>
-		<widget source="parent.ServiceEvent" render="Label" position="top" size="*,50" font="FdLcD;42" halign="left" noWrap="1">
-			<convert type="ServiceName">Name</convert>
+		<widget source="global.CurrentTime" render="Label" position="4,47" size="60,17" font="AmikoSkin_UserSkinFont;20" halign="left" >
+			<convert type="ClockToText">Default</convert>
 		</widget>
-		<widget source="parent.ServiceEvent" render="Label" position="top" size="*,70" font="FdLcD;33" halign="left">
-			<convert type="EventName">Name</convert>
+		<widget source="session.RecordState" render="FixedLabel" text="record" position="110,215" size="120,25" font="AmikoSkin_UserSkinFont;24" foregroundColor="#d20808" halign="center" zPosition="1" >
+			<convert type="ConfigEntryTest">config.usage.blinking_display_clock_during_recording,True,CheckSourceBoolean</convert>
+			<convert type="ConditionalShowHide">Blink</convert>
 		</widget>
-		<widget source="parent.ServiceEvent" render="Progress" position="bottom" size="*,14" borderWidth="1">
-			<convert type="EventTime">Progress</convert>
+		<widget source="parent.ServiceEvent" render="Label" position="245,47" size="69,17" font="AmikoSkin_UserSkinFont;20" halign="right" >
+			<convert type="EventTime">Remaining</convert>
+			<convert type="RemainingToText">NoSeconds</convert>
 		</widget>
 	</screen>
-  
-<!-- menus-->
+	<!-- LCD screen (menus) -->
 	<screen name="MenuSummary" position="fill">
-		<widget source="parent.title" render="Label" position="top" size="*,65" font="FdLcD;35" halign="center" valign="top" />
-		<widget source="parent.menu" render="Label" position="top" size="*,90" font="FdLcD;40" halign="center" valign="top">
-			<convert type="StringListSelection" />
+		<widget source="parent.title" render="Label" position="6,0" size="316,30" font="AmikoSkin_UserSkinFont;28" halign="center" valign="center"/>
+		<widget source="parent.menu" render="Listbox" position="6,29" scrollbarMode="showOnDemand" size="316,218" foregroundColorSelected="#3e3ef3" >
+			<convert type="StringList" />
 		</widget>
-		<panel position="bottom" size="*,46">
-			<widget source="global.CurrentTime" render="Label" position="180,0" size="120,46" font="FdLcD;45" halign="right" valign="top">
-				<convert type="ClockToText">Format:%H:%M</convert>
-			</widget>
-		</panel>
+	</screen> 
+		<!-- LCD screen (ChoiceBox) -->
+	<screen name="ChoiceBox_summary" position="fill">
+		<widget source="parent.summary_list" render="Label" position="2,0" size="316,200" font="AmikoSkin_UserSkinFont;18" foregroundColor="#3e3ef3" />
 	</screen>
-
-<!-- standby -->
-	<screen name="StandbySummary" position="fill">
-		<widget source="global.CurrentTime" render="Label" position="center,center" size="320,100" font="FdLcD;100" halign="center" valign="center" noWrap="1">
-			<convert type="ClockToText"></convert>
-		</widget>
-		<widget source="session.RecordState" render="FixedLabel" text="Recording" position="4,50" size="120,12" font="FdLcD;12" zPosition="2" valign="bottom" halign="left" noWrap="1">
-			<convert type="ConditionalShowHide"></convert>
-		</widget>
+	<!-- LCD screen (MessageBox) -->
+	<screen name="MessageBox_summary" position="fill">
+		<widget source="parent.Text" render="Label" position="2,0" size="316,120" font="AmikoSkin_UserSkinFont;28" halign="center" valign="center" />
+		<widget source="parent.selectedChoice" render="Label" position="6,120" size="316,120" font="AmikoSkin_UserSkinFont;28" halign="center" valign="center"/>
 	</screen>
-
-<!-- movieplayer-->
-	<screen name="InfoBarMoviePlayerSummary" position="fill">
-		<widget source="session.CurrentService" render="Label" position="top" size="*,36" font="FdLcD;16" halign="left" valign="top" >
+	<!-- LCD/OLED Movie Player-->
+	<screen name="InfoBarMoviePlayerSummary" position="fill" >
+		<ePixmap pixmap="skin_default/menu/media_player.png" position="-2,5" size="126,126" alphatest="on"/>
+	  	<widget source="global.CurrentTime" render="Label" position="140,5" size="173,70" font="AmikoSkin_UserSkinFont;70" halign="left" valign="top">
+			<convert type="ClockToText">Format:%H:%M</convert>
+		</widget>
+		<widget source="session.RecordState" render="FixedLabel" text="record" position="110,215" size="120,25" font="AmikoSkin_UserSkinFont;24" foregroundColor="#d20808" halign="center" zPosition="1" >
+			<convert type="ConfigEntryTest">config.usage.blinking_display_clock_during_recording,True,CheckSourceBoolean</convert>
+			<convert type="ConditionalShowHide">Blink</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Label" position="2,135" size="316,65" font="AmikoSkin_UserSkinFont;29" halign="center" valign="top"  >
 			<convert type="ServiceName">Name</convert>
 		</widget>
-		<widget source="session.CurrentService" render="Progress" position="top" size="*,4" borderWidth="1">
+		<widget source="session.CurrentService" render="Progress" position="2,200" size="316,15" borderWidth="1" >
 			<convert type="ServicePosition">Position</convert>
 		</widget>
-		<panel position="bottom" size="*,24" name="SummaryClockPanel">
-			<widget source="session.CurrentService" render="Label" position="4,0" size="42,12" font="FdLcD;12" halign="left" noWrap="1">
-				<convert type="ServicePosition">Position</convert>
-			</widget>
-		</panel>
+		<widget source="session.CurrentService" render="Label" position="4,215" size="69,25" font="AmikoSkin_UserSkinFont;24" halign="left" >
+			<convert type="ServicePosition">Length</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Label" position="245,215" size="69,25" font="AmikoSkin_UserSkinFont;24" halign="right" >
+			<convert type="ServicePosition">Remaining,Negate</convert>
+		</widget>
 	</screen>
-	
-	<screen name="MovieContextMenuSummary" position="fill">
-		<widget source="parent.Title" render="Label" position="top" size="*,14" font="FdLcD;12" halign="left" valign="top" noWrap="1" />
-		<widget source="selected" render="Label" position="top" size="*,32" font="FdLcD;16" />
-		<panel position="bottom" size="*,18">
-			<widget source="global.CurrentTime" render="Label" position="right" size="60,*" halign="right" font="FdLcD;16" >
-				<convert type="ClockToText"></convert>
-			</widget>
-		</panel>
+	<!-- LCD/OLED StandBy-Clock-->
+	<screen name="StandbySummary" position="fill">
+		<widget source="global.CurrentTime" render="Label" position="0,20" size="320,160" font="AmikoSkin_Digital;140" valign="top" halign="center" >
+			<convert type="ClockToText">Default</convert>
+		</widget>
+		<widget source="session.RecordState" render="FixedLabel" text="record" position="110,215" size="120,25" font="AmikoSkin_UserSkinFont;24" foregroundColor="#d20808" halign="center" zPosition="1" >
+			<convert type="ConfigEntryTest">config.usage.blinking_display_clock_during_recording,True,CheckSourceBoolean</convert>
+			<convert type="ConditionalShowHide">Blink</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="0,150" size="320,50" font="AmikoSkin_UserSkinFont;38" halign="center" >
+			<convert type="ClockToText">Format:%a. %d.%b.%Y</convert>
+		</widget>
 	</screen>
-
-	<screen name="MovieSelectionSummary" position="fill">
-		<widget source="parent.Title" render="Label" position="top" size="*,14" font="FdLcD;12" halign="left" valign="top" noWrap="1" />
-		<widget source="name" render="Label" position="top" size="*,32" font="FdLcD;16" halign="left" valign="top" />
-		<panel position="bottom" size="*,18">
-			<widget source="parent.Service" render="Label" position="right" size="46,*" font="FdLcD;14" halign="left" noWrap="1">
-				<convert type="MovieInfo">FileSize</convert>
-			</widget>
-			<widget source="parent.Service" render="Label" position="fill" font="FdLcD;14" halign="left" noWrap="1">
-				<convert type="MovieInfo">RecordServiceName</convert>
-			</widget>
-		</panel>
-	</screen>
-
-<!-- DVD -->
+	<!-- LCD/OLED Anzeige DVDPlayer -->
 	<screen name="DVDSummary" position="fill">
-		<widget source="session.CurrentService" render="Label" position="top" size="*,28" font="FdLcD;12"  >
+		<widget source="global.CurrentTime" render="Label" position="4,47" size="60,17" font="AmikoSkin_UserSkinFont;20" halign="left" >
+			<convert type="ClockToText">Default</convert>
+		</widget>
+		<widget source="session.RecordState" render="FixedLabel" text="record" position="110,215" size="120,25" font="AmikoSkin_UserSkinFont;24" foregroundColor="#d20808" halign="center" zPosition="1" >
+			<convert type="ConfigEntryTest">config.usage.blinking_display_clock_during_recording,True,CheckSourceBoolean</convert>
+			<convert type="ConditionalShowHide">Blink</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Label" position="6,0" size="123,30" font="AmikoSkin_UserSkinFont;15" >
 			<convert type="ServiceName">Name</convert>
 		</widget>
-		<widget source="session.CurrentService" render="Progress" position="top" size="*,4" borderWidth="1" >
+	    <widget name="Chapter" position="75,25" size="50,15" font="AmikoSkin_UserSkinFont;15" transparent="1" halign="right" zPosition="1" />
+		<widget source="session.CurrentService" render="Label" position="60,47" size="69,17" font="AmikoSkin_UserSkinFont;20" halign="right" >
+			<convert type="ServicePosition">Remaining,Negate,ShowHours,ShowNoSeconds</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Progress" position="6,41" size="316,6" borderWidth="1" >
 			<convert type="ServicePosition">Position</convert>
 		</widget>
-		<panel position="fill">
-			<widget source="session.CurrentService" render="Label" position="left" size="60,*" font="FdLcD;12" halign="left" >
-				<convert type="ServicePosition">Position</convert>
-			</widget>
-			<widget name="Chapter" position="fill" font="FdLcD;12" halign="left" />
-		</panel>
 	</screen>
-
-<!-- setup-->
-	<screen name="SetupSummary" position="fill">
-		<widget source="SetupTitle" render="Label" position="top" size="*,12" font="FdLcD;12" halign="left" />
-		<widget source="SetupEntry" render="Label" position="top" size="*,40" font="FdLcD;12" halign="left" />
-		<widget source="SetupValue" render="Label" position="top" size="*,12" font="FdLcD;12" halign="left" />
-	</screen>
-
-<!-- misc-->
-	<screen name="SimpleSummary" position="fill">
-		<widget source="parent.Title" render="Label" position="top" size="*,40" font="FdLcD;16" halign="center" valign="center" />
-		<panel position="bottom" size="*,24" name="SummaryClockPanel" />
-	</screen>
-
-	<screen name="WizardSummary" position="fill">
-		<widget source="text" render="Label" position="top" size="*,16" font="FdLcD;16"/>
-		<widget source="parent.list" render="Label" position="fill" font="FdLcD;12">
-			<convert type="StringListSelection" />
-		</widget>
-	</screen>
-
-	<screen name="VideoWizardSummary" position="fill">
-		<widget name="text" position="top" size="*,40" font="FdLcD;12" transparent="1" />
-		<widget source="parent.list" render="Label" position="fill" font="FdLcD;14">
-			<convert type="StringListSelection" />
-		</widget>
-	</screen>
-
-<!-- standby -->
-	<screen name="StandbySummary" position="fill">
-		<widget source="global.CurrentTime" render="Label" position="center,0" size="120,64" font="FdLcD;48" halign="center" valign="center" noWrap="1">
-			<convert type="ClockToText"></convert>
-		</widget>
-		<widget source="session.RecordState" render="FixedLabel" text="Recording" position="4,50" size="120,12" font="FdLcD;12" zPosition="2" valign="bottom" halign="left" noWrap="1">
-			<convert type="ConditionalShowHide"></convert>
-		</widget>
-	</screen>
-<!-- Plugin browser -->
-	<screen name="PluginBrowserSummary" position="fill">
-		<widget source="parent.Title" render="Label" position="top" size="*,16" font="FdLcD;12"  noWrap="1" />
-		<widget source="entry" render="Label" position="top" size="*,20" font="FdLcD;18" noWrap="1" />
-		<widget source="desc" render="Label" position="fill" font="FdLcD;12" valign="top" />
-	</screen>
-
-<!-- JobView Summary -->
+	<!-- LCD screen (JobView) -->
 	<screen name="JobView_summary" position="fill">
-		<widget source="parent.summary_job_name" render="Label" position="6,4" size="120,42" font="FdLcD;16" />
-		<widget source="parent.summary_job_task" render="Label" position="6,22" size="120,26" font="FdLcD;12" />
-		<widget source="parent.summary_job_progress" render="Progress" position="6,50" size="60,12" borderWidth="1" zPosition="1" />
-		<widget source="parent.summary_job_progress" render="Label" position="66,50" size="50,12" font="FdLcD;12" zPosition="2" halign="center" transparent="1"  >
+		<widget source="parent.summary_job_name" render="Label" position="6,4" size="316,19" font="AmikoSkin_UserSkinFont;16" />
+		<widget source="parent.summary_job_task" render="Label" position="6,22" size="316,19" font="AmikoSkin_UserSkinFont;12" />
+		<widget source="parent.summary_job_progress" render="Progress" position="4,39" size="316,7" borderWidth="1" zPosition="1" />
+		<widget source="parent.summary_job_progress" render="Label" position="66,50" size="316,12" font="AmikoSkin_UserSkinFont;12" zPosition="2" halign="center" transparent="1"  >
 			<convert type="ProgressToText" />
 		</widget>
 	</screen>
-
-	<screen name="ChoiceBox_summary" position="fill">
-		<widget source="parent.summary_list" render="Label" position="fill" font="FdLcD;11" />
-	</screen>	
-
-	<screen name="MessageBox_summary" position="fill">
-		<widget source="parent.Text" render="Label" position="top" size="*,52" font="FdLcD;11" halign="center" valign="center" />
-		<widget source="parent.selectedChoice" render="Label" position="bottom" size="*,14" font="FdLcD;14" halign="center" valign="center" />
+	<!-- LCD screen (misc) -->
+	<screen name="SimpleSummary" position="fill">
+		<widget source="parent.Title" render="Label" position="6,0" size="316,64" font="AmikoSkin_UserSkinFont;16" halign="center" valign="center" />
 	</screen>
-
-	<screen name="MessageBoxSimple_summary" position="fill">
-		<widget source="parent.Text" render="Label" position="top" size="*,52" font="FdLcD;11" halign="center" valign="center" />
-		<widget source="parent.selectedChoice" render="Label" position="bottom" size="*,14" font="FdLcD;14" halign="center" valign="center" />
+	<!-- LCD screen (Wizard) -->
+	<screen name="WizardSummary" position="fill">
+		<widget source="text" render="Label" position="6,0" size="316,16" font="AmikoSkin_UserSkinFont;16" transparent="1" />
+		<widget source="parent.list" render="Label" position="6,18" size="316,46" font="AmikoSkin_UserSkinFont;12">
+			<convert type="StringListSelection" />
+		</widget>
 	</screen>
-</skin>
+	<!-- LCD screen (ServiceScan) -->
+	<screen name="ServiceScanSummary" position="fill">
+		<widget name="Title" position="6,4" size="316,42" font="AmikoSkin_UserSkinFont;26" transparent="1" />
+		<widget name="Service" position="6,22" size="316,26" font="AmikoSkin_UserSkinFont;18" transparent="1" />
+		<widget name="scan_progress" position="6,50" zPosition="1" borderWidth="1" size="316,20" backgroundColor="dark" />
+	</screen>
+	<subtitles>
+		<sub name="Subtitle_TTX" 		font="Regular;34" 		foregroundColor="#ffffff" shadowColor="#40101010" shadowOffset="-3,-3" />
+		<sub name="Subtitle_Regular" 	font="Regular;34" 		foregroundColor="#ffffff" shadowColor="#40101010" shadowOffset="-3,-3" />
+		<sub name="Subtitle_Bold" 		font="Replacement;34" 	foregroundColor="#ffffff" shadowColor="#40101010" shadowOffset="-3,-3" />
+		<sub name="Subtitle_Italic" 	font="Regular;34" 		foregroundColor="#ffffff" shadowColor="#40101010" shadowOffset="-3,-3" />
+	</subtitles>
+      </skin>
