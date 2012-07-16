@@ -64,5 +64,7 @@ case $ret in
 		/sbin/reboot
 		;;
 	*)
+		# No zombies
+		killall -9 enigma2
 		;;
 esac
