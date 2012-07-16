@@ -654,8 +654,6 @@ class Network:
 			return None
 
 		devicedir = self.sysfsPath(iface) + '/device'
-		if os_path.isdir(devicedir + '/ieee80211'):
-			return 'nl80211'
 
 		moduledir = self.getWlanModuleDir(iface)
 		if moduledir:
