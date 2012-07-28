@@ -1,7 +1,7 @@
 <default>
 	<prerequisites>
 		<!-- hardware can occur more than once -->
-		<hardware type="spark" />
+		<hardware type="spark7162" />
 	</prerequisites>
 	
 	<info>
