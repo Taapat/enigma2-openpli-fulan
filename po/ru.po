@@ -6,8 +6,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-11 16:07+0200\n"
 "PO-Revision-Date: 2010-05-18 18:10+0200\n"
-"Last-Translator: peter <peter@dreambox.org.ua>\n"
-"Language-Team: Russian / enigma(c) Ukraine, Kiev>\n"
+"Last-Translator: AndreyUA <andrey.wys@gmail.com>\n"
+"Language-Team: Russian / ar-p team allrussian.info>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,10 +38,10 @@ msgstr ""
 #
 msgid ""
 "\n"
-"Backup your Dreambox settings."
+"Backup your set-top-box settings."
 msgstr ""
 "\n"
-"Резервная копия настроек Dreambox."
+"Резервная копия настроек ресивера."
 
 #
 msgid ""
@@ -53,18 +53,18 @@ msgstr ""
 
 msgid ""
 "\n"
-"Manage extensions or plugins for your Dreambox"
+"Manage extensions or plugins for your set-top-box"
 msgstr ""
 "\n"
-"Управление расширениями и плагинами для Dreambox"
+"Управление расширениями и плагинами для ресивера"
 
 #
 msgid ""
 "\n"
-"Online update of your Dreambox software."
+"Online update of your set-top-box software."
 msgstr ""
 "\n"
-"Онлайн обновление Dreambox."
+"Онлайн обновление ресивера."
 
 #
 msgid ""
@@ -77,18 +77,18 @@ msgstr ""
 #
 msgid ""
 "\n"
-"Restore your Dreambox settings."
+"Restore your set-top-box settings."
 msgstr ""
 "\n"
-"Восстановить настройки Dreambox."
+"Восстановить настройки ресивера."
 
 #
 msgid ""
 "\n"
-"Restore your Dreambox with a new firmware."
+"Restore your set-top-box with a new firmware."
 msgstr ""
 "\n"
-"Восстановить Dreambox с новой микропрограммой."
+"Восстановить ресивер с новой прошивкой."
 
 #
 msgid ""
@@ -210,7 +210,7 @@ msgstr[2] ""
 
 #, python-format
 msgid "%d minutes"
-msgstr ""
+msgstr "%d минут"
 
 #, python-format
 msgid "%d second"
@@ -238,7 +238,7 @@ msgstr "%s (%s)\n"
 
 #
 msgid "(ZAP)"
-msgstr "(ZAP)"
+msgstr "(Перекл.)"
 
 #
 msgid "(empty)"
@@ -250,7 +250,7 @@ msgstr "(показать опцион. DVD аудио меню)"
 
 #
 msgid "* Only available if more than one interface is active."
-msgstr "* Доступно если активно более одного интерфейса."
+msgstr "* Доступно, если активно более одного интерфейса."
 
 #
 msgid "/usr/share/enigma2 directory"
@@ -283,7 +283,7 @@ msgstr "1.2"
 
 #
 msgid "12V output"
-msgstr "12V Выход"
+msgstr "Выход 12V"
 
 #
 msgid "13 V"
@@ -311,7 +311,7 @@ msgstr "16:10 PanScan"
 
 #
 msgid "16:9 always"
-msgstr "16:9 always"
+msgstr "16:9 всегда"
 
 #
 msgid "18 V"
@@ -324,7 +324,7 @@ msgid "3"
 msgstr "3"
 
 msgid "3d mode"
-msgstr ""
+msgstr "3D режим"
 
 msgid "4"
 msgstr "4"
@@ -357,13 +357,13 @@ msgid "9"
 msgstr "9"
 
 msgid "<Current movielist location>"
-msgstr "<Текущее расположение movielist>"
+msgstr "<Распол. тек. списка>"
 
 msgid "<Default movie location>"
-msgstr "<Расположение фильма по умолчанию>"
+msgstr "<Распол. по-умолчанию>"
 
 msgid "<Last timer location>"
-msgstr "<Расположение последнгего таймера>"
+msgstr "<Распол. послед. таймера>"
 
 #
 msgid "<unknown>"
@@ -392,17 +392,17 @@ msgstr "Использование демо-плагина для TPM"
 #
 msgid ""
 "A finished record timer wants to set your\n"
-"Dreambox to standby. Do that now?"
+"set-top-box to standby. Do that now?"
 msgstr ""
-"Запись по таймеру завершена, Dreambox будет переведен\n"
+"Запись по таймеру завершена, ресивер будет переведен\n"
 "\"в ждущий режим. Сделать это сейчас?\""
 
 #
 msgid ""
 "A finished record timer wants to shut down\n"
-"your Dreambox. Shutdown now?"
+"your set-top-box. Shutdown now?"
 msgstr ""
-"Запись по таймеру закончена, Dreambox\n"
+"Запись по таймеру закончена, ресивер\n"
 "\"будет выключен. Сделать это сейчас?\""
 
 #
@@ -415,7 +415,7 @@ msgid ""
 "A record has been started:\n"
 "%s"
 msgstr ""
-"Запись начата:\n"
+"Запись была начата:\n"
 "%s"
 
 #
@@ -423,7 +423,7 @@ msgid ""
 "A recording is currently running.\n"
 "What do you want to do?"
 msgstr ""
-"Идет запись.\n"
+"Запись сейчас запущена.\n"
 "Что вы хотите сделать?"
 
 #
@@ -431,19 +431,19 @@ msgid ""
 "A recording is currently running. Please stop the recording before trying to "
 "configure the positioner."
 msgstr ""
-"Идет запись. Пожалуйста остановите запись перед попыткой настроить "
+"Запись сейчас запущена. Пожалуйста остановите запись перед попыткой настроить "
 "позиционер."
 
 msgid ""
 "A recording is currently running. Please stop the recording before trying to "
 "scan."
-msgstr ""
-
+msgstr "Запись сейчас запущена. Пожалуйста остановите запись перед попыткой"
+"сканирования."
 #
 msgid ""
 "A recording is currently running. Please stop the recording before trying to "
 "start the satfinder."
-msgstr "Идет запись. Остановите запись перед поиском спутника."
+msgstr "Запись сейчас запущена. Остановите запись перед поиском спутника."
 
 #
 #, python-format
@@ -466,17 +466,17 @@ msgstr ""
 #
 msgid ""
 "A sleep timer wants to set your\n"
-"Dreambox to standby. Do that now?"
+"set-top-box to standby. Do that now?"
 msgstr ""
-"Таймер сна хочет перевести Dreambox\n"
+"Таймер сна хочет перевести ресивер\n"
 "в ждущий режим. Сделать это сейчас?"
 
 #
 msgid ""
 "A sleep timer wants to shut down\n"
-"your Dreambox. Shutdown now?"
+"your set-top-box. Shutdown now?"
 msgstr ""
-"Таймер сна хочет выключить Dreambox.\n"
+"Таймер сна хочет выключить ресивер.\n"
 "Сделать это сейчас?\""
 
 #, fuzzy
@@ -508,7 +508,7 @@ msgid "AC3 downmix"
 msgstr "AC3 микширование"
 
 msgid "AC3/DTS downmix"
-msgstr ""
+msgstr "AC3/DTS микширование"
 
 msgid "Abort"
 msgstr "Прервать"
@@ -526,11 +526,11 @@ msgstr "Точка доступа:"
 
 #
 msgid "Action on long powerbutton press"
-msgstr "Длительное нажатии кнопки питания"
+msgstr "Долгое нажатие кнопки питания"
 
-#, fuzzy
+#
 msgid "Action on short powerbutton press"
-msgstr "Действие при коротком нажатии кнопки питания"
+msgstr "Короткое нажатие кнопки питания"
 
 #
 msgid "Action:"
@@ -580,21 +580,21 @@ msgstr "Добавить название"
 
 #
 msgid "Add to bouquet"
-msgstr "Добавить в пакет"
+msgstr "Добавить в букет"
 
 #
 msgid "Add to favourites"
 msgstr "Добавить в избранное"
 
 msgid "Add/Remove timer for current event"
-msgstr ""
+msgstr "Добавить/удалить таймер для текущего события"
 
 #
 msgid ""
-"Adds enigma2 settings and dreambox model informations like SN, rev... if "
+"Adds enigma2 settings and set-top-box model informations like SN, rev... if "
 "enabled."
-msgstr ""
-
+msgstr "Добавляет настройки enigma2 и информацию о ресивере, такую как "
+"серийный номер, ревизию... если включен"
 msgid "Adds network configuration if enabled."
 msgstr "Добавляет конфигурацию сети, если включен."
 
@@ -603,10 +603,10 @@ msgid "Adds wlan configuration if enabled."
 msgstr "Добавляет WLAN конфигурацию если включен"
 
 msgid "Adjust 3D settings"
-msgstr ""
+msgstr "Настройка установок 3D"
 
 msgid "Adjust HDMI CEC settings"
-msgstr ""
+msgstr "Настройка установок HDMI CEC"
 
 #
 msgid ""
@@ -626,15 +626,15 @@ msgstr "Расширенные опции"
 
 #
 msgid "Advanced Software"
-msgstr ""
+msgstr "Дополнительное ПО"
 
 #
 msgid "Advanced Software Plugin"
-msgstr ""
+msgstr "Дополнительные плагины"
 
 #
 msgid "Advanced Video Enhancement Setup"
-msgstr ""
+msgstr "Расширенные настройки Видео четкости"
 
 #
 msgid "Advanced Video Setup"
@@ -649,15 +649,15 @@ msgid "After event"
 msgstr "После события"
 
 msgid "After pressing OK, please wait!"
-msgstr ""
+msgstr "После нажатия ОК, пожалуйста, подождите"
 
 #
 msgid ""
 "After the start wizard is completed, you need to protect single services. "
-"Refer to your dreambox's manual on how to do that."
+"Refer to your set-top-box's manual on how to do that."
 msgstr ""
-"По окончанию работы мастера Вы можете установить ограничение на некоторые "
-"сервисы.Прочитайте в инструкции к тюнеру как это сделать."
+"После окончания работы мастера Вы можете установить ограничение на некоторые "
+"сервисы. Прочитайте в инструкции к ресиверу, как это сделать."
 
 #
 msgid "Album"
@@ -672,16 +672,16 @@ msgid "All Satellites"
 msgstr "Все Спутники"
 
 msgid "Allocate"
-msgstr ""
+msgstr "Выделить"
 
 msgid "Allocate unused memory index"
-msgstr ""
+msgstr "Выделить неиспользуемый индекс памяти"
 
 msgid "Allow Subtitle equals Audio mask"
-msgstr ""
+msgstr "Разрешить сибтитры как аудио маску"
 
 msgid "Allow hearing impaired subtitles"
-msgstr ""
+msgstr "Разрешить субтитры для слабослышаших"
 
 #
 msgid "Alpha"
@@ -696,7 +696,7 @@ msgid "Alternative services tuner priority"
 msgstr "Приоритет используемых тюнеров"
 
 msgid "Always ask"
-msgstr ""
+msgstr "Спрашивать всегда"
 
 msgid "Always ask before sending"
 msgstr "Всегда спрашивать перед отправкой"
@@ -711,10 +711,10 @@ msgstr "Неизвестная ошибка!"
 
 #
 msgid "Anonymize crashlog?"
-msgstr ""
+msgstr "Анонимный крешлог?"
 
 msgid "Any activity"
-msgstr ""
+msgstr "Любое действие"
 
 #
 msgid "Arabic"
@@ -733,7 +733,7 @@ msgid ""
 "following backup:\n"
 msgstr ""
 "Вы уверены, что хотите удалить\n"
-"следующий бекап:\n"
+"следующую резервную копию:\n"
 
 msgid "Are you sure you want to exit this wizard?"
 msgstr "Вы уверены, что хотите выйти из этого мастера?"
@@ -752,14 +752,14 @@ msgid ""
 "following backup:\n"
 msgstr ""
 "Вы уверены, что хотите восстановить\n"
-"этот бекап:\n"
+"эту резервную копию:\n"
 
 #
 msgid ""
 "Are you sure you want to restore your Enigma2 backup?\n"
 "Enigma2 will restart after the restore"
 msgstr ""
-"Вы уверены, что хотите восстановить бекап Enigma2?\n"
+"Вы уверены, что хотите восстановить резервную копию Enigma2?\n"
 "Enigma2 будет перезапущена после восстановления"
 
 #
@@ -787,27 +787,27 @@ msgid "Audio Options..."
 msgstr "Аудио опции..."
 
 msgid "Audio PID"
-msgstr ""
+msgstr "Аудио PID"
 
 msgid "Audio language selection 1"
-msgstr ""
+msgstr "Язык аудио выбор 1"
 
 msgid "Audio language selection 2"
-msgstr ""
+msgstr "Язык аудио выбор 2"
 
 msgid "Audio language selection 3"
-msgstr ""
+msgstr "Язык аудио выбор 3"
 
 msgid "Audio language selection 4"
-msgstr ""
+msgstr "Язык аудио выбор 4"
 
 #
 msgid "Author: "
-msgstr ""
+msgstr "Автор: "
 
 #
 msgid "Authoring mode"
-msgstr ""
+msgstr "Авторский режим"
 
 #
 #. TRANSLATORS: (aspect ratio policy: always try to display as fullscreen, when there is no content (black bars) on left/right, even if this breaks the aspect.
@@ -823,20 +823,20 @@ msgid "Auto flesh"
 msgstr ""
 
 msgid "Auto focus"
-msgstr ""
+msgstr "Автофокус"
 
 msgid "Auto focus commencing ..."
-msgstr ""
+msgstr "Автофокус начинается ..."
 
 msgid "Auto language selection"
-msgstr ""
+msgstr "Автоматический выбор языка"
 
 #
 msgid "Auto scart switching"
 msgstr "Автоматическое переключение SCART"
 
 msgid "Auto-focus"
-msgstr ""
+msgstr "Автофокус"
 
 #
 msgid "Automatic"
@@ -879,18 +879,18 @@ msgid "Background"
 msgstr "Фон"
 
 msgid "Background delete option"
-msgstr ""
+msgstr "Опция фонового удаления"
 
 msgid "Background delete speed"
-msgstr ""
+msgstr "Скорость фонового удаления"
 
 #
 msgid "Backup"
-msgstr "Сохранение"
+msgstr "Резервное копирование"
 
 #
 msgid "Backup Location"
-msgstr "Место сохранения"
+msgstr "Место сохранения резервной копии"
 
 #
 msgid "Backup Mode"
@@ -906,7 +906,7 @@ msgstr "Сохранение неудалось."
 
 #
 msgid "Backup is running..."
-msgstr ""
+msgstr "Сохранение запушено..."
 
 #
 msgid "Backup system settings"
@@ -921,7 +921,7 @@ msgid "Bandwidth"
 msgstr "Траффик"
 
 msgid "Basque"
-msgstr ""
+msgstr "Баскский"
 
 #
 msgid "Begin time"
@@ -937,11 +937,11 @@ msgstr "Действие кнопки 0 в PiP режиме"
 
 #
 msgid "Behavior when a movie is started"
-msgstr "Действие при начале воспроизведения фильма"
+msgstr "Действие при начале воспроиз-ния"
 
 #
 msgid "Behavior when a movie is stopped"
-msgstr "Действие при остановке воспроизведения фильма"
+msgstr "Действие при остановке воспроиз-ния"
 
 #
 msgid "Behavior when a movie reaches the end"
@@ -949,17 +949,17 @@ msgstr "Действие при окончании фильма"
 
 #
 msgid "Bitrate:"
-msgstr ""
+msgstr "Битрейт:"
 
 msgid "Black screen"
-msgstr ""
+msgstr "Черный экран"
 
 msgid "Black screen till locked"
-msgstr ""
+msgstr "Черный экран по-прежнему заблокирован"
 
 #
 msgid "Block noise reduction"
-msgstr ""
+msgstr "Блок снижения уровня шума"
 
 #
 msgid "Blue boost"
@@ -974,7 +974,7 @@ msgid "Brightness"
 msgstr "Яркость"
 
 msgid "Bulgarian"
-msgstr ""
+msgstr "Болгарский"
 
 #
 msgid "Burn DVD"
@@ -1013,7 +1013,7 @@ msgstr "CF карта"
 
 #
 msgid "CI assignment"
-msgstr ""
+msgstr "Назначение CI"
 
 #
 msgid "CVBS"
@@ -1024,39 +1024,39 @@ msgid "Cable"
 msgstr "Кабель"
 
 msgid "Cable Scan"
-msgstr ""
+msgstr "Сканирование кабельного"
 
 #
 msgid "Cache Thumbnails"
 msgstr "Кешировать Эскизы"
 
 msgid "Calculate"
-msgstr ""
+msgstr "Расчитать"
 
 msgid "Calculate all positions"
-msgstr ""
+msgstr "Расчитать все позиции"
 
 msgid "Calculation complete"
-msgstr ""
+msgstr "Расчет окончен"
 
 msgid "Calibrate"
-msgstr ""
+msgstr "Калибровка"
 
 #
 msgid "Cancel"
 msgstr "Отменить"
 
 msgid "Cannot determine"
-msgstr ""
+msgstr "Невозможно определить"
 
 msgid "Cannot find any signal ..., aborting !"
-msgstr ""
+msgstr "Несозможно найти сигнал ..., отмена!"
 
 msgid "Cannot move files on a different disk or system to the trash can"
-msgstr ""
+msgstr "Невозможно переместить файлы на другом диске или системе в корзину"
 
 msgid "Cannot move to trash can"
-msgstr ""
+msgstr "Несозможно переместить в корзину"
 
 #
 msgid "Capacity: "
@@ -1067,7 +1067,7 @@ msgid "Card"
 msgstr "Карта"
 
 msgid "Centered DVB subtitles"
-msgstr ""
+msgstr "Центрирование DVB субтитров"
 
 #
 msgid "Change bouquets in quickzap"
@@ -1078,23 +1078,23 @@ msgid "Change pin code"
 msgstr "Сменить PIN код"
 
 msgid "Change repeat and delay settings?"
-msgstr ""
+msgstr "Изменить настройки повторения и задержки"
 
 msgid "Change service PIN"
-msgstr ""
+msgstr "Изменить сервисный PIN"
 
 msgid "Change service PINs"
-msgstr ""
+msgstr "Изменить сервисные PIN"
 
 msgid "Change setup PIN"
-msgstr ""
+msgstr "Изменить настройки PIN"
 
 #
 msgid "Change step size"
-msgstr ""
+msgstr "Изменить размер шага"
 
 msgid "Changelog"
-msgstr ""
+msgstr "Список изменений"
 
 #
 msgid "Channel"
@@ -1134,7 +1134,7 @@ msgstr "Проверить"
 
 #
 msgid "Checking Filesystem..."
-msgstr "Файловая система..."
+msgstr "Проверка Файловой системы..."
 
 #
 msgid "Choose Tuner"
@@ -1142,34 +1142,34 @@ msgstr "Выбрать тюнер"
 
 #
 msgid "Choose a wireless network"
-msgstr ""
+msgstr "Выберите беспроводную сеть"
 
 #
 msgid "Choose backup files"
-msgstr "Выбрать файлы"
+msgstr "Выберите файлы"
 
 #
 msgid "Choose backup location"
-msgstr "Расположение"
+msgstr "Выберите расположение"
 
 #
 msgid "Choose bouquet"
-msgstr "Выберите пакет пользователя"
+msgstr "Выберите букет"
 
 msgid "Choose image to download"
-msgstr ""
+msgstr "Выберите имидж для загрузки"
 
 #
 msgid "Choose target folder"
-msgstr "Выбрать целевую папку"
+msgstr "Выберите целевую папку"
 
 #
 msgid "Choose upgrade source"
-msgstr "Выбрать источник обновления"
+msgstr "Выберите источник обновления"
 
 #
 msgid "Choose your Skin"
-msgstr "Выбор графической оболочки"
+msgstr "Выберите графическую оболочку"
 
 #
 msgid "Circular left"
@@ -1185,25 +1185,25 @@ msgstr "Очистить"
 
 #
 msgid "Cleanup Wizard"
-msgstr ""
+msgstr "Мастер очистки"
 
 #
 msgid "Cleanup Wizard settings"
-msgstr ""
+msgstr "Настройки мастера очистки"
 
 #
 msgid "CleanupWizard"
-msgstr ""
+msgstr "Мастер очистки"
 
 msgid "Clear"
-msgstr ""
+msgstr "Очистить"
 
 #
 msgid "Clear before scan"
 msgstr "Очистить перед сканированием"
 
 msgid "Clear fixed"
-msgstr ""
+msgstr "Очистка исправлена"
 
 #
 msgid "Clear log"
@@ -1215,13 +1215,13 @@ msgstr "Закрыть"
 
 #
 msgid "Close title selection"
-msgstr ""
+msgstr "Закрыть выбор оглавления"
 
 msgid "Code rate HP"
-msgstr ""
+msgstr "Скорость кодирования HP"
 
 msgid "Code rate LP"
-msgstr ""
+msgstr "Скорость кодирования LP"
 
 #
 msgid "Coderate HP"
@@ -1241,7 +1241,7 @@ msgstr "Настройки коллекции"
 
 #
 msgid "Color Format"
-msgstr "Тип видеовыхода"
+msgstr "Цветовая модель"
 
 #
 msgid "Command execution..."
@@ -1269,7 +1269,7 @@ msgstr ""
 
 #
 msgid "Communication"
-msgstr ""
+msgstr "Связь"
 
 #
 msgid "Compact Flash"
@@ -1284,7 +1284,7 @@ msgid "Complex (allows mixing audio tracks and aspects)"
 msgstr "Комплекс (микширование звуковых дорожек и разрешения видео)"
 
 msgid "Composition of the recording filenames"
-msgstr ""
+msgstr "Состав названия файла записи"
 
 #
 msgid "Configuration Mode"
@@ -1300,14 +1300,14 @@ msgstr "Настройка DNS"
 
 #
 msgid "Configure your internal LAN"
-msgstr "Настроить LAN"
+msgstr "Настроить проводную сеть"
 
 #
 msgid "Configure your network again"
 msgstr "Повторить настройку сети"
 
 msgid "Configure your network settings, and press OK to start the scan"
-msgstr ""
+msgstr "Настройте вашу сеть и нажмите ОК для запуска сканирования"
 
 #
 msgid "Configure your wireless LAN again"
@@ -1323,11 +1323,11 @@ msgstr "Конфликт таймеров"
 
 #
 msgid "Connect"
-msgstr ""
+msgstr "Подключение"
 
 #
 msgid "Connect to a Wireless Network"
-msgstr ""
+msgstr "Подключение к беспроводной сети"
 
 #
 msgid "Connected to"
@@ -1335,7 +1335,7 @@ msgstr "Подключен к"
 
 #
 msgid "Connected!"
-msgstr ""
+msgstr "Подключено!"
 
 #
 msgid "Constellation"
@@ -1346,7 +1346,7 @@ msgid "Content does not fit on DVD!"
 msgstr "Содержание не помещается на DVD"
 
 msgid "Continue"
-msgstr ""
+msgstr "Продолжить"
 
 #
 msgid "Continue in background"
@@ -1361,20 +1361,20 @@ msgid "Contrast"
 msgstr "Контрастность"
 
 msgid "Convert ext3 to ext4"
-msgstr ""
+msgstr "Конвертация ext3 в ext4"
 
 msgid "Convert ext3 to ext4..."
-msgstr ""
+msgstr "Конвертация ext3 в ext4..."
 
 msgid "Convert filesystem ext3 to ext4"
-msgstr ""
+msgstr "Конвертация ФС ext3 в ext4"
 
 msgid "Copy"
-msgstr ""
+msgstr "Копировать"
 
 #
-msgid "Could not connect to Dreambox .NFI Image Feed Server:"
-msgstr "Не удалось подключиться к Dreambox. NFI Feed Image серверу:"
+msgid "Could not connect to set-top-box .NFI Image Feed Server:"
+msgstr "Не удалось подключиться к ресиверу. NFI Feed Image сервер:"
 
 #
 msgid "Could not load Medium! No disc inserted?"
@@ -1382,7 +1382,7 @@ msgstr "Не удалось загрузить носитель! Проверь�
 
 #
 msgid "Could not open Picture in Picture"
-msgstr ""
+msgstr "Невозможно открыть PiP"
 
 #
 #, python-format
@@ -1391,11 +1391,11 @@ msgstr "Запись невозможна - конфликт таймеров %s
 
 #, python-format
 msgid "Couldn't record due to invalid service %s"
-msgstr ""
+msgstr "Запись невозможна из-за неправильного сервиса %s"
 
 #
 msgid "Crashlog settings"
-msgstr ""
+msgstr "Настройка крешлогов"
 
 #
 msgid "CrashlogAutoSubmit"
@@ -1420,16 +1420,16 @@ msgid "Create DVD-ISO"
 msgstr "Создать DVD-ISO"
 
 msgid "Create Filesystem"
-msgstr ""
+msgstr "Создать файловую систему"
 
 msgid "Create Partition"
-msgstr ""
+msgstr "Создать раздел"
 
 msgid "Create more detailed crash log"
-msgstr ""
+msgstr "Создать более детальный крешлог"
 
 msgid "Create movie directory"
-msgstr ""
+msgstr "Создать папку для фильмов"
 
 #
 #, python-format
@@ -1441,14 +1441,14 @@ msgid "Croatian"
 msgstr "Хорватский"
 
 msgid "Current CEC address"
-msgstr ""
+msgstr "Текущий адрес CEC"
 
 #
 msgid "Current Transponder"
 msgstr "Текущий транспондер"
 
 msgid "Current device: "
-msgstr ""
+msgstr "Текущее устройство:"
 
 #
 msgid "Current settings:"
@@ -1456,14 +1456,14 @@ msgstr "Текущие настройки:"
 
 #
 msgid "Current value: "
-msgstr ""
+msgstr "Текущее значение:"
 
 #
 msgid "Current version:"
 msgstr "Текущая версия:"
 
 msgid "Currently installed image"
-msgstr ""
+msgstr "Установленный имидж"
 
 #
 msgid "Custom skip time for '1'/'3'-keys"
@@ -1478,10 +1478,10 @@ msgid "Custom skip time for '7'/'9'-keys"
 msgstr "Время пропуска для кнопок '7'/'9'"
 
 msgid "Custom text alignment"
-msgstr ""
+msgstr "Пользовательское выравнивание текста"
 
 msgid "Custom text position"
-msgstr ""
+msgstr "Пользовательская позиция текста"
 
 #
 msgid "Customize"
@@ -1493,7 +1493,7 @@ msgstr "Редактировать"
 
 #
 msgid "Cutlist editor..."
-msgstr "видео редактор..."
+msgstr "Видео редактор..."
 
 #
 msgid "Czech"
@@ -1508,14 +1508,14 @@ msgid "DHCP"
 msgstr "DHCP"
 
 msgid "DTS downmix"
-msgstr ""
+msgstr "DTS микширование"
 
 #
 msgid "DUAL LAYER DVD"
 msgstr ""
 
 msgid "DVB subtitle black transparency"
-msgstr ""
+msgstr "Прозрачность DVB субтитров"
 
 msgid "DVB-C"
 msgstr ""
@@ -1539,7 +1539,7 @@ msgstr ""
 
 #
 msgid "DVD File Browser"
-msgstr ""
+msgstr "Браузер файлов DVD"
 
 #
 msgid "DVD Player"
@@ -1550,7 +1550,7 @@ msgid "DVD Titlelist"
 msgstr ""
 
 msgid "DVD data format"
-msgstr ""
+msgstr "Формат данных DVD"
 
 #
 msgid "DVD media toolbox"
@@ -1566,7 +1566,7 @@ msgstr "Дата"
 
 #
 msgid "Decide if you want to enable or disable the Cleanup Wizard."
-msgstr ""
+msgstr "Хотите ли вы включить или отключить мастера очистки?"
 
 #
 msgid "Decide what should be done when crashlogs are found."
@@ -1582,18 +1582,18 @@ msgstr "Выключить"
 
 #
 msgid "Default"
-msgstr ""
+msgstr "По-умолчанию"
 
 #
 msgid "Default Settings"
-msgstr ""
+msgstr "Настройки по-умолчанию"
 
 #
 msgid "Default movie location"
-msgstr ""
+msgstr "Расположение по-умолчанию"
 
 msgid "Delay before key repeat starts:"
-msgstr ""
+msgstr "Задержка повторением нажатия кнопки"
 
 #
 msgid "Delete"
@@ -1621,16 +1621,16 @@ msgstr ""
 "%s?"
 
 msgid "Deleted"
-msgstr ""
+msgstr "Удалено"
 
 msgid "Deleted items"
-msgstr ""
+msgstr "Удаленные пункты"
 
 msgid "Depth"
-msgstr ""
+msgstr "Высота"
 
 msgid "Descramble http streams"
-msgstr ""
+msgstr "Дешифрование http потоков"
 
 #
 msgid "Description"
@@ -1641,7 +1641,7 @@ msgid "Deselect"
 msgstr "Отменить"
 
 msgid "Details for plugin: "
-msgstr ""
+msgstr "Описание плагина:"
 
 #
 msgid "Detected HDD:"
@@ -1652,7 +1652,7 @@ msgid "Detected NIMs:"
 msgstr "Найден тюнер:"
 
 msgid "Devicename:"
-msgstr ""
+msgstr "Имя устройства:"
 
 #
 msgid "DiSEqC"
@@ -1676,11 +1676,11 @@ msgstr "DiSEqC повтор"
 
 #
 msgid "DiSEqC-Tester settings"
-msgstr ""
+msgstr "Настройки DiSEqC-Tester"
 
 #
 msgid "Dialing:"
-msgstr ""
+msgstr "Набор:"
 
 #
 msgid "Digital contour removal"
@@ -1691,7 +1691,7 @@ msgid "Direct playback of linked titles without menu"
 msgstr "Воспроизводить связанные названия без меню"
 
 msgid "Directory"
-msgstr ""
+msgstr "Папка"
 
 #
 #, python-format
@@ -1700,11 +1700,11 @@ msgstr "Каталог %s отсутствует."
 
 #
 msgid "Directory browser"
-msgstr ""
+msgstr "Браузер папок"
 
 #, python-format
 msgid "Directory contains %d file(s) and %d sub-directories.\n"
-msgstr ""
+msgstr "Папка содержит %d файла(ов) и %d вложенных папок. \n"
 
 #
 msgid "Disable"
@@ -1715,7 +1715,7 @@ msgid "Disable Picture in Picture"
 msgstr "Отключить режим PiP"
 
 msgid "Disable background scanning"
-msgstr ""
+msgstr "Отменить фоновое сканирование"
 
 #
 msgid "Disable crashlog reporting"
@@ -1731,14 +1731,14 @@ msgstr "Отключен"
 
 #
 msgid "Disconnect"
-msgstr ""
+msgstr "Отключено"
 
 #
 msgid "Dish"
 msgstr "Тарелка"
 
 msgid "Disk space to reserve for recordings (in GB)"
-msgstr ""
+msgstr "Размер резерва дискового пространства (в Gb)"
 
 #
 msgid "Display 16:9 content as"
@@ -1758,7 +1758,7 @@ msgstr "Настройка дисплея"
 
 #
 msgid "Display and Userinterface"
-msgstr ""
+msgstr "Дисплей и интерфейс пользователя"
 
 #
 #, python-format
@@ -1780,7 +1780,8 @@ msgstr ""
 msgid ""
 "Do you really want to convert the filesystem?\n"
 "You cannot go back!"
-msgstr ""
+msgstr "Вы действительно хотите конвертировать файловую систему?\n"
+"Это невозможно отменить!"
 
 #
 #, python-format
@@ -1798,13 +1799,13 @@ msgstr ""
 
 #
 msgid "Do you really want to exit?"
-msgstr ""
+msgstr "Вы действительно хотите выйти?"
 
 msgid ""
 "Do you really want to initialize the device?\n"
 "All data on the disk will be lost!"
-msgstr ""
-
+msgstr "Вы действительно хотите инициализировать устройство?\n"
+"Все данные на диске будут удалены!"
 #
 #, python-format
 msgid "Do you really want to remove directory %s from the disk?"
@@ -1837,11 +1838,11 @@ msgstr "Искать еще вручную?"
 
 #, python-format
 msgid "Do you want to download the image to %s ?"
-msgstr ""
+msgstr "Вы хотите загрузить имидж в %s ?"
 
 #
-msgid "Do you want to enable the parental control feature on your dreambox?"
-msgstr "Вы желаете установить родительский контроль на Вашем dreambox?"
+msgid "Do you want to enable the parental control feature on your set-top-box?"
+msgstr "Вы желаете установить родительский контроль на Вашем ресивере?"
 
 #
 msgid "Do you want to install the package:\n"
@@ -1856,8 +1857,8 @@ msgid "Do you want to preview this DVD before burning?"
 msgstr "Вы хотите просмотреть DVD перед прожигом?"
 
 #
-msgid "Do you want to reboot your Dreambox?"
-msgstr "Вы хотите перезагрузить Dreambox?"
+msgid "Do you want to reboot your set-top-box?"
+msgstr "Вы хотите перезагрузить ресивер?"
 
 #
 msgid "Do you want to remove the package:\n"
@@ -1878,15 +1879,15 @@ msgid ""
 msgstr ""
 
 #
-msgid "Do you want to update your Dreambox?"
-msgstr "Вы хотите обновить Dreambox?"
+msgid "Do you want to update your set-top-box?"
+msgstr "Вы хотите обновить ресивер?"
 
 #
 msgid ""
-"Do you want to update your Dreambox?\n"
+"Do you want to update your set-top-box?\n"
 "After pressing OK, please wait!"
 msgstr ""
-"Вы хотите обновить ПО Dreambox?\n"
+"Вы хотите обновить ПО ресивера?\n"
 "После нажатия OK, пожалуйста, ждите!"
 
 #
@@ -1894,7 +1895,7 @@ msgid "Do you want to upgrade the package:\n"
 msgstr "Вы хотите обновить пакет:\n"
 
 msgid "Do you want to upgrade?"
-msgstr ""
+msgstr "Вы хотите обновить?"
 
 #
 msgid "Do you want to view a tutorial?"
@@ -1902,7 +1903,7 @@ msgstr "Вы хотите посмотреть описание?"
 
 #
 msgid "Don't ask, just send"
-msgstr ""
+msgstr "Не спрашивать, просто отправить"
 
 #
 msgid "Don't stop current event but disable coming events"
@@ -1924,7 +1925,7 @@ msgstr "Загрузить"
 
 #, python-format
 msgid "Download %s from Server"
-msgstr ""
+msgstr "Загрузить %s с сервера"
 
 #
 msgid "Download .NFI-Files for USB-Flasher"
@@ -1951,11 +1952,11 @@ msgid "Downloading plugin information. Please wait..."
 msgstr "Загрузка информации о плагинах. Ждите..."
 
 #
-msgid "Dreambox format data DVD (HDTV compatible)"
-msgstr "Dreambox формат данных DVD (HDTV-совместимый"
+msgid "set-top-box format data DVD (HDTV compatible)"
+msgstr "Формат данных DVD set-top-box(HDTV-совместимый)"
 
 #
-msgid "Dreambox software because updates are available."
+msgid "set-top-box software because updates are available."
 msgstr ""
 
 #
@@ -1964,7 +1965,7 @@ msgstr "Нидерландский"
 
 #
 msgid "Dynamic contrast"
-msgstr ""
+msgstr "Динамический контраст"
 
 #
 msgid "E"
@@ -1972,13 +1973,13 @@ msgstr "E"
 
 #
 msgid "EPG Selection"
-msgstr "Выбор EPG"
+msgstr "Выбор телегида"
 
 msgid "EPG language selection 1"
-msgstr ""
+msgstr "Язык телегида 1"
 
 msgid "EPG language selection 2"
-msgstr ""
+msgstr "Язык телегида 2"
 
 #
 #, python-format
@@ -1990,7 +1991,7 @@ msgid "East"
 msgstr "Восток"
 
 msgid "East limit set"
-msgstr ""
+msgstr "установка предена на восток"
 
 #
 msgid "Edit"
@@ -2006,7 +2007,7 @@ msgstr "Изменить заголовок"
 
 #
 msgid "Edit bouquets list"
-msgstr ""
+msgstr "Изменить список букетов"
 
 #
 msgid "Edit chapters of current title"
@@ -2021,12 +2022,12 @@ msgid "Edit settings"
 msgstr "Изменить настройки"
 
 #
-msgid "Edit the Nameserver configuration of your Dreambox.\n"
-msgstr "Изменить сервер DNS вашего Dreambox.\n"
+msgid "Edit the Nameserver configuration of your set-top-box.\n"
+msgstr "Изменить сервер DNS вашего ресивера.\n"
 
 #
-msgid "Edit the network configuration of your Dreambox.\n"
-msgstr "Изменить конфигурацию сети  вашего Dreambox.\n"
+msgid "Edit the network configuration of your set-top-box.\n"
+msgstr "Изменить конфигурацию сети  вашего ресивера.\n"
 
 #
 msgid "Edit title"
@@ -2034,7 +2035,7 @@ msgstr "Изменить заголовок"
 
 #
 msgid "Edit upgrade source url."
-msgstr ""
+msgstr "Изменить исходный URL для обновлений"
 
 #
 msgid "Electronic Program Guide"
@@ -2050,22 +2051,22 @@ msgstr "Включить 5V для антенны"
 
 #
 msgid "Enable Cleanup Wizard?"
-msgstr ""
+msgstr "Включить мастер очистки?"
 
 msgid "Enable EIT EPG"
-msgstr ""
+msgstr "Включить EIT Телегид"
 
 msgid "Enable MHW EPG"
-msgstr ""
+msgstr "Включить MHW телегид"
 
 msgid "Enable Netmed EPG"
-msgstr ""
+msgstr "Включить Netmed телегид"
 
 msgid "Enable ViaSat EPG"
-msgstr ""
+msgstr "Включить ViaSat телегид"
 
 msgid "Enable freesat EPG"
-msgstr ""
+msgstr "Включить freesat телегид"
 
 #
 msgid "Enable multiple bouquets"
@@ -2076,7 +2077,7 @@ msgid "Enable parental control"
 msgstr "Включить родительский контроль"
 
 msgid "Enable teletext caching"
-msgstr ""
+msgstr "Включить кеширование телетекста"
 
 #
 msgid "Enable timer"
@@ -2088,7 +2089,7 @@ msgstr "Включен"
 
 #
 msgid "Encrypted: "
-msgstr ""
+msgstr "Кодировано: "
 
 #
 msgid "Encryption"
@@ -2104,7 +2105,7 @@ msgstr "Тип ключа шифрования"
 
 #
 msgid "Encryption:"
-msgstr ""
+msgstr "Шифрование:"
 
 #
 msgid "End time"
@@ -2134,7 +2135,7 @@ msgstr "Войти в главное меню..."
 
 #
 msgid "Enter pin code"
-msgstr ""
+msgstr "Введите PIN код"
 
 #
 msgid "Enter the service pin"
@@ -2149,7 +2150,7 @@ msgid "Error"
 msgstr "Ошибка"
 
 msgid "Error code"
-msgstr ""
+msgstr "Код ошибки"
 
 #
 msgid "Error executing plugin"
@@ -2166,23 +2167,23 @@ msgstr ""
 
 #
 msgid "Estonian"
-msgstr ""
+msgstr "Эстонский"
 
 msgid "Ethernet network interface"
-msgstr ""
+msgstr "Интерфейс проводной сети"
 
 msgid "Event Fontsize (relative to skin size)"
-msgstr ""
+msgstr "Размер шрифта для собитий (относительно размера скина)"
 
 #
 msgid "Eventview"
 msgstr "Просмотр событий"
 
 msgid "Eventview menu"
-msgstr ""
+msgstr "Меню просмотра событий"
 
 msgid "Everywhere"
-msgstr ""
+msgstr "Везде"
 
 #
 #, fuzzy
@@ -2206,14 +2207,14 @@ msgid "Exit"
 msgstr "Выйти"
 
 msgid "Exit EPG"
-msgstr ""
+msgstr "Выход из телегида"
 
 #
 msgid "Exit editor"
 msgstr "Выйти из редактора"
 
 msgid "Exit input device selection."
-msgstr ""
+msgstr "Выход из выбора устройств ввода"
 
 #
 msgid "Exit network wizard"
@@ -2221,7 +2222,7 @@ msgstr "Выйти из мастера"
 
 #
 msgid "Exit the cleanup wizard"
-msgstr ""
+msgstr "Выход из мастера очистки"
 
 #
 msgid "Exit the wizard"
@@ -2245,11 +2246,11 @@ msgstr "Расширенные настройки..."
 
 #
 msgid "Extended Software"
-msgstr ""
+msgstr "Дополнительное ПО"
 
 #
 msgid "Extended Software Plugin"
-msgstr ""
+msgstr "Дополнительные плагины ПО"
 
 #
 msgid "Extensions"
@@ -2257,14 +2258,14 @@ msgstr "Расширения"
 
 #
 msgid "Extensions management"
-msgstr ""
+msgstr "Управление расширениями"
 
 #
 msgid "FEC"
 msgstr "FEC"
 
 msgid "FTA"
-msgstr ""
+msgstr "Открытый"
 
 #
 msgid "Factory reset"
@@ -2275,7 +2276,7 @@ msgid "Failed"
 msgstr "Неудачный"
 
 msgid "Failed to write /tmp/positionersetup.log: "
-msgstr ""
+msgstr "Ошибка записи /tmp/positionersetup.log:"
 
 #
 #, python-format
@@ -2305,7 +2306,7 @@ msgid "Fast Forward speeds"
 msgstr "Скорость перемотки вперед"
 
 msgid "Fast Scan"
-msgstr ""
+msgstr "Быстрое сканирование"
 
 #
 msgid "Fast epoch"
@@ -2316,20 +2317,20 @@ msgid "Favourites"
 msgstr "Избранное"
 
 msgid "File appears to be busy.\n"
-msgstr ""
+msgstr "Файл занят\n"
 
 #
 msgid "Filesystem Check"
-msgstr ""
+msgstr "Проверка файловой системы"
 
 msgid "Final position at"
-msgstr ""
+msgstr "Конечная позиция на:"
 
 msgid "Final position at index"
-msgstr ""
+msgstr "Индекс конечной позиции"
 
 msgid "Fine movement"
-msgstr ""
+msgstr "Точное перемещение"
 
 #
 msgid "Finetune"
@@ -2361,17 +2362,17 @@ msgstr "Прошивка не удалась"
 
 #
 msgid "Following tasks will be done after you press OK!"
-msgstr ""
+msgstr "Следующие задачи должны быть выполнены после нажатия ОК"
 
 msgid "For more information see www.openpli.org"
-msgstr ""
+msgstr "Для дополнительной информации смотри www.openpli.org"
 
 #
 msgid "Format"
 msgstr "Формат"
 
 msgid "Forward volume keys"
-msgstr ""
+msgstr "Клавиши регулировки громкости назад"
 
 #
 msgid "Frame size in full view"
@@ -2406,7 +2407,7 @@ msgid "Friday"
 msgstr "Пятница"
 
 msgid "From :"
-msgstr ""
+msgstr "От :"
 
 #
 #, python-format
@@ -2427,19 +2428,19 @@ msgstr "Шлюз"
 
 #
 msgid "General AC3 Delay"
-msgstr ""
+msgstr "Главный AC3 задержка"
 
 #
 msgid "General AC3 delay (ms)"
-msgstr ""
+msgstr "Главный AC3 задержка (мс)"
 
 #
 msgid "General PCM Delay"
-msgstr ""
+msgstr "Главный PCM задержка"
 
 #
 msgid "General PCM delay (ms)"
-msgstr ""
+msgstr "Главный PCM задержка (ms)"
 
 #
 msgid "Genre"
@@ -2460,69 +2461,69 @@ msgid "Getting plugin information. Please wait..."
 msgstr "Получение информации о плагине. Пожалуйста ждите..."
 
 msgid "Go down the list"
-msgstr ""
+msgstr "Перейти вниз списка"
 
 msgid "Go to first movie or last item"
-msgstr ""
+msgstr "Перейти к первому фильму или к последнему элементу"
 
 msgid "Go to first movie or top of list"
-msgstr ""
+msgstr "Перейти к первому фильму или вверх списка"
 
 msgid "Go up the list"
-msgstr ""
+msgstr "Перейти вверх по списку"
 
 msgid "Goto"
-msgstr ""
+msgstr "Переход"
 
 #
 msgid "Goto 0"
 msgstr "Установка на позицию 0"
 
 msgid "Goto :"
-msgstr ""
+msgstr "Перейти :"
 
 msgid "Goto X"
 msgstr ""
 
 msgid "Goto first service"
-msgstr ""
+msgstr "Перейти к первому сервису"
 
 msgid "Goto index position"
 msgstr ""
 
 msgid "Goto last service"
-msgstr ""
+msgstr "Перейти к последнему сервису"
 
 msgid "Goto next event"
-msgstr ""
+msgstr "Перейти к следующему событию"
 
 msgid "Goto next page of events"
-msgstr ""
+msgstr "Перейти к следующей странице события"
 
 msgid "Goto next page of service"
-msgstr ""
+msgstr "Перейти к следующей странице сервиса"
 
 #
 msgid "Goto position"
 msgstr "Переход на позицию"
 
 msgid "Goto previous event"
-msgstr ""
+msgstr "Перейти к предыдущему событию"
 
 msgid "Goto previous page of events"
-msgstr ""
+msgstr "Перейти к предыдущей странице события"
 
 msgid "Goto previous page of service"
-msgstr ""
+msgstr "Перейти к предыдущей странице сервиса"
 
 msgid "Goto specific data/time"
 msgstr ""
 
 msgid "GotoX calibration"
-msgstr ""
+msgstr "Калибровка GotoX"
 
 msgid "Graph MEpg Settings"
-msgstr ""
+msgstr "Настройки Графического телегида"
 
 #
 msgid "Graphical Multi EPG"
@@ -2541,10 +2542,10 @@ msgid "Guard Interval"
 msgstr "Интервал защиты"
 
 msgid "Guard interval"
-msgstr ""
+msgstr "Интервал защиты"
 
 msgid "HD list"
-msgstr ""
+msgstr "Список HD"
 
 msgid "Handle standby from TV"
 msgstr ""
@@ -2568,43 +2569,43 @@ msgid "Hardware: "
 msgstr ""
 
 msgid "Hebrew"
-msgstr ""
+msgstr "Иврит"
 
 msgid "Hidden network"
-msgstr ""
+msgstr "Скрытая сеть"
 
 msgid "Hide CI messages"
-msgstr ""
+msgstr "Скрыть сообщения CI"
 
 msgid "Hide zap errors"
-msgstr ""
+msgstr "Скрыть ошибки переключения"
 
 #
 msgid "Hierarchy Information"
-msgstr "Иерархия информации"
+msgstr "Иерархия информация"
 
 msgid "Hierarchy info"
-msgstr ""
+msgstr "Иерархическая информация"
 
 #
 msgid "High bitrate support"
-msgstr ""
+msgstr "Поддержка высокого битрейта"
 
 msgid "Hold screen"
 msgstr ""
 
 msgid "Hold till locked"
-msgstr ""
+msgstr "Удерживать, пока заблокировано"
 
 msgid "Home"
-msgstr ""
+msgstr "Домой"
 
 #
 msgid "Horizontal"
 msgstr "Горизонтальная"
 
 msgid "Horizontal turning speed"
-msgstr ""
+msgstr "Горизонтальная скорость поворота"
 
 #
 msgid "How many minutes do you want to record?"
@@ -2616,7 +2617,7 @@ msgstr ""
 
 #
 msgid "Hue"
-msgstr ""
+msgstr "оттенок"
 
 #
 msgid "Hungarian"
@@ -2632,10 +2633,10 @@ msgstr "ISO файл слишком велик для этой файловой 
 
 #
 msgid "ISO path"
-msgstr "ISO путь"
+msgstr "путь к ISO"
 
 msgid "Icons"
-msgstr ""
+msgstr "Иконки"
 
 #
 msgid ""
@@ -2668,7 +2669,7 @@ msgstr ""
 "Если Вас устраивает результат, нажмите OK."
 
 msgid "Image: "
-msgstr ""
+msgstr "Имидж: "
 
 #
 msgid "In Progress"
@@ -2680,13 +2681,13 @@ msgid ""
 msgstr "Таймер переключил телевизор на записываемый канал!\n"
 
 msgid "Include AIT in http streams"
-msgstr ""
+msgstr "Добавить AIT в http потоки"
 
 msgid "Include ECM in http streams"
-msgstr ""
+msgstr "Добавить ECM в http потоки"
 
 msgid "Include EIT in http streams"
-msgstr ""
+msgstr "Добавить EIT в http потоки"
 
 #
 msgid "Include your email and name (optional) in the mail?"
@@ -2701,11 +2702,11 @@ msgid "Index"
 msgstr "Индекс"
 
 msgid "Index allocated:"
-msgstr ""
+msgstr "Выделение индекса:"
 
 #
 msgid "Info"
-msgstr ""
+msgstr "Информация"
 
 #
 msgid "InfoBar"
@@ -2724,48 +2725,48 @@ msgid "Init"
 msgstr "Инициализация"
 
 msgid "Initial Fast Forward speed"
-msgstr ""
+msgstr "Начальная скорость перемотки вперед"
 
 msgid "Initial Rewind speed"
-msgstr ""
+msgstr "Начальная скорость перемотки назад"
 
 #
 msgid "Initial location in new timers"
-msgstr ""
+msgstr "Начальное расположение в новых таймерах"
 
 msgid "Initial lock ratio"
-msgstr ""
+msgstr "Начальный коэффициент блокировки"
 
 msgid "Initial signal quality"
-msgstr ""
+msgstr "Начальное качество сигнала"
 
 msgid "Initial signal quality:"
-msgstr ""
+msgstr "Начальное качество сигнала"
 
 #
 msgid "Initialization"
-msgstr ""
+msgstr "Инициализация"
 
 #
 msgid "Initialize"
-msgstr "Инициализация"
+msgstr "Инициализировать"
 
 msgid "Initializing storage device..."
-msgstr ""
+msgstr "Инициализация накопителя..."
 
 #
 msgid "Input"
 msgstr "Вход"
 
 msgid "Input device setup"
-msgstr ""
+msgstr "Настройка устройства ввода"
 
 msgid "Input devices"
-msgstr ""
+msgstr "Устройство ввода"
 
 #
 msgid "Install"
-msgstr ""
+msgstr "Установка"
 
 #
 msgid "Install a new image with a USB stick"
@@ -2777,18 +2778,18 @@ msgstr "Установить новый имидж через web браузер
 
 #
 msgid "Install extensions."
-msgstr ""
+msgstr "Установка расширений."
 
 #
 msgid "Install local extension"
-msgstr ""
+msgstr "Установка локальных расширений"
 
 #
 msgid "Install or remove finished."
-msgstr ""
+msgstr "Установка или удаление закончено"
 
 msgid "Install picons on"
-msgstr ""
+msgstr "Установить пиконы в"
 
 #
 msgid "Install settings, skins, software..."
@@ -2796,7 +2797,7 @@ msgstr "Установить настройки, скины, программн�
 
 #
 msgid "Installation finished."
-msgstr ""
+msgstr "Установка окончена."
 
 #
 msgid "Installing"
@@ -2824,11 +2825,11 @@ msgstr "Немедленная запись..."
 
 #
 msgid "Instant record location"
-msgstr ""
+msgstr "Расположение немедленной записи"
 
 #
 msgid "Interface: "
-msgstr ""
+msgstr "Интерфейс:"
 
 #
 msgid "Intermediate"
@@ -2839,10 +2840,10 @@ msgid "Internal Flash"
 msgstr "Внутренняя флешь"
 
 msgid "Internal hdd only"
-msgstr ""
+msgstr "Только внутренний HDD"
 
 msgid "Interval between keys when repeating:"
-msgstr ""
+msgstr "Интервал клавиш между повторениями:"
 
 #
 msgid "Invalid Location"
@@ -2858,7 +2859,7 @@ msgid "Inversion"
 msgstr "Инверсия"
 
 msgid "Invert"
-msgstr ""
+msgstr "Инвертировать"
 
 #
 msgid "Ipkg"
@@ -2866,14 +2867,14 @@ msgstr "Ipkg"
 
 #
 msgid "Is this videomode ok?"
-msgstr ""
+msgstr "Этот видеорежим ОК?"
 
 #
 msgid "Italian"
 msgstr "Итальянский"
 
 msgid "Items per Page "
-msgstr ""
+msgstr "Элементов на странице"
 
 #
 msgid "Job View"
@@ -2885,14 +2886,14 @@ msgid "Just Scale"
 msgstr "Just Scale"
 
 msgid "Keep old timers for how many days"
-msgstr ""
+msgstr "Сколько дней хранить старые таймеры"
 
 msgid "Kernel Version: "
-msgstr ""
+msgstr "Версия ядра: "
 
 #
 msgid "Keyboard"
-msgstr ""
+msgstr "Клавиатура"
 
 #
 msgid "Keyboard Map"
@@ -2903,14 +2904,14 @@ msgid "Keyboard Setup"
 msgstr "Установка клавиатуры"
 
 msgid "Kill partition table"
-msgstr ""
+msgstr "Убить таблицу разделов"
 
 #
 msgid "LAN Adapter"
-msgstr "Сетевой адаптер"
+msgstr "LAN адаптер"
 
 msgid "LAN connection"
-msgstr ""
+msgstr "Сетевое подключение"
 
 #
 msgid "LNB"
@@ -2937,11 +2938,11 @@ msgid "Language selection"
 msgstr "Выбор языка"
 
 msgid "Last Upgrade: "
-msgstr ""
+msgstr "Последнее обновление: "
 
 #
 msgid "Last config"
-msgstr ""
+msgstr "Последняя конфигурация"
 
 #
 msgid "Last speed"
@@ -2969,7 +2970,7 @@ msgid "Letterbox"
 msgstr "Letterbox"
 
 msgid "Letzeburgesch"
-msgstr ""
+msgstr "Люксембургский"
 
 #
 msgid "Limit east"
@@ -2981,21 +2982,21 @@ msgstr "Ограничение запад"
 
 #
 msgid "Limited character set for recording filenames"
-msgstr ""
+msgstr "Ограниченный набор символов для имен файлов"
 
 msgid "Limits cancelled"
-msgstr ""
+msgstr "Ограничения отменены"
 
 msgid "Limits enabled"
-msgstr ""
+msgstr "Ограничения активны"
 
 #
 msgid "Limits off"
-msgstr "Ограничения выключены"
+msgstr "Ограничения выключить"
 
 #
 msgid "Limits on"
-msgstr "Ограничения включены"
+msgstr "Ограничения включить"
 
 #
 msgid "Link Quality:"
@@ -3010,18 +3011,18 @@ msgid "Linked titles with a DVD menu"
 msgstr "Заголовки связанные с DVD меню"
 
 msgid "List available networks"
-msgstr ""
+msgstr "Список доступных сетей"
 
 #
 msgid "List of Storage Devices"
 msgstr "Список устройств хранения"
 
 msgid "List type"
-msgstr ""
+msgstr "Тип списка"
 
 #, python-format
 msgid "List version %d, found %d channels"
-msgstr ""
+msgstr "Список версий %d, найдено %d каналов"
 
 #
 msgid "Lithuanian"
@@ -3037,7 +3038,7 @@ msgstr "Загружать длительность видео в список �
 
 #
 msgid "Local Network"
-msgstr "Локальная сеть"
+msgstr "Локалка"
 
 #
 msgid "Location"
@@ -3045,10 +3046,10 @@ msgstr "Расположение"
 
 #
 msgid "Location for instant recordings"
-msgstr ""
+msgstr "Расположение мгновенных записей"
 
 msgid "Lock ratio"
-msgstr ""
+msgstr "Блокировка ратио"
 
 #
 msgid "Lock:"
@@ -3063,7 +3064,7 @@ msgid "Long Keypress"
 msgstr "Длинное нажатие"
 
 msgid "Long filenames"
-msgstr ""
+msgstr "Длинные имена файлов"
 
 #
 msgid "Longitude"
@@ -3086,7 +3087,7 @@ msgid "Mainmenu"
 msgstr "Главное меню"
 
 msgid "Maintain old EPG data for"
-msgstr ""
+msgstr "Сохранение старых данных телегида"
 
 #
 msgid "Make this mark an 'in' point"
@@ -3102,7 +3103,7 @@ msgstr "Создать простую метку"
 
 #
 msgid "Manage extensions"
-msgstr ""
+msgstr "Управление расширениями"
 
 #
 msgid "Manage your receiver's software"
@@ -3110,10 +3111,10 @@ msgstr "Менеджер ПО ресивера"
 
 #
 msgid "Manual Scan"
-msgstr "Ручной поиск"
+msgstr "Поиск вручную"
 
 msgid "Manual configuration"
-msgstr ""
+msgstr "Нстройки вручную"
 
 #
 msgid "Manual transponder"
@@ -3125,15 +3126,15 @@ msgstr "Производитель"
 
 #
 msgid "Margin after record"
-msgstr "Объединить после записи"
+msgstr "Запас после записи (в минутах)"
 
 #
 msgid "Margin before record (minutes)"
-msgstr "Объединить перед записью (в минутах)"
+msgstr "Запас перед записью (в минутах)"
 
 #
 msgid "Max. Bitrate: "
-msgstr ""
+msgstr "Макс. Битрейт:"
 
 #
 msgid "Media player"
@@ -3152,10 +3153,10 @@ msgid "Medium is not empty!"
 msgstr "Носитель не пустой!"
 
 msgid "Memory"
-msgstr ""
+msgstr "Память"
 
 msgid "Memory index"
-msgstr ""
+msgstr "Индекс памяти"
 
 #
 msgid "Menu"
@@ -3170,7 +3171,7 @@ msgid "Message..."
 msgstr "Сообщение..."
 
 msgid "Missing "
-msgstr ""
+msgstr "Отсутствует"
 
 #
 msgid "Mode"
@@ -3205,10 +3206,10 @@ msgid "Mosquito noise reduction"
 msgstr ""
 
 msgid "Mount"
-msgstr ""
+msgstr "Монтирование"
 
 msgid "Move"
-msgstr ""
+msgstr "Перемещение"
 
 #
 msgid "Move Picture in Picture"
@@ -3219,67 +3220,67 @@ msgid "Move east"
 msgstr "Переместить на восток"
 
 msgid "Move to other directory"
-msgstr ""
+msgstr "Переместить в другой каталог"
 
 msgid "Move to position X"
-msgstr ""
+msgstr "Переместить в позицию Х"
 
 #
 msgid "Move west"
 msgstr "Переместить на запад"
 
 msgid "Moved to position 0"
-msgstr ""
+msgstr "Перемещен в позицию 0"
 
 msgid "Moved to position at index"
-msgstr ""
+msgstr "Перемещен в позицию с индексом"
 
 msgid "Movement"
-msgstr ""
+msgstr "Движение"
 
 msgid "Movie List Configuration"
-msgstr ""
+msgstr "Конфигурация списка фильмов"
 
 msgid "Movie Selection"
-msgstr ""
+msgstr "Выбор фильмов"
 
 #
 msgid "Movie location"
-msgstr ""
+msgstr "Расположение фильмов"
 
 #
 msgid "Movielist menu"
 msgstr "Меню списка видео"
 
 msgid "Moving"
-msgstr ""
+msgstr "Перемещение"
 
 msgid "Moving east ..."
-msgstr ""
+msgstr "Перемещение на восток"
 
 msgid "Moving to position"
-msgstr ""
+msgstr "Перемещение в позицию"
 
 msgid "Moving west ..."
-msgstr ""
+msgstr "Перемещение на запад"
 
 #
 msgid "Multi EPG"
-msgstr "Граф. EPG"
+msgstr "Граф. Телегид"
 
 msgid "Multi-EPG bouquet selection"
-msgstr ""
+msgstr "Выбор букета Граф-телегида"
 
 #
 msgid "Multimedia"
-msgstr ""
+msgstr "Мультимедиа"
 
 #
 msgid "Multiple service support"
 msgstr "Поддержка мультисервисов"
 
 msgid "Multiplex"
-msgstr ""
+msgstr "Мультиплекс"
 
 #
 msgid "Multisat"
@@ -3291,7 +3292,7 @@ msgstr "Без звука"
 
 #
 msgid "N/A"
-msgstr "N/A"
+msgstr "Н/О"
 
 #
 msgid "NEXT"
@@ -3338,7 +3339,7 @@ msgid "Nameserver settings"
 msgstr "Настройка DNS"
 
 msgid "Namespace"
-msgstr ""
+msgstr "Пространство имен:"
 
 #
 msgid "Netmask"
@@ -3346,7 +3347,7 @@ msgstr "Маска подсети"
 
 #
 msgid "Network"
-msgstr ""
+msgstr "Сеть"
 
 #
 msgid "Network Configuration..."
@@ -3384,7 +3385,7 @@ msgid "Network test..."
 msgstr "Тест сети..."
 
 msgid "Network test: "
-msgstr ""
+msgstr "Тест сети:"
 
 #
 msgid "Network:"
@@ -3395,14 +3396,14 @@ msgid "NetworkWizard"
 msgstr "Мастер настройки сети"
 
 msgid "Networkname (SSID)"
-msgstr ""
+msgstr "Имя сети (SSID)"
 
 #
 msgid "New"
 msgstr "Новые"
 
 msgid "New PIN"
-msgstr ""
+msgstr "Новый PIN"
 
 #
 msgid "New version:"
@@ -3422,10 +3423,10 @@ msgstr "Не найден (поддерживаемый) DVDROM!"
 
 #
 msgid "No Connection"
-msgstr ""
+msgstr "Нет подключения"
 
 msgid "No Delay"
-msgstr ""
+msgstr "Без задержки"
 
 #
 msgid "No HDD found or HDD not initialized!"
@@ -3438,19 +3439,19 @@ msgid "No backup needed"
 msgstr "Резервное копирование не требуется"
 
 msgid "No cable tuner found!"
-msgstr ""
+msgstr "Кабельный тюнер не найден"
 
 #
 msgid ""
 "No data on transponder!\n"
 "(Timeout reading PAT)"
 msgstr ""
-"Нет данный на транспондере!\n"
-"(Таймаут чтенияPAT)"
+"Нет данных на транспондере!\n"
+"(Таймаут чтения PAT)"
 
 #
 msgid "No description available."
-msgstr ""
+msgstr "Нет доступного описания"
 
 #
 msgid "No details for this image file"
@@ -3471,7 +3472,7 @@ msgid ""
 msgstr ""
 
 msgid "No free index available"
-msgstr ""
+msgstr "Нет доступных свободных индексов"
 
 #
 msgid "No free tuner!"
@@ -3479,7 +3480,7 @@ msgstr "Нет свободного тюнера!"
 
 #
 msgid "No network connection available."
-msgstr ""
+msgstr "Нет доступных сетевых подключений"
 
 #
 msgid "No networks found"
@@ -3499,7 +3500,7 @@ msgid "No positioner capable frontend found."
 msgstr "Нет фронтэнда с позиционером"
 
 msgid "No sat tuner found!"
-msgstr ""
+msgstr "Не найден спутниковый тюнер!"
 
 #
 msgid "No satellite frontend found!!"
@@ -3511,7 +3512,7 @@ msgstr "Нет меток для этих фильмов."
 
 #
 msgid "No to all"
-msgstr ""
+msgstr "Нет для всех"
 
 #
 msgid "No tuner is configured for use with a diseqc positioner!"
@@ -3532,7 +3533,7 @@ msgid ""
 "When you say 'No' here the service protection stay disabled!"
 msgstr ""
 "Не найден валидный PIN!\n"
-"Вы хотите изменить PIN сервисасейчас?\n"
+"Вы хотите изменить PIN сервиса сейчас?\n"
 "Если вы ответите 'НЕТ', то защита сервиса \n"
 "не будет включена!"
 
@@ -3589,15 +3590,15 @@ msgid "No, do nothing."
 msgstr "Нет, не делать"
 
 #
-msgid "No, just start my dreambox"
-msgstr "Нет, включить мой dreamdox"
+msgid "No, just start my set-top-box"
+msgstr "Нет, включить мой ресивер"
 
 msgid "No, never"
-msgstr ""
+msgstr "Нет, никогда"
 
 #
 msgid "No, not now"
-msgstr ""
+msgstr "Нет, не сейчас"
 
 #
 msgid "No, scan later manually"
@@ -3631,7 +3632,7 @@ msgid ""
 "required, %d MB available)"
 msgstr ""
 "Нет места на диске. Пожалуйста освободите немного места и попробуйте снова. "
-"(%d MB required, %d MB available)"
+"(%d MB нужно, %d MB доступно)"
 
 msgid "Not-Associated"
 msgstr ""
@@ -3645,11 +3646,11 @@ msgstr ""
 "Пожалуйста, настройте Ваш тюнер перед началом поиска."
 
 msgid "Nothing to upgrade"
-msgstr ""
+msgstr "Нечего обновлять"
 
 #
 msgid "Now Playing"
-msgstr "Воспроизводится "
+msgstr "Воспроизводится"
 
 #
 msgid ""
@@ -3672,11 +3673,11 @@ msgstr "OK, подсказывать мне в процессе обновлен
 
 #
 msgid "OK, remove another extensions"
-msgstr ""
+msgstr "ОК, удалить другие расширения"
 
 #
 msgid "OK, remove some extensions"
-msgstr ""
+msgstr "ОК, удалить какие-нибудь расширения"
 
 msgid "ONID"
 msgstr ""
@@ -3686,7 +3687,7 @@ msgid "OSD Settings"
 msgstr "OSD установки"
 
 msgid "OSD name request"
-msgstr ""
+msgstr "Запрос имени OSD"
 
 #
 msgid "OSD visibility"
@@ -3697,7 +3698,7 @@ msgid "Off"
 msgstr "Выкл."
 
 msgid "Offline decode delay (ms)"
-msgstr ""
+msgstr "Оффлайн задержка декодирования (мс)"
 
 msgid "Ok"
 msgstr ""
@@ -3716,7 +3717,7 @@ msgstr "Только бесплатные"
 
 #
 msgid "Only extensions."
-msgstr ""
+msgstr "Только расцирения"
 
 #
 msgid "Optionally enter your name if you want to."
@@ -3727,23 +3728,23 @@ msgid "Orbital Position"
 msgstr "Орбитальная позиция"
 
 msgid "Orbital position"
-msgstr ""
+msgstr "Орбитальная позиция"
 
 msgid "Original"
-msgstr ""
+msgstr "Оригинал"
 
 msgid "Other"
-msgstr ""
+msgstr "Другой"
 
 #
 msgid "Output"
 msgstr "Действие"
 
 msgid "Overwrite configuration files ?"
-msgstr ""
+msgstr "Перезаписать конфигурационные файлы?"
 
 msgid "Overwrite configuration files during software upgrade?"
-msgstr ""
+msgstr "Перезаписать конфигурационные файлы во время обновления ПО?"
 
 #
 msgid "PAL"
@@ -3765,14 +3766,14 @@ msgstr "Обновление списка пакетов"
 
 #
 msgid "Package removal failed.\n"
-msgstr ""
+msgstr "Удаление пакета не удалось.\n"
 
 #
 msgid "Package removed successfully.\n"
 msgstr ""
 
 msgid "Packages"
-msgstr ""
+msgstr "Пакеты"
 
 #
 msgid "Packet management"
@@ -3809,24 +3810,24 @@ msgstr "Тип родительского контроля"
 
 #
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #
 msgid "Pause movie at end"
 msgstr "Пауза в конце фильма"
 
 msgid "Permanently delete all recordings in the trash can?"
-msgstr ""
+msgstr "Окончательно удалить все записи в корзину?"
 
 msgid "Permanently remove all deleted items"
-msgstr ""
+msgstr "Окончательно удалить все удаленные элементы"
 
 msgid "Persian"
-msgstr ""
+msgstr "Персидский"
 
 #
 msgid "Phone number"
-msgstr ""
+msgstr "Номер телефона"
 
 #
 msgid "PiPSetup"
@@ -3866,13 +3867,13 @@ msgid "Play Music..."
 msgstr "Воспроизвести Музыку..."
 
 msgid "Play audio in background"
-msgstr ""
+msgstr "Воспроизвести аудио в фоне"
 
 msgid "Play next"
-msgstr ""
+msgstr "Воспроизвести следующее"
 
 msgid "Play previous"
-msgstr ""
+msgstr "Воспроизвести предыдущее"
 
 #
 msgid "Play recorded movies..."
@@ -3884,12 +3885,13 @@ msgstr "Пожалуйста, выберите носитель для скан�
 
 #
 msgid "Please add titles to the compilation."
-msgstr ""
+msgstr "Пожалуйста, добавьте название к компиляции"
 
 msgid ""
 "Please be aware, that anyone can disable the parental control, if you have "
 "not set a PIN."
-msgstr ""
+msgstr "Имейте ввиду, что любой человек может отключить родительский контроль"
+"если вы не установите PIN код"
 
 #
 msgid "Please change recording endtime"
@@ -3953,14 +3955,14 @@ msgstr "Пожалуйста, введите имя файла(пусто = те
 
 #
 msgid "Please enter name of the new directory"
-msgstr "Пожалуйста, введите имя нового каталого"
+msgstr "Пожалуйста, введите имя нового каталога"
 
 #
 msgid "Please enter the correct pin code"
 msgstr "Пожалуйста, введите правильный PIN"
 
 msgid "Please enter the old PIN code"
-msgstr ""
+msgstr "Пожалуйста, введите старый PIN код"
 
 #
 msgid "Please enter your email address here:"
@@ -4011,11 +4013,11 @@ msgstr ""
 
 #
 msgid "Please select an extension to remove."
-msgstr ""
+msgstr "Пожалуйста, выберите расширение для удаления."
 
 #
 msgid "Please select an option below."
-msgstr ""
+msgstr "Пожалуйста, выберите опцию ниже"
 
 #
 msgid "Please select medium to use as backup location"
@@ -4087,7 +4089,7 @@ msgstr "Подождите, идет активация вашей сетево�
 
 #
 msgid "Please wait while removing selected package..."
-msgstr ""
+msgstr "Пожалуйста, подождите пока удаляется выбранный пакет..."
 
 #
 msgid "Please wait while scanning is in progress..."
@@ -4127,18 +4129,18 @@ msgstr "Установленные плагины"
 
 #
 msgid "Plugin manager activity information"
-msgstr ""
+msgstr "Информация об активности Менеджера плагинов"
 
 #
 msgid "Plugin manager help"
-msgstr ""
+msgstr "Помощь Менеджера плагинов"
 
 #
 msgid "Plugins"
 msgstr "Плагины"
 
 msgid "Polarisation"
-msgstr ""
+msgstr "Поляризация"
 
 #
 msgid "Polarization"
@@ -4169,7 +4171,7 @@ msgid "Portuguese"
 msgstr "Португальский"
 
 msgid "Position of finished Timers in Timerlist"
-msgstr ""
+msgstr "Позиция окончания Таймеров в списке таймеров"
 
 msgid "Position stored at index"
 msgstr ""
@@ -4191,22 +4193,22 @@ msgid "Predefined transponder"
 msgstr "Предопределенный транспондер"
 
 msgid "Prefer AC3"
-msgstr ""
+msgstr "Предпочтение AC3"
 
 msgid "Prefer DVB-grafical subtitles"
-msgstr ""
+msgstr "Предпочитать DVB-графические субтитры"
 
 msgid "Prefer audio stream stored by service"
-msgstr ""
+msgstr "Предпочитать хранение потока как сервис"
 
 msgid "Prefer hearing impaired subtitles"
-msgstr ""
+msgstr "Предпочитать субтитры для слабослышащих"
 
 msgid "Prefer subtitle stored by service"
-msgstr ""
+msgstr "Предпочитать хранение субтитров как сервис"
 
 msgid "Preferred tuner"
-msgstr ""
+msgstr "Предпочтительный тюнер"
 
 msgid "Prepare another USB stick for image flashing"
 msgstr ""
@@ -4216,13 +4218,13 @@ msgid "Preparing... Please wait"
 msgstr "Подготовка ... Пожалуйста, подождите"
 
 msgid "Press '0' to toggle internal/external PiP."
-msgstr ""
+msgstr "Нажмите '0' для переключения внутреннего/наружного PiP"
 
 msgid "Press INFO on your remote control for additional information."
-msgstr ""
+msgstr "Нажмите INFO для дополнительной информации"
 
 msgid "Press MENU on your remote control for additional options."
-msgstr ""
+msgstr "Нажмите MENU для дополнительных опций"
 
 #
 msgid "Press OK on your remote control to continue."
@@ -4230,7 +4232,7 @@ msgstr "Нажмите OK на пульте, чтобы продолжить"
 
 #
 msgid "Press OK to activate the selected skin."
-msgstr ""
+msgstr "Нажмите ОК для активации выбранного скина"
 
 #
 msgid "Press OK to activate the settings."
@@ -4251,11 +4253,11 @@ msgstr "Нажмите OK для поиска."
 
 #
 msgid "Press OK to select a Provider."
-msgstr ""
+msgstr "Нажмите ОК для выбота провайдера"
 
 #
 msgid "Press OK to select/deselect a CAId."
-msgstr ""
+msgstr "Нажмите ОК для выбора/отключения кодировки"
 
 #
 msgid "Press OK to start the scan"
@@ -4263,11 +4265,11 @@ msgstr "Нажмите OK для начала поиска."
 
 #
 msgid "Press OK to toggle the selection."
-msgstr ""
+msgstr "Нажмите ОК для переключения выбора"
 
 #
 msgid "Press yellow to set this interface as default interface."
-msgstr ""
+msgstr "Нажмите желтую кнопку для установки этого интерфейса по-умолчанию."
 
 #
 msgid "Prev"
@@ -4275,7 +4277,7 @@ msgstr "Пред."
 
 #
 msgid "Preview"
-msgstr ""
+msgstr "Предпросмотр"
 
 #
 msgid "Preview menu"
@@ -4291,10 +4293,10 @@ msgstr "Очередность"
 
 #
 msgid "Process"
-msgstr ""
+msgstr "Прогресс"
 
 msgid "Progress"
-msgstr ""
+msgstr "Прогресс"
 
 msgid "Progress Small"
 msgstr ""
@@ -4324,10 +4326,10 @@ msgid "Providers"
 msgstr "Провайдеры"
 
 msgid "Put TV in standby"
-msgstr ""
+msgstr "Перевести ТВ в режим ожидания"
 
 msgid "Put receiver in standby"
-msgstr ""
+msgstr "Перевести ресивер в режим ожидания"
 
 #
 msgid "Python frontend for /tmp/mmi.socket"
@@ -4339,7 +4341,7 @@ msgstr "Быстро"
 
 #
 msgid "Quickzap"
-msgstr "Quickzap"
+msgstr "Быстрое переключение"
 
 #
 msgid "RF output"
@@ -4389,14 +4391,14 @@ msgid "Really upgrade the frontprocessor and reboot now?"
 msgstr ""
 
 msgid "Really upgrade your settop box and reboot now?"
-msgstr ""
+msgstr "Действительно обновить ваш ресивер и перезагрузится?"
 
 #
 msgid "Reboot"
 msgstr "Перезагрузка"
 
 msgid "Rec"
-msgstr ""
+msgstr "Зап"
 
 #
 msgid "Reception Settings"
@@ -4404,7 +4406,7 @@ msgstr "Параметры приема"
 
 #
 msgid "Record"
-msgstr "Записать"
+msgstr "Запись"
 
 #
 #, python-format
@@ -4420,17 +4422,17 @@ msgid "Recording"
 msgstr "Запись"
 
 msgid "Recording data sync size"
-msgstr ""
+msgstr "Размер записываемых данных для синхронизации"
 
 msgid "Recording in progress"
-msgstr ""
+msgstr "Запись в процессе"
 
 #
 msgid "Recording paths"
-msgstr ""
+msgstr "Путь записи"
 
 msgid "Recording type"
-msgstr ""
+msgstr "Тип записи "
 
 #
 msgid "Recording(s) are in progress or coming up in few seconds!"
@@ -4438,17 +4440,17 @@ msgstr "Запись(и) идет или начнется в ближайшие 
 
 #
 msgid "Recordings"
-msgstr ""
+msgstr "Записи"
 
 #
 msgid "Recordings always have priority"
 msgstr "Записи всегда имеют приоритет"
 
 msgid "Red button..."
-msgstr ""
+msgstr "Красная кнопка..."
 
 msgid "Reenter new PIN"
-msgstr ""
+msgstr "Повторите новый PIN"
 
 #
 msgid "Refresh Rate"
@@ -4459,7 +4461,7 @@ msgid "Refresh rate selection."
 msgstr "Выбор частоты обновления"
 
 msgid "Regard deep standby as standby"
-msgstr ""
+msgstr "Считать глубокий режим ожидания как режим ожидания"
 
 #
 msgid "Reload"
@@ -4467,20 +4469,20 @@ msgstr "Обновить"
 
 #
 msgid "Reload Black-/Whitelists"
-msgstr ""
+msgstr "Перезагрузить Черный/белый список"
 
 msgid "Reloading bouquets and services..."
-msgstr ""
+msgstr "Перезагрузка букетов и сервисов..."
 
 msgid "Remember service PIN"
-msgstr ""
+msgstr "Запомнить сервисный PIN"
 
 msgid "Remember these settings for each folder"
-msgstr ""
+msgstr "Запомнить настройки для каждой папки"
 
 #
 msgid "Remove"
-msgstr ""
+msgstr "Удалить"
 
 #
 msgid "Remove Bookmark"
@@ -4500,14 +4502,14 @@ msgstr "Удалить выбранный заголовок"
 
 #
 msgid "Remove failed."
-msgstr ""
+msgstr "Ошибка удаления."
 
 #
 msgid "Remove finished."
 msgstr "Удаление завершено"
 
 msgid "Remove items from trash after (days)"
-msgstr ""
+msgstr "Удалить элементы из корзины после (дней)"
 
 #
 msgid "Remove plugins"
@@ -4523,7 +4525,7 @@ msgstr "Удалить описание"
 
 #
 msgid "Removed successfully."
-msgstr ""
+msgstr "Удаление успешно."
 
 #
 msgid "Removing"
@@ -4544,7 +4546,7 @@ msgstr ""
 
 #
 msgid "Repeat Type"
-msgstr "Повторить тип"
+msgstr "Тип повторения"
 
 #
 msgid "Repeating event currently recording... What do you want to do?"
@@ -4556,10 +4558,10 @@ msgstr "Повторы"
 
 #
 msgid "Required medium type:"
-msgstr ""
+msgstr "Требуемый тип носителя:"
 
 msgid "Reread partition table"
-msgstr ""
+msgstr "Перечитать таблицу разделов"
 
 #
 msgid "Reset"
@@ -4570,7 +4572,7 @@ msgid "Reset and renumerate title names"
 msgstr "Сбросить и перенумеровать заголовки"
 
 msgid "Reset playback position"
-msgstr ""
+msgstr "Сброс позиции воспроизведения"
 
 #
 msgid "Reset video enhancement settings to system defaults?"
@@ -4593,7 +4595,7 @@ msgid "Restart GUI now?"
 msgstr "Перезагрузить GUI сейчас?"
 
 msgid "Restart enigma"
-msgstr ""
+msgstr "Перезапустить Enigma"
 
 #
 msgid "Restart network"
@@ -4613,11 +4615,11 @@ msgstr "Восстановить"
 
 #
 msgid "Restore backups"
-msgstr ""
+msgstr "Восстановить резервные копии"
 
 #
 msgid "Restore is running..."
-msgstr ""
+msgstr "Восстановление запущено..."
 
 #
 msgid "Restore running"
@@ -4634,7 +4636,7 @@ msgstr "Возобновить с последней позиции"
 #
 #, python-format
 msgid "Resume position at %s"
-msgstr ""
+msgstr "Возобновить позицию в"
 
 #
 #. TRANSLATORS: The string "Resuming playback" flashes for a moment
@@ -4660,34 +4662,34 @@ msgid "Rewind speeds"
 msgstr "Скорость перемотки назад"
 
 msgid "Rewrap teletext subtitles"
-msgstr ""
+msgstr "Подзаголовки субтитров"
 
 #
 msgid "Right"
 msgstr "Правый"
 
 msgid "Roll-off"
-msgstr ""
+msgstr "Спад"
 
 #
 msgid "Rolloff"
-msgstr "Rolloff"
+msgstr "Спад"
 
 msgid "Romanian"
-msgstr ""
+msgstr "Румынский"
 
 msgid "Root directory"
-msgstr ""
+msgstr "Корневой каталог"
 
 msgid "Rotor step position:"
-msgstr ""
+msgstr "Положение шага ротора:"
 
 #
 msgid "Rotor turning speed"
 msgstr "Скорость вращения мотора"
 
 msgid "Round start time on"
-msgstr ""
+msgstr "Округлить время начала"
 
 #
 msgid "Russian"
@@ -4698,11 +4700,11 @@ msgid "S-Video"
 msgstr "S-Video"
 
 msgid "SID"
-msgstr ""
+msgstr "SID"
 
 #
 msgid "SINGLE LAYER DVD"
-msgstr ""
+msgstr "Однослойный DVD"
 
 #
 msgid "SNR"
@@ -4714,7 +4716,7 @@ msgstr "SNR:"
 
 #
 msgid "SSID:"
-msgstr ""
+msgstr "SSID:"
 
 #
 msgid "Sat"
@@ -4730,14 +4732,14 @@ msgstr "Спутник"
 
 #
 msgid "Satellite Equipment Setup"
-msgstr "Настройки спутникового оборудования"
+msgstr "Настройки спутн-го оборудования"
 
 #
 msgid "Satellite equipment"
-msgstr ""
+msgstr "Спутниковое оборудование"
 
 msgid "Satellite longitude:"
-msgstr ""
+msgstr "Долгота спутника:"
 
 #
 msgid "Satellites"
@@ -4753,7 +4755,7 @@ msgstr "Спутники"
 
 #
 msgid "Saturation"
-msgstr ""
+msgstr "Насыщенность"
 
 #
 msgid "Saturday"
@@ -4769,7 +4771,7 @@ msgstr "Сохранить плейлист"
 
 #
 msgid "Scaler sharpness"
-msgstr ""
+msgstr "Точность счетчика"
 
 #
 msgid "Scaling Mode"
@@ -4870,21 +4872,21 @@ msgstr "Сканировать диапазон US SUPER"
 msgid ""
 "Scan your network for wireless access points and connect to them using your "
 "selected wireless device.\n"
-msgstr ""
-
+msgstr "Сканирование сети для поиска точек доступа и подключения к ним используя\n"
+"выбранное беспроводное устройство.\n"
 #, python-format
 msgid "Scanning %s..."
-msgstr ""
+msgstr "Сканирование %s..."
 
 #, python-format
 msgid "Scanning completed, %d channels found"
-msgstr ""
+msgstr "Сканирование завершено, %d каналов найдено"
 
 msgid "Scanning failed!"
-msgstr ""
+msgstr "Ошибка сканирования!"
 
 msgid "Scanning..."
-msgstr ""
+msgstr "Сканирование..."
 
 #
 msgid ""
@@ -4900,21 +4902,21 @@ msgid "Search west"
 msgstr "Поиск запад"
 
 msgid "Searching"
-msgstr ""
+msgstr "Поиск"
 
 msgid "Searching east ..."
-msgstr ""
+msgstr "Поиск востока..."
 
 #
 msgid "Searching for available updates. Please wait..."
-msgstr ""
+msgstr "Поиск доступных обновленийю Пожалуйста, подождите..."
 
 #
 msgid "Searching for new installed or removed packages. Please wait..."
-msgstr ""
+msgstr "Поиск новых установленных или удаленных пакетов. Пожалуйста, подождите..."
 
 msgid "Searching west ..."
-msgstr ""
+msgstr "Поиск запада..."
 
 #
 msgid "Secondary DNS"
@@ -4956,23 +4958,23 @@ msgid "Select copy destination for:"
 msgstr ""
 
 msgid "Select desired image from feed list"
-msgstr ""
+msgstr "Выберите нужный имидж из списка"
 
 msgid "Select destination for:"
-msgstr ""
+msgstr "Выберите назначение для:"
 
 msgid "Select files for backup."
-msgstr ""
+msgstr "Выберите файлы для резервного копирования"
 
 #
 msgid "Select files/folders to backup"
-msgstr ""
+msgstr "Выберите файлы/каталоги для резервного копирования"
 
 msgid "Select input device"
-msgstr ""
+msgstr "Выберите устройство ввода"
 
 msgid "Select input device."
-msgstr ""
+msgstr "Выберите устройство ввода"
 
 #
 msgid "Select interface"
@@ -4980,11 +4982,11 @@ msgstr "Выберите интерфейс"
 
 #
 msgid "Select package"
-msgstr ""
+msgstr "Выберите пакет"
 
 #
 msgid "Select provider to add..."
-msgstr ""
+msgstr "Выберите провайдера для добавления..."
 
 #
 msgid "Select refresh rate"
@@ -4992,15 +4994,15 @@ msgstr "Выберите частоту обновления"
 
 #
 msgid "Select service to add..."
-msgstr ""
+msgstr "Выберите сервис для добавления..."
 
 #
 msgid "Select upgrade source to edit."
-msgstr ""
+msgstr "Выбор источника обновления для редактирования."
 
 #
 msgid "Select video input with up/down buttons"
-msgstr "Выберите видео вход кнопками ВВЕРХ/ВНИЗ"
+msgstr "Выберите видеовход кнопками ВВЕРХ/ВНИЗ"
 
 #
 msgid "Select video mode"
@@ -5011,7 +5013,7 @@ msgid "Select wireless network"
 msgstr "Выберите беспроводную сеть"
 
 msgid "Select your provider, and press OK to start the scan"
-msgstr ""
+msgstr "Выберите провайдера и нажмите ОК для запуска сканирования"
 
 #
 msgid "Send DiSEqC"
@@ -5031,7 +5033,7 @@ msgstr "Последовательность повторения"
 
 #
 msgid "Serbian"
-msgstr ""
+msgstr "Сербский"
 
 #
 msgid "Service"
@@ -5070,7 +5072,7 @@ msgstr ""
 "(SID не найден в PAT)"
 
 msgid "Service reference"
-msgstr ""
+msgstr "Справка"
 
 #
 msgid "Service scan"
@@ -5086,7 +5088,7 @@ msgstr ""
 
 #
 msgid "Serviceinfo"
-msgstr "Сервис"
+msgstr "Информация о сервисе"
 
 #
 msgid "Services"
@@ -5094,10 +5096,10 @@ msgstr "Сервисы"
 
 #
 msgid "Set End Time"
-msgstr ""
+msgstr "Установить время окончания"
 
 msgid "Set Limits"
-msgstr ""
+msgstr "Установить пределы"
 
 #
 msgid "Set Voltage and 22KHz"
@@ -5105,29 +5107,29 @@ msgstr "Установить напряжение и 22КГц"
 
 #
 msgid "Set available internal memory threshold for the warning."
-msgstr ""
+msgstr "Установка доступной порога внутренней памяти для предупреждения"
 
 msgid "Set fixed"
-msgstr ""
+msgstr "Установить фиксированной"
 
 #
 msgid "Set interface as default Interface"
 msgstr "Установить интерфейс по умолчанию"
 
 msgid "Set time window to 1 hour"
-msgstr ""
+msgstr "Установить время окна в 1 час"
 
 msgid "Set time window to 2 hours"
-msgstr ""
+msgstr "Установить время окна в 2 час"
 
 msgid "Set time window to 3 hours"
-msgstr ""
+msgstr "Установить время окна в 3 час"
 
 msgid "Set time window to 4 hours"
-msgstr ""
+msgstr "Установить время окна в 4 час"
 
 msgid "Set time window to 5 hours"
-msgstr ""
+msgstr "Установить время окна в 5 часов"
 
 #
 msgid "Settings"
@@ -5142,10 +5144,10 @@ msgid "Setup Mode"
 msgstr "Режим настроек"
 
 msgid "Setup menu"
-msgstr ""
+msgstr "Настройка меню"
 
 msgid "Setup your positioner"
-msgstr ""
+msgstr "Настройка позиционера"
 
 #
 #, python-format
@@ -5156,56 +5158,56 @@ msgstr ""
 
 #
 msgid "Sharpness"
-msgstr ""
+msgstr "Четкость"
 
 msgid "Short filenames"
-msgstr ""
+msgstr "Короткие имена файлов"
 
 msgid "Show EIT now/next in infobar"
-msgstr ""
+msgstr "Показать EIT сейчас/следующий на панели"
 
 #
 msgid "Show Info"
-msgstr "Показать инфо"
+msgstr "Показать информацию"
 
 #
 msgid "Show Message when Recording starts"
-msgstr ""
+msgstr "Показать сообщение при старте записи"
 
 msgid "Show Picons"
-msgstr ""
+msgstr "Показать пиконы"
 
 msgid "Show Service Names "
-msgstr ""
+msgstr "Показать имена каналов"
 
 #
 msgid "Show WLAN Status"
 msgstr "Показать состояние WLAN"
 
 msgid "Show animation while busy"
-msgstr ""
+msgstr "Показать анимацию когда занято"
 
 msgid "Show background in Radio Mode"
-msgstr ""
+msgstr "Показать фон в режиме радио"
 
 msgid "Show bouquet selection menu"
-msgstr ""
+msgstr "Показать меню выбора букетов"
 
 msgid "Show channel numbers in channel selection"
-msgstr ""
+msgstr "Показать номера каналов при выборе каналов"
 
 msgid "Show crypto info in infobar"
-msgstr ""
+msgstr "Показать информацию о шифровании на панели"
 
 msgid "Show detailed event info"
-msgstr ""
+msgstr "Показать подробную информацию о событии"
 
 #
 msgid "Show event-progress in channel selection"
-msgstr ""
+msgstr "Показать прогресс события при выборе каналов"
 
 msgid "Show icon for new/unseen items"
-msgstr ""
+msgstr "Показать иконку для новых /невидимых пунктов"
 
 #
 msgid "Show infobar on channel change"
@@ -5224,14 +5226,14 @@ msgid "Show positioner movement"
 msgstr "Показать движение позиционера"
 
 msgid "Show second infobar"
-msgstr ""
+msgstr "Показать вторую панель"
 
 #
 msgid "Show services beginning with"
-msgstr "Показать сервисы начинающиеся с"
+msgstr "Показать каналы начинающиеся с"
 
 msgid "Show status icons in Movielist"
-msgstr ""
+msgstr "Показать иконки статуса с списке фильмов"
 
 #
 msgid "Show the radio player..."
@@ -5247,28 +5249,28 @@ msgstr "Показывает состояние вашего беспровод�
 
 #
 msgid "Shutdown"
-msgstr ""
+msgstr "Выключение"
 
 #
-msgid "Shutdown Dreambox after"
+msgid "Shutdown set-top-box after"
 msgstr "Выключить через :  "
 
 msgid "Side by Side"
-msgstr ""
+msgstr "Рядом"
 
 msgid "Signal OK, proceeding"
-msgstr ""
+msgstr "Сигнал ОК, продолжение"
 
 #
 msgid "Signal Strength:"
-msgstr ""
+msgstr "Мощность сигнала"
 
 msgid "Signal quality"
-msgstr ""
+msgstr "Качество сигнала"
 
 #
 msgid "Signal: "
-msgstr ""
+msgstr "Сигнал:"
 
 #
 msgid "Similar"
@@ -5292,7 +5294,7 @@ msgstr "Один"
 
 #
 msgid "Single EPG"
-msgstr "EPG"
+msgstr "Простой телегид"
 
 #
 msgid "Single satellite"
@@ -5307,21 +5309,21 @@ msgid "Singlestep (GOP)"
 msgstr "Один шаг (GOP)"
 
 msgid "Site latitude"
-msgstr ""
+msgstr "Широта места"
 
 msgid "Site longitude"
-msgstr ""
+msgstr "Долгота места"
 
 #
 msgid "Skin"
-msgstr ""
+msgstr "Внешний вид"
 
 #
 msgid "Skins"
-msgstr ""
+msgstr "Скины"
 
 msgid "Skip Empty Services"
-msgstr ""
+msgstr "Пропустить пустые каналы"
 
 #
 msgid "Sleep Timer"
@@ -5341,11 +5343,11 @@ msgid "Slot %d"
 msgstr "Слот %d"
 
 msgid "Slovak"
-msgstr ""
+msgstr "Словацкий"
 
 #
 msgid "Slovenian"
-msgstr ""
+msgstr "Словенский"
 
 #
 msgid "Slow"
@@ -5360,14 +5362,14 @@ msgstr ""
 
 #
 msgid "Software"
-msgstr ""
+msgstr "Программное обеспечение"
 
 #
 msgid "Software management"
-msgstr ""
+msgstr "Управление ПО"
 
 msgid "Software manager setup"
-msgstr ""
+msgstr "Настройка менеджера ПО"
 
 #
 msgid "Software restore"
@@ -5378,7 +5380,7 @@ msgid "Software update"
 msgstr "Обновление ПО"
 
 msgid "Softwaremanager information"
-msgstr ""
+msgstr "Информация менеджера ПО"
 
 #
 msgid "Some plugins are not available:\n"
@@ -5412,7 +5414,7 @@ msgstr ""
 
 #
 msgid "Sorry, no Details available!"
-msgstr ""
+msgstr "Извините, нет подробностей"
 
 #
 msgid ""
@@ -5421,10 +5423,10 @@ msgid ""
 "Please choose another one."
 msgstr ""
 "Извините, сюда нельзя сохранить резервную копию.\n"
-"/nПожалуйста, выберите другое место"
+"Пожалуйста, выберите другое место"
 
 msgid "Sort"
-msgstr ""
+msgstr "Сортировка"
 
 #
 #. TRANSLATORS: This must fit into the header button in the EPG-List
@@ -5445,7 +5447,7 @@ msgid "Soundcarrier"
 msgstr "Несущая"
 
 msgid "Source request"
-msgstr ""
+msgstr "Запрос источника"
 
 #
 msgid "South"
@@ -5457,7 +5459,7 @@ msgstr "Испанский"
 
 #
 msgid "Split preview mode"
-msgstr ""
+msgstr "Соединить режим просмотра"
 
 #
 msgid "Standby"
@@ -5465,7 +5467,7 @@ msgstr "Ждущий режим"
 
 #
 msgid "Standby / Restart"
-msgstr "Выключение"
+msgstr "Ждущий режим/Перезагрузка"
 
 #
 #, python-format
@@ -5482,7 +5484,7 @@ msgid "Start from the beginning"
 msgstr "Начать с самого начала"
 
 msgid "Start offline decode"
-msgstr ""
+msgstr "Запуск офлайн декодирования"
 
 #
 msgid "Start recording?"
@@ -5509,10 +5511,10 @@ msgid "Step west"
 msgstr "Шаг на запад"
 
 msgid "Stepped east"
-msgstr ""
+msgstr "Ступенчато на восток"
 
 msgid "Stepped west"
-msgstr ""
+msgstr "Ступенчато на запад"
 
 #
 msgid "Stop"
@@ -5535,10 +5537,10 @@ msgid "Stop playing this movie?"
 msgstr "Остановить воспроизведение?"
 
 msgid "Stop recording"
-msgstr ""
+msgstr "Остановить запись"
 
 msgid "Stop recording and delete"
-msgstr ""
+msgstr "Остановить запись и удалить"
 
 #
 msgid "Stop test"
@@ -5553,10 +5555,10 @@ msgid "Stop testing plane after # successful transponders"
 msgstr "Остановить тестирование после # исправного транспондера"
 
 msgid "Stopped"
-msgstr ""
+msgstr "Остановлено"
 
 msgid "Store at index"
-msgstr ""
+msgstr "Хранить как индекс"
 
 #
 msgid "Store position"
@@ -5567,7 +5569,7 @@ msgid "Stored position"
 msgstr "Сохраненное положение"
 
 msgid "Stream request"
-msgstr ""
+msgstr "Запрос потока"
 
 msgid "Strongest position"
 msgstr ""
@@ -5581,29 +5583,29 @@ msgid "Subservices"
 msgstr "Подсервисы"
 
 msgid "Subtitle delay when timing lacks"
-msgstr ""
+msgstr "Задержать субтитры, когда не хватает времени"
 
 msgid "Subtitle language selection 1"
-msgstr ""
+msgstr "Язык субтитров 1"
 
 msgid "Subtitle language selection 2"
-msgstr ""
+msgstr "Язык субтитров 2"
 
 msgid "Subtitle language selection 3"
-msgstr ""
+msgstr "Язык субтитров 3"
 
 msgid "Subtitle language selection 4"
-msgstr ""
+msgstr "Язык субтитров 4"
 
 #
 msgid "Subtitle selection"
 msgstr "Выбор субтитров"
 
 msgid "Subtitle selection..."
-msgstr ""
+msgstr "Выбор субтитров..."
 
 msgid "Subtitle settings"
-msgstr ""
+msgstr "Настройка субтитров"
 
 #
 msgid "Subtitles"
@@ -5618,7 +5620,7 @@ msgid "Sunday"
 msgstr "Воскресение"
 
 msgid "Swap SNR in db with SNR in percentage on OSD"
-msgstr ""
+msgstr "Поменять местами SNR в db с SNR в % на экране"
 
 #
 msgid "Swap Services"
@@ -5629,7 +5631,7 @@ msgid "Swedish"
 msgstr "Шведский"
 
 msgid "Switch TV to correct input"
-msgstr ""
+msgstr "Подключите телевизор к правильному входу"
 
 #
 msgid "Switch to next subservice"
@@ -5641,21 +5643,21 @@ msgstr "Переключиться на предыдущий подсервис"
 
 #
 msgid "Switchable tuner types:"
-msgstr ""
+msgstr "Переключение типов тюнеров:"
 
 #
 msgid "Symbol Rate"
 msgstr "Символьная скорость"
 
 msgid "Symbol rate"
-msgstr ""
+msgstr "Символьная скорость"
 
 #
 msgid "Symbolrate"
 msgstr "Символьная скорость"
 
 msgid "Sync failure moving back to origin !"
-msgstr ""
+msgstr "Ошибка синхронизации, возврат к оригинальному"
 
 #
 msgid "System"
@@ -5689,11 +5691,11 @@ msgid "Tags"
 msgstr "Теги"
 
 msgid "Teletext subtitle color"
-msgstr ""
+msgstr "Цвет субтитров"
 
 #
 msgid "Temperature and Fan control"
-msgstr ""
+msgstr "Температура и скорость кулера"
 
 #
 msgid "Terrestrial"
@@ -5716,21 +5718,21 @@ msgid "Test mode"
 msgstr "Режим теста"
 
 #
-msgid "Test the network configuration of your Dreambox.\n"
-msgstr "Тест сетевой конфигурации вашего Dreambox.\n"
+msgid "Test the network configuration of your set-top-box.\n"
+msgstr "Тест сетевой конфигурации вашего ресивера.\n"
 
 #
 msgid "Test-Messagebox?"
 msgstr "Тест сообщения?"
 
 msgid "Text border width"
-msgstr ""
+msgstr "ширина границы"
 
 msgid "Text font size"
-msgstr ""
+msgstr "Размер шрифта"
 
 msgid "Thai"
-msgstr ""
+msgstr "Тайский"
 
 #
 msgid ""
@@ -5743,19 +5745,19 @@ msgstr ""
 #
 msgid ""
 "Thank you for using the wizard. Your box is now ready to use.\n"
-"Please press OK to start using your Dreambox."
+"Please press OK to start using your set-top-box."
 msgstr ""
 "Спасибо Вам за использование мастера. Ваш ресивер готов к работе.\n"
-"Пожалуйста, нажмите OK для начала работы Вашего Dreambox."
+"Пожалуйста, нажмите OK для начала работы Вашего ресивера."
 
 #
 msgid ""
 "The DVD standard doesn't support H.264 (HDTV) video streams. Do you want to "
-"create a Dreambox format data DVD (which will not play in stand-alone DVD "
+"create a set-top-box format data DVD (which will not play in stand-alone DVD "
 "players) instead?"
 msgstr ""
 "DVD стандарт не поддерживает H.264 (HDTV) видео потоков. Вы хотите создать "
-"Dreambox DVD  (который не будет проигрываться в стационарных DVD "
+"set-top-box DVD  (который не будет проигрываться в стационарных DVD "
 "проигрывателях)?"
 
 #
@@ -5763,18 +5765,22 @@ msgid ""
 "The NetworkWizard extension is not installed!\n"
 "Please install it."
 msgstr ""
+"Расширение 'Мастер настройки сети' не установлено!\n"
+"Пожалуйста, установите его."
 
 msgid "The PIN code has been changed successfully."
-msgstr ""
+msgstr "PIN код был изменен успешно."
 
 msgid "The PIN codes you entered are different."
-msgstr ""
+msgstr "PIN коды, которые вы ввели различны"
 
 #
 msgid ""
 "The Softwaremanagement extension is not installed!\n"
 "Please install it."
 msgstr ""
+"Расширение 'Управление ПО'\n"
+"Пожалуйста, установите его."
 
 msgid ""
 "The USB stick was prepared to be bootable.\n"
@@ -5782,19 +5788,19 @@ msgid ""
 msgstr ""
 
 msgid "The User Interface of your receiver is restarting"
-msgstr ""
+msgstr "Интерфейс пользователя ресивера перезагружается"
 
 msgid ""
 "The User Interface of your receiver is restarting\n"
 "due to an error in mytest.py"
-msgstr ""
-
+msgstr "Интерфейс пользователя ресивера перезагружается\n"
+"из-за ошибки в mytest.py"
 #
 msgid "The backup failed. Please choose a different backup location."
 msgstr "Сохранение не выполнено. Выберите другое место ресположения. "
 
 msgid "The current beta image could not be stable"
-msgstr ""
+msgstr "Этот бета имидж не может быть стабильным"
 
 #
 #, python-format
@@ -5802,6 +5808,8 @@ msgid ""
 "The directory %s is not writable.\n"
 "Make sure you select a writable directory instead."
 msgstr ""
+"Каталог %s только для чтения.\n"
+"Убедитесь, что вы выбрали каталог, возможный для записи."
 
 #
 #, python-format
@@ -5839,13 +5847,13 @@ msgstr "Установка списков сервисов по умолчани
 #
 msgid ""
 "The installation of the default settings is finished. You can now continue "
-"configuring your Dreambox by pressing the OK button on the remote control."
+"configuring your set-top-box by pressing the OK button on the remote control."
 msgstr ""
 "Установка по умолчанию закончена. Теперь Вы можете продолжить настройку "
-"Dreambox, нажав на кнопку ОК на пульте ДУ."
+"тюнера, нажав на кнопку ОК на пульте ДУ."
 
 msgid "The md5sum validation failed, the file may be corrupted!"
-msgstr ""
+msgstr "Ошибка контрольной суммы, возможно, файл поврежден!"
 
 #
 msgid "The package doesn't contain anything."
@@ -5853,7 +5861,7 @@ msgstr "Этот пакет ничего не содержит."
 
 #
 msgid "The package:"
-msgstr ""
+msgstr "Пакет:"
 
 #
 #, python-format
@@ -5862,7 +5870,7 @@ msgstr "Этот путь %s уже существует."
 
 #
 msgid "The pin code you entered is wrong."
-msgstr "Введенный PIN код не верный"
+msgstr "Введенный PIN код неверный"
 
 #
 #, python-format
@@ -5912,15 +5920,15 @@ msgstr ""
 msgid ""
 "The wizard found a configuration backup. Do you want to restore your old "
 "settings from %s?"
-msgstr ""
-
+msgstr "Мастер нашел резервную копию настроек. Вы хотите восстановить ваши "
+"старые настройки из %s?"
 #
 msgid "The wizard is finished now."
 msgstr "Мастер закончил работу."
 
 #
 msgid "There are at least "
-msgstr ""
+msgstr "Есть по крайней мере"
 
 #
 msgid "There are currently no outstanding actions."
@@ -5936,14 +5944,14 @@ msgstr "В этом имидже нет настроек по умолчанию
 
 #
 msgid "There are no updates available."
-msgstr ""
+msgstr "Обновлений нет."
 
 #
 msgid "There are now "
-msgstr ""
+msgstr "Сейчас "
 
 msgid "There is no signal to lock on !"
-msgstr ""
+msgstr "Нет сигнала блокировки"
 
 #
 msgid ""
@@ -5959,7 +5967,7 @@ msgstr "Ошибка загрузки списка пактов. Пожалуй�
 
 #
 msgid "There was an error. The package:"
-msgstr ""
+msgstr "Произошла ошибка. Пакет:"
 
 #
 msgid ""
@@ -5971,8 +5979,8 @@ msgstr ""
 
 #
 #, python-format
-msgid "This Dreambox can't decode %s streams!"
-msgstr "Этот Dreambox не может декодировать %s потоки!"
+msgid "This set-top-box can't decode %s streams!"
+msgstr "Этот тюнер не может декодировать %s потоки!"
 
 #
 msgid "This is step number 2."
@@ -5980,7 +5988,7 @@ msgstr "Это шаг номер 2."
 
 msgid ""
 "This plugin creates a USB stick which can be used to update the firmware of "
-"your Dreambox without the need for a network or WLAN connection.\n"
+"your set-top-box without the need for a network or WLAN connection.\n"
 "First, a USB stick needs to be prepared so that it becomes bootable.\n"
 "In the next step, an NFI image file can be downloaded from the update server "
 "and saved on the USB stick.\n"
@@ -5990,19 +5998,19 @@ msgstr ""
 
 #
 msgid "This plugin is installed."
-msgstr ""
+msgstr "Этот плагин установлен."
 
 #
 msgid "This plugin is not installed."
-msgstr ""
+msgstr "Этот плагин не установлен."
 
 #
 msgid "This plugin will be installed."
-msgstr ""
+msgstr "Этот плагин может быть установлен."
 
 #
 msgid "This plugin will be removed."
-msgstr ""
+msgstr "Этот плагин может быть удален."
 
 #
 msgid ""
@@ -6066,14 +6074,16 @@ msgstr ""
 
 #
 msgid "This test detects your configured LAN-Adapter."
-msgstr "Данный тест определит ваш сетевой-адаптер."
+msgstr "Данный тест определит ваш сетевой адаптер."
 
 msgid ""
 "This will (re-)calculate all positions of your rotor and may remove "
 "previously memorised positions and fine-tuning!\n"
 "Are you sure?"
 msgstr ""
-
+"Будут перекалиброваны все позиции вашего ротора и возможно "
+"ранее сохраненные позиции и точные настройки!\n"
+"Вы уверены?"
 #
 msgid "Three"
 msgstr "Три"
@@ -6099,7 +6109,7 @@ msgid "Time"
 msgstr "Время"
 
 msgid "Time Scale"
-msgstr ""
+msgstr "Шкала таймера"
 
 #
 msgid "Time/Date Input"
@@ -6118,7 +6128,7 @@ msgid "Timer Editor"
 msgstr "Редактор таймеров"
 
 msgid "Timer Overview"
-msgstr ""
+msgstr "Просмотр таймера"
 
 #
 msgid "Timer Type"
@@ -6142,7 +6152,7 @@ msgstr ""
 
 #
 msgid "Timer record location"
-msgstr ""
+msgstr "Расположение записи таймера"
 
 #
 msgid "Timer sanity error"
@@ -6162,7 +6172,7 @@ msgstr "Таймшифт"
 
 #
 msgid "Timeshift location"
-msgstr ""
+msgstr "Расположение таймшифт"
 
 #
 msgid "Timeshift not possible!"
@@ -6185,13 +6195,13 @@ msgid "Titleset mode"
 msgstr "Режим установки заголовка"
 
 msgid "To audio selection"
-msgstr ""
+msgstr "Выбор аудио"
 
 msgid "To subtitle selection"
-msgstr ""
+msgstr "Выбор субтитров"
 
 msgid ""
-"To update your Dreambox firmware, please follow these steps:\n"
+"To update your set-top-box firmware, please follow these steps:\n"
 "1) Turn off your box with the rear power switch and make sure the bootable "
 "USB stick is plugged in.\n"
 "2) Turn mains back on and hold the DOWN button on the front panel pressed "
@@ -6205,7 +6215,7 @@ msgstr "Сегодня"
 
 #
 msgid "Tone Amplitude"
-msgstr ""
+msgstr "Амплитуда тона"
 
 #
 msgid "Tone mode"
@@ -6217,10 +6227,10 @@ msgstr "Тоновый сигнал"
 
 #
 msgid "Toneburst A/B"
-msgstr "тоновый сигнал A/B"
+msgstr "Тоновый сигнал A/B"
 
 msgid "Top and Bottom"
-msgstr ""
+msgstr "Верх и низ"
 
 #
 msgid "Track"
@@ -6251,7 +6261,7 @@ msgid "Transponder Type"
 msgstr "Тип транспондера"
 
 msgid "Trashcan"
-msgstr ""
+msgstr "Корзина"
 
 #
 msgid "Tries left:"
@@ -6286,11 +6296,11 @@ msgid "Tune"
 msgstr "Настройка"
 
 msgid "Tune and Focus"
-msgstr ""
+msgstr "Настройка и фокус"
 
 #
 msgid "Tune failed!"
-msgstr "Tune failed!"
+msgstr "Ошибка настройки!"
 
 #
 msgid "Tuner"
@@ -6302,7 +6312,7 @@ msgstr "Тюнер"
 
 #
 msgid "Tuner Slot"
-msgstr "Tuner Slot"
+msgstr "Слот тюнера"
 
 #
 msgid "Tuner configuration"
@@ -6310,14 +6320,14 @@ msgstr "Настройка тюнера"
 
 #
 msgid "Tuner status"
-msgstr "Состояние тюнера"
+msgstr "Статус тюнера"
 
 #
 msgid "Tuner type"
-msgstr ""
+msgstr "Тип тюнера"
 
 msgid "Tuning step size"
-msgstr ""
+msgstr "Настройка размера шага"
 
 #
 msgid "Turkish"
@@ -6340,11 +6350,11 @@ msgid "USALS"
 msgstr "USALS"
 
 msgid "USALS Calibration"
-msgstr ""
+msgstr "Калибровка USALS"
 
 #
 msgid "USB Stick"
-msgstr "USB флешь"
+msgstr "USB флеш"
 
 #
 msgid "USB stick wizard"
@@ -6365,11 +6375,11 @@ msgstr "Команда переключения DiSEqC"
 
 #
 msgid "Undo install"
-msgstr ""
+msgstr "Отменить установку"
 
 #
 msgid "Undo uninstall"
-msgstr ""
+msgstr "Отменить удаление"
 
 msgid "Unencrypted"
 msgstr ""
@@ -6392,21 +6402,21 @@ msgstr "Unicable Martix"
 
 #
 msgid "Uninstall"
-msgstr ""
+msgstr "Удалить"
 
 #
 msgid "Universal LNB"
-msgstr "универсальный-LNB"
+msgstr "Универсальный-LNB"
 
 msgid "Unknown"
-msgstr ""
+msgstr "Неизвестно"
 
 msgid "Unmount"
-msgstr ""
+msgstr "Отмонтировать"
 
 #
 msgid "Unsupported"
-msgstr ""
+msgstr "Не поддерживается"
 
 #
 msgid "Update"
@@ -6414,7 +6424,7 @@ msgstr "Обновление"
 
 #
 msgid "Updatefeed not available."
-msgstr ""
+msgstr "Нет обновлений."
 
 #
 msgid "Updates your receiver's software"
@@ -6426,30 +6436,30 @@ msgstr "Обновление завершено.Результат:"
 
 #
 msgid "Updating software catalog"
-msgstr ""
+msgstr "Каталог обновления ПО"
 
 #
 msgid "Updating... Please wait... This can take some minutes..."
 msgstr "Обновление... Пожалуйста ждите... Это может занять несколько минут... "
 
 msgid "Upgrade and ask to reboot"
-msgstr ""
+msgstr "Обновить и спросить для перезагрузки"
 
 #
 msgid "Upgrade finished."
 msgstr "Обновление завершено"
 
 #
-msgid "Upgrade finished. Do you want to reboot your Dreambox?"
-msgstr "Обновление завершено. Вы хотите перезагрузить Dreambox?"
+msgid "Upgrade finished. Do you want to reboot your set-top-box?"
+msgstr "Обновление завершено. Вы хотите перезагрузить ресивер?"
 
 #
 msgid "Upgrading"
 msgstr "Обновление"
 
 #
-msgid "Upgrading Dreambox... Please wait"
-msgstr "Обновление Dreambox... Пожалуйста, подождите."
+msgid "Upgrading set-top-box... Please wait"
+msgstr "Обновление ресивера... Пожалуйста, подождите."
 
 #
 msgid "Use"
@@ -6460,7 +6470,7 @@ msgid "Use DHCP"
 msgstr "Использовать DHCP"
 
 msgid "Use DVB subtitles position"
-msgstr ""
+msgstr "Использовать позицию DVB субтитров"
 
 #
 msgid "Use Interface"
@@ -6471,23 +6481,23 @@ msgid "Use Power Measurement"
 msgstr "Использовать измерение мощности"
 
 msgid "Use TV remote control"
-msgstr ""
+msgstr "Использовать пульт телевизора"
 
 #
 msgid "Use a gateway"
 msgstr "Использовать шлюз"
 
 msgid "Use fastscan channel names"
-msgstr ""
+msgstr "Использовать быстрое скан. имен каналов"
 
 msgid "Use fastscan channel numbering"
-msgstr ""
+msgstr "Использовать быстрое скан. ном. каналов"
 
 msgid "Use official channel numbering"
-msgstr ""
+msgstr "Использовать оф. нумерацию каналов"
 
 msgid "Use original teletext position"
-msgstr ""
+msgstr "Использовать оригинальную позицию телетекста"
 
 #
 msgid "Use power measurement"
@@ -6495,7 +6505,7 @@ msgstr "Используйте измерение мощности"
 
 #
 msgid "Use the Networkwizard to configure selected network adapter"
-msgstr ""
+msgstr "Использовать мастер настройки сети для настройки выбранного адаптера"
 
 #
 msgid "Use the Networkwizard to configure your Network\n"
@@ -6520,21 +6530,21 @@ msgstr ""
 "нажмите OK."
 
 msgid "Use this input device settings?"
-msgstr ""
+msgstr "Использовать эти настройки устройства ввода?"
 
 msgid "Use this settings?"
-msgstr ""
+msgstr "Использовать эти настройки?"
 
 #
 msgid "Use this video enhancement settings?"
-msgstr ""
+msgstr "Использовать эту точную настройку видео?"
 
 #
 msgid "Use time of currently running service"
-msgstr ""
+msgstr "Использовать время текущего запущенного канала"
 
 msgid "Use trashcan in movielist"
-msgstr ""
+msgstr "Использовать корзину в списке фильмов"
 
 #
 msgid "Use usals for this sat"
@@ -6549,7 +6559,7 @@ msgid "Used service scan type"
 msgstr "Используемый тип сканирования"
 
 msgid "User - bouquets"
-msgstr ""
+msgstr "Пользователь - букеты"
 
 #
 msgid "User defined"
@@ -6557,10 +6567,10 @@ msgstr "Определены пользователем"
 
 #
 msgid "Username"
-msgstr ""
+msgstr "Имя"
 
 msgid "Using fixed address"
-msgstr ""
+msgstr "Использовать фиксированный адрес"
 
 #
 msgid "VCR scart"
@@ -6572,10 +6582,10 @@ msgstr "VMGM (трейлер)"
 
 #
 msgid "Vertical"
-msgstr "Вартикальная"
+msgstr "Вертикальная"
 
 msgid "Vertical turning speed"
-msgstr ""
+msgstr "Скорость вертикального поворота"
 
 #
 msgid "Video Fine-Tuning"
@@ -6590,7 +6600,7 @@ msgid "Video Output"
 msgstr "Видеовыход"
 
 msgid "Video PID"
-msgstr ""
+msgstr "Видео PID"
 
 #
 msgid "Video Setup"
@@ -6602,15 +6612,15 @@ msgstr "Мастер видео"
 
 #
 msgid "Video enhancement preview"
-msgstr ""
+msgstr "Точная настройка предпросмотра"
 
 #
 msgid "Video enhancement settings"
-msgstr ""
+msgstr "Точная настройка видео"
 
 #
 msgid "Video enhancement setup"
-msgstr ""
+msgstr "Точная настройка видео"
 
 #
 msgid ""
@@ -6633,17 +6643,17 @@ msgid "Video mode selection."
 msgstr "Выбор режима видео"
 
 msgid "Videocodec"
-msgstr ""
+msgstr "Видеокодек"
 
 #
 msgid "Videoenhancement Setup"
-msgstr ""
+msgstr "Точная настройка видео"
 
 msgid "Videoformat"
-msgstr ""
+msgstr "Формат видео"
 
 msgid "Videosize"
-msgstr ""
+msgstr "Размер видео"
 
 #
 msgid "View Movies..."
@@ -6663,59 +6673,59 @@ msgstr "Смотреть Video CD..."
 
 #
 msgid "View details"
-msgstr ""
+msgstr "Просмотр подробностей"
 
 #
 msgid "View list of available "
-msgstr ""
+msgstr "Просмотр списка доступных"
 
 #
 msgid "View list of available CommonInterface extensions"
-msgstr ""
+msgstr "Просмотр списка доступных расширений для CI"
 
 #
 msgid "View list of available Display and Userinterface extensions."
-msgstr ""
+msgstr "Просмотр списка доступных расширений для отображения и интерфейса пользователя"
 
 #
 msgid "View list of available EPG extensions."
-msgstr ""
+msgstr "Просмотр списка доступных расширений телегида"
 
 #
 msgid "View list of available Satellite equipment extensions."
-msgstr ""
+msgstr "Просмотр списка доступных расширений для спутников"
 
 #
 msgid "View list of available communication extensions."
-msgstr ""
+msgstr "Просмотр списка доступных расширений для связи"
 
 #
 msgid "View list of available default settings"
-msgstr ""
+msgstr "Просмотр списка доступных расширений по-умолчанию"
 
 #
 msgid "View list of available multimedia extensions."
-msgstr ""
+msgstr "Просмотр списка доступных мультимедиа расширений"
 
 #
 msgid "View list of available networking extensions"
-msgstr ""
+msgstr "Просмотр списка доступных сетевых расширений"
 
 #
 msgid "View list of available recording extensions"
-msgstr ""
+msgstr "Просмотр списка доступных расширений для записи"
 
 #
 msgid "View list of available skins"
-msgstr ""
+msgstr "Просмотр списка доступных скинов"
 
 #
 msgid "View list of available software extensions"
-msgstr ""
+msgstr "Просмотр списка доступных расширений"
 
 #
 msgid "View list of available system extensions"
-msgstr ""
+msgstr "Просмотр списка доступных системных расширений"
 
 #
 msgid "View teletext..."
@@ -6742,7 +6752,7 @@ msgid "WEP"
 msgstr "WEP"
 
 msgid "WLAN connection"
-msgstr ""
+msgstr "Беспроводния соединения"
 
 #
 msgid "WPA"
@@ -6761,30 +6771,30 @@ msgid "WSS on 4:3"
 msgstr "WSS on 4:3"
 
 msgid "Wait for mount"
-msgstr ""
+msgstr "Ожидание монтирования"
 
 msgid "Wait for partition"
-msgstr ""
+msgstr "Ожидание раздела"
 
 #
 msgid "Waiting"
 msgstr "Ожидание"
 
 msgid "Wakeup"
-msgstr ""
+msgstr "Разбудить"
 
 msgid "Wakeup TV from standby"
-msgstr ""
+msgstr "Разбудить TV из режима ожидания"
 
 msgid "Wakeup receiver from standby"
-msgstr ""
+msgstr "Разбудить ресивер из режима ожидания"
 
 msgid "Wakeup signal from TV"
 msgstr ""
 
 #
 msgid "Warn if free space drops below (kB):"
-msgstr ""
+msgstr "Предупреждать, если свободное пространство падает ниже (Кб):"
 
 #
 msgid "Wed"
@@ -6798,7 +6808,7 @@ msgstr "Среда"
 msgid "Weekday"
 msgstr "День недели"
 
-msgid "Weigthed position"
+msgid "Взвешенная позиция"
 msgstr ""
 
 #
@@ -6821,11 +6831,11 @@ msgstr ""
 #
 msgid ""
 "Welcome to the Image upgrade wizard. The wizard will assist you in upgrading "
-"the firmware of your Dreambox by providing a backup facility for your "
+"the firmware of your set-top-box by providing a backup facility for your "
 "current settings and a short explanation of how to upgrade your firmware."
 msgstr ""
 "Добро пожаловать в мастер обновления имиджа. Мастер поможет Вам в обновлении "
-"программного обеспечения Вашего Dreambox путем сохранения Ваших текущих "
+"программного обеспечения Вашего ресивера путем сохранения Ваших текущих "
 "настроек и коротких подсказок по процессу обновления."
 
 #
@@ -6833,24 +6843,28 @@ msgid ""
 "Welcome to the cleanup wizard.\n"
 "\n"
 "We have detected that your available internal memory has dropped below 2MB.\n"
-"To ensure stable operation of your Dreambox, the internal memory should be "
+"To ensure stable operation of your set-top-box, the internal memory should be "
 "cleaned up.\n"
 "You can use this wizard to remove some extensions.\n"
 msgstr ""
-
+"Добро пожаловать мастер очистки.\n"
+"\n"
+"Мы обнаружили, что доступное место во внутренней памяти снизилась до 2MB.\n"
+"Для обеспечения стабильной работы вашего ресивера внутренняя память должна быть очищена.\n"
+"Вы можете использовать этот мастер для удаления некоторых расширений.\n"
 #
 msgid ""
 "Welcome.\n"
 "\n"
-"If you want to connect your Dreambox to the Internet, this wizard will guide "
-"you through the basic network setup of your Dreambox.\n"
+"If you want to connect your set-top-box to the Internet, this wizard will guide "
+"you through the basic network setup of your set-top-box.\n"
 "\n"
 "Press OK to start configuring your network"
 msgstr ""
 "Добро пожаловать.\n"
 "\n"
-"Если вы хотите подключить Dreambox к сети интернет, этот мастер проведет вас "
-"через основные настройки сети Вашего Dreambox.\n"
+"Если вы хотите подключить ресивер к сети интернет, этот мастер проведет вас "
+"через основные настройки сети Вашего ресивера.\n"
 "\n"
 "Нажмите ОК для начала настройки сети."
 
@@ -6858,12 +6872,12 @@ msgstr ""
 msgid ""
 "Welcome.\n"
 "\n"
-"This start wizard will guide you through the basic setup of your Dreambox.\n"
+"This start wizard will guide you through the basic setup of your set-top-box.\n"
 "Press the OK button on your remote control to move to the next step."
 msgstr ""
 "Добро пожаловать.\n"
 "\n"
-"Этот мастер поможет Вам настроить основные параметры Вашего Dreambox.\n"
+"Этот мастер поможет Вам настроить основные параметры Вашего ресивера.\n"
 "Нажмите OK на пульте управления для перехода к следующему шагу."
 
 #
@@ -6875,7 +6889,7 @@ msgid "West"
 msgstr "Запад"
 
 msgid "West limit set"
-msgstr ""
+msgstr "Предел установки на запад"
 
 #
 msgid "What do you want to scan?"
@@ -6910,20 +6924,20 @@ msgstr "Куда сохранить временные файлы отложен
 
 #
 msgid "Wireless LAN"
-msgstr ""
+msgstr "Беспроводная сеть"
 
 #
 msgid "Wireless Network"
 msgstr "Беспроводная сеть"
 
 msgid "Wireless network connection setup"
-msgstr ""
+msgstr "Настройка беспроводной сети"
 
 msgid "Wireless network connection setup."
-msgstr ""
+msgstr "Настройка беспроводной сети"
 
 msgid "Wireless network state"
-msgstr ""
+msgstr "Состояние беспроводной сети"
 
 #
 msgid "Write error while recording. Disk full?\n"
@@ -6942,10 +6956,10 @@ msgid "Year"
 msgstr "Год"
 
 msgid "Yellow DVB subtitles"
-msgstr ""
+msgstr "Желтые DVB субтитры"
 
 msgid "Yellow pango subtitles"
-msgstr ""
+msgstr "Желтые Pango субтитры"
 
 #
 msgid "Yes"
@@ -6953,10 +6967,10 @@ msgstr "Да"
 
 #
 msgid "Yes to all"
-msgstr ""
+msgstr "Да для всех"
 
 msgid "Yes, always"
-msgstr ""
+msgstr "Да, всегда"
 
 #
 msgid "Yes, and delete this movie"
@@ -6964,7 +6978,7 @@ msgstr "Да, удалить эту запись"
 
 #
 msgid "Yes, and don't ask again"
-msgstr ""
+msgstr "Да, и не спрашивать опять"
 
 #
 msgid "Yes, backup my settings!"
@@ -6999,7 +7013,7 @@ msgid "Yes, view the tutorial"
 msgstr "Да, смотреть инструкцию "
 
 msgid "Yesterday"
-msgstr ""
+msgstr "Вчера"
 
 #, python-format
 msgid ""
@@ -7007,14 +7021,17 @@ msgid ""
 "would you like to remove\n"
 "\"%s\"?"
 msgstr ""
+"Вы уже установили список каналов,\n"
+"вы хотите удалить\n"
+"\"%s\"?"
 
 #
 msgid "You can cancel the installation."
-msgstr ""
+msgstr "Вы можете отменить установку"
 
 #
 msgid "You can cancel the removal."
-msgstr ""
+msgstr "Вы можете отменить удаление"
 
 #
 msgid ""
@@ -7029,23 +7046,23 @@ msgid "You can choose, what you want to install..."
 msgstr "Вы можете выбрать то, что хотите установить..."
 
 msgid "You can continue watching TV etc. while this is running."
-msgstr ""
+msgstr "Вы можете продолжить просмотр ТВ пока это запушено"
 
 #
 msgid "You can install this plugin."
-msgstr ""
+msgstr "Вы можете установить этот плагин"
 
 #
-msgid "You can only burn Dreambox recordings!"
-msgstr ""
+msgid "You can only burn set-top-box recordings!"
+msgstr "Вы можете прожечь только записи ресивера"
 
 #
 msgid "You can remove this plugin."
-msgstr ""
+msgstr "Вы можете удалить этот плагин"
 
 #
 msgid "You cannot delete this!"
-msgstr "Вы не можете удалит это."
+msgstr "Вы не можете удалить это."
 
 #
 msgid "You chose not to install any default services lists."
@@ -7065,7 +7082,7 @@ msgid ""
 msgstr "Вы ничего не выбрали. Пожалуйста нажмите ОК чтобы закончить установку."
 
 msgid "You didn't select a channel to record from."
-msgstr ""
+msgstr "Вы не выбрали канал для записи"
 
 #
 msgid ""
@@ -7098,16 +7115,16 @@ msgstr "Необходимо подождать %s!"
 
 #
 msgid ""
-"You need a PC connected to your dreambox. If you need further instructions, "
+"You need a PC connected to your set-top-box. If you need further instructions, "
 "please visit the website http://www.dm7025.de.\n"
-"Your dreambox will now be halted. After you have performed the update "
+"Your set-top-box will now be halted. After you have performed the update "
 "instructions from the website, your new firmware will ask you to restore "
 "your settings."
 msgstr ""
-"Вам потребуется компьютер подсоединенный а Вашему Dreambox. Если вам "
+"Вам потребуется компьютер подсоединенный к Вашему ресиверу. Если вам "
 "необходимы дополнительные инструкции, пожалуйста, посетите сайт http://www."
-"dm7025.de.\n"
-"Ваш Dreambox должен быть остановлен. После выполнения Вами инструкций по "
+"allrussian.info.\n"
+"Ваш тюнер должен быть остановлен. После выполнения Вами инструкций по "
 "обновлению с сайта, новое ПО запросит восстановление Ваших установок. "
 
 msgid ""
@@ -7115,35 +7132,41 @@ msgid ""
 "\n"
 "Do you want to set the pin now?"
 msgstr ""
+"Вам нужно установить PIN код и спрятать его от ваших детей\n"
+"\n"
+"Вы хотите установить PIN сейчас?"
 
 msgid "You system does not support ext4"
-msgstr ""
+msgstr "Ваша система не поддерживает ext4"
 
 #
 msgid ""
-"Your Dreambox is now ready to use.\n"
+"Your set-top-box is now ready to use.\n"
 "\n"
 "Your internet connection is working now.\n"
 "\n"
 msgstr ""
-
+"Ваш ресивер готов к использованию.\n"
+"\n"
+"Ваше подключние к интернет работает.\n"
+"\n"
 #
 msgid ""
-"Your Dreambox is now ready to use.\n"
+"Your set-top-box is now ready to use.\n"
 "\n"
 "Your internet connection is working now.\n"
 "\n"
 "Please press OK to continue."
 msgstr ""
-"Dreambox готов к работе.\n"
+"Ресивер готов к работе.\n"
 "\n"
 "Интернет соединение уже работает.\n"
 "\n"
 "Нажмите ОК для продолжения."
 
 #
-msgid "Your Dreambox will restart after pressing OK on your remote control."
-msgstr "Ваш Dreambox будет перезагружен после нажатия кнопки OK на пульте."
+msgid "Your set-top-box will restart after pressing OK on your remote control."
+msgstr "Ваш ресивер будет перезагружен после нажатия кнопки OK на пульте."
 
 #
 msgid ""
@@ -7161,15 +7184,15 @@ msgstr ""
 
 #
 msgid "Your current collection will get lost!"
-msgstr ""
+msgstr "Ваша текущая коллекция будет потеряна!"
 
 #
-msgid "Your dreambox is shutting down. Please stand by..."
-msgstr "Ваш Dreambox выключается. Пожалуйста, ожидайте..."
+msgid "Your set-top-box is shutting down. Please stand by..."
+msgstr "Ваш ресивер выключается. Пожалуйста, ожидайте..."
 
 #
 msgid ""
-"Your dreambox isn't connected to the internet properly. Please check it and "
+"Your set-top-box isn't connected to the internet properly. Please check it and "
 "try again."
 msgstr ""
 "Ваш ресивер не подключен к интернету. Пожалуйста, проверьте и попробуйте "
@@ -7177,7 +7200,7 @@ msgstr ""
 
 #
 msgid "Your email address:"
-msgstr ""
+msgstr "Ваш адрес email"
 
 #
 msgid ""
@@ -7203,17 +7226,17 @@ msgstr ""
 
 #
 msgid "Your name (optional):"
-msgstr ""
+msgstr "Ваше имя (не обязательно):"
 
 #
 msgid "Your network configuration has been activated."
 msgstr "Ваши сетевые настройки активированы."
 
 msgid "Your receiver is rebooting"
-msgstr ""
+msgstr "Ваш ресивер перегружается"
 
 msgid "Your receiver is shutting down"
-msgstr ""
+msgstr "Ваш ресивер выключается"
 
 #
 msgid ""
@@ -7229,35 +7252,35 @@ msgstr ""
 
 #
 msgid "Zap back to previously tuned service?"
-msgstr ""
+msgstr "Вернуться назад к предыдущему настраиваемому сервису?"
 
 #
 msgid "Zap back to service before positioner setup?"
-msgstr "Переключить на предыдущий сервис?"
+msgstr "Вернуться назад к сервису, используемому перед настройкой позиционера?"
 
 #
 msgid "Zap back to service before satfinder?"
-msgstr "Переключить на предыдущий сервис?"
+msgstr "Вернуться назад к сервису, используемому перед поиском спутников?"
 
 #
 msgid "Zap back to service before tuner setup?"
-msgstr ""
+msgstr "Вернуться назад к сервису, используемому перед настройкой тюнера?"
 
 msgid "Zap focus to Picture in Picture"
-msgstr ""
+msgstr "Переключить фокус на PiP"
 
 msgid "Zap focus to main screen"
-msgstr ""
+msgstr "Переключить Фокус на главный экран"
 
 msgid "Zap mode"
-msgstr ""
+msgstr "режим переключения"
 
 msgid "Zap to selected channel"
-msgstr ""
+msgstr "переключить выбраный канал"
 
 #
 msgid "[alternative edit]"
-msgstr ""
+msgstr "[альтернативное редактирование]"
 
 #
 msgid "[bouquet edit]"
@@ -7296,7 +7319,7 @@ msgid "about to start"
 msgstr "about to start"
 
 msgid "activate PiP"
-msgstr ""
+msgstr "активировать PiP"
 
 #
 msgid "activate current configuration"
@@ -7304,15 +7327,15 @@ msgstr "активировать текущие настройки"
 
 #
 msgid "activate network adapter configuration"
-msgstr ""
+msgstr "активировать конфигурацию сети"
 
 #
 msgid "add Provider"
-msgstr ""
+msgstr "добавить провайдера"
 
 #
 msgid "add Service"
-msgstr ""
+msgstr "добавить канал"
 
 #
 msgid "add a nameserver entry"
@@ -7379,7 +7402,7 @@ msgid "advanced"
 msgstr "Расширенный"
 
 msgid "alphabetic reverse"
-msgstr ""
+msgstr "обратный алфвит"
 
 #
 msgid "alphabetic sort"
@@ -7395,17 +7418,17 @@ msgstr ""
 
 #
 msgid "assigned CAIds:"
-msgstr ""
+msgstr "назначенная кодировака:"
 
 #
 msgid "assigned Services/Provider:"
-msgstr ""
+msgstr "назначенный канал/провайдер"
 
 msgid "at beginning"
-msgstr ""
+msgstr "в начале"
 
 msgid "at end"
-msgstr ""
+msgstr "в конце"
 
 #
 #, python-format
@@ -7427,7 +7450,7 @@ msgstr "авто"
 
 #
 msgid "available"
-msgstr ""
+msgstr "доступно"
 
 #
 msgid "back"
@@ -7463,7 +7486,7 @@ msgid "burn audio track (%s)"
 msgstr "прожечь аудио дорожку (%s)"
 
 msgid "center"
-msgstr ""
+msgstr "центр"
 
 #
 msgid "change recording (duration)"
@@ -7515,7 +7538,7 @@ msgstr "копировать в пакет"
 
 #
 msgid "could not be removed"
-msgstr ""
+msgstr "не может быть удалено"
 
 #
 msgid "create directory"
@@ -7523,7 +7546,7 @@ msgstr "создать каталог"
 
 #, python-format
 msgid "currently installed image: %s"
-msgstr ""
+msgstr "установленный имидж: %s"
 
 #
 msgid "daily"
@@ -7554,7 +7577,7 @@ msgid "delete..."
 msgstr "удалить..."
 
 msgid "descramble and record ecm"
-msgstr ""
+msgstr "расшифровывать и записывать ECM"
 
 #
 msgid "disable"
@@ -7581,7 +7604,7 @@ msgid "do nothing"
 msgstr "не делать ничего"
 
 msgid "don't descramble, record ecm"
-msgstr ""
+msgstr "не расшифровывать, записывать ECM"
 
 #
 msgid "don't record"
@@ -7591,23 +7614,23 @@ msgstr "не записывать"
 msgid "done!"
 msgstr "выполнено!"
 
-msgid "dreambox advanced remote control (native)"
+msgid "set-top-box advanced remote control (native)"
 msgstr ""
 
-msgid "dreambox front panel"
+msgid "set-top-box front panel"
 msgstr ""
 
-msgid "dreambox ir keyboard"
+msgid "set-top-box ir keyboard"
 msgstr ""
 
-msgid "dreambox ir mouse"
+msgid "set-top-box ir mouse"
 msgstr ""
 
-msgid "dreambox remote control (native)"
-msgstr ""
+msgid "set-top-box remote control (native)"
+msgstr "удаленное управление (нативное)"
 
 msgid "east"
-msgstr ""
+msgstr "восток"
 
 #
 msgid "edit alternatives"
@@ -7690,7 +7713,7 @@ msgid "exit networkadapter setup menu"
 msgstr "закрыть настройки сетевого адаптера"
 
 msgid "false"
-msgstr ""
+msgstr "нет"
 
 #
 msgid "fileformats (BMP, PNG, JPG, GIF)"
@@ -7705,7 +7728,7 @@ msgid "fine-tune your display"
 msgstr "точная настройка дисплея"
 
 msgid "fixed"
-msgstr ""
+msgstr "зафиксировано"
 
 #
 msgid "forward to the next chapter"
@@ -7720,7 +7743,7 @@ msgid "free diskspace"
 msgstr "свободное место на диске"
 
 msgid "full transparency"
-msgstr ""
+msgstr "полная прозрачность"
 
 #
 msgid "go to deep standby"
@@ -7732,7 +7755,7 @@ msgstr "перейти в ждущий режим"
 
 #
 msgid "grab this frame as bitmap"
-msgstr ""
+msgstr "сохранить этот фрейм как картинку"
 
 #
 msgid "green"
@@ -7743,7 +7766,7 @@ msgid "hear radio..."
 msgstr "Слушать радио"
 
 msgid "height"
-msgstr ""
+msgstr "высота"
 
 #
 msgid "help..."
@@ -7763,18 +7786,18 @@ msgstr "немедленное выключение"
 
 #
 msgid "init module"
-msgstr "init модуль"
+msgstr "инициализация модуля"
 
 #
 msgid "init modules"
-msgstr ""
+msgstr "инициализация модулей"
 
 #
 msgid "insert mark here"
 msgstr "вставить метку"
 
 msgid "invalid type"
-msgstr ""
+msgstr "неправильный тип"
 
 #
 msgid "jump back to the previous title"
@@ -7813,11 +7836,11 @@ msgid "length"
 msgstr "длина"
 
 msgid "limit ..., aborting !"
-msgstr ""
+msgstr "предел..., отмена!"
 
 #
 msgid "list of EPG views..."
-msgstr ""
+msgstr "список посмотров телегида..."
 
 #
 msgid "list style compact"
@@ -7913,15 +7936,15 @@ msgstr "нет"
 
 #
 msgid "no CAId selected"
-msgstr ""
+msgstr "не выбрана кодировка"
 
 #
 msgid "no CI slots found"
-msgstr ""
+msgstr "не найден слот CI"
 
 #
 msgid "no Services/Providers selected"
-msgstr ""
+msgstr "не выбран канал/провайдер"
 
 #
 msgid "no module found"
@@ -7932,32 +7955,32 @@ msgid "no standby"
 msgstr "не переходить в ждущий режим"
 
 msgid "no storage devices found"
-msgstr ""
+msgstr "устройство хранения не найдено"
 
 #
 msgid "no timeout"
 msgstr "нет задержки"
 
 msgid "no transparency"
-msgstr ""
+msgstr "нет прозрачности"
 
 #
 msgid "none"
 msgstr "никакой"
 
 msgid "normal"
-msgstr ""
+msgstr "нормальный"
 
 #
 msgid "not configured"
-msgstr ""
+msgstr "не настроен"
 
 #
 msgid "not locked"
 msgstr "не захвачен"
 
 msgid "not supported"
-msgstr ""
+msgstr "не поддерживается"
 
 #
 msgid "not used"
@@ -7980,7 +8003,7 @@ msgid "off"
 msgstr "выкл."
 
 msgid "offset is"
-msgstr ""
+msgstr "смещение"
 
 #
 msgid "on"
@@ -8011,7 +8034,7 @@ msgid "open servicelist(up)"
 msgstr "Открыть список сервисов(вверх)"
 
 msgid "original"
-msgstr ""
+msgstr "оригинал"
 
 #
 msgid "pass"
@@ -8019,10 +8042,10 @@ msgstr "передать"
 
 #
 msgid "pause"
-msgstr "Пауза"
+msgstr "пауза"
 
 msgid "play as picture in picture"
-msgstr ""
+msgstr "воспроизвести как кртинку в картинке"
 
 #
 msgid "play entry"
@@ -8037,7 +8060,7 @@ msgid "play from previous mark or playlist entry"
 msgstr "воспроизвести начиная с предыдущей метки или записи в плейлисте"
 
 msgid "play in mainwindow"
-msgstr ""
+msgstr "воспроизвести на главном экране"
 
 #
 msgid "please press OK when ready"
@@ -8068,7 +8091,7 @@ msgid "red"
 msgstr "красный"
 
 msgid "relative"
-msgstr ""
+msgstr "относительный"
 
 #
 msgid "remove a nameserver entry"
@@ -8108,7 +8131,7 @@ msgstr "удалить из родительского контроля"
 
 #
 msgid "remove new found flag"
-msgstr "удалить флаг новый найденный "
+msgstr "удалить флаг 'новый найденный'"
 
 #
 msgid "remove selected satellite"
@@ -8127,7 +8150,7 @@ msgid "repeated"
 msgstr "повторный"
 
 msgid "reverse by date"
-msgstr ""
+msgstr "обратить по дате"
 
 #
 msgid "rewind to the previous chapter"
@@ -8176,11 +8199,11 @@ msgstr "выбрать"
 
 #
 msgid "select CAId"
-msgstr ""
+msgstr "выбрать CAId"
 
 #
 msgid "select CAId's"
-msgstr ""
+msgstr "выбрать CAId"
 
 #
 msgid "select interface"
@@ -8199,13 +8222,13 @@ msgid "select the movie path"
 msgstr "выбрать путь к фильму"
 
 msgid "service PIN"
-msgstr ""
+msgstr "сервисный PIN"
 
 msgid "set as startup service"
-msgstr ""
+msgstr "установить канал при запуске"
 
 msgid "setup PIN"
-msgstr ""
+msgstr "настройка ЗШТ"
 
 #
 msgid "show DVD main menu"
@@ -8213,14 +8236,14 @@ msgstr "показать главное меню DVD"
 
 #
 msgid "show EPG..."
-msgstr "Показать EPG..."
+msgstr "Показать телегид..."
 
 #
 msgid "show Infoline"
 msgstr "показать инфолинию"
 
 msgid "show all tags"
-msgstr ""
+msgstr "показать все теги"
 
 #
 msgid "show alternatives"
@@ -8228,14 +8251,14 @@ msgstr "показать альтернативы"
 
 #
 msgid "show event details"
-msgstr "оказать детали событий"
+msgstr "показать детали событий"
 
 #
 msgid "show extended description"
 msgstr "показать расширенное описание"
 
 msgid "show mediaplayer on mainmenu"
-msgstr ""
+msgstr "показать медиаплеер в главном меню"
 
 #
 msgid "show shutdown menu"
@@ -8254,7 +8277,7 @@ msgid "show transponder info"
 msgstr "показать инфо транспондера"
 
 msgid "shuffle"
-msgstr ""
+msgstr "перемешать"
 
 #
 msgid "shuffle playlist"
@@ -8262,7 +8285,7 @@ msgstr "перемешать плейлист"
 
 #
 msgid "shut down"
-msgstr ""
+msgstr "выключение"
 
 #
 msgid "shutdown"
@@ -8270,7 +8293,7 @@ msgstr "Выключить"
 
 #
 msgid "simple"
-msgstr "простой"
+msgstr "Простой"
 
 #
 msgid "skip backward"
@@ -8297,11 +8320,11 @@ msgid "sort by date"
 msgstr "сортировать по дате"
 
 msgid "sorting of playlists"
-msgstr ""
+msgstr "сортировка плейлиста"
 
 #
 msgid "special characters"
-msgstr ""
+msgstr "спец. символы"
 
 #
 msgid "standard"
@@ -8324,7 +8347,7 @@ msgid "start timeshift"
 msgstr "таймшифт"
 
 msgid "stepsize"
-msgstr ""
+msgstr "размер шага"
 
 #
 msgid "stereo"
@@ -8347,7 +8370,7 @@ msgid "stop timeshift"
 msgstr "Остановить таймшифт"
 
 msgid "stop using as startup service"
-msgstr ""
+msgstr "остановить использование канала при старте"
 
 #
 msgid "swap PiP and main picture"
@@ -8402,28 +8425,28 @@ msgid "toggle time, chapter, audio, subtitle info"
 msgstr "время переключения, разделы, аудио, информация субтитров"
 
 msgid "top"
-msgstr ""
+msgstr "верх"
 
 msgid "true"
-msgstr ""
+msgstr "да"
 
 msgid "tuner is not supported"
-msgstr ""
+msgstr "тюнер не пддерживается"
 
 #
 msgid "unavailable"
-msgstr "недоступен"
+msgstr "недоступно"
 
 #
 msgid "unconfirmed"
 msgstr "не присвоен"
 
 msgid "undefined"
-msgstr ""
+msgstr "не определено"
 
 #
 msgid "unknown"
-msgstr ""
+msgstr "неизвестно"
 
 #
 msgid "unknown service"
@@ -8435,7 +8458,7 @@ msgstr ""
 
 #
 msgid "user defined"
-msgstr "определен пользователем"
+msgstr "Определено пользователем"
 
 #
 msgid "vertical"
@@ -8463,27 +8486,27 @@ msgstr "ожидание"
 
 #
 msgid "was removed successfully"
-msgstr ""
+msgstr "удаление успешно"
 
 #
 msgid "weekly"
 msgstr "Еженедельно"
 
 msgid "west"
-msgstr ""
+msgstr "запад"
 
 msgid "white"
-msgstr ""
+msgstr "белый"
 
 #
 msgid "whitelist"
 msgstr "белый список"
 
 msgid "width"
-msgstr ""
+msgstr "ширина"
 
 msgid "wireless network interface"
-msgstr ""
+msgstr "интерфейс беспроводной сети"
 
 #
 msgid "working"
@@ -8503,8 +8526,8 @@ msgstr "да (keep feeds)"
 
 #
 msgid ""
-"your dreambox might be unusable now. Please consult the manual for further "
-"assistance before rebooting your dreambox."
+"your set-top-box might be unusable now. Please consult the manual for further "
+"assistance before rebooting your set-top-box."
 msgstr ""
 "Сейчас ваш ресивер может быть непригодным для использования. Обратитесь к "
 "руководству для получения дополнительной помощи до его перезагрузки."
@@ -8641,8 +8664,8 @@ msgstr "переключено"
 #~ "Активный/\n"
 #~ "Не активный"
 
-#~ msgid "Add a new NFS or CIFS mount point to your Dreambox."
-#~ msgstr "Добавить новую точку монтирования NFS или CIFS к вашему Dreambox."
+#~ msgid "Add a new NFS or CIFS mount point to your set-top-box."
+#~ msgstr "Добавить новую точку монтирования NFS или CIFS к вашему set-top-box."
 
 #
 #~ msgid "Add files to playlist"
@@ -8991,8 +9014,8 @@ msgstr "переключено"
 #~ msgstr "Язык..."
 
 #
-#~ msgid "Lets you view/edit files in your Dreambox"
-#~ msgstr "Позволяет просматривать и редактировать файлы на Dreambox"
+#~ msgid "Lets you view/edit files in your set-top-box"
+#~ msgstr "Позволяет просматривать и редактировать файлы на set-top-box"
 
 #
 #~ msgid "Mkfs failed"
@@ -9048,7 +9071,7 @@ msgstr "переключено"
 
 #
 #~ msgid ""
-#~ "Please disconnect all USB devices from your Dreambox and (re-)attach the "
+#~ "Please disconnect all USB devices from your set-top-box and (re-)attach the "
 #~ "target USB stick (minimum size is 64 MB) now!"
 #~ msgstr ""
 #~ "Пожалуйста, отключите все USB устройства от ресивера и (пере-)подключите "
@@ -9289,8 +9312,8 @@ msgstr "переключено"
 #~ "во флэш-память?"
 
 #
-#~ msgid "This Dreambox can't decode %s video streams!"
-#~ msgstr "Этот Dreambox не может декодировать %s видео потоки!"
+#~ msgid "This set-top-box can't decode %s video streams!"
+#~ msgstr "Этот set-top-box не может декодировать %s видео потоки!"
 
 #
 #~ msgid "This is unsupported at the moment."
@@ -9302,15 +9325,15 @@ msgstr "переключено"
 
 #
 #~ msgid ""
-#~ "To update your Dreambox firmware, please follow these steps:\n"
+#~ "To update your set-top-box firmware, please follow these steps:\n"
 #~ "1) Turn off your box with the rear power switch and plug in the bootable "
 #~ "USB stick.\n"
 #~ "2) Turn mains back on and hold the DOWN button on the front panel pressed "
 #~ "for 10 seconds.\n"
 #~ "3) Wait for bootup and follow instructions of the wizard."
 #~ msgstr ""
-#~ "Для обновления микропрограммы Dreambox, выполните следующие действия:\n"
-#~ "1) Выключите Dreambox кнопкой на задней панели и вставьте загрузочный USB "
+#~ "Для обновления микропрограммы set-top-box, выполните следующие действия:\n"
+#~ "1) Выключите set-top-box кнопкой на задней панели и вставьте загрузочный USB "
 #~ "стик.\n"
 #~ "2) Включите ресивер и удерживайте кнопку ВНИЗ на передней панели около 10 "
 #~ "секунд.\n"
@@ -9393,7 +9416,7 @@ msgstr "переключено"
 
 #
 #~ msgid ""
-#~ "You do not seem to have a harddisk in your Dreambox. So backing up to a "
+#~ "You do not seem to have a harddisk in your set-top-box. So backing up to a "
 #~ "harddisk is not an option for you."
 #~ msgstr ""
 #~ "Возможно не установлен жесткий диск. Поэтому вы не можете выбрать "
