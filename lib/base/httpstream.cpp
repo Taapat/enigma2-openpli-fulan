@@ -47,7 +47,7 @@ int eHttpStream::openHttpConnection()
 	char proto[100];
 	int statuscode = 0;
 	char statusmsg[100];
-	bool redirected = true;
+	bool redirected = false;
 
 	close();
 
@@ -152,7 +152,7 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 
 int eHttpStream::valid()
 {
-	return ret_code;
+	return true;
 	return streamSocket >= 0;
 }
 
