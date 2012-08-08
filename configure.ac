@@ -268,6 +268,8 @@ lib/python/Plugins/SystemPlugins/WirelessLan/Makefile
 lib/python/Plugins/SystemPlugins/WirelessLan/meta/Makefile
 lib/python/Plugins/Extensions/TopfieldVFD/Makefile
 lib/python/Plugins/Extensions/CuberevoVFD/Makefile
+lib/python/Plugins/Extensions/ModemSettings/Makefile
+lib/python/Plugins/Extensions/ModemSettings/icons/Makefile
 lib/python/Plugins/SystemPlugins/VFD-Icons/Makefile 
 lib/python/Plugins/SystemPlugins/VFD-Icons/meta/Makefile
 lib/python/Tools/Makefile
