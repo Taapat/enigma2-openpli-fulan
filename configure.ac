@@ -273,8 +273,8 @@ lib/python/Plugins/Extensions/ModemSettings/Makefile
 lib/python/Plugins/Extensions/ModemSettings/icons/Makefile
 lib/python/Plugins/SystemPlugins/VFD-Icons/Makefile 
 lib/python/Plugins/SystemPlugins/VFD-Icons/meta/Makefile
-lib/python/Plugins/Extensions/NetworkBrowser/Makefile
-lib/python/Plugins/Extensions/NetworkBrowser/icons/Makefile
+lib/python/Plugins/SystemPlugins/NetworkBrowser/Makefile
+lib/python/Plugins/SystemPlugins/NetworkBrowser/icons/Makefile
 lib/python/Tools/Makefile
 po/Makefile
 main/Makefile
