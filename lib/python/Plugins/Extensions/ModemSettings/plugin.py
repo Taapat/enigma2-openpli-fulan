@@ -4,27 +4,20 @@ from Components.ActionMap import ActionMap
 from Components.config import config, ConfigSubsection, getConfigListEntry, ConfigSelection, ConfigText, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
 from Components.Pixmap import Pixmap
-from Components.Label import Label
+from Components.Sources.StaticText import StaticText
 from Plugins.Plugin import PluginDescriptor
 import os
 from os import path as os_path
 
 class ModemSetup(Screen, ConfigListScreen):
-	skin = """
-<screen name="ConfigEdit" position="center,center" size="500,340" title="Modem configuration">
-	<eLabel position="5,0" size="490,2" backgroundColor="#aaaaaa" />
-<widget name="config" position="30,20" size="460,310" zPosition="1" scrollbarMode="showOnDemand" />
-	<ePixmap position="85,325" zPosition="1" size="170,2" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/ModemSettings/images/red.png" transparent="1" alphatest="on" />
-	<ePixmap position="255,325" zPosition="1" size="170,2" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/ModemSettings/images/green.png" transparent="1" alphatest="on" />
-	<widget name="key_red" position="85,300" zPosition="2" size="170,30" valign="center" halign="center" font="Regular;22" transparent="1" />
-	<widget name="key_green" position="255,300" zPosition="2" size="170,30" valign="center" halign="center" font="Regular;22" transparent="1" />
-</screen>"""
 
 	def __init__(self, session):
 		self.session = session
 		Screen.__init__(self, self.session)
+		self.skinName = ["Setup"]
+		self.setTitle(_("Modem configuration"))
 		self.createConfig()
-		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"],
+		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
 			{
 				"cancel": self.cancel,
 				"ok": self.ok,
@@ -34,8 +27,8 @@ class ModemSetup(Screen, ConfigListScreen):
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session = self.session)
 		self.createSetup()
-		self["key_red"] = Label(_("Exit"))
-		self["key_green"] = Label(_("Ok"))
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("OK"))
 
 	def createConfig(self):
 		if os.path.exists("/etc/modem.conf"):
