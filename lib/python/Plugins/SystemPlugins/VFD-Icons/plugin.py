@@ -17,7 +17,7 @@ from Components.ActionMap import ActionMap
 from Screens.Screen import Screen
 from Components.config import config, ConfigSubsection, getConfigListEntry, ConfigSelection
 from Components.ConfigList import ConfigListScreen
-from Components.Label import Label
+from Components.Sources.StaticText import StaticText
 
 config.vfdicon = ConfigSubsection()
 config.vfdicon.displayshow = ConfigSelection(default = "channel", choices = [
@@ -25,19 +25,12 @@ config.vfdicon.displayshow = ConfigSelection(default = "channel", choices = [
 displayshow = config.vfdicon.displayshow
 
 class ConfigVFDDisplay(Screen, ConfigListScreen):
-	skin = """
-<screen name="ConfigVFDDisplay" position="center,180" size="500,200" title="VFD display configuration">
-	<eLabel position="5,0" size="490,2" backgroundColor="#aaaaaa" />
-<widget name="config" position="30,20" size="460,50" zPosition="1" scrollbarMode="showOnDemand" />
-	<widget name="key_red" position="83,150" zPosition="2" size="170,30" valign="center" halign="center" font="Regular;22" transparent="1" />
-	<widget name="key_green" position="257,150" zPosition="2" size="170,30" valign="center" halign="center" font="Regular;22" transparent="1" />
-	<eLabel position="85,180" size="166,2" backgroundColor="#00ff2525" />
-	<eLabel position="255,180" size="166,2" backgroundColor="#00389416" />
-</screen>"""
 
 	def __init__(self, session):
 		self.session = session
 		Screen.__init__(self, session)
+		self.skinName = ["Setup"]
+		self.setup_title = _("VFD display configuration")
 		cfglist = []
 		cfglist.append(getConfigListEntry(_("Show on VFD Display"), displayshow))
 		ConfigListScreen.__init__(self, cfglist)
@@ -48,8 +41,8 @@ class ConfigVFDDisplay(Screen, ConfigListScreen):
 				"green": self.keySave,
 				"red": self.cancel,
 			}, -2)
-		self["key_red"] = Label(_("Exit"))
-		self["key_green"] = Label(_("Ok"))
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("OK"))
 
 	def cancel(self):
 		self.showVFD()
