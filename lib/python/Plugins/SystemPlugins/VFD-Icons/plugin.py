@@ -30,7 +30,7 @@ class ConfigVFDDisplay(Screen, ConfigListScreen):
 		self.session = session
 		Screen.__init__(self, session)
 		self.skinName = ["Setup"]
-		self.setup_title = _("VFD display configuration")
+		self.setTitle(_("VFD display configuration"))
 		cfglist = []
 		cfglist.append(getConfigListEntry(_("Show on VFD Display"), displayshow))
 		ConfigListScreen.__init__(self, cfglist)
