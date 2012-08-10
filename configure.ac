@@ -209,8 +209,6 @@ lib/python/Plugins/SystemPlugins/HdmiCEC/Makefile
 lib/python/Plugins/SystemPlugins/VideoClippingSetup/Makefile
 lib/python/Plugins/Extensions/CutListEditor/Makefile
 lib/python/Plugins/Extensions/CutListEditor/meta/Makefile
-# lib/python/Plugins/Extensions/DVDBurn/Makefile
-# lib/python/Plugins/Extensions/DVDBurn/meta/Makefile
 lib/python/Plugins/Extensions/DVDPlayer/Makefile
 lib/python/Plugins/Extensions/DVDPlayer/meta/Makefile
 lib/python/Plugins/Extensions/GraphMultiEPG/Makefile
