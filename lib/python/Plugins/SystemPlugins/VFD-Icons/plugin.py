@@ -29,10 +29,10 @@ class ConfigVFDDisplay(Screen, ConfigListScreen):
 <screen name="ConfigVFDDisplay" position="center,180" size="500,200" title="VFD display configuration">
 	<eLabel position="5,0" size="490,2" backgroundColor="#aaaaaa" />
 <widget name="config" position="30,20" size="460,50" zPosition="1" scrollbarMode="showOnDemand" />
-	<ePixmap position="85,180" zPosition="1" size="170,2" pixmap="/usr/lib/enigma2/python/Plugins/SystemPlugins/VFD-Icons/images/red.png" transparent="1" alphatest="on" />
-	<ePixmap position="255,180" zPosition="1" size="170,2" pixmap="/usr/lib/enigma2/python/Plugins/SystemPlugins/VFD-Icons/images/green.png" transparent="1" alphatest="on" />
-	<widget name="key_red" position="85,150" zPosition="2" size="170,30" valign="center" halign="center" font="Regular;22" transparent="1" />
-	<widget name="key_green" position="255,150" zPosition="2" size="170,30" valign="center" halign="center" font="Regular;22" transparent="1" />
+	<widget name="key_red" position="83,150" zPosition="2" size="170,30" valign="center" halign="center" font="Regular;22" transparent="1" />
+	<widget name="key_green" position="257,150" zPosition="2" size="170,30" valign="center" halign="center" font="Regular;22" transparent="1" />
+	<eLabel position="85,180" size="166,2" backgroundColor="#00ff2525" />
+	<eLabel position="255,180" size="166,2" backgroundColor="#00389416" />
 </screen>"""
 
 	def __init__(self, session):
@@ -44,6 +44,7 @@ class ConfigVFDDisplay(Screen, ConfigListScreen):
 		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
 			{
 				"cancel": self.cancel,
+				"ok": self.keySave,
 				"green": self.keySave,
 				"red": self.cancel,
 			}, -2)
