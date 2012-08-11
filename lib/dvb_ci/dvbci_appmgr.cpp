@@ -6,17 +6,32 @@
 
 eDVBCIApplicationManagerSession::eDVBCIApplicationManagerSession(eDVBCISlot *tslot)
 {
+#ifdef __sh__
+	eDebug("%s >", __func__);
+#endif
 	slot = tslot;
 	slot->setAppManager(this);
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 }
 
 eDVBCIApplicationManagerSession::~eDVBCIApplicationManagerSession()
 {
+#ifdef __sh__
+	eDebug("%s >", __func__);
+#endif
 	slot->setAppManager(NULL);
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 }
 
 int eDVBCIApplicationManagerSession::receivedAPDU(const unsigned char *tag,const void *data, int len)
 {
+#ifdef __sh__
+	eDebug("eDVBCIApplicationManagerSession::%s >", __func__);
+#endif
 	eDebugNoNewLine("SESSION(%d)/APP %02x %02x %02x: ", session_nb, tag[0], tag[1], tag[2]);
 	for (int i=0; i<len; i++)
 		eDebugNoNewLine("%02x ", ((const unsigned char*)data)[i]);
@@ -58,11 +73,17 @@ int eDVBCIApplicationManagerSession::receivedAPDU(const unsigned char *tag,const
 			break;
 		}
 	}
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 	return 0;
 }
 
 int eDVBCIApplicationManagerSession::doAction()
 {
+#ifdef __sh__
+	eDebug("%s >", __func__);
+#endif
   switch (state)
   {
   case stateStarted:
@@ -70,6 +91,9 @@ int eDVBCIApplicationManagerSession::doAction()
     const unsigned char tag[3]={0x9F, 0x80, 0x20}; // application manager info e    sendAPDU(tag);
 		sendAPDU(tag);
     state=stateFinal;
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
     return 1;
   }
   case stateFinal:
@@ -81,19 +105,35 @@ int eDVBCIApplicationManagerSession::doAction()
       const unsigned char tag[3]={0x9F, 0x80, 0x22};  // Tenter_menu
       sendAPDU(tag);
       wantmenu=0;
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
       return 0;
     } else
       return 0;
   default:
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
     return 0;
   }
+#ifdef __sh__
+	eDebug("%s <", __func__);
+#endif
 }
 
 int eDVBCIApplicationManagerSession::startMMI()
 {
+#ifdef __sh__
+	eDebug("%s >", __func__);
+#endif
 	eDebug("in appmanager -> startmmi()");
 	const unsigned char tag[3]={0x9F, 0x80, 0x22};  // Tenter_menu
 	sendAPDU(tag);
+#ifdef __sh__
+	slot->mmiOpened();
+	eDebug("%s <", __func__);
+#endif
 	return 0;
 }
 

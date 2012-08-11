@@ -28,6 +28,9 @@
 #include <lib/python/connections.h>
 #include <lib/python/python.h>
 
+#if defined(__sh__) // vfd class
+#include <lib/driver/vfd.h>
+#endif  
 #include "bsod.h"
 #include "version_info.h"
 
@@ -220,6 +223,12 @@ int main(int argc, char **argv)
 	gRC::getInstance()->setSpinnerDC(my_dc);
 
 	eRCInput::getInstance()->keyEvent.connect(slot(keyEvent));
+
+#if defined(__sh__) // initialise the vfd class
+	evfd * vfd = new evfd;
+	vfd->init();
+	delete vfd;
+#endif
 	
 	printf("executing main\n");
 	
