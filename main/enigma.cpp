@@ -169,7 +169,12 @@ int main(int argc, char **argv)
 	eWidgetDesktop dsk_lcd(my_lcd_dc->size());
 
 	dsk.setStyleID(0);
-	dsk_lcd.setStyleID(my_lcd_dc->size().width() == 96 ? 2 : 1);
+
+#ifndef __sh__
+  	dsk_lcd.setStyleID(my_lcd_dc->size().width() == 96 ? 2 : 1);
+#else
+  	dsk_lcd.setStyleID(my_lcd_dc->size().width() == 320 ? 1 : 2);
+#endif
 
 /*	if (double_buffer)
 	{
