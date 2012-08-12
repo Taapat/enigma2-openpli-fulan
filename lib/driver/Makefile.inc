@@ -25,7 +25,7 @@ driverinclude_HEADERS = \
 	driver/rcinput.h \
 	driver/rfmod.h \
 	driver/hdmi_cec.h \
-	driver/vfd.cpp
+	driver/vfd.h
 
 if HAVE_LIBSDL
 driver_libenigma_driver_a_SOURCES += \
