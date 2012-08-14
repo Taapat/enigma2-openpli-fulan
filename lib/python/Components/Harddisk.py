@@ -17,7 +17,7 @@ def getProcMounts():
 	try:
 		mounts = open("/proc/mounts")
 	except IOError, ex:
-		print "[Harddisk] Failed to open /proc/mounts", ex 
+		print "[Harddisk] Failed to open /proc/mounts", ex
 		return []
 	return [line.strip().split(' ') for line in mounts]
 
@@ -41,7 +41,7 @@ def findMountPoint(path):
 	while not os.path.ismount(path):
 		path = os.path.dirname(path)
 	return path
-	
+
 
 DEVTYPE_UDEV = 0
 DEVTYPE_DEVFS = 1
@@ -69,7 +69,7 @@ class Harddisk:
 		self.mount_path = None
 		self.mount_device = None
 		self.phys_path = path.realpath(self.sysfsPath('device'))
-		
+
 		if self.type == DEVTYPE_UDEV:
 			self.dev_path = '/dev/' + self.device
 			self.disk_path = self.dev_path
@@ -160,7 +160,7 @@ class Harddisk:
 				model = readFile(self.sysfsPath('device/model'))
 				return vendor + '(' + model + ')'
 			else:
-				raise Exception, "no hdX or sdX" 
+				raise Exception, "no hdX or sdX"
 		except Exception, e:
 			print "[Harddisk] Failed to get model:", e
 			return "-?-"
@@ -224,7 +224,7 @@ class Harddisk:
 
 	def mkfs(self):
 		# No longer supported, use createInitializeJob instead
-		return 1 
+		return 1
 
 	def mount(self):
 		# try mounting through fstab first
@@ -267,7 +267,7 @@ class Harddisk:
 
 	def fsck(self):
 		# No longer supported, use createCheckJob instead
-		return 1 
+		return 1
 
 	def killPartitionTable(self):
 		zero = 512 * '\0'
@@ -365,7 +365,7 @@ class Harddisk:
 	def check(self):
 		# no longer supported
 		return -5
-		
+
 	def createCheckJob(self):
 		job = Task.Job(_("Checking Filesystem..."))
 		if self.findMount():
@@ -615,7 +615,7 @@ class HarddiskManager:
 		try:
 			removable = bool(int(readFile(devpath + "/removable")))
 			dev = int(readFile(devpath + "/dev").split(':')[0])
-			if dev in (7, 31, 253): # loop, mtdblock, romblock
+			if dev in (1, 7, 31, 253): # ram, loop, mtdblock, romblock
 				blacklisted = True
 			if blockdev[0:2] == 'sr':
 				is_cdrom = True
@@ -691,7 +691,7 @@ class HarddiskManager:
 #+++<
 			p = Partition(mountpoint = self.getMountpoint(device), description = description, force_mounted = True, device = device)
 			self.partitions.append(p)
-			if p.mountpoint: # Plugins won't expect unmounted devices 
+			if p.mountpoint: # Plugins won't expect unmounted devices
 				self.on_partition_list_change("add", p)
 			# see if this is a harddrive
 			l = len(device)
@@ -792,7 +792,7 @@ class HarddiskManager:
 		try:
 			from fcntl import ioctl
 			cd = open(device)
-			ioctl(cd.fileno(), ioctl_flag, speed) 
+			ioctl(cd.fileno(), ioctl_flag, speed)
 			cd.close()
 		except Exception, ex:
 			print "[Harddisk] Failed to set %s speed to %s" % (device, speed), ex

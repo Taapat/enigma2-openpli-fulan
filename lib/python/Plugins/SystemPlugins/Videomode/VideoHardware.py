@@ -14,7 +14,6 @@ class VideoHardware:
 
 	modes = { }  # a list of (high-level) modes for a certain port.
 
-#+++> To many changes, hole table exchanged
 	rates["PAL"] =			{ "50Hz":		{ 50: "pal" } }
 
 	rates["576i"] =			{ "50Hz": 	{ 50: "576i50" } }
@@ -22,26 +21,24 @@ class VideoHardware:
 	rates["576p"] =			{ "50Hz": 	{ 50: "576p50" } }
 
 	rates["720p"] =			{ "50Hz": 	{ 50: "720p50" },
-					  "60Hz": 	{ 60: "720p60" } }
+							  "60Hz": 	{ 60: "720p60" } }
 
 	rates["1080i"] =		{ "50Hz":	{ 50: "1080i50" },
-					  "60Hz":	{ 60: "1080i60" } }
+							  "60Hz":	{ 60: "1080i60" } }
 
 	rates["1080p"] =		{ "23Hz":	{ 50: "1080p23" },
-					  "24Hz":	{ 60: "1080p24" },
-					  "25Hz":	{ 60: "1080p25" },
-					  "29Hz":	{ 60: "1080p29" },
-					  "30Hz":	{ 60: "1080p30" },
-					  "50Hz":	{ 60: "1080p50" } }
-                      
+							  "24Hz":	{ 60: "1080p24" },
+							  "25Hz":	{ 60: "1080p25" },
+							  "29Hz":	{ 60: "1080p29" },
+							  "30Hz":	{ 60: "1080p30" },
+							  "50Hz":	{ 60: "1080p50" } }
+
 
 	rates["PC"] = { 
-		"1024x768": 		{ 60: "1024x768_60", 70: "1024x768_70", 75: "1024x768_75", 90: "1024x768_90", 100: "1024x768_100" }, #43 60 70 72 75 90 100
-		"1280x1024" : 		{ 60: "1280x1024_60", 70: "1280x1024_70", 75: "1280x1024_75" }, #43 47 60 70 74 75
-		"1600x1200": 		{ 60: "1600x1200_60" }, #60 66 76
-
+		"1024x768"  : { 60: "1024x768_60", 70: "1024x768_70", 75: "1024x768_75", 90: "1024x768_90", 100: "1024x768_100" }, #43 60 70 72 75 90 100
+		"1280x1024" : { 60: "1280x1024_60", 70: "1280x1024_70", 75: "1280x1024_75" }, #43 47 60 70 74 75
+		"1600x1200" : { 60: "1600x1200_60" }, #60 66 76
 	}
-
 
 	modes["Scart"] = ["PAL"]
 	modes["Component"] = ["576i", "576p", "720p", "1080i", "1080p"]
@@ -49,7 +46,6 @@ class VideoHardware:
 	modes["HDMI-PC"] = ["PC"]
 
 	widescreen_modes = set(["576i", "576p", "720p", "1080i", "1080p"])
-#+++<
 
 	def getOutputAspect(self):
 		ret = (16,9)
@@ -103,6 +99,7 @@ class VideoHardware:
 		config.av.tvsystem.notifiers = [ ]
 		config.av.wss.notifiers = [ ]
 		AVSwitch.getOutputAspect = self.getOutputAspect
+
 #+++>
 		config.av.colorformat_hdmi = ConfigSelection(choices = {"hdmi_rgb": _("RGB"), "hdmi_yuv": _("YUV"), "hdmi_422": _("422")}, default="hdmi_rgb")
 		config.av.colorformat_yuv = ConfigSelection(choices = {"yuv": _("YUV")}, default="yuv")
@@ -110,15 +107,14 @@ class VideoHardware:
 		config.av.hdmi_audio_source = ConfigSelection(choices = {"pcm": _("PCM"), "spdif": _("SPDIF")}, default="pcm")
 		config.av.threedmode = ConfigSelection(choices = {"off": _("Off"), "sbs": _("Side by Side"),"tab": _("Top and Bottom")}, default="off")
 		config.av.threedmode.addNotifier(self.set3DMode)
-#+++<
 		config.av.colorformat_hdmi.addNotifier(self.setHDMIColor)
 		config.av.colorformat_yuv.addNotifier(self.setYUVColor)
 		config.av.hdmi_audio_source.addNotifier(self.setHDMIAudioSource)
+#+++<
 		config.av.aspect.addNotifier(self.updateAspect)
 		config.av.wss.addNotifier(self.updateAspect)
 		config.av.policy_169.addNotifier(self.updateAspect)
 		config.av.policy_43.addNotifier(self.updateAspect)
-		
 
 		# until we have the hotplug poll socket
 #		self.timer = eTimer()
@@ -151,14 +147,10 @@ class VideoHardware:
 	def isModeAvailable(self, port, mode, rate):
 		rate = self.rates[mode][rate]
 		for mode in rate.values():
-			# DVI modes must be in "modes_preferred"
-#--->
-#- #			if port == "DVI":
-#---<
-#+++>
 			if port == "HDMI-PC":
 				return True
-#+++<
+			# DVI modes must be in "modes_preferred"
+#			if port == "DVI":
 #				if mode not in self.modes_preferred and not config.av.edid_override.value:
 #					print "no, not preferred"
 #					return False
@@ -197,15 +189,13 @@ class VideoHardware:
 			open("/etc/videomode", "w").write(mode_50) # use 50Hz mode (if available) for booting
 		except IOError:
 			print "writing initial videomode to /etc/videomode failed."
-#+++>
+
+		self.updateAspect(None)
+		self.updateColor(port)
+
 		#call setResolution() with -1,-1 to read the new scrren dimesions without changing the framebuffer resolution
 		from enigma import gMainDC
 		gMainDC.getInstance().setResolution(-1, -1)
-#+++<
-		self.updateAspect(None)
-#+++>
-		self.updateColor(port)
-#+++<
 
 	def saveMode(self, port, mode, rate):
 		print "saveMode", port, mode, rate
@@ -223,12 +213,8 @@ class VideoHardware:
 		return True
 
 	def isPortUsed(self, port):
-#--->
-#- 		if port == "DVI":
-#---<
-#+++>
+#		if port == "DVI":
 		if port == "HDMI":
-#+++<
 			self.readPreferredModes()
 			return len(self.modes_preferred) != 0
 		else:
@@ -361,7 +347,6 @@ class VideoHardware:
 	def set3DMode(self, configElement):
 		open("/proc/stb/video/3d_mode", "w").write(configElement.value)
 
-#+++>
 	def setHDMIColor(self, configElement):
 		map = {"hdmi_rgb": 0, "hdmi_yuv": 1, "hdmi_422": 2}
 		open("/proc/stb/avs/0/colorformat", "w").write(configElement.value)
@@ -384,7 +369,6 @@ class VideoHardware:
 			map = {"cvbs": 0, "rgb": 1, "svideo": 2, "yuv": 3}
 			from enigma import eAVSwitch
 			eAVSwitch.getInstance().setColorFormat(map[config.av.colorformat.value])
-#+++<
 
 config.av.edid_override = ConfigYesNo(default = False)
 video_hw = VideoHardware()

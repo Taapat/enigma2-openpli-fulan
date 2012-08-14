@@ -254,7 +254,7 @@ EOD`
 	#
 	AC_MSG_CHECKING([for Python site-packages path])
 	if test -z "$PYTHON_SITE_PKG"; then
-		PYTHON_SITE_PKG="$PY_PATH//lib/python2.6/site-packages"
+		PYTHON_SITE_PKG="$PY_PATH/lib/python2.6/site-packages"
 #		PYTHON_SITE_PKG=`$PYTHON -c "import distutils.sysconfig; \
 #			print (distutils.sysconfig.get_python_lib(0,0));"`
 	fi

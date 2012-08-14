@@ -25,7 +25,7 @@ fi
 
 LIBS=@libdir@/libopen.so.0.0.0
 
-#check for dreambox specific passthrough helper lib
+#check for receiver specific passthrough helper lib
 if [ -e @libdir@/libpassthrough.so ]; then
 	LIBS="$LIBS @libdir@/libpassthrough.so"
 fi
@@ -35,9 +35,9 @@ LD_PRELOAD=$LIBS @bindir@/enigma2
 
 # enigma2 exit codes:
 #
-# 0 - restart enigma
 # 1 - halt
 # 2 - reboot
+# 3 - restart enigma
 #
 # >128 signal
 
@@ -48,6 +48,9 @@ case $ret in
 		;;
 	2)
 		/sbin/reboot
+		;;
+	3)
+		rm -fR /home/root/.gstreamer-0.10
 		;;
 	4)
 		/sbin/rmmod lcd

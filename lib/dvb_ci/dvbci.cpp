@@ -78,179 +78,179 @@ int asn_1_decode(uint16_t * length, unsigned char * asn_1_array,
 eData eDVBCISlot::sendData(unsigned char* data, int len)
 {
 #ifdef x_debug	
-        printf("%s: %p, %d\n", __func__, data, len);
+	printf("%s: %p, %d\n", __func__, data, len);
 #endif
-       
+
 	unsigned char *d = (unsigned char*) malloc(len + 5);
-		
-	/* should we send a data last ?
-	 */
+
+	/* should we send a data last ? */
+
 	if (data != NULL)
 	{
-	   if ((data[2] >= T_SB) && (data[2] <= T_NEW_T_C))
-	   {
-	      memcpy(d, data, len);
-	   } else
-	   {
-	      //send data_last and data
-	      memcpy(d + 5, data, len);
+		if ((data[2] >= T_SB) && (data[2] <= T_NEW_T_C))
+		{
+			memcpy(d, data, len);
+		} else
+		{
+			//send data_last and data
+			memcpy(d + 5, data, len);
 
-	      d[0] = getSlotID();
-	      d[1] = connection_id;
-	      d[2] = T_DATA_LAST; 	
-	      d[3] = len + 1; 		/* len */
-	      d[4] = connection_id; 	/* transport connection identifier*/
+			d[0] = getSlotID();
+			d[1] = connection_id;
+			d[2] = T_DATA_LAST;
+			d[3] = len + 1; /* len */
+			d[4] = connection_id; /* transport connection identifier*/
 
-	      len += 5;	
-	   }
+			len += 5;	
+		}
 	}
 	else
 	{
-	      //send a data last only
-	      d[0] = getSlotID();
-	      d[1] = connection_id;
-	      d[2] = T_DATA_LAST; 	
-	      d[3] = len + 1; 		/* len */
-	      d[4] = connection_id; 	/* transport connection identifier*/
+		//send a data last only
+		d[0] = getSlotID();
+		d[1] = connection_id;
+		d[2] = T_DATA_LAST;
+		d[3] = len + 1; /* len */
+		d[4] = connection_id; /* transport connection identifier*/
 
-	      len = 5;	
+		len = 5;
 	}
 
 #ifdef x_debug
 	printf("write (%d): > ", getSlotID());
 	for(int i=0; i < len; i++)
-	   printf("%02x ",d[i]);
+		printf("%02x ",d[i]);
 	printf("\n");
 #endif
 
 #ifdef direct_write
-	res = write(fd, d, len); 
+	res = write(fd, d, len);
 
 	free(d);
-	if (res < 0 || res != len) 
-	{ 
-            printf("error writing data to fd %d, slot %d: %m\n", fd, getSlotID());
-            return eDataError; 
+	if (res < 0 || res != len)
+	{
+		printf("error writing data to fd %d, slot %d: %m\n", fd, getSlotID());
+		return eDataError; 
 	}
 #else
 	sendqueue.push( queueData(d, len) );
-#endif	 
-	
+#endif
+
 	return eDataReady;
 }
 
 //send a transport connection create request
 bool eDVBCISlot::sendCreateTC()
 {
-   //printf("%s:%s >\n", FILENAME, __FUNCTION__);
-   unsigned char* data = (unsigned char*) malloc(sizeof(char) * 5);
+	//printf("%s:%s >\n", FILENAME, __FUNCTION__);
+	unsigned char* data = (unsigned char*) malloc(sizeof(char) * 5);
 
-   tx_time.tv_sec = 0;
-   
-   data[0] = getSlotID();
-   data[1] = getSlotID() + 1; 	/* conid */
-   data[2] = T_CREATE_T_C;
-   data[3] = 1;
-   data[4] = getSlotID() + 1 	/*conid*/;
+	tx_time.tv_sec = 0;
 
-   write(fd, data, 5);
+	data[0] = getSlotID();
+	data[1] = getSlotID() + 1; 	/* conid */
+	data[2] = T_CREATE_T_C;
+	data[3] = 1;
+	data[4] = getSlotID() + 1 	/*conid*/;
 
-   //printf("%s:%s <\n", FILENAME, __FUNCTION__);
-   return true;
+	write(fd, data, 5);
+
+	//printf("%s:%s <\n", FILENAME, __FUNCTION__);
+	return true;
 }
 
 void eDVBCISlot::process_tpdu(unsigned char tpdu_tag, __u8* data, int asn_data_length, int con_id)
 {
-   switch (tpdu_tag) 
-   {
-	   case T_C_T_C_REPLY:
-	      printf("Got CTC Replay (slot %d, con %d)\n", getSlotID(), connection_id);
+	switch (tpdu_tag)
+	{
+		case T_C_T_C_REPLY:
+			printf("Got CTC Replay (slot %d, con %d)\n", getSlotID(), connection_id);
 
-          tx_time.tv_sec = 0;
-	      
-		  state = stateInserted;
-          
-          //answer with data last (and if we have with data)
-	      sendData(NULL, 0);
-	      
-	      break;
-	   case T_DELETE_T_C:
+			tx_time.tv_sec = 0;
+
+			state = stateInserted;
+
+			//answer with data last (and if we have with data)
+			sendData(NULL, 0);
+
+			break;
+		case T_DELETE_T_C:
 //FIXME: close sessions etc; reset ?
 //we must answer here with t_c_replay
 
-	      printf("Got \"Delete Transport Connection\" from module ->currently not handled!\n");
-	      
-	      break;
-	   case T_D_T_C_REPLY:
+			printf("Got \"Delete Transport Connection\" from module ->currently not handled!\n");
 
-	      printf("Got \"Delete Transport Connection Replay\" from module!\n");
-	      break;
+			break;
+		case T_D_T_C_REPLY:
 
-	   case T_REQUEST_T_C:
+			printf("Got \"Delete Transport Connection Replay\" from module!\n");
+			break;
 
-	      printf("Got \"Request Transport Connection\" from Module ->currently not handled!\n");
+		case T_REQUEST_T_C:
 
-	      break;
-	   case T_DATA_MORE:
-	   {
-		  int new_data_length = receivedLen + asn_data_length;
+			printf("Got \"Request Transport Connection\" from Module ->currently not handled!\n");
 
-	      printf("Got \"Data More\" from Module\n");
-
-		  __u8 *new_data_buffer = (__u8*)
-	      realloc(receivedData, new_data_length);
-
-		  receivedData = new_data_buffer;
-
-		  memcpy(receivedData + receivedLen, data, asn_data_length);
-
-		  receivedLen = new_data_length;
-
-	      tx_time.tv_sec = 0;
-	      break;
- 	  }
-	  case T_DATA_LAST:
-	 
-#ifdef x_debug	
-	        printf("Got \"Data Last\" from Module\n");
-#endif
-		
-	    tx_time.tv_sec = 0;
-		/* single package */
-	    if (receivedData == NULL) 
+			break;
+		case T_DATA_MORE:
 		{
+			int new_data_length = receivedLen + asn_data_length;
 
-	       printf("->single package\n");
-#ifdef x_debug	
-			printf("calling receiveData with data (len %d)> ", asn_data_length);
-			for(int i = 0;i < asn_data_length; i++)
-				printf("%02x ", data[i]);
-                        printf("\n");
+			printf("Got \"Data More\" from Module\n");
+
+			__u8 *new_data_buffer =
+			(__u8*) realloc(receivedData, new_data_length);
+
+			receivedData = new_data_buffer;
+
+			memcpy(receivedData + receivedLen, data, asn_data_length);
+
+			receivedLen = new_data_length;
+
+			tx_time.tv_sec = 0;
+			break;
+		}
+		case T_DATA_LAST:
+
+#ifdef x_debug
+			printf("Got \"Data Last\" from Module\n");
 #endif
 
-			eDVBCISession::receiveData(this, data, asn_data_length);
-			eDVBCISession::pollAll();
-		} else 
-		{
+			tx_time.tv_sec = 0;
+			/* single package */
+			if (receivedData == NULL)
+			{
+
+				printf("->single package\n");
+#ifdef x_debug
+				printf("calling receiveData with data (len %d)> ", asn_data_length);
+				for(int i = 0;i < asn_data_length; i++)
+					printf("%02x ", data[i]);
+				printf("\n");
+#endif
+
+				eDVBCISession::receiveData(this, data, asn_data_length);
+				eDVBCISession::pollAll();
+			} else 
+			{
 			/* chained package */
 			int new_data_length = receivedLen + asn_data_length;
 
-	        printf("->chained data\n");
+			printf("->chained data\n");
 
 			__u8 *new_data_buffer =
-	    	(__u8*) realloc(receivedData, new_data_length);
+			(__u8*) realloc(receivedData, new_data_length);
 	
 			receivedData = new_data_buffer;
 
 			memcpy(receivedData + receivedLen, data, asn_data_length);
-		
+
 			receivedLen = new_data_length;
-					
-#ifdef x_debug	
+
+#ifdef x_debug
 			printf("calling receiveData with data (len %d)> ", asn_data_length);
 			for(int i = 0;i < receivedLen; i++)
 				printf("%02x ", receivedData[i]);
-                        printf("\n");
+			printf("\n");
 #endif
 
 			eDVBCISession::receiveData(this, receivedData, receivedLen);
@@ -262,37 +262,37 @@ void eDVBCISlot::process_tpdu(unsigned char tpdu_tag, __u8* data, int asn_data_l
 			receivedData = NULL;
 			receivedLen = 0;
 		}
-	    break;
-	    case T_SB:
-	    {
-#ifdef x_debug	
-	      printf("Got \"SB\" from Module\n");
+		break;
+		case T_SB:
+		{
+#ifdef x_debug
+			printf("Got \"SB\" from Module\n");
 #endif
 
-	      if (data[0] & 0x80)
-	      {
-	      	printf("->data ready (%d)\n", getSlotID());
-	
-		    // send the RCV and ask for the data
-		    unsigned char send_data[5];
+			if (data[0] & 0x80)
+			{
+				printf("->data ready (%d)\n", getSlotID());
 
-		    send_data[0] = getSlotID();
-		    send_data[1] = connection_id;
-		    send_data[2] = T_RCV;
-		    send_data[3] = 1;
-		    send_data[4] = connection_id;
+				// send the RCV and ask for the data
+				unsigned char send_data[5];
 
-		    write(fd, send_data, 5);
-		    gettimeofday(&tx_time, 0);
-	      } else
-          {
-             tx_time.tv_sec = 0;
-          }
-	      break;
-	 }
-	 default:
-	      printf("unhandled tpdu_tag 0x%0x\n", tpdu_tag);
-   }
+				send_data[0] = getSlotID();
+				send_data[1] = connection_id;
+				send_data[2] = T_RCV;
+				send_data[3] = 1;
+				send_data[4] = connection_id;
+
+				write(fd, send_data, 5);
+				gettimeofday(&tx_time, 0);
+			} else
+			{
+				tx_time.tv_sec = 0;
+			}
+			break;
+		}
+		default:
+		printf("unhandled tpdu_tag 0x%0x\n", tpdu_tag);
+	}
 }
 
 #endif
@@ -314,15 +314,7 @@ eDVBCIInterfaces::eDVBCIInterfaces()
 		sprintf(filename, "/dev/ci%d", num_ci);
 #endif
 
-		if (::access(filename, R_OK) < 0)
-#ifdef __sh__
-		{
-			eDebug("stat on %s failed\n", filename);		
-#endif
-			break;
-#ifdef __sh__
-		}
-#endif
+		if (::access(filename, R_OK) < 0) break;
 
 		ePtr<eDVBCISlot> cislot;
 
@@ -1241,7 +1233,7 @@ int eDVBCISlot::send(const unsigned char *data, size_t len)
 		memcpy(d, data, len);
 
 #ifdef __sh__
-        sendData(d, len);
+		sendData(d, len);
 		notifier->setRequested(eSocketNotifier::Read | eSocketNotifier::Priority | eSocketNotifier::Write);
 #else
 		sendqueue.push( queueData(d, len) );
@@ -1308,201 +1300,201 @@ void eDVBCISlot::data(int what)
 			}
 		}
 		else
-			notifier->setRequested(eSocketNotifier::Read|eSocketNotifier::Priority); 
+			notifier->setRequested(eSocketNotifier::Read|eSocketNotifier::Priority);
 	}
 #else
-    	unsigned char data[1024];
-        int len = 1024;
-        unsigned char* d;
-        eData status;
-	    ca_slot_info_t info;
-		    
-        if (what & eSocketNotifier::Read)
-        {
-	        eDebugCI("eSocketNotifier::Read\n");
-            status = eDataReady;
-		    len = ::read(fd, data, len);
-        }    
-        else
-        if (what & eSocketNotifier::Write)
-        {
-	        eDebugCI("eSocketNotifier::Write\n");
-            status = eDataWrite;
-        }
-        else
-        if (what & eSocketNotifier::Priority)
-        {
-	        eDebugCI("eSocketNotifier::Priority\n");
-            status = eDataStatusChanged;
-        }
+		unsigned char data[1024];
+		int len = 1024;
+		unsigned char* d;
+		eData status;
+		ca_slot_info_t info;
 
-	    switch (getState())
-	    {
-	        case stateInvalid:
-		    {
-                 if (status == eDataStatusChanged)
-                 {
-                    info.num = getSlotID();
+		if (what & eSocketNotifier::Read)
+		{
+			eDebugCI("eSocketNotifier::Read\n");
+			status = eDataReady;
+			len = ::read(fd, data, len);
+		}
+		else
+		if (what & eSocketNotifier::Write)
+		{
+			eDebugCI("eSocketNotifier::Write\n");
+			status = eDataWrite;
+		}
+		else
+		if (what & eSocketNotifier::Priority)
+		{
+			eDebugCI("eSocketNotifier::Priority\n");
+			status = eDataStatusChanged;
+		}
 
-			        if (ioctl(fd, CA_GET_SLOT_INFO, &info) < 0)
-			                printf("IOCTL CA_GET_SLOT_INFO failed for slot %d\n", getSlotID());
+		switch (getState())
+		{
+			case stateInvalid:
+			{
+				if (status == eDataStatusChanged)
+				{
+					info.num = getSlotID();
 
-	   	            if (info.flags & CA_CI_MODULE_READY)
-		            {
-		                  printf("1. cam status changed ->cam now present\n");
+					if (ioctl(fd, CA_GET_SLOT_INFO, &info) < 0)
+						printf("IOCTL CA_GET_SLOT_INFO failed for slot %d\n", getSlotID());
 
-		                  state = stateInserted;
-	                      mmi_active = false;
+					if (info.flags & CA_CI_MODULE_READY)
+					{
+						printf("1. cam status changed ->cam now present\n");
 
-                          tx_time.tv_sec = 0;
+						state = stateInserted;
+						mmi_active = false;
 
-	                      application_manager = 0;
-	                      ca_manager = 0;
+						tx_time.tv_sec = 0;
 
-                          sendCreateTC();
+						application_manager = 0;
+						ca_manager = 0;
 
-                          eDVBCI_UI::getInstance()->setState(getSlotID(),1);
-		             }
-                  }
-                  else
-                  {
-                       usleep(100000);
-                  }
-		    }
-		    break;
-		    case stateInserted:
-            {    
-		       if (status == eDataReady)
-		       {
-                 eDebugCI("received data - len %d\n", len);
-               
-		         //int s_id = data[0];
-		         //int c_id = data[1];
+						sendCreateTC();
 
-		         //printf("%d: s_id = %d, c_id = %d\n", slot->slot, s_id, c_id);
-                       
-		         d = data;
+						eDVBCI_UI::getInstance()->setState(getSlotID(),1);
+					}
+				}
+				else
+				{
+					usleep(100000);
+				}
+			}
+			break;
+			case stateInserted:
+			{
+				if (status == eDataReady)
+				{
+					eDebugCI("received data - len %d\n", len);
 
-		         /* taken from the dvb-apps */
-		         int data_length = len - 2;
-		         d += 2; /* remove leading slot and connection id */
-		         while (data_length > 0)
-		         {
-			         unsigned char tpdu_tag = d[0];
-			         unsigned short asn_data_length;
-			         int length_field_len;
+					//int s_id = data[0];
+					//int c_id = data[1];
 
-			         if ((length_field_len = asn_1_decode(&asn_data_length, d + 1, data_length - 1)) < 0) 
-			         {
-				         printf("Received data with invalid asn from module on slot %02x\n", getSlotID());
-				         break;
-			         }
+					//printf("%d: s_id = %d, c_id = %d\n", slot->slot, s_id, c_id);
 
-			         if ((asn_data_length < 1) ||
-		    		      (asn_data_length > (data_length - (1 + length_field_len)))) 
-			         {
-				         printf("Received data with invalid length from module on slot %02x\n", getSlotID());
-				         break;
-			         }
+					d = data;
 
-			         connection_id = d[1 + length_field_len];
+					/* taken from the dvb-apps */
+					int data_length = len - 2;
+					d += 2; /* remove leading slot and connection id */
+					while (data_length > 0)
+					{
+						unsigned char tpdu_tag = d[0];
+						unsigned short asn_data_length;
+						int length_field_len;
 
-			         //printf("Setting connection_id from received data to %d\n", slot->connection_id);
+						if ((length_field_len = asn_1_decode(&asn_data_length, d + 1, data_length - 1)) < 0)
+						{
+							printf("Received data with invalid asn from module on slot %02x\n", getSlotID());
+							break;
+						}
 
-			         d += 1 + length_field_len + 1;
-			         data_length -= (1 + length_field_len + 1);
-			         asn_data_length--;
+						if ((asn_data_length < 1) ||
+							(asn_data_length > (data_length - (1 + length_field_len))))
+						{
+							printf("Received data with invalid length from module on slot %02x\n", getSlotID());
+							break;
+						}
 
-			         process_tpdu(tpdu_tag, d, asn_data_length, connection_id);
+						connection_id = d[1 + length_field_len];
 
-			         // skip over the consumed data
-			         d += asn_data_length;
-			         data_length -= asn_data_length;
+						//printf("Setting connection_id from received data to %d\n", slot->connection_id);
 
-		         } // while (data_length)
-		       } /* data ready */
-		       else if (status == eDataWrite)
-		       {
-		           if (!sendqueue.empty() && (tx_time.tv_sec == 0)) 
-                   {
-			          const queueData &qe = sendqueue.top();
-			     
-			          int res = write(fd, qe.data, qe.len);
-			          if (res >= 0 && (unsigned int)res == qe.len)
-			          {
-				         delete [] qe.data;
-				         sendqueue.pop();
-					     gettimeofday(&tx_time, 0);
-			          }
-			          else
-			          {
-				         printf("r = %d, %m\n", res);
-			          }			
-		           }
+						d += 1 + length_field_len + 1;
+						data_length -= (1 + length_field_len + 1);
+						asn_data_length--;
 
-                   /* the spec say's that we _must_ poll the connection
-                    * if the transport connection is in active state
-                    */
-                   if ((tx_time.tv_sec == 0) && (!checkQueueSize()) &&
-			           (time_after(last_poll_time, 1000)))
-		           {
-		              sendData(NULL, 0);
-		              clock_gettime(CLOCK_MONOTONIC, &last_poll_time);
-                   }
-		       }
-		       else if (status == eDataStatusChanged)
-		       {
-                   info.num = getSlotID();
+						process_tpdu(tpdu_tag, d, asn_data_length, connection_id);
 
-		           if (ioctl(fd, CA_GET_SLOT_INFO, &info) < 0)
-			           printf("IOCTL CA_GET_SLOT_INFO failed for slot %d\n", getSlotID());
-	               
-	               if (info.flags & CA_CI_MODULE_READY)
-		           {
-		              printf("2. cam status changed ->cam now present\n");
+						// skip over the consumed data
+						d += asn_data_length;
+						data_length -= asn_data_length;
 
-	                  mmi_active = false;
-		              state = stateInvalid;
-	                  application_manager = 0;
-	                  ca_manager = 0;
-                      tx_time.tv_sec = 0;
-                      
-		              eDVBCI_UI::getInstance()->setState(getSlotID(),1); 
+					} // while (data_length)
+				} /* data ready */
+				else if (status == eDataWrite)
+				{
+					if (!sendqueue.empty() && (tx_time.tv_sec == 0)) 
+					{
+						const queueData &qe = sendqueue.top();
 
-                   } 
-                   else
-	   	           if (!(info.flags & CA_CI_MODULE_READY))
-			       {
-		               printf("cam status changed ->cam now _not_ present\n");
+						int res = write(fd, qe.data, qe.len);
+						if (res >= 0 && (unsigned int)res == qe.len)
+						{
+							delete [] qe.data;
+							sendqueue.pop();
+							gettimeofday(&tx_time, 0);
+						}
+						else
+						{
+							printf("r = %d, %m\n", res);
+						}
+					}
 
-	 	               eDVBCISession::deleteSessions(this);
+					/* the spec say's that we _must_ poll the connection
+					 * if the transport connection is in active state
+					 */
+					if ((tx_time.tv_sec == 0) && (!checkQueueSize()) &&
+						 (time_after(last_poll_time, 1000)))
+					{
+						sendData(NULL, 0);
+						clock_gettime(CLOCK_MONOTONIC, &last_poll_time);
+					}
+				}
+				else if (status == eDataStatusChanged)
+				{
+					info.num = getSlotID();
 
-	                   mmi_active = false;
-			           state = stateInvalid;
-	                   application_manager = 0;
-	                   ca_manager = 0;
-                       tx_time.tv_sec = 0;
+					if (ioctl(fd, CA_GET_SLOT_INFO, &info) < 0)
+						printf("IOCTL CA_GET_SLOT_INFO failed for slot %d\n", getSlotID());
 
-	                   eDVBCIInterfaces::getInstance()->ciRemoved(this);
+					if (info.flags & CA_CI_MODULE_READY)
+					{
+						printf("2. cam status changed ->cam now present\n");
 
-			           eDVBCI_UI::getInstance()->setState(getSlotID(),0);
+						mmi_active = false;
+						state = stateInvalid;
+						application_manager = 0;
+						ca_manager = 0;
+						tx_time.tv_sec = 0;
 
-	                   while(sendqueue.size())
-	                   {
-		        	       delete [] sendqueue.top().data;
-		        	       sendqueue.pop();
-	                   }
-                   }
-		       }
-		    }
-		    break;
-		    default:
-               printf("unknown state %d\n", state);		
-		    break;
-	    }
+						eDVBCI_UI::getInstance()->setState(getSlotID(),1); 
+
+					}
+					else
+					if (!(info.flags & CA_CI_MODULE_READY))
+					{
+						printf("cam status changed ->cam now _not_ present\n");
+
+						eDVBCISession::deleteSessions(this);
+
+						mmi_active = false;
+						state = stateInvalid;
+						application_manager = 0;
+						ca_manager = 0;
+						tx_time.tv_sec = 0;
+
+						eDVBCIInterfaces::getInstance()->ciRemoved(this);
+
+						eDVBCI_UI::getInstance()->setState(getSlotID(),0);
+
+						while(sendqueue.size())
+						{
+							delete [] sendqueue.top().data;
+							sendqueue.pop();
+						}
+					}
+				}
+			}
+			break;
+			default:
+				printf("unknown state %d\n", state);
+			break;
+		}
 
 		notifier->setRequested(eSocketNotifier::Read | eSocketNotifier::Priority | eSocketNotifier::Write);
-       
+
 #endif
 }
 
@@ -1546,16 +1538,16 @@ eDVBCISlot::eDVBCISlot(eMainloop *context, int nr)
 #ifdef __sh__
 		connection_id = slotid + 1;
 
-	    tx_time.tv_sec = 0;
-	    tx_time.tv_usec = 0;
-	    last_poll_time.tv_sec = 0;
-        last_poll_time.tv_nsec = 0;
+		tx_time.tv_sec = 0;
+		tx_time.tv_usec = 0;
+		last_poll_time.tv_sec = 0;
+		last_poll_time.tv_nsec = 0;
 #endif
 		notifier = eSocketNotifier::create(context, fd, eSocketNotifier::Read | eSocketNotifier::Priority | eSocketNotifier::Write);
 		CONNECT(notifier->activated, eDVBCISlot::data);
 
 #ifdef __sh__
-        reset();
+	reset();
 #endif
 	} else
 	{
@@ -1597,7 +1589,7 @@ int eDVBCISlot::reset()
 
 	eDVBCI_UI::getInstance()->setAppName(getSlotID(), "");
 	eDVBCISession::deleteSessions(this);
-    eDVBCIInterfaces::getInstance()->ciRemoved(this);
+	eDVBCIInterfaces::getInstance()->ciRemoved(this);
 
 #else
 	if (state == stateInvalid)

@@ -109,10 +109,10 @@ class eDVBCISlot: public iObject, public Object
 	bool plugged;
 #ifdef __sh__
 	//dagobert
-	char 		connection_id;
-	bool		mmi_active;	
+	char connection_id;
+	bool mmi_active;
 
-    int            receivedLen;
+	int receivedLen;
 	unsigned char* receivedData;
 
 #endif
@@ -152,9 +152,9 @@ public:
 	void mmiOpened() { mmi_active = true; };
 	void mmiClosed() { mmi_active = false; };
 
-    void process_tpdu(unsigned char tpdu_tag, __u8* data, int asn_data_length, int con_id);
-    bool sendCreateTC();
-    eData sendData(unsigned char* data, int len);
+	void process_tpdu(unsigned char tpdu_tag, __u8* data, int asn_data_length, int con_id);
+	bool sendCreateTC();
+	eData sendData(unsigned char* data, int len);
 
 	struct timeval tx_time;
 	struct timespec last_poll_time;

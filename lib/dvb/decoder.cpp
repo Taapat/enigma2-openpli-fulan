@@ -769,11 +769,11 @@ int eTSMPEGDecoder::setState()
 				m_video->unfreeze();
 			else
 				m_video->freeze();
-#if defined(__sh__) 
-/* 
-the VIDEO_CONTINUE would reset the FASTFORWARD  command so we 
+#if defined(__sh__)
+/*
+the VIDEO_CONTINUE would reset the FASTFORWARD  command so we
 execute the FASTFORWARD after the VIDEO_CONTINUE
-*/ 
+*/
 			if(s[1])
 			{
 				m_video->setFastForward(s[2]);
@@ -784,7 +784,7 @@ execute the FASTFORWARD after the VIDEO_CONTINUE
 				m_video->setSlowMotion(s[1]);
 				m_video->setFastForward(s[2]);
 			}
-#endif 
+#endif
 		}
 		if (changed & (changeState|changeAudio) && m_audio)
 		{
@@ -1079,7 +1079,7 @@ RESULT eTSMPEGDecoder::showSinglePic(const char *filename)
 #if defined(__sh__) // our driver has a different behaviour for iframes
 			if (m_video_clip_fd >= 0)  
 				finishShowSinglePic();  
-#endif  
+#endif
 			if (m_video_clip_fd == -1)
 				m_video_clip_fd = open("/dev/dvb/adapter0/video0", O_WRONLY);
 			if (m_video_clip_fd >= 0)
@@ -1095,7 +1095,7 @@ RESULT eTSMPEGDecoder::showSinglePic(const char *filename)
 				read(f, iframe, s.st_size);
 				if (ioctl(m_video_clip_fd, VIDEO_SELECT_SOURCE, VIDEO_SOURCE_MEMORY) < 0)
 					eDebug("VIDEO_SELECT_SOURCE MEMORY failed (%m)");
-#if not defined(__sh__) 
+#if not defined(__sh__)
 				if (ioctl(m_video_clip_fd, VIDEO_SET_STREAMTYPE, streamtype) < 0)
 					eDebug("VIDEO_SET_STREAMTYPE failed(%m)");
 #endif 
@@ -1115,7 +1115,7 @@ RESULT eTSMPEGDecoder::showSinglePic(const char *filename)
 				if (!seq_end_avail)
 					write(m_video_clip_fd, seq_end, sizeof(seq_end));
 				write(m_video_clip_fd, stuffing, 8192);
-#if not defined(__sh__) 
+#if not defined(__sh__)
 				m_showSinglePicTimer->start(150, true);
 #endif 
 			}

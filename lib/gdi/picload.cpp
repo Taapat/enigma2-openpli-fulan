@@ -21,7 +21,7 @@ static std::string getSize(const char* file)
 	if (stat64(file, &s) < 0)
 		return "";
 	char tmp[20];
-	snprintf(tmp, 20, "%ld kB",(long)s.st_size / 1024);
+	snprintf(tmp, 20, "%ld kB", (long)s.st_size / 1024);
 	return tmp;
 }
 
@@ -82,13 +82,13 @@ static unsigned char *color_resize(unsigned char * orgin, int ox, int oy, int dx
 	for (int j = 0; j < dy; j++)
 	{
 		int ya = j * oy / dy;
-		int yb = (j + 1) * oy / dy; 
+		int yb = (j + 1) * oy / dy;
 		if (yb >= oy)
 			yb = oy - 1;
 		for (int i = 0; i < dx; i++, p += 3)
 		{
 			int xa = i * ox / dx;
-			int xb = (i + 1) * ox / dx; 
+			int xb = (i + 1) * ox / dx;
 			if (xb >= ox)
 				xb = ox - 1;
 			int r = 0;
@@ -164,7 +164,7 @@ static unsigned char *bmp_load(const char *file,  int *x, int *y)
 
 	unsigned char *pic_buffer = new unsigned char[(*x) * (*y) * 3];
 	unsigned char *wr_buffer = pic_buffer + (*x) * ((*y) - 1) * 3;
-	
+
 	switch (bpp)
 	{
 		case 4:
@@ -175,7 +175,7 @@ static unsigned char *bmp_load(const char *file,  int *x, int *y)
 			unsigned char * tbuffer = new unsigned char[*x / 2 + 1];
 			if (tbuffer == NULL)
 				return NULL;
-			for (int i = 0; i < *y; i++) 
+			for (int i = 0; i < *y; i++)
 			{
 				read(fd, tbuffer, (*x) / 2 + *x % 2);
 				int j;
@@ -296,7 +296,6 @@ static void png_load(Cfilepara* filepara, int background)
 	png_read_info(png_ptr, info_ptr);
 	png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, &interlace_type, NULL, NULL);
 
-//----------------------------
 	if (color_type == PNG_COLOR_TYPE_GRAY || color_type & PNG_COLOR_MASK_PALETTE)
 	{
 		if (bit_depth < 8)
@@ -309,7 +308,7 @@ static void png_load(Cfilepara* filepara, int background)
 		filepara->oy = height;
 		filepara->pic_buffer = pic_buffer;
 		filepara->bits = 8;
-	
+
 		png_bytep *rowptr=new png_bytep[height];
 		for (unsigned int i=0; i!=height; i++)
 		{
@@ -318,7 +317,7 @@ static void png_load(Cfilepara* filepara, int background)
 		}
 		png_read_rows(png_ptr, rowptr, 0, height);
 		delete [] rowptr;
-	
+
 		if (png_get_valid(png_ptr, info_ptr, PNG_INFO_PLTE))
 		{
 			png_color *palette;
@@ -342,50 +341,49 @@ static void png_load(Cfilepara* filepara, int background)
 					filepara->palette[i].a=255-trans[i];
 			}
 		}
-//---------------------------
 	}
 	else
 	{
-	if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
-		png_set_expand(png_ptr);
-	if (bit_depth == 16)
-		png_set_strip_16(png_ptr);
-	if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
-		png_set_gray_to_rgb(png_ptr);
-	if ((color_type == PNG_COLOR_TYPE_RGB_ALPHA) || (color_type == PNG_COLOR_TYPE_GRAY_ALPHA))
-	{
-		png_set_strip_alpha(png_ptr);
-		png_color_16 bg;
-		bg.red = (background >> 16) & 0xFF;
-		bg.green = (background >> 8) & 0xFF;
-		bg.blue = (background) & 0xFF;
-		bg.gray = bg.green;
-		bg.index = 0;
-		png_set_background(png_ptr, &bg, PNG_BACKGROUND_GAMMA_SCREEN, 0, 1.0);
-	}
-	int number_passes = png_set_interlace_handling(png_ptr);
-	png_read_update_info(png_ptr, info_ptr);
+		if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
+			png_set_expand(png_ptr);
+		if (bit_depth == 16)
+			png_set_strip_16(png_ptr);
+		if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
+			png_set_gray_to_rgb(png_ptr);
+		if ((color_type == PNG_COLOR_TYPE_RGB_ALPHA) || (color_type == PNG_COLOR_TYPE_GRAY_ALPHA))
+		{
+			png_set_strip_alpha(png_ptr);
+			png_color_16 bg;
+			bg.red = (background >> 16) & 0xFF;
+			bg.green = (background >> 8) & 0xFF;
+			bg.blue = (background) & 0xFF;
+			bg.gray = bg.green;
+			bg.index = 0;
+			png_set_background(png_ptr, &bg, PNG_BACKGROUND_GAMMA_SCREEN, 0, 1.0);
+		}
+		int number_passes = png_set_interlace_handling(png_ptr);
+		png_read_update_info(png_ptr, info_ptr);
 
-	if (width * 3 != png_get_rowbytes(png_ptr, info_ptr))
-	{
-		eDebug("[Picload] Error processing (did not get RGB data from PNG file)");
-		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
-		fclose(fh);
-		return;
-	}
+		if (width * 3 != png_get_rowbytes(png_ptr, info_ptr))
+		{
+			eDebug("[Picload] Error processing (did not get RGB data from PNG file)");
+			png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+			fclose(fh);
+			return;
+		}
 
-	unsigned char *pic_buffer = new unsigned char[height * width * 3];
-	filepara->ox = width;
-	filepara->oy = height;
-	filepara->pic_buffer = pic_buffer;
+		unsigned char *pic_buffer = new unsigned char[height * width * 3];
+		filepara->ox = width;
+		filepara->oy = height;
+		filepara->pic_buffer = pic_buffer;
 
-	for(int pass = 0; pass < number_passes; pass++)
-	{
-		fbptr = (png_byte *)pic_buffer;
-		for (i = 0; i < height; i++, fbptr += width * 3)
-			png_read_row(png_ptr, fbptr, NULL);
-	}
-	png_read_end(png_ptr, info_ptr);
+		for(int pass = 0; pass < number_passes; pass++)
+		{
+			fbptr = (png_byte *)pic_buffer;
+			for (i = 0; i < height; i++, fbptr += width * 3)
+				png_read_row(png_ptr, fbptr, NULL);
+		}
+		png_read_end(png_ptr, info_ptr);
 	}
 	png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 	fclose(fh);
@@ -445,7 +443,7 @@ static unsigned char *jpeg_load(const char *file, int *ox, int *oy, unsigned int
 	ciptr->scale_denom = s;
 
 	jpeg_start_decompress(ciptr);
-	
+
 	*ox=ciptr->output_width;
 	*oy=ciptr->output_height;
 	// eDebug("jpeg_read ox=%d oy=%d w=%d (%d), h=%d (%d) scale=%d rec_outbuf_height=%d", ciptr->output_width, ciptr->output_height, ciptr->image_width, max_x, ciptr->image_height, max_y, ciptr->scale_denom, ciptr->rec_outbuf_height);
@@ -471,41 +469,41 @@ static unsigned char *jpeg_load(const char *file, int *ox, int *oy, unsigned int
 
 static int jpeg_save(const char * filename, int ox, int oy, unsigned char *pic_buffer)
 {
- 	struct jpeg_compress_struct cinfo;
- 	struct jpeg_error_mgr jerr;
- 	FILE * outfile;		
- 	JSAMPROW row_pointer[1];
- 	int row_stride;		
- 
- 	cinfo.err = jpeg_std_error(&jerr);
- 	jpeg_create_compress(&cinfo);
- 
- 	if ((outfile = fopen(filename, "wb")) == NULL) 
+	struct jpeg_compress_struct cinfo;
+	struct jpeg_error_mgr jerr;
+	FILE * outfile;
+	JSAMPROW row_pointer[1];
+	int row_stride;
+
+	cinfo.err = jpeg_std_error(&jerr);
+	jpeg_create_compress(&cinfo);
+
+	if ((outfile = fopen(filename, "wb")) == NULL)
 	{
 		eDebug("[Picload] jpeg can't open %s", filename);
 		return 1;
 	}
 	eDebug("[Picload] save Thumbnail... %s",filename);
 
- 	jpeg_stdio_dest(&cinfo, outfile);
- 
- 	cinfo.image_width = ox;
- 	cinfo.image_height = oy;
- 	cinfo.input_components = 3;
- 	cinfo.in_color_space = JCS_RGB;
- 	jpeg_set_defaults(&cinfo);
- 	jpeg_set_quality(&cinfo, 70, TRUE );
- 	jpeg_start_compress(&cinfo, TRUE);
- 	row_stride = ox * 3;
- 	while (cinfo.next_scanline < cinfo.image_height) 
+	jpeg_stdio_dest(&cinfo, outfile);
+
+	cinfo.image_width = ox;
+	cinfo.image_height = oy;
+	cinfo.input_components = 3;
+	cinfo.in_color_space = JCS_RGB;
+	jpeg_set_defaults(&cinfo);
+	jpeg_set_quality(&cinfo, 70, TRUE );
+	jpeg_start_compress(&cinfo, TRUE);
+	row_stride = ox * 3;
+	while (cinfo.next_scanline < cinfo.image_height)
 	{
- 		row_pointer[0] = & pic_buffer[cinfo.next_scanline * row_stride];
- 		(void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
- 	}
- 	jpeg_finish_compress(&cinfo);
- 	fclose(outfile);
- 	jpeg_destroy_compress(&cinfo);
- 	return 0;
+		row_pointer[0] = & pic_buffer[cinfo.next_scanline * row_stride];
+		(void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
+	}
+	jpeg_finish_compress(&cinfo);
+	fclose(outfile);
+	jpeg_destroy_compress(&cinfo);
+	return 0;
 }
 
 //-------------------------------------------------------------------
@@ -535,9 +533,9 @@ static void gif_load(Cfilepara* filepara)
 	ColorMapObject *cmap;
 	int cmaps;
 	int extcode;
-	
+
 	gft = DGifOpenFileName(filepara->file);
-	if (gft == NULL) 
+	if (gft == NULL)
 		return;
 	do
 	{
@@ -704,21 +702,19 @@ void ePicLoad::decodePic()
 		
 		fclose(fp);
 	}
-	
+
 	eDebug("[Picload] software decode picture... %s",m_filepara->file);
 
 	switch(m_filepara->id)
 	{
-		case F_PNG: png_load(m_filepara, m_conf.background); break;
+		case F_PNG:	png_load(m_filepara, m_conf.background); break;
 		case F_JPEG:	m_filepara->pic_buffer = jpeg_load(m_filepara->file, &m_filepara->ox, &m_filepara->oy, m_filepara->max_x, m_filepara->max_y);	break;
 		case F_BMP:	m_filepara->pic_buffer = bmp_load(m_filepara->file, &m_filepara->ox, &m_filepara->oy);	break;
-		case F_GIF: gif_load(m_filepara); break;
+		case F_GIF:	gif_load(m_filepara); break;
 	}
-	
+
 	if(m_filepara->pic_buffer != NULL)
-	{
 		resizePic();
-	}
 }
 
 void ePicLoad::decodeThumb()
@@ -729,7 +725,7 @@ void ePicLoad::decodeThumb()
 	bool cachefile_found = false;
 	std::string cachefile = "";
 	std::string cachedir = "/.Thumbnails";
-	
+
 	if(m_filepara->id == F_JPEG)
 	{
 		Cexif *exif = new Cexif;
@@ -755,7 +751,7 @@ void ePicLoad::decodeThumb()
 		}
 		delete exif;
 	}
-	
+
 	if((! exif_thumbnail) && m_conf.usecache)
 	{
 		if(FILE *f=fopen(m_filepara->file, "rb"))
@@ -770,16 +766,16 @@ void ePicLoad::decodeThumb()
 				crc32 = crc32_table[((crc32) ^ (c)) & 0xFF] ^ ((crc32) >> 8);
 				if(--count < 0) break;
 			}
-	
+
 			fclose(f);
 			crc32 = ~crc32;
 			sprintf(crcstr, "%08lX", crc32);
-		
+
 			cachedir = m_filepara->file;
 			unsigned int pos = cachedir.find_last_of("/");
 			if (pos != std::string::npos)
 				cachedir = cachedir.substr(0, pos) + "/.Thumbnails";
-			
+
 			cachefile = cachedir + std::string("/pc_") + crcstr;
 			if(!access(cachefile.c_str(), R_OK))
 			{
@@ -791,8 +787,8 @@ void ePicLoad::decodeThumb()
 			}
 		}
 	}
+
 	int hw_decoded = 0;
-	
 	if(m_filepara->id == F_JPEG)
 	{
 		eDebug("[Picload] hardware decode picture... %s",m_filepara->file);
@@ -824,7 +820,7 @@ void ePicLoad::decodeThumb()
 				hw_decoded = 1;
 			}
 		}
-		
+
 		if(!hw_decoded)
 		{
 			eDebug("hardware decode error");
@@ -832,6 +828,7 @@ void ePicLoad::decodeThumb()
 			fclose(fp);
 		}
 	}
+
 	if(!hw_decoded)
 	{
 		switch(m_filepara->id)
@@ -842,10 +839,10 @@ void ePicLoad::decodeThumb()
 			case F_GIF: gif_load(m_filepara); break;
 		}
 	}
-	
+
 	if(exif_thumbnail)
 		::unlink(THUMBNAILTMPFILE);
-	
+
 	if(m_filepara->pic_buffer != NULL)
 	{
 		//save cachefile
@@ -853,7 +850,7 @@ void ePicLoad::decodeThumb()
 		{
 			if(access(cachedir.c_str(), R_OK))
 				::mkdir(cachedir.c_str(), 0755);
-			
+
 			//resize for Thumbnail
 			if(!hw_decoded)
 			{
@@ -887,7 +884,12 @@ void ePicLoad::resizePic()
 {
 	int imx, imy;
 
-	if((m_conf.aspect_ratio * m_filepara->oy * m_filepara->max_x / m_filepara->ox) <= m_filepara->max_y)
+	if (m_conf.aspect_ratio == 0)  // do not keep aspect ration but just fill the destination area
+	{
+		imx = m_filepara->max_x;
+		imy = m_filepara->max_y;
+	}
+	else if ((m_conf.aspect_ratio * m_filepara->oy * m_filepara->max_x / m_filepara->ox) <= m_filepara->max_y)
 	{
 		imx = m_filepara->max_x;
 		imy = (int)(m_conf.aspect_ratio * m_filepara->oy * m_filepara->max_x / m_filepara->ox);
@@ -897,10 +899,10 @@ void ePicLoad::resizePic()
 		imx = (int)((1.0/m_conf.aspect_ratio) * m_filepara->ox * m_filepara->max_y / m_filepara->oy);
 		imy = m_filepara->max_y;
 	}
-	
+
 	if (m_filepara->bits == 8)
 		m_filepara->pic_buffer = simple_resize_8(m_filepara->pic_buffer, m_filepara->ox, m_filepara->oy, imx, imy);
-	else if(m_conf.resizetype)
+	else if (m_conf.resizetype)
 		m_filepara->pic_buffer = color_resize(m_filepara->pic_buffer, m_filepara->ox, m_filepara->oy, imx, imy);
 	else
 		m_filepara->pic_buffer = simple_resize_24(m_filepara->pic_buffer, m_filepara->ox, m_filepara->oy, imx, imy);
@@ -928,9 +930,7 @@ void ePicLoad::gotMessage(const Message &msg)
 		case Message::decode_finished: // called from main thread
 			//eDebug("[Picload] decode finished... %s", m_filepara->file);
 			if(m_filepara->callback)
-			{
 				PictureData(m_filepara->picinfo.c_str());
-			}
 			else
 			{
 				if(m_filepara != NULL)
@@ -953,13 +953,13 @@ int ePicLoad::startThread(int what, const char *file, int x, int y, bool async)
 		m_filepara->callback = false;
 		return 1;
 	}
-	
+
 	if(m_filepara != NULL)
 	{
 		delete m_filepara;
 		m_filepara = NULL;
 	}
-	
+
 	int file_id = -1;
 	unsigned char id[10];
 	int fd = ::open(file, O_RDONLY);
@@ -969,10 +969,10 @@ int ePicLoad::startThread(int what, const char *file, int x, int y, bool async)
 
 	if(id[1] == 'P' && id[2] == 'N' && id[3] == 'G')			file_id = F_PNG;
 	else if(id[6] == 'J' && id[7] == 'F' && id[8] == 'I' && id[9] == 'F')	file_id = F_JPEG;
-	else if(id[0] == 0xff && id[1] == 0xd8 && id[2] == 0xff) 		file_id = F_JPEG;
+	else if(id[0] == 0xff && id[1] == 0xd8 && id[2] == 0xff)		file_id = F_JPEG;
 	else if(id[0] == 'B' && id[1] == 'M' )					file_id = F_BMP;
 	else if(id[0] == 'G' && id[1] == 'I' && id[2] == 'F')			file_id = F_GIF;
-	
+
 	if(file_id < 0)
 	{
 		eDebug("[Picload] <format not supportet>");
@@ -980,9 +980,9 @@ int ePicLoad::startThread(int what, const char *file, int x, int y, bool async)
 	}
 
 	m_filepara = new Cfilepara(file, file_id, getSize(file));
-	x > 0 ? m_filepara->max_x = x : m_filepara->max_x = m_conf.max_x;
-	y > 0 ? m_filepara->max_y = y : m_filepara->max_y = m_conf.max_y;
-	
+	m_filepara->max_x = x > 0 ? x : m_conf.max_x;
+	m_filepara->max_y = x > 0 ? y : m_conf.max_y;
+
 	if(m_filepara->max_x <= 0 || m_filepara->max_y <= 0)
 	{
 		delete m_filepara;
@@ -990,7 +990,7 @@ int ePicLoad::startThread(int what, const char *file, int x, int y, bool async)
 		eDebug("[Picload] <error in Para>");
 		return 1;
 	}
-	
+
 	if (async) {
 		if(what==1)
 			msg_thread.send(Message(Message::decode_Pic));
@@ -1018,7 +1018,7 @@ RESULT ePicLoad::getThumbnail(const char *file, int x, int y, bool async)
 PyObject *ePicLoad::getInfo(const char *filename)
 {
 	ePyObject list;
-	
+
 	Cexif *exif = new Cexif;
 	if(exif->DecodeExif(filename))
 	{
@@ -1092,145 +1092,142 @@ int ePicLoad::getData(ePtr<gPixmap> &result)
 		m_filepara = NULL;
 		return 0;
 	}
-//----------------
+
 	if (m_filepara->bits == 8)
 	{
-	result=new gPixmap(eSize(m_filepara->max_x, m_filepara->max_y), 8);
-	gSurface *surface = result->surface;
-	surface->clut.data = m_filepara->palette;
-	surface->clut.colors = m_filepara->palette_size;
-	surface->clut.start=0;
-	m_filepara->palette = NULL; // transfer ownership
-	int o_y=0, u_y=0, v_x=0, h_x=0;
+		result=new gPixmap(eSize(m_filepara->max_x, m_filepara->max_y), 8);
+		gSurface *surface = result->surface;
+		surface->clut.data = m_filepara->palette;
+		surface->clut.colors = m_filepara->palette_size;
+		surface->clut.start=0;
+		m_filepara->palette = NULL; // transfer ownership
+		int o_y=0, u_y=0, v_x=0, h_x=0;
 
-	unsigned char *tmp_buffer=((unsigned char *)(surface->data));
-	unsigned char *origin = m_filepara->pic_buffer;
-	
-	if(m_filepara->oy < m_filepara->max_y)
-	{
-		o_y = (m_filepara->max_y - m_filepara->oy) / 2;
-		u_y = m_filepara->max_y - m_filepara->oy - o_y;
-	}
-	if(m_filepara->ox < m_filepara->max_x)
-	{
-		v_x = (m_filepara->max_x - m_filepara->ox) / 2;
-		h_x = m_filepara->max_x - m_filepara->ox - v_x;
-	}
-	
-	int background;
-	gRGB bg(m_conf.background);
-	background = surface->clut.findColor(bg);
+		unsigned char *tmp_buffer=((unsigned char *)(surface->data));
+		unsigned char *origin = m_filepara->pic_buffer;
 
-	if(m_filepara->oy < m_filepara->max_y)
-	{
-		memset(tmp_buffer, background, o_y * m_filepara->ox);
-		tmp_buffer += o_y * m_filepara->ox;
-	}
-	
-	for(int a = m_filepara->oy; a > 0; --a)
-	{
+		if(m_filepara->oy < m_filepara->max_y)
+		{
+			o_y = (m_filepara->max_y - m_filepara->oy) / 2;
+			u_y = m_filepara->max_y - m_filepara->oy - o_y;
+		}
 		if(m_filepara->ox < m_filepara->max_x)
 		{
-			memset(tmp_buffer, background, v_x);
-			tmp_buffer += v_x;
+			v_x = (m_filepara->max_x - m_filepara->ox) / 2;
+			h_x = m_filepara->max_x - m_filepara->ox - v_x;
 		}
 
-		memcpy(tmp_buffer, origin, m_filepara->ox);
-		tmp_buffer += m_filepara->ox;
-		origin += m_filepara->ox;
+		int background;
+		gRGB bg(m_conf.background);
+		background = surface->clut.findColor(bg);
 
-		if(m_filepara->ox < m_filepara->max_x)
+		if(m_filepara->oy < m_filepara->max_y)
 		{
-			memset(tmp_buffer, background, h_x);
-			tmp_buffer += h_x;
+			memset(tmp_buffer, background, o_y * m_filepara->ox);
+			tmp_buffer += o_y * m_filepara->ox;
 		}
-	}
-	
-	if(m_filepara->oy < m_filepara->max_y)
-	{
-		memset(tmp_buffer, background, u_y * m_filepara->ox);
-		tmp_buffer += u_y * m_filepara->ox;
-	}
-	
+
+		for(int a = m_filepara->oy; a > 0; --a)
+		{
+			if(m_filepara->ox < m_filepara->max_x)
+			{
+				memset(tmp_buffer, background, v_x);
+				tmp_buffer += v_x;
+			}
+
+			memcpy(tmp_buffer, origin, m_filepara->ox);
+			tmp_buffer += m_filepara->ox;
+			origin += m_filepara->ox;
+
+			if(m_filepara->ox < m_filepara->max_x)
+			{
+				memset(tmp_buffer, background, h_x);
+				tmp_buffer += h_x;
+			}
+		}
+
+		if(m_filepara->oy < m_filepara->max_y)
+		{
+			memset(tmp_buffer, background, u_y * m_filepara->ox);
+			tmp_buffer += u_y * m_filepara->ox;
+		}
 	}
 	else
-//----------------
 	{
-	result=new gPixmap(eSize(m_filepara->max_x, m_filepara->max_y), 32);
-	gSurface *surface = result->surface;
-	int o_y=0, u_y=0, v_x=0, h_x=0;
+		result=new gPixmap(eSize(m_filepara->max_x, m_filepara->max_y), 32);
+		gSurface *surface = result->surface;
+		int o_y=0, u_y=0, v_x=0, h_x=0;
 
-	unsigned char *tmp_buffer=((unsigned char *)(surface->data));
-	unsigned char *origin = m_filepara->pic_buffer;
-	
-	if(m_filepara->oy < m_filepara->max_y)
-	{
-		o_y = (m_filepara->max_y - m_filepara->oy) / 2;
-		u_y = m_filepara->max_y - m_filepara->oy - o_y;
-	}
-	if(m_filepara->ox < m_filepara->max_x)
-	{
-		v_x = (m_filepara->max_x - m_filepara->ox) / 2;
-		h_x = m_filepara->max_x - m_filepara->ox - v_x;
-	}
-	
-	int background = m_conf.background;
-	if(m_filepara->oy < m_filepara->max_y)
-	{
-		for(int ma = o_y * m_filepara->ox; ma != 0; --ma)
+		unsigned char *tmp_buffer=((unsigned char *)(surface->data));
+		unsigned char *origin = m_filepara->pic_buffer;
+
+		if(m_filepara->oy < m_filepara->max_y)
 		{
-			*(int*)tmp_buffer = background;
-			tmp_buffer += 4;
+			o_y = (m_filepara->max_y - m_filepara->oy) / 2;
+			u_y = m_filepara->max_y - m_filepara->oy - o_y;
 		}
-	}
-	
-	for(int a = m_filepara->oy; a > 0; --a)
-	{
 		if(m_filepara->ox < m_filepara->max_x)
 		{
-			for(int b = v_x; b != 0; --b)
+			v_x = (m_filepara->max_x - m_filepara->ox) / 2;
+			h_x = m_filepara->max_x - m_filepara->ox - v_x;
+		}
+
+		int background = m_conf.background;
+		if(m_filepara->oy < m_filepara->max_y)
+		{
+			for(int ma = o_y * m_filepara->ox; ma != 0; --ma)
 			{
 				*(int*)tmp_buffer = background;
 				tmp_buffer += 4;
 			}
 		}
 
-		for(int b = m_filepara->ox; b != 0; --b)
+		for(int a = m_filepara->oy; a > 0; --a)
 		{
-			tmp_buffer[2] = *origin;
-			++origin;
-			tmp_buffer[1] = *origin;
-			++origin;
-			tmp_buffer[0] = *origin;
-			++origin;
-			tmp_buffer[3] = 0xFF; // alpha
-			tmp_buffer += 4;
+			if(m_filepara->ox < m_filepara->max_x)
+			{
+				for(int b = v_x; b != 0; --b)
+				{
+					*(int*)tmp_buffer = background;
+					tmp_buffer += 4;
+				}
+			}
+
+			for(int b = m_filepara->ox; b != 0; --b)
+			{
+				tmp_buffer[2] = *origin;
+				++origin;
+				tmp_buffer[1] = *origin;
+				++origin;
+				tmp_buffer[0] = *origin;
+				++origin;
+				tmp_buffer[3] = 0xFF; // alpha
+				tmp_buffer += 4;
+			}
+
+			if(m_filepara->ox < m_filepara->max_x)
+			{
+				for(int b = h_x; b != 0; --b)
+				{
+					*(int*)tmp_buffer = background;
+					tmp_buffer += 4;
+				}
+			}
 		}
-		
-		if(m_filepara->ox < m_filepara->max_x)
+
+		if(m_filepara->oy < m_filepara->max_y)
 		{
-			for(int b = h_x; b != 0; --b)
+			for(int a = u_y * m_filepara->ox; a != 0; --a)
 			{
 				*(int*)tmp_buffer = background;
 				tmp_buffer += 4;
 			}
 		}
+
+		surface->clut.data=0;
+		surface->clut.colors=0;
+		surface->clut.start=0;
 	}
-	
-	if(m_filepara->oy < m_filepara->max_y)
-	{
-		for(int a = u_y * m_filepara->ox; a != 0; --a)
-		{
-			*(int*)tmp_buffer = background;
-			tmp_buffer += 4;
-		}
-	}
-	
-	surface->clut.data=0;
-	surface->clut.colors=0;
-	surface->clut.start=0;
-	}
-//----------------
 
 	delete m_filepara;
 	m_filepara = NULL;
@@ -1245,19 +1242,21 @@ RESULT ePicLoad::setPara(PyObject *val)
 	if (PySequence_Size(val) < 7)
 		return 0;
 	else {
-		ePyObject fast = PySequence_Fast(val, "");
+		int as;
+		ePyObject fast		= PySequence_Fast(val, "");
 		m_conf.max_x		= PyInt_AsLong( PySequence_Fast_GET_ITEM(fast, 0));
 		m_conf.max_y		= PyInt_AsLong( PySequence_Fast_GET_ITEM(fast, 1));
-		m_conf.aspect_ratio	= (double)PyInt_AsLong( PySequence_Fast_GET_ITEM(fast, 2)) / PyInt_AsLong(PySequence_Fast_GET_ITEM(fast, 3));
+		as			= PyInt_AsLong(PySequence_Fast_GET_ITEM(fast, 3));
+		m_conf.aspect_ratio	= as == 0 ? 0.0 : (double)PyInt_AsLong( PySequence_Fast_GET_ITEM(fast, 2)) / as;
 		m_conf.usecache		= PyInt_AsLong( PySequence_Fast_GET_ITEM(fast, 4));
 		m_conf.resizetype	= PyInt_AsLong( PySequence_Fast_GET_ITEM(fast, 5));
 		const char *bg_str	= PyString_AsString( PySequence_Fast_GET_ITEM(fast, 6));
-	
+
 		if(bg_str[0] == '#' && strlen(bg_str)==9)
-		{
 			m_conf.background = strtoul(bg_str+1, NULL, 16);
-		}
-		eDebug("[Picload] setPara max-X=%d max-Y=%d aspect_ratio=%lf cache=%d resize=%d bg=#%08X", m_conf.max_x, m_conf.max_y, m_conf.aspect_ratio, (int)m_conf.usecache, (int)m_conf.resizetype, m_conf.background);
+		eDebug("[Picload] setPara max-X=%d max-Y=%d aspect_ratio=%lf cache=%d resize=%d bg=#%08X",
+				m_conf.max_x, m_conf.max_y, m_conf.aspect_ratio,
+				(int)m_conf.usecache, (int)m_conf.resizetype, m_conf.background);
 	}
 	return 1;
 }

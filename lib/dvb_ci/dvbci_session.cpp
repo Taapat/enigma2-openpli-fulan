@@ -187,14 +187,14 @@ void eDVBCISession::createSession(eDVBCISlot *slot, const unsigned char *resourc
 	for (session_nb=1; session_nb < SLMS; ++session_nb)
 		if (!sessions[session_nb-1])
 			break;
-#ifdef __sh__		
+#ifdef __sh__
 	eDebug("use session_nb = %d\n", session_nb);
 #endif		
 	if (session_nb == SLMS)
 	{
 		status=0xF3;
 #ifdef __sh__
-	        eDebug("%s <", __func__);
+		eDebug("%s <", __func__);
 #endif
 		return;
 	}

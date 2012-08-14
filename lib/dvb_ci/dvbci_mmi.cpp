@@ -34,7 +34,7 @@ eDVBCIMMISession::~eDVBCIMMISession()
 #ifdef __sh__
 	eDebug("%s >", __func__);
 	slot->mmiClosed();
-#endif	
+#endif
 	slot->setMMIManager(NULL);
 	eDVBCI_UI::getInstance()->mmiSessionDestroyed(slot->getSlotID());
 #ifdef __sh__

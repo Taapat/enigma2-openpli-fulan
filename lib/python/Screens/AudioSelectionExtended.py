@@ -35,7 +35,7 @@ class AudioSelection(Screen, ConfigListScreen):
 			})
 		self.cached_subtitle_checked = False
 		self.__selected_subtitle = None
-        
+
 		self["actions"] = ActionMap(["ColorActions", "SetupActions", "DirectionActions"],
 		{
 			"red": self.keyRed,
@@ -62,11 +62,11 @@ class AudioSelection(Screen, ConfigListScreen):
 		streams = []
 		conflist = []
 		selectedidx = 0
-		
+
 		service = self.session.nav.getCurrentService()
 		self.audioTracks = audio = service and service.audioTracks()
 		n = audio and audio.getNumberOfTracks() or 0
-		
+
 		if self.settings.menupage.getValue() == PAGE_AUDIO:
 			self.setTitle(_("Select audio track"))
 			if SystemInfo["CanDownmixAC3"]:
@@ -127,7 +127,7 @@ class AudioSelection(Screen, ConfigListScreen):
 				sel = None
 
 			idx = 0
-			
+
 			subtitlelist = self.getSubtitleList()
 
 			if len(subtitlelist):
@@ -140,7 +140,7 @@ class AudioSelection(Screen, ConfigListScreen):
 					if sel and x[:4] == sel[:4]:
 						selected = _("Running")
 						selectedidx = idx
-					
+
 					if x[4] != "und":
 						if LanguageCodes.has_key(x[4]):
 							language = LanguageCodes[x[4]][0]
@@ -161,15 +161,15 @@ class AudioSelection(Screen, ConfigListScreen):
 
 					streams.append((x, "", number, description, language, selected))
 					idx += 1
-			
+
 			else:
 				streams = []
 
 		conflist.append(getConfigListEntry(_("Menu"), self.settings.menupage))
-		
+
 		from Components.PluginComponent import plugins
 		from Plugins.Plugin import PluginDescriptor
-		
+
 		if hasattr(self.infobar, "runPlugin"):
 			class PluginCaller:
 				def __init__(self, fnc, *args):

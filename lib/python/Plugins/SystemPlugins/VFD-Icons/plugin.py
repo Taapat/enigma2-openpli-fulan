@@ -91,7 +91,7 @@ class VFDIcons:
 		
 	def __evStart(self):
 		print "[__evStart]"
-		self.__evSeekableStatusChanged()	
+		self.__evSeekableStatusChanged()
 		
 	def __evUpdatedInfo(self):
 		print "[__evUpdatedInfo]"
@@ -102,7 +102,7 @@ class VFDIcons:
 		self.showCrypted()
 		self.showDolby()
 		self.showMp3()
-		
+
 	def writeChannelName(self):
 		print "[writeVFDDisplay]"
 		servicename = ""
@@ -132,7 +132,7 @@ class VFDIcons:
 
 			else:
 				print "no Service found"
-		
+
 		print "vfd display text:", servicename[0:63]
 		evfd.getInstance().vfd_write_string(servicename[0:63])
 		return 1
@@ -147,7 +147,7 @@ class VFDIcons:
 				evfd.getInstance().vfd_set_icon(0x13,1)
 			else:
 				evfd.getInstance().vfd_set_icon(0x13,0)
-	
+
 	def checkAudioTracks(self):
 		self.dolbyAvailable = False
 		self.mp3Available = False
@@ -163,21 +163,21 @@ class VFDIcons:
 						self.mp3Available = True
 					if description.find("AC3") != -1 or description.find("DTS") != -1:
 						self.dolbyAvailable = True
-	
+
 	def showDolby(self):
 		print "[showDolby]"
 		if self.dolbyAvailable:
 			evfd.getInstance().vfd_set_icon(0x17,1)
 		else:
 			evfd.getInstance().vfd_set_icon(0x17,0)
-		
+
 	def showMp3(self):
 		print "[showMp3]"
 		if self.mp3Available:
 			evfd.getInstance().vfd_set_icon(0x15,1)
 		else:
 			evfd.getInstance().vfd_set_icon(0x15,0)
-		
+
 	def __evUpdatedEventInfo(self):
 		print "[__evUpdatedEventInfo]"
 		
@@ -189,14 +189,14 @@ class VFDIcons:
 		if seek is None:
 			return False
 		return seek.isCurrentlySeekable()
-		
+
 	def __evSeekableStatusChanged(self):
 		print "[__evSeekableStatusChanged]"
 		if self.getSeekState():
 			evfd.getInstance().vfd_set_icon(0x1A,1)
 		else:
 			evfd.getInstance().vfd_set_icon(0x1A,0)
-		
+
 	def __evVideoSizeChanged(self):
 		print "[__evVideoSizeChanged]"
 		service=self.session.nav.getCurrentService()
@@ -207,7 +207,7 @@ class VFDIcons:
 				evfd.getInstance().vfd_set_icon(0x11,1)
 			else:
 				evfd.getInstance().vfd_set_icon(0x11,0)
-		
+
 	def gotRecordEvent(self, service, event):
 		recs = self.session.nav.getRecordings()
 		nrecs = len(recs)

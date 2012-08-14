@@ -33,23 +33,23 @@ PKG_CHECK_MODULES(LIBDDVD, libdreamdvd, HAVE_LIBDDVD="yes", HAVE_LIBDDVD="no")
 AM_CONDITIONAL(HAVE_LIBDDVD, test "$HAVE_LIBDDVD" = "yes")
 
 AC_ARG_ENABLE([tf7700],
-        [AS_HELP_STRING(--enable-tf7700,    enable topfield tf7700 stuff)],
+	[AS_HELP_STRING(--enable-tf7700,    enable topfield tf7700 stuff)],
 #	AC_MSG_ERROR([bad value I${enableval}I for --enable-tf7700]))
-        [case "${enableval}" in
-                yes) enable_tf7700=true ;;
-                no) enable_tf7700=false ;;
-                *) AC_MSG_ERROR([bad value ${enableval} for --enable-tf7700]) ;;
-        esac])
+		[case "${enableval}" in
+			yes) enable_tf7700=true ;;
+			no) enable_tf7700=false ;;
+			*) AC_MSG_ERROR([bad value ${enableval} for --enable-tf7700]) ;;
+		esac])
 AM_CONDITIONAL([ENABLE_TF7700], [test x$enable_tf7700 = xtrue])
 
 AC_ARG_ENABLE([cuberevo],
-        [AS_HELP_STRING(--enable-cuberevo,    enable cuberevo stuff)],
+	[AS_HELP_STRING(--enable-cuberevo,    enable cuberevo stuff)],
 #	AC_MSG_ERROR([bad value I${enableval}I for --enable-cuberevo]))
-        [case "${enableval}" in
-                yes) enable_cuberevo=true ;;
-                no) enable_cuberevo=false ;;
-                *) AC_MSG_ERROR([bad value ${enableval} for --enable-cuberevo]) ;;
-        esac])
+		[case "${enableval}" in
+			yes) enable_cuberevo=true ;;
+			no) enable_cuberevo=false ;;
+			*) AC_MSG_ERROR([bad value ${enableval} for --enable-cuberevo]) ;;
+		esac])
 AM_CONDITIONAL([ENABLE_CUBEREVO], [test x$enable_cuberevo = xtrue])
 
 AC_CHECK_LIB([dl], [dlopen], [LIBDL_LIBS="-ldl"], [AC_MSG_ERROR([Could not find libdl])])
@@ -178,7 +178,12 @@ data/defaults/Dream/hdbouquets/Makefile
 data/defaults/Dream/sdbouquets/Makefile
 data/extensions/Makefile
 data/keymaps/Makefile
+data/rc_models/Makefile
 data/rc_models/spark/Makefile
+data/rc_models/et6x00/Makefile
+data/rc_models/et9500/Makefile
+data/rc_models/et9x00/Makefile
+data/rc_models/vu/Makefile
 data/skin_default/Makefile
 data/skin_default/menu/Makefile
 data/skin_default/icons/Makefile

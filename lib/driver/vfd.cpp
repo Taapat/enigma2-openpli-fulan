@@ -7,7 +7,7 @@
 #include <sys/ioctl.h>
 #include <ctype.h>
 #include <sys/stat.h>
-#include  <pthread.h> 
+#include  <pthread.h>
 
 #include <lib/base/eerror.h>
 #include <lib/driver/vfd.h>
@@ -18,10 +18,10 @@
 
 #define VFD_DEVICE "/dev/vfd"
 #define VFDICONDISPLAYONOFF	0xc0425a0a
-#define	VFDDISPLAYCHARS 	0xc0425a00
-#define VFDBRIGHTNESS           0xc0425a03
+#define VFDDISPLAYCHARS		0xc0425a00
+#define VFDBRIGHTNESS			0xc0425a03
 //light on off
-#define VFDDISPLAYWRITEONOFF    0xc0425a05
+#define VFDDISPLAYWRITEONOFF	0xc0425a05
 
 bool startloop_running = false;
 static bool icon_onoff[32];
@@ -70,7 +70,7 @@ evfd::evfd()
 
 void evfd::init()
 {
-	pthread_create (&thread_start_loop, NULL, &start_loop, NULL);	
+	pthread_create (&thread_start_loop, NULL, &start_loop, NULL);
 	return;
 }
 
@@ -122,7 +122,7 @@ void * start_loop (void *arg)
 	// set scroll mode
 	//frontpanel_ioctl_scrollmode scrollMode = {2, 10, 15};
 	//ioctl(fpc, FRONTPANELSCROLLMODE, &scrollMode);
-	
+
 	// display string
 	char str[] = "        AR-P ENIGMA2";
 	int length = strlen(str);
@@ -157,11 +157,11 @@ void * start_loop (void *arg)
 		usleep(200000);
 		if((index % 4) == 0)
 		{
-		  // display progress
-		  progress = getProgress();
-		  write(fpsmall, progress, strlen(progress) + 1);
-		  if(strncmp("100", progress, 3) == 0)
-		    break;
+			// display progress
+			progress = getProgress();
+			write(fpsmall, progress, strlen(progress) + 1);
+			if(strncmp("100", progress, 3) == 0)
+				break;
 		}
 	}
 
@@ -230,10 +230,10 @@ void * start_loop (void *arg)
 		usleep(75000);
 	}
 	vfd.vfd_set_brightness(7);
-#if !defined(PLATFORM_FORTIS_HDBOX) && !defined(PLATFORM_OCTAGON1008)	&& !defined(PLATFORM_ATEVIO7500) && !defined(PLATFORM_CUBEREVO) && !defined(PLATFORM_CUBEREVO_MINI) && !defined(PLATFORM_CUBEREVO_MINI2) && !defined(PLATFORM_CUBEREVO_MINI_FTA) && !defined(PLATFORM_CUBEREVO_250HD) && !defined(PLATFORM_CUBEREVO_2000HD) && !defined(PLATFORM_CUBEREVO_9500HD) && !defined(PLATFORM_HS7810A)
+#if !defined(PLATFORM_FORTIS_HDBOX) && !defined(PLATFORM_OCTAGON1008) && !defined(PLATFORM_ATEVIO7500) && !defined(PLATFORM_CUBEREVO) && !defined(PLATFORM_CUBEREVO_MINI) && !defined(PLATFORM_CUBEREVO_MINI2) && !defined(PLATFORM_CUBEREVO_MINI_FTA) && !defined(PLATFORM_CUBEREVO_250HD) && !defined(PLATFORM_CUBEREVO_2000HD) && !defined(PLATFORM_CUBEREVO_9500HD) && !defined(PLATFORM_HS7810A)
 	//set all blocked icons
 	for (int id = 0x10; id < 0x20; id++) {
-		vfd.vfd_set_icon((tvfd_icon)id, icon_onoff[id]);	
+		vfd.vfd_set_icon((tvfd_icon)id, icon_onoff[id]);
 	}
 #endif
 	blocked = false;
@@ -355,7 +355,7 @@ void evfd::vfd_write_string(char * str, bool force)
 	i = strlen ( str );
 	if ( i > 63 ) i = 63;
 	memset ( chars, ' ', 63 );
-	memcpy ( chars, str, i);	
+	memcpy ( chars, str, i);
 
 #ifdef PLATFORM_TF7700
 
@@ -369,7 +369,7 @@ void evfd::vfd_write_string(char * str, bool force)
 #endif
 		struct vfd_ioctl_data data;
 		memset ( data.data, ' ', 63 );
-		memcpy ( data.data, str, i );	
+		memcpy ( data.data, str, i );
 
 		data.start = 0;
 		data.length = i;
@@ -431,12 +431,12 @@ void evfd::vfd_set_icon(tvfd_icon id, bool onoff, bool force)
 			memset(&data, 0, sizeof(struct vfd_ioctl_data));
 
 			data.start = 0x00;
-    			data.data[0] = id;
-    			data.data[4] = onoff;
-    			data.length = 5;
+			data.data[0] = id;
+			data.data[4] = onoff;
+			data.length = 5;
 
 			file_vfd = open (VFD_DEVICE, O_WRONLY);
-    			ioctl(file_vfd, VFDICONDISPLAYONOFF, &data);
+			ioctl(file_vfd, VFDICONDISPLAYONOFF, &data);
 			close (file_vfd);
 		}
 	}
@@ -446,7 +446,7 @@ void evfd::vfd_set_icon(tvfd_icon id, bool onoff, bool force)
 void evfd::vfd_clear_icons()
 {
 	for (int id = 0x10; id < 0x20; id++) {
-		vfd_set_icon((tvfd_icon)id, false);	
+		vfd_set_icon((tvfd_icon)id, false);
 	}
 	return;
 }
@@ -480,11 +480,11 @@ void evfd::vfd_set_light(bool onoff)
 		data.start = 0x01;
 	else
 		data.start = 0x00;
-    	data.length = 0;
+		data.length = 0;
 
 	file_vfd = open (VFD_DEVICE, O_WRONLY);
 
-    	ioctl(file_vfd, VFDDISPLAYWRITEONOFF, &data);
+	ioctl(file_vfd, VFDDISPLAYWRITEONOFF, &data);
 
 	close (file_vfd);
 	return;
@@ -501,11 +501,11 @@ void evfd::vfd_set_fan(bool onoff)
 		data.start = 0x01;
 	else
 		data.start = 0x00;
-    	data.length = 0;
+		data.length = 0;
 
 	file_vfd = open (VFD_DEVICE, O_WRONLY);
 
-    ioctl(file_vfd, 0xc0425af8, &data);
+	ioctl(file_vfd, 0xc0425af8, &data);
 
 	close (file_vfd);
 #endif

@@ -9,12 +9,12 @@
 #if defined(__sh__) // this allows filesystem tasks to be prioritised
 #include <sys/vfs.h>
 
-#define USBDEVICE_SUPER_MAGIC 0x9fa2 
-#define EXT2_SUPER_MAGIC      0xEF53 
-#define EXT3_SUPER_MAGIC      0xEF53 
-#define SMB_SUPER_MAGIC       0x517B 
-#define NFS_SUPER_MAGIC       0x6969 
-#define MSDOS_SUPER_MAGIC     0x4d44            /* MD */
+#define USBDEVICE_SUPER_MAGIC 0x9fa2
+#define EXT2_SUPER_MAGIC      0xEF53
+#define EXT3_SUPER_MAGIC      0xEF53
+#define SMB_SUPER_MAGIC       0x517B
+#define NFS_SUPER_MAGIC       0x6969
+#define MSDOS_SUPER_MAGIC     0x4d44 /* MD */
 #endif
 
 #define PVR_COMMIT 1
@@ -75,7 +75,7 @@ void eFilePushThread::thread()
 	int fd_video = open("/dev/dvb/adapter0/video0", O_RDONLY);
 #endif
 		/* m_stop must be evaluated after each syscall. */
-		
+
 // vvv Fix to ensure that event evtEOF is called at end of playbackl part 1/3
 	bool already_empty=false;
 // ^^^ Fix to ensure that event evtEOF is called at end of playbackl part 1/3

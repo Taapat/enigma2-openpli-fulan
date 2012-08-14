@@ -11,7 +11,7 @@ class gLCDDC: public gDC
 	int update;
 	void exec(const gOpcode *opcode);
 	gSurface surface;
-#ifdef __sh__    
+#ifdef __sh__
 	struct timespec last_update;
 #endif
 public:

@@ -171,16 +171,16 @@ void gFBDC::setGamma(int g)
 
 void gFBDC::setResolution(int xres, int yres, int bpp)
 {
-#if defined(__sh__) 
-	/* if xres and yres are negative call SetMode with the lates xres and yres  
-	 * we need that to read the new screen dimesnions after a resolution change 
+#if defined(__sh__)
+	/* if xres and yres are negative call SetMode with the lates xres and yres
+	 * we need that to read the new screen dimesnions after a resolution change
 	 * without changing the frambuffer dimensions
-	 */ 
-	if(xres<0 && yres<0 ){ 
-		fb->SetMode(m_xres, m_yres, bpp); 
-		return; 
-	} 
-#else 
+	 */
+	if(xres<0 && yres<0 ){
+		fb->SetMode(m_xres, m_yres, bpp);
+		return;
+	}
+#else
 	if (m_pixmap && (m_xres == xres) && (m_yres == yres) && (bpp == m_bpp))
 		return;
 #endif

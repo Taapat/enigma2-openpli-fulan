@@ -245,7 +245,7 @@ typedef long time_t;
 %include <lib/dvb/db.h>
 %include <lib/python/python.h>
 %include <lib/gdi/picload.h>
-%include <lib/driver/vfd.h> 
+%include <lib/driver/vfd.h>
 /**************  eptr  **************/
 
 /**************  signals  **************/

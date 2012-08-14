@@ -16,25 +16,25 @@
 #error no byte order defined!
 #endif
 
-#if defined(__sh__) 
-#include <sys/vfs.h> 
-//this is not available for stlinux :-( 
-//#include <linux/magic.h> 
- 
-/* and these i dont get included :-( 
-#include <linux/usbdevice_fs.h> 
-#include <linux/smb.h> 
-#include <linux/nfs__fs.h> 
-#include <linux/ext3_fs.h> 
+#if defined(__sh__)
+#include <sys/vfs.h>
+//this is not available for stlinux :-(
+//#include <linux/magic.h>
 
-so hack ;-) 
-*/ 
-#define USBDEVICE_SUPER_MAGIC 0x9fa2 
-#define EXT2_SUPER_MAGIC      0xEF53 
-#define EXT3_SUPER_MAGIC      0xEF53 
-#define SMB_SUPER_MAGIC       0x517B 
-#define NFS_SUPER_MAGIC       0x6969 
-#define MSDOS_SUPER_MAGIC     0x4d44            /* MD */ 
+/* and these i dont get included :-(
+#include <linux/usbdevice_fs.h>
+#include <linux/smb.h>
+#include <linux/nfs__fs.h>
+#include <linux/ext3_fs.h>
+
+so hack ;-)
+*/
+#define USBDEVICE_SUPER_MAGIC 0x9fa2
+#define EXT2_SUPER_MAGIC      0xEF53
+#define EXT3_SUPER_MAGIC      0xEF53
+#define SMB_SUPER_MAGIC       0x517B
+#define NFS_SUPER_MAGIC       0x6969
+#define MSDOS_SUPER_MAGIC     0x4d44 /* MD */
 #endif
 DEFINE_REF(eDVBServiceRecord);
 
@@ -325,40 +325,40 @@ int eDVBServiceRecord::doRecord()
 	
 	if (!m_record && m_tuned && !m_streaming && !m_simulate)
 	{
-#if defined(__sh__) 
+#if defined(__sh__)
 		int flags = O_WRONLY|O_CREAT|O_LARGEFILE;
 		struct statfs sbuf;
 #endif
 		eDebug("Recording to %s...", m_filename.c_str());
 		::remove(m_filename.c_str());
-#if defined(__sh__) 
+#if defined(__sh__)
 		//we must creat a file for statfs
 		int fd = ::open(m_filename.c_str(), O_WRONLY|O_CREAT|O_LARGEFILE, 0666);
 		::close(fd);
-		if (statfs(m_filename.c_str(), &sbuf) < 0) 
-		{ 
-			eDebug("eDVBServiceRecord - can't get fs type assuming none NFS!"); 
-		} else 
-		{ 
+		if (statfs(m_filename.c_str(), &sbuf) < 0)
+		{
+			eDebug("eDVBServiceRecord - can't get fs type assuming none NFS!");
+		} else
+		{
 			if (sbuf.f_type == EXT3_SUPER_MAGIC) 
-				eDebug("eDVBServiceRecord - Ext2/3/4 Filesystem\n"); 
-			else 
+				eDebug("eDVBServiceRecord - Ext2/3/4 Filesystem\n");
+			else
 			if (sbuf.f_type == NFS_SUPER_MAGIC) 
-			{ 
-				eDebug("eDVBServiceRecord - NFS Filesystem; add O_DIRECT to flags\n"); 
+			{
+				eDebug("eDVBServiceRecord - NFS Filesystem; add O_DIRECT to flags\n");
 				flags |= O_DIRECT; 
-			} 
-			else 
+			}
+			else
 			if (sbuf.f_type == USBDEVICE_SUPER_MAGIC) 
-				eDebug("eDVBServiceRecord - USB Device\n"); 
-			else 
+				eDebug("eDVBServiceRecord - USB Device\n");
+			else
 			if (sbuf.f_type == SMB_SUPER_MAGIC) 
-				eDebug("eDVBServiceRecord - SMBs Device\n"); 
+				eDebug("eDVBServiceRecord - SMBs Device\n");
 			else 
 			if (sbuf.f_type == MSDOS_SUPER_MAGIC) 
-				eDebug("eDVBServiceRecord - MSDOS Device\n"); 
-		} 
-		fd = ::open(m_filename.c_str(), flags, 0644); 
+				eDebug("eDVBServiceRecord - MSDOS Device\n");
+		}
+		fd = ::open(m_filename.c_str(), flags, 0644);
 #else
 		int fd = ::open(m_filename.c_str(), O_WRONLY|O_CREAT|O_LARGEFILE, 0644);
 #endif
@@ -372,7 +372,11 @@ int eDVBServiceRecord::doRecord()
 
 		/* Attempt to tune kernel caching strategies */
 		int pr;
+#if defined SYS_fadvise64
 		pr = syscall(SYS_fadvise64, fd, 0, 0, 0, 0, 0, POSIX_FADV_RANDOM);
+#elif defined SYS_arm_fadvise64_64
+		pr = syscall(SYS_arm_fadvise64_64, fd, 0, 0, 0, 0, 0, POSIX_FADV_RANDOM);
+#endif
 		eDebug("POSIX_FADV_RANDOM returned %d", pr);
 
 		ePtr<iDVBDemux> demux;

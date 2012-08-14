@@ -13,11 +13,7 @@ from Components.config import config, configfile, ConfigSubsection, ConfigEnable
 from Components.ConfigList import ConfigListScreen
 from Plugins.Plugin import PluginDescriptor
 import ServiceReference
-#---- Civer start ----#
-#- from enigma import iPlayableService, eServiceCenter, iServiceInformation
-#- from enigma import evfd
 from enigma import *
-#----- Civer end ----#
 from Components.ServiceEventTracker import ServiceEventTracker, InfoBarBase
 from re import compile as re_compile, search as re_search
 
@@ -52,7 +48,6 @@ class CuberevoVFDSetup(ConfigListScreen, Screen):
 		# create elements for the menu list
 		self.list = [ ]
 		self.list.append(getConfigListEntry(_("Show clock"), config.plugins.CuberevoVFD.showClock))
-#		self.list.append(getConfigListEntry(_("Daylight"), config.plugins.CuberevoVFD.setDaylight))
 		self.list.append(getConfigListEntry(_("Time mode"), config.plugins.CuberevoVFD.timeMode))
 		self.list.append(getConfigListEntry(_("Set led"), config.plugins.CuberevoVFD.setLed))
 		self.list.append(getConfigListEntry(_("Brightness"), config.plugins.CuberevoVFD.brightness))
@@ -128,11 +123,9 @@ class CuberevoVFDSetup(ConfigListScreen, Screen):
 class CuberevoVFD:
 	def __init__(self, session):
 		#print "CuberevoVFD initializing"
-#---- CIVER start ----#
 		global showmenuorpanel
 		showmenuorpanel = False
 		self.showtimer = eTimer()
-#---- CIVER end ----#
 		self.session = session
 		self.service = None
 		self.onClose = [ ]
@@ -143,15 +136,12 @@ class CuberevoVFD:
 			})
 		self.Console = Console()
 		self.tsEnabled = False
-#---- CIVER start ----#
 		self.timer = eTimer()
 		self.timer.callback.append(self.handleTimer)
 		self.timer.start(1000, False)
-#---- CIVER end ----#
 		self.fanEnabled = config.plugins.CuberevoVFD.setFan.getValue()
 		self.ledEnabled = config.plugins.CuberevoVFD.setLed.getValue()
 		self.clockEnabled = config.plugins.CuberevoVFD.showClock.getValue()
-#		self.daylightEnabled = config.plugins.CuberevoVFD.setDaylight.getValue()
 		if config.plugins.CuberevoVFD.timeMode.value == "24h":
 			self.timeModeEnabled = 1
 		else:
@@ -165,7 +155,6 @@ class CuberevoVFD:
 		else:
 			self.enableLed()
 
-#---- CIVER start---workaround to show servicename again after menues ----#
 	def handleTimer(self):
 		global showmenuorpanel
 		try:
@@ -200,7 +189,6 @@ class CuberevoVFD:
 		global showmenuorpanel
 		showmenuorpanel = True
 		self.showtimer.stop()
-#---- CIVER end ----#
 
 	def enableClock(self):
 		self.clockEnabled = True
@@ -229,29 +217,6 @@ class CuberevoVFD:
 			os.popen("/bin/fp_control -tm 0")
 		except OSError:
 			print "no memory"
-
-# konfetti: what that?
-#	def enableDaylight(self):
-#		self.daylightEnabled = True
-#		try:
-#			os.popen("/bin/cubefpctl --setdaylight 1")
-#		except OSError:
-#			print "no memory"
-#		try:
-#			os.popen("/bin/cubefpctl --syncfptime")
-#		except OSError:
-#			print "no memory"
-
-#	def disableDaylight(self):
-#		self.daylightEnabled = False
-#		try:
-#			os.popen("/bin/cubefpctl --setdaylight 0")
-#		except OSError:
-#			print "no memory"
-#		try:
-#			os.popen("/bin/cubefpctl --syncfptime")
-#		except OSError:
-#			print "no memory"
 
 	def enableLed(self):
 		self.ledEnabled = True

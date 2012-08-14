@@ -52,9 +52,9 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 				"showRadio": (self.showRadio, _("Show the radio player...")),
 				"showTv": (self.showTv, _("Show the tv player...")),
 #+++>
-				"toogleTvRadio": (self.toogleTvRadio, _("toggels betwenn tv and radio...")), 
-				"volumeUp": (self._volUp, _("...")), 
-				"volumeDown": (self._volDown, _("...")), 
+				"toogleTvRadio": (self.toogleTvRadio, _("toggels betwenn tv and radio...")),
+				"volumeUp": (self._volUp, _("...")),
+				"volumeDown": (self._volDown, _("...")),
 #+++<
 			}, prio=2)
 		
@@ -114,20 +114,20 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 
 #+++>
 	def toogleTvRadio(self): 
-		service = self.session.nav.getCurrentService() 
-		info = service.info() 
-		AudioPID = info.getInfo(iServiceInformation.sAudioPID) 
-		VideoPID = info.getInfo(iServiceInformation.sVideoPID) 
+		service = self.session.nav.getCurrentService()
+		info = service.info()
+		AudioPID = info.getInfo(iServiceInformation.sAudioPID)
+		VideoPID = info.getInfo(iServiceInformation.sVideoPID)
 
-		print "sAudioPID", AudioPID 
-		print "sVideoPID", VideoPID 
-               
-		if VideoPID == -1: 
-			print "radio->tv" 
-			self.showTv2() 
-		else: 
-			print "tv->radio" 
-			self.showRadio2() 
+		print "sAudioPID", AudioPID
+		print "sVideoPID", VideoPID
+
+		if VideoPID == -1:
+			print "radio->tv"
+			self.showTv2()
+		else:
+			print "tv->radio"
+			self.showRadio2()
 #+++<
 
 	def serviceStarted(self):  #override from InfoBarShowHide
@@ -222,10 +222,15 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 		self.servicelist = slist
 		self.lastservice = lastservice or session.nav.getCurrentlyPlayingServiceReference()
 		session.nav.playService(service)
+		from Screens.MovieSelection import Playlist
+		self.playlist = Playlist.getPlayList()
+		self.cur_service = service
 		self.returning = False
 		self.onClose.append(self.__onClose)
 
 	def __onClose(self):
+		from Screens.MovieSelection import Playlist
+		Playlist.clearPlayList()
 		self.session.nav.playService(self.lastservice)
 
 	def handleLeave(self, how):
@@ -293,25 +298,39 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 					return
 
 		if answer in ("quit", "quitanddeleteconfirmed"):
-#+++> 
-                        # make sure that playback is unpaused otherwise the  
-                        # player driver might stop working 
-                        self.setSeekState(self.SEEK_STATE_PLAY) 
+#+++>
+			# make sure that playback is unpaused otherwise the
+			# player driver might stop working 
+			self.setSeekState(self.SEEK_STATE_PLAY)
 #+++<
 			self.close()
 		elif answer == "movielist":
 			ref = self.session.nav.getCurrentlyPlayingServiceReference()
 			self.returning = True
 			self.session.openWithCallback(self.movieSelected, Screens.MovieSelection.MovieSelection, ref)
-#+++> 
-                        # make sure that playback is unpaused otherwise the  
-                        # player driver might stop working 
-                        self.setSeekState(self.SEEK_STATE_PLAY) 
+#+++>
+			# make sure that playback is unpaused otherwise the  
+			# player driver might stop working 
+			self.setSeekState(self.SEEK_STATE_PLAY)
 #+++<
 			self.session.nav.stopService()
 		elif answer == "restart":
 			self.doSeek(0)
 			self.setSeekState(self.SEEK_STATE_PLAY)
+		elif answer in ("playlist","playlistquit","loop"):
+			( next_service, item , lenght ) = self.nextPlaylistService(self.cur_service)
+			if next_service is not None:
+				if config.usage.next_movie_msg.value:
+					self.displayPlayedName(next_service, item, lenght)
+				self.session.nav.playService(next_service)
+				self.cur_service = next_service
+			else:
+				if answer == "playlist":
+					self.leavePlayerConfirmed([True,"movielist"])
+				elif answer == "loop" and lenght > 0:
+					self.leavePlayerConfirmed([True,"loop"])
+				else:
+					self.leavePlayerConfirmed([True,"quit"])
 
 	def doEofInternal(self, playing):
 		if not self.execing:
@@ -408,6 +427,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 
 	def movieSelected(self, service):
 		if service is not None:
+			self.cur_service = service
 			self.is_closing = False
 			self.session.nav.playService(service)
 			self.returning = False
@@ -420,3 +440,22 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 			# no selection? Continue where we left off
 			if ref and not self.session.nav.getCurrentlyPlayingServiceReference():
 				self.session.nav.playService(ref)
+
+	def nextPlaylistService(self, service):
+		n = len(self.playlist)
+		for item, i in zip(self.playlist,range(1,n+1)):
+			if item == service:
+				if i < n:
+					return (self.playlist[i], i+1, n)
+				elif config.usage.on_movie_eof.value == "loop" and n > 0:
+					return (self.playlist[0], 1, n)
+		return ( None, 0, 0 )
+
+	def displayPlayedName(self, ref, index, n):
+		from Tools import Notifications
+		from Screens.MessageBox import MessageBox
+		Notifications.AddPopup(text = _("%s/%s: %s") % (index, n, self.ref2HumanName(ref)), type = MessageBox.TYPE_INFO, timeout = 5)
+
+	def ref2HumanName(self, ref):
+		from enigma import eServiceCenter
+		return eServiceCenter.getInstance().info(ref).getName(ref)

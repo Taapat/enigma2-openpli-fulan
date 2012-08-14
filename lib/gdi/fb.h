@@ -4,21 +4,22 @@
 #include <lib/base/eerror.h>
 #include <linux/fb.h>
 
-#if defined(__sh__) 
-	#include <linux/stmfb.h> 
+#if defined(__sh__)
+	#include <linux/stmfb.h>
 #endif
 class fbClass
 {
 	int fbFd;
 	int xRes, yRes, stride, bpp;
-#if defined(__sh__) 
+#if defined(__sh__)
 	struct stmfbio_output_configuration outcfg;
 	struct stmfbio_outputinfo outinfo;
 	struct stmfbio_planeinfo planemode;
 	struct stmfbio_var_screeninfo_ex infoex;
 	
 	int xResSc, yResSc;
-	int topDiff, leftDiff, rightDiff, bottomDiff; 
+	int topDiff, leftDiff, rightDiff, bottomDiff;
+	unsigned char *lfb_direct;
 #endif
 	int available;
 	struct fb_var_screeninfo screeninfo;
@@ -65,6 +66,11 @@ public:
 	int lock();
 	void unlock();
 	int islocked() { return locked; }
+#if defined(__sh__) 
+	void clearFBblit();
+	int getFBdiff(int ret);
+	void setFBdiff(int top, int right, int left, int bottom);
+#endif
 };
 
 #endif

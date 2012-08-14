@@ -74,6 +74,8 @@ eventData::eventData(const eit_event_struct* e, int size, int type, int tsidonid
 				case EXTENDED_EVENT_DESCRIPTOR:
 				case LINKAGE_DESCRIPTOR:
 				case COMPONENT_DESCRIPTOR:
+				case CONTENT_DESCRIPTOR:
+				case PARENTAL_RATING_DESCRIPTOR:
 				{
 					__u32 crc = 0;
 					int cnt=0;
@@ -230,7 +232,7 @@ const eit_event_struct* eventData::get() const
 			descriptors.find(*p++);
 #else
 		__u32 index = p[3] << 24 | p[2] << 16 | p[1] << 8 | p[0];
-/* eDebug("index %d %x, %x %x %x %x\n", index, index, p[0], p[1], p[2], p[3]);			*/
+/* eDebug("index %d %x, %x %x %x %x\n", index, index, p[0], p[1], p[2], p[3]); */
 		descriptorMap::iterator it =
 			descriptors.find(index);
 
@@ -272,7 +274,7 @@ eventData::~eventData()
 				descriptors.find(*d++);
 #else
 			__u32 index = d[3] << 24 | d[2] << 16 | d[1] << 8 | d[0];
-/* eDebug("index %d %x, %x %x %x %x\n", index, index, d[0], d[1], d[2], d[3]);			*/
+/* eDebug("index %d %x, %x %x %x %x\n", index, index, d[0], d[1], d[2], d[3]); */
 			descriptorMap::iterator it =
 				descriptors.find(index);
 				
@@ -677,12 +679,13 @@ void eEPGCache::sectionRead(const __u8 *data, int source, channel_data *channel)
 		return;
 
 #if 0 
-               /* 
-                * disable for now, as this hack breaks EIT parsing for 
-                * services with a low segment_last_table_id
-                * 
-                * Multichoice should be the exception, not the rule... 
-                */	
+		/* 
+		 * disable for now, as this hack breaks EIT parsing for 
+		 * services with a low segment_last_table_id
+		 * 
+		 * Multichoice should be the exception, not the rule... 
+		 */
+
 	// This fixed the EPG on the Multichoice irdeto systems
 	// the EIT packet is non-compliant.. their EIT packet stinks
 	if ( data[ptr-1] < 0x40 )
@@ -1783,7 +1786,7 @@ void eEPGCache::channel_data::readData( const __u8 *data, int source)
 	iDVBSectionReader *reader = NULL;
 #ifdef __sh__
 /* Dagobert: this is still very hacky, but currently I cant find
- * the origin of the readData call. I think the caller is 
+ * the origin of the readData call. I think the caller is
  * responsible for the unaligned data pointer in this call.
  * So we malloc our own memory here which _should_ be aligned.
  *
@@ -1791,7 +1794,7 @@ void eEPGCache::channel_data::readData( const __u8 *data, int source)
  * said before I need an UML Diagram or must try to import
  * e2 and all libs into an IDE for better overview ;)
  *
- */ 
+ */
 	const __u8 *aligned_data;
 	bool isNotAligned = false;
 	
@@ -1801,25 +1804,25 @@ void eEPGCache::channel_data::readData( const __u8 *data, int source)
 	if (isNotAligned)
 	{
 	
-	   /* see HILO macro and eit.h */
-	   int len = ((data[1] & 0x0F) << 8 | data[2]) -1;
+		/* see HILO macro and eit.h */
+		int len = ((data[1] & 0x0F) << 8 | data[2]) -1;
 
-           /*eDebug("len %d %x, %x %x\n", len, len, data[1], data[2]);*/
+		/*eDebug("len %d %x, %x %x\n", len, len, data[1], data[2]);*/
 
-	   if ( EIT_SIZE >= len )
-		   return;
+		if ( EIT_SIZE >= len )
+			return;
 
-	   aligned_data = (const __u8 *) malloc(len);
+		aligned_data = (const __u8 *) malloc(len);
 
-	   if ((unsigned int)aligned_data % 4 != 0)
-	   {
-		   eDebug("eEPGCache::channel_data::readData: ERRORERRORERROR: unaligned data pointer %p\n", aligned_data);
-	   }
+		if ((unsigned int)aligned_data % 4 != 0)
+		{
+			eDebug("eEPGCache::channel_data::readData: ERRORERRORERROR: unaligned data pointer %p\n", aligned_data);
+		}
 
-           /*eDebug("%p %p\n", aligned_data, data); */
-	   memcpy((void *) aligned_data, (const __u8 *) data, len);
-	   data = aligned_data;	
-	}	
+		/*eDebug("%p %p\n", aligned_data, data); */
+		memcpy((void *) aligned_data, (const __u8 *) data, len);
+		data = aligned_data;
+	}
 #endif
 	switch (source)
 	{
@@ -1927,7 +1930,7 @@ void eEPGCache::channel_data::readData( const __u8 *data, int source)
 	}
 #ifdef __sh__
 	if (isNotAligned)
-	   free((void *)aligned_data);
+		free((void *)aligned_data);
 #endif	
 }
 
@@ -2291,6 +2294,12 @@ void fillTuple(ePyObject tuple, const char *argstring, int argcount, ePyObject s
 			case 'E': // Event Extended Description
 				tmp = ptr ? PyString_FromString(ptr->getExtendedDescription().c_str()) : ePyObject();
 				break;
+			case 'P': // Event Parental Rating
+				tmp = ptr ? ePyObject(ptr->getParentalData()) : ePyObject();
+				break;
+			case 'W': // Event Content Description
+				tmp = ptr ? ePyObject(ptr->getGenreData()) : ePyObject();
+				break;
 			case 'C': // Current Time
 				tmp = nowTime;
 				inc_refcount = true;
@@ -2363,6 +2372,8 @@ int handleEvent(eServiceEvent *ptr, ePyObject dest_list, const char* argstring, 
 //   T = Event Title
 //   S = Event Short Description
 //   E = Event Extended Description
+//   P = Event Parental Rating
+//   W = Event Content Description ('W'hat)
 //   C = Current Time
 //   R = Service Reference
 //   N = Service Name
@@ -2901,6 +2912,8 @@ void eEPGCache::importEvents(ePyObject serviceReferences, ePyObject list)
 //   D = Event Duration
 //   T = Event Title
 //   S = Event Short Description
+//   P = Event Parental Rating
+//   W = Event Content Description
 //   E = Event Extended Description
 //   R = Service Reference
 //   N = Service Name
@@ -2954,6 +2967,8 @@ PyObject *eEPGCache::search(ePyObject arg)
 					case 'S':
 					case 'E':
 					case 'T':
+					case 'P':
+					case 'W':
 						needServiceEvent=true;
 						break;
 					case 'N':
@@ -3005,7 +3020,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 /* Dagobert: Alignment fix */
 							__u8 *p = (__u8*)(data+10);
 #endif
-								// search short and extended event descriptors
+							// search short and extended event descriptors
 							while(tmp>3)
 							{
 #ifndef __sh__

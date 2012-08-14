@@ -9,7 +9,7 @@
 #include <lib/gdi/gpixmap.h>
 
 gAccel *gAccel::instance;
-#if not defined(__sh__) 
+#if not defined(__sh__)
 #define BCM_ACCEL
 #else
 #define STMFB_ACCEL
@@ -65,7 +65,7 @@ gAccel::gAccel()
 	m_accel_allocation = 0;
 	instance = this;
 
-#ifdef STMFB_ACCEL	
+#ifdef STMFB_ACCEL
 	stmfb_accel_init();
 #endif
 #ifdef ATI_ACCEL	
@@ -78,7 +78,7 @@ gAccel::gAccel()
 
 gAccel::~gAccel()
 {
-#ifdef STMFB_ACCEL	
+#ifdef STMFB_ACCEL
 	stmfb_accel_close();
 #endif
 #ifdef ATI_ACCEL
@@ -136,14 +136,14 @@ int gAccel::blit(gSurface *dst, const gSurface *src, const eRect &p, const eRect
 
 	int src_format = 0;
 	void *data = 0;
-     	int data_phys = 0;
+	int data_phys = 0;
 
 	if (src->bpp == 32)
 		src_format = 0;
 	else if ((src->bpp == 8) && (dst->bpp == 32))
 	{
 		src_format = 1;
-        	if(accelAlloc(data, data_phys, area.height() * area.width() * 4))
+		if(accelAlloc(data, data_phys, area.height() * area.width() * 4))
 			return -1;
 
 		__u8 *srcptr=(__u8*)src->data;

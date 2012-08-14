@@ -310,7 +310,7 @@ eDVBUsbAdapter::eDVBUsbAdapter(int nr)
 	struct dvb_frontend_info fe_info;
 	int frontend = -1;
 	char filename[256];
-	eDebug("linking adapter%d/frontend0 to vtuner%d", nr, nr - 1);
+	int vtunerid = nr - 1;
 
 	pumpThread = NULL;
 
@@ -373,12 +373,23 @@ eDVBUsbAdapter::eDVBUsbAdapter(int nr)
 		goto error;
 	}
 
-	snprintf(filename, sizeof(filename), "/dev/misc/vtuner%d", nr - 1);
-	vtunerFd = open(filename, O_RDWR);
+	while (vtunerFd < 0)
+	{
+		snprintf(filename, sizeof(filename), "/dev/misc/vtuner%d", vtunerid);
+		if (::access(filename, F_OK) < 0) break;
+		vtunerFd = open(filename, O_RDWR);
+		if (vtunerFd < 0)
+		{
+			vtunerid++;
+		}
+	}
+
 	if (vtunerFd < 0)
 	{
 		goto error;
 	}
+
+	eDebug("linking adapter%d/frontend0 to vtuner%d", nr, vtunerid);
 
 	filter.input = DMX_IN_FRONTEND;
 	filter.flags = 0;
@@ -416,10 +427,14 @@ eDVBUsbAdapter::eDVBUsbAdapter(int nr)
 #define VTUNER_SET_TYPE     4
 #define VTUNER_SET_HAS_OUTPUTS 5
 #define VTUNER_SET_FE_INFO  6
-#define VTUNER_SET_DELSYS   7
+#define VTUNER_SET_NUM_MODES 7
+#define VTUNER_SET_MODES 8
+#define VTUNER_SET_DELSYS 32
+#define VTUNER_SET_ADAPTER 33
 	ioctl(vtunerFd, VTUNER_SET_NAME, name);
 	ioctl(vtunerFd, VTUNER_SET_TYPE, type);
 	ioctl(vtunerFd, VTUNER_SET_HAS_OUTPUTS, "no");
+	ioctl(vtunerFd, VTUNER_SET_ADAPTER, nr);
 
 	memset(pidList, 0xff, sizeof(pidList));
 
@@ -740,11 +755,8 @@ PyObject *eDVBResourceManager::setFrontendSlotInformations(ePyObject list)
 		}
 	}
 	if (assigned != m_frontend.size()) {
-		char blasel[256];
-		sprintf(blasel, "eDVBResourceManager::setFrontendSlotInformations .. assigned %zd socket informations, but %d registered frontends!",
+		eDebug("eDVBResourceManager::setFrontendSlotInformations .. assigned %zd socket informations, but %d registered frontends!",
 			m_frontend.size(), assigned);
-		PyErr_SetString(PyExc_StandardError, blasel);
-		return NULL;
 	}
 	for (eSmartPtrList<eDVBRegisteredFrontend>::iterator i(m_simulate_frontend.begin()); i != m_simulate_frontend.end(); ++i)
 	{
@@ -898,7 +910,7 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 		}
 	}
 #if defined(__sh__) // we use our own algo for demux detection
-	else if (m_boxtype == ADB_BOX ||  m_boxtype == UFS910 || m_boxtype == UFS912 || m_boxtype == SPARK || m_boxtype == SPARK7162 || m_boxtype == UFS922 || m_boxtype == TF7700HDPVR || m_boxtype == HDBOX ||
+	else if (m_boxtype == ADB_BOX || m_boxtype == UFS910 || m_boxtype == UFS912 || m_boxtype == SPARK || m_boxtype == SPARK7162 || m_boxtype == UFS922 || m_boxtype == TF7700HDPVR || m_boxtype == HDBOX ||
 		m_boxtype == HL101 || m_boxtype == CUBEREVO || m_boxtype == CUBEREVO_MINI || m_boxtype == CUBEREVO_MINI2 || m_boxtype == VIP1_V2 || m_boxtype == VIP2_V1 || m_boxtype == HS7810A || m_boxtype == HS7110 || m_boxtype == WHITEBOX ||
 		m_boxtype == CUBEREVO_MINI_FTA || m_boxtype == CUBEREVO_250HD || m_boxtype == CUBEREVO_2000HD || m_boxtype == CUBEREVO_9500HD || m_boxtype == OCTAGON1008 || m_boxtype == ATEVIO7500)
 	{
@@ -942,7 +954,6 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 					//eDebug("\nallocate demux c = %d\n",n);
 					return 0;
 				}
-
 				unused = i;
 				//eDebug("\nallocate demux d = %d\n", n);
 				break;
@@ -995,6 +1006,7 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 			}
 		}
 	}
+
 	if (unused)
 	{
 		demux = new eDVBAllocatedDemux(unused);
@@ -1171,10 +1183,10 @@ RESULT eDVBResourceManager::allocatePVRChannel(const eDVBChannelID &channelid, e
 	ePtr<eDVBChannel> ch = new eDVBChannel(this, 0);
 	if (channelid)
 	{
-		/* 
-		 * user provided a channelid, with the clear intention for 
+		/*
+		 * user provided a channelid, with the clear intention for
 		 * this channel to be registered at the resource manager.
-		 * (allowing e.g. epgcache to be started) 
+		 * (allowing e.g. epgcache to be started)
 		 */
 		ePtr<iDVBFrontendParameters> feparm;
 		ch->setChannel(channelid, feparm);
@@ -1194,7 +1206,7 @@ RESULT eDVBResourceManager::addChannel(const eDVBChannelID &chid, eDVBChannel *c
 	}
 	std::list<active_channel> &active_channels = simulate ? m_active_simulate_channels : m_active_channels;
 	active_channels.push_back(active_channel(chid, ch));
-	if (!simulate) 
+	if (!simulate)
 	{
 		/* emit */ m_channelAdded(ch);
 	}
@@ -1850,17 +1862,17 @@ void eDVBChannel::getNextSourceSpan(off_t current_offset, size_t bytes_read, off
 			eDebug("frame skipping failed, reverting to byte-skipping");
 		}
 	}
-	
+
 	if (!frame_skip_success)
 	{
 		current_offset += align(m_skipmode_m, blocksize);
-		
+
 		if (m_skipmode_m)
 		{
 			eDebug("we are at %llx, and we try to find the iframe here:", current_offset);
 			size_t iframe_len;
 			off_t iframe_start = current_offset;
-			
+
 			int direction = (m_skipmode_m < 0) ? -1 : +1;
 			m_tstools_lock.lock();
 			int r = m_tstools.findFrame(iframe_start, iframe_len, direction);
@@ -1962,7 +1974,7 @@ void eDVBChannel::getNextSourceSpan(off_t current_offset, size_t bytes_read, off
 			eDebug("get offset for pts=%llu failed!", pts);
 			continue;
 		}
-		
+
 		eDebug("ok, resolved skip (rel: %d, diff %lld), now at %08llx", relative, pts, offset);
 		current_offset = align(offset, blocksize); /* in case tstools return non-aligned offset */
 	}
