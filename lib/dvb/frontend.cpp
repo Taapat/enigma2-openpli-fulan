@@ -1335,7 +1335,7 @@ static void fillDictWithTerrestrialData(ePyObject dict, struct dtv_property *p, 
 			{
 			default:
 			case SYS_DVBT: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T; break;
-			case SYS_DVBT2: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T2; break;
+			//doenst work?case SYS_DVBT2: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T2; break;
 			}
 			PutToDict(dict, "system", tmp);
 			break;
@@ -2147,7 +2147,7 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			{
 			default:
 			case eDVBFrontendParametersTerrestrial::System_DVB_T: p[cmdseq.num].u.data = SYS_DVBT; break;
-			case eDVBFrontendParametersTerrestrial::System_DVB_T2: p[cmdseq.num].u.data = SYS_DVBT2; break;
+			//doenst work?case eDVBFrontendParametersTerrestrial::System_DVB_T2: p[cmdseq.num].u.data = SYS_DVBT2; break;
 			}
 			cmdseq.num++;
 
@@ -2658,19 +2658,19 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 	}
 	else if (m_type == eDVBFrontend::feTerrestrial)
 	{
-		std::map<fe_delivery_system_t, bool>::iterator it = m_delsys.find(SYS_DVBT2);
-		bool can_handle_dvbt2 = (it != m_delsys.end()) ? it->second : false;
+		//doenst work?std::map<fe_delivery_system_t, bool>::iterator it = m_delsys.find(SYS_DVBT2);
+//		bool can_handle_dvbt2 = (it != m_delsys.end()) ? it->second : false;
 		eDVBFrontendParametersTerrestrial parm;
 		if (feparm->getDVBT(parm) < 0)
 		{
 			return 0;
 		}
-		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T2 && !can_handle_dvbt2)
+//		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T2 && !can_handle_dvbt2)
 		{
 			return 0;
 		}
 		score = 2;
-		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T && can_handle_dvbt2)
+//		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T && can_handle_dvbt2)
 		{
 			/* prefer to use a T tuner, try to keep T2 free for T2 transponders */
 			score--;
