@@ -124,6 +124,10 @@ class InfoHandler(xml.sax.ContentHandler):
 			self.attributes["packagename"] = str(data)
 		if self.elements[-1] == "needsRestart":
 			self.attributes["needsRestart"] = str(data)
+#+++>
+		if self.elements[-1] == "details":
+			self.attributes["details"] = str(data)
+#+++<
 		if self.elements[-1] == "shortdescription":
 			self.attributes["shortdescription"] = str(data)
 		if self.elements[-1] == "description":

@@ -28,10 +28,15 @@
 #include <lib/python/connections.h>
 #include <lib/python/python.h>
 
+#if defined(__sh__) // vfd class
+#include <lib/driver/vfd.h>
+#endif  
 #include "bsod.h"
 #include "version_info.h"
 
+#ifndef ENABLE_EPLAYER
 #include <gst/gst.h>
+#endif
 
 #ifdef OBJECT_DEBUG
 int object_total_remaining;
@@ -133,7 +138,9 @@ int main(int argc, char **argv)
 	atexit(object_dump);
 #endif
 
+#ifndef ENABLE_EPLAYER
 	gst_init(&argc, &argv);
+#endif
 
 	// set pythonpath if unset
 	setenv("PYTHONPATH", eEnv::resolve("${libdir}/enigma2/python").c_str(), 0);
@@ -220,6 +227,12 @@ int main(int argc, char **argv)
 	gRC::getInstance()->setSpinnerDC(my_dc);
 
 	eRCInput::getInstance()->keyEvent.connect(slot(keyEvent));
+
+#if defined(__sh__) // initialise the vfd class
+	evfd * vfd = new evfd;
+	vfd->init();
+	delete vfd;
+#endif
 	
 	printf("executing main\n");
 	
