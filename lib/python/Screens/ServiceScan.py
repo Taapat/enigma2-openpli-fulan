@@ -34,7 +34,6 @@ class ServiceScan(Screen):
 		print "ok"
 		if self["scan"].isDone():
 			if `self.currentInfobar`.endswith(".InfoBar'>"):
-				self.currentServiceList = self.currentInfobar.servicelist
 				if self.currentServiceList is not None:
 					bouquets = self.currentServiceList.getBouquetList()
 					for x in bouquets:
@@ -55,15 +54,18 @@ class ServiceScan(Screen):
 		
 		self.scanList = scanList
 		
-		self.currentInfobar = session.infobar
+		if hasattr(session, 'infobar'):
+			self.currentInfobar = session.infobar
+			self.currentServiceList = self.currentInfobar.servicelist
+			if self.session.pipshown and self.currentServiceList:
+				if self.currentServiceList.dopipzap:
+					self.currentServiceList.togglePipzap()
+				del self.session.pip
+				self.session.pipshown = False
+		else:
+			self.currentInfobar = None
 
 		self.session.nav.stopService()
-
-		if self.session.pipshown:
-			if self.currentServiceList and self.currentServiceList.dopipzap:
-				self.currentServiceList.togglePipzap()
-			del self.session.pip
-			self.session.pipshown = False
 
 		self["scan_progress"] = ProgressBar()
 		self["scan_state"] = Label(_("scan state"))

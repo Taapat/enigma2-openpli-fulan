@@ -28,28 +28,40 @@ TUXBOX_APPS_DVB
 AM_CONDITIONAL(HAVE_GIT_DIR, test -d "$srcdir/.git")
 AM_CONDITIONAL(HAVE_FAKE_GIT_DIR, test -f "$srcdir/.git/last_commit_info")
 
+AC_ARG_ENABLE(eplayer,
+	[  --enable-eplayer            enable eplayer3 support],
+	[AC_DEFINE(ENABLE_EPLAYER,1,[enable eplayer3 support])])
+
+AM_CONDITIONAL(ENABLE_EPLAYER,test "$enable_eplayer" = "yes")
+if test "$enable_eplayer" = "yes"; then
+	AC_DEFINE(ENABLE_EPLAYER,1,[include eplayer3 support])
+fi
+
+if ! test "$enable_eplayer" = "yes"; then
 PKG_CHECK_MODULES(BASE, [freetype2 fribidi gstreamer-0.10 gstreamer-pbutils-0.10 libdvbsi++ libpng libxml-2.0 sigc++-1.2])
+else
+PKG_CHECK_MODULES(BASE, [freetype2 fribidi libdvbsi++ libpng libxml-2.0 sigc++-1.2])
+fi
+
 PKG_CHECK_MODULES(LIBDDVD, libdreamdvd, HAVE_LIBDDVD="yes", HAVE_LIBDDVD="no")
 AM_CONDITIONAL(HAVE_LIBDDVD, test "$HAVE_LIBDDVD" = "yes")
 
 AC_ARG_ENABLE([tf7700],
 	[AS_HELP_STRING(--enable-tf7700,    enable topfield tf7700 stuff)],
-#	AC_MSG_ERROR([bad value I${enableval}I for --enable-tf7700]))
-		[case "${enableval}" in
-			yes) enable_tf7700=true ;;
-			no) enable_tf7700=false ;;
-			*) AC_MSG_ERROR([bad value ${enableval} for --enable-tf7700]) ;;
-		esac])
+	[case "${enableval}" in
+		yes) enable_tf7700=true ;;
+		no) enable_tf7700=false ;;
+		*) AC_MSG_ERROR([bad value ${enableval} for --enable-tf7700]) ;;
+	esac])
 AM_CONDITIONAL([ENABLE_TF7700], [test x$enable_tf7700 = xtrue])
 
 AC_ARG_ENABLE([cuberevo],
 	[AS_HELP_STRING(--enable-cuberevo,    enable cuberevo stuff)],
-#	AC_MSG_ERROR([bad value I${enableval}I for --enable-cuberevo]))
-		[case "${enableval}" in
-			yes) enable_cuberevo=true ;;
-			no) enable_cuberevo=false ;;
-			*) AC_MSG_ERROR([bad value ${enableval} for --enable-cuberevo]) ;;
-		esac])
+	[case "${enableval}" in
+		yes) enable_cuberevo=true ;;
+		no) enable_cuberevo=false ;;
+		*) AC_MSG_ERROR([bad value ${enableval} for --enable-cuberevo]) ;;
+	esac])
 AM_CONDITIONAL([ENABLE_CUBEREVO], [test x$enable_cuberevo = xtrue])
 
 AC_CHECK_LIB([dl], [dlopen], [LIBDL_LIBS="-ldl"], [AC_MSG_ERROR([Could not find libdl])])

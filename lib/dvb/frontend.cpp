@@ -1335,7 +1335,9 @@ static void fillDictWithTerrestrialData(ePyObject dict, struct dtv_property *p, 
 			{
 			default:
 			case SYS_DVBT: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T; break;
+#ifdef FE_CAN_2G_MODULATION
 			case SYS_DVBT2: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T2; break;
+#endif
 			}
 			PutToDict(dict, "system", tmp);
 			break;
@@ -2147,7 +2149,9 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			{
 			default:
 			case eDVBFrontendParametersTerrestrial::System_DVB_T: p[cmdseq.num].u.data = SYS_DVBT; break;
+#ifdef FE_CAN_2G_MODULATION
 			case eDVBFrontendParametersTerrestrial::System_DVB_T2: p[cmdseq.num].u.data = SYS_DVBT2; break;
+#endif
 			}
 			cmdseq.num++;
 
@@ -2656,6 +2660,7 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 	{
 		score = 2;
 	}
+#ifdef FE_CAN_2G_MODULATION
 	else if (m_type == eDVBFrontend::feTerrestrial)
 	{
 		std::map<fe_delivery_system_t, bool>::iterator it = m_delsys.find(SYS_DVBT2);
@@ -2676,6 +2681,7 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 			score--;
 		}
 	}
+#endif
 	else if (m_type == eDVBFrontend::feATSC)
 	{
 		score = 2;

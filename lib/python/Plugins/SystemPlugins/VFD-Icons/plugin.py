@@ -141,7 +141,6 @@ class VFDIcons:
 		else:
 			evfd.getInstance().vfd_set_icon(0x1e,0)
 
-
 VFDIconsInstance = None
 
 def main(session, **kwargs):
@@ -151,4 +150,4 @@ def main(session, **kwargs):
 		VFDIconsInstance = VFDIcons(session)
 
 def Plugins(**kwargs):
- 	return [ PluginDescriptor(name="VFDIcons", description="Icons in VFD", where = PluginDescriptor.WHERE_SESSIONSTART, fnc=main ) ]
+	return [ PluginDescriptor(name="VFDIcons", description="Icons in VFD", where = PluginDescriptor.WHERE_SESSIONSTART, fnc=main ) ]

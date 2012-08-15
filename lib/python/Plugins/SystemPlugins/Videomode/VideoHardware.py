@@ -358,7 +358,6 @@ class VideoHardware:
 	def setHDMIAudioSource(self, configElement):
 		open("/proc/stb/hdmi/audio_source", "w").write(configElement.value)
 
-
 	def updateColor(self, port):
 		print "updateColor: ", port
 		if port == "HDMI":
