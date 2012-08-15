@@ -58,6 +58,8 @@ enigma2_LDADD = \
 
 enigma2_LDFLAGS = -Wl,--export-dynamic
 
+enigma2_LDADD += -lglcddrivers -lglcdgraphics -lglcdskin
+ 
 if HAVE_GIT_DIR
 GIT_DIR = $(top_srcdir)/.git
 GIT = git --git-dir=$(GIT_DIR)
