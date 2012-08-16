@@ -66,7 +66,13 @@ public:
 	int lock();
 	void unlock();
 	int islocked() { return locked; }
-#if defined(__sh__) 
+#if defined(__sh__)
+//---> "hack" for libeplayer3 fb access
+	int getFD() { return fbFd; }
+	unsigned char * getLFB_Direct() { return lfb_direct; }
+	int getScreenResX() { return xRes; }
+	int getScreenResY() { return yRes; }
+//---<
 	void clearFBblit();
 	int getFBdiff(int ret);
 	void setFBdiff(int top, int right, int left, int bottom);

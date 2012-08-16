@@ -51,7 +51,6 @@ int eDVBAudio::startPid(int pid, int type)
 		return -errno;
 	}
 	eDebug("ok");
-
 #if not defined(__sh__) // already startet cause of DMX_IMMEDIATE_START
 	eDebugNoNewLine("DEMUX_START - audio - ");
 	if (::ioctl(m_fd_demux, DMX_START) < 0)
@@ -61,7 +60,6 @@ int eDVBAudio::startPid(int pid, int type)
 	}
 	eDebug("ok");
 #endif
-
 	int bypass = 0;
 
 	switch (type)
@@ -97,7 +95,6 @@ int eDVBAudio::startPid(int pid, int type)
 		eDebug("failed (%m)");
 	else
 		eDebug("ok");
-
 #if not defined(__sh__) // this is a hack which only matters for dm drivers
 	freeze();  // why freeze here?!? this is a problem when only a pid change is requested... because of the unfreeze logic in Decoder::setState
 #endif
@@ -761,7 +758,7 @@ int eTSMPEGDecoder::setState()
 		int *s = state_table[m_state];
 		if (changed & (changeState|changeVideo) && m_video)
 		{
-#if not defined(__sh__)  // see comment below
+#if not defined(__sh__) // see comment below
 			m_video->setSlowMotion(s[1]);
 			m_video->setFastForward(s[2]);
 #endif 
@@ -770,10 +767,8 @@ int eTSMPEGDecoder::setState()
 			else
 				m_video->freeze();
 #if defined(__sh__)
-/*
-the VIDEO_CONTINUE would reset the FASTFORWARD  command so we
-execute the FASTFORWARD after the VIDEO_CONTINUE
-*/
+// the VIDEO_CONTINUE would reset the FASTFORWARD  command so we
+// execute the FASTFORWARD after the VIDEO_CONTINUE
 			if(s[1])
 			{
 				m_video->setFastForward(s[2]);
@@ -1077,8 +1072,8 @@ RESULT eTSMPEGDecoder::showSinglePic(const char *filename)
 			struct stat s;
 			fstat(f, &s);
 #if defined(__sh__) // our driver has a different behaviour for iframes
-			if (m_video_clip_fd >= 0)  
-				finishShowSinglePic();  
+			if (m_video_clip_fd >= 0)
+				finishShowSinglePic();
 #endif
 			if (m_video_clip_fd == -1)
 				m_video_clip_fd = open("/dev/dvb/adapter0/video0", O_WRONLY);

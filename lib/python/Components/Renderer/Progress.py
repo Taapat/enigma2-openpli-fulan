@@ -30,7 +30,6 @@ class Progress(VariableValue, Renderer):
 				(self.range, self.value) = ((0, 1), 0)
 				return
 
-
 			range = (self.source and self.source.range) or 100
 			value = (self.source and self.source.value) or 0
 

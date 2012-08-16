@@ -113,7 +113,7 @@ eDVBResourceManager::eDVBResourceManager()
 		m_boxtype = DM7020HD;
 #if defined(__sh__)
 	else if (!strncmp(tmp, "adb_box\n", rd))
-		m_boxtype = ADB_BOX;   
+		m_boxtype = ADB_BOX;
 	else if (!strncmp(tmp, "ufs910\n", rd))
 		m_boxtype = UFS910;
 	else if (!strncmp(tmp, "ufs912\n", rd))
@@ -928,8 +928,7 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 						unused = i;
 					}
 				}
-				else if (i->m_adapter == fe->m_adapter &&
-				    i->m_demux->getSource() == fe->m_frontend->getDVBID())
+				else if (i->m_adapter == fe->m_adapter && i->m_demux->getSource() == fe->m_frontend->getDVBID())
 				{
 					// take the demux allocated to the same
 					// frontend,  just create a new reference
@@ -2073,12 +2072,13 @@ void eDVBChannel::AddUse()
 
 void eDVBChannel::ReleaseUse()
 {
-	if (!--m_use_count)
+	int count = --m_use_count;
+	if (!count)
 	{
 		m_state = state_release;
 		m_stateChanged(this);
 	}
-	else if (m_use_count == 1)
+	else if (count == 1)
 	{
 		m_state = state_last_instance;
 		m_stateChanged(this);

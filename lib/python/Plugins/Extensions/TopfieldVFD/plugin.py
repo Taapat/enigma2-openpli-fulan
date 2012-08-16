@@ -92,7 +92,6 @@ class TopfieldVFDSetup(ConfigListScreen, Screen):
 		<widget name="key_red" position="280,350" size="140,40" font="Regular;20" backgroundColor="#9f1313" zPosition="2" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
 		</screen>"""
 
-
 	def __init__(self, session, args = None):
 		Screen.__init__(self, session)
 		self.onClose.append(self.abort)
@@ -137,7 +136,6 @@ class TopfieldVFDSetup(ConfigListScreen, Screen):
 		for x in self["config"].list:
 			x[1].cancel()
 		self.close()
-
 
 class TopfieldVFD:
 	def __init__(self, session):

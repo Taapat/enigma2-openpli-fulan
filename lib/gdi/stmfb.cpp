@@ -51,7 +51,7 @@ void stmfb_accel_blit(
 	bltData.src_top    = src_y;
 	bltData.src_right  = src_x + width;
 	bltData.src_bottom = src_y + height;
- bltData.srcFormat  = SURF_BGRA8888;
+	bltData.srcFormat  = SURF_BGRA8888;
 
 	bltData.dstOffset  = 1920*1080*4;
 	bltData.dstPitch   = dst_stride;
@@ -59,7 +59,7 @@ void stmfb_accel_blit(
 	bltData.dst_top    = dst_y;
 	bltData.dst_right  = dst_x + dwidth;
 	bltData.dst_bottom = dst_y + dheight;
- bltData.dstFormat  = SURF_BGRA8888;
+	bltData.dstFormat  = SURF_BGRA8888;
 
 	if (ioctl(fb_fd, STMFBIO_BLT, &bltData ) < 0)
 	{
@@ -74,4 +74,3 @@ void stmfb_accel_fill(
 {
 //	printf("unimplemented bcm_accel_fill\n");
 }
-

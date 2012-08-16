@@ -33,17 +33,14 @@
 eDVBCIInterfaces *eDVBCIInterfaces::instance = 0;
 
 #ifdef __sh__
-
 //#define x_debug
 
 bool eDVBCISlot::checkQueueSize()
 {
 	return (sendqueue.size() > 0);
-
 }
 
-/* from dvb-apps
- */
+/* from dvb-apps */
 int asn_1_decode(uint16_t * length, unsigned char * asn_1_array,
 		 uint32_t asn_1_array_len)
 {
@@ -70,7 +67,6 @@ int asn_1_decode(uint16_t * length, unsigned char * asn_1_array,
 		*length = (asn_1_array[1] << 8) | asn_1_array[2];
 		return 3;
 	}
-
 	return -1;
 }
 
@@ -518,7 +514,7 @@ static bool canDescrambleMultipleServices(int slotid)
 	if ( str == "auto" )
 	{
 		std::string appname = eDVBCI_UI::getInstance()->getAppName(slotid);
-		if (appname.find("AlphaCrypt") != std::string::npos)
+		if (appname.find("AlphaCrypt") != std::string::npos || appname.find("Multi") != std::string::npos)
 			return true;
 	}
 	else if (str == "yes")
@@ -1263,6 +1259,7 @@ void eDVBCISlot::data(int what)
 		}
 		return;
 	}
+
 	if (state == stateInvalid)
 		reset();
 
@@ -1590,7 +1587,6 @@ int eDVBCISlot::reset()
 	eDVBCI_UI::getInstance()->setAppName(getSlotID(), "");
 	eDVBCISession::deleteSessions(this);
 	eDVBCIInterfaces::getInstance()->ciRemoved(this);
-
 #else
 	if (state == stateInvalid)
 	{

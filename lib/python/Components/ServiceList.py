@@ -183,9 +183,6 @@ class ServiceList(HTMLComponent, GUIComponent):
 					break
 		return dest
 
-	def setNumberOffset(self, offset):
-		self.l.setNumberOffset(offset)
-
 	def setPlayableIgnoreService(self, ref):
 		self.l.setIgnoreService(ref)
 
@@ -196,6 +193,12 @@ class ServiceList(HTMLComponent, GUIComponent):
 			self.l.sort()
 		self.selectionChanged()
 
+	def resetRoot(self):
+		index = self.instance.getCurrentIndex()
+		self.l.setRoot(self.root, False)
+		self.l.sort()
+		self.instance.moveSelectionTo(index)
+	
 	def removeCurrent(self):
 		self.l.removeCurrent()
 
@@ -265,4 +268,5 @@ class ServiceList(HTMLComponent, GUIComponent):
 		self.l.setElementFont(self.l.celServiceInfo, self.ServiceInfoFont)
 		if "perc" in config.usage.show_event_progress_in_servicelist.value:
 			self.l.setElementFont(self.l.celServiceEventProgressbar, self.ServiceInfoFont)
+
 
