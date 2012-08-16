@@ -28,16 +28,16 @@ TUXBOX_APPS_DVB
 AM_CONDITIONAL(HAVE_GIT_DIR, test -d "$srcdir/.git")
 AM_CONDITIONAL(HAVE_FAKE_GIT_DIR, test -f "$srcdir/.git/last_commit_info")
 
-AC_ARG_ENABLE(eplayer,
-	[  --enable-eplayer            enable eplayer3 support],
-	[AC_DEFINE(ENABLE_EPLAYER,1,[enable eplayer3 support])])
+AC_ARG_ENABLE(libeplayer3,
+	[  --enable-libeplayer3          enable TDT libeplayer3 as player engine supportt],
+	[AC_DEFINE(ENABLE_LIBEPLAYER3,1,[enable TDT libeplayer3 as player engine support])])
 
-AM_CONDITIONAL(ENABLE_EPLAYER,test "$enable_eplayer" = "yes")
-if test "$enable_eplayer" = "yes"; then
-	AC_DEFINE(ENABLE_EPLAYER,1,[include eplayer3 support])
+AM_CONDITIONAL(ENABLE_LIBEPLAYER3,test "$enable_libeplayer3" = "yes")
+if test "$enable_libeplayer3" = "yes"; then
+	AC_DEFINE(ENABLE_LIBEPLAYER3,1,[include TDT libeplayer3 as player engine support])
 fi
 
-if ! test "$enable_eplayer" = "yes"; then
+if ! test "$enable_libeplayer3" = "yes"; then
 PKG_CHECK_MODULES(BASE, [freetype2 fribidi gstreamer-0.10 gstreamer-pbutils-0.10 libdvbsi++ libpng libxml-2.0 sigc++-1.2])
 else
 PKG_CHECK_MODULES(BASE, [freetype2 fribidi libdvbsi++ libpng libxml-2.0 sigc++-1.2])
