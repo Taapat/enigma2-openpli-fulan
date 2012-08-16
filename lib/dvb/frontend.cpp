@@ -527,7 +527,7 @@ int eDVBFrontend::openFrontend()
 			{
 			case FE_QPSK:
 				m_delsys[SYS_DVBS] = true;
-#ifdef FE_CAN_2G_MODULATION
+#if not defined(__sh__)
 				if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBS2] = true;
 #endif
 				break;
@@ -540,7 +540,7 @@ int eDVBFrontend::openFrontend()
 				break;
 			case FE_OFDM:
 				m_delsys[SYS_DVBT] = true;
-#ifdef FE_CAN_2G_MODULATION
+#if not defined(__sh__)
 				if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBT2] = true;
 #endif
 				break;
@@ -1336,7 +1336,7 @@ static void fillDictWithTerrestrialData(ePyObject dict, struct dtv_property *p, 
 			default:
 			case SYS_DVBT: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T; break;
 
-#ifdef FE_CAN_2G_MODULATION
+#if not defined(__sh__)
 			case SYS_DVBT2: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T2; break;
 #endif
 			}
@@ -2150,7 +2150,7 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			{
 			default:
 			case eDVBFrontendParametersTerrestrial::System_DVB_T: p[cmdseq.num].u.data = SYS_DVBT; break;
-#ifdef FE_CAN_2G_MODULATION
+#if not defined(__sh__)
 			case eDVBFrontendParametersTerrestrial::System_DVB_T2: p[cmdseq.num].u.data = SYS_DVBT2; break;
 #endif
 			}
@@ -2661,26 +2661,31 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 	{
 		score = 2;
 	}
-#ifdef FE_CAN_2G_MODULATION
+#if not defined(__sh__)
 	else if (m_type == eDVBFrontend::feTerrestrial)
 	{
-		//doenst work?std::map<fe_delivery_system_t, bool>::iterator it = m_delsys.find(SYS_DVBT2);
-//		bool can_handle_dvbt2 = (it != m_delsys.end()) ? it->second : false;
+		std::map<fe_delivery_system_t, bool>::iterator it = m_delsys.find(SYS_DVBT2);
+		bool can_handle_dvbt2 = (it != m_delsys.end()) ? it->second : false;
 		eDVBFrontendParametersTerrestrial parm;
 		if (feparm->getDVBT(parm) < 0)
 		{
 			return 0;
 		}
-//		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T2 && !can_handle_dvbt2)
+		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T2 && !can_handle_dvbt2)
 		{
 			return 0;
 		}
 		score = 2;
-//		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T && can_handle_dvbt2)
+		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T && can_handle_dvbt2)
 		{
 			/* prefer to use a T tuner, try to keep T2 free for T2 transponders */
 			score--;
 		}
+	}
+#else
+	else if (m_type == eDVBFrontend::feTerrestrial)
+	{
+		score = 2;
 	}
 #endif
 	else if (m_type == eDVBFrontend::feATSC)

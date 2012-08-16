@@ -72,7 +72,7 @@ void eFilePushThread::thread()
 // No idea how this is handeld in dm drivers
 	int fd_video = open("/dev/dvb/adapter0/video0", O_RDONLY);
 // Fix to ensure that event evtEOF is called at end of playbackl part 1/3
-	bool already_empty=false;
+	bool already_empty = false;
 #endif
 		/* m_stop must be evaluated after each syscall. */
 	while (!m_stop)
@@ -150,10 +150,10 @@ void eFilePushThread::thread()
 		if (m_sg && !current_span_remaining)
 		{
 #if defined (__sh__) // tells the player to play in reverse
-#define VIDEO_DISCONTINUITY                   _IO('o',  84)
+#define VIDEO_DISCONTINUITY                   _IO('o', 84)
 #define DVB_DISCONTINUITY_SKIP                0x01
 #define DVB_DISCONTINUITY_CONTINUOUS_REVERSE  0x02
-			if((m_sg->getSkipMode() != 0))
+			if ((m_sg->getSkipMode() != 0))
 			{
 				// inform the player about the jump in the stream data
 				// this only works if the video device allows the discontinuity ioctl in read-only mode (patched)
