@@ -7,7 +7,7 @@ AM_CPPFLAGS = \
 	-include Python.h \
 	-include $(top_builddir)/enigma2_config.h
 
-if ENABLE_EPLAYER
+if ENABLE_LIBEPLAYER3
 AM_CPPFLAGS += \
 	-I$(top_srcdir)/../misc/tools/libeplayer3/include
 endif
