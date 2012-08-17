@@ -6,7 +6,7 @@
 #include <lib/dvb/pmt.h>
 #include <lib/dvb/subtitle.h>
 #include <lib/dvb/teletext.h>
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 #include <gst/gst.h>
 #else
 #include <common.h>
@@ -55,7 +55,7 @@ public:
 	PyObject* getInfoObject(const eServiceReference &ref, int w);
 };
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 typedef struct _GstElement GstElement;
 #endif
 
@@ -115,7 +115,7 @@ public:
 	RESULT getName(std::string &name);
 	int getInfo(int w);
 	std::string getInfoString(int w);
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	PyObject *getInfoObject(int w);
 #endif
 
@@ -146,7 +146,7 @@ public:
 	void setAC3Delay(int);
 	void setPCMDelay(int);
 
-#ifdef ENABLE_EPLAYER
+#ifdef ENABLE_LIBEPLAYER3
 	struct audioStream
 	{
 		audiotype_t type;
@@ -249,7 +249,7 @@ private:
 	std::vector<audioStream> m_audioStreams;
 	std::vector<subtitleStream> m_subtitleStreams;
 	eSubtitleWidget *m_subtitle_widget;
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	gdouble m_currentTrickRatio;
 #else
 	int m_currentTrickRatio;
@@ -257,7 +257,7 @@ private:
 	friend class eServiceFactoryMP3;
 	eServiceReference m_ref;
 	int m_buffer_size;
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	gint64 m_buffer_duration;
 	bool m_use_prefillbuffer;
 #endif
@@ -270,7 +270,7 @@ private:
 		stIdle, stRunning, stStopped,
 	};
 	int m_state;
-#ifdef ENABLE_EPLAYER
+#ifdef ENABLE_LIBEPLAYER3
 	Context_t * player;
 #else
 	GstElement *m_gst_playbin, *audioSink, *videoSink;
@@ -286,7 +286,7 @@ private:
 #endif
 
 	public:
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 		GstMessageContainer(int type, GstMessage *msg, GstPad *pad, GstBuffer *buffer)
 		{
 			messagePointer = msg;
@@ -348,14 +348,14 @@ private:
 	int m_decoder_time_valid_state;
 
 	void pushSubtitles();
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	void pullSubtitle(GstBuffer *buffer);
 #else
 	void pullSubtitle();
 #endif
 	void sourceTimeout();
 	sourceStream m_sourceinfo;
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	gulong m_subs_to_pull_handler_id;
 #endif
 
@@ -363,7 +363,7 @@ private:
 
 	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
 	std::string m_useragent;
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	RESULT trickSeek(gdouble ratio);
 #endif
 };
