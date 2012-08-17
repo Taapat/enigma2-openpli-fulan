@@ -34,7 +34,7 @@
 #include "bsod.h"
 #include "version_info.h"
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 #include <gst/gst.h>
 #endif
 
@@ -138,7 +138,7 @@ int main(int argc, char **argv)
 	atexit(object_dump);
 #endif
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	gst_init(&argc, &argv);
 #endif
 

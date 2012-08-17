@@ -658,6 +658,22 @@ eServiceMP3::~eServiceMP3()
 		gst_object_unref (GST_OBJECT (m_gst_playbin));
 		eDebug("eServiceMP3::destruct!");
 	}
+#else
+//Trick
+/*	if(player && player->output)
+	{
+		player->output->Command(player,OUTPUT_DEL, (void*)"audio");
+		player->output->Command(player,OUTPUT_DEL, (void*)"video");
+		player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
+	}
+
+	if(player && player->playback)
+		player->playback->Command(player,PLAYBACK_CLOSE, NULL);
+
+	if(player)
+		free(player);
+	player = NULL;
+*/
 #endif
 }
 
@@ -1178,7 +1194,7 @@ int eServiceMP3::getInfo(int w)
 	case sTagKeywords:
 	case sTagChannelMode:
 	case sUser+12:
-#ifndef ENABLE_LIBEPLAYER3
+#if not defined(__sh__)
 		return resIsString;
 #endif
 	case sTagTrackGain:
@@ -2383,21 +2399,23 @@ RESULT eServiceMP3::enableSubtitles(eWidget *parent, ePyObject tuple)
 	{
 #ifndef ENABLE_LIBEPLAYER3
 		g_object_set (G_OBJECT (m_gst_playbin), "current-text", -1, NULL);
+#endif
+		m_subtitle_pages.clear();
+		m_prev_decoder_time = -1;
 		m_decoder_time_valid_state = 0;
 		m_currentSubtitleStream = pid;
 		m_cachedSubtitleStream = m_currentSubtitleStream;
+#ifndef ENABLE_LIBEPLAYER3
 		g_object_set (G_OBJECT (m_gst_playbin), "current-text", m_currentSubtitleStream, NULL);
 #endif
-		m_prev_decoder_time = -1;
-		m_subtitle_pages.clear();
 
 		m_subtitle_widget = 0;
 		m_subtitle_widget = new eSubtitleWidget(parent);
 		m_subtitle_widget->resize(parent->size()); /* full size */
 
-#ifndef ENABLE_LIBEPLAYER3
 		eDebug ("eServiceMP3::switched to subtitle stream %i", m_currentSubtitleStream);
 
+#ifndef ENABLE_LIBEPLAYER3
 #ifdef GSTREAMER_SUBTITLE_SYNC_MODE_BUG
 		/* 
 		 * when we're running the subsink in sync=false mode, 
@@ -2405,11 +2423,13 @@ RESULT eServiceMP3::enableSubtitles(eWidget *parent, ePyObject tuple)
 		 */
 		seekRelative(-1, 90000);
 #endif
-#else
-	if(player && player->playback)
-		player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&pid);
 #endif
 	}
+#ifdef ENABLE_LIBEPLAYER3
+	if (player && player->playback)
+		player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&pid);
+	m_event((iPlayableService*)this, evUpdatedInfo);
+#endif
 
 	return 0;
 
@@ -2422,21 +2442,19 @@ error_out:
 RESULT eServiceMP3::disableSubtitles(eWidget *parent)
 {
 	eDebug("eServiceMP3::disableSubtitles");
-#ifndef ENABLE_LIBEPLAYER3
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = m_currentSubtitleStream;
+#ifndef ENABLE_LIBEPLAYER3
 	g_object_set (G_OBJECT (m_gst_playbin), "current-text", m_currentSubtitleStream, NULL);
+#endif
 	m_subtitle_pages.clear();
 	m_prev_decoder_time = -1;
 	m_decoder_time_valid_state = 0;
 	delete m_subtitle_widget;
 	m_subtitle_widget = 0;
-#else
-	m_subtitle_pages.clear();
-	delete m_subtitle_widget;
-	m_subtitle_widget = 0;
+#ifdef ENABLE_LIBEPLAYER3
 	int pid = -1;
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&pid);
 #endif
 	return 0;

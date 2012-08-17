@@ -54,7 +54,12 @@ enigma2_LDADD = \
 	@PYTHON_LDFLAGS@ \
 	@LIBDDVD_LIBS@ \
 	-ltuxtxt -ltuxtxt32bpp -lcrypt \
-	-ldl -lpthread -lcrypt -lresolv -lrt -lmmeimage -leplayer3
+	-ldl -lpthread -lcrypt -lresolv -lrt -lmmeimage
+
+if ENABLE_LIBEPLAYER3
+enigma2_LDADD += \
+	-leplayer3
+endif
 
 enigma2_LDFLAGS = -Wl,--export-dynamic
 

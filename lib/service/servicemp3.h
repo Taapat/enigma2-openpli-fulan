@@ -221,6 +221,7 @@ public:
 		{
 		}
 	};
+#endif
 	struct bufferInfo
 	{
 		gint bufferPercent;
@@ -232,7 +233,6 @@ public:
 		{
 		}
 	};
-#endif
 	struct errorInfo
 	{
 		std::string error_message;
@@ -270,9 +270,8 @@ private:
 		stIdle, stRunning, stStopped,
 	};
 	int m_state;
-#ifdef ENABLE_LIBEPLAYER3
+#ifndef ENABLE_LIBEPLAYER3
 	Context_t * player;
-#else
 	GstElement *m_gst_playbin, *audioSink, *videoSink;
 	GstTagList *m_stream_tags;
 
@@ -283,10 +282,8 @@ private:
 		GstPad *messagePad;
 		GstBuffer *messageBuffer;
 		int messageType;
-#endif
 
 	public:
-#ifndef ENABLE_LIBEPLAYER3
 		GstMessageContainer(int type, GstMessage *msg, GstPad *pad, GstBuffer *buffer)
 		{
 			messagePointer = msg;
@@ -319,6 +316,8 @@ private:
 	static void gstHTTPSourceSetAgent(GObject *source, GParamSpec *unused, gpointer user_data);
 	static gint match_sinktype(GstElement *element, gpointer type);
 #else
+	Context_t * player;
+	
 	struct Message
 	{
 		Message()
