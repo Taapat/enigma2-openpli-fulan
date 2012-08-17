@@ -133,6 +133,8 @@ class VFDIcons:
 			else:
 				print "no Service found"
 
+		if servicename == None:
+			servicename = "    "
 		print "vfd display text:", servicename[0:63]
 		evfd.getInstance().vfd_write_string(servicename[0:63])
 		return 1
