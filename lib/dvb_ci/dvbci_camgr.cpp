@@ -5,32 +5,17 @@
 
 eDVBCICAManagerSession::eDVBCICAManagerSession(eDVBCISlot *tslot)
 {
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	slot = tslot;
 	slot->setCAManager(this);
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 eDVBCICAManagerSession::~eDVBCICAManagerSession()
 {
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	slot->setCAManager(NULL);
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 int eDVBCICAManagerSession::receivedAPDU(const unsigned char *tag, const void *data, int len)
 {
-#ifdef __sh__
-	eDebug("eDVBCICAManagerSession::%s >", __func__);
-#endif
 	eDebugNoNewLine("SESSION(%d)/CA %02x %02x %02x: ", session_nb, tag[0], tag[1],tag[2]);
 	for (int i=0; i<len; i++)
 		eDebugNoNewLine("%02x ", ((const unsigned char*)data)[i]);
@@ -56,17 +41,11 @@ int eDVBCICAManagerSession::receivedAPDU(const unsigned char *tag, const void *d
 			break;
 		}
 	}
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 	return 0;
 }
 
 int eDVBCICAManagerSession::doAction()
 {
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	switch (state)
 	{
 	case stateStarted:
@@ -79,28 +58,16 @@ int eDVBCICAManagerSession::doAction()
 	case stateFinal:
 		eDebug("stateFinal und action! kann doch garnicht sein ;)");
 	default:
-#ifdef __sh__
-		eDebug("%s <", __func__);
-#endif
 		return 0;
 	}
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 int eDVBCICAManagerSession::sendCAPMT(unsigned char *data, int len)
 {
 	const unsigned char tag[3]={0x9F, 0x80, 0x32}; // ca_pmt
 
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	sendAPDU(tag, data, len);
 
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 	return 0;
 }
 

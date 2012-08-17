@@ -12,10 +12,11 @@
 #include <common.h>
 #include <subtitle.h>
 #define gint int
+#define gint64 int64_t
 extern OutputHandler_t		OutputHandler;
 extern PlaybackHandler_t	PlaybackHandler;
 extern ContainerHandler_t	ContainerHandler;
-extern ManagerHandler_t		ManagerHandler;
+extern ManagerHandler_t	ManagerHandler;
 #endif
 /* for subtitles */
 #include <lib/gui/esubtitle.h>
@@ -146,49 +147,7 @@ public:
 	void setAC3Delay(int);
 	void setPCMDelay(int);
 
-#ifdef ENABLE_LIBEPLAYER3
-	struct audioStream
-	{
-		audiotype_t type;
-		std::string language_code; /* iso-639, if available. */
-		std::string codec; /* clear text codec description */
-		audioStream()
-			:type(atUnknown)
-		{
-		}
-	};
-	struct subtitleStream
-	{
-		subtype_t type;
-		std::string language_code; /* iso-639, if available. */
-		int id;
-		subtitleStream()
-		{
-		}
-	};
-	struct sourceStream
-	{
-		audiotype_t audiotype;
-		containertype_t containertype;
-		bool is_video;
-		bool is_streaming;
-		sourceStream()
-			:audiotype(atUnknown), containertype(ctNone), is_video(false), is_streaming(false)
-		{
-		}
-	};
-	struct bufferInfo
-	{
-		int bufferPercent;
-		int avgInRate;
-		int avgOutRate;
-		int64_t bufferingLeft;
-		bufferInfo()
-			:bufferPercent(0), avgInRate(0), avgOutRate(0), bufferingLeft(-1)
-		{
-		}
-	};
-#else
+#ifndef ENABLE_LIBEPLAYER3
 	struct audioStream
 	{
 		GstPad* pad;
@@ -218,6 +177,37 @@ public:
 		bool is_streaming;
 		sourceStream()
 			:audiotype(atUnknown), containertype(ctNone), is_video(FALSE), is_streaming(FALSE)
+		{
+		}
+	};
+#else
+	struct audioStream
+	{
+		audiotype_t type;
+		std::string language_code; /* iso-639, if available. */
+		std::string codec; /* clear text codec description */
+		audioStream()
+			:type(atUnknown)
+		{
+		}
+	};
+	struct subtitleStream
+	{
+		subtype_t type;
+		std::string language_code; /* iso-639, if available. */
+		int id;
+		subtitleStream()
+		{
+		}
+	};
+	struct sourceStream
+	{
+		audiotype_t audiotype;
+		containertype_t containertype;
+		bool is_video;
+		bool is_streaming;
+		sourceStream()
+			:audiotype(atUnknown), containertype(ctNone), is_video(false), is_streaming(false)
 		{
 		}
 	};
@@ -271,7 +261,6 @@ private:
 	};
 	int m_state;
 #ifndef ENABLE_LIBEPLAYER3
-	Context_t * player;
 	GstElement *m_gst_playbin, *audioSink, *videoSink;
 	GstTagList *m_stream_tags;
 
@@ -317,7 +306,7 @@ private:
 	static gint match_sinktype(GstElement *element, gpointer type);
 #else
 	Context_t * player;
-	
+
 	struct Message
 	{
 		Message()
@@ -349,8 +338,6 @@ private:
 	void pushSubtitles();
 #ifndef ENABLE_LIBEPLAYER3
 	void pullSubtitle(GstBuffer *buffer);
-#else
-	void pullSubtitle();
 #endif
 	void sourceTimeout();
 	sourceStream m_sourceinfo;

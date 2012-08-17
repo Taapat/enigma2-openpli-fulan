@@ -5,9 +5,6 @@
 
 int eDVBCIDateTimeSession::receivedAPDU(const unsigned char *tag,const void *data, int len)
 {
-#ifdef __sh__
-	eDebug("eDVBCIDateTimeSession::%s >", __func__);
-#endif
 	eDebugNoNewLine("SESSION(%d)/DATETIME %02x %02x %02x: ", session_nb, tag[0],tag[1], tag[2]);
 	for (int i=0; i<len; i++)
 		eDebugNoNewLine("%02x ", ((const unsigned char*)data)[i]);
@@ -19,9 +16,6 @@ int eDVBCIDateTimeSession::receivedAPDU(const unsigned char *tag,const void *dat
 		{
 		case 0x40:
 			state=stateSendDateTime;
-#ifdef __sh__
-			eDebug("%s <", __func__);
-#endif
 			return 1;
 			break;
 		default:
@@ -29,43 +23,25 @@ int eDVBCIDateTimeSession::receivedAPDU(const unsigned char *tag,const void *dat
 			break;
 		}
 	}
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 	return 0;
 }
 
 int eDVBCIDateTimeSession::doAction()
 {
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	switch (state)
 	{
 	case stateStarted:
-#ifdef __sh__
-		eDebug("%s <", __func__);
-#endif
 		return 0;
 	case stateSendDateTime:
 	{
 		unsigned char tag[3]={0x9f, 0x84, 0x41}; // date_time_response
 		unsigned char msg[7]={0, 0, 0, 0, 0, 0, 0};
 		sendAPDU(tag, msg, 7);
-#ifdef __sh__
-		eDebug("%s <", __func__);
-#endif
 		return 0;
 	}
 	case stateFinal:
 		eDebug("stateFinal und action! kann doch garnicht sein ;)");
 	default:
-#ifdef __sh__
-		eDebug("%s <", __func__);
-#endif
 		return 0;
 	}
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }

@@ -14,9 +14,6 @@ ePtr<eDVBCISession> eDVBCISession::sessions[SLMS];
 
 int eDVBCISession::buildLengthField(unsigned char *pkt, int len)
 {
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	if (len < 127)
 	{
 		*pkt++=len;
@@ -37,23 +34,14 @@ int eDVBCISession::buildLengthField(unsigned char *pkt, int len)
 		eDebug("too big length");
 		exit(0);
 	}
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 int eDVBCISession::parseLengthField(const unsigned char *pkt, int &len)
 {
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	len=0;
 	if (!(*pkt&0x80)) 
 	{
 		len = *pkt;
-#ifdef __sh__
-		eDebug("%s <", __func__);
-#endif
 		return 1;
 	}
 	for (int i=0; i<(pkt[0]&0x7F); ++i)
@@ -61,9 +49,6 @@ int eDVBCISession::parseLengthField(const unsigned char *pkt, int &len)
 		len <<= 8;
 		len |= pkt[i + 1];
 	}
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 	return (pkt[0] & 0x7F) + 1;
 }
 
@@ -71,37 +56,22 @@ void eDVBCISession::sendAPDU(const unsigned char *tag, const void *data, int len
 {
 	unsigned char pkt[len+3+4];
 	int l;
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	memcpy(pkt, tag, 3);
 	l=buildLengthField(pkt+3, len);
 	if (data)
 		memcpy(pkt+3+l, data, len);
 	sendSPDU(0x90, 0, 0, pkt, len+3+l);
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 void eDVBCISession::sendSPDU(unsigned char tag, const void *data, int len, const void *apdu, int alen)
 {
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	sendSPDU(slot, tag, data, len, session_nb, apdu, alen);
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 void eDVBCISession::sendSPDU(eDVBCISlot *slot, unsigned char tag, const void *data, int len, unsigned short session_nb, const void *apdu,int alen)
 {
 	unsigned char pkt[4096];
 	unsigned char *ptr=pkt;
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	*ptr++=tag;
 	ptr+=buildLengthField(ptr, len+2);
 	if (data)
@@ -115,9 +85,6 @@ void eDVBCISession::sendSPDU(eDVBCISlot *slot, unsigned char tag, const void *da
 
 	ptr+=alen;
 	slot->send(pkt, ptr - pkt);
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 void eDVBCISession::sendOpenSessionResponse(eDVBCISlot *slot, unsigned char session_status, const unsigned char *resource_identifier, unsigned short session_nb)
@@ -127,53 +94,32 @@ void eDVBCISession::sendOpenSessionResponse(eDVBCISlot *slot, unsigned char sess
 	eDebug("sendOpenSessionResponse");
 	memcpy(pkt + 1, resource_identifier, 4);
 	sendSPDU(slot, 0x92, pkt, 5, session_nb);
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 void eDVBCISession::recvCreateSessionResponse(const unsigned char *data)
 {
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	status = data[0];
 	state = stateStarted;
 	action = 1;
 	eDebug("create Session Response, status %x", status);
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 void eDVBCISession::recvCloseSessionRequest(const unsigned char *data)
 {
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	state = stateInDeletion;
 	action = 1;
 	eDebug("close Session Request");
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 void eDVBCISession::deleteSessions(const eDVBCISlot *slot)
 {
 	ePtr<eDVBCISession> ptr;
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	for (unsigned short session_nb=0; session_nb < SLMS; ++session_nb)
 	{
 		ptr = sessions[session_nb];
 		if (ptr && ptr->slot == slot)
 			sessions[session_nb]=0;
 	}
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 void eDVBCISession::createSession(eDVBCISlot *slot, const unsigned char *resource_identifier, unsigned char &status, ePtr<eDVBCISession> &session)
@@ -181,21 +127,12 @@ void eDVBCISession::createSession(eDVBCISlot *slot, const unsigned char *resourc
 	unsigned long tag;
 	unsigned short session_nb;
 
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	for (session_nb=1; session_nb < SLMS; ++session_nb)
 		if (!sessions[session_nb-1])
 			break;
-#ifdef __sh__
-	eDebug("use session_nb = %d\n", session_nb);
-#endif		
 	if (session_nb == SLMS)
 	{
 		status=0xF3;
-#ifdef __sh__
-		eDebug("%s <", __func__);
-#endif
 		return;
 	}
 
@@ -253,28 +190,16 @@ void eDVBCISession::createSession(eDVBCISlot *slot, const unsigned char *resourc
 		status = 0;
 	}
 	session->state = stateInCreation;
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 void eDVBCISession::handleClose()
 {
 	unsigned char data[1]={0x00};
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	sendSPDU(0x96, data, 1, 0, 0);
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 int eDVBCISession::pollAll()
 {
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 	for (int session_nb=1; session_nb < SLMS; ++session_nb)
 		if (sessions[session_nb-1])
 		{
@@ -289,18 +214,8 @@ int eDVBCISession::pollAll()
 				r=sessions[session_nb-1]->poll();
 
 			if (r)
-#ifdef __sh__
-			{
-				eDebug("%s <", __func__);
-#endif
 				return 1;
-#ifdef __sh__
-			}
-#endif
 		}
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 	return 0;
 }
 
@@ -309,9 +224,6 @@ void eDVBCISession::receiveData(eDVBCISlot *slot, const unsigned char *ptr, size
 	const unsigned char *pkt = (const unsigned char*)ptr;
 	unsigned char tag = *pkt++;
 	int llen, hlen;
-#ifdef __sh__
-	eDebug("%s >", __func__);
-#endif
 
 	eDebug("slot: %p",slot);
 
@@ -427,9 +339,6 @@ void eDVBCISession::receiveData(eDVBCISlot *slot, const unsigned char *ptr, size
 #endif
 	if (len)
 		eDebug("PROTOCOL: warning, TL-Data has invalid length");
-#ifdef __sh__
-	eDebug("%s <", __func__);
-#endif
 }
 
 eDVBCISession::~eDVBCISession()

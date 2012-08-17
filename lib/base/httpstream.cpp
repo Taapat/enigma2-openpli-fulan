@@ -5,37 +5,17 @@
 
 DEFINE_REF(eHttpStream);
 
-eHttpStream::eHttpStream() : sock_mutex(), ret_code(-1)
+eHttpStream::eHttpStream()
 {
 	streamSocket = -1;
-	//TODO: malloc and free
-	this->url = new char[1000];
 }
 
 eHttpStream::~eHttpStream()
 {
-	kill();
 	close();
 }
 
 int eHttpStream::open(const char *url)
-{
-	// lock the mutex until socket is opened for reading
-	sock_mutex.lock();
-	strcpy(this->url, url);
-	eDebug("http thread");
-	int rc = run();
-}
-
-void eHttpStream::thread()
-{
-	hasStarted();
-	ret_code = openHttpConnection();
-	eDebug("eHttpStream::open: ret %d", ret_code);
-	sock_mutex.unlock();
-}
-
-int eHttpStream::openHttpConnection()
 {
 	int port;
 	std::string hostname;
@@ -47,7 +27,6 @@ int eHttpStream::openHttpConnection()
 	char proto[100];
 	int statuscode = 0;
 	char statusmsg[100];
-	bool redirected = false;
 
 	close();
 
@@ -94,24 +73,15 @@ int eHttpStream::openHttpConnection()
 	if (result <= 0) goto error;
 
 	result = sscanf(linebuf, "%99s %d %99s", proto, &statuscode, statusmsg);
-	if (result != 3 || (statuscode != 200 && statuscode != 302))
+	if (result != 3 || statuscode != 200) 
 	{
 		eDebug("eHttpStream::open: wrong http response code: %d", statuscode);
 		goto error;
 	}
-
 	while (result > 0)
 	{
 		result = readLine(streamSocket, &linebuf, &buflen);
-		if (statuscode == 302 && sscanf(linebuf, "Location: %999s", this->url) == 1)
-		{
-				eDebug("eHttpStream::open: redirecting");
-				if (openHttpConnection() < 0) goto error;
-				redirected = true;
-				break;
-		}
 	}
-	if (statuscode == 302 && !redirected) goto error;
 
 	free(linebuf);
 	return 0;
@@ -129,7 +99,6 @@ off_t eHttpStream::lseek(off_t offset, int whence)
 
 int eHttpStream::close()
 {
-	eDebug("eHttpStream::close socket");
 	int retval = -1;
 	if (streamSocket >= 0)
 	{
@@ -141,18 +110,11 @@ int eHttpStream::close()
 
 ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 {
-	sock_mutex.lock();
-	sock_mutex.unlock();
-	if (streamSocket < 0) {
-		eDebug("eHttpStream::read not valid fd");
-		return -1;
-	}
 	return timedRead(streamSocket, buf, count, 5000, 500);
 }
 
 int eHttpStream::valid()
 {
-	return true;
 	return streamSocket >= 0;
 }
 

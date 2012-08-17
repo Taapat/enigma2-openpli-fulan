@@ -527,7 +527,7 @@ int eDVBFrontend::openFrontend()
 			{
 			case FE_QPSK:
 				m_delsys[SYS_DVBS] = true;
-#if not defined(__sh__)
+#ifdef FE_CAN_2G_MODULATION
 				if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBS2] = true;
 #endif
 				break;
@@ -540,7 +540,7 @@ int eDVBFrontend::openFrontend()
 				break;
 			case FE_OFDM:
 				m_delsys[SYS_DVBT] = true;
-#if not defined(__sh__)
+#ifdef FE_CAN_2G_MODULATION
 				if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBT2] = true;
 #endif
 				break;
@@ -1335,7 +1335,6 @@ static void fillDictWithTerrestrialData(ePyObject dict, struct dtv_property *p, 
 			{
 			default:
 			case SYS_DVBT: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T; break;
-
 #if not defined(__sh__)
 			case SYS_DVBT2: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T2; break;
 #endif

@@ -15,7 +15,7 @@
 
 #include <string>
 
-#ifndef !ENABLE_LIBEPLAYER3
+#ifndef ENABLE_LIBEPLAYER3
 #include <gst/gst.h>
 #include <gst/pbutils/missing-plugins.h>
 #endif
@@ -77,7 +77,7 @@ eServiceFactoryMP3::eServiceFactoryMP3()
 		int rd = fd >= 0 ? read(fd, tmp, 255) : 0;
 		if (fd >= 0)
 			close(fd);
-		if (!strncmp(tmp, "ufs912\n", rd) || !strncmp(tmp, "atevio7500\n", rd) || !strncmp(tmp, "hs7110\n", rd) || !strncmp(tmp, "whitebox\n", rd))
+		if (!strncmp(tmp, "ufs912\n", rd) || !strncmp(tmp, "atevio7500\n", rd) || !strncmp(tmp, "hs7110\n", rd) || !strncmp(tmp, "hs7810a\n", rd) || !strncmp(tmp, "spark7162\n", rd) || !strncmp(tmp, "whitebox\n", rd))
 			extensions.push_back("wmv");
 #endif
 		extensions.push_back("wma");
@@ -445,7 +445,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 #else
 	player = (Context_t*) malloc(sizeof(Context_t));
 
-	if(player)
+	if (player)
 	{
 		player->playback	= &PlaybackHandler;
 		player->output		= &OutputHandler;
@@ -455,14 +455,14 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 	}
 
 	//Registration of output devices
-	if(player && player->output)
+	if (player && player->output)
 	{
 		player->output->Command(player,OUTPUT_ADD, (void*)"audio");
 		player->output->Command(player,OUTPUT_ADD, (void*)"video");
 		player->output->Command(player,OUTPUT_ADD, (void*)"subtitle");
 	}
 
-	if(player && player->output && player->output->subtitle)
+	if (player && player->output && player->output->subtitle)
 	{
 		fbClass *fb = fbClass::getInstance();
 		SubtitleOutputDef_t out;
@@ -478,39 +478,39 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 	//create playback path
 	char file[400] = {""};
 
-	if(!strncmp("http://", m_ref.path.c_str(), 7))
+	if (!strncmp("http://", m_ref.path.c_str(), 7))
 		;
-	else if(!strncmp("rtsp://", m_ref.path.c_str(), 7))
+	else if (!strncmp("rtsp://", m_ref.path.c_str(), 7))
 		;
-	else if(!strncmp("rtmp://", m_ref.path.c_str(), 7))
+	else if (!strncmp("rtmp://", m_ref.path.c_str(), 7))
 		;
-	else if(!strncmp("rtmpe://", m_ref.path.c_str(), 8))
+	else if (!strncmp("rtmpe://", m_ref.path.c_str(), 8))
 		;
-	else if(!strncmp("rtmpt://", m_ref.path.c_str(), 8))
+	else if (!strncmp("rtmpt://", m_ref.path.c_str(), 8))
 		;
-	else if(!strncmp("rtmps://", m_ref.path.c_str(), 8))
+	else if (!strncmp("rtmps://", m_ref.path.c_str(), 8))
 		;
-	else if(!strncmp("rtmpte://", m_ref.path.c_str(), 9))
+	else if (!strncmp("rtmpte://", m_ref.path.c_str(), 9))
 		;
-	else if(!strncmp("rtp://", m_ref.path.c_str(), 6))
+	else if (!strncmp("rtp://", m_ref.path.c_str(), 6))
 		;
-	else if(!strncmp("upnp://", m_ref.path.c_str(), 7))
+	else if (!strncmp("upnp://", m_ref.path.c_str(), 7))
 		;
-	else if(!strncmp("mms://", m_ref.path.c_str(), 6))
+	else if (!strncmp("mms://", m_ref.path.c_str(), 6))
 		;
-	else if(!strncmp("file://", m_ref.path.c_str(), 7))
+	else if (!strncmp("file://", m_ref.path.c_str(), 7))
 		;
 	else
 		strcat(file, "file://");
 	strcat(file, m_ref.path.c_str());
 
 	//try to open file
-	if(player && player->playback && player->playback->Command(player, PLAYBACK_OPEN, file) >= 0)
+	if (player && player->playback && player->playback->Command(player, PLAYBACK_OPEN, file) >= 0)
 	{
 		//VIDEO
 		//We dont have to register video tracks, or do we ?
 		//AUDIO
-		if(player && player->manager && player->manager->audio)
+		if (player && player->manager && player->manager->audio)
 		{
 			char ** TrackList = NULL;
 			player->manager->audio->Command(player, MANAGER_LIST, &TrackList);
@@ -525,21 +525,21 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 					audio.language_code = TrackList[i];
 
 					// atUnknown, atMPEG, atMP3, atAC3, atDTS, atAAC, atPCM, atOGG, atFLAC
-					if(     !strncmp("A_MPEG/L3",   TrackList[i+1], 9))
+					if (    !strncmp("A_MPEG/L3",   TrackList[i+1], 9))
 						audio.type = atMP3;
-					else if(!strncmp("A_MP3",       TrackList[i+1], 5))
+					else if (!strncmp("A_MP3",      TrackList[i+1], 5))
 						audio.type = atMP3;
-					else if(!strncmp("A_AC3",       TrackList[i+1], 5))
+					else if (!strncmp("A_AC3",      TrackList[i+1], 5))
 						audio.type = atAC3;
-					else if(!strncmp("A_DTS",       TrackList[i+1], 5))
+					else if (!strncmp("A_DTS",      TrackList[i+1], 5))
 						audio.type = atDTS;
-					else if(!strncmp("A_AAC",       TrackList[i+1], 5))
+					else if (!strncmp("A_AAC",      TrackList[i+1], 5))
 						audio.type = atAAC;
-					else if(!strncmp("A_PCM",       TrackList[i+1], 5))
+					else if (!strncmp("A_PCM",      TrackList[i+1], 5))
 						audio.type = atPCM;
-					else if(!strncmp("A_VORBIS",    TrackList[i+1], 8))
+					else if (!strncmp("A_VORBIS",   TrackList[i+1], 8))
 						audio.type = atOGG;
-					else if(!strncmp("A_FLAC",      TrackList[i+1], 6))
+					else if (!strncmp("A_FLAC",     TrackList[i+1], 6))
 						audio.type = atFLAC;
 					else
 						audio.type = atUnknown;
@@ -552,7 +552,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 			}
 		}
 		//SUB
-		if(player && player->manager && player->manager->subtitle)
+		if (player && player->manager && player->manager->subtitle)
 		{
 			char ** TrackList = NULL;
 			player->manager->subtitle->Command(player, MANAGER_LIST, &TrackList);
@@ -567,14 +567,14 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 					sub.language_code = TrackList[i];
 
 					//  stPlainText, stSSA, stSRT
-					if(     !strncmp("S_TEXT/SSA",  TrackList[i+1], 10) ||
-							!strncmp("S_SSA",       TrackList[i+1], 5))
+					if (     !strncmp("S_TEXT/SSA",   TrackList[i+1], 10) ||
+							!strncmp("S_SSA", TrackList[i+1], 5))
 						sub.type = stSSA;
-					else if(!strncmp("S_TEXT/ASS",  TrackList[i+1], 10) ||
-							!strncmp("S_AAS",       TrackList[i+1], 5))
+					else if (!strncmp("S_TEXT/ASS",   TrackList[i+1], 10) ||
+							!strncmp("S_AAS", TrackList[i+1], 5))
 						sub.type = stSSA;
-					else if(!strncmp("S_TEXT/SRT",  TrackList[i+1], 10) ||
-							!strncmp("S_SRT",       TrackList[i+1], 5))
+					else if (!strncmp("S_TEXT/SRT",   TrackList[i+1], 10) ||
+							!strncmp("S_SRT", TrackList[i+1], 5))
 						sub.type = stSRT;
 					else
 						sub.type = stPlainText;
@@ -592,17 +592,17 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 	{
 		//Creation failed, no playback support for insert file, so delete playback context
 		//FIXME: How to tell e2 that we failed?
-		if(player && player->output)
+		if (player && player->output)
 		{
 			player->output->Command(player,OUTPUT_DEL, (void*)"audio");
 			player->output->Command(player,OUTPUT_DEL, (void*)"video");
 			player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
 		}
 
-		if(player && player->playback)
+		if (player && player->playback)
 			player->playback->Command(player,PLAYBACK_CLOSE, NULL);
 
-		if(player)
+		if (player)
 			free(player);
 		player = NULL;
 	}
@@ -697,7 +697,7 @@ RESULT eServiceMP3::start()
 #ifndef ENABLE_LIBEPLAYER3
 	ASSERT(m_state == stIdle);
 #else
-	if(m_state != stIdle)
+	if (m_state != stIdle)
 	{
 		eDebug("eServiceMP3::%s < m_state != stIdle", __func__);
 		return -1;
@@ -712,7 +712,7 @@ RESULT eServiceMP3::start()
 		gst_element_set_state (m_gst_playbin, GST_STATE_PLAYING);
 	}
 #else
-	if(player && player->output && player->playback)
+	if (player && player->output && player->playback)
 	{
 		player->output->Command(player, OUTPUT_OPEN, NULL);
 		player->playback->Command(player, PLAYBACK_PLAY, NULL);
@@ -735,7 +735,7 @@ RESULT eServiceMP3::stop()
 #ifndef ENABLE_LIBEPLAYER3
 	ASSERT(m_state != stIdle);
 #else
-	if(m_state == stIdle)
+	if (m_state == stIdle)
 	{
 		eDebug("eServiceMP3::%s < m_state == stIdle", __func__);
 		return -1;
@@ -749,26 +749,26 @@ RESULT eServiceMP3::stop()
 #ifndef ENABLE_LIBEPLAYER3
 	gst_element_set_state(m_gst_playbin, GST_STATE_NULL);
 #else
-	if(player && player->playback && player->output)
+	if (player && player->playback && player->output)
 	{
 		player->playback->Command(player, PLAYBACK_STOP, NULL);
 		player->output->Command(player, OUTPUT_CLOSE, NULL);
 	}
-	//Trick
-	if(player && player->output)
+
+	if (player && player->output)
 	{
 		player->output->Command(player,OUTPUT_DEL, (void*)"audio");
 		player->output->Command(player,OUTPUT_DEL, (void*)"video");
 		player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
 	}
 
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player,PLAYBACK_CLOSE, NULL);
 
-	if(player)
+	if (player)
 		free(player);
 
-	if(player != NULL)
+	if (player != NULL)
 		player = NULL;
 #endif
 	m_state = stStopped;
@@ -836,12 +836,13 @@ RESULT eServiceMP3::setSlowMotion(int ratio)
 #else
 // konfetti: in libeplayer3 we changed this because I dont like application specific stuff in a library
 	int speed = getSpeed(ratio);
-	if(player && player->playback && (speed != -1))
+	if (player && player->playback && (speed != -1))
 	{
 		int result = 0;
-		if(ratio > 1) result = player->playback->Command(player, PLAYBACK_SLOWMOTION, (void*)&speed);
-		if (result != 0)
-			return -1;
+		if (ratio > 1)
+			result = player->playback->Command(player, PLAYBACK_SLOWMOTION, (void*)&speed);
+			if (result != 0)
+				return -1;
 	}
 	return 0;
 #endif
@@ -853,27 +854,22 @@ RESULT eServiceMP3::setFastForward(int ratio)
 	eDebug("eServiceMP3::setFastForward ratio=%i",ratio);
 	return trickSeek(ratio);
 #else
-
-/* konfetti: in libeplayer3 we changed this because
- * I dont like application specific stuff in a library
- */
+// konfetti: in libeplayer3 we changed this because I dont like application specific stuff in a library
 	int speed = getSpeed(ratio);
-
-	if(player && player->playback && (speed != -1))
+	if (player && player->playback && (speed != -1))
 	{
 		int result = 0;
-		if(ratio > 1)
+		if (ratio > 1)
 			result = player->playback->Command(player, PLAYBACK_FASTFORWARD, (void*)&speed);
-		else if(ratio < -1)
+		else if (ratio < -1)
 		{
 			//speed = speed * -1;
 			result = player->playback->Command(player, PLAYBACK_FASTBACKWARD, (void*)&speed);
 		}
 		else
 			result = player->playback->Command(player, PLAYBACK_CONTINUE, NULL);
-
-		if (result != 0)
-			return -1;
+			if (result != 0)
+				return -1;
 	}
 	return 0;
 #endif
@@ -888,7 +884,7 @@ RESULT eServiceMP3::pause()
 
 	trickSeek(0.0);
 #else
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_PAUSE, NULL);
 #endif
 
@@ -903,7 +899,7 @@ RESULT eServiceMP3::unpause()
 
 	trickSeek(1.0);
 #else
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_CONTINUE, NULL);
 #endif
 
@@ -937,10 +933,10 @@ RESULT eServiceMP3::getLength(pts_t &pts)
 #else
 	double length = 0;
 
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_LENGTH, &length);
 
-	if(length <= 0)
+	if (length <= 0)
 		return -1;
 
 	pts = length * 90000;
@@ -1042,7 +1038,7 @@ RESULT eServiceMP3::seekRelative(int direction, pts_t to)
 	return seekTo(ppos);
 #else
 	float pos = direction*(to/90000.0);
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
 
 	return 0;
@@ -1094,10 +1090,10 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 	}
 
 	unsigned long long int vpts = 0;
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_PTS, &vpts);
 
-	if(vpts<=0)
+	if (vpts<=0)
 		return -1;
 
 	/* len is in nanoseconds. we have 90 000 pts per second. */
@@ -1115,8 +1111,8 @@ RESULT eServiceMP3::setTrickmode(int trick)
 
 RESULT eServiceMP3::isCurrentlySeekable()
 {
-#ifdef ENABLE_LIBEPLAYER3
-	return 3; /*Hellmaster1024: 1 for skipping 3 for skipping anf fast forward */
+#ifdef ENABLE_LIBEPLAYER3 // Hellmaster1024: 1 for skipping 3 for skipping anf fast forward
+	return 3;
 #else
 	int ret = 3; /* just assume that seeking and fast/slow winding are possible */
 
@@ -1411,14 +1407,14 @@ std::string eServiceMP3::getInfoString(int w)
 
 	if (player && player->playback)
 	{
-		/*Hellmaster1024: we need to save the adress of tag to free the strduped mem 
+		/*Hellmaster1024: we need to save the adress of tag to free the strduped mem
 		  the command will retun a new adress for a new strduped string.
 		  Both Strings need to be freed! */
 		res_str = tag;
 		player->playback->Command(player, PLAYBACK_INFO, &res_str);
 
 		/* Hellmaster1024: in case something went wrong maybe no new adress is returned */
-		if(tag != res_str)
+		if (tag != res_str)
 		{
 			std::string res = res_str;
 			free(tag);
@@ -1583,9 +1579,9 @@ int eServiceMP3::selectAudioStream(int i)
 	}
 	return -1;
 #else
-	if(i!=m_currentAudioStream)
+	if (i!=m_currentAudioStream)
 	{
-		if(player && player->playback)
+		if (player && player->playback)
 			player->playback->Command(player, PLAYBACK_SWITCH_AUDIO, (void*)&i);
 		m_currentAudioStream=i;
 	}
