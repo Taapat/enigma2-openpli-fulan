@@ -6,6 +6,7 @@ class RcModel:
 	RCTYPE_ET6X00 = 2
 	RCTYPE_ET9500 = 3
 	RCTYPE_VU = 4
+	RCTYPE_SPARK = 5
 
 	def __init__(self):
 		self.currentRcType = self.RCTYPE_DMM
@@ -41,6 +42,9 @@ class RcModel:
 					self.currentRcType = self.RCTYPE_ET9500
 		elif os.path.exists('/proc/stb/info/vumodel'):
 			self.currentRcType = self.RCTYPE_VU
+		elif os.path.exists('/proc/stb/info/model'):
+			self.currentRcType = self.RCTYPE_SPARK
+
 
 	def getRcLocation(self):
 		if self.currentRcType == self.RCTYPE_ET9X00:
@@ -51,5 +55,7 @@ class RcModel:
 			return '/usr/share/enigma2/rc_models/et6x00/'
 		elif self.currentRcType == self.RCTYPE_VU:
 			return '/usr/share/enigma2/rc_models/vu/'
+		elif self.currentRcType == self.RCTYPE_SPARK:
+			return '/usr/share/enigma2/rc_models/spark/'
 
 rc_model = RcModel()
