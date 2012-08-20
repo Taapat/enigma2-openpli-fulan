@@ -1,6 +1,14 @@
 installdir = $(pkglibdir)/python/Plugins/Extensions
 
-SUBDIRS = CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI ModemSettings
+SUBDIRS = \
+	CutListEditor \
+	PicturePlayer \
+	MediaScanner \
+	MediaPlayer \
+	GraphMultiEPG \
+	SocketMMI \
+	ModemSettings \
+	QuickEPG
  
 if ENABLE_TF7700
 SUBDIRS += TopfieldVFD
