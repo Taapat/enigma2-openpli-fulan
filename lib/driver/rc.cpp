@@ -104,7 +104,9 @@ void eRCInputEventDriver::keyPressed(int)
 
 eRCInputEventDriver::eRCInputEventDriver(const char *filename): eRCDriver(eRCInput::getInstance())
 {
+	eDebug("open %s", filename);
 	handle=open(filename, O_RDONLY|O_NONBLOCK);
+	eDebug("open OK");
 	if (handle<0)
 	{
 		eDebug("failed to open %s", filename);
