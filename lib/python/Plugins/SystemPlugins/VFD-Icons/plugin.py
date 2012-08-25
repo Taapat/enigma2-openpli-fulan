@@ -91,7 +91,7 @@ class VFDIcons:
 					i = audio.getTrackInfo(x)
 					description = i.getDescription();
 					if description.find("MP3") != -1:
-							servicename = self.service.info().getInfoString(iServiceInformation.sTagTitle)
+							servicename = service.info().getInfoString(iServiceInformation.sTagTitle)
 					elif config.vfdicon.displayshow.value == "channel number":
 						try: # show the service channel number
 							servicename = str(self.session.nav.getCurrentlyPlayingServiceReference(False).getChannelNum())
