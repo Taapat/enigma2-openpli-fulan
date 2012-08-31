@@ -3019,7 +3019,7 @@ msgstr "Качество соединения:"
 
 #
 msgid "Link:"
-msgstr "Ссылка:"
+msgstr "Соединение:"
 
 #
 msgid "Linked titles with a DVD menu"
@@ -3815,7 +3815,7 @@ msgid "Package removed successfully.\n"
 msgstr "Пакет удален успешно.\n"
 
 msgid "Packages"
-msgstr "Пакеты"
+msgstr "Пакетов"
 
 #
 msgid "Packet management"
@@ -6640,11 +6640,11 @@ msgid "User - bouquets"
 msgstr "Пользователь - букеты"
 
 msgid "User Interface"
-msgstr "Интнрфейс пользователя"
+msgstr "Интерфейс пользователя"
 
 #
 msgid "User defined"
-msgstr "Определены пользователем"
+msgstr "Определено пользователем"
 
 #
 msgid "Username"
