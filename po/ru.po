@@ -3823,7 +3823,7 @@ msgstr "Удаление пакета не удалось.\n"
 
 #
 msgid "Package removed successfully.\n"
-msgstr "Пакет удален успешно."
+msgstr "Пакет удален успешно.\n"
 
 msgid "Packages"
 msgstr "Пакеты"
