@@ -22,6 +22,7 @@
 #define VFDBRIGHTNESS         0xc0425a03
 //light on off
 #define VFDDISPLAYWRITEONOFF  0xc0425a05
+#define VFDDISPLAYCLR		0xc0425b00
 
 bool startloop_running = false;
 static bool icon_onoff[32];
