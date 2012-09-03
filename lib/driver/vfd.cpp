@@ -185,7 +185,7 @@ void * start_loop (void *arg)
 	evfd vfd;
 	blocked = true;
 	//vfd.vfd_clear_icons();
-	vfd.vfd_write_string("Open AR-P ENIGMA2");
+	vfd.vfd_write_string("Open AR-P ENIGMA2", true);
 	//run 2 times through all icons 
 	for (int vloop = 0; vloop < 128; vloop++)
 	{
@@ -421,13 +421,7 @@ void evfd::vfd_write_string_scrollText(char* text)
 #endif
 void evfd::vfd_clear_string()
 {
-#if defined(SPARK) || defined(SPARK7162)
-	file_vfd = open (VFD_DEVICE, O_WRONLY);
-	ioctl ( file_vfd, VFDDISPLAYCLR, &data );
-	close (file_vfd);
-#else
 	vfd_write_string("                ");
-#endif
 	return;
 }
 
