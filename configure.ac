@@ -38,9 +38,9 @@ if test "$enable_libeplayer3" = "yes"; then
 fi
 
 if ! test "$enable_libeplayer3" = "yes"; then
-PKG_CHECK_MODULES(BASE, [freetype2 fribidi gstreamer-0.10 gstreamer-pbutils-0.10 libdvbsi++ libpng libxml-2.0 sigc++-1.2])
+PKG_CHECK_MODULES(BASE, [freetype2 fribidi gstreamer-0.10 gstreamer-pbutils-0.10 libdvbsi++ libpng libxml-2.0 sigc++-1.2 libssl libcrypto])
 else
-PKG_CHECK_MODULES(BASE, [freetype2 fribidi libdvbsi++ libpng libxml-2.0 sigc++-1.2])
+PKG_CHECK_MODULES(BASE, [freetype2 fribidi libdvbsi++ libpng libxml-2.0 sigc++-1.2 libssl libcrypto])
 fi
 
 
@@ -105,6 +105,15 @@ if test x"$withcolorlcd" != xno ; then
 fi
 AM_CONDITIONAL(HAVE_COLORLCD, test x"$withcolorlcd" != xno)
 
+AC_ARG_WITH(graphlcd,
+	AC_HELP_STRING([--with-graphlcd], [use GraphLCD color display, yes or no]),
+	[[withgraphlcd=$withval]],
+	[[withgraphlcd=no]]
+)
+if test x"$withgraphlcd" != xno ; then
+	AC_DEFINE(HAVE_GRAPHLCD, 1,[Define when using a GraphLCD color display device])
+fi
+AM_CONDITIONAL(HAVE_GRAPHLCD, test x"$withgraphlcd" != xno)
 
 AC_ARG_WITH(oldpvr,
 	AC_HELP_STRING([--with-oldpvr], [use /dev/misc/pvr instead of /dev/dvb/adapterX/dvrX, yes or no]),
