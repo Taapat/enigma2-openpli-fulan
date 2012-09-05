@@ -18,23 +18,7 @@
 
 #if defined(__sh__)
 #include <sys/vfs.h>
-//this is not available for stlinux :-(
-//#include <linux/magic.h>
-
-/* and these i dont get included :-(
-#include <linux/usbdevice_fs.h>
-#include <linux/smb.h>
-#include <linux/nfs__fs.h>
-#include <linux/ext3_fs.h>
-
-so hack ;-)
-*/
-#define USBDEVICE_SUPER_MAGIC 0x9fa2
-#define EXT2_SUPER_MAGIC      0xEF53
-#define EXT3_SUPER_MAGIC      0xEF53
-#define SMB_SUPER_MAGIC       0x517B
-#define NFS_SUPER_MAGIC       0x6969
-#define MSDOS_SUPER_MAGIC     0x4d44 /* MD */
+#include <linux/magic.h>
 #endif
 DEFINE_REF(eDVBServiceRecord);
 
@@ -340,22 +324,22 @@ int eDVBServiceRecord::doRecord()
 			eDebug("eDVBServiceRecord - can't get fs type assuming none NFS!");
 		} else
 		{
-			if (sbuf.f_type == EXT3_SUPER_MAGIC) 
+			if (sbuf.f_type == EXT3_SUPER_MAGIC)
 				eDebug("eDVBServiceRecord - Ext2/3/4 Filesystem\n");
 			else
-			if (sbuf.f_type == NFS_SUPER_MAGIC) 
+			if (sbuf.f_type == NFS_SUPER_MAGIC)
 			{
 				eDebug("eDVBServiceRecord - NFS Filesystem; add O_DIRECT to flags\n");
-				flags |= O_DIRECT; 
+				flags |= O_DIRECT;
 			}
 			else
-			if (sbuf.f_type == USBDEVICE_SUPER_MAGIC) 
+			if (sbuf.f_type == USBDEVICE_SUPER_MAGIC)
 				eDebug("eDVBServiceRecord - USB Device\n");
 			else
-			if (sbuf.f_type == SMB_SUPER_MAGIC) 
+			if (sbuf.f_type == SMB_SUPER_MAGIC)
 				eDebug("eDVBServiceRecord - SMBs Device\n");
 			else 
-			if (sbuf.f_type == MSDOS_SUPER_MAGIC) 
+			if (sbuf.f_type == MSDOS_SUPER_MAGIC)
 				eDebug("eDVBServiceRecord - MSDOS Device\n");
 		}
 		fd = ::open(m_filename.c_str(), flags, 0644);
