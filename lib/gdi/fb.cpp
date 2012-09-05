@@ -8,7 +8,6 @@
 #include <linux/kd.h>
 
 #include <lib/gdi/fb.h>
-
 #ifdef __sh__
 #include <linux/stmfb.h>
 #endif
@@ -50,6 +49,7 @@ fbClass::fbClass(const char *fb)
 		goto nolfb;
 	}
 
+
 #if not defined(__sh__)
 	if (ioctl(fbFd, FBIOGET_VSCREENINFO, &screeninfo)<0)
 	{
@@ -57,6 +57,7 @@ fbClass::fbClass(const char *fb)
 		goto nolfb;
 	}
 #endif
+
 	fb_fix_screeninfo fix;
 	if (ioctl(fbFd, FBIOGET_FSCREENINFO, &fix)<0)
 	{
@@ -73,11 +74,6 @@ fbClass::fbClass(const char *fb)
 	available -= 1920*1080*4;
 	eDebug("%dk usable video mem", available/1024);
 	lfb=(unsigned char*)mmap(0, available, PROT_WRITE|PROT_READ, MAP_SHARED, fbFd, 1920*1080*4);
-	lfb_direct = lfb;
-	topDiff = 0;
-	leftDiff = 0;
-	rightDiff = 0;
-	bottomDiff = 0;
 #else
 	eDebug("%dk video mem", available/1024);
 	lfb=(unsigned char*)mmap(0, available, PROT_WRITE|PROT_READ, MAP_SHARED, fbFd, 0);
@@ -177,8 +173,10 @@ int fbClass::SetMode(int nxRes, int nyRes, int nbpp)
 
 	
 	m_number_of_pages = screeninfo.yres_virtual / nyRes;
+	
 #endif
 	ioctl(fbFd, FBIOGET_VSCREENINFO, &screeninfo);
+	
 #if defined(__sh__)
 	xResSc=screeninfo.xres;
 	yResSc=screeninfo.yres;
@@ -237,13 +235,14 @@ void fbClass::blit()
 #if defined(__sh__)
 	int modefd=open("/proc/stb/video/3d_mode", O_RDWR);
 	char buf[16] = "off";
-	if(modefd > 0){
+	if (modefd > 0)
+	{
 		read(modefd, buf, 15);
 		buf[15]='\0';
 		close(modefd);
 	}
 
-	STMFBIO_BLT_DATA  bltData;
+	STMFBIO_BLT_DATA    bltData;
 	memset(&bltData, 0, sizeof(STMFBIO_BLT_DATA));
 	bltData.operation  = BLT_OP_COPY;
 	bltData.srcOffset  = 1920*1080*4;
@@ -254,10 +253,11 @@ void fbClass::blit()
 	bltData.src_left   = 0;
 	bltData.src_right  = xRes;
 	bltData.src_bottom = yRes;
-	bltData.srcFormat = SURF_BGRA8888;        bltData.dstFormat = SURF_BGRA8888;
+	bltData.srcFormat  = SURF_BGRA8888;       bltData.dstFormat  = SURF_BGRA8888;
 	bltData.srcMemBase = STMFBGP_FRAMEBUFFER; bltData.dstMemBase = STMFBGP_FRAMEBUFFER;
 
-	if(strncmp(buf,"sbs",3)==0){
+	if (strncmp(buf,"sbs",3)==0)
+	{
 		bltData.dst_top    = 0 + topDiff;
 		bltData.dst_left   = 0 + leftDiff/2;
 		bltData.dst_right  = xResSc/2 + rightDiff/2;
@@ -274,7 +274,9 @@ void fbClass::blit()
 		{
 			perror("STMFBIO_BLT");
 		}
-	}else if(strncmp(buf,"tab",3)==0){
+	}
+	else if (strncmp(buf,"tab",3)==0)
+	{
 		bltData.dst_top    = 0 + topDiff/2;
 		bltData.dst_left   = 0 + leftDiff;
 		bltData.dst_right  = xResSc + rightDiff;
@@ -291,7 +293,9 @@ void fbClass::blit()
 		{
 			perror("STMFBIO_BLT");
 		}
-	}else{
+	}
+	else
+	{
 		bltData.dst_top    = 0 + topDiff;
 		bltData.dst_left   = 0 + leftDiff;
 		bltData.dst_right  = xResSc + rightDiff;
@@ -303,11 +307,10 @@ void fbClass::blit()
 	
 	}
 
-	if(ioctl(fbFd, STMFBIO_SYNC_BLITTER) < 0)
+	if (ioctl(fbFd, STMFBIO_SYNC_BLITTER) < 0)
 	{
 		perror("STMFBIO_SYNC_BLITTER");
 	}
-
 #else
 	if (m_manual_blit == 1) {
 		if (ioctl(fbFd, FBIO_BLIT) < 0)
@@ -348,7 +351,6 @@ int fbClass::lock()
 	}
 	else
 		locked = 1;
-	
 #if defined(__sh__)
 	outcfg.outputid = STMFBIO_OUTPUTID_MAIN;
 	if (ioctl( fbFd, STMFBIO_GET_OUTPUT_CONFIG, &outcfg ) < 0)
@@ -368,7 +370,6 @@ int fbClass::lock()
 	if (ioctl( fbFd, STMFBIO_GET_VAR_SCREENINFO_EX, &infoex ) < 0)
 		perror("STMFBIO_GET_VAR_SCREENINFO_EX\n");
 #endif
-
 	return fbFd;
 }
 
@@ -379,7 +380,6 @@ void fbClass::unlock()
 	if (locked == 2)  // re-enable manualBlit
 		enableManualBlit();
 	locked=0;
-
 #if defined(__sh__)
 	if (ioctl( fbFd, STMFBIO_SET_VAR_SCREENINFO_EX, &infoex ) < 0)
 		perror("STMFBIO_SET_VAR_SCREENINFO_EX\n");
@@ -398,7 +398,6 @@ void fbClass::unlock()
 
 	memset(lfb, 0, stride*yRes);
 #endif
-
 	SetMode(xRes, yRes, bpp);
 	PutCMAP();
 }
@@ -424,44 +423,4 @@ void fbClass::disableManualBlit()
 		m_manual_blit = 0;
 #endif
 }
-
-#if defined(__sh__)
-void fbClass::clearFBblit()
-{
-	//set real frambuffer transparent
-	memset(lfb_direct, 0x00, xRes * yRes * 4);
-	blit();
-}
-
-int fbClass::getFBdiff(int ret)
-{
-	if(ret == 0)
-		return topDiff;
-	else if(ret == 1)
-		return leftDiff;
-	else if(ret == 2)
-		return rightDiff;
-	else if(ret == 3)
-		return bottomDiff;
-	else
-		return -1;
-
-}
-
-void fbClass::setFBdiff(int top, int left, int right, int bottom)
-{
-	if(top < 0) top = 0;
-	if(top > yRes) top = yRes;
-	topDiff = top;
-	if(left < 0) left = 0;
-	if(left > xRes) left = xRes;
-	leftDiff = left;
-	if(right > 0) right = 0;
-	if(-right > xRes) right = -xRes;
-	rightDiff = right;
-	if(bottom > 0) bottom = 0;
-	if(-bottom > yRes) bottom = -yRes;
-	bottomDiff = bottom;
-}
-#endif
 

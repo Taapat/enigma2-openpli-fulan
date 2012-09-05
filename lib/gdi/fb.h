@@ -16,9 +16,11 @@ class fbClass
 	struct stmfbio_outputinfo outinfo;
 	struct stmfbio_planeinfo planemode;
 	struct stmfbio_var_screeninfo_ex infoex;
-	
+
 	int xResSc, yResSc;
 	int topDiff, leftDiff, rightDiff, bottomDiff;
+#endif
+#ifdef ENABLE_LIBEPLAYER3
 	unsigned char *lfb_direct;
 #endif
 	int available;
@@ -62,21 +64,17 @@ public:
 	int PutCMAP();
 #endif
 	static fbClass *getInstance();
-
-	int lock();
-	void unlock();
-	int islocked() { return locked; }
-#if defined(__sh__)
+#ifdef ENABLE_LIBEPLAYER3
 //---> "hack" for libeplayer3 fb access
 	int getFD() { return fbFd; }
 	unsigned char * getLFB_Direct() { return lfb_direct; }
 	int getScreenResX() { return xRes; }
 	int getScreenResY() { return yRes; }
 //---<
-	void clearFBblit();
-	int getFBdiff(int ret);
-	void setFBdiff(int top, int right, int left, int bottom);
 #endif
+	int lock();
+	void unlock();
+	int islocked() { return locked; }
 };
 
 #endif
