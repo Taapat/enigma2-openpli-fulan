@@ -5,7 +5,7 @@
 #include <lib/gdi/esize.h>
 #include <lib/gdi/erect.h>
 
-#ifdef __sh__
+#ifdef HAVE_GRAPHLCD
 #include <glcdgraphics/bitmap.h>
 #include <glcdgraphics/glcd.h>
 #include <glcdgraphics/image.h>
@@ -35,7 +35,6 @@ protected:
 	int _stride;
 	int locked;
 #endif
-
 public:
 	int lock();
 	void unlock();
@@ -60,15 +59,13 @@ class eDBoxLCD: public eLCD
 	unsigned char inverted;
 	bool flipped;
 	int is_oled;
-
-#ifdef __sh__
+#ifdef HAVE_GRAPHLCD
 	GLCD::cDriver * lcd;
 	GLCD::cBitmap * bitmap;
 	int displayNumber;
 	int depth;
 	int width, height;
 #endif
-
 #ifdef SWIG
 	eDBoxLCD();
 	~eDBoxLCD();
