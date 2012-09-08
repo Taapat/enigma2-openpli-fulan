@@ -63,7 +63,9 @@ endif
 
 enigma2_LDFLAGS = -Wl,--export-dynamic
 
+if HAVE_GRAPHLCD
 enigma2_LDADD += -lglcddrivers -lglcdgraphics -lglcdskin
+endif
  
 if HAVE_GIT_DIR
 GIT_DIR = $(top_srcdir)/.git
