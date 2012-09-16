@@ -5,8 +5,10 @@
 #include <lib/base/ebase.h>
 #include <lib/base/itssource.h>
 #include <lib/base/socketbase.h>
+#include <lib/base/thread.h>
+#include <lib/base/elock.h>
 
-class eHttpStream: public iTsSource, public eSocketBase, public Object
+class eHttpStream: public iTsSource, public eSocketBase, public Object, public eThread
 {
 	DECLARE_REF(eHttpStream);
 
@@ -21,12 +23,17 @@ class eHttpStream: public iTsSource, public eSocketBase, public Object
 	off_t length();
 	off_t offset();
 	int valid();
+	void thread();
+	int openHttpConnection();
+	int close();
+	char *url;
+	int ret_code;
+	eSingleLock sock_mutex;
 
 public:
 	eHttpStream();
 	~eHttpStream();
 	int open(const char *url);
-	int close();
 };
 
 #endif

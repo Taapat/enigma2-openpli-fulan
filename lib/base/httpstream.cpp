@@ -6,18 +6,38 @@
 
 DEFINE_REF(eHttpStream);
 
-eHttpStream::eHttpStream()
+eHttpStream::eHttpStream() : sock_mutex(), ret_code(-1)
 {
 	streamSocket = -1;
+	//TODO: malloc and free
+	this->url = new char[1000];
 }
 
 eHttpStream::~eHttpStream()
 {
+	kill();
 	close();
 }
 
 int eHttpStream::openUrl(const std::string &url, std::string &newurl)
-{
+	{
+	// lock the mutex until socket is opened for reading
+	sock_mutex.lock();
+	strcpy(this->url, url);
+	eDebug("http thread");
+	int rc = run();
+	}
+
+void eHttpStream::thread()
+	{
+	hasStarted();
+	ret_code = openHttpConnection();
+	eDebug("eHttpStream::open: ret %d", ret_code);
+	sock_mutex.unlock();
+	}
+
+int eHttpStream::openHttpConnection()
+	{
 	int port;
 	std::string hostname;
 	std::string uri = url;
@@ -28,8 +48,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	char proto[100];
 	int statuscode = 0;
 	char statusmsg[100];
-	bool playlist = false;
-	bool contenttypeparsed = false;
+	bool redirected = true;
 
 	close();
 
@@ -134,16 +153,17 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 			eDebug("%s: playlist entry: %s", __FUNCTION__, newurl.c_str());
 			break;
 		}
-		else if (statuscode == 302 && !strncmp(linebuf, "Location: ", 10))
+		else if (statuscode == 302 && sscanf(linebuf, "Location: %999s", this->url) == 1)
 		{
-			newurl = &linebuf[10];
-			eDebug("%s: redirecting to: %s", __FUNCTION__, newurl.c_str());
-			break;
+				eDebug("eHttpStream::open: redirecting");
+				if (openHttpConnection() < 0) goto error;
+				redirected = true;
+				break;
 		}
 		if (!playlist && result == 0) break;
 		if (result < 0) break;
 	}
-
+	if (statuscode == 302 && !redirected) goto error;
 	free(linebuf);
 	return 0;
 error:
@@ -185,6 +205,7 @@ off_t eHttpStream::lseek(off_t offset, int whence)
 
 int eHttpStream::close()
 {
+	eDebug("eHttpStream::close socket");
 	int retval = -1;
 	if (streamSocket >= 0)
 	{
@@ -196,11 +217,18 @@ int eHttpStream::close()
 
 ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 {
+	sock_mutex.lock();
+	sock_mutex.unlock();
+	if (streamSocket < 0) {
+		eDebug("eHttpStream::read not valid fd");
+		return -1;
+	}
 	return timedRead(streamSocket, buf, count, 5000, 500);
 }
 
 int eHttpStream::valid()
 {
+	return ret_code;
 	return streamSocket >= 0;
 }
 
