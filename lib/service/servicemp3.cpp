@@ -489,10 +489,10 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 
 	if (player)
 	{
-		player->playback	= &PlaybackHandler;
-		player->output		= &OutputHandler;
-		player->container	= &ContainerHandler;
-		player->manager		= &ManagerHandler;
+		player->playback  = &PlaybackHandler;
+		player->output    = &OutputHandler;
+		player->container = &ContainerHandler;
+		player->manager   = &ManagerHandler;
 		printf("%s\n", player->output->Name);
 	}
 
@@ -607,7 +607,6 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 					printf("\t%s - %s\n", TrackList[i], TrackList[i+1]);
 					subtitleStream sub;
 					sub.language_code = TrackList[i];
-
 					//  stPlainText, stSSA, stSRT
 					if (     !strncmp("S_TEXT/SSA",   TrackList[i+1], 10) ||
 							!strncmp("S_SSA", TrackList[i+1], 5))
@@ -700,22 +699,6 @@ eServiceMP3::~eServiceMP3()
 		gst_object_unref (GST_OBJECT (m_gst_playbin));
 		eDebug("eServiceMP3::destruct!");
 	}
-#else
-//Trick
-/*	if(player && player->output)
-	{
-		player->output->Command(player,OUTPUT_DEL, (void*)"audio");
-		player->output->Command(player,OUTPUT_DEL, (void*)"video");
-		player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
-	}
-
-	if(player && player->playback)
-		player->playback->Command(player,PLAYBACK_CLOSE, NULL);
-
-	if(player)
-		free(player);
-	player = NULL;
-*/
 #endif
 }
 
@@ -762,9 +745,7 @@ RESULT eServiceMP3::start()
 #endif
 
 	m_event(this, evStart);
-#ifdef ENABLE_LIBEPLAYER3
-	m_event((iPlayableService*)this, evUpdatedInfo);
-#endif
+
 	return 0;
 }
 
@@ -829,7 +810,6 @@ RESULT eServiceMP3::pause(ePtr<iPauseableService> &ptr)
 {
 	ptr=this;
 #ifdef ENABLE_LIBEPLAYER3
-//	m_event((iPlayableService*)this, evSeekableStatusChanged);
 	m_event((iPlayableService*)this, evUpdatedInfo);
 #endif
 	return 0;
@@ -859,7 +839,6 @@ int speed_mapping[] =
 int getSpeed(int ratio)
 {
 	int i = 0;
-
 	while (speed_mapping[i] != -1)
 	{
 		if (speed_mapping[i] == ratio)
@@ -885,6 +864,7 @@ RESULT eServiceMP3::setSlowMotion(int ratio)
 		int result = 0;
 		if (ratio > 1)
 			result = player->playback->Command(player, PLAYBACK_SLOWMOTION, (void*)&speed);
+
 		if (result != 0)
 			return -1;
 	}
@@ -912,8 +892,9 @@ RESULT eServiceMP3::setFastForward(int ratio)
 		}
 		else
 			result = player->playback->Command(player, PLAYBACK_CONTINUE, NULL);
-			if (result != 0)
-				return -1;
+
+		if (result != 0)
+			return -1;
 	}
 	return 0;
 #endif
@@ -1125,7 +1106,8 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 	/* pos is in nanoseconds. we have 90 000 pts per second. */
 	pts = pos / 11111LL;
 #else
-	if (player && player->playback && !player->playback->isPlaying) {
+	if (player && player->playback && !player->playback->isPlaying)
+	{
 		eDebug("eServiceMP3::%s !!!!EOF!!!! < -1", __func__);
 		if(m_state == stRunning)
 			m_event((iPlayableService*)this, evEOF);
@@ -1622,7 +1604,7 @@ int eServiceMP3::selectAudioStream(int i)
 	}
 	return -1;
 #else
-	if (i!=m_currentAudioStream)
+	if (i != m_currentAudioStream)
 	{
 		if (player && player->playback)
 			player->playback->Command(player, PLAYBACK_SWITCH_AUDIO, (void*)&i);
@@ -2506,9 +2488,9 @@ RESULT eServiceMP3::enableSubtitles(eWidget *parent, ePyObject tuple)
 		m_subtitle_pages.clear();
 		m_prev_decoder_time = -1;
 		m_decoder_time_valid_state = 0;
+#ifndef ENABLE_LIBEPLAYER3
 		m_currentSubtitleStream = pid;
 		m_cachedSubtitleStream = m_currentSubtitleStream;
-#ifndef ENABLE_LIBEPLAYER3
 		g_object_set (G_OBJECT (m_gst_playbin), "current-text", m_currentSubtitleStream, NULL);
 #endif
 
@@ -2531,7 +2513,6 @@ RESULT eServiceMP3::enableSubtitles(eWidget *parent, ePyObject tuple)
 #ifdef ENABLE_LIBEPLAYER3
 	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&pid);
-	m_event((iPlayableService*)this, evUpdatedInfo);
 #endif
 
 	return 0;
@@ -2545,9 +2526,9 @@ error_out:
 RESULT eServiceMP3::disableSubtitles(eWidget *parent)
 {
 	eDebug("eServiceMP3::disableSubtitles");
+#ifndef ENABLE_LIBEPLAYER3
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = m_currentSubtitleStream;
-#ifndef ENABLE_LIBEPLAYER3
 	g_object_set (G_OBJECT (m_gst_playbin), "current-text", m_currentSubtitleStream, NULL);
 #endif
 	m_subtitle_pages.clear();

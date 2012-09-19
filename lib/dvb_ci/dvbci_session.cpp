@@ -251,9 +251,6 @@ void eDVBCISession::receiveData(eDVBCISlot *slot, const unsigned char *ptr, size
 	else
 	{
 		unsigned session_nb;
-#ifdef __sh__
-		eDebug("hlen = %d, %d, %d\n", hlen,  pkt[hlen-2], pkt[hlen-1]);
-#endif
 		session_nb=pkt[hlen-2]<<8;
 		session_nb|=pkt[hlen-1]&0xFF;
 		
@@ -262,8 +259,7 @@ void eDVBCISession::receiveData(eDVBCISlot *slot, const unsigned char *ptr, size
 			eDebug("PROTOCOL: illegal session number %x", session_nb);
 #ifdef __sh__
 			//Dagobert during start-up we seems to have some problems
-			//on some modules which "looses" the connection. So reset
-			//it
+			//on some modules which "looses" the connection. So reset it
 			deleteSessions(slot);
 			slot->reset();
 #endif
@@ -300,10 +296,6 @@ void eDVBCISession::receiveData(eDVBCISlot *slot, const unsigned char *ptr, size
 	len -= hlen;
 
 	if (session)
-#ifdef __sh__
-	{
-		eDebug("len %d\n", len);
-#endif
 		while (len > 0)
 		{
 			int alen;
@@ -313,9 +305,6 @@ void eDVBCISession::receiveData(eDVBCISlot *slot, const unsigned char *ptr, size
 			hlen=parseLengthField(pkt, alen);
 			pkt+=hlen;
 			len-=hlen;
-#ifdef __sh__
-			eDebug("len = %d, hlen = %d, alen = %d\n", len, hlen, alen);
-#endif
 
 			//if (eDVBCIModule::getInstance()->workarounds_active & eDVBCIModule::workaroundMagicAPDULength)
 			{
@@ -325,18 +314,12 @@ void eDVBCISession::receiveData(eDVBCISlot *slot, const unsigned char *ptr, size
 					alen=len;
 				}
 			}
-#ifdef __sh__
-			eDebug("1. Call receivedAPDU tag = 0x%2x, len = %d\n", tag, alen);
-#endif
 			if (session->receivedAPDU(tag, pkt, alen))
 				session->action = 1;
 			pkt+=alen;
 			len-=alen;
 		}
 		
-#ifdef __sh__
-	}
-#endif
 	if (len)
 		eDebug("PROTOCOL: warning, TL-Data has invalid length");
 }

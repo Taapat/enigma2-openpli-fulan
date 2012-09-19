@@ -90,7 +90,6 @@ from Components.PluginComponent import plugins
 
 profile("LOAD:Wizard")
 from Screens.Wizard import wizardManager
-from Screens.DefaultWizard import *
 from Screens.StartWizard import *
 from Screens.TutorialWizard import *
 import Screens.Rc
@@ -194,7 +193,7 @@ class Session:
 			callback(*retval)
 
 	def execBegin(self, first=True, do_show = True):
-		assert not self.in_exec 
+		assert not self.in_exec
 		self.in_exec = True
 		c = self.current_dialog
 
@@ -304,10 +303,10 @@ class Session:
 
 		self.pushCurrent()
 		dlg = self.current_dialog = self.instantiateDialog(screen, *arguments, **kwargs)
-#+++> # If the dialog can not be found return instead of crashing
+
 		if dlg is None:
 			return
-#+++<
+
 		dlg.isTmp = True
 		dlg.callback = None
 		self.execBegin()
@@ -503,7 +502,7 @@ def runScreenTest():
 
 	profile("wakeup")
 	from time import time, strftime, localtime
-	from Tools.DreamboxHardware import setFPWakeuptime, getFPWakeuptime, setRTCtime
+	from Tools.StbHardware import setFPWakeuptime, getFPWakeuptime, setRTCtime
 	#get currentTime
 	nowTime = time()
 	wakeupList = [
@@ -517,17 +516,10 @@ def runScreenTest():
 	if wakeupList:
 		from time import strftime
 		startTime = wakeupList[0]
-#+++> # Unfortunatly sometimes it takes longer to boot (filesystemcheck, ...) so start earlier
-#-		if (startTime[0] - nowTime) < 270: # no time to switch box back on
-#-			wptime = nowTime + 30  # so switch back on in 30 seconds
-#-		else:
-#-			wptime = startTime[0] - 240
-
 		if (startTime[0] - nowTime) < 330: # no time to switch box back on
 			wptime = nowTime + 30  # so switch back on in 30 seconds
 		else:
 			wptime = startTime[0] - 300
-#+++<
 		if not config.misc.useTransponderTime.value:
 			print "dvb time sync disabled... so set RTC now to current linux time!", strftime("%Y/%m/%d %H:%M", localtime(nowTime))
 			setRTCtime(nowTime)
@@ -546,7 +538,7 @@ def runScreenTest():
 	configfile.save()
 	from Screens import InfoBarGenerics
 	InfoBarGenerics.saveResumePoints()
-	
+
 	return 0
 
 profile("Init:skin")

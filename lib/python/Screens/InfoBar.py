@@ -7,7 +7,10 @@ from Screen import Screen
 from Screens.MessageBox import MessageBox
 
 profile("LOAD:enigma")
-from enigma import iServiceInformation, iPlayableService
+import enigma
+#+++>
+from enigma import iServiceInformation
+#+++<
 
 profile("LOAD:InfoBarGenerics")
 from Screens.InfoBarGenerics import InfoBarShowHide, \
@@ -69,7 +72,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 
 		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
 			{
-				iPlayableService.evUpdatedEventInfo: self.__eventInfoChanged
+				enigma.iPlayableService.evUpdatedEventInfo: self.__eventInfoChanged
 			})
 
 		self.current_begin_time=0
@@ -214,15 +217,13 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 		self.servicelist = slist
 		self.lastservice = lastservice or session.nav.getCurrentlyPlayingServiceReference()
 		session.nav.playService(service)
-		from Screens.MovieSelection import Playlist
-		self.playlist = Playlist.getPlayList()
 		self.cur_service = service
 		self.returning = False
 		self.onClose.append(self.__onClose)
 
 	def __onClose(self):
-		from Screens.MovieSelection import Playlist
-		Playlist.clearPlayList()
+		from Screens.MovieSelection import playlist
+		del playlist[:]
 		self.session.nav.playService(self.lastservice)
 
 	def handleLeave(self, how):
@@ -253,7 +254,8 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 
 	def leavePlayerOnExit(self, answer = None):
 		if answer == True:
-			self.leavePlayer()
+			setResumePoint(self.session)
+			self.handleLeave("quit")
 		elif self.shown:
 			self.hide()
 		elif answer is None:
@@ -268,8 +270,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 
 		if answer in ("quitanddelete", "quitanddeleteconfirmed"):
 			ref = self.session.nav.getCurrentlyPlayingServiceReference()
-			from enigma import eServiceCenter
-			serviceHandler = eServiceCenter.getInstance()
+			serviceHandler = enigma.eServiceCenter.getInstance()
 			if answer == "quitanddelete":
 				msg = ''
 				if config.usage.movielist_trashcan.value:
@@ -440,13 +441,14 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 				self.session.nav.playService(ref)
 
 	def nextPlaylistService(self, service):
-		n = len(self.playlist)
-		for item, i in zip(self.playlist,range(1,n+1)):
+		from MovieSelection import playlist
+		for i, item in enumerate(playlist):
 			if item == service:
-				if i < n:
-					return (self.playlist[i], i+1, n)
-				elif config.usage.on_movie_eof.value == "loop" and n > 0:
-					return (self.playlist[0], 1, n)
+				i += 1
+				if i < len(playlist):
+					return (playlist[i], i+1, len(playlist))
+				elif config.usage.on_movie_eof.value == "loop":
+					return (playlist[0], 1, len(playlist))
 		return ( None, 0, 0 )
 
 	def displayPlayedName(self, ref, index, n):
@@ -454,10 +456,8 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 		Notifications.AddPopup(text = _("%s/%s: %s") % (index, n, self.ref2HumanName(ref)), type = MessageBox.TYPE_INFO, timeout = 5)
 
 	def ref2HumanName(self, ref):
-		from enigma import eServiceCenter
-		return eServiceCenter.getInstance().info(ref).getName(ref)
+		return enigma.eServiceCenter.getInstance().info(ref).getName(ref)
 
 	def sleepTimer(self):
 		from Screens.SleepTimerEdit import SleepTimerEdit
 		self.session.open(SleepTimerEdit)
-

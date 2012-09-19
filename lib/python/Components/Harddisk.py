@@ -74,23 +74,6 @@ class Harddisk:
 			self.dev_path = '/dev/' + self.device
 			self.disk_path = self.dev_path
 
-#--->
-#-		elif self.type == DEVTYPE_DEVFS:
-#-			tmp = readFile(self.sysfsPath('dev')).split(':')
-#-			s_major = int(tmp[0])
-#-			s_minor = int(tmp[1])
-#-			for disc in listdir("/dev/discs"):
-#-				dev_path = path.realpath('/dev/discs/' + disc)
-#-				disk_path = dev_path + '/disc'
-#-				try:
-#-					rdev = stat(disk_path).st_rdev
-#-				except OSError:
-#-					continue
-#-				if s_major == major(rdev) and s_minor == minor(rdev):
-#-					self.dev_path = dev_path
-#-					self.disk_path = disk_path
-#-					break
-#---<
 #+++>
 		elif self.type == DEVTYPE_DEVFS:
 			self.dev_path = '/dev/' + self.device
@@ -663,7 +646,6 @@ class HarddiskManager:
 		for item in getProcMounts():
 			if item[0] == dev:
 				return item[1]
-
 #+++>
 		#Check if has autofs mountpoint
 		mount = self.getAutofsMountpoint(device)

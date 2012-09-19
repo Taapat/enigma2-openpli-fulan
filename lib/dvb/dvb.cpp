@@ -118,6 +118,8 @@ eDVBResourceManager::eDVBResourceManager()
 		m_boxtype = UFS910;
 	else if (!strncmp(tmp, "ufs912\n", rd))
 		m_boxtype = UFS912;
+	else if (!strncmp(tmp, "ufs913\n", rd))
+		m_boxtype = UFS913;
 	else if (!strncmp(tmp, "ufs922\n", rd))
 		m_boxtype = UFS922;
 	else if (!strncmp(tmp, "tf7700hdpvr\n", rd))
@@ -148,10 +150,14 @@ eDVBResourceManager::eDVBResourceManager()
 		m_boxtype = CUBEREVO_250HD;
 	else if (!strncmp(tmp, "cuberevo-mini-fta\n", rd))
 		m_boxtype = CUBEREVO_MINI_FTA;
-	else if (!strncmp(tmp, "octagon1008\n", rd)) m_boxtype = OCTAGON1008;
-	else if (!strncmp(tmp, "hs7810a\n", rd)) m_boxtype = HS7810A;
-	else if (!strncmp(tmp, "hs7110\n", rd)) m_boxtype = HS7110;
-	else if (!strncmp(tmp, "whitebox\n", rd)) m_boxtype = WHITEBOX;
+	else if (!strncmp(tmp, "octagon1008\n", rd))
+		m_boxtype = OCTAGON1008;
+	else if (!strncmp(tmp, "hs7810a\n", rd))
+		m_boxtype = HS7810A;
+	else if (!strncmp(tmp, "hs7110\n", rd))
+		m_boxtype = HS7110;
+	else if (!strncmp(tmp, "whitebox\n", rd))
+		m_boxtype = WHITEBOX;
 	else if (!strncmp(tmp, "atevio7500\n", rd))
 		m_boxtype = ATEVIO7500;
 #endif
@@ -312,7 +318,7 @@ eDVBUsbAdapter::eDVBUsbAdapter(int nr)
 	char filename[256];
 	int vtunerid = nr - 1;
 
-	pumpThread = NULL;
+	pumpThread = 0;
 
 	int num_fe = 0;
 	while (1)
@@ -653,6 +659,7 @@ void *eDVBUsbAdapter::vtunerPump()
 			}
 		}
 	}
+	return NULL;
 }
 
 eDVBResourceManager::~eDVBResourceManager()
@@ -910,7 +917,7 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 		}
 	}
 #if defined(__sh__) // we use our own algo for demux detection
-	else if (m_boxtype == ADB_BOX || m_boxtype == UFS910 || m_boxtype == UFS912 || m_boxtype == SPARK || m_boxtype == SPARK7162 || m_boxtype == UFS922 || m_boxtype == TF7700HDPVR || m_boxtype == HDBOX ||
+	else if (m_boxtype == ADB_BOX || m_boxtype == UFS910 || m_boxtype == UFS912 || m_boxtype == UFS913 || m_boxtype == SPARK || m_boxtype == SPARK7162 || m_boxtype == UFS922 || m_boxtype == TF7700HDPVR || m_boxtype == HDBOX ||
 		m_boxtype == HL101 || m_boxtype == CUBEREVO || m_boxtype == CUBEREVO_MINI || m_boxtype == CUBEREVO_MINI2 || m_boxtype == VIP1_V2 || m_boxtype == VIP2_V1 || m_boxtype == HS7810A || m_boxtype == HS7110 || m_boxtype == WHITEBOX ||
 		m_boxtype == CUBEREVO_MINI_FTA || m_boxtype == CUBEREVO_250HD || m_boxtype == CUBEREVO_2000HD || m_boxtype == CUBEREVO_9500HD || m_boxtype == OCTAGON1008 || m_boxtype == ATEVIO7500)
 	{
@@ -2212,7 +2219,7 @@ RESULT eDVBChannel::getDemux(ePtr<iDVBDemux> &demux, int cap)
 {
 	ePtr<eDVBAllocatedDemux> &our_demux = (cap & capDecode) ? m_decoder_demux : m_demux;
 
-	if (m_frontend == NULL)
+	if (!m_frontend)
 	{
 		/* in dvr mode, we have to stick to a single demux (the one connected to our dvr device) */
 		our_demux = m_decoder_demux ? m_decoder_demux : m_demux;

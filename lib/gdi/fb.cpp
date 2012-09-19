@@ -253,8 +253,10 @@ void fbClass::blit()
 	bltData.src_left   = 0;
 	bltData.src_right  = xRes;
 	bltData.src_bottom = yRes;
-	bltData.srcFormat  = SURF_BGRA8888;       bltData.dstFormat  = SURF_BGRA8888;
-	bltData.srcMemBase = STMFBGP_FRAMEBUFFER; bltData.dstMemBase = STMFBGP_FRAMEBUFFER;
+	bltData.srcFormat  = SURF_BGRA8888;
+	bltData.dstFormat  = SURF_BGRA8888;
+	bltData.srcMemBase = STMFBGP_FRAMEBUFFER;
+	bltData.dstMemBase = STMFBGP_FRAMEBUFFER;
 
 	if (strncmp(buf,"sbs",3)==0)
 	{
@@ -351,6 +353,7 @@ int fbClass::lock()
 	}
 	else
 		locked = 1;
+
 #if defined(__sh__)
 	outcfg.outputid = STMFBIO_OUTPUTID_MAIN;
 	if (ioctl( fbFd, STMFBIO_GET_OUTPUT_CONFIG, &outcfg ) < 0)
@@ -380,6 +383,7 @@ void fbClass::unlock()
 	if (locked == 2)  // re-enable manualBlit
 		enableManualBlit();
 	locked=0;
+
 #if defined(__sh__)
 	if (ioctl( fbFd, STMFBIO_SET_VAR_SCREENINFO_EX, &infoex ) < 0)
 		perror("STMFBIO_SET_VAR_SCREENINFO_EX\n");
@@ -398,6 +402,7 @@ void fbClass::unlock()
 
 	memset(lfb, 0, stride*yRes);
 #endif
+
 	SetMode(xRes, yRes, bpp);
 	PutCMAP();
 }
@@ -423,4 +428,43 @@ void fbClass::disableManualBlit()
 		m_manual_blit = 0;
 #endif
 }
+
+#if defined(__sh__)
+void fbClass::clearFBblit()
+{
+	//set real frambuffer transparent
+//	memset(lfb, 0x00, xRes * yRes * 4);
+	blit();
+}
+
+int fbClass::getFBdiff(int ret)
+{
+	if(ret == 0)
+		return topDiff;
+	else if(ret == 1)
+		return leftDiff;
+	else if(ret == 2)
+		return rightDiff;
+	else if(ret == 3)
+		return bottomDiff;
+	else
+		return -1;
+}
+
+void fbClass::setFBdiff(int top, int left, int right, int bottom)
+{
+	if(top < 0) top = 0;
+	if(top > yRes) top = yRes;
+	topDiff = top;
+	if(left < 0) left = 0;
+	if(left > xRes) left = xRes;
+	leftDiff = left;
+	if(right > 0) right = 0;
+	if(-right > xRes) right = -xRes;
+	rightDiff = right;
+	if(bottom > 0) bottom = 0;
+	if(-bottom > yRes) bottom = -yRes;
+	bottomDiff = bottom;
+}
+#endif
 
