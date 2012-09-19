@@ -19,7 +19,7 @@ eHttpStream::~eHttpStream()
 	close();
 }
 
-int eHttpStream::openUrl(const std::string &url, std::string &newurl)
+int eHttpStream::open(const char *url)
 	{
 	// lock the mutex until socket is opened for reading
 	sock_mutex.lock();
