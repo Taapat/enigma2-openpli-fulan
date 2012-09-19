@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-05 10:00+0200\n"
-"PO-Revision-Date: 2010-05-18 18:10+0200\n"
+"PO-Revision-Date: 2010-09-19 18:10+0200\n"
 "Last-Translator: AndreyUA <andrey.wys@gmail.com>\n"
 "Language-Team: Russian / ar-p team allrussian.info>\n"
 "Language: ru\n"
@@ -433,19 +433,19 @@ msgid ""
 "A recording is currently running. Please stop the recording before trying to "
 "configure the positioner."
 msgstr ""
-"Запись сейчас запущена. Пожалуйста остановите запись перед попыткой настроить "
+"Запись сейчас запущена. Пожалуйста, остановите запись перед попыткой настроить "
 "позиционер."
 
 msgid ""
 "A recording is currently running. Please stop the recording before trying to "
 "scan."
-msgstr "Запись сейчас запущена. Пожалуйста остановите запись перед попыткой"
+msgstr "Запись сейчас запущена. Пожалуйста, остановите запись перед попыткой"
 "сканирования."
 #
 msgid ""
 "A recording is currently running. Please stop the recording before trying to "
 "start the satfinder."
-msgstr "Запись сейчас запущена. Остановите запись перед поиском спутника."
+msgstr "Запись сейчас запущена. Пожалуйста, остановите запись перед поиском спутника."
 
 #
 #, python-format
@@ -670,7 +670,7 @@ msgid "All Satellites"
 msgstr "Все Спутники"
 
 msgid "All ages"
-msgstr ""
+msgstr "Все возрасты"
 
 msgid "Allocate"
 msgstr "Выделить"
@@ -679,7 +679,7 @@ msgid "Allocate unused memory index"
 msgstr "Выделить неиспользуемый индекс памяти"
 
 msgid "Allow Subtitle equals Audio mask"
-msgstr "Разрешить сибтитры как аудио маску"
+msgstr "Разрешить субтитры как аудио маску"
 
 msgid "Allow hearing impaired subtitles"
 msgstr "Разрешить субтитры для слабослышаших"
@@ -690,7 +690,7 @@ msgstr "Прозрачность"
 
 #
 msgid "Alternative radio mode"
-msgstr "Альтернативный радио режим "
+msgstr "Альтернативный радио режим"
 
 #
 msgid "Alternative services tuner priority"
@@ -1054,13 +1054,13 @@ msgid "Cannot determine"
 msgstr "Невозможно определить"
 
 msgid "Cannot find any signal ..., aborting !"
-msgstr "Несозможно найти сигнал ..., отмена!"
+msgstr "Невозможно найти сигнал ..., отмена!"
 
 msgid "Cannot move files on a different disk or system to the trash can"
 msgstr "Невозможно переместить файлы на другом диске или системе в корзину"
 
 msgid "Cannot move to trash can"
-msgstr "Несозможно переместить в корзину"
+msgstr "Невозможно переместить в корзину"
 
 #
 msgid "Capacity: "
@@ -1075,11 +1075,11 @@ msgstr "Центрирование DVB субтитров"
 
 #
 msgid "Change bouquets in quickzap"
-msgstr "Сменить пакеты при быстром переключении"
+msgstr "Сменить букеты при быстром переключении"
 
 #
 msgid "Change pin code"
-msgstr "Сменить PIN код"
+msgstr "Изменить PIN код"
 
 msgid "Change repeat and delay settings?"
 msgstr "Изменить настройки повторения и задержки"
@@ -1122,7 +1122,7 @@ msgstr "Меню списка каналов"
 
 #
 msgid "Chap."
-msgstr "Глава"
+msgstr "Разд."
 
 #
 msgid "Chapter"
@@ -1403,7 +1403,7 @@ msgstr "Запись невозможна - конфликт таймеров %s
 
 #, python-format
 msgid "Couldn't record due to invalid service %s"
-msgstr "Запись невозможна из-за неправильного сервиса %s"
+msgstr "Запись невозможна из-за неправильного канала %s"
 
 #
 msgid "Crashlog settings"
@@ -1462,7 +1462,7 @@ msgid "Current device: "
 msgstr "Текущее устройство:"
 
 msgid "Current event EPG"
-msgstr ""
+msgstr "Текущее событие телегида"
 
 #
 msgid "Current settings:"
@@ -1470,7 +1470,7 @@ msgstr "Текущие настройки:"
 
 #
 msgid "Current value: "
-msgstr "Текущее значение:"
+msgstr "Текущее значение: "
 
 #
 msgid "Current version:"
@@ -1526,7 +1526,7 @@ msgstr "DTS микширование"
 
 #
 msgid "DUAL LAYER DVD"
-msgstr ""
+msgstr "Двухслойный DVD"
 
 msgid "DVB subtitle black transparency"
 msgstr "Прозрачность DVB субтитров"
@@ -1561,7 +1561,7 @@ msgstr "DVD плеер"
 
 #
 msgid "DVD Titlelist"
-msgstr ""
+msgstr "Оглавление DVD"
 
 msgid "DVD data format"
 msgstr "Формат данных DVD"
@@ -1592,7 +1592,7 @@ msgstr ""
 
 #
 msgid "Deep Standby"
-msgstr "Выключить"
+msgstr "Спящий режим"
 
 #
 msgid "Default"
@@ -1615,7 +1615,7 @@ msgstr "Удалить"
 
 #
 msgid "Delete crashlogs"
-msgstr ""
+msgstr "Удалить крешлоги"
 
 #
 msgid "Delete entry"
@@ -1623,7 +1623,7 @@ msgstr "Удалить выбранное"
 
 #
 msgid "Delete failed!"
-msgstr "Нельзя удалить!"
+msgstr "Ошибка удаления!"
 
 #
 #, python-format
@@ -1631,7 +1631,7 @@ msgid ""
 "Delete no more configured satellite\n"
 "%s?"
 msgstr ""
-"Удалить не настроенный спутник\n"
+"Удалить ненастроенный спутник\n"
 "%s?"
 
 msgid "Deleted"
@@ -1659,11 +1659,11 @@ msgstr "Описание плагина:"
 
 #
 msgid "Detected HDD:"
-msgstr "Найден HDD:"
+msgstr "HDD:"
 
 #
 msgid "Detected NIMs:"
-msgstr "Найден тюнер:"
+msgstr "Тюнер:"
 
 msgid "Devicename:"
 msgstr "Имя устройства:"
@@ -1686,7 +1686,7 @@ msgstr "DiSEqC режим"
 
 #
 msgid "DiSEqC repeats"
-msgstr "DiSEqC повтор"
+msgstr "Повторения DiSEqC"
 
 #
 msgid "DiSEqC-Tester settings"
@@ -1705,7 +1705,7 @@ msgid "Direct playback of linked titles without menu"
 msgstr "Воспроизводить связанные названия без меню"
 
 msgid "Directory"
-msgstr "Папка"
+msgstr "Каталог"
 
 #
 #, python-format
@@ -1733,7 +1733,7 @@ msgstr "Отменить фоновое сканирование"
 
 #
 msgid "Disable crashlog reporting"
-msgstr ""
+msgstr "Отключить отчет о крешлогах"
 
 #
 msgid "Disable timer"
@@ -1839,7 +1839,7 @@ msgid ""
 "After pressing OK, please wait!"
 msgstr ""
 "Вы хотите создать резервную копию?\n"
-"После нажатия OK, пожалуйста, ждите!"
+"После нажатия OK, пожалуйста, подождите!"
 
 #
 msgid "Do you want to burn this collection to DVD medium?"
@@ -1894,14 +1894,14 @@ msgid ""
 msgstr ""
 
 msgid "Do you want to update your receiver?"
-msgstr "Вы хотите обновить ресивер?"
+msgstr "Вы хотите обновить ПО ресивера?"
 
 msgid ""
 "Do you want to update your receiver?\n"
 "After pressing OK, please wait!"
 msgstr ""
 "Вы хотите обновить ПО ресивера?\n"
-"После нажатия OK, пожалуйста, ждите!"
+"После нажатия OK, пожалуйста, подождите!"
 
 #
 msgid "Do you want to upgrade the package:\n"
@@ -1999,7 +1999,7 @@ msgid "East"
 msgstr "Восток"
 
 msgid "East limit set"
-msgstr "установка предена на восток"
+msgstr "установка предела на восток"
 
 #
 msgid "Edit"
@@ -2023,7 +2023,7 @@ msgstr "Изменить главы текущего заголовка"
 
 #
 msgid "Edit services list"
-msgstr "Редактировать список сервисов"
+msgstr "Редактировать список каналов"
 
 #
 msgid "Edit settings"
@@ -2182,7 +2182,7 @@ msgid "Ethernet network interface"
 msgstr "Интерфейс проводной сети"
 
 msgid "Event Fontsize (relative to skin size)"
-msgstr "Размер шрифта для собитий (относительно размера скина)"
+msgstr "Размер шрифта для событий (относительно размера скина)"
 
 #
 msgid "Eventview"
@@ -2227,7 +2227,7 @@ msgstr "Выход из выбора устройств ввода"
 
 #
 msgid "Exit network wizard"
-msgstr "Выйти из мастера"
+msgstr "Выйти из мастера настройки сети"
 
 #
 msgid "Exit the cleanup wizard"
@@ -2285,7 +2285,7 @@ msgid "Failed"
 msgstr "Неудачный"
 
 msgid "Failed to write /tmp/positionersetup.log: "
-msgstr "Ошибка записи /tmp/positionersetup.log:"
+msgstr "Ошибка записи /tmp/positionersetup.log: "
 
 #
 #, python-format
@@ -2460,7 +2460,7 @@ msgid "German"
 msgstr "Немецкий"
 
 msgid "Get latest experimental image"
-msgstr ""
+msgstr "Получить последний экспериментальный имидж"
 
 msgid "Get latest release image"
 msgstr "Получить последний релиз"
@@ -2591,7 +2591,7 @@ msgstr "Скрыть ошибки переключения"
 
 #
 msgid "Hierarchy Information"
-msgstr "Иерархия информация"
+msgstr "Иерархическая информация"
 
 msgid "Hierarchy info"
 msgstr "Иерархическая информация"
@@ -2626,7 +2626,7 @@ msgstr ""
 
 #
 msgid "Hue"
-msgstr "оттенок"
+msgstr "Оттенок"
 
 #
 msgid "Hungarian"
@@ -2673,7 +2673,7 @@ msgstr ""
 "контрастность Вашего ТВ  на максимально возможное значение.\n"
 "Теперь уменьшите яркость на максимально низкое значение, на сколько это "
 "возможно, но при этом следите, чтобы два самых нижних оттенка "
-"былиразличимы.\n"
+"были различимы.\n"
 "Не беспокойтесь о ярких оттенках, они будут настроены на следующем этапе.\n"
 "Если Вас устраивает результат, нажмите OK."
 
@@ -2779,7 +2779,7 @@ msgstr "Установка"
 
 #
 msgid "Install a new image with a USB stick"
-msgstr "Установить новый имидж с USB стика"
+msgstr "Установить новый имидж с USB"
 
 #
 msgid "Install a new image with your web browser"
@@ -2795,7 +2795,7 @@ msgstr "Установка локальных расширений"
 
 #
 msgid "Install or remove finished."
-msgstr "Установка или удаление закончено"
+msgstr "Установка или удаление закончено."
 
 msgid "Install picons on"
 msgstr "Установить пиконы в"
@@ -2818,7 +2818,7 @@ msgstr "Установка программы..."
 
 #
 msgid "Installing default sat lists... Please wait..."
-msgstr "Установка "
+msgstr "Установка списка спутников по умолчанию... Пожалуйста, подождите..."
 
 #
 msgid "Installing defaults... Please wait..."
@@ -2846,7 +2846,7 @@ msgstr "Промежуточный"
 
 #
 msgid "Internal Flash"
-msgstr "Внутренняя флешь"
+msgstr "Внутренняя флеш"
 
 msgid "Internal hdd only"
 msgstr "Только внутренний HDD"
@@ -3135,7 +3135,7 @@ msgid "Manual Scan"
 msgstr "Поиск вручную"
 
 msgid "Manual configuration"
-msgstr "Нстройки вручную"
+msgstr "Настройки вручную"
 
 #
 msgid "Manual transponder"
@@ -3167,7 +3167,7 @@ msgstr "Медиаплеер"
 
 #
 msgid "Medium is not a writeable DVD!"
-msgstr "Носитель не записываемый DVD!"
+msgstr "Носитель - не записываемый DVD!"
 
 #
 msgid "Medium is not empty!"
@@ -3204,7 +3204,7 @@ msgstr "Режим"
 
 #
 msgid "Model: "
-msgstr "Модель:"
+msgstr "Модель: "
 
 #
 msgid "Modulation"
@@ -3416,7 +3416,7 @@ msgid "Network test..."
 msgstr "Тест сети..."
 
 msgid "Network test: "
-msgstr "Тест сети:"
+msgstr "Тест сети: "
 
 #
 msgid "Network:"
@@ -6839,7 +6839,7 @@ msgid "WEP"
 msgstr "WEP"
 
 msgid "WLAN connection"
-msgstr "Беспроводния соединения"
+msgstr "Беспроводное соединение"
 
 #
 msgid "WPA"
@@ -8287,7 +8287,7 @@ msgid "performing arts"
 msgstr ""
 
 msgid "play as picture in picture"
-msgstr "воспроизвести как кртинку в картинке"
+msgstr "воспроизвести как картинку в картинке"
 
 #
 msgid "play entry"
