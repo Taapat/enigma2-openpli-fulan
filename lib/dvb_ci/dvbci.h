@@ -80,8 +80,6 @@ static inline int time_after(struct timespec oldtime, uint32_t delta_ms)
 	// check
 	return nowtime_ms > oldtime_ms;
 }
-
-
 #endif
 
 class eDVBCISlot: public iObject, public Object
@@ -111,10 +109,8 @@ class eDVBCISlot: public iObject, public Object
 	//dagobert
 	char connection_id;
 	bool mmi_active;
-
 	int receivedLen;
 	unsigned char* receivedData;
-
 #endif
 public:
 	enum {stateRemoved, stateInserted, stateInvalid, stateResetted};
@@ -147,18 +143,15 @@ public:
 	int setClockRate(int);
 #ifdef __sh__
 	bool checkQueueSize();
-
-	void thread();  // thread function
+	void thread();
 	void mmiOpened() { mmi_active = true; };
 	void mmiClosed() { mmi_active = false; };
-
 	void process_tpdu(unsigned char tpdu_tag, __u8* data, int asn_data_length, int con_id);
 	bool sendCreateTC();
 	eData sendData(unsigned char* data, int len);
-
 	struct timeval tx_time;
 	struct timespec last_poll_time;
-#endif	
+#endif
 };
 
 struct CIPmtHandler

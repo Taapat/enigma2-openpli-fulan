@@ -75,9 +75,6 @@ class VolumeControl:
 
 	def volMute(self, showMuteSymbol=True, force=False):
 		if HdmiCec.instance.volumeForwardingEnabled: return
-#--->
-#-		vol = self.volctrl.getVolume()
-#---<
 #+++>
 		if config.audio.volume.value != 0:
 			vol = config.audio.volume.value

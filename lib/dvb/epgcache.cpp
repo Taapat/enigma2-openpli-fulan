@@ -131,7 +131,7 @@ eventData::eventData(const eit_event_struct* e, int size, int type, int tsidonid
 						title_data[4] = descr[4];
 						title_data[5] = eventNameUTF8len + 1;
 						title_data[6] = 0x15; //identify event name as UTF-8
-						memcpy(&title_data[7], eventNameUTF8.c_str(), eventNameUTF8len);
+						memcpy(&title_data[7], eventNameUTF8.data(), eventNameUTF8len);
 						title_data[7 + eventNameUTF8len] = 0;
 
 						//Calculate the CRC, based on our new data
@@ -170,7 +170,7 @@ eventData::eventData(const eit_event_struct* e, int size, int type, int tsidonid
 						text_data[5] = 0;
 						text_data[6] = textUTF8len + 1; //identify text as UTF-8
 						text_data[7] = 0x15; //identify text as UTF-8
-						memcpy(&text_data[8], textUTF8.c_str(), textUTF8len);
+						memcpy(&text_data[8], textUTF8.data(), textUTF8len);
 
 						__u32 text_crc = 0;
 						int cnt=0;
@@ -222,8 +222,8 @@ const eit_event_struct* eventData::get() const
 #ifndef __sh__
 	__u32 *p = (__u32*)(EITdata+10);
 #else
-/* Dagobert: fix not aligned access */
-		__u8 *p = (__u8*)(EITdata+10);
+// Dagobert: fix not aligned access
+	__u8 *p = (__u8*)(EITdata+10);
 #endif
 	while(tmp>3)
 	{
@@ -232,7 +232,7 @@ const eit_event_struct* eventData::get() const
 			descriptors.find(*p++);
 #else
 		__u32 index = p[3] << 24 | p[2] << 16 | p[1] << 8 | p[0];
-/* eDebug("index %d %x, %x %x %x %x\n", index, index, p[0], p[1], p[2], p[3]); */
+// eDebug("index %d %x, %x %x %x %x\n", index, index, p[0], p[1], p[2], p[3]);
 		descriptorMap::iterator it =
 			descriptors.find(index);
 
@@ -263,7 +263,7 @@ eventData::~eventData()
 #ifndef __sh__
 		__u32 *d = (__u32*)(EITdata+10);
 #else
-/* Dagobert: fix not aligned access */
+// Dagobert: fix not aligned access
 		__u8 *d = (__u8*)(EITdata+10);
 #endif
 		ByteSize -= 10;
@@ -274,7 +274,7 @@ eventData::~eventData()
 				descriptors.find(*d++);
 #else
 			__u32 index = d[3] << 24 | d[2] << 16 | d[1] << 8 | d[0];
-/* eDebug("index %d %x, %x %x %x %x\n", index, index, d[0], d[1], d[2], d[3]); */
+// eDebug("index %d %x, %x %x %x %x\n", index, index, d[0], d[1], d[2], d[3]);
 			descriptorMap::iterator it =
 				descriptors.find(index);
 				
@@ -1216,7 +1216,7 @@ void eEPGCache::load()
 			}
 			char text1[13];
 			fread( text1, 13, 1, f);
-			if ( !strncmp( text1, "ENIGMA_EPG_V7", 13) )
+			if ( !memcmp( text1, "ENIGMA_EPG_V7", 13) )
 			{
 				singleLock s(cache_lock);
 				fread( &size, sizeof(int), 1, f);
@@ -1250,7 +1250,7 @@ void eEPGCache::load()
 #ifdef ENABLE_PRIVATE_EPG
 				char text2[11];
 				fread( text2, 11, 1, f);
-				if ( !strncmp( text2, "PRIVATE_EPG", 11) )
+				if ( !memcmp( text2, "PRIVATE_EPG", 11) )
 				{
 					size=0;
 					fread( &size, sizeof(int), 1, f);
@@ -1287,6 +1287,7 @@ void eEPGCache::load()
 			}
 			else
 				eDebug("[EPGC] don't read old epg database");
+			posix_fadvise(fileno(f), 0, 0, POSIX_FADV_DONTNEED);
 			fclose(f);
 			// We got this far, so the EPG file is okay.
 			if (renameResult == 0)
@@ -2921,12 +2922,13 @@ void eEPGCache::importEvents(ePyObject serviceReferences, ePyObject list)
 //  the second tuple entry is the MAX matches value
 //  the third tuple entry is the type of query
 //     0 = search for similar broadcastings (SIMILAR_BROADCASTINGS_SEARCH)
-//     1 = search events with exactly title name (EXAKT_TITLE_SEARCH)
+//     1 = search events with exactly title name (EXACT_TITLE_SEARCH)
 //     2 = search events with text in title name (PARTIAL_TITLE_SEARCH)
+//     3 = search events starting with title name (START_TITLE_SEARCH)
 //  when type is 0 (SIMILAR_BROADCASTINGS_SEARCH)
 //   the fourth is the servicereference string
 //   the fifth is the eventid
-//  when type is 1 or 2 (EXAKT_TITLE_SEARCH or PARTIAL_TITLE_SEARCH)
+//  when type > 0 (*_TITLE_SEARCH)
 //   the fourth is the search text
 //   the fifth is
 //     0 = case sensitive (CASE_CHECK)
@@ -3017,7 +3019,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 #ifndef __sh__
 							__u32 *p = (__u32*)(data+10);
 #else
-/* Dagobert: Alignment fix */
+// Dagobert: Alignment fix
 							__u8 *p = (__u8*)(data+10);
 #endif
 							// search short and extended event descriptors
@@ -3026,7 +3028,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 #ifndef __sh__
 								__u32 crc = *p++;
 #else
-/* Dagobert: Alignment fix */
+// Dagobert: Alignment fix
 								__u32 crc = p[3] << 24 | p[2] << 16 | p[1] << 8 | p[0];
 								p += 4;
 #endif
@@ -3063,7 +3065,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 					return NULL;
 				}
 			}
-			else if (tuplesize > 4 && (querytype == 1 || querytype == 2) )
+			else if (tuplesize > 4 && (querytype > 0) )
 			{
 				ePyObject obj = PyTuple_GET_ITEM(arg, 3);
 				if (PyString_Check(obj))
@@ -3075,50 +3077,74 @@ PyObject *eEPGCache::search(ePyObject arg)
 #else
 					int textlen = PyString_Size(obj);
 #endif
-					if (querytype == 1)
-						eDebug("lookup for events with '%s' as title(%s)", str, casetype?"ignore case":"case sensitive");
-					else
-						eDebug("lookup for events with '%s' in title(%s)", str, casetype?"ignore case":"case sensitive");
+					switch (querytype)
+					{
+						case 1:
+							eDebug("lookup events with '%s' as title (%s)", str, casetype?"ignore case":"case sensitive");
+							break;
+						case 2:
+							eDebug("lookup events with '%s' in title (%s)", str, casetype?"ignore case":"case sensitive");
+							break;
+						case 3:
+							eDebug("lookup events, title starting with '%s' (%s)", str, casetype?"ignore case":"case sensitive");
+							break;
+					}
 					singleLock s(cache_lock);
+					std::string title;
 					for (descriptorMap::iterator it(eventData::descriptors.begin());
 						it != eventData::descriptors.end() && descridx < 511; ++it)
 					{
 						__u8 *data = it->second.second;
 						if ( data[0] == 0x4D ) // short event descriptor
 						{
-							std::string title;
 							const char *titleptr = (const char*)&data[6];
 							int title_len = data[5];
 							if (data[6] < 0x20)
 							{
 								/* custom encoding */
 								title = convertDVBUTF8((unsigned char*)titleptr, title_len, 0x40, 0);
-								titleptr = title.c_str();
+								titleptr = title.data();
 								title_len = title.length();
 							}
+							if (title_len < textlen)
+								/*Doesn't fit, so cannot match anything */
+								continue;
 							if (querytype == 1)
 							{
 								/* require exact title match */
 								if (title_len != textlen)
 									continue;
 							}
-							while (title_len >= textlen)
+							else if (querytype == 3)
 							{
-								if (casetype)
+								/* Do a "startswith" match by pretending the text isn't that long */
+								title_len = textlen;
+							}
+							if (casetype)
+							{
+								while (title_len >= textlen)
 								{
 									if (!strncasecmp(titleptr, str, textlen))
 									{
 										descr[++descridx] = it->first;
 										break;
 									}
+									title_len--;
+									titleptr++;
 								}
-								else if (!strncmp(titleptr, str, textlen))
+							}
+							else
+							{
+								while (title_len >= textlen)
 								{
-									descr[++descridx] = it->first;
-									break;
+									if (!memcmp(titleptr, str, textlen))
+									{
+										descr[++descridx] = it->first;
+										break;
+									}
+									title_len--;
+									titleptr++;
 								}
-								title_len--;
-								titleptr++;
 							}
 						}
 					}
@@ -3135,7 +3161,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 			{
 				PyErr_SetString(PyExc_StandardError,
 					"type error");
-				eDebug("tuple arg 3(%d) is not a known querytype(0, 1, 2)", querytype);
+				eDebug("tuple arg 3(%d) is not a known querytype(0..3)", querytype);
 				return NULL;
 			}
 		}
@@ -3187,7 +3213,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 #ifndef __sh__
 				__u32 *p = (__u32*)(data+10);
 #else
-/* Dagobert: Alignment fix */
+// Dagobert: Alignment fix
 				__u8 *p = (__u8*)(data+10);
 #endif
 				// check if any of our descriptor used by this event
@@ -3197,7 +3223,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 #ifndef __sh__
 					__u32 crc32 = *p++;
 #else
-/* Dagobert: Alignment fix */
+// Dagobert: Alignment fix
 					__u32 crc32 = p[3] << 24 | p[2] << 16 | p[1] << 8 | p[0];
 					p += 4;
 #endif
@@ -3217,7 +3243,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 					tmp-=4;
 				}
 				if ( (querytype == 0 && cnt == descridx) ||
-					 ((querytype == 1 || querytype == 2) && cnt != -1) )
+					 ((querytype > 0) && cnt != -1) )
 				{
 					const uniqueEPGKey &service = cit->first;
 					std::vector<eServiceReference> refs;
@@ -3347,7 +3373,7 @@ void eEPGCache::PMTready(eDVBServicePMTHandler *pmthandler)
 								{
 									__u8 buffer[10];
 									(*desc)->writeToBuffer(buffer);
-									if (!strncmp((const char *)buffer+2, "EPGDATA", 7))
+									if (!memcmp((const char *)buffer+2, "EPGDATA", 7))
 									{
 										eServiceReferenceDVB ref;
 										if (!pmthandler->getServiceReference(ref))
@@ -3356,7 +3382,7 @@ void eEPGCache::PMTready(eDVBServicePMTHandler *pmthandler)
 											messages.send(Message(Message::got_mhw2_channel_pid, ref, pid));
 										}
 									}
-									else if(!strncmp((const char *)buffer+2, "FICHAS", 6))
+									else if(!memcmp((const char *)buffer+2, "FICHAS", 6))
 									{
 										eServiceReferenceDVB ref;
 										if (!pmthandler->getServiceReference(ref))
@@ -3365,7 +3391,7 @@ void eEPGCache::PMTready(eDVBServicePMTHandler *pmthandler)
 											messages.send(Message(Message::got_mhw2_summary_pid, ref, pid));
 										}
 									}
-									else if(!strncmp((const char *)buffer+2, "GENEROS", 7))
+									else if(!memcmp((const char *)buffer+2, "GENEROS", 7))
 									{
 										eServiceReferenceDVB ref;
 										if (!pmthandler->getServiceReference(ref))

@@ -40,11 +40,10 @@ class CuberevoVFDSetup(ConfigListScreen, Screen):
 		<widget name="key_red" position="280,350" size="140,40" font="Regular;20" backgroundColor="#9f1313" zPosition="2" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
 		</screen>"""
 
-
 	def __init__(self, session, args = None):
 		Screen.__init__(self, session)
 		self.onClose.append(self.abort)
-		
+
 		# create elements for the menu list
 		self.list = [ ]
 		self.list.append(getConfigListEntry(_("Show clock"), config.plugins.CuberevoVFD.showClock))
@@ -111,14 +110,12 @@ class CuberevoVFDSetup(ConfigListScreen, Screen):
 		evfd.getInstance().vfd_set_brightness(brightness)
 
 		configfile.save()
-
 		self.close()
 
 	def cancel(self):
 		for x in self["config"].list:
 			x[1].cancel()
 		self.close()
-
 
 class CuberevoVFD:
 	def __init__(self, session):
@@ -253,10 +250,10 @@ class CuberevoVFD:
 			return pattern.search(string).group()
 		except AttributeError:
 			None
-	
+
 	def __evStart(self):
 		self.__evSeekableStatusChanged()
-	
+
 	def getTimeshiftState(self):
 		service = self.session.nav.getCurrentService()
 		if service is None:

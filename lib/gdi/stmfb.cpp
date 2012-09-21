@@ -25,7 +25,6 @@ int stmfb_accel_init(void)
 		perror("/dev/fb0");
 		return 1;
 	}
-
 	eDebug("STMFB accel interface available\n");
 	return 0;
 }

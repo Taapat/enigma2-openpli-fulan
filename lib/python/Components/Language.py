@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 import gettext
 import locale
+import os
 
 from Tools.Directories import SCOPE_LANGUAGE, resolveFilename
 
@@ -61,17 +62,18 @@ class Language:
 		try:
 			lang = self.lang[index]
 			print "Activating language " + lang[0]
-			gettext.translation('enigma2', resolveFilename(SCOPE_LANGUAGE, ""), languages=[lang[1]]).install(names=("ngettext"))
+			gettext.translation('enigma2', resolveFilename(SCOPE_LANGUAGE, ""), languages=[lang[1]]).install(names=("ngettext", "pgettext"))
 			self.activeLanguage = index
 			for x in self.callbacks:
 				x()
 		except:
 			print "Selected language does not exist!"
 		try:
-			locale.setlocale(locale.LC_TIME, self.getLanguage())
+			locale.setlocale(locale.LC_TIME, (self.getLanguage(), 'UTF-8'))
 		except:
 			print "Failed to set LC_TIME to " + self.getLanguage() + ". Setting it to 'C'"
 			locale.setlocale(locale.LC_TIME, 'C')
+		os.environ["LC_TIME"] = self.getLanguage() + '.UTF-8'
 
 	def activateLanguageIndex(self, index):
 		if index < len(self.langlist):

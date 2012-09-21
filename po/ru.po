@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-05 10:00+0200\n"
+"POT-Creation-Date: 2012-08-30 16:54+0200\n"
 "PO-Revision-Date: 2010-05-18 18:10+0200\n"
 "Last-Translator: AndreyUA <andrey.wys@gmail.com>\n"
 "Language-Team: Russian / ar-p team allrussian.info>\n"
@@ -1976,6 +1976,9 @@ msgstr "Динамический контраст"
 msgid "E"
 msgstr "E"
 
+msgid "EPG"
+msgstr ""
+
 #
 msgid "EPG Selection"
 msgstr "Выбор телегида"
@@ -2217,6 +2220,9 @@ msgstr "Выйти"
 
 msgid "Exit EPG"
 msgstr "Выход из телегида"
+
+msgid "Exit Movieplayer?"
+msgstr ""
 
 #
 msgid "Exit editor"
@@ -3443,9 +3449,13 @@ msgstr "Новая версия:"
 msgid "News Current Affairs"
 msgstr ""
 
-#
+msgctxt "button label, 'next screen'"
 msgid "Next"
-msgstr "Следующий"
+msgstr ""
+
+msgctxt "now/next: 'next' event label"
+msgid "Next"
+msgstr ""
 
 #
 msgid "No"
@@ -3684,6 +3694,7 @@ msgstr ""
 msgid "Nothing to upgrade"
 msgstr "Нечего обновлять"
 
+msgctxt "now/next: 'now' event label"
 msgid "Now"
 msgstr ""
 
@@ -3857,6 +3868,12 @@ msgstr "Пароль"
 #
 msgid "Pause movie at end"
 msgstr "Пауза в конце фильма"
+
+msgid "Percentage Left"
+msgstr ""
+
+msgid "Percentage Right"
+msgstr ""
 
 msgid "Permanently delete all recordings in the trash can?"
 msgstr "Окончательно удалить все записи в корзину?"
@@ -4328,9 +4345,9 @@ msgstr "Нажмите ОК для переключения выбора"
 msgid "Press yellow to set this interface as default interface."
 msgstr "Нажмите желтую кнопку для установки этого интерфейса по-умолчанию."
 
-#
+msgctxt "button label, 'previous screen'"
 msgid "Prev"
-msgstr "Пред."
+msgstr ""
 
 #
 msgid "Preview"
@@ -4339,6 +4356,9 @@ msgstr "Предпросмотр"
 #
 msgid "Preview menu"
 msgstr "Просмотреть меню"
+
+msgid "Preview selected channel"
+msgstr ""
 
 #
 msgid "Primary DNS"
@@ -4354,6 +4374,12 @@ msgstr "Прогресс"
 
 msgid "Progress"
 msgstr "Прогресс"
+
+msgid "Progress Bar Left"
+msgstr ""
+
+msgid "Progress Bar Right"
+msgstr ""
 
 msgid "Progress Small"
 msgstr ""
@@ -4484,9 +4510,6 @@ msgstr "Записанные файлы..."
 #
 msgid "Recording"
 msgstr "Запись"
-
-msgid "Recording data sync size"
-msgstr "Размер записываемых данных для синхронизации"
 
 msgid "Recording in progress"
 msgstr "Запись в процессе"
@@ -8870,3 +8893,11 @@ msgstr "переключить"
 #
 msgid "zapped"
 msgstr "переключено"
+
+#
+#~ msgid "Next"
+#~ msgstr "Следующий"
+
+#
+#~ msgid "Prev"
+#~ msgstr "Пред."

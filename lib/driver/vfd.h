@@ -44,5 +44,4 @@ public:
 	void vfd_set_fan(bool onoff);
 };
 
-
 #endif

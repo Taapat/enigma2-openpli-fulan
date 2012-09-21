@@ -6,7 +6,7 @@ from Tools.HardwareInfo import HardwareInfo
 from os import path
 
 # The "VideoHardware" is the interface to /proc/stb/video.
-# It generates hotplug events, and gives you the list of 
+# It generates hotplug events, and gives you the list of
 # available and preferred modes, as well as handling the currently
 # selected mode. No other strict checking is done.
 class VideoHardware:
@@ -14,25 +14,24 @@ class VideoHardware:
 
 	modes = { }  # a list of (high-level) modes for a certain port.
 
-	rates["PAL"] =			{ "50Hz":		{ 50: "pal" } }
+	rates["PAL"] =			{ "50Hz":	{ 50: "pal" } }
 
-	rates["576i"] =			{ "50Hz": 	{ 50: "576i50" } }
+	rates["576i"] =			{ "50Hz":	{ 50: "576i50" } }
 
-	rates["576p"] =			{ "50Hz": 	{ 50: "576p50" } }
+	rates["576p"] =			{ "50Hz":	{ 50: "576p50" } }
 
-	rates["720p"] =			{ "50Hz": 	{ 50: "720p50" },
-							  "60Hz": 	{ 60: "720p60" } }
+	rates["720p"] =			{ "50Hz":	{ 50: "720p50" },
+								"60Hz":	{ 60: "720p60" } }
 
 	rates["1080i"] =		{ "50Hz":	{ 50: "1080i50" },
-							  "60Hz":	{ 60: "1080i60" } }
+								"60Hz":	{ 60: "1080i60" } }
 
 	rates["1080p"] =		{ "23Hz":	{ 50: "1080p23" },
-							  "24Hz":	{ 60: "1080p24" },
-							  "25Hz":	{ 60: "1080p25" },
-							  "29Hz":	{ 60: "1080p29" },
-							  "30Hz":	{ 60: "1080p30" },
-							  "50Hz":	{ 60: "1080p50" } }
-
+								"24Hz":	{ 60: "1080p24" },
+								"25Hz":	{ 60: "1080p25" },
+								"29Hz":	{ 60: "1080p29" },
+								"30Hz":	{ 60: "1080p30" },
+								"50Hz":	{ 60: "1080p50" } }
 
 	rates["PC"] = { 
 		"1024x768"  : { 60: "1024x768_60", 70: "1024x768_70", 75: "1024x768_75", 90: "1024x768_90", 100: "1024x768_100" }, #43 60 70 72 75 90 100
@@ -41,11 +40,9 @@ class VideoHardware:
 	}
 
 	modes["Scart"] = ["PAL"]
-	modes["Component"] = ["576i", "576p", "720p", "1080i", "1080p"]
-	modes["HDMI"]  = ["720p", "1080i", "1080p", "576i", "576p"]
+	modes["Component"] = ["720p", "1080p", "1080i", "576p", "576i"]
+	modes["HDMI"] = ["720p", "1080p", "1080i", "576p", "576i"]
 	modes["HDMI-PC"] = ["PC"]
-
-	widescreen_modes = set(["576i", "576p", "720p", "1080i", "1080p"])
 
 	def getOutputAspect(self):
 		ret = (16,9)
@@ -88,13 +85,22 @@ class VideoHardware:
 			del self.modes["DVI-PC"]
 
 		self.createConfig()
-#		self.on_hotplug.append(self.createConfig)
-
 		self.readPreferredModes()
+
+		portlist = self.getPortList()
+		has1080p50 = False
+		for port in portlist:
+			if port == 'HDMI' and HardwareInfo().has_hdmi():
+				if "1080p50" in self.modes_available:
+					has1080p50 = True
+
+		if has1080p50:
+			self.widescreen_modes = set(["576i", "576p", "720p", "1080i", "1080p"])
+		else:
+			self.widescreen_modes = set(["576i", "576p", "720p", "1080i"])
 
 		# take over old AVSwitch component :)
 		from Components.AVSwitch import AVSwitch
-#		config.av.colorformat.notifiers = [ ] 
 		config.av.aspectratio.notifiers = [ ]
 		config.av.tvsystem.notifiers = [ ]
 		config.av.wss.notifiers = [ ]
@@ -103,7 +109,6 @@ class VideoHardware:
 #+++>
 		config.av.colorformat_hdmi = ConfigSelection(choices = {"hdmi_rgb": _("RGB"), "hdmi_yuv": _("YUV"), "hdmi_422": _("422")}, default="hdmi_rgb")
 		config.av.colorformat_yuv = ConfigSelection(choices = {"yuv": _("YUV")}, default="yuv")
-#		config.av.hdmi_audio_source = ConfigSelection(choices = {"pcm": _("PCM"), "spdif": _("SPDIF"), "8ch": _("8Ch"), "none": _("None")}, default="pcm")
 		config.av.hdmi_audio_source = ConfigSelection(choices = {"pcm": _("PCM"), "spdif": _("SPDIF")}, default="pcm")
 		config.av.threedmode = ConfigSelection(choices = {"off": _("Off"), "sbs": _("Side by Side"),"tab": _("Top and Bottom")}, default="off")
 		config.av.threedmode.addNotifier(self.set3DMode)
@@ -115,11 +120,6 @@ class VideoHardware:
 		config.av.wss.addNotifier(self.updateAspect)
 		config.av.policy_169.addNotifier(self.updateAspect)
 		config.av.policy_43.addNotifier(self.updateAspect)
-
-		# until we have the hotplug poll socket
-#		self.timer = eTimer()
-#		self.timer.callback.append(self.readPreferredModes)
-#		self.timer.start(1000)
 
 	def readAvailableModes(self):
 		try:
@@ -149,11 +149,6 @@ class VideoHardware:
 		for mode in rate.values():
 			if port == "HDMI-PC":
 				return True
-			# DVI modes must be in "modes_preferred"
-#			if port == "DVI":
-#				if mode not in self.modes_preferred and not config.av.edid_override.value:
-#					print "no, not preferred"
-#					return False
 			if mode not in self.modes_available:
 				return False
 		return True
@@ -172,7 +167,7 @@ class VideoHardware:
 		mode_60 = modes.get(60)
 		if mode_50 is None or force == 60:
 			mode_50 = mode_60
-		if mode_60 is None or force == 50: 
+		if mode_60 is None or force == 50:
 			mode_60 = mode_50
 
 		try:
@@ -190,12 +185,12 @@ class VideoHardware:
 		except IOError:
 			print "writing initial videomode to /etc/videomode failed."
 
-		self.updateAspect(None)
-		self.updateColor(port)
-
 		#call setResolution() with -1,-1 to read the new scrren dimesions without changing the framebuffer resolution
 		from enigma import gMainDC
 		gMainDC.getInstance().setResolution(-1, -1)
+
+		self.updateAspect(None)
+		self.updateColor(port)
 
 	def saveMode(self, port, mode, rate):
 		print "saveMode", port, mode, rate
@@ -283,7 +278,7 @@ class VideoHardware:
 
 		# based on;
 		#   config.av.videoport.value: current video output device
-		#     Scart: 
+		#     Scart:
 		#   config.av.aspect:
 		#     4_3:            use policy_169
 		#     16_9,16_10:     use policy_43
@@ -318,17 +313,21 @@ class VideoHardware:
 			policy_choices = {"pillarbox": "panscan", "panscan": "letterbox", "nonlinear": "nonlinear", "scale": "bestfit"}
 			if path.exists("/proc/stb/video/policy_choices") and "auto" in open("/proc/stb/video/policy_choices").readline():
 				policy_choices.update({"auto": "auto"})
+			else:
+				policy_choices.update({"auto": "bestfit"})
 			policy = policy_choices[config.av.policy_43.value]
 			policy2_choices = {"letterbox": "letterbox", "panscan": "panscan", "scale": "bestfit"}
 			if path.exists("/proc/stb/video/policy2_choices") and "auto" in open("/proc/stb/video/policy2_choices").readline():
 				policy2_choices.update({"auto": "auto"})
+			else:
+				policy2_choices.update({"auto": "bestfit"})
 			policy2 = policy2_choices[config.av.policy_169.value]
 		elif is_auto:
 			aspect = "any"
 			policy = "bestfit"
 		else:
 			aspect = "4:3"
-			policy = {"letterbox": "letterbox", "panscan": "panscan", "scale": "bestfit"}[config.av.policy_169.value]
+			policy = {"letterbox": "letterbox", "panscan": "panscan", "scale": "bestfit", "auto": "bestfit"}[config.av.policy_169.value]
 
 		if not config.av.wss.value:
 			wss = "auto(4:3_off)"

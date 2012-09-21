@@ -143,7 +143,7 @@ int gAccel::blit(gSurface *dst, const gSurface *src, const eRect &p, const eRect
 	else if ((src->bpp == 8) && (dst->bpp == 32))
 	{
 		src_format = 1;
-		if(accelAlloc(data, data_phys, area.height() * area.width() * 4))
+		if (accelAlloc(data, data_phys, area.height() * area.width() * 4))
 			return -1;
 
 		__u8 *srcptr=(__u8*)src->data;
@@ -156,7 +156,7 @@ int gAccel::blit(gSurface *dst, const gSurface *src, const eRect &p, const eRect
 				pal[i]=(src->clut.data[i].a<<24)|(src->clut.data[i].r<<16)|(src->clut.data[i].g<<8)|(src->clut.data[i].b);
 			else
 				pal[i]=0x010101*i;
-			if((pal[i]&0xFF000000) >= 0xE0000000)
+			if ((pal[i]&0xFF000000) >= 0xE0000000)
 				pal[i] = 0xFF000000;
 			pal[i]^=0xFF000000;
 		}
@@ -175,12 +175,12 @@ int gAccel::blit(gSurface *dst, const gSurface *src, const eRect &p, const eRect
 			dstptr+=area.width() * 4;
 		}
 	} else {
-		if(data_phys)
+		if (data_phys)
 			accelFree(data_phys);
 		return -1;
 	}
 
-	if(data_phys)
+	if (data_phys)
 	{
 		stmfb_accel_blit(
 			data_phys, 0, 0, area.width() * 4, src_format,

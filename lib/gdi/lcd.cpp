@@ -60,8 +60,7 @@ void eLCD::renderText(ePoint start, const char *text)
 }
 #endif
 
-#ifndef __sh__
-
+#ifndef HAVE_GRAPHLCD
 eDBoxLCD::eDBoxLCD()
 {
 	int xres=132, yres=64, bpp=8;
@@ -398,18 +397,6 @@ int eDBoxLCD::setLCDBrightness(int brightness)
 eDBoxLCD::~eDBoxLCD()
 {
 	eDebug("eDBoxLCD::~eDBoxLCD");
-
-/* konfetti: there is an error in graphlcd (I reported it alread)
- * ->InitSingleDisplay returns 0 if dpf_open fails, which leads
- * to a crash here!
-	if (lcd)
-	{
-		lcd->DeInit();
-		delete lcd;
-	}
-	if (bitmap)
-		delete bitmap;
-*/
 }
 
 eDBoxLCD *eDBoxLCD::getInstance()
@@ -422,18 +409,15 @@ void eDBoxLCD::update()
 {
 	if (lcdfd == 1)
 	{
-
 		bitmap->Clear();
-
 		for (int x = 0; x < width; x++)
 			for (int y = 0; y < height; y++)
 			{
 				__u16 *buf16  = (__u16*) _buffer;
-
 #if BYTE_ORDER == LITTLE_ENDIAN
-				__u16 col16   = bswap_16(*((__u16*)(((__u16*)buf16) + y * width + x)));
+				__u16 col16 = bswap_16(*((__u16*)(((__u16*)buf16) + y * width + x)));
 #else
-				__u16 col16   = *((__u16*)(((__u16*)buf16) + y  * width + x));
+				__u16 col16 = *((__u16*)(((__u16*)buf16) + y * width + x));
 #endif
 				__u8 red, green, blue, alpha; 
 				__u32 color32;
@@ -455,6 +439,4 @@ void eDBoxLCD::update()
 		lcd->Refresh(false); /* partial update */
 	}
 }
-
 #endif
-

@@ -17,11 +17,11 @@
 #endif
 
 #define VFD_DEVICE "/dev/vfd"
-#define VFDICONDISPLAYONOFF	0xc0425a0a
-#define VFDDISPLAYCHARS		0xc0425a00
-#define VFDBRIGHTNESS		0xc0425a03
+#define VFDICONDISPLAYONOFF   0xc0425a0a
+#define VFDDISPLAYCHARS       0xc0425a00
+#define VFDBRIGHTNESS         0xc0425a03
 //light on off
-#define VFDDISPLAYWRITEONOFF	0xc0425a05
+#define VFDDISPLAYWRITEONOFF  0xc0425a05
 
 bool startloop_running = false;
 static bool icon_onoff[32];
@@ -36,7 +36,8 @@ int VFD_SCROLL = 1;
 char chars[64];
 char g_str[64];
 
-struct vfd_ioctl_data {
+struct vfd_ioctl_data
+{
 	unsigned char start;
 	unsigned char data[64];
 	unsigned char length;
@@ -60,7 +61,6 @@ evfd* evfd::getInstance()
 		instance = new evfd;
 	return instance;
 }
-
 
 evfd::evfd()
 {
@@ -86,19 +86,18 @@ char * getProgress()
 	static char progress[20] = "0";
 	int fd = open ("/proc/progress", O_RDONLY);
 
-	if(fd < 0)
+	if (fd < 0)
 		return 0;
 
 	n = read(fd, progress, sizeof(progress));
 	close(fd);
 
-	if(n < 0)
+	if (n < 0)
 		n = 0;
 	else if((n > 1) && (progress[n-1] == 0xa))
 		n--;
 
 	progress[n] = 0;
-
 	return progress;
 }
 
@@ -110,9 +109,9 @@ void * start_loop (void *arg)
 	int fpsmall = open ("/dev/fpsmall", O_WRONLY);
 	int fpc = open ("/dev/fpc", O_WRONLY);
 
-	if((fplarge < 0) || (fpsmall < 0) || (fpc < 0))
+	if ((fplarge < 0) || (fpsmall < 0) || (fpc < 0))
 	{
-		printf("Failed opening devices (%d, %d, %d)\n",fplarge, fpsmall, fpc);
+		printf("Failed opening devices (%d, %d, %d)\n", fplarge, fpsmall, fpc);
 		return NULL;
 	}
 
@@ -134,36 +133,35 @@ void * start_loop (void *arg)
 	// start the display loop
 	char * progress = getProgress();
 	int index = 2;
-	while(!requested)
+	while (!requested)
 	{
 		// display the CD segments
 		icons.Icons2 = (((1 << index) - 1)) & 0x1ffe;
 		ioctl(fpc, FRONTPANELICON, &icons);
 		index++;
-		if(index > 13)
+		if (index > 13)
 		{
 			index = 2;
 			icons.BlinkMode = (~icons.BlinkMode) & 0xf;
 		}
 
 		// display the visible part of the string
-		for(i = 0; i < MAX_CHARS; i++)
+		for (i = 0; i < MAX_CHARS; i++)
 		{
 			dispData[i] = str[(offset + i) % length];
 		}
 		offset++;
 		write(fplarge, dispData, sizeof(dispData));
 		usleep(200000);
-		if((index % 4) == 0)
+		if ((index % 4) == 0)
 		{
 			// display progress
 			progress = getProgress();
 			write(fpsmall, progress, strlen(progress) + 1);
-			if(strncmp("100", progress, 3) == 0)
+			if (strncmp("100", progress, 3) == 0)
 				break;
 		}
 	}
-
 	// clear all icons
 	frontpanel_ioctl_icons iconsOff = {0xffffffff, 0xffffffff, 0x0};
 	ioctl(fpc, FRONTPANELICON, &iconsOff);
@@ -179,7 +177,6 @@ void * start_loop (void *arg)
 
 	return NULL;
 }
-
 #else
 
 void * start_loop (void *arg)
@@ -189,9 +186,11 @@ void * start_loop (void *arg)
 	//vfd.vfd_clear_icons();
 	vfd.vfd_write_string("Open AR-P ENIGMA2", true);
 	//run 2 times through all icons 
-	for  (int vloop = 0; vloop < 128; vloop++) {
+	for (int vloop = 0; vloop < 128; vloop++)
+	{
 #if !defined(PLATFORM_FORTIS_HDBOX) && !defined(PLATFORM_OCTAGON1008) && !defined(PLATFORM_ATEVIO7500) && !defined(PLATFORM_CUBEREVO) && !defined(PLATFORM_CUBEREVO_MINI) && !defined(PLATFORM_CUBEREVO_MINI2) && !defined(PLATFORM_CUBEREVO_MINI_FTA) && !defined(PLATFORM_CUBEREVO_250HD) && !defined(PLATFORM_CUBEREVO_2000HD) && !defined(PLATFORM_CUBEREVO_9500HD) && !defined(PLATFORM_HS7810A)
-		if (vloop%2 == 1) {
+		if (vloop%2 == 1)
+		{
 			vfd.vfd_set_icon( (tvfd_icon) (((vloop%32)/2)%16), ICON_OFF, true);
 			//usleep(1000);
 			vfd.vfd_set_icon( (tvfd_icon) ((((vloop%32)/2)%16)+1), ICON_ON, true);
@@ -225,31 +224,31 @@ void * start_loop (void *arg)
 			vfd.vfd_set_brightness(1);
 		else if (vloop%14 == 13 )
 			vfd.vfd_set_brightness(0);
-#endif		
+#endif
 		usleep(75000);
 	}
 	vfd.vfd_set_brightness(7);
 #if !defined(PLATFORM_FORTIS_HDBOX) && !defined(PLATFORM_OCTAGON1008) && !defined(PLATFORM_ATEVIO7500) && !defined(PLATFORM_CUBEREVO) && !defined(PLATFORM_CUBEREVO_MINI) && !defined(PLATFORM_CUBEREVO_MINI2) && !defined(PLATFORM_CUBEREVO_MINI_FTA) && !defined(PLATFORM_CUBEREVO_250HD) && !defined(PLATFORM_CUBEREVO_2000HD) && !defined(PLATFORM_CUBEREVO_9500HD) && !defined(PLATFORM_HS7810A)
 	//set all blocked icons
-	for (int id = 0x10; id < 0x20; id++) {
+	for (int id = 0x10; id < 0x20; id++)
+	{
 		vfd.vfd_set_icon((tvfd_icon)id, icon_onoff[id]);
 	}
 #endif
 	blocked = false;
 	return NULL;
 }
-
 #endif
 
-//////////////////////////////////////////////////////////////////////////////////////
-
 #if defined(PLATFORM_FORTIS_HDBOX) || defined(PLATFORM_OCTAGON1008) || defined(PLATFORM_ATEVIO7500) || defined(PLATFORM_CUBEREVO) || defined(PLATFORM_CUBEREVO_MINI) || defined(PLATFORM_CUBEREVO_MINI2) || defined(PLATFORM_CUBEREVO_MINI_FTA) || defined(PLATFORM_CUBEREVO_250HD) || defined(PLATFORM_CUBEREVO_2000HD) || defined(PLATFORM_CUBEREVO_9500HD) || defined(PLATFORM_HS7810A)
-void evfd::vfd_write_string_scrollText(char* text) {
+void evfd::vfd_write_string_scrollText(char* text)
+{
 	return;
 }
 
 //we can not use a member function (vfd_write_string_scrollText) in pthread, so we use a second (same content) non member function (vfd_write_string_scrollText1)
-static void *vfd_write_string_scrollText1(void *arg) {
+static void *vfd_write_string_scrollText1(void *arg)
+{
 	pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
 	bool scoll_loop = true;
 	char out[VFDLENGTH+1];
@@ -257,30 +256,42 @@ static void *vfd_write_string_scrollText1(void *arg) {
 	evfd vfd;
 	len = strlen((char *) g_str);
 	memset(out, 0, VFDLENGTH+1);
-	while(scoll_loop && (len > VFDLENGTH)) {
-		if (blocked) {
+	while (scoll_loop && (len > VFDLENGTH))
+	{
+		if (blocked)
+		{
 			usleep(250000);
-		} else {
+		}
+		else
+		{
 			scoll_loop = false;
 		}
-		for (i=0; i<=(len-VFDLENGTH); i++) {
-			if (blocked) {
+		for (i=0; i<=(len-VFDLENGTH); i++)
+		{
+			if (blocked)
+			{
 				memset(out, ' ', VFDLENGTH);
 				memcpy(out, g_str+i, VFDLENGTH);
 				vfd.vfd_write_string(out,true);
 				usleep(250000);
-			} else {
+			}
+			else
+			{
 				scoll_loop = false;
 				i = len-VFDLENGTH;
 			}
 		}
-		for (i=1; i < VFDLENGTH; i++) {
-			if (blocked) {
+		for (i=1; i < VFDLENGTH; i++)
+		{
+			if (blocked)
+			{
 				memset(out, ' ', VFDLENGTH);
 				memcpy(out, g_str+len+i-VFDLENGTH, VFDLENGTH-i);
 				vfd.vfd_write_string(out,true);
 				usleep(250000);
-			} else {
+			}
+			else
+			{
 				scoll_loop = false;
 				i = VFDLENGTH;
 			}
@@ -297,7 +308,7 @@ static void *vfd_write_string_scrollText1(void *arg) {
 void evfd::vfd_write_string(char * str)
 {
 	int i = strlen(str);
-	if(blocked)
+	if (blocked)
 	{
 		pthread_cancel(thread_start_loop);
 		pthread_join(thread_start_loop, NULL);
@@ -306,7 +317,7 @@ void evfd::vfd_write_string(char * str)
 	memset(g_str,0,64);
 	strcpy(g_str,str);
 	vfd_write_string(str, false);
-	if(i > VFDLENGTH && VFD_SCROLL)
+	if (i > VFDLENGTH && VFD_SCROLL)
 	{
 		blocked = true;
 		pthread_create(&thread_start_loop, NULL, vfd_write_string_scrollText1, (void *)str);
@@ -318,7 +329,8 @@ void evfd::vfd_write_string(char * str, bool force)
 {
 	int ws = 0;
 	int i = strlen(str);
-	if (VFD_CENTER) {
+	if (VFD_CENTER)
+	{
 		if (i < VFDLENGTH)
 			ws=(VFDLENGTH-i)/2;
 		else
@@ -343,6 +355,7 @@ void evfd::vfd_write_string(char * str, bool force)
 }
 
 #else
+
 void evfd::vfd_write_string(char * str)
 {
 	vfd_write_string(str, false);
@@ -355,16 +368,14 @@ void evfd::vfd_write_string(char * str, bool force)
 	if ( i > 63 ) i = 63;
 	memset ( chars, ' ', 63 );
 	memcpy ( chars, str, i);
-
 #ifdef PLATFORM_TF7700
-
 	// request the display to cancel the start loop
 	requested = true;
 	while(blocked) usleep(200000);
-
 	{
 #else
-	if (!blocked || force) {
+	if (!blocked || force)
+	{
 #endif
 		struct vfd_ioctl_data data;
 		memset ( data.data, ' ', 63 );
@@ -380,24 +391,26 @@ void evfd::vfd_write_string(char * str, bool force)
 	return;
 }
 
-void evfd::vfd_write_string_scrollText(char* text) {
-	if (!blocked) {
+void evfd::vfd_write_string_scrollText(char* text)
+{
+	if (!blocked)
+	{
 		int i, len = strlen(text);
 		char* out = (char *) malloc(16);
-
-		for (i=0; i<=(len-16); i++) { // scroll text till end
+		for (i=0; i<=(len-16); i++)
+		{ // scroll text till end
 			memset(out, ' ', 16);
 			memcpy(out, text+i, 16);
 			vfd_write_string(out);
 			usleep(200000);
 		}
-		for (i=1; i<16; i++) { // scroll text with whitespaces from right
+		for (i=1; i<16; i++)
+		{ // scroll text with whitespaces from right
 			memset(out, ' ', 16);
 			memcpy(out, text+len+i-16, 16-i);
 			vfd_write_string(out);
 			usleep(200000);
 		}
-
 		memcpy(out, text, 16); // display first 16 chars after scrolling
 		vfd_write_string(out);
 		free (out);
@@ -411,8 +424,6 @@ void evfd::vfd_clear_string()
 	return;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
-
 void evfd::vfd_set_icon(tvfd_icon id, bool onoff)
 {
 	vfd_set_icon(id, onoff, false);
@@ -422,11 +433,11 @@ void evfd::vfd_set_icon(tvfd_icon id, bool onoff)
 void evfd::vfd_set_icon(tvfd_icon id, bool onoff, bool force)
 {
 	icon_onoff[id] = onoff;
-
-	if (!blocked || force) {
+	if (!blocked || force)
+	{
 		struct vfd_ioctl_data data;
-
-		if (!startloop_running) {
+		if (!startloop_running)
+		{
 			memset(&data, 0, sizeof(struct vfd_ioctl_data));
 
 			data.start = 0x00;
@@ -444,20 +455,19 @@ void evfd::vfd_set_icon(tvfd_icon id, bool onoff, bool force)
 
 void evfd::vfd_clear_icons()
 {
-	for (int id = 0x10; id < 0x20; id++) {
+	for (int id = 0x10; id < 0x20; id++)
+	{
 		vfd_set_icon((tvfd_icon)id, false);
 	}
 	return;
 }
-
-//////////////////////////////////////////////////////////////////////////////////////
 
 void evfd::vfd_set_brightness(unsigned char setting)
 {
 	struct vfd_ioctl_data data;
 
 	memset(&data, 0, sizeof(struct vfd_ioctl_data));
-	
+
 	data.start = setting & 0x07;
 	data.length = 0;
 
@@ -467,7 +477,6 @@ void evfd::vfd_set_brightness(unsigned char setting)
 
 	return;
 }
-
 
 void evfd::vfd_set_light(bool onoff)
 {
@@ -482,7 +491,6 @@ void evfd::vfd_set_light(bool onoff)
 		data.length = 0;
 
 	file_vfd = open (VFD_DEVICE, O_WRONLY);
-
 	ioctl(file_vfd, VFDDISPLAYWRITEONOFF, &data);
 
 	close (file_vfd);
@@ -503,12 +511,10 @@ void evfd::vfd_set_fan(bool onoff)
 		data.length = 0;
 
 	file_vfd = open (VFD_DEVICE, O_WRONLY);
-
 	ioctl(file_vfd, 0xc0425af8, &data);
 
 	close (file_vfd);
 #endif
-
 	return;
 }
 

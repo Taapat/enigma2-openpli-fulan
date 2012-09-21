@@ -769,7 +769,7 @@ int eTSMPEGDecoder::setState()
 #if defined(__sh__)
 // the VIDEO_CONTINUE would reset the FASTFORWARD  command so we
 // execute the FASTFORWARD after the VIDEO_CONTINUE
-			if(s[1])
+			if (s[1])
 			{
 				m_video->setFastForward(s[2]);
 				m_video->setSlowMotion(s[1]);

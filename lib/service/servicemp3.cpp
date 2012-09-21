@@ -15,13 +15,26 @@
 
 #include <string>
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 #include <gst/gst.h>
 #include <gst/pbutils/missing-plugins.h>
 #endif
 #include <sys/stat.h>
 
 #define HTTP_TIMEOUT 10
+
+typedef enum
+{
+	GST_PLAY_FLAG_VIDEO         = 0x00000001,
+	GST_PLAY_FLAG_AUDIO         = 0x00000002,
+	GST_PLAY_FLAG_TEXT          = 0x00000004,
+	GST_PLAY_FLAG_VIS           = 0x00000008,
+	GST_PLAY_FLAG_SOFT_VOLUME   = 0x00000010,
+	GST_PLAY_FLAG_NATIVE_AUDIO  = 0x00000020,
+	GST_PLAY_FLAG_NATIVE_VIDEO  = 0x00000040,
+	GST_PLAY_FLAG_DOWNLOAD      = 0x00000080,
+	GST_PLAY_FLAG_BUFFERING     = 0x000000100
+} GstPlayFlags;
 
 // eServiceFactoryMP3
 
@@ -77,7 +90,7 @@ eServiceFactoryMP3::eServiceFactoryMP3()
 		int rd = fd >= 0 ? read(fd, tmp, 255) : 0;
 		if (fd >= 0)
 			close(fd);
-		if (!strncmp(tmp, "ufs912\n", rd) || !strncmp(tmp, "atevio7500\n", rd) || !strncmp(tmp, "hs7110\n", rd) || !strncmp(tmp, "whitebox\n", rd))
+		if (!strncmp(tmp, "ufs912\n", rd) || !strncmp(tmp, "ufs913\n", rd) || !strncmp(tmp, "atevio7500\n", rd) || !strncmp(tmp, "hs7110\n", rd) || !strncmp(tmp, "hs7810a\n", rd) || !strncmp(tmp, "spark7162\n", rd) || !strncmp(tmp, "whitebox\n", rd))
 			extensions.push_back("wmv");
 #endif
 		extensions.push_back("wma");
@@ -264,7 +277,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 {
 	m_subtitle_sync_timer = eTimer::create(eApp);
 	m_streamingsrc_timeout = 0;
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	m_stream_tags = 0;
 #endif
 	m_currentAudioStream = -1;
@@ -272,20 +285,22 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 	m_cachedSubtitleStream = 0; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_subtitle_widget = 0;
 	m_currentTrickRatio = 1.0;
-	m_buffer_size = 5*1024*1024;
-#ifndef ENABLE_EPLAYER
-	m_buffer_duration = 5 * GST_SECOND;
-	m_use_prefillbuffer = FALSE;
+	m_buffer_size = 5 * 1024 * 1024;
+#ifndef ENABLE_LIBEPLAYER3
+	m_ignore_buffering_messages = 0;
+	m_is_live = false;
+	m_use_prefillbuffer = false;
+	m_download_buffer_path = "";
 #endif
 	m_prev_decoder_time = -1;
 	m_decoder_time_valid_state = 0;
 	m_errorInfo.missing_codec = "";
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	audioSink = videoSink = NULL;
 #endif
 
 	CONNECT(m_subtitle_sync_timer->timeout, eServiceMP3::pushSubtitles);
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	CONNECT(m_pump.recv_msg, eServiceMP3::gstPoll);
 #endif
 	m_aspect = m_width = m_height = m_framerate = m_progressive = -1;
@@ -298,7 +313,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 	if (!ext)
 		ext = filename;
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	m_sourceinfo.is_video = FALSE;
 	m_sourceinfo.audiotype = atUnknown;
 	if ( (strcasecmp(ext, ".mpeg") && strcasecmp(ext, ".mpg") && strcasecmp(ext, ".vob") && strcasecmp(ext, ".bin") && strcasecmp(ext, ".dat") ) == 0 )
@@ -349,8 +364,6 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 	}
 	if ( strstr(filename, "://") )
 		m_sourceinfo.is_streaming = TRUE;
-	if ( strstr(filename, " buffer=1") )
-		m_use_prefillbuffer = TRUE;
 
 	gchar *uri;
 
@@ -368,6 +381,21 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 		}
 		if ( m_useragent.length() == 0 )
 			m_useragent = "Enigma2 Mediaplayer";
+
+		if (strstr(filename, " buffer=1"))
+		{
+			m_use_prefillbuffer = true;
+		}
+		else if (strstr(filename, " buffer=2"))
+		{
+			/* progressive download buffering */
+			if (::access("/hdd/movie", X_OK) >= 0)
+			{
+				/* It looks like /hdd points to a valid mount, so we can store a download buffer on it */
+				m_download_buffer_path = "/hdd/gstreamer_XXXXXXXXXX";
+			}
+			m_use_prefillbuffer = true;
+		}
 	}
 	else if ( m_sourceinfo.containertype == ctCDA )
 	{
@@ -397,18 +425,34 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 	m_gst_playbin = gst_element_factory_make("playbin2", "playbin");
 	if ( m_gst_playbin )
 	{
-		g_object_set (G_OBJECT (m_gst_playbin), "uri", uri, NULL);
-		int flags = 0x47; // ( GST_PLAY_FLAG_VIDEO | GST_PLAY_FLAG_AUDIO | GST_PLAY_FLAG_NATIVE_VIDEO | GST_PLAY_FLAG_TEXT );
+		guint flags;
+		g_object_get(G_OBJECT (m_gst_playbin), "flags", &flags, NULL);
+		/* avoid video/audio conversion, let the (hardware) sinks handle that */
+		flags |= (GST_PLAY_FLAG_NATIVE_VIDEO | GST_PLAY_FLAG_NATIVE_AUDIO);
+		/* volume control is done by hardware */
+		flags &= ~GST_PLAY_FLAG_SOFT_VOLUME;
 		if ( m_sourceinfo.is_streaming )
 		{
 			g_signal_connect (G_OBJECT (m_gst_playbin), "notify::source", G_CALLBACK (gstHTTPSourceSetAgent), this);
-			if (m_use_prefillbuffer)
+			if (m_download_buffer_path != "")
 			{
-				g_object_set (G_OBJECT (m_gst_playbin), "buffer_duration", m_buffer_duration, NULL);
-				flags |= 0x100; // USE_BUFFERING
+				/* use progressive download buffering */
+				flags |= GST_PLAY_FLAG_DOWNLOAD;
+				g_signal_connect(G_OBJECT(m_gst_playbin), "element-added", G_CALLBACK(handleElementAdded), this);
+				/* limit file size */
+				g_object_set(m_gst_playbin, "ring-buffer-max-size", (guint64)(8LL * 1024LL * 1024LL), NULL);
 			}
+			/*
+			 * regardless whether or not we configured a progressive download file, use a buffer as well
+			 * (progressive download might not work for all formats)
+			 */
+			flags |= GST_PLAY_FLAG_BUFFERING;
+			/* increase the default 2 second / 2 MB buffer limitations to 5s / 5MB */
+			g_object_set(G_OBJECT(m_gst_playbin), "buffer-duration", 5LL * GST_SECOND, NULL);
+			g_object_set(G_OBJECT(m_gst_playbin), "buffer-size", m_buffer_size, NULL);
 		}
 		g_object_set (G_OBJECT (m_gst_playbin), "flags", flags, NULL);
+		g_object_set (G_OBJECT (m_gst_playbin), "uri", uri, NULL);
 		GstElement *subsink = gst_element_factory_make("subsink", "subtitle_sink");
 		if (!subsink)
 			eDebug("eServiceMP3::sorry, can't play: missing gst-plugin-subsink");
@@ -440,29 +484,27 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 		eDebug("eServiceMP3::sorry, can't play: %s",m_errorInfo.error_message.c_str());
 	}
 	g_free(uri);
-
-	setBufferSize(m_buffer_size);
 #else
 	player = (Context_t*) malloc(sizeof(Context_t));
 
-	if(player)
+	if (player)
 	{
-		player->playback	= &PlaybackHandler;
-		player->output		= &OutputHandler;
-		player->container	= &ContainerHandler;
-		player->manager		= &ManagerHandler;
+		player->playback  = &PlaybackHandler;
+		player->output    = &OutputHandler;
+		player->container = &ContainerHandler;
+		player->manager   = &ManagerHandler;
 		printf("%s\n", player->output->Name);
 	}
 
 	//Registration of output devices
-	if(player && player->output)
+	if (player && player->output)
 	{
 		player->output->Command(player,OUTPUT_ADD, (void*)"audio");
 		player->output->Command(player,OUTPUT_ADD, (void*)"video");
 		player->output->Command(player,OUTPUT_ADD, (void*)"subtitle");
 	}
 
-	if(player && player->output && player->output->subtitle)
+	if (player && player->output && player->output->subtitle)
 	{
 		fbClass *fb = fbClass::getInstance();
 		SubtitleOutputDef_t out;
@@ -478,39 +520,39 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 	//create playback path
 	char file[400] = {""};
 
-	if(!strncmp("http://", m_ref.path.c_str(), 7))
+	if (!strncmp("http://", m_ref.path.c_str(), 7))
 		;
-	else if(!strncmp("rtsp://", m_ref.path.c_str(), 7))
+	else if (!strncmp("rtsp://", m_ref.path.c_str(), 7))
 		;
-	else if(!strncmp("rtmp://", m_ref.path.c_str(), 7))
+	else if (!strncmp("rtmp://", m_ref.path.c_str(), 7))
 		;
-	else if(!strncmp("rtmpe://", m_ref.path.c_str(), 8))
+	else if (!strncmp("rtmpe://", m_ref.path.c_str(), 8))
 		;
-	else if(!strncmp("rtmpt://", m_ref.path.c_str(), 8))
+	else if (!strncmp("rtmpt://", m_ref.path.c_str(), 8))
 		;
-	else if(!strncmp("rtmps://", m_ref.path.c_str(), 8))
+	else if (!strncmp("rtmps://", m_ref.path.c_str(), 8))
 		;
-	else if(!strncmp("rtmpte://", m_ref.path.c_str(), 9))
+	else if (!strncmp("rtmpte://", m_ref.path.c_str(), 9))
 		;
-	else if(!strncmp("rtp://", m_ref.path.c_str(), 6))
+	else if (!strncmp("rtp://", m_ref.path.c_str(), 6))
 		;
-	else if(!strncmp("upnp://", m_ref.path.c_str(), 7))
+	else if (!strncmp("upnp://", m_ref.path.c_str(), 7))
 		;
-	else if(!strncmp("mms://", m_ref.path.c_str(), 6))
+	else if (!strncmp("mms://", m_ref.path.c_str(), 6))
 		;
-	else if(!strncmp("file://", m_ref.path.c_str(), 7))
+	else if (!strncmp("file://", m_ref.path.c_str(), 7))
 		;
 	else
 		strcat(file, "file://");
 	strcat(file, m_ref.path.c_str());
 
 	//try to open file
-	if(player && player->playback && player->playback->Command(player, PLAYBACK_OPEN, file) >= 0)
+	if (player && player->playback && player->playback->Command(player, PLAYBACK_OPEN, file) >= 0)
 	{
 		//VIDEO
 		//We dont have to register video tracks, or do we ?
 		//AUDIO
-		if(player && player->manager && player->manager->audio)
+		if (player && player->manager && player->manager->audio)
 		{
 			char ** TrackList = NULL;
 			player->manager->audio->Command(player, MANAGER_LIST, &TrackList);
@@ -525,21 +567,21 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 					audio.language_code = TrackList[i];
 
 					// atUnknown, atMPEG, atMP3, atAC3, atDTS, atAAC, atPCM, atOGG, atFLAC
-					if(     !strncmp("A_MPEG/L3",   TrackList[i+1], 9))
+					if (    !strncmp("A_MPEG/L3",   TrackList[i+1], 9))
 						audio.type = atMP3;
-					else if(!strncmp("A_MP3",       TrackList[i+1], 5))
+					else if (!strncmp("A_MP3",      TrackList[i+1], 5))
 						audio.type = atMP3;
-					else if(!strncmp("A_AC3",       TrackList[i+1], 5))
+					else if (!strncmp("A_AC3",      TrackList[i+1], 5))
 						audio.type = atAC3;
-					else if(!strncmp("A_DTS",       TrackList[i+1], 5))
+					else if (!strncmp("A_DTS",      TrackList[i+1], 5))
 						audio.type = atDTS;
-					else if(!strncmp("A_AAC",       TrackList[i+1], 5))
+					else if (!strncmp("A_AAC",      TrackList[i+1], 5))
 						audio.type = atAAC;
-					else if(!strncmp("A_PCM",       TrackList[i+1], 5))
+					else if (!strncmp("A_PCM",      TrackList[i+1], 5))
 						audio.type = atPCM;
-					else if(!strncmp("A_VORBIS",    TrackList[i+1], 8))
+					else if (!strncmp("A_VORBIS",   TrackList[i+1], 8))
 						audio.type = atOGG;
-					else if(!strncmp("A_FLAC",      TrackList[i+1], 6))
+					else if (!strncmp("A_FLAC",     TrackList[i+1], 6))
 						audio.type = atFLAC;
 					else
 						audio.type = atUnknown;
@@ -552,7 +594,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 			}
 		}
 		//SUB
-		if(player && player->manager && player->manager->subtitle)
+		if (player && player->manager && player->manager->subtitle)
 		{
 			char ** TrackList = NULL;
 			player->manager->subtitle->Command(player, MANAGER_LIST, &TrackList);
@@ -565,16 +607,15 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 					printf("\t%s - %s\n", TrackList[i], TrackList[i+1]);
 					subtitleStream sub;
 					sub.language_code = TrackList[i];
-
 					//  stPlainText, stSSA, stSRT
-					if(     !strncmp("S_TEXT/SSA",  TrackList[i+1], 10) ||
-							!strncmp("S_SSA",       TrackList[i+1], 5))
+					if (     !strncmp("S_TEXT/SSA",   TrackList[i+1], 10) ||
+							!strncmp("S_SSA", TrackList[i+1], 5))
 						sub.type = stSSA;
-					else if(!strncmp("S_TEXT/ASS",  TrackList[i+1], 10) ||
-							!strncmp("S_AAS",       TrackList[i+1], 5))
+					else if (!strncmp("S_TEXT/ASS",   TrackList[i+1], 10) ||
+							!strncmp("S_AAS", TrackList[i+1], 5))
 						sub.type = stSSA;
-					else if(!strncmp("S_TEXT/SRT",  TrackList[i+1], 10) ||
-							!strncmp("S_SRT",       TrackList[i+1], 5))
+					else if (!strncmp("S_TEXT/SRT",   TrackList[i+1], 10) ||
+							!strncmp("S_SRT", TrackList[i+1], 5))
 						sub.type = stSRT;
 					else
 						sub.type = stPlainText;
@@ -592,17 +633,17 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 	{
 		//Creation failed, no playback support for insert file, so delete playback context
 		//FIXME: How to tell e2 that we failed?
-		if(player && player->output)
+		if (player && player->output)
 		{
 			player->output->Command(player,OUTPUT_DEL, (void*)"audio");
 			player->output->Command(player,OUTPUT_DEL, (void*)"video");
 			player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
 		}
 
-		if(player && player->playback)
+		if (player && player->playback)
 			player->playback->Command(player,PLAYBACK_CLOSE, NULL);
 
-		if(player)
+		if (player)
 			free(player);
 		player = NULL;
 	}
@@ -613,7 +654,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 
 eServiceMP3::~eServiceMP3()
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	// disconnect subtitle callback
 	GstElement *subsink = gst_bin_get_by_name(GST_BIN(m_gst_playbin), "subtitle_sink");
 
@@ -626,7 +667,7 @@ eServiceMP3::~eServiceMP3()
 
 	delete m_subtitle_widget;
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (m_gst_playbin)
 	{
 		// disconnect sync handler callback
@@ -639,7 +680,7 @@ eServiceMP3::~eServiceMP3()
 	if (m_state == stRunning)
 		stop();
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (m_stream_tags)
 		gst_tag_list_free(m_stream_tags);
 
@@ -663,14 +704,14 @@ eServiceMP3::~eServiceMP3()
 
 DEFINE_REF(eServiceMP3);
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 DEFINE_REF(eServiceMP3::GstMessageContainer);
 #endif
 
 RESULT eServiceMP3::connectEvent(const Slot2<void,iPlayableService*,int> &event, ePtr<eConnection> &connection)
 {
 	connection = new eConnection((iPlayableService*)this, m_event.connect(event));
-#ifdef ENABLE_EPLAYER
+#ifdef ENABLE_LIBEPLAYER3
 	m_event(this, evSeekableStatusChanged);
 #endif
 	return 0;
@@ -678,10 +719,10 @@ RESULT eServiceMP3::connectEvent(const Slot2<void,iPlayableService*,int> &event,
 
 RESULT eServiceMP3::start()
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	ASSERT(m_state == stIdle);
 #else
-	if(m_state != stIdle)
+	if (m_state != stIdle)
 	{
 		eDebug("eServiceMP3::%s < m_state != stIdle", __func__);
 		return -1;
@@ -689,14 +730,14 @@ RESULT eServiceMP3::start()
 #endif
 
 	m_state = stRunning;
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (m_gst_playbin)
 	{
 		eDebug("eServiceMP3::starting pipeline");
 		gst_element_set_state (m_gst_playbin, GST_STATE_PLAYING);
 	}
 #else
-	if(player && player->output && player->playback)
+	if (player && player->output && player->playback)
 	{
 		player->output->Command(player, OUTPUT_OPEN, NULL);
 		player->playback->Command(player, PLAYBACK_PLAY, NULL);
@@ -716,10 +757,10 @@ void eServiceMP3::sourceTimeout()
 
 RESULT eServiceMP3::stop()
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	ASSERT(m_state != stIdle);
 #else
-	if(m_state == stIdle)
+	if (m_state == stIdle)
 	{
 		eDebug("eServiceMP3::%s < m_state == stIdle", __func__);
 		return -1;
@@ -730,29 +771,29 @@ RESULT eServiceMP3::stop()
 		return -1;
 
 	eDebug("eServiceMP3::stop %s", m_ref.path.c_str());
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	gst_element_set_state(m_gst_playbin, GST_STATE_NULL);
 #else
-	if(player && player->playback && player->output)
+	if (player && player->playback && player->output)
 	{
 		player->playback->Command(player, PLAYBACK_STOP, NULL);
 		player->output->Command(player, OUTPUT_CLOSE, NULL);
 	}
-	//Trick
-	if(player && player->output)
+
+	if (player && player->output)
 	{
 		player->output->Command(player,OUTPUT_DEL, (void*)"audio");
 		player->output->Command(player,OUTPUT_DEL, (void*)"video");
 		player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
 	}
 
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player,PLAYBACK_CLOSE, NULL);
 
-	if(player)
+	if (player)
 		free(player);
 
-	if(player != NULL)
+	if (player != NULL)
 		player = NULL;
 #endif
 	m_state = stStopped;
@@ -768,14 +809,13 @@ RESULT eServiceMP3::setTarget(int target)
 RESULT eServiceMP3::pause(ePtr<iPauseableService> &ptr)
 {
 	ptr=this;
-#ifdef ENABLE_EPLAYER
-	m_event((iPlayableService*)this, evSeekableStatusChanged);
+#ifdef ENABLE_LIBEPLAYER3
 	m_event((iPlayableService*)this, evUpdatedInfo);
 #endif
 	return 0;
 }
 
-#ifdef ENABLE_EPLAYER
+#ifdef ENABLE_LIBEPLAYER3
 int speed_mapping[] =
 {
  /* e2_ratio   speed */
@@ -799,7 +839,6 @@ int speed_mapping[] =
 int getSpeed(int ratio)
 {
 	int i = 0;
-
 	while (speed_mapping[i] != -1)
 	{
 		if (speed_mapping[i] == ratio)
@@ -812,7 +851,7 @@ int getSpeed(int ratio)
 
 RESULT eServiceMP3::setSlowMotion(int ratio)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (!ratio)
 		return 0;
 	eDebug("eServiceMP3::setSlowMotion ratio=%f",1.0/(gdouble)ratio);
@@ -820,10 +859,12 @@ RESULT eServiceMP3::setSlowMotion(int ratio)
 #else
 // konfetti: in libeplayer3 we changed this because I dont like application specific stuff in a library
 	int speed = getSpeed(ratio);
-	if(player && player->playback && (speed != -1))
+	if (player && player->playback && (speed != -1))
 	{
 		int result = 0;
-		if(ratio > 1) result = player->playback->Command(player, PLAYBACK_SLOWMOTION, (void*)&speed);
+		if (ratio > 1)
+			result = player->playback->Command(player, PLAYBACK_SLOWMOTION, (void*)&speed);
+
 		if (result != 0)
 			return -1;
 	}
@@ -833,22 +874,18 @@ RESULT eServiceMP3::setSlowMotion(int ratio)
 
 RESULT eServiceMP3::setFastForward(int ratio)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	eDebug("eServiceMP3::setFastForward ratio=%i",ratio);
 	return trickSeek(ratio);
 #else
-
-/* konfetti: in libeplayer3 we changed this because
- * I dont like application specific stuff in a library
- */
+// konfetti: in libeplayer3 we changed this because I dont like application specific stuff in a library
 	int speed = getSpeed(ratio);
-
-	if(player && player->playback && (speed != -1))
+	if (player && player->playback && (speed != -1))
 	{
 		int result = 0;
-		if(ratio > 1)
+		if (ratio > 1)
 			result = player->playback->Command(player, PLAYBACK_FASTFORWARD, (void*)&speed);
-		else if(ratio < -1)
+		else if (ratio < -1)
 		{
 			//speed = speed * -1;
 			result = player->playback->Command(player, PLAYBACK_FASTBACKWARD, (void*)&speed);
@@ -866,13 +903,13 @@ RESULT eServiceMP3::setFastForward(int ratio)
 		// iPausableService
 RESULT eServiceMP3::pause()
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (!m_gst_playbin || m_state != stRunning)
 		return -1;
 
 	trickSeek(0.0);
 #else
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_PAUSE, NULL);
 #endif
 
@@ -881,13 +918,13 @@ RESULT eServiceMP3::pause()
 
 RESULT eServiceMP3::unpause()
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (!m_gst_playbin || m_state != stRunning)
 		return -1;
 
 	trickSeek(1.0);
 #else
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_CONTINUE, NULL);
 #endif
 
@@ -903,7 +940,7 @@ RESULT eServiceMP3::seek(ePtr<iSeekableService> &ptr)
 
 RESULT eServiceMP3::getLength(pts_t &pts)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (!m_gst_playbin)
 		return -1;
 
@@ -921,10 +958,10 @@ RESULT eServiceMP3::getLength(pts_t &pts)
 #else
 	double length = 0;
 
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_LENGTH, &length);
 
-	if(length <= 0)
+	if (length <= 0)
 		return -1;
 
 	pts = length * 90000;
@@ -934,7 +971,7 @@ RESULT eServiceMP3::getLength(pts_t &pts)
 
 RESULT eServiceMP3::seekToImpl(pts_t to)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 		/* convert pts to nanoseconds */
 	gint64 time_nanoseconds = to * 11111LL;
 	if (!gst_element_seek (m_gst_playbin, m_currentTrickRatio, GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH,
@@ -953,7 +990,7 @@ RESULT eServiceMP3::seekTo(pts_t to)
 {
 	RESULT ret = -1;
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (m_gst_playbin)
 	{
 		m_subtitle_pages.clear();
@@ -967,7 +1004,7 @@ RESULT eServiceMP3::seekTo(pts_t to)
 }
 
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 RESULT eServiceMP3::trickSeek(gdouble ratio)
 {
 	if (!m_gst_playbin)
@@ -1014,7 +1051,7 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 
 RESULT eServiceMP3::seekRelative(int direction, pts_t to)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (!m_gst_playbin)
 		return -1;
 
@@ -1026,14 +1063,14 @@ RESULT eServiceMP3::seekRelative(int direction, pts_t to)
 	return seekTo(ppos);
 #else
 	float pos = direction*(to/90000.0);
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
 
 	return 0;
 #endif
 }
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 gint eServiceMP3::match_sinktype(GstElement *element, gpointer type)
 {
 	return strcmp(g_type_name(G_OBJECT_TYPE(element)), (const char*)type);
@@ -1042,7 +1079,7 @@ gint eServiceMP3::match_sinktype(GstElement *element, gpointer type)
 
 RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	gint64 pos;
 	pts = 0;
 
@@ -1069,7 +1106,8 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 	/* pos is in nanoseconds. we have 90 000 pts per second. */
 	pts = pos / 11111LL;
 #else
-	if (player && player->playback && !player->playback->isPlaying) {
+	if (player && player->playback && !player->playback->isPlaying)
+	{
 		eDebug("eServiceMP3::%s !!!!EOF!!!! < -1", __func__);
 		if(m_state == stRunning)
 			m_event((iPlayableService*)this, evEOF);
@@ -1078,10 +1116,10 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 	}
 
 	unsigned long long int vpts = 0;
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_PTS, &vpts);
 
-	if(vpts<=0)
+	if (vpts<=0)
 		return -1;
 
 	/* len is in nanoseconds. we have 90 000 pts per second. */
@@ -1099,8 +1137,8 @@ RESULT eServiceMP3::setTrickmode(int trick)
 
 RESULT eServiceMP3::isCurrentlySeekable()
 {
-#ifdef ENABLE_EPLAYER
-	return 3; /*Hellmaster1024: 1 for skipping 3 for skipping anf fast forward */
+#ifdef ENABLE_LIBEPLAYER3 // Hellmaster1024: 1 for skipping 3 for skipping anf fast forward
+	return 3;
 #else
 	int ret = 3; /* just assume that seeking and fast/slow winding are possible */
 
@@ -1136,7 +1174,7 @@ RESULT eServiceMP3::getName(std::string &name)
 
 int eServiceMP3::getInfo(int w)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	const gchar *tag = 0;
 #endif
 
@@ -1178,7 +1216,7 @@ int eServiceMP3::getInfo(int w)
 	case sTagKeywords:
 	case sTagChannelMode:
 	case sUser+12:
-#ifndef ENABLE_EPLAYER
+#if not defined(__sh__)
 		return resIsString;
 #endif
 	case sTagTrackGain:
@@ -1191,7 +1229,7 @@ int eServiceMP3::getInfo(int w)
 	case sTagPreviewImage:
 	case sTagAttachment:
 		return resIsPyObject;
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	case sTagTrackNumber:
 		tag = GST_TAG_TRACK_NUMBER;
 		break;
@@ -1230,7 +1268,7 @@ int eServiceMP3::getInfo(int w)
 		return resNA;
 	}
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (!m_stream_tags || !tag)
 		return 0;
 	
@@ -1244,7 +1282,7 @@ int eServiceMP3::getInfo(int w)
 
 std::string eServiceMP3::getInfoString(int w)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if ( !m_stream_tags && w < sUser && w > 26 )
 		return "";
 	const gchar *tag = 0;
@@ -1395,14 +1433,13 @@ std::string eServiceMP3::getInfoString(int w)
 
 	if (player && player->playback)
 	{
-		/*Hellmaster1024: we need to save the adress of tag to free the strduped mem 
+		/*Hellmaster1024: we need to save the adress of tag to free the strduped mem
 		  the command will retun a new adress for a new strduped string.
 		  Both Strings need to be freed! */
 		res_str = tag;
 		player->playback->Command(player, PLAYBACK_INFO, &res_str);
-
 		/* Hellmaster1024: in case something went wrong maybe no new adress is returned */
-		if(tag != res_str)
+		if (tag != res_str)
 		{
 			std::string res = res_str;
 			free(tag);
@@ -1420,7 +1457,7 @@ std::string eServiceMP3::getInfoString(int w)
 	return "";
 }
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 PyObject *eServiceMP3::getInfoObject(int w)
 {
 	const gchar *tag = 0;
@@ -1516,7 +1553,7 @@ int eServiceMP3::getNumberOfTracks()
 
 int eServiceMP3::getCurrentTrack()
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (m_currentAudioStream == -1)
 		g_object_get (G_OBJECT (m_gst_playbin), "current-audio", &m_currentAudioStream, NULL);
 #endif
@@ -1525,7 +1562,7 @@ int eServiceMP3::getCurrentTrack()
 
 RESULT eServiceMP3::selectTrack(unsigned int i)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	bool validposition = false;
 	pts_t ppos = 0;
 	if (getPlayPosition(ppos) >= 0)
@@ -1539,7 +1576,7 @@ RESULT eServiceMP3::selectTrack(unsigned int i)
 
 	int ret = selectAudioStream(i);
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	if (!ret) 
 	{
 		if (validposition)
@@ -1555,7 +1592,7 @@ RESULT eServiceMP3::selectTrack(unsigned int i)
 
 int eServiceMP3::selectAudioStream(int i)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	int current_audio;
 	g_object_set (G_OBJECT (m_gst_playbin), "current-audio", i, NULL);
 	g_object_get (G_OBJECT (m_gst_playbin), "current-audio", &current_audio, NULL);
@@ -1567,9 +1604,9 @@ int eServiceMP3::selectAudioStream(int i)
 	}
 	return -1;
 #else
-	if(i!=m_currentAudioStream)
+	if (i != m_currentAudioStream)
 	{
-		if(player && player->playback)
+		if (player && player->playback)
 			player->playback->Command(player, PLAYBACK_SWITCH_AUDIO, (void*)&i);
 		m_currentAudioStream=i;
 	}
@@ -1591,7 +1628,7 @@ RESULT eServiceMP3::getTrackInfo(struct iAudioTrackInfo &info, unsigned int i)
 {
  	if (i >= m_audioStreams.size())
 		return -2;
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 		info.m_description = m_audioStreams[i].codec;
 /*	if (m_audioStreams[i].type == atMPEG)
 		info.m_description = "MPEG";
@@ -1632,7 +1669,7 @@ RESULT eServiceMP3::getTrackInfo(struct iAudioTrackInfo &info, unsigned int i)
 	return 0;
 }
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 subtype_t getSubtitleType(GstPad* pad, gchar *g_codec=NULL)
 {
 	subtype_t type = stUnknown;
@@ -1746,9 +1783,9 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 #endif
 #if 0
 						/* we should not use ts-offset to sync with the decoder time, we have to do our own decoder timekeeping */
-						g_object_set (G_OBJECT (subsink), "ts-offset", -2L * GST_SECOND, NULL);
+						g_object_set (G_OBJECT (subsink), "ts-offset", -2LL * GST_SECOND, NULL);
 						/* late buffers probably will not occur very often */
-						g_object_set (G_OBJECT (subsink), "max-lateness", 0L, NULL);
+						g_object_set (G_OBJECT (subsink), "max-lateness", 0LL, NULL);
 						/* avoid prerolling (it might not be a good idea to preroll a sparse stream) */
 						g_object_set (G_OBJECT (subsink), "async", TRUE, NULL);
 #endif
@@ -1771,6 +1808,8 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 					children = gst_bin_iterate_recurse(GST_BIN(m_gst_playbin));
 					videoSink = GST_ELEMENT_CAST(gst_iterator_find_custom(children, (GCompareFunc)match_sinktype, (gpointer)"GstDVBVideoSink"));
 					gst_iterator_free(children);
+
+					m_is_live = (gst_element_get_state(m_gst_playbin, NULL, NULL, 0LL) == GST_STATE_CHANGE_NO_PREROLL);
 
 					setAC3Delay(ac3_delay);
 					setPCMDelay(pcm_delay);
@@ -1951,7 +1990,7 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 
 			if ( m_errorInfo.missing_codec != "" )
 			{
-				if ( m_errorInfo.missing_codec.find("video/") == 0 || ( m_errorInfo.missing_codec.find("audio/") == 0 && getNumberOfTracks() == 0 ) )
+				if (m_errorInfo.missing_codec.find("video/") == 0 || (m_errorInfo.missing_codec.find("audio/") == 0 && m_audioStreams.empty()))
 					m_event((iPlayableService*)this, evUser+12);
 			}
 			break;
@@ -2018,27 +2057,55 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 			break;
 		}
 		case GST_MESSAGE_BUFFERING:
-		{
-			GstBufferingMode mode;
-			gst_message_parse_buffering(msg, &(m_bufferInfo.bufferPercent));
-			eDebug("Buffering %u percent done", m_bufferInfo.bufferPercent);
-			gst_message_parse_buffering_stats(msg, &mode, &(m_bufferInfo.avgInRate), &(m_bufferInfo.avgOutRate), &(m_bufferInfo.bufferingLeft));
-			m_event((iPlayableService*)this, evBuffering);
-			if (m_state == stRunning && m_use_prefillbuffer)
+			if (m_state == stRunning && m_sourceinfo.is_streaming)
 			{
-				if (m_bufferInfo.bufferPercent == 100)
+				GstBufferingMode mode;
+				gst_message_parse_buffering(msg, &(m_bufferInfo.bufferPercent));
+				eDebug("Buffering %u percent done", m_bufferInfo.bufferPercent);
+				gst_message_parse_buffering_stats(msg, &mode, &(m_bufferInfo.avgInRate), &(m_bufferInfo.avgOutRate), &(m_bufferInfo.bufferingLeft));
+				m_event((iPlayableService*)this, evBuffering);
+				/*
+				 * we don't react to buffer level messages, unless we are configured to use a prefill buffer
+				 * (even if we are not configured to, we still use the buffer, but we rely on it to remain at the
+				 * healthy level at all times, without ever having to pause the stream)
+				 *
+				 * Also, it does not make sense to pause the stream if it is a live stream
+				 * (in which case the sink will not produce data while paused, so we won't
+				 * recover from an empty buffer)
+				 */
+				if (m_use_prefillbuffer && !m_is_live && --m_ignore_buffering_messages <= 0)
 				{
-					eDebug("start playing");
-					gst_element_set_state (m_gst_playbin, GST_STATE_PLAYING);
-				}
-				if (m_bufferInfo.bufferPercent == 0)
-				{
-					eDebug("start pause");
-					gst_element_set_state (m_gst_playbin, GST_STATE_PAUSED);
+					if (m_bufferInfo.bufferPercent == 100)
+					{
+						GstState state;
+						gst_element_get_state(m_gst_playbin, &state, NULL, 0LL);
+						if (state != GST_STATE_PLAYING)
+						{
+							eDebug("start playing");
+							gst_element_set_state (m_gst_playbin, GST_STATE_PLAYING);
+						}
+						/*
+						 * when we start the pipeline, the contents of the buffer will immediately drain
+						 * into the (hardware buffers of the) sinks, so we will receive low buffer level
+						 * messages right away.
+						 * Ignore the first few buffering messages, giving the buffer the chance to recover
+						 * a bit, before we start handling empty buffer states again.
+						 */
+						m_ignore_buffering_messages = 5;
+					}
+					else if (m_bufferInfo.bufferPercent == 0)
+					{
+						eDebug("start pause");
+						gst_element_set_state (m_gst_playbin, GST_STATE_PAUSED);
+						m_ignore_buffering_messages = 0;
+					}
+					else
+					{
+						m_ignore_buffering_messages = 0;
+					}
 				}
 			}
 			break;
-		}
 		case GST_MESSAGE_STREAM_STATUS:
 		{
 			GstStreamStatusType type;
@@ -2102,8 +2169,42 @@ void eServiceMP3::gstHTTPSourceSetAgent(GObject *object, GParamSpec *unused, gpo
 	g_object_get(_this->m_gst_playbin, "source", &source, NULL);
 	if (source)
 	{
-		g_object_set (G_OBJECT (source), "user-agent", _this->m_useragent.c_str(), NULL);
+		GObjectClass *klass = G_OBJECT_GET_CLASS(source);
+		if (g_object_class_find_property(klass, "user-agent"))
+		{
+			g_object_set(G_OBJECT(source), "user-agent", _this->m_useragent.c_str(), NULL);
+		}
 		gst_object_unref(source);
+	}
+}
+
+void eServiceMP3::handleElementAdded(GstBin *bin, GstElement *element, gpointer user_data)
+{
+	eServiceMP3 *_this = (eServiceMP3*)user_data;
+	if (_this)
+	{
+		gchar *elementname = gst_element_get_name(element);
+
+		if (g_str_has_prefix(elementname, "queue2"))
+		{
+			if (_this->m_download_buffer_path != "")
+			{
+				g_object_set(G_OBJECT(element), "temp-template", _this->m_download_buffer_path.c_str(), NULL);
+			}
+			else
+			{
+				g_object_set(G_OBJECT(element), "temp-template", NULL, NULL);
+			}
+		}
+		else if (g_str_has_prefix(elementname, "uridecodebin") || g_str_has_prefix(elementname, "decodebin2"))
+		{
+			/*
+			 * Listen for queue2 element added to uridecodebin/decodebin2 as well.
+			 * Ignore other bins since they may have unrelated queues
+			 */
+				g_signal_connect(element, "element-added", G_CALLBACK(handleElementAdded), user_data);
+		}
+		g_free(elementname);
 	}
 }
 
@@ -2181,7 +2282,7 @@ void eServiceMP3::gstPoll(ePtr<GstMessageContainer> const &msg)
 
 eAutoInitPtr<eServiceFactoryMP3> init_eServiceFactoryMP3(eAutoInitNumbers::service+1, "eServiceFactoryMP3");
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 void eServiceMP3::gstCBsubtitleAvail(GstElement *subsink, GstBuffer *buffer, gpointer user_data)
 {
 	eServiceMP3 *_this = (eServiceMP3*)user_data;
@@ -2309,7 +2410,7 @@ void eServiceMP3::eplayerCBsubtitleAvail(long int duration_ms, size_t len, char 
 
 void eServiceMP3::pushSubtitles()
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	while ( !m_subtitle_pages.empty() )
 	{
 		SubtitlePage &frontpage = m_subtitle_pages.front();
@@ -2381,23 +2482,25 @@ RESULT eServiceMP3::enableSubtitles(eWidget *parent, ePyObject tuple)
 
 	if (m_currentSubtitleStream != pid)
 	{
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 		g_object_set (G_OBJECT (m_gst_playbin), "current-text", -1, NULL);
+#endif
+		m_subtitle_pages.clear();
+		m_prev_decoder_time = -1;
 		m_decoder_time_valid_state = 0;
+#ifndef ENABLE_LIBEPLAYER3
 		m_currentSubtitleStream = pid;
 		m_cachedSubtitleStream = m_currentSubtitleStream;
 		g_object_set (G_OBJECT (m_gst_playbin), "current-text", m_currentSubtitleStream, NULL);
 #endif
-		m_prev_decoder_time = -1;
-		m_subtitle_pages.clear();
 
 		m_subtitle_widget = 0;
 		m_subtitle_widget = new eSubtitleWidget(parent);
 		m_subtitle_widget->resize(parent->size()); /* full size */
 
-#ifndef ENABLE_EPLAYER
 		eDebug ("eServiceMP3::switched to subtitle stream %i", m_currentSubtitleStream);
 
+#ifndef ENABLE_LIBEPLAYER3
 #ifdef GSTREAMER_SUBTITLE_SYNC_MODE_BUG
 		/* 
 		 * when we're running the subsink in sync=false mode, 
@@ -2405,11 +2508,12 @@ RESULT eServiceMP3::enableSubtitles(eWidget *parent, ePyObject tuple)
 		 */
 		seekRelative(-1, 90000);
 #endif
-#else
-	if(player && player->playback)
-		player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&pid);
 #endif
 	}
+#ifdef ENABLE_LIBEPLAYER3
+	if (player && player->playback)
+		player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&pid);
+#endif
 
 	return 0;
 
@@ -2422,21 +2526,19 @@ error_out:
 RESULT eServiceMP3::disableSubtitles(eWidget *parent)
 {
 	eDebug("eServiceMP3::disableSubtitles");
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = m_currentSubtitleStream;
 	g_object_set (G_OBJECT (m_gst_playbin), "current-text", m_currentSubtitleStream, NULL);
+#endif
 	m_subtitle_pages.clear();
 	m_prev_decoder_time = -1;
 	m_decoder_time_valid_state = 0;
 	delete m_subtitle_widget;
 	m_subtitle_widget = 0;
-#else
-	m_subtitle_pages.clear();
-	delete m_subtitle_widget;
-	m_subtitle_widget = 0;
+#ifdef ENABLE_LIBEPLAYER3
 	int pid = -1;
-	if(player && player->playback)
+	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&pid);
 #endif
 	return 0;
@@ -2510,7 +2612,7 @@ PyObject *eServiceMP3::getBufferCharge()
 int eServiceMP3::setBufferSize(int size)
 {
 	m_buffer_size = size;
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	g_object_set (G_OBJECT (m_gst_playbin), "buffer-size", m_buffer_size, NULL);
 #endif
 	return 0;
@@ -2528,7 +2630,7 @@ int eServiceMP3::getPCMDelay()
 
 void eServiceMP3::setAC3Delay(int delay)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	ac3_delay = delay;
 	if (!m_gst_playbin || m_state != stRunning)
 		return;
@@ -2563,7 +2665,7 @@ void eServiceMP3::setAC3Delay(int delay)
 
 void eServiceMP3::setPCMDelay(int delay)
 {
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	pcm_delay = delay;
 	if (!m_gst_playbin || m_state != stRunning)
 		return;

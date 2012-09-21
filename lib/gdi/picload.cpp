@@ -661,7 +661,7 @@ void ePicLoad::thread()
 
 void ePicLoad::decodePic()
 {
-	if(m_filepara->id == F_JPEG)
+	if (m_filepara->id == F_JPEG)
 	{
 		eDebug("[Picload] hardware decode picture... %s",m_filepara->file);
 		m_filepara->pic_buffer = NULL;
@@ -670,11 +670,11 @@ void ePicLoad::decodePic()
 		if (!(fp = fopen(m_filepara->file, "rb")))
 			return; // software decode won't find the file either...
 		
-		if(get_jpeg_img_size(fp, (unsigned int *)&m_filepara->ox, (unsigned int *)&m_filepara->oy) == LIBMMEIMG_SUCCESS)
+		if (get_jpeg_img_size(fp, (unsigned int *)&m_filepara->ox, (unsigned int *)&m_filepara->oy) == LIBMMEIMG_SUCCESS)
 		{
 			int imx, imy;
 
-			if((m_conf.aspect_ratio * m_filepara->oy * m_filepara->max_x / m_filepara->ox) <= m_filepara->max_y)
+			if ((m_conf.aspect_ratio * m_filepara->oy * m_filepara->max_x / m_filepara->ox) <= m_filepara->max_y)
 			{
 				imx = m_filepara->max_x;
 				imy = (int)(m_conf.aspect_ratio * m_filepara->oy * m_filepara->max_x / m_filepara->ox);
@@ -685,7 +685,7 @@ void ePicLoad::decodePic()
 				imy = m_filepara->max_y;
 			}
 			
-			if(decode_jpeg(fp, m_filepara->ox, m_filepara->oy, imx, imy, (char **)&m_filepara->pic_buffer) == LIBMMEIMG_SUCCESS)
+			if (decode_jpeg(fp, m_filepara->ox, m_filepara->oy, imx, imy, (char **)&m_filepara->pic_buffer) == LIBMMEIMG_SUCCESS)
 			{
 				m_filepara->ox = imx;
 				m_filepara->oy = imy;
@@ -785,7 +785,7 @@ void ePicLoad::decodeThumb()
 	}
 
 	int hw_decoded = 0;
-	if(m_filepara->id == F_JPEG)
+	if (m_filepara->id == F_JPEG)
 	{
 		eDebug("[Picload] hardware decode picture... %s",m_filepara->file);
 		m_filepara->pic_buffer = NULL;
@@ -794,7 +794,7 @@ void ePicLoad::decodeThumb()
 		if (!(fp = fopen(m_filepara->file, "rb")))
 			return; // software decode won't find the file either...
 		
-		if(get_jpeg_img_size(fp, (unsigned int *)&m_filepara->ox, (unsigned int *)&m_filepara->oy) == LIBMMEIMG_SUCCESS)
+		if (get_jpeg_img_size(fp, (unsigned int *)&m_filepara->ox, (unsigned int *)&m_filepara->oy) == LIBMMEIMG_SUCCESS)
 		{
 			int imx, imy;
 			if (m_filepara->ox <= m_filepara->oy)
@@ -808,7 +808,7 @@ void ePicLoad::decodeThumb()
 				imy = (int)( (m_conf.thumbnailsize * ((double)m_filepara->oy)) / ((double)m_filepara->ox) );
 			}
 			
-			if(decode_jpeg(fp, m_filepara->ox, m_filepara->oy, imx, imy, (char **)&m_filepara->pic_buffer) == LIBMMEIMG_SUCCESS)
+			if (decode_jpeg(fp, m_filepara->ox, m_filepara->oy, imx, imy, (char **)&m_filepara->pic_buffer) == LIBMMEIMG_SUCCESS)
 			{
 				m_filepara->ox = imx;
 				m_filepara->oy = imy;
@@ -817,7 +817,7 @@ void ePicLoad::decodeThumb()
 			}
 		}
 
-		if(!hw_decoded)
+		if (!hw_decoded)
 		{
 			eDebug("hardware decode error");
 		
@@ -825,13 +825,13 @@ void ePicLoad::decodeThumb()
 		}
 	}
 
-	if(!hw_decoded)
+	if (!hw_decoded)
 	{
 		switch(m_filepara->id)
 		{
 			case F_PNG: png_load(m_filepara, m_conf.background); break;
-			case F_JPEG:	m_filepara->pic_buffer = jpeg_load(m_filepara->file, &m_filepara->ox, &m_filepara->oy, m_filepara->max_x, m_filepara->max_y);	break;
-			case F_BMP:	m_filepara->pic_buffer = bmp_load(m_filepara->file, &m_filepara->ox, &m_filepara->oy);	break;
+			case F_JPEG: m_filepara->pic_buffer = jpeg_load(m_filepara->file, &m_filepara->ox, &m_filepara->oy, m_filepara->max_x, m_filepara->max_y); break;
+			case F_BMP: m_filepara->pic_buffer = bmp_load(m_filepara->file, &m_filepara->ox, &m_filepara->oy); break;
 			case F_GIF: gif_load(m_filepara); break;
 		}
 	}

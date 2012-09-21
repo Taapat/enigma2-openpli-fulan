@@ -92,7 +92,7 @@ class VFDIcons:
 	def __evStart(self):
 		print "[__evStart]"
 		self.__evSeekableStatusChanged()
-		
+
 	def __evUpdatedInfo(self):
 		print "[__evUpdatedInfo]"
 		if config.vfdicon.displayshow.value == "clock":
@@ -136,7 +136,7 @@ class VFDIcons:
 		print "vfd display text:", servicename[0:63]
 		evfd.getInstance().vfd_write_string(servicename[0:63])
 		return 1
-		
+
 	def showCrypted(self):
 		print "[showCrypted]"
 		service=self.session.nav.getCurrentService()
@@ -180,7 +180,7 @@ class VFDIcons:
 
 	def __evUpdatedEventInfo(self):
 		print "[__evUpdatedEventInfo]"
-		
+
 	def getSeekState(self):
 		service = self.session.nav.getCurrentService()
 		if service is None:

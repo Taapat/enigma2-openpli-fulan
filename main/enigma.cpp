@@ -30,11 +30,11 @@
 
 #if defined(__sh__) // vfd class
 #include <lib/driver/vfd.h>
-#endif  
+#endif
 #include "bsod.h"
 #include "version_info.h"
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 #include <gst/gst.h>
 #endif
 
@@ -138,7 +138,7 @@ int main(int argc, char **argv)
 	atexit(object_dump);
 #endif
 
-#ifndef ENABLE_EPLAYER
+#ifndef ENABLE_LIBEPLAYER3
 	gst_init(&argc, &argv);
 #endif
 
@@ -173,11 +173,10 @@ int main(int argc, char **argv)
 	eWidgetDesktop dsk_lcd(my_lcd_dc->size());
 
 	dsk.setStyleID(0);
-
-#ifndef __sh__
-  	dsk_lcd.setStyleID(my_lcd_dc->size().width() == 96 ? 2 : 1);
+#ifdef HAVE_GRAPHLCD
+	dsk_lcd.setStyleID(my_lcd_dc->size().width() == 320 ? 1 : 2);
 #else
-  	dsk_lcd.setStyleID(my_lcd_dc->size().width() == 320 ? 1 : 2);
+	dsk_lcd.setStyleID(my_lcd_dc->size().width() == 96 ? 2 : 1);
 #endif
 
 /*	if (double_buffer)

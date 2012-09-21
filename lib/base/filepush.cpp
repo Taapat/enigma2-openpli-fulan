@@ -1,6 +1,5 @@
 #include <lib/base/filepush.h>
 #include <lib/base/eerror.h>
-#include <lib/base/systemsettings.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -215,7 +214,7 @@ void eFilePushThread::thread()
 					case 0:
 						eDebug("wait for driver eof timeout");
 #if defined(__sh__) // Fix to ensure that event evtEOF is called at end of playbackl part 2/3
-						if(already_empty)
+						if (already_empty)
 						{
 							break;
 						}
@@ -258,7 +257,6 @@ void eFilePushThread::thread()
 		} else
 		{
 			eofcount = 0;
-
 #if defined(__sh__) // Fix to ensure that event evtEOF is called at end of playbackl part 3/3
 			already_empty=false;
 #endif

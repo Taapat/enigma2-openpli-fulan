@@ -188,7 +188,7 @@ void gPixmap::fill(const gRegion &region, const gColor &color)
 				col=0x10101*color;
 			
 #if defined(__sh__)
-if((col&0xFF000000) == 0xFF000000) col = 0xFF000000;
+if ((col&0xFF000000) == 0xFF000000) col = 0xFF000000;
 #endif
 			col^=0xFF000000;
 			
@@ -223,7 +223,7 @@ void gPixmap::fill(const gRegion &region, const gRGB &color)
 
 			col = color.argb();
 #if defined(__sh__)
-if((col&0xFF000000) == 0xFF000000) col = 0xFF000000;
+if ((col&0xFF000000) == 0xFF000000) col = 0xFF000000;
 #endif
 			col^=0xFF000000;
 
@@ -526,7 +526,7 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 				else
 					pal[i]=0x010101*i;
 #if defined(__sh__)
-if((pal[i]&0xFF000000) >= 0xE0000000) pal[i] = 0xFF000000;
+if ((pal[i]&0xFF000000) >= 0xE0000000) pal[i] = 0xFF000000;
 #endif
 				pal[i]^=0xFF000000;
 			}
