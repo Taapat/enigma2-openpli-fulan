@@ -6,6 +6,9 @@ class RemainingToText(Converter, object):
 	WITH_SECONDS = 1
 	NO_SECONDS = 2
 	IN_SECONDS = 3
+#+++>
+	FOLLOW = 4
+#+++<
 
 	def __init__(self, type):
 		Converter.__init__(self, type)
@@ -15,6 +18,10 @@ class RemainingToText(Converter, object):
 			self.type = self.NO_SECONDS
 		elif type == "InSeconds":
 			self.type = self.IN_SECONDS	
+#+++>
+		elif type == "FOLLOW":
+			self.type = self.FOLLOW	
+#+++<
 		else:
 			self.type = self.DEFAULT
 
@@ -41,9 +48,16 @@ class RemainingToText(Converter, object):
 				return str(remaining)
 			else:
 				return str(duration)
+#+++>
+		elif self.type == self.FOLLOW:
+			if remaining is not None:
+				return "in %d min" % (remaining / 60)
+			else:
+				return "%d min" % (duration / 60)
+#+++<
 		elif self.type == self.DEFAULT:
 			if remaining is not None:
-				return "+%d min" % (remaining / 60)
+				return "%d min" % (remaining / 60)
 			else:
 				return "%d min" % (duration / 60)
 		else:

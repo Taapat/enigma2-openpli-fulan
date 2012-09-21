@@ -45,7 +45,10 @@ keyDescriptions = [{
 		KEYIDS["KEY_9"]: ("9",),
 		KEYIDS["KEY_EXIT"]: ("EXIT",),
 		KEYIDS["KEY_STOP"]: ("STOP",),
-		KEYIDS["KEY_RECORD"]: ("RECORD",)
+		KEYIDS["KEY_RECORD"]: ("RECORD",),
+		KEYIDS["KEY_EPG"]: ("EPG",),
+		KEYIDS["KEY_REWIND"]: ("REWIND",),
+		KEYIDS["KEY_FASTFORWARD"]: ("FASTFORWARD",)
 	},
 	{
 		KEYIDS["BTN_0"]: ("UP", "fp"),
@@ -87,7 +90,10 @@ keyDescriptions = [{
 		KEYIDS["KEY_9"]: ("9",),
 		KEYIDS["KEY_EXIT"]: ("EXIT",),
 		KEYIDS["KEY_STOP"]: ("TV", "SHIFT"),
-		KEYIDS["KEY_RECORD"]: ("RADIO", "SHIFT")
+		KEYIDS["KEY_RECORD"]: ("RADIO", "SHIFT"),
+		KEYIDS["KEY_EPG"]: ("EPG",),
+		KEYIDS["KEY_REWIND"]: ("REWIND",),
+		KEYIDS["KEY_FASTFORWARD"]: ("FASTFORWARD",)
 	},
 	{
 		KEYIDS["BTN_0"]: ("UP", "fp"),

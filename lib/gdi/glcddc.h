@@ -11,6 +11,9 @@ class gLCDDC: public gDC
 	int update;
 	void exec(const gOpcode *opcode);
 	gSurface surface;
+#ifdef HAVE_GRAPHLCD
+	struct timespec last_update;
+#endif
 public:
 	gLCDDC();
 	~gLCDDC();

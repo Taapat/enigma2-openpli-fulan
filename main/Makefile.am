@@ -9,6 +9,8 @@ AM_CXXFLAGS = \
 
 bin_PROGRAMS = enigma2
 
+installdir = $(targetprefix)/usr/local/bin
+
 enigma2_SOURCES = \
 	bsod.cpp \
 	bsod.h \
@@ -51,7 +53,17 @@ enigma2_LDADD = \
 	@PTHREAD_LIBS@ \
 	@PYTHON_LDFLAGS@ \
 	@LIBDDVD_LIBS@ \
-	-ltuxtxt -ltuxtxt32bpp -lcrypt
+	-ltuxtxt -ltuxtxt32bpp -lcrypt \
+	-ldl -lpthread -lcrypt -lresolv -lrt -lmmeimage
+
+if ENABLE_LIBEPLAYER3
+enigma2_LDADD += \
+	-leplayer3
+endif
+
+if HAVE_GRAPHLCD
+enigma2_LDADD += -lglcddrivers -lglcdgraphics -lglcdskin
+endif
 
 enigma2_LDFLAGS = -Wl,--export-dynamic
 

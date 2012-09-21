@@ -67,6 +67,7 @@ class VideoSetup(Screen, ConfigListScreen):
 				self.list.append(getConfigListEntry(_("Resolution"), config.av.videorate[config.av.videomode[config.av.videoport.value].value], _("This option sets up the screen resolution, when in PC mode.")))
 			else:
 				self.list.append(getConfigListEntry(_("Refresh Rate"), config.av.videorate[config.av.videomode[config.av.videoport.value].value], _("This option sets up the screen refresh-rate.")))
+		self.list.append(getConfigListEntry(_("3D Mode"), config.av.threedmode))
 
 		port = config.av.videoport.value
 		if port not in config.av.videomode:
@@ -90,6 +91,14 @@ class VideoSetup(Screen, ConfigListScreen):
 
 #		if config.av.videoport.value == "DVI":
 #			self.list.append(getConfigListEntry(_("Allow Unsupported Modes"), config.av.edid_override))
+#+++>
+		if config.av.videoport.value == "Component":
+			self.list.append(getConfigListEntry(_("Color Format"), config.av.colorformat_yuv))
+
+		if config.av.videoport.value == "HDMI":
+			self.list.append(getConfigListEntry(_("Color Format"), config.av.colorformat_hdmi))
+			self.list.append(getConfigListEntry(_("Audio Source"), config.av.hdmi_audio_source))
+#+++<
 		if config.av.videoport.value == "Scart":
 			self.list.append(getConfigListEntry(_("Color Format"), config.av.colorformat, _("When using scart connection, choose what color format to use.")))
 			if level >= 1:

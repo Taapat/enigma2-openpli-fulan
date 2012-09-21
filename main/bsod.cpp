@@ -17,8 +17,11 @@
 #include "version_info.h"
 
 /************************************************/
-
+#if defined(__sh__) // dont send mails to dm
+#define CRASH_EMAILADDR "somebody who cares"
+#else
 #define CRASH_EMAILADDR "forum at www.openpli.org"
+#endif
 #define INFOFILE "/maintainer.info"
 
 #define RINGBUFFER_SIZE 16384

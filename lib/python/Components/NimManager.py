@@ -20,6 +20,10 @@ from Tools import Directories
 import xml.etree.cElementTree
 
 def getConfigSatlist(orbpos, satlist):
+#+++>  CAUSE OF CRASH!
+	if not satlist:
+		return None
+#+++<
 	default_orbpos = None
 	for x in satlist:
 		if x[0] == orbpos:

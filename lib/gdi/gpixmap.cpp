@@ -187,6 +187,9 @@ void gPixmap::fill(const gRegion &region, const gColor &color)
 			else
 				col=0x10101*color;
 			
+#if defined(__sh__)
+if ((col&0xFF000000) == 0xFF000000) col = 0xFF000000;
+#endif
 			col^=0xFF000000;
 			
 			if (surface->data_phys && gAccel::getInstance())
@@ -219,6 +222,9 @@ void gPixmap::fill(const gRegion &region, const gRGB &color)
 			__u32 col;
 
 			col = color.argb();
+#if defined(__sh__)
+if ((col&0xFF000000) == 0xFF000000) col = 0xFF000000;
+#endif
 			col^=0xFF000000;
 
 			if (surface->data_phys && gAccel::getInstance())
@@ -400,7 +406,9 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 		if (flag & blitScale)
 		{
 			eWarning("unimplemented: scale on non-accel surfaces");
+#if not defined (__sh__) //if accel blit fails, do direkt blit
 			continue;
+#endif
 		}
 
 		if ((surface->bpp == 8) && (src.surface->bpp==8))
@@ -517,6 +525,9 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 					pal[i]=(src.surface->clut.data[i].a<<24)|(src.surface->clut.data[i].r<<16)|(src.surface->clut.data[i].g<<8)|(src.surface->clut.data[i].b);
 				else
 					pal[i]=0x010101*i;
+#if defined(__sh__)
+if ((pal[i]&0xFF000000) >= 0xE0000000) pal[i] = 0xFF000000;
+#endif
 				pal[i]^=0xFF000000;
 			}
 

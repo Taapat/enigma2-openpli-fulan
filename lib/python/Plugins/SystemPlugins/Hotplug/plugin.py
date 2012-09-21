@@ -9,6 +9,8 @@ def processHotplugData(self, v):
 	action = v.get("ACTION")
 	device = v.get("DEVPATH")
 	physdevpath = v.get("PHYSDEVPATH")
+	if physdevpath == "-":
+		physdevpath = None
 	media_state = v.get("X_E2_MEDIA_STATUS")
 
 	dev = device.split('/')[-1]

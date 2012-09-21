@@ -99,7 +99,7 @@ def InitUsageConfig():
 	config.usage.frontend_priority = ConfigSelection(default = "-1", choices = nims)
 	config.misc.disable_background_scan = ConfigYesNo(default = False)
 
-	config.usage.show_event_progress_in_servicelist = ConfigSelection(default = 'barright', choices = [
+	config.usage.show_event_progress_in_servicelist = ConfigSelection(default = 'barleft', choices = [
 		('barleft', _("Progress Bar Left")),
 		('barright', _("Progress Bar Right")),
 		('percleft', _("Percentage Left")),
