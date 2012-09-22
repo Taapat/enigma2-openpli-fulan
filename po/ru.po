@@ -311,7 +311,7 @@ msgstr "16:9"
 
 #
 msgid "16:9 Letterbox"
-msgstr "16:10 PanScan"
+msgstr "16:9 Letterbox"
 
 #
 msgid "16:9 always"
