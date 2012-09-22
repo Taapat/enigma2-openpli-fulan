@@ -5,15 +5,14 @@ from Components.AVSwitch import AVSwitch
 from Components.SystemInfo import SystemInfo
 from GlobalActions import globalActionMap
 from enigma import eDVBVolumecontrol
-from subprocess import call
-import os
+
 inStandby = None
 
 class Standby(Screen):
 	def Power(self):
 		print "leave standby"
 #+++>
-		call("/bin/vdstandby -d &", shell="true")
+		open("/proc/stb/hdmi/output", "w").write("on")
 #+++<
 		#set input to encoder
 		self.avswitch.setInput("ENCODER")
@@ -70,7 +69,7 @@ class Standby(Screen):
 		else:
 			self.avswitch.setInput("AUX")
 #+++>
-		call("/bin/vdstandby -a &", shell="true")
+		open("/proc/stb/hdmi/output", "w").write("off")
 #+++<
 		self.onFirstExecBegin.append(self.__onFirstExecBegin)
 		self.onClose.append(self.__onClose)
