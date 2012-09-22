@@ -2581,7 +2581,7 @@ class InfoBarAspectSelection:
 		selection = 0
 		tlist = []
 		tlist.append((_("off"), "off"))
-		tlist.append((_("Side-by-Side"), "sbs"))
+		tlist.append((_("Side by Side"), "sbs"))
 		tlist.append((_("Top and Bottom"), "tab"))
 		keys = ["green", "yellow", "blue"]
 		self.session.openWithCallback(self.tdSelected, ChoiceBox, title=_("Please select an 3D modus..."), list = tlist, selection = selection, keys = keys)
