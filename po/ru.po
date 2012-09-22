@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-05 10:00+0200\n"
-"PO-Revision-Date: 2012-09-22 20:14+0100\n"
+"PO-Revision-Date: 2012-09-22 21:56+0100\n"
 "Last-Translator: Jakob Kais <schpuntik@freenet.de>\n"
 "Language-Team: Russian / ar-p team allrussian.info>\n"
 "Language: ru\n"
@@ -1922,7 +1922,7 @@ msgstr "Загрузить .NFI-файлы для USB-флешера"
 
 #
 msgid "Download Plugins"
-msgstr "Скачать плагины"
+msgstr "Установить плагины"
 
 #
 msgid "Downloadable new plugins"
@@ -1954,7 +1954,7 @@ msgstr "E"
 
 #
 msgid "EPG"
-msgstr "EPG"
+msgstr "Телегид"
 
 #
 msgid "EPG Selection"
@@ -2024,7 +2024,7 @@ msgid "Edit upgrade source url."
 msgstr "Изменить исходный URL для обновлений"
 
 msgid "Education/Science/..."
-msgstr "Обучение/Наука/..."
+msgstr "Образование/Наука/..."
 
 #
 msgid "Electronic Program Guide"
@@ -2086,15 +2086,15 @@ msgstr "Кодировка"
 
 #
 msgid "Encryption Key"
-msgstr "Ключ шифрования"
+msgstr "Ключ кодирования"
 
 #
 msgid "Encryption Keytype"
-msgstr "Тип ключа шифрования"
+msgstr "Тип ключа кодирования"
 
 #
 msgid "Encryption:"
-msgstr "Шифрование:"
+msgstr "Кодировка:"
 
 #
 msgid "End time"
@@ -2149,7 +2149,7 @@ msgstr "Код ошибки"
 
 #
 msgid "Error executing plugin"
-msgstr "Ошибка выполнения плагина"
+msgstr "Ошибка запуска плагина"
 
 #
 #, python-format
@@ -2520,11 +2520,11 @@ msgid "GotoX calibration"
 msgstr "Калибровка GotoX"
 
 msgid "GraphMultiEpg Settings"
-msgstr "Настройки Графического телегида"
+msgstr "Настройки  телегида GraphMultiEpg "
 
 #
 msgid "Graphical Multi EPG"
-msgstr "Графический телегид"
+msgstr "Графический телегид  GraphMultiEpg"
 
 #
 msgid "Greek"
@@ -2545,10 +2545,10 @@ msgid "HD list"
 msgstr "Список HD"
 
 msgid "Handle standby from TV"
-msgstr "Перевести ресивер телевизором в режим ожидания."
+msgstr "Перевести ресивер, телевизором в режим ожидания."
 
 msgid "Handle wakeup from TV"
-msgstr "Разбудить ресивер телевизором"
+msgstr "Разбудить ресивер, телевизором"
 
 #
 msgid "Harddisk"
@@ -2560,7 +2560,7 @@ msgstr "Настройка диска"
 
 #
 msgid "Harddisk standby after"
-msgstr "Отключение HDD через"
+msgstr "Усыпить HDD через"
 
 msgid "Hardware: "
 msgstr "Железо: "
@@ -5341,7 +5341,7 @@ msgstr "Долгота места"
 
 #
 msgid "Skin"
-msgstr "Внешний вид"
+msgstr "Графическая оболочка (Скин)"
 
 #
 msgid "Skins"
@@ -6238,7 +6238,7 @@ msgid "Toneburst A/B"
 msgstr "Тоновый сигнал A/B"
 
 msgid "Top and Bottom"
-msgstr "Верх и низ"
+msgstr "Вверху и снизу"
 
 #
 msgid "Track"
