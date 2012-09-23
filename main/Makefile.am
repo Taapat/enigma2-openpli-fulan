@@ -62,7 +62,6 @@ enigma2_LDADD += \
 endif
 
 if HAVE_GRAPHLCD
-if HAVE_GRAPHLCD
 enigma2_LDADD += -lglcddrivers -lglcdgraphics -lglcdskin
 endif
 
