@@ -545,10 +545,6 @@ int eDVBFrontend::openFrontend()
 #endif
 				break;
 			}
-			case FE_ATSC:   // placeholder to prevent warning
-			{
-				break;
-			}
 #endif
 
 			switch (fe_info.type)
