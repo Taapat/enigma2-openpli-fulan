@@ -448,6 +448,8 @@ class InfoBarChannelSelection:
 				"historyBack": (self.historyBack, _("previous channel in history")),
 				"historyNext": (self.historyNext, _("next channel in history")),
 				"openServiceList": (self.openServiceList, _("open servicelist")),
+				"showFavourites": (self.showFavourites, _("show favourites")),
+				"showSatellites": (self.showSatellites, _("show satellites")),
 			})
 
 	def showTvChannelList(self, zap=False):
@@ -526,6 +528,14 @@ class InfoBarChannelSelection:
 			if info and info.isPlayable(ref, cur_running):
 				return True
 		return False
+
+	def showFavourites(self):
+		self.session.execDialog(self.servicelist)
+		self.servicelist.showFavourites()
+
+	def showSatellites(self):
+		self.session.execDialog(self.servicelist)
+		self.servicelist.showSatellites()
 
 class InfoBarMenu:
 	""" Handles a menu action, to open the (main) menu """
@@ -627,6 +637,8 @@ class SimpleServicelist:
 		if not self.length or self.current >= self.length:
 			return None
 		return self.services[self.current]
+
+
 
 class InfoBarEPG:
 	""" EPG - Opens an EPG list when the showEPGList action fires """
