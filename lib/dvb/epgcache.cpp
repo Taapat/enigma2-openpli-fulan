@@ -23,7 +23,7 @@
 int eventData::CacheSize=0;
 bool eventData::isCacheCorrupt = 0;
 descriptorMap eventData::descriptors;
-__u8 eventData::data[4108];
+__u8 eventData::data[2 * 4096 + 12];
 extern const uint32_t crc32_table[256];
 
 const eServiceReference &handleGroup(const eServiceReference &ref)
@@ -215,21 +215,20 @@ eventData::eventData(const eit_event_struct* e, int size, int type, int tsidonid
 
 const eit_event_struct* eventData::get() const
 {
-	int pos = 12;
-	int tmp = ByteSize-10;
+	unsigned int pos = 12;
+	int tmp = ByteSize - 10;
 	memcpy(data, EITdata, 10);
-	int descriptors_length=0;
+	unsigned int descriptors_length = 0;
 #ifndef __sh__
-	__u32 *p = (__u32*)(EITdata+10);
+	__u32 *p = (__u32*)(EITdata + 10);
 #else
 // Dagobert: fix not aligned access
 	__u8 *p = (__u8*)(EITdata+10);
 #endif
-	while(tmp>3)
+	while (tmp > 3)
 	{
 #ifndef __sh__
-		descriptorMap::iterator it =
-			descriptors.find(*p++);
+	descriptorMap::iterator it = descriptors.find(*p++);
 #else
 		__u32 index = p[3] << 24 | p[2] << 16 | p[1] << 8 | p[0];
 // eDebug("index %d %x, %x %x %x %x\n", index, index, p[0], p[1], p[2], p[3]);
@@ -238,18 +237,20 @@ const eit_event_struct* eventData::get() const
 
 		p += 4;
 #endif
-		if ( it != descriptors.end() )
+		if (it != descriptors.end())
 		{
-			int b = it->second.second[1]+2;
-			memcpy(data+pos, it->second.second, b );
-			pos += b;
-			descriptors_length += b;
+			unsigned int b = it->second.second[1] + 2;
+			if (pos + b < sizeof(data))
+			{
+				memcpy(data + pos, it->second.second, b);
+				pos += b;
+				descriptors_length += b;
+			}
 		}
 		else
 			cacheCorrupt("eventData::get");
-		tmp-=4;
+		tmp -= 4;
 	}
-	ASSERT(pos <= 4108);
 	data[10] = (descriptors_length >> 8) & 0x0F;
 	data[11] = descriptors_length & 0xFF;
 	return (eit_event_struct*)data;
