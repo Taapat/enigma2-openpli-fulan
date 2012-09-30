@@ -1106,6 +1106,11 @@ int eDVBServicePMTHandler::tuneExt(eServiceReferenceDVB &ref, int use_decode_dem
 			eDVBCIInterfaces::getInstance()->addPMTHandler(this);
 	} else if (!simulate) // no simulation of playback services
 	{
+		if (m_service_type == streamclient)
+		{
+			eDebug("force setServiceID(1)");
+			m_reference.setServiceID(1);
+		}
 		if (!ref.getServiceID().get() /* incorrect sid in meta file or recordings.epl*/ )
 		{
 			eDVBTSTools tstools;
