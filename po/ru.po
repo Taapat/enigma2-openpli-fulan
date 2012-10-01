@@ -1952,9 +1952,6 @@ msgstr "Динамический контраст"
 msgid "E"
 msgstr "E"
 
-msgid "EPG"
-msgstr ""
-
 #
 msgid "EPG"
 msgstr "Телегид"
@@ -3426,10 +3423,6 @@ msgstr "Новости/Текущие события"
 msgctxt "button label, 'next screen'"
 msgid "Next"
 msgstr "Дальше"
-
-msgctxt "now/next: 'next' event label"
-msgid "Next"
-msgstr ""
 
 msgctxt "now/next: 'next' event label"
 msgid "Next"
