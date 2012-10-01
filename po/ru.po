@@ -5,15 +5,14 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-30 16:54+0200\n"
-"PO-Revision-Date: 2010-09-19 18:10+0200\n"
-"Last-Translator: AndreyUA <andrey.wys@gmail.com>\n"
+"PO-Revision-Date: 2012-09-22 21:56+0100\n"
+"Last-Translator: Jakob Kais <schpuntik@freenet.de>\n"
 "Language-Team: Russian / ar-p team allrussian.info>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Pootle 2.0.3\n"
 "X-Poedit-Language: Русский\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
@@ -91,6 +90,8 @@ msgid ""
 "\n"
 "Restore your receiver with a new firmware."
 msgstr ""
+"\n"
+"Востановить ресивер  с новым firmware."
 
 msgid ""
 "\n"
@@ -126,19 +127,19 @@ msgstr ""
 "Просмотр, установка и удаление доступных или установленных пакетов."
 
 msgid " (PiP)"
-msgstr ""
+msgstr "(PiP)"
 
 msgid " (Radio)"
-msgstr ""
+msgstr "(Radio)"
 
 msgid " (TV)"
-msgstr ""
+msgstr " (TV)"
 
 msgid " extensions."
 msgstr " расширений"
 
 msgid " ms"
-msgstr ""
+msgstr " ms"
 
 msgid " packages selected."
 msgstr " пакетов выбрано."
@@ -152,41 +153,41 @@ msgstr " беспроводных сетей найдено!"
 #. TRANSLATORS: short time representation hour:minute
 #, python-format
 msgid "%2d:%02d"
-msgstr ""
+msgstr "%2d:%02d"
 
 #. TRANSLATORS: full time representation hour:minute:seconds
 #, python-format
 msgid "%2d:%02d:%02d"
-msgstr ""
+msgstr "%2d:%02d:%02d"
 
 msgid "%A %d %B"
-msgstr ""
+msgstr "%A %d %B"
 
 #. TRANSLATORS: long date representations dayname daynum monthname in strftime() format! See 'man strftime'
 msgid "%A %e %B"
-msgstr ""
+msgstr "%A %e %B"
 
 #. TRANSLATORS: full date representation dayname daynum monthname year in strftime() format! See 'man strftime'
 msgid "%A %e %B %Y"
-msgstr ""
+msgstr "%A %e %B %Y"
 
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. TRANSLATORS: short date representation short dayname daynum short monthname in strftime() format! See 'man strftime'
 msgid "%a %e/%m"
-msgstr ""
+msgstr "%a %e/%m"
 
 #. TRANSLATORS: long date representation short dayname daynum short monthname hour:minute in strftime() format! See 'man strftime'
 msgid "%a %e/%m  %-H:%M"
-msgstr ""
+msgstr "%a %e/%m  %-H:%M"
 
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d час"
+msgstr[1] "%d часа"
+msgstr[2] "%d часов"
 
 #
 #, python-format
@@ -201,9 +202,9 @@ msgstr "%d мин"
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d минута"
+msgstr[1] "%d минуты"
+msgstr[2] "%d минут"
 
 #, python-format
 msgid "%d minutes"
@@ -212,9 +213,9 @@ msgstr "%d минут"
 #, python-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d секунда"
+msgstr[1] "%d секунды"
+msgstr[2] "%d секунд"
 
 #
 #, python-format
@@ -222,7 +223,7 @@ msgid "%d services found!"
 msgstr "%d сервисов найдено!"
 
 msgid "%d-%m"
-msgstr ""
+msgstr "%d-%m"
 
 #
 msgid "%d.%B %Y"
@@ -230,7 +231,7 @@ msgstr "%d.%B %Y"
 
 #. TRANSLATORS: VFD hour:minute daynum short monthname in strftime() format! See 'man strftime'
 msgid "%k:%M %e/%m"
-msgstr ""
+msgstr "%k:%M %e/%m"
 
 #, python-format
 msgid "%s (%s)\n"
@@ -238,7 +239,7 @@ msgstr "%s (%s)\n"
 
 #, python-format
 msgid "%s/%s: %s"
-msgstr ""
+msgstr "%s/%s: %s"
 
 #
 msgid "(ZAP)"
@@ -311,7 +312,7 @@ msgstr "16:9"
 
 #
 msgid "16:9 Letterbox"
-msgstr "16:10 PanScan"
+msgstr "16:9 Letterbox"
 
 #
 msgid "16:9 always"
@@ -429,22 +430,14 @@ msgstr ""
 "Что вы хотите сделать?"
 
 #
-msgid ""
-"A recording is currently running. Please stop the recording before trying to "
-"configure the positioner."
-msgstr ""
-"Запись сейчас запущена. Пожалуйста, остановите запись перед попыткой настроить "
-"позиционер."
+msgid "A recording is currently running. Please stop the recording before trying to configure the positioner."
+msgstr "Запись сейчас запущена. Пожалуйста, остановите запись перед попыткой настроить позиционер."
 
-msgid ""
-"A recording is currently running. Please stop the recording before trying to "
-"scan."
-msgstr "Запись сейчас запущена. Пожалуйста, остановите запись перед попыткой"
-"сканирования."
+msgid "A recording is currently running. Please stop the recording before trying to scan."
+msgstr "Запись сейчас запущена. Пожалуйста, остановите запись перед попыткойсканирования."
+
 #
-msgid ""
-"A recording is currently running. Please stop the recording before trying to "
-"start the satfinder."
+msgid "A recording is currently running. Please stop the recording before trying to start the satfinder."
 msgstr "Запись сейчас запущена. Пожалуйста, остановите запись перед поиском спутника."
 
 #
@@ -452,7 +445,6 @@ msgstr "Запись сейчас запущена. Пожалуйста, ост
 msgid "A required tool (%s) was not found."
 msgstr "Нужный инструмент (%s), не найден."
 
-#, fuzzy
 msgid "A search for available updates is currently in progress."
 msgstr "Поиск доступных обновлений в процессе."
 
@@ -479,7 +471,6 @@ msgstr ""
 "Таймер сна хочет выключить ресивер.\n"
 "Сделать это сейчас?\""
 
-#, fuzzy
 msgid "A small overview of the available icon states and actions."
 msgstr "Небольшой обзор доступных состояний иконок и действий."
 
@@ -589,15 +580,12 @@ msgstr "Добавить в избранное"
 msgid "Add/Remove timer for current event"
 msgstr "Добавить/удалить таймер для текущего события"
 
-msgid ""
-"Adds enigma2 settings and receiver model informations like SN, rev... if "
-"enabled."
-msgstr "Добавляет настройки enigma2 и информацию о ресивере, такую как "
-"серийный номер, ревизию... если включен"
+msgid "Adds enigma2 settings and receiver model informations like SN, rev... if enabled."
+msgstr "Добавляет настройки enigma2 и информацию о ресивере, такую как серийный номер, ревизию... если включен"
+
 msgid "Adds network configuration if enabled."
 msgstr "Добавляет конфигурацию сети, если включен."
 
-#, fuzzy
 msgid "Adds wlan configuration if enabled."
 msgstr "Добавляет WLAN конфигурацию если включен"
 
@@ -608,16 +596,8 @@ msgid "Adjust HDMI CEC settings"
 msgstr "Настройка установок HDMI CEC"
 
 #
-msgid ""
-"Adjust the color settings so that all the color shades are distinguishable, "
-"but appear as saturated as possible. If you are happy with the result, press "
-"OK to close the video fine-tuning, or use the number keys to select other "
-"test screens."
-msgstr ""
-"Настройте параметры цвета, так чтобы все оттенки цветов были максимально "
-"видны, насколько это возможно. Если вы довольны результатом, нажмите кнопку "
-"ОК для закрытия видео настроек, или используйте цифровые клавиши для выбора "
-"других тестов экрана "
+msgid "Adjust the color settings so that all the color shades are distinguishable, but appear as saturated as possible. If you are happy with the result, press OK to close the video fine-tuning, or use the number keys to select other test screens."
+msgstr "Настройте параметры цвета, так чтобы все оттенки цветов были максимально видны, насколько это возможно. Если вы довольны результатом, нажмите кнопку ОК для закрытия видео настроек, или используйте цифровые клавиши для выбора других тестов экрана "
 
 #
 msgid "Advanced Options"
@@ -650,12 +630,8 @@ msgstr "После события"
 msgid "After pressing OK, please wait!"
 msgstr "После нажатия ОК, пожалуйста, подождите"
 
-msgid ""
-"After the start wizard is completed, you need to protect single services. "
-"Refer to your receiver's manual on how to do that."
-msgstr ""
-"После окончания работы мастера Вы можете установить ограничение на некоторые "
-"сервисы. Прочитайте в инструкции к ресиверу, как это сделать."
+msgid "After the start wizard is completed, you need to protect single services. Refer to your receiver's manual on how to do that."
+msgstr "После окончания работы мастера Вы можете установить ограничение на некоторые сервисы. Прочитайте в инструкции к ресиверу, как это сделать."
 
 #
 msgid "Album"
@@ -824,7 +800,7 @@ msgstr "Автоматически разделять на главы кажды
 
 #
 msgid "Auto flesh"
-msgstr ""
+msgstr "Авто флешь"
 
 msgid "Auto focus"
 msgstr "Автофокус"
@@ -967,7 +943,7 @@ msgstr "Блок снижения уровня шума"
 
 #
 msgid "Blue boost"
-msgstr ""
+msgstr "Добавить голубого"
 
 #
 msgid "Bookmarks"
@@ -989,7 +965,6 @@ msgid "Burn existing image to DVD"
 msgstr "Прожечь существующий образ на DVD"
 
 #
-#, fuzzy
 msgid "Burn to DVD"
 msgstr "Прожечь на DVD..."
 
@@ -998,9 +973,7 @@ msgid "Bus: "
 msgstr "Шина:"
 
 #
-msgid ""
-"By pressing the OK Button on your remote control, the info bar is being "
-"displayed."
+msgid "By pressing the OK Button on your remote control, the info bar is being displayed."
 msgstr "Нажмите кнопку OK на пульте, для отображения инфопанели."
 
 #
@@ -1141,7 +1114,7 @@ msgid "Checking Filesystem..."
 msgstr "Проверка Файловой системы..."
 
 msgid "Children/Youth"
-msgstr ""
+msgstr "Дети/Подростки"
 
 #
 msgid "Choose Tuner"
@@ -1268,11 +1241,11 @@ msgstr "Common Interfaсе"
 
 #
 msgid "Common Interface Assignment"
-msgstr ""
+msgstr "Common Interface назначить"
 
 #
 msgid "CommonInterface"
-msgstr ""
+msgstr "CommonInterface"
 
 #
 msgid "Communication"
@@ -1411,20 +1384,22 @@ msgstr "Настройка крешлогов"
 
 #
 msgid "CrashlogAutoSubmit"
-msgstr ""
+msgstr "CrashlogAutoSubmit"
 
 #
 msgid "CrashlogAutoSubmit settings"
-msgstr ""
+msgstr "CrashlogAutoSubmit настройки"
 
 #
 msgid "CrashlogAutoSubmit settings..."
-msgstr ""
+msgstr "CrashlogAutoSubmit настройки..."
 
 msgid ""
 "Crashlogs found!\n"
 "Send them to the Image Developper?"
 msgstr ""
+"Crashlogs найден!\n"
+"Отправить его разработчикам имеджа?"
 
 #
 msgid "Create DVD-ISO"
@@ -1532,10 +1507,10 @@ msgid "DVB subtitle black transparency"
 msgstr "Прозрачность DVB субтитров"
 
 msgid "DVB-C"
-msgstr ""
+msgstr "DVB-C"
 
 msgid "DVB-C ANNEX C"
-msgstr ""
+msgstr "DVB-C ANNEX C"
 
 #
 msgid "DVB-S"
@@ -1546,10 +1521,10 @@ msgid "DVB-S2"
 msgstr "DVB-S2"
 
 msgid "DVB-T"
-msgstr ""
+msgstr "DVB-T"
 
 msgid "DVB-T2"
-msgstr ""
+msgstr "DVB-T2"
 
 #
 msgid "DVD File Browser"
@@ -1584,11 +1559,11 @@ msgstr "Хотите ли вы включить или отключить мас
 
 #
 msgid "Decide what should be done when crashlogs are found."
-msgstr ""
+msgstr "Решите, что должно случится с crashlogs если он будет найден."
 
 #
 msgid "Decide what should happen to the crashlogs after submission."
-msgstr ""
+msgstr "Решите,что должно произойти,с  crashlogs после представления."
 
 #
 msgid "Deep Standby"
@@ -1698,7 +1673,7 @@ msgstr "Набор:"
 
 #
 msgid "Digital contour removal"
-msgstr ""
+msgstr "Удалить цифровые контуры"
 
 #
 msgid "Direct playback of linked titles without menu"
@@ -1797,7 +1772,8 @@ msgstr ""
 msgid ""
 "Do you really want to convert the filesystem?\n"
 "You cannot go back!"
-msgstr "Вы действительно хотите конвертировать файловую систему?\n"
+msgstr ""
+"Вы действительно хотите конвертировать файловую систему?\n"
 "Это невозможно отменить!"
 
 #
@@ -1821,8 +1797,10 @@ msgstr "Вы действительно хотите выйти?"
 msgid ""
 "Do you really want to initialize the device?\n"
 "All data on the disk will be lost!"
-msgstr "Вы действительно хотите инициализировать устройство?\n"
+msgstr ""
+"Вы действительно хотите инициализировать устройство?\n"
 "Все данные на диске будут удалены!"
+
 #
 #, python-format
 msgid "Do you really want to remove directory %s from the disk?"
@@ -1888,10 +1866,8 @@ msgid "Do you want to resume this playback?"
 msgstr "Вы хотите продолжить воспроизведение?"
 
 #
-msgid ""
-"Do you want to submit your email address and name so that we can contact you "
-"if needed?"
-msgstr ""
+msgid "Do you want to submit your email address and name so that we can contact you if needed?"
+msgstr "Вы хотите, представить свой ​​е-майл  и имя, чтобы мы могли связаться с вами в случае необходимости?"
 
 msgid "Do you want to update your receiver?"
 msgstr "Вы хотите обновить ПО ресивера?"
@@ -1946,7 +1922,7 @@ msgstr "Загрузить .NFI-файлы для USB-флешера"
 
 #
 msgid "Download Plugins"
-msgstr "Скачать плагины"
+msgstr "Установить плагины"
 
 #
 msgid "Downloadable new plugins"
@@ -1978,6 +1954,10 @@ msgstr "E"
 
 msgid "EPG"
 msgstr ""
+
+#
+msgid "EPG"
+msgstr "Телегид"
 
 #
 msgid "EPG Selection"
@@ -2047,7 +2027,7 @@ msgid "Edit upgrade source url."
 msgstr "Изменить исходный URL для обновлений"
 
 msgid "Education/Science/..."
-msgstr "Обучение/Наука/..."
+msgstr "Образование/Наука/..."
 
 #
 msgid "Electronic Program Guide"
@@ -2109,15 +2089,15 @@ msgstr "Кодировка"
 
 #
 msgid "Encryption Key"
-msgstr "Ключ шифрования"
+msgstr "Ключ кодирования"
 
 #
 msgid "Encryption Keytype"
-msgstr "Тип ключа шифрования"
+msgstr "Тип ключа кодирования"
 
 #
 msgid "Encryption:"
-msgstr "Шифрование:"
+msgstr "Кодировка:"
 
 #
 msgid "End time"
@@ -2140,6 +2120,12 @@ msgid ""
 "\n"
 "© 2006 - Stephan Reichholf"
 msgstr ""
+"Enigma2 Skinselector\n"
+"\n"
+"Если у вас возникли проблемы, пожалуйста, свяжитесь с\n"
+"stephan@reichholf.net\n"
+"\n"
+"© 2006 - Stephan Reichholf"
 
 #
 msgid "Enter main menu..."
@@ -2155,7 +2141,7 @@ msgstr "Введите pin-код для сервиса"
 
 #
 msgid "Enter your email address so that we can contact you if needed."
-msgstr ""
+msgstr "Введите е-майл, чтобы мы могли связаться с вами в случае необходимости."
 
 #
 msgid "Error"
@@ -2166,7 +2152,7 @@ msgstr "Код ошибки"
 
 #
 msgid "Error executing plugin"
-msgstr "Ошибка выполнения плагина"
+msgstr "Ошибка запуска плагина"
 
 #
 #, python-format
@@ -2198,7 +2184,6 @@ msgid "Everywhere"
 msgstr "Везде"
 
 #
-#, fuzzy
 msgid "Exceeds dual layer medium!"
 msgstr "превышает двухслойный носитель"
 
@@ -2222,7 +2207,7 @@ msgid "Exit EPG"
 msgstr "Выход из телегида"
 
 msgid "Exit Movieplayer?"
-msgstr ""
+msgstr "Выйти из Movieplayer?"
 
 #
 msgid "Exit editor"
@@ -2296,17 +2281,17 @@ msgstr "Ошибка записи /tmp/positionersetup.log: "
 #
 #, python-format
 msgid "Fan %d"
-msgstr ""
+msgstr "Вентилятор %d"
 
 #
 #, python-format
 msgid "Fan %d PWM"
-msgstr ""
+msgstr "PWM %d вентилятора"
 
 #
 #, python-format
 msgid "Fan %d Voltage"
-msgstr ""
+msgstr "Напряжение %d вентилятора"
 
 #
 msgid "Fast"
@@ -2325,7 +2310,7 @@ msgstr "Быстрое сканирование"
 
 #
 msgid "Fast epoch"
-msgstr ""
+msgstr "Быстро пространство"
 
 #
 msgid "Favourites"
@@ -2498,13 +2483,13 @@ msgid "Goto :"
 msgstr "Перейти :"
 
 msgid "Goto X"
-msgstr ""
+msgstr "Перейти к X"
 
 msgid "Goto first service"
 msgstr "Перейти к первому сервису"
 
 msgid "Goto index position"
-msgstr ""
+msgstr "Перейти к  позиции индекса"
 
 msgid "Goto last service"
 msgstr "Перейти к последнему сервису"
@@ -2532,17 +2517,17 @@ msgid "Goto previous page of service"
 msgstr "Перейти к предыдущей странице сервиса"
 
 msgid "Goto specific data/time"
-msgstr ""
+msgstr "Перейти к указанной дате/времени"
 
 msgid "GotoX calibration"
 msgstr "Калибровка GotoX"
 
 msgid "GraphMultiEpg Settings"
-msgstr "Настройки Графического телегида"
+msgstr "Настройки  телегида GraphMultiEpg "
 
 #
 msgid "Graphical Multi EPG"
-msgstr "Графический телегид"
+msgstr "Графический телегид  GraphMultiEpg"
 
 #
 msgid "Greek"
@@ -2550,7 +2535,7 @@ msgstr "Греческий"
 
 #
 msgid "Green boost"
-msgstr ""
+msgstr "Добавить зелёного"
 
 #
 msgid "Guard Interval"
@@ -2563,10 +2548,10 @@ msgid "HD list"
 msgstr "Список HD"
 
 msgid "Handle standby from TV"
-msgstr ""
+msgstr "Перевести ресивер, телевизором в режим ожидания."
 
 msgid "Handle wakeup from TV"
-msgstr ""
+msgstr "Разбудить ресивер, телевизором"
 
 #
 msgid "Harddisk"
@@ -2578,7 +2563,7 @@ msgstr "Настройка диска"
 
 #
 msgid "Harddisk standby after"
-msgstr "Отключение HDD через"
+msgstr "Усыпить HDD через"
 
 msgid "Hardware: "
 msgstr "Железо: "
@@ -2607,7 +2592,7 @@ msgid "High bitrate support"
 msgstr "Поддержка высокого битрейта"
 
 msgid "Hold screen"
-msgstr ""
+msgstr "Остановить изображение"
 
 msgid "Hold till locked"
 msgstr "Удерживать, пока заблокировано"
@@ -2628,7 +2613,7 @@ msgstr "Сколько минут вы хотите записать?"
 
 #
 msgid "How to handle found crashlogs?"
-msgstr ""
+msgstr "Что делать если crashlogs найден?"
 
 #
 msgid "Hue"
@@ -2663,23 +2648,13 @@ msgstr ""
 
 #
 msgid ""
-"If your TV has a brightness or contrast enhancement, disable it. If there is "
-"something called \"dynamic\", set it to standard. Adjust the backlight level "
-"to a value suiting your taste. Turn down contrast on your TV as much as "
-"possible.\n"
-"Then turn the brightness setting as low as possible, but make sure that the "
-"two lowermost shades of gray stay distinguishable.\n"
-"Do not care about the bright shades now. They will be set up in the next "
-"step.\n"
+"If your TV has a brightness or contrast enhancement, disable it. If there is something called \"dynamic\", set it to standard. Adjust the backlight level to a value suiting your taste. Turn down contrast on your TV as much as possible.\n"
+"Then turn the brightness setting as low as possible, but make sure that the two lowermost shades of gray stay distinguishable.\n"
+"Do not care about the bright shades now. They will be set up in the next step.\n"
 "If you are happy with the result, press OK."
 msgstr ""
-"Если в Вашем телевизоре наблюдается превышение яркости или контрастности, "
-"устраните это. Если в Вашем TB выбран один из режимов настроек изображения,"
-"например \"динамичный\", сбросьте настройки в стандартные .Уменьшите "
-"контрастность Вашего ТВ  на максимально возможное значение.\n"
-"Теперь уменьшите яркость на максимально низкое значение, на сколько это "
-"возможно, но при этом следите, чтобы два самых нижних оттенка "
-"были различимы.\n"
+"Если в Вашем телевизоре наблюдается превышение яркости или контрастности, устраните это. Если в Вашем TB выбран один из режимов настроек изображения,например \"динамичный\", сбросьте настройки в стандартные .Уменьшите контрастность Вашего ТВ  на максимально возможное значение.\n"
+"Теперь уменьшите яркость на максимально низкое значение, на сколько это возможно, но при этом следите, чтобы два самых нижних оттенка были различимы.\n"
 "Не беспокойтесь о ярких оттенках, они будут настроены на следующем этапе.\n"
 "Если Вас устраивает результат, нажмите OK."
 
@@ -2691,8 +2666,7 @@ msgid "In Progress"
 msgstr "В Процессе"
 
 #
-msgid ""
-"In order to record a timer, the TV was switched to the recording service!\n"
+msgid "In order to record a timer, the TV was switched to the recording service!\n"
 msgstr "Таймер переключил телевизор на записываемый канал!\n"
 
 msgid "Include AIT in http streams"
@@ -2706,7 +2680,7 @@ msgstr "Добавить EIT в http потоки"
 
 #
 msgid "Include your email and name (optional) in the mail?"
-msgstr ""
+msgstr "Добавить ваш е-майл и имя (optional) в сообщение ?"
 
 #
 msgid "Increased voltage"
@@ -2983,7 +2957,7 @@ msgid "Left"
 msgstr "Левый"
 
 msgid "Leisure hobies"
-msgstr ""
+msgstr "Досуг хобби"
 
 #
 #. TRANSLATORS: (aspect ratio policy: black bars on top/bottom) in doubt, keep english term.
@@ -3049,7 +3023,7 @@ msgid "List version %d, found %d channels"
 msgstr "Список версий %d, найдено %d каналов"
 
 msgid "Listscreen default at start user interface"
-msgstr ""
+msgstr "Установить модус списков по умолчанию при старте интерфейса"
 
 #
 msgid "Lithuanian"
@@ -3234,7 +3208,7 @@ msgstr "Понедельник"
 
 #
 msgid "Mosquito noise reduction"
-msgstr ""
+msgstr " Шумоподавление мosquito"
 
 msgid "Mount"
 msgstr "Монтирование"
@@ -3337,14 +3311,14 @@ msgstr "Следующий"
 
 #
 msgid "NFI Image Flashing"
-msgstr ""
+msgstr "NFI Image Flashing"
 
 #
 msgid "NFI image flashing completed. Press Yellow to Reboot!"
 msgstr "NFI имидж удачно установлен. Нажмите ЖЕЛТЫЙ для перезагрузки!"
 
 msgid "NIM"
-msgstr ""
+msgstr "NIM"
 
 #
 msgid "NOW"
@@ -3447,9 +3421,13 @@ msgid "New version:"
 msgstr "Новая версия:"
 
 msgid "News Current Affairs"
-msgstr ""
+msgstr "Новости/Текущие события"
 
 msgctxt "button label, 'next screen'"
+msgid "Next"
+msgstr "Дальше"
+
+msgctxt "now/next: 'next' event label"
 msgid "Next"
 msgstr ""
 
@@ -3510,10 +3488,8 @@ msgid "No event info found, recording indefinitely."
 msgstr "Информация о событиях не найдена, запись продолжена."
 
 #
-msgid ""
-"No fast winding possible yet.. but you can use the number buttons to skip "
-"forward/backward!"
-msgstr ""
+msgid "No fast winding possible yet.. but you can use the number buttons to skip forward/backward!"
+msgstr "Перемотка не доступна...но  вы можете использовать цыфровые кнопки для передвижения вперёд/назад!"
 
 msgid "No free index available"
 msgstr "Нет доступных свободных индексов"
@@ -3531,8 +3507,7 @@ msgid "No networks found"
 msgstr "Сети не найдены"
 
 #
-msgid ""
-"No packages were upgraded yet. So you can check your network and try again."
+msgid "No packages were upgraded yet. So you can check your network and try again."
 msgstr "Пакеты не были обновлены. Проверьте настройки сети и попробуйте снова."
 
 #
@@ -3598,32 +3573,26 @@ msgstr "Беспроводная сеть не найдена! Поиск..."
 #
 msgid ""
 "No working local network adapter found.\n"
-"Please verify that you have attached a network cable and your network is "
-"configured correctly."
+"Please verify that you have attached a network cable and your network is configured correctly."
 msgstr ""
 "Не найден сетевой адаптер.\n"
-"Пожалуйста, убедитесь, что сетевой кабель подключен и ваша сеть настроена "
-"правильно."
+"Пожалуйста, убедитесь, что сетевой кабель подключен и ваша сеть настроена правильно."
 
 #
 msgid ""
 "No working wireless network adapter found.\n"
-"Please verify that you have attached a compatible WLAN device and your "
-"network is configured correctly."
+"Please verify that you have attached a compatible WLAN device and your network is configured correctly."
 msgstr ""
 "Не найден ,беспроводный адаптер.\n"
-"Пожалуйста, убедитесь, что совместимый беспроводной адаптер подключен и ваша "
-"сеть настроена правильно."
+"Пожалуйста, убедитесь, что совместимый беспроводной адаптер подключен и ваша сеть настроена правильно."
 
 #
 msgid ""
 "No working wireless network interface found.\n"
-" Please verify that you have attached a compatible WLAN device or enable "
-"your local network interface."
+" Please verify that you have attached a compatible WLAN device or enable your local network interface."
 msgstr ""
 "Не найден ,беспроводный интерфейс.\n"
-"Пожалуйста, убедитесь, что совместимый беспроводной адаптер подключен и ваша "
-"сеть настроена правильно."
+"Пожалуйста, убедитесь, что совместимый беспроводной адаптер подключен и ваша сеть настроена правильно."
 
 #
 msgid "No, but restart from begin"
@@ -3649,7 +3618,7 @@ msgstr "Нет, найти позже вручную."
 
 #
 msgid "No, send them never"
-msgstr ""
+msgstr "Нет, никогда не отправлять"
 
 #
 msgid "None"
@@ -3673,12 +3642,8 @@ msgstr "Норвежский"
 
 #
 #, python-format
-msgid ""
-"Not enough diskspace. Please free up some diskspace and try again. (%d MB "
-"required, %d MB available)"
-msgstr ""
-"Нет места на диске. Пожалуйста освободите немного места и попробуйте снова. "
-"(%d MB нужно, %d MB доступно)"
+msgid "Not enough diskspace. Please free up some diskspace and try again. (%d MB required, %d MB available)"
+msgstr "Нет места на диске. Пожалуйста освободите немного места и попробуйте снова. (%d MB нужно, %d MB доступно)"
 
 msgid "Not-Associated"
 msgstr "Не ассоциировано"
@@ -3703,15 +3668,8 @@ msgid "Now Playing"
 msgstr "Воспроизводится"
 
 #
-msgid ""
-"Now, use the contrast setting to turn up the brightness of the background as "
-"much as possible, but make sure that you can still see the difference "
-"between the two brightest levels of shades.If you have done that, press OK."
-msgstr ""
-"Теперь используйте  настройки  контрастности для поднятия фона в максимально "
-"возможный уровень, но при этом необходимо следить,чтобы Вы могли видеть "
-"различия между двумя самыми яркими уровнями оттенков.Если все нормально "
-"нажмите OK."
+msgid "Now, use the contrast setting to turn up the brightness of the background as much as possible, but make sure that you can still see the difference between the two brightest levels of shades.If you have done that, press OK."
+msgstr "Теперь используйте  настройки  контрастности для поднятия фона в максимально возможный уровень, но при этом необходимо следить,чтобы Вы могли видеть различия между двумя самыми яркими уровнями оттенков.Если все нормально нажмите OK."
 
 #
 msgid "OK"
@@ -3730,7 +3688,7 @@ msgid "OK, remove some extensions"
 msgstr "ОК, удалить какие-нибудь расширения"
 
 msgid "ONID"
-msgstr ""
+msgstr "ONID"
 
 #
 msgid "OSD Settings"
@@ -3751,7 +3709,7 @@ msgid "Offline decode delay (ms)"
 msgstr "Оффлайн задержка декодирования (мс)"
 
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #
 msgid "On"
@@ -3774,7 +3732,7 @@ msgstr "Только расцирения"
 
 #
 msgid "Optionally enter your name if you want to."
-msgstr ""
+msgstr "При необходимости введите ваши имя, если вы хотите."
 
 #
 msgid "Orbital Position"
@@ -3804,14 +3762,14 @@ msgid "PAL"
 msgstr "PAL"
 
 msgid "PCR PID"
-msgstr ""
+msgstr "PCR PID"
 
 #
 msgid "PIDs"
 msgstr "ПИДы"
 
 msgid "PMT PID"
-msgstr ""
+msgstr "PMT PID"
 
 #
 msgid "Package list update"
@@ -3870,10 +3828,10 @@ msgid "Pause movie at end"
 msgstr "Пауза в конце фильма"
 
 msgid "Percentage Left"
-msgstr ""
+msgstr "процентуально влево"
 
 msgid "Percentage Right"
-msgstr ""
+msgstr "Процентуально вправо"
 
 msgid "Permanently delete all recordings in the trash can?"
 msgstr "Окончательно удалить все записи в корзину?"
@@ -3958,11 +3916,8 @@ msgstr "Пожалуйста, выберите носитель для скан�
 msgid "Please add titles to the compilation."
 msgstr "Пожалуйста, добавьте название к компиляции"
 
-msgid ""
-"Please be aware, that anyone can disable the parental control, if you have "
-"not set a PIN."
-msgstr "Имейте ввиду, что любой человек может отключить родительский контроль"
-"если вы не установите PIN код"
+msgid "Please be aware, that anyone can disable the parental control, if you have not set a PIN."
+msgstr "Имейте ввиду, что любой человек может отключить родительский контрольесли вы не установите PIN код"
 
 #
 msgid "Please change recording endtime"
@@ -3982,14 +3937,11 @@ msgstr "Пожалуйста выберите пакет..."
 
 #
 msgid "Please choose the default services lists you want to install."
-msgstr ""
-"Пожалуйста, выберите список каналов по умолчанию который вы хотите "
-"установить."
+msgstr "Пожалуйста, выберите список каналов по умолчанию который вы хотите установить."
 
 #
 msgid ""
-"Please configure or verify your Nameservers by filling out the required "
-"values.\n"
+"Please configure or verify your Nameservers by filling out the required values.\n"
 "When you are ready press OK to continue."
 msgstr ""
 "Пожалуйста, настройте или проверьте конфигурацию DNS заполнив нужные данные\n"
@@ -3997,8 +3949,7 @@ msgstr ""
 
 #
 msgid ""
-"Please configure your internet connection by filling out the required "
-"values.\n"
+"Please configure your internet connection by filling out the required values.\n"
 "When you are ready press OK to continue."
 msgstr ""
 "Пожалуйста, настройте интернет соединение заполнив нужные данные\n"
@@ -4037,23 +3988,19 @@ msgstr "Пожалуйста, введите старый PIN код"
 
 #
 msgid "Please enter your email address here:"
-msgstr ""
+msgstr "Пожалуста введите ваш е-майл адрес здесь:"
 
 #
 msgid "Please enter your name here (optional):"
-msgstr ""
+msgstr "Пожалуста введите ваше имя здесь (необязательный):"
 
 #
 msgid "Please follow the instructions on the TV"
 msgstr "Пожалуйста, следуйте инструкциям на ТВ"
 
 #
-msgid ""
-"Please note that the previously selected media could not be accessed and "
-"therefore the default directory is being used instead."
-msgstr ""
-"Пожалуйста, обратите внимание, что ранее выбранный носитель недоступен, и "
-"вместо него будет использован каталог по умолчанию"
+msgid "Please note that the previously selected media could not be accessed and therefore the default directory is being used instead."
+msgstr "Пожалуйста, обратите внимание, что ранее выбранный носитель недоступен, и вместо него будет использован каталог по умолчанию"
 
 #
 msgid "Please press OK to continue."
@@ -4083,7 +4030,7 @@ msgid "Please select a subservice..."
 msgstr "Пожалуйста, выберите подсервис..."
 
 msgid "Please select an NFI file and press green key to flash!"
-msgstr ""
+msgstr "Пожалуйста, выберите файл NFI и нажмите зеленую кнопку для загрузки!"
 
 #
 msgid "Please select an extension to remove."
@@ -4107,13 +4054,11 @@ msgstr "Пожалуйста, выберите путь ..."
 
 #
 msgid ""
-"Please select the network interface that you want to use for your internet "
-"connection.\n"
+"Please select the network interface that you want to use for your internet connection.\n"
 "\n"
 "Please press OK to continue."
 msgstr ""
-"Пожалуйста, выберите сетевой интерфейс который будет использован для выхода "
-"в интернет\n"
+"Пожалуйста, выберите сетевой интерфейс который будет использован для выхода в интернет\n"
 "\n"
 "Нажмите ОК для продолжения."
 
@@ -4150,12 +4095,8 @@ msgstr ""
 "Нажмите OK  для возвращения в режим TV или EXIT для отмены движения."
 
 #
-msgid ""
-"Please use the UP and DOWN keys to select your language. Afterwards press "
-"the OK button."
-msgstr ""
-"Пожалуйста, используйте кнопки ВВЕРХ и ВНИЗ для выбора языка. Далее нажмите "
-"ОК."
+msgid "Please use the UP and DOWN keys to select your language. Afterwards press the OK button."
+msgstr "Пожалуйста, используйте кнопки ВВЕРХ и ВНИЗ для выбора языка. Далее нажмите ОК."
 
 #
 msgid "Please wait for activation of your network configuration..."
@@ -4171,7 +4112,7 @@ msgstr "Пожалуйста, подождите пока идет сканир�
 
 #
 msgid "Please wait while searching for removable packages..."
-msgstr ""
+msgstr "Пожалуйста, подождите при поиске удаляемых  пакетов ..."
 
 #
 msgid "Please wait while we configure your network..."
@@ -4285,7 +4226,7 @@ msgid "Preferred tuner"
 msgstr "Предпочтительный тюнер"
 
 msgid "Prepare another USB stick for image flashing"
-msgstr ""
+msgstr "Приготовить другие USB stick для прошивки image"
 
 #
 msgid "Preparing... Please wait"
@@ -4358,7 +4299,7 @@ msgid "Preview menu"
 msgstr "Просмотреть меню"
 
 msgid "Preview selected channel"
-msgstr ""
+msgstr "Просмотр  выбранного канала"
 
 #
 msgid "Primary DNS"
@@ -4370,19 +4311,19 @@ msgstr "Очередность"
 
 #
 msgid "Process"
-msgstr "Прогресс"
+msgstr "Процесс"
 
 msgid "Progress"
 msgstr "Прогресс"
 
 msgid "Progress Bar Left"
-msgstr ""
+msgstr "Полоса продвижения влево"
 
 msgid "Progress Bar Right"
-msgstr ""
+msgstr "Полоса продвижения вправо"
 
 msgid "Progress Small"
-msgstr ""
+msgstr "Продвижение маленький"
 
 #
 msgid "Properties of current title"
@@ -4448,10 +4389,10 @@ msgstr "Случайно"
 
 #, python-format
 msgid "Rating defined by broadcaster - %d"
-msgstr ""
+msgstr "Рейтинг определяется вещателем - %d"
 
 msgid "Rating undefined"
-msgstr ""
+msgstr "Рейтинг  неизвестен"
 
 #
 msgid "Really close without saving settings?"
@@ -4478,7 +4419,7 @@ msgid "Really shutdown now?"
 msgstr "Действительно выключить сейчас?"
 
 msgid "Really upgrade the frontprocessor and reboot now?"
-msgstr ""
+msgstr "Действительно обновить фронтпроцессор и перезагрузить сейчас?"
 
 msgid "Really upgrade your settop box and reboot now?"
 msgstr "Действительно обновить ваш ресивер и перезагрузится?"
@@ -4629,7 +4570,7 @@ msgstr "Переименовать"
 
 #
 msgid "Rename crashlogs"
-msgstr ""
+msgstr "Переименовать crashlogs"
 
 #
 msgid "Repeat Type"
@@ -4666,11 +4607,11 @@ msgstr "Сброс позиции воспроизведения"
 
 #
 msgid "Reset video enhancement settings to system defaults?"
-msgstr ""
+msgstr "Сбросить настройки A/V на  стандартные?"
 
 #
 msgid "Reset video enhancement settings to your last configuration?"
-msgstr ""
+msgstr "Сбросить настройки A/V на предыдущие?"
 
 #
 msgid "Resolution"
@@ -4723,10 +4664,9 @@ msgstr "Восстановить настройки"
 msgid "Resume from last position"
 msgstr "Возобновить с последней позиции"
 
-#
 #, python-format
 msgid "Resume position at %s"
-msgstr "Возобновить позицию в"
+msgstr "Возобновить позицию в %s"
 
 #
 #. TRANSLATORS: The string "Resuming playback" flashes for a moment
@@ -4959,11 +4899,11 @@ msgstr "Сканировать диапазон US MID"
 msgid "Scan band US SUPER"
 msgstr "Сканировать диапазон US SUPER"
 
-msgid ""
-"Scan your network for wireless access points and connect to them using your "
-"selected wireless device.\n"
-msgstr "Сканирование сети для поиска точек доступа и подключения к ним используя\n"
+msgid "Scan your network for wireless access points and connect to them using your selected wireless device.\n"
+msgstr ""
+"Сканирование сети для поиска точек доступа и подключения к ним используя\n"
 "выбранное беспроводное устройство.\n"
+
 #, python-format
 msgid "Scanning %s..."
 msgstr "Сканирование %s..."
@@ -4979,8 +4919,7 @@ msgid "Scanning..."
 msgstr "Сканирование..."
 
 #
-msgid ""
-"Scans default lamedbs sorted by satellite with a connected dish positioner"
+msgid "Scans default lamedbs sorted by satellite with a connected dish positioner"
 msgstr "Сканировать lamedb по спутникам с подключенным мотоподвесом"
 
 #
@@ -5045,7 +4984,7 @@ msgid "Select channel to record from"
 msgstr "Выбрать канал для записи"
 
 msgid "Select copy destination for:"
-msgstr ""
+msgstr "Выберите место для копии:"
 
 msgid "Select default EPG type..."
 msgstr "Выберите тип телегида по-умолчанию..."
@@ -5144,7 +5083,7 @@ msgid "Service Searching"
 msgstr "Поиск сервисов"
 
 msgid "Service Title mode"
-msgstr ""
+msgstr "Режим название канала"
 
 #
 msgid "Service has been added to the favourites."
@@ -5250,10 +5189,8 @@ msgstr "Настройка позиционера"
 
 #
 #, python-format
-msgid ""
-"Shall the USB stick wizard proceed and program the image file %s into flash "
-"memory?"
-msgstr ""
+msgid "Shall the USB stick wizard proceed and program the image file %s into flash memory?"
+msgstr "Должен USB stick  мастер продолжить и  %s запрограмировать в флэш-памяти?"
 
 #
 msgid "Sharpness"
@@ -5266,7 +5203,7 @@ msgid "Show EIT now/next in infobar"
 msgstr "Показать EIT сейчас/следующий на панели"
 
 msgid "Show Games show"
-msgstr ""
+msgstr "Показать игровые каналы"
 
 #
 msgid "Show Info"
@@ -5411,7 +5348,7 @@ msgstr "Долгота места"
 
 #
 msgid "Skin"
-msgstr "Внешний вид"
+msgstr "Графическая оболочка (Скин)"
 
 #
 msgid "Skins"
@@ -5453,7 +5390,7 @@ msgid "Slow Motion speeds"
 msgstr "Низкая скорость"
 
 msgid "Social/Political/Economics"
-msgstr ""
+msgstr "Социальное/Политика/Экономика"
 
 msgid "SoftCam / CI"
 msgstr "Эмулятор/Картоприемник"
@@ -5510,9 +5447,8 @@ msgstr ""
 "Извините, сюда нельзя сохранить резервную копию.\n"
 "Пожалуйста, выберите другое место"
 
-msgid ""
-"Sorry, deleting directories can (for now) only be done through the trash can."
-msgstr ""
+msgid "Sorry, deleting directories can (for now) only be done through the trash can."
+msgstr "Извените,удаление папок (пока) возможна толко через корзину."
 
 #
 msgid "Sorry, no Details available!"
@@ -5564,7 +5500,7 @@ msgid "Split preview mode"
 msgstr "Соединить режим просмотра"
 
 msgid "Sports"
-msgstr ""
+msgstr "Спортивный"
 
 #
 msgid "Standby"
@@ -5577,12 +5513,12 @@ msgstr "Ждущий режим/Перезагрузка"
 #
 #, python-format
 msgid "Standby Fan %d PWM"
-msgstr ""
+msgstr " PWM вентилятора %d в режиме ожидания"
 
 #
 #, python-format
 msgid "Standby Fan %d Voltage"
-msgstr ""
+msgstr "Напражение вентилятора  %d  в режиме ожидания"
 
 #
 msgid "Start from the beginning"
@@ -5677,7 +5613,7 @@ msgid "Stream request"
 msgstr "Запрос потока"
 
 msgid "Strongest position"
-msgstr ""
+msgstr "Наилутьшая позиция"
 
 #
 msgid "Subservice list..."
@@ -5781,14 +5717,14 @@ msgid "TS file is too large for ISO9660 level 1!"
 msgstr "TS файл слишком большой для ISO9660 level 1!"
 
 msgid "TSID"
-msgstr ""
+msgstr "TSID"
 
 #
 msgid "TV System"
 msgstr "TV система"
 
 msgid "TXT PID"
-msgstr ""
+msgstr "TXT PID"
 
 #
 msgid "Table of content for collection"
@@ -5856,14 +5792,8 @@ msgstr ""
 "Спасибо Вам за использование мастера. Ваш ресивер готов к работе.\n"
 "Пожалуйста, нажмите OK для начала работы Вашего ресивера."
 
-msgid ""
-"The DVD standard doesn't support H.264 (HDTV) video streams. Do you want to "
-"create a special format data DVD (which will not play in stand-alone DVD "
-"players) instead?"
-msgstr ""
-"DVD стандарт не поддерживает H.264 (HDTV) видео потоков. Вы хотите создать "
-"set-top-box DVD  (который не будет проигрываться в стационарных DVD "
-"проигрывателях)?"
+msgid "The DVD standard doesn't support H.264 (HDTV) video streams. Do you want to create a special format data DVD (which will not play in stand-alone DVD players) instead?"
+msgstr "DVD стандарт не поддерживает H.264 (HDTV) видео потоков. Вы хотите создать set-top-box DVD  (который не будет проигрываться в стационарных DVD проигрывателях)?"
 
 #
 msgid ""
@@ -5891,6 +5821,8 @@ msgid ""
 "The USB stick was prepared to be bootable.\n"
 "Now you can download an NFI image file!"
 msgstr ""
+"USB stick сделан загрузочным.\n"
+"Теперь вы можете сгрузить NFI имедж!"
 
 msgid "The User Interface of your receiver is restarting"
 msgstr "Интерфейс пользователя ресивера перезагружается"
@@ -5898,8 +5830,10 @@ msgstr "Интерфейс пользователя ресивера перез�
 msgid ""
 "The User Interface of your receiver is restarting\n"
 "due to an error in mytest.py"
-msgstr "Интерфейс пользователя ресивера перезагружается\n"
+msgstr ""
+"Интерфейс пользователя ресивера перезагружается\n"
 "из-за ошибки в mytest.py"
+
 #
 msgid "The backup failed. Please choose a different backup location."
 msgstr "Сохранение не выполнено. Выберите другое место ресположения. "
@@ -5938,23 +5872,17 @@ msgstr "Следующие файлы были найдены ..."
 #
 msgid ""
 "The input port should be configured now.\n"
-"You can now configure the screen by displaying some test pictures. Do you "
-"want to do that now?"
+"You can now configure the screen by displaying some test pictures. Do you want to do that now?"
 msgstr ""
 "Видеовход уже настроен.\n"
-"Теперь Вы можете настроить экран с помошью тестовых изображений. Хотите "
-"сделать это сейчас?"
+"Теперь Вы можете настроить экран с помошью тестовых изображений. Хотите сделать это сейчас?"
 
 #
 msgid "The installation of the default services lists is finished."
 msgstr "Установка списков сервисов по умолчанию закончена."
 
-msgid ""
-"The installation of the default settings is finished. You can now continue "
-"configuring your receiver by pressing the OK button on the remote control."
-msgstr ""
-"Установка по умолчанию закончена. Теперь Вы можете продолжить настройку "
-"тюнера, нажав на кнопку ОК на пульте ДУ."
+msgid "The installation of the default settings is finished. You can now continue configuring your receiver by pressing the OK button on the remote control."
+msgstr "Установка по умолчанию закончена. Теперь Вы можете продолжить настройку тюнера, нажав на кнопку ОК на пульте ДУ."
 
 msgid "The md5sum validation failed, the file may be corrupted!"
 msgstr "Ошибка контрольной суммы, возможно, файл поврежден!"
@@ -5989,10 +5917,8 @@ msgstr "Таймер сна был включен."
 msgid "The sleep timer has been disabled."
 msgstr "Таймер сна был выключен."
 
-msgid ""
-"The status of the current beta image could not be checked because www."
-"openpli.org could not be reached for some reason"
-msgstr ""
+msgid "The status of the current beta image could not be checked because www.openpli.org could not be reached for some reason"
+msgstr "Актуальное состояние имеджа щас невозможно определить."
 
 #
 msgid "The timer file (timers.xml) is corrupt and could not be loaded."
@@ -6015,17 +5941,13 @@ msgstr ""
 "Пожалуйста, установите его."
 
 #
-msgid ""
-"The wizard can backup your current settings. Do you want to do a backup now?"
-msgstr ""
-"Мастер может сохранить Ваши текущие настройки. Вы хотите сделать это сейчас?"
+msgid "The wizard can backup your current settings. Do you want to do a backup now?"
+msgstr "Мастер может сохранить Ваши текущие настройки. Вы хотите сделать это сейчас?"
 
 #, python-format
-msgid ""
-"The wizard found a configuration backup. Do you want to restore your old "
-"settings from %s?"
-msgstr "Мастер нашел резервную копию настроек. Вы хотите восстановить ваши "
-"старые настройки из %s?"
+msgid "The wizard found a configuration backup. Do you want to restore your old settings from %s?"
+msgstr "Мастер нашел резервную копию настроек. Вы хотите восстановить ваши старые настройки из %s?"
+
 #
 msgid "The wizard is finished now."
 msgstr "Мастер закончил работу."
@@ -6036,7 +5958,7 @@ msgstr "Есть по крайней мере"
 
 #
 msgid "There are currently no outstanding actions."
-msgstr ""
+msgstr "Щас нет запланированных действий."
 
 #
 msgid "There are no default services lists in your image."
@@ -6074,26 +5996,23 @@ msgid "There was an error. The package:"
 msgstr "Произошла ошибка. Пакет:"
 
 #
-msgid ""
-"This DVD RW medium is already formatted - reformatting will erase all "
-"content on the disc."
-msgstr ""
-"Этот DVD RW  уже отформатирован - переформатирование может удалить все "
-"содержимое диска."
+msgid "This DVD RW medium is already formatted - reformatting will erase all content on the disc."
+msgstr "Этот DVD RW  уже отформатирован - переформатирование может удалить все содержимое диска."
 
 #
 msgid "This is step number 2."
 msgstr "Это шаг номер 2."
 
 msgid ""
-"This plugin creates a USB stick which can be used to update the firmware of "
-"your receiver without the need for a network or WLAN connection.\n"
+"This plugin creates a USB stick which can be used to update the firmware of your receiver without the need for a network or WLAN connection.\n"
 "First, a USB stick needs to be prepared so that it becomes bootable.\n"
-"In the next step, an NFI image file can be downloaded from the update server "
-"and saved on the USB stick.\n"
-"If you already have a prepared bootable USB stick, please insert it now. "
-"Otherwise plug in a USB stick with a minimum size of 64 MB!"
+"In the next step, an NFI image file can be downloaded from the update server and saved on the USB stick.\n"
+"If you already have a prepared bootable USB stick, please insert it now. Otherwise plug in a USB stick with a minimum size of 64 MB!"
 msgstr ""
+"Этот плагин создает USB stick при помощи которого вы можете обновить Firmware  вашего ресивера, не создавая сетевого соединения через LAN или WLAN.\n"
+"Сперва надо подготовить USB stick и сделать его загрузочным.\n"
+"Следующим этапом нужно скачать NFI образ с update сервера и сохранить на  USB stick.\n"
+"Если USB stick уже сделан загрузочноспособным, вставьте его в разъём USB. Используйте USB stick минимум 64 MB!"
 
 #
 msgid "This plugin is installed."
@@ -6120,15 +6039,12 @@ msgid ""
 "This test checks for configured Nameservers.\n"
 "If you get a \"unconfirmed\" message:\n"
 "- please check your DHCP, cabling and Adapter setup\n"
-"- if you configured your Nameservers manually please verify your entries in "
-"the \"Nameserver\" Configuration"
+"- if you configured your Nameservers manually please verify your entries in the \"Nameserver\" Configuration"
 msgstr ""
 "Этот тест проверяет конфигурацию DNS серверов.\n"
 "При появлении сообщения \"не присвоен\":\n"
-"- пожалуйста проверьте настройки DHCP, сетевого адаптера и состояние "
-"сетевого кабеля\n"
-"- Если Вы прописали вручную DNS сервера, пожалуйста проверьте конфигурацию "
-"\"DNS сервер\""
+"- пожалуйста проверьте настройки DHCP, сетевого адаптера и состояние сетевого кабеля\n"
+"- Если Вы прописали вручную DNS сервера, пожалуйста проверьте конфигурацию \"DNS сервер\""
 
 #
 msgid ""
@@ -6137,8 +6053,7 @@ msgid ""
 "- verify that a network cable is attached\n"
 "- verify that the cable is not broken"
 msgstr ""
-"Этот тест проверяет наличие подключения сетевого кабеля к сетевому "
-"адаптеру.\n"
+"Этот тест проверяет наличие подключения сетевого кабеля к сетевому адаптеру.\n"
 "При появлении сообщения \" нет соединения\":\n"
 "- проверьте, что сетевой кабель подключен\n"
 "- проверьте, что сетевой кабель не оборван"
@@ -6153,22 +6068,18 @@ msgstr ""
 "Этот тест проверяет присвоен ли IP адрес сетевому адаптеру..\n"
 "При появлении сообщения \" не присвоен\":\n"
 "- IP адрес не был найден\n"
-"- пожалуйста проверьте настройки DHCP, сетевого адаптера и состояние "
-"сетевого кабеля"
+"- пожалуйста проверьте настройки DHCP, сетевого адаптера и состояние сетевого кабеля"
 
 #
 msgid ""
-"This test checks whether your LAN Adapter is set up for automatic IP Address "
-"configuration with DHCP.\n"
+"This test checks whether your LAN Adapter is set up for automatic IP Address configuration with DHCP.\n"
 "If you get a \"disabled\" message:\n"
 " - then your LAN Adapter is configured for manual IP Setup\n"
-"- verify thay you have entered correct IP informations in the AdapterSetup "
-"dialog.\n"
+"- verify thay you have entered correct IP informations in the AdapterSetup dialog.\n"
 "If you get an \"enabeld\" message:\n"
 "-verify that you have a configured and working DHCP Server in your network."
 msgstr ""
-"Этот тест проверяет,включен ли DHCP в настройках сетевого адаптера, для "
-"присвоения автоматического IP.\n"
+"Этот тест проверяет,включен ли DHCP в настройках сетевого адаптера, для присвоения автоматического IP.\n"
 "При появлении сообщения \" отключен\":\n"
 "- введите вручную IP адрес при настройке сетевого адаптера .\n"
 "- проверьте,что Вы ввели корректную информацию в меню настройка сети.\n"
@@ -6180,13 +6091,12 @@ msgid "This test detects your configured LAN-Adapter."
 msgstr "Данный тест определит ваш сетевой адаптер."
 
 msgid ""
-"This will (re-)calculate all positions of your rotor and may remove "
-"previously memorised positions and fine-tuning!\n"
+"This will (re-)calculate all positions of your rotor and may remove previously memorised positions and fine-tuning!\n"
 "Are you sure?"
 msgstr ""
-"Будут перекалиброваны все позиции вашего ротора и возможно "
-"ранее сохраненные позиции и точные настройки!\n"
+"Будут перекалиброваны все позиции вашего ротора и возможно ранее сохраненные позиции и точные настройки!\n"
 "Вы уверены?"
+
 #
 msgid "Three"
 msgstr "Три"
@@ -6305,12 +6215,14 @@ msgstr "Выбор субтитров"
 
 msgid ""
 "To update your receiver firmware, please follow these steps:\n"
-"1) Turn off your box with the rear power switch and make sure the bootable "
-"USB stick is plugged in.\n"
-"2) Turn mains back on and hold the DOWN button on the front panel pressed "
-"for 10 seconds.\n"
+"1) Turn off your box with the rear power switch and make sure the bootable USB stick is plugged in.\n"
+"2) Turn mains back on and hold the DOWN button on the front panel pressed for 10 seconds.\n"
 "3) Wait for bootup and follow instructions of the wizard."
 msgstr ""
+"Что-бы обновить firmware вашего ресивера надо  сделать следующее:\n"
+"1) Выключите ресивер  выключателем на задней панели, USB stick должен находится в разъёме .\n"
+"2) Включите ресивер выключателем сзади при этом удерживая кнопку  \"ввниз\"   10 секунд .\n"
+"3) После нового  старта следуйте инструкциям мастера."
 
 #
 msgid "Today"
@@ -6333,7 +6245,7 @@ msgid "Toneburst A/B"
 msgstr "Тоновый сигнал A/B"
 
 msgid "Top and Bottom"
-msgstr "Верх и низ"
+msgstr "Вверху и снизу"
 
 #
 msgid "Track"
@@ -6372,15 +6284,11 @@ msgstr "Осталось попыток:"
 
 #
 msgid "Try to find used Transponders in cable network.. please wait..."
-msgstr ""
-"Пытаемся найти транспондеры, используемые в кабельной сети .. Пожалуйста, "
-"подождите ..."
+msgstr "Пытаемся найти транспондеры, используемые в кабельной сети .. Пожалуйста, подождите ..."
 
 #
 msgid "Try to find used transponders in cable network.. please wait..."
-msgstr ""
-"Пытаемся найти транспондеры, используемые в кабельной сети .. Пожалуйста, "
-"подождите ..."
+msgstr "Пытаемся найти транспондеры, используемые в кабельной сети .. Пожалуйста, подождите ..."
 
 #
 msgid "Trying to download a new packetlist. Please wait..."
@@ -6468,6 +6376,9 @@ msgid ""
 "Please wait until your receiver reboots\n"
 "This may take a few minutes"
 msgstr ""
+"Производится автоматическое обновление\n"
+"Пожалуйста ждите пока ресивер сам перезагрузится\n"
+"Это займёт пару минут"
 
 msgid "Unattended upgrade without GUI and reboot system"
 msgstr "Автоматическое обновление без GUI и перезагрузка"
@@ -6485,11 +6396,11 @@ msgid "Undo uninstall"
 msgstr "Отменить удаление"
 
 msgid "Unencrypted"
-msgstr ""
+msgstr "Некодированный"
 
 #
 msgid "UnhandledKey"
-msgstr ""
+msgstr "UnhandledKey"
 
 #
 msgid "Unicable"
@@ -6623,12 +6534,8 @@ msgstr ""
 "Пожалуйста, установите Tuner A"
 
 #
-msgid ""
-"Use the up/down keys on your remote control to select an option. After that, "
-"press OK."
-msgstr ""
-"Используйте кнопки вверх и вниз на пульте для выбора опций. После этого "
-"нажмите OK."
+msgid "Use the up/down keys on your remote control to select an option. After that, press OK."
+msgstr "Используйте кнопки вверх и вниз на пульте для выбора опций. После этого нажмите OK."
 
 msgid "Use this input device settings?"
 msgstr "Использовать эти настройки устройства ввода?"
@@ -6736,15 +6643,13 @@ msgstr "Точная настройка видео"
 msgid ""
 "Video input selection\n"
 "\n"
-"Please press OK if you can see this page on your TV (or select a different "
-"input port).\n"
+"Please press OK if you can see this page on your TV (or select a different input port).\n"
 "\n"
 "The next input port will be automatically probed in 10 seconds."
 msgstr ""
 "Выбор видео входа\n"
 "\n"
-"Нажмите ОК если вы видите эту страницу на экране ТВ (или выберите другой "
-"вход).\n"
+"Нажмите ОК если вы видите эту страницу на экране ТВ (или выберите другой вход).\n"
 "\n"
 "Следующий вход будет автоматически выбран через 10 сек."
 
@@ -6900,7 +6805,7 @@ msgid "Wakeup receiver from standby"
 msgstr "Разбудить ресивер из режима ожидания"
 
 msgid "Wakeup signal from TV"
-msgstr ""
+msgstr "Включить сигналом с ТВ"
 
 #
 msgid "Warn if free space drops below (kB):"
@@ -6921,38 +6826,31 @@ msgstr "Среда"
 msgid "Weekday"
 msgstr "День недели"
 
+msgid "Weigthed position"
+msgstr "Расчитанная позиция"
+
 #
 msgid ""
 "Welcome to the Cutlist editor.\n"
 "\n"
-"Seek to the start of the stuff you want to cut away. Press OK, select 'start "
-"cut'.\n"
+"Seek to the start of the stuff you want to cut away. Press OK, select 'start cut'.\n"
 "\n"
 "Then seek to the end, press OK, select 'end cut'. That's it."
 msgstr ""
 "Добро пожаловать в редактор видео.\n"
 "\n"
-"Отметьте место с которого вы хотите начать редактирование. Нажмите OK, "
-"выберите 'начало редактирования'.\n"
+"Отметьте место с которого вы хотите начать редактирование. Нажмите OK, выберите 'начало редактирования'.\n"
 "\"\n"
-"\"После, отметьте точку окончания редактирования, нажмите OK, выберите "
-"'конец редактирования'. Вот и все;)"
+"\"После, отметьте точку окончания редактирования, нажмите OK, выберите 'конец редактирования'. Вот и все;)"
 
-msgid ""
-"Welcome to the Image upgrade wizard. The wizard will assist you in upgrading "
-"the firmware of your receiver by providing a backup facility for your "
-"current settings and a short explanation of how to upgrade your firmware."
-msgstr ""
-"Добро пожаловать в мастер обновления имиджа. Мастер поможет Вам в обновлении "
-"программного обеспечения Вашего ресивера путем сохранения Ваших текущих "
-"настроек и коротких подсказок по процессу обновления."
+msgid "Welcome to the Image upgrade wizard. The wizard will assist you in upgrading the firmware of your receiver by providing a backup facility for your current settings and a short explanation of how to upgrade your firmware."
+msgstr "Добро пожаловать в мастер обновления имиджа. Мастер поможет Вам в обновлении программного обеспечения Вашего ресивера путем сохранения Ваших текущих настроек и коротких подсказок по процессу обновления."
 
 msgid ""
 "Welcome to the cleanup wizard.\n"
 "\n"
 "We have detected that your available internal memory has dropped below 2MB.\n"
-"To ensure stable operation of your receiver, the internal memory should be "
-"cleaned up.\n"
+"To ensure stable operation of your receiver, the internal memory should be cleaned up.\n"
 "You can use this wizard to remove some extensions.\n"
 msgstr ""
 "Добро пожаловать мастер очистки.\n"
@@ -6960,18 +6858,17 @@ msgstr ""
 "Мы обнаружили, что доступное место во внутренней памяти снизилась до 2MB.\n"
 "Для обеспечения стабильной работы вашего ресивера внутренняя память должна быть очищена.\n"
 "Вы можете использовать этот мастер для удаления некоторых расширений.\n"
+
 msgid ""
 "Welcome.\n"
 "\n"
-"If you want to connect your receiver to the Internet, this wizard will guide "
-"you through the basic network setup of your receiver.\n"
+"If you want to connect your receiver to the Internet, this wizard will guide you through the basic network setup of your receiver.\n"
 "\n"
 "Press OK to start configuring your network"
 msgstr ""
 "Добро пожаловать.\n"
 "\n"
-"Если вы хотите подключить ресивер к сети интернет, этот мастер проведет вас "
-"через основные настройки сети Вашего ресивера.\n"
+"Если вы хотите подключить ресивер к сети интернет, этот мастер проведет вас через основные настройки сети Вашего ресивера.\n"
 "\n"
 "Нажмите ОК для начала настройки сети."
 
@@ -7003,14 +6900,13 @@ msgstr "Что Вы хотите найти?"
 
 #
 msgid "What to do with submitted crashlogs?"
-msgstr ""
+msgstr "Что делать с представленными  crashlogs?"
 
 #
 msgid ""
 "When you do a factory reset, you will lose ALL your configuration data\n"
 "(including bouquets, services, satellite data ...)\n"
-"After completion of factory reset, your receiver will restart "
-"automatically!\n"
+"After completion of factory reset, your receiver will restart automatically!\n"
 "\n"
 "Really do a factory reset?"
 msgstr ""
@@ -7140,12 +7036,8 @@ msgid "You can cancel the removal."
 msgstr "Вы можете отменить удаление"
 
 #
-msgid ""
-"You can choose some default settings now. Please select the settings you "
-"want to be installed."
-msgstr ""
-"Вы можете выбрать настройки по умолчанию. Пожалуйста, выберите настройки "
-"которые вы хотели бы установить."
+msgid "You can choose some default settings now. Please select the settings you want to be installed."
+msgstr "Вы можете выбрать настройки по умолчанию. Пожалуйста, выберите настройки которые вы хотели бы установить."
 
 #
 msgid "You can choose, what you want to install..."
@@ -7174,44 +7066,27 @@ msgid "You chose not to install any default services lists."
 msgstr "Вы не выбрали установку списка сервисов по умолчанию."
 
 #
-msgid ""
-"You chose not to install any default settings. You can however install the "
-"default settings later in the settings menu."
-msgstr ""
-"Вы не выбрали установку настроек по умолчанию. В любом случае Вы можете "
-"установить их позже из меню настроек."
+msgid "You chose not to install any default settings. You can however install the default settings later in the settings menu."
+msgstr "Вы не выбрали установку настроек по умолчанию. В любом случае Вы можете установить их позже из меню настроек."
 
 #
-msgid ""
-"You chose not to install anything. Please press OK finish the install wizard."
+msgid "You chose not to install anything. Please press OK finish the install wizard."
 msgstr "Вы ничего не выбрали. Пожалуйста нажмите ОК чтобы закончить установку."
 
 msgid "You didn't select a channel to record from."
 msgstr "Вы не выбрали канал для записи"
 
 #
-msgid ""
-"You have chosen to backup your settings. Please press OK to start the backup "
-"now."
-msgstr ""
-"Вы выбрали резервное копирование настроек. Пожалуйста, нажмите кнопку ОК для "
-"начала резервного копирования."
+msgid "You have chosen to backup your settings. Please press OK to start the backup now."
+msgstr "Вы выбрали резервное копирование настроек. Пожалуйста, нажмите кнопку ОК для начала резервного копирования."
 
 #
-msgid ""
-"You have chosen to create a new .NFI flasher bootable USB stick. This will "
-"repartition the USB stick and therefore all data on it will be erased."
-msgstr ""
-"Вы выбрали создание нового загрузочного внешнего USB накопителя. USB "
-"накопитель будет отформатирован и все данные будут утеряны."
+msgid "You have chosen to create a new .NFI flasher bootable USB stick. This will repartition the USB stick and therefore all data on it will be erased."
+msgstr "Вы выбрали создание нового загрузочного внешнего USB накопителя. USB накопитель будет отформатирован и все данные будут утеряны."
 
 #
-msgid ""
-"You have chosen to restore your settings. Enigma2 will restart after "
-"restore. Please press OK to start the restore now."
-msgstr ""
-"Вы выбрали восстановление настроек. Enigma2 будет перезапущена сразу после "
-"восстановления. Нажмите ОК для восстановления."
+msgid "You have chosen to restore your settings. Enigma2 will restart after restore. Please press OK to start the restore now."
+msgstr "Вы выбрали восстановление настроек. Enigma2 будет перезапущена сразу после восстановления. Нажмите ОК для восстановления."
 
 #
 #, python-format
@@ -7219,17 +7094,11 @@ msgid "You have to wait %s!"
 msgstr "Необходимо подождать %s!"
 
 msgid ""
-"You need a PC connected to your receiver. If you need further instructions, "
-"please visit the website http://www.dm7025.de.\n"
-"Your receiver will now be halted. After you have performed the update "
-"instructions from the website, your new firmware will ask you to restore "
-"your settings."
+"You need a PC connected to your receiver. If you need further instructions, please visit the website http://www.dm7025.de.\n"
+"Your receiver will now be halted. After you have performed the update instructions from the website, your new firmware will ask you to restore your settings."
 msgstr ""
-"Вам потребуется компьютер подсоединенный к Вашему ресиверу. Если вам "
-"необходимы дополнительные инструкции, пожалуйста, посетите сайт http://www."
-"allrussian.info.\n"
-"Ваш тюнер должен быть остановлен. После выполнения Вами инструкций по "
-"обновлению с сайта, новое ПО запросит восстановление Ваших установок. "
+"Вам потребуется компьютер подсоединенный к Вашему ресиверу. Если вам необходимы дополнительные инструкции, пожалуйста, посетите сайт http://www.allrussian.info.\n"
+"Ваш тюнер должен быть остановлен. После выполнения Вами инструкций по обновлению с сайта, новое ПО запросит восстановление Ваших установок. "
 
 msgid ""
 "You need to set a PIN code and hide it from your children.\n"
@@ -7254,19 +7123,14 @@ msgstr ""
 "\n"
 "Ваше подключние к интернет работает.\n"
 "\n"
+
 #
-msgid ""
-"Your backup succeeded. We will now continue to explain the further upgrade "
-"process."
+msgid "Your backup succeeded. We will now continue to explain the further upgrade process."
 msgstr "Резервная копия создана. Теперь мы продолжим процесс обновления. "
 
 #
-msgid ""
-"Your collection exceeds the size of a single layer medium, you will need a "
-"blank dual layer DVD!"
-msgstr ""
-"Ваша коллекция превышает размер однослойного диска. Вам нужен чистый "
-"двухслойный DVD!"
+msgid "Your collection exceeds the size of a single layer medium, you will need a blank dual layer DVD!"
+msgstr "Ваша коллекция превышает размер однослойного диска. Вам нужен чистый двухслойный DVD!"
 
 #
 msgid "Your current collection will get lost!"
@@ -7289,6 +7153,9 @@ msgid ""
 "Please wait until your receiver reboots\n"
 "This may take a few minutes"
 msgstr ""
+"Ваш  frontprocessor обновляется\n"
+"Пожалуста ждите пока ваш ресивер перезагрузится\n"
+"Это межет длится пару минут"
 
 #
 msgid ""
@@ -7313,6 +7180,11 @@ msgid ""
 "\n"
 "Please press OK to continue."
 msgstr ""
+"Ваш ресивер готов к  использованию.\n"
+"\n"
+"Интернет соединение работает.\n"
+"\n"
+"Нажмите OK что-бы продолжить."
 
 msgid "Your receiver is rebooting"
 msgstr "Ваш ресивер перегружается"
@@ -7321,15 +7193,13 @@ msgid "Your receiver is shutting down"
 msgstr "Ваш ресивер выключается"
 
 msgid "Your receiver is shutting down. Please stand by..."
-msgstr ""
+msgstr "Ваш ресивер выключается.Подождите..."
 
-msgid ""
-"Your receiver isn't connected to the internet properly. Please check it and "
-"try again."
-msgstr ""
+msgid "Your receiver isn't connected to the internet properly. Please check it and try again."
+msgstr "Нет интернет  соединения. Проверьте соединение и попробуйте снова. "
 
 msgid "Your receiver will restart after pressing OK on your remote control."
-msgstr ""
+msgstr "Ваш ресивер перестартует если  вы нажмёте ОК на пульте ДУ."
 
 #
 msgid ""
@@ -7392,11 +7262,11 @@ msgstr "[режим перемещения]"
 
 #
 msgid "a gui to assign services/providers to common interface modules"
-msgstr ""
+msgstr " оболочка для назначения  каналов/провайдеров к common interface модулям"
 
 #
 msgid "a gui to assign services/providers/caids to common interface modules"
-msgstr ""
+msgstr " оболочка для назначения  каналов/провайдеров/caid к common interface модулям"
 
 #
 msgid "abort alternatives edit"
@@ -7494,17 +7364,17 @@ msgid "add to parental protection"
 msgstr "добавить в родительский контроль"
 
 msgid "adult movie/drama"
-msgstr ""
+msgstr "Для взрослых/Драма"
 
 #
 msgid "advanced"
 msgstr "Расширенный"
 
 msgid "adventure/western/war"
-msgstr ""
+msgstr "Приключения/western/Боевик"
 
 msgid "advertisement/shopping"
-msgstr ""
+msgstr "реклама/покупки"
 
 msgid "alphabetic reverse"
 msgstr "обратный алфвит"
@@ -7522,10 +7392,10 @@ msgstr ""
 "следующий б:\n"
 
 msgid "arts/culture (without music, general)"
-msgstr ""
+msgstr "Искусство/Культура (нез музыки,общее)"
 
 msgid "arts/culture magazine"
-msgstr ""
+msgstr "Искусство / Журнал культура"
 
 #
 msgid "assigned CAIds:"
@@ -7542,7 +7412,7 @@ msgid "at end"
 msgstr "в конце"
 
 msgid "athletics"
-msgstr ""
+msgstr "Лёгкая атлетика"
 
 #
 #, python-format
@@ -7579,11 +7449,11 @@ msgid "backgroundcolor"
 msgstr "цвет фона"
 
 msgid "ballet"
-msgstr ""
+msgstr "Балет"
 
 #, python-format
 msgid "bc%s"
-msgstr ""
+msgstr "bc%s"
 
 #
 msgid "better"
@@ -7605,7 +7475,7 @@ msgid "blue"
 msgstr "синий"
 
 msgid "broadcasting/press"
-msgstr ""
+msgstr "Вещание/Пресса"
 
 #
 #, python-format
@@ -7613,7 +7483,7 @@ msgid "burn audio track (%s)"
 msgstr "прожечь аудио дорожку (%s)"
 
 msgid "cartoon/puppets"
-msgstr ""
+msgstr "Мультфильмы/Куклы"
 
 msgid "center"
 msgstr "центр"
@@ -7631,7 +7501,7 @@ msgid "chapters"
 msgstr "разделы"
 
 msgid "childrens's/youth program (general)"
-msgstr ""
+msgstr "Детская/Юношеская передача"
 
 #
 msgid "circular left"
@@ -7646,7 +7516,7 @@ msgid "clear playlist"
 msgstr "очистить список воспроизведения"
 
 msgid "comedy"
-msgstr ""
+msgstr "Комедия"
 
 #
 msgid "complex"
@@ -7669,7 +7539,7 @@ msgid "continue"
 msgstr "Продолжить"
 
 msgid "cooking"
-msgstr ""
+msgstr "Варить/Готовить"
 
 #
 msgid "copy to bouquets"
@@ -7719,7 +7589,7 @@ msgid "descramble and record ecm"
 msgstr "расшифровывать и записывать ECM"
 
 msgid "detective/thriller"
-msgstr ""
+msgstr "Детектив/Триллер"
 
 #
 msgid "disable"
@@ -7738,7 +7608,7 @@ msgid "disconnected"
 msgstr "отключено"
 
 msgid "discussion/interview/debate"
-msgstr ""
+msgstr "Дискурсии/Интервью/Дебаты"
 
 #
 msgid "do not change"
@@ -7749,7 +7619,7 @@ msgid "do nothing"
 msgstr "не делать ничего"
 
 msgid "documentary"
-msgstr ""
+msgstr "Докуметальный"
 
 msgid "don't descramble, record ecm"
 msgstr "не расшифровывать, записывать ECM"
@@ -7762,33 +7632,33 @@ msgstr "не записывать"
 msgid "done!"
 msgstr "выполнено!"
 
-msgid "set-top-box advanced remote control (native)"
-msgstr ""
+msgid "dreambox advanced remote control (native)"
+msgstr "Расширенный пульт ДУ"
 
-msgid "set-top-box front panel"
-msgstr ""
+msgid "dreambox front panel"
+msgstr "Фронтдисплей  ресивера"
 
-msgid "set-top-box ir keyboard"
-msgstr ""
+msgid "dreambox ir keyboard"
+msgstr "Инфракрасная клавиатура"
 
-msgid "set-top-box ir mouse"
-msgstr ""
+msgid "dreambox ir mouse"
+msgstr "Инфракрасная мышка"
 
-msgid "set-top-box remote control (native)"
+msgid "dreambox remote control (native)"
 msgstr "удаленное управление (нативное)"
 
 msgid "east"
 msgstr "восток"
 
 msgid "economics/social advisory"
-msgstr ""
+msgstr "Экономика/Социальное"
 
 #
 msgid "edit alternatives"
 msgstr "изменить alternatives"
 
 msgid "education/science/factual topics (general)"
-msgstr ""
+msgstr "Образование/Наука/Фактические темы"
 
 #
 msgid "empty"
@@ -7835,17 +7705,17 @@ msgid "enigma2 and network"
 msgstr "enigma2 и сеть"
 
 msgid "entertainment (10-16 year old)"
-msgstr ""
+msgstr "Развлечения (10-16 лет)"
 
 msgid "entertainment (6-14 year old)"
-msgstr ""
+msgstr "Развлечения (6-14 лет)"
 
 #
 msgid "equal to"
 msgstr "также как"
 
 msgid "equestrian"
-msgstr ""
+msgstr "Конный спорт"
 
 #
 msgid "exit DVD player or return to file browser"
@@ -7876,13 +7746,13 @@ msgid "exit networkadapter setup menu"
 msgstr "закрыть настройки сетевого адаптера"
 
 msgid "experimental film/video"
-msgstr ""
+msgstr "Експерементальный фильм/Видео"
 
 msgid "false"
 msgstr "нет"
 
 msgid "fashion"
-msgstr ""
+msgstr "Мода"
 
 #
 msgid "fileformats (BMP, PNG, JPG, GIF)"
@@ -7893,29 +7763,29 @@ msgid "filename"
 msgstr "имя файла"
 
 msgid "film/cinema"
-msgstr ""
+msgstr "Фильм/Кино"
 
 msgid "fine arts"
-msgstr ""
+msgstr "Искусствоведение"
 
 #
 msgid "fine-tune your display"
 msgstr "точная настройка дисплея"
 
 msgid "fitness & health"
-msgstr ""
+msgstr "Фитнес и здоровье"
 
 msgid "fixed"
 msgstr "зафиксировано"
 
 msgid "folk/traditional music"
-msgstr ""
+msgstr "Народная / Традиционная музыка"
 
 msgid "football/soccer"
-msgstr ""
+msgstr "Футбол"
 
 msgid "foreign countries/expeditions"
-msgstr ""
+msgstr "Експедиции"
 
 #
 msgid "forward to the next chapter"
@@ -7933,13 +7803,13 @@ msgid "full transparency"
 msgstr "полная прозрачность"
 
 msgid "further education"
-msgstr ""
+msgstr "Дальнейшее образование"
 
 msgid "game show/quiz/contest"
-msgstr ""
+msgstr "Игровые передачи/Викторины/Конкурсы"
 
 msgid "gardening"
-msgstr ""
+msgstr "Садоводство"
 
 #
 msgid "go to deep standby"
@@ -7958,7 +7828,7 @@ msgid "green"
 msgstr "зеленый"
 
 msgid "handicraft"
-msgstr ""
+msgstr "Искусство ремесленника"
 
 #
 msgid "hear radio..."
@@ -7984,7 +7854,7 @@ msgid "immediate shutdown"
 msgstr "немедленное выключение"
 
 msgid "information/education/school program"
-msgstr ""
+msgstr "Информация/Образование/Школьная программа"
 
 #
 msgid "init module"
@@ -8002,7 +7872,7 @@ msgid "invalid type"
 msgstr "неправильный тип"
 
 msgid "jazz"
-msgstr ""
+msgstr "Джаз"
 
 #
 msgid "jump back to the previous title"
@@ -8040,7 +7910,7 @@ msgid "left"
 msgstr "левый"
 
 msgid "leisure hobbies (general)"
-msgstr ""
+msgstr "Досуг хобби (общее)"
 
 #
 msgid "length"
@@ -8070,10 +7940,10 @@ msgid "list style single line"
 msgstr "список в одну строку"
 
 msgid "literature"
-msgstr ""
+msgstr "Литература"
 
 msgid "live broadcast"
-msgstr ""
+msgstr "Прямой эфир"
 
 #
 msgid "load playlist"
@@ -8088,17 +7958,17 @@ msgid "loopthrough to"
 msgstr "петля к"
 
 msgid "magazines/reports/documentary"
-msgstr ""
+msgstr "Репортажи/Документации"
 
 #
 msgid "manual"
 msgstr "ручной"
 
 msgid "martial sports"
-msgstr ""
+msgstr "Единоборства"
 
 msgid "medicine/physiology/psychology"
-msgstr ""
+msgstr "Медицина/Психология/Физиология"
 
 #
 msgid "menu"
@@ -8117,10 +7987,10 @@ msgid "month"
 msgstr "месяц"
 
 msgid "motor sport"
-msgstr ""
+msgstr "Мотоспорт"
 
 msgid "motoring"
-msgstr ""
+msgstr "Мотоспорт"
 
 #
 msgid "move PiP to main picture"
@@ -8147,36 +8017,36 @@ msgid "movie list"
 msgstr "список фильмов"
 
 msgid "movie/drama (general)"
-msgstr ""
+msgstr "Фильм/Драма (общее)"
 
 #
 msgid "multinorm"
 msgstr "мультинорм"
 
 msgid "music/ballet/dance (general)"
-msgstr ""
+msgstr "Музыка/Балет/Танцы (общее)"
 
 msgid "musical/opera"
-msgstr ""
+msgstr "Мюзикл/Опера"
 
 msgid "nature/animals/environment"
-msgstr ""
+msgstr "Природа/Звери/Окружающая среда"
 
 #
 msgid "never"
 msgstr "никогда"
 
 msgid "new media"
-msgstr ""
+msgstr "Новые медии"
 
 msgid "news magazine"
-msgstr ""
+msgstr "Новостной журнал"
 
 msgid "news/current affairs (general)"
-msgstr ""
+msgstr "Новости/Актуальное (общее)"
 
 msgid "news/weather report"
-msgstr ""
+msgstr "Новости/Прогноз погоды"
 
 #
 msgid "next channel"
@@ -8307,7 +8177,7 @@ msgid "pause"
 msgstr "пауза"
 
 msgid "performing arts"
-msgstr ""
+msgstr "Исполнительское исскуство"
 
 msgid "play as picture in picture"
 msgstr "воспроизвести как картинку в картинке"
@@ -8336,10 +8206,10 @@ msgid "please wait, loading picture..."
 msgstr "Ждите...Загрузка изображения"
 
 msgid "popular culture/traditional arts"
-msgstr ""
+msgstr "Популярная культура/Традициональное искусство"
 
 msgid "pre-school children's program"
-msgstr ""
+msgstr "Программа для дошкольников"
 
 #
 msgid "previous channel"
@@ -8368,10 +8238,10 @@ msgid "relative"
 msgstr "относительный"
 
 msgid "religion"
-msgstr ""
+msgstr "Религия"
 
 msgid "remarkable people"
-msgstr ""
+msgstr "Выдающийся люди"
 
 #
 msgid "remove a nameserver entry"
@@ -8441,10 +8311,10 @@ msgid "right"
 msgstr "правый"
 
 msgid "rock/pop"
-msgstr ""
+msgstr "Рок/Поп"
 
 msgid "romance"
-msgstr ""
+msgstr "Романс"
 
 #
 msgid "save last directory on exit"
@@ -8472,7 +8342,7 @@ msgid "scan state"
 msgstr "состояние поиска"
 
 msgid "science fiction/fantasy/horror"
-msgstr ""
+msgstr "Фантастика/Ужасы"
 
 #
 msgid "second cable of motorized LNB"
@@ -8511,10 +8381,10 @@ msgid "select the movie path"
 msgstr "выбрать путь к фильму"
 
 msgid "serious music/classic music"
-msgstr ""
+msgstr "Классическая музыка"
 
 msgid "serious/classical/religious/historical movie/drama"
-msgstr ""
+msgstr "Классические/Исторические/Религиозные фильмы"
 
 msgid "service PIN"
 msgstr "сервисный PIN"
@@ -8578,7 +8448,7 @@ msgid "show transponder info"
 msgstr "показать инфо транспондера"
 
 msgid "show/game show (general)"
-msgstr ""
+msgstr "Игровые передачи (общее)"
 
 msgid "shuffle"
 msgstr "перемешать"
@@ -8620,13 +8490,13 @@ msgid "slide picture in loop"
 msgstr "циклический показ слайдов"
 
 msgid "soap/melodram/folkloric"
-msgstr ""
+msgstr "Мыло / Мелодрама / фольклорные"
 
 msgid "social/political issues/economics (general)"
-msgstr ""
+msgstr "Социальное/Политика/Экономика (общее)"
 
 msgid "social/spiritual science"
-msgstr ""
+msgstr "Гуманитарные науки"
 
 #
 msgid "sort by date"
@@ -8640,16 +8510,16 @@ msgid "special characters"
 msgstr "спец. символы"
 
 msgid "special events"
-msgstr ""
+msgstr "Специальные мероприятия"
 
 msgid "special format data DVD (HDTV compatible)"
-msgstr ""
+msgstr "Специалный формат данных  DVD (HDTV совместимый)"
 
 msgid "sports (general)"
-msgstr ""
+msgstr "Спорт (общее)"
 
 msgid "sports magazine"
-msgstr ""
+msgstr "Спортивный журнал"
 
 #
 msgid "standard"
@@ -8726,20 +8596,20 @@ msgid "switch to the next subtitle language"
 msgstr "переключиться на следующий язык субтитров"
 
 msgid "talk show"
-msgstr ""
+msgstr "Разговорные передачи"
 
 msgid "team sports"
-msgstr ""
+msgstr "Коммандный спорт"
 
 msgid "technology/natural science"
-msgstr ""
+msgstr "Технологии/Естественные науки"
 
 #
 msgid "template file"
 msgstr "Шаблон файла"
 
 msgid "tennis/squash"
-msgstr ""
+msgstr "Теннис/Сквош"
 
 #
 msgid "textcolor"
@@ -8765,7 +8635,7 @@ msgid "top"
 msgstr "верх"
 
 msgid "tourism/travel"
-msgstr ""
+msgstr "Туризм/Путешествия"
 
 msgid "true"
 msgstr "да"
@@ -8793,7 +8663,7 @@ msgid "unknown service"
 msgstr "неизвестный сервис"
 
 msgid "unpublished"
-msgstr ""
+msgstr "неопубликованный"
 
 #
 msgid "until standby/restart"
@@ -8804,7 +8674,7 @@ msgid "user defined"
 msgstr "Определено пользователем"
 
 msgid "variety show"
-msgstr ""
+msgstr "Варьете"
 
 #
 msgid "vertical"
@@ -8835,7 +8705,7 @@ msgid "was removed successfully"
 msgstr "удаление успешно"
 
 msgid "water sport"
-msgstr ""
+msgstr "Водный спорт"
 
 #
 msgid "weekly"
@@ -8855,7 +8725,7 @@ msgid "width"
 msgstr "ширина"
 
 msgid "winter sport"
-msgstr ""
+msgstr "Зимний спорт"
 
 msgid "wireless network interface"
 msgstr "интерфейс беспроводной сети"
@@ -8876,12 +8746,8 @@ msgstr "да"
 msgid "yes (keep feeds)"
 msgstr "да (keep feeds)"
 
-msgid ""
-"your receiver might be unusable now. Please consult the manual for further "
-"assistance before rebooting your receiver."
-msgstr ""
-"Сейчас ваш ресивер может быть непригодным для использования. Обратитесь к "
-"руководству для получения дополнительной помощи до его перезагрузки."
+msgid "your receiver might be unusable now. Please consult the manual for further assistance before rebooting your receiver."
+msgstr "Сейчас ваш ресивер может быть непригодным для использования. Обратитесь к руководству для получения дополнительной помощи до его перезагрузки."
 
 #
 msgid "zap"

@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-30 16:54+0200\n"
-"PO-Revision-Date: 2009-02-25 20:35+0200\n"
+"PO-Revision-Date: 2012-09-22 00:13+0100\n"
 "Last-Translator: Ivo Grinbergs <ivog@apollo.lv>\n"
 "Language-Team: Ivo / enigma2 (c) <ivog@apolllo.lv>\n"
 "Language: \n"
@@ -433,25 +433,15 @@ msgstr ""
 "Ko Jūs vēlaties darīt?"
 
 #
-msgid ""
-"A recording is currently running. Please stop the recording before trying to "
-"configure the positioner."
-msgstr ""
-"Pašreiz tiek veikts ieraksts. Lūdzu apturiet ierakstu pirms konfigurējat "
-"pozicionieri."
+msgid "A recording is currently running. Please stop the recording before trying to configure the positioner."
+msgstr "Pašreiz tiek veikts ieraksts. Lūdzu apturiet ierakstu pirms konfigurējat pozicionieri."
 
-msgid ""
-"A recording is currently running. Please stop the recording before trying to "
-"scan."
+msgid "A recording is currently running. Please stop the recording before trying to scan."
 msgstr ""
 
 #
-msgid ""
-"A recording is currently running. Please stop the recording before trying to "
-"start the satfinder."
-msgstr ""
-"Pašreiz tiek veikts ieraksts. Lūdzu apturiet ierakstu pirms startējiet sat-"
-"meklētāju."
+msgid "A recording is currently running. Please stop the recording before trying to start the satfinder."
+msgstr "Pašreiz tiek veikts ieraksts. Lūdzu apturiet ierakstu pirms startējiet sat-meklētāju."
 
 #
 #, python-format
@@ -595,9 +585,7 @@ msgstr "Pievienot favorītiem"
 msgid "Add/Remove timer for current event"
 msgstr ""
 
-msgid ""
-"Adds enigma2 settings and receiver model informations like SN, rev... if "
-"enabled."
+msgid "Adds enigma2 settings and receiver model informations like SN, rev... if enabled."
 msgstr ""
 
 #
@@ -615,16 +603,8 @@ msgid "Adjust HDMI CEC settings"
 msgstr ""
 
 #
-msgid ""
-"Adjust the color settings so that all the color shades are distinguishable, "
-"but appear as saturated as possible. If you are happy with the result, press "
-"OK to close the video fine-tuning, or use the number keys to select other "
-"test screens."
-msgstr ""
-"Regulēt krāsu iestatījumus tā, lai visi krāsu toņi ir izšķirami bet, cik "
-"iespējams, piesātināti. Ja esat apmierināti ar rezultātu, spiediet OK, lai "
-"aizvērtu attēla precizēšanu vai izmantojiet ciparu taustiņus, lai izvēlētos "
-"citus testēšanas rastrus."
+msgid "Adjust the color settings so that all the color shades are distinguishable, but appear as saturated as possible. If you are happy with the result, press OK to close the video fine-tuning, or use the number keys to select other test screens."
+msgstr "Regulēt krāsu iestatījumus tā, lai visi krāsu toņi ir izšķirami bet, cik iespējams, piesātināti. Ja esat apmierināti ar rezultātu, spiediet OK, lai aizvērtu attēla precizēšanu vai izmantojiet ciparu taustiņus, lai izvēlētos citus testēšanas rastrus."
 
 #
 msgid "Advanced Options"
@@ -657,9 +637,7 @@ msgstr "Pēc notikuma"
 msgid "After pressing OK, please wait!"
 msgstr ""
 
-msgid ""
-"After the start wizard is completed, you need to protect single services. "
-"Refer to your receiver's manual on how to do that."
+msgid "After the start wizard is completed, you need to protect single services. Refer to your receiver's manual on how to do that."
 msgstr ""
 
 #
@@ -1007,9 +985,7 @@ msgid "Bus: "
 msgstr "Bus: "
 
 #
-msgid ""
-"By pressing the OK Button on your remote control, the info bar is being "
-"displayed."
+msgid "By pressing the OK Button on your remote control, the info bar is being displayed."
 msgstr "Nospiežot OK uz tālvadības pults, tiks parādīta informācijas josla."
 
 #
@@ -1904,9 +1880,7 @@ msgid "Do you want to resume this playback?"
 msgstr "Vai vēlaties atsākt šo atskaņošanu?"
 
 #
-msgid ""
-"Do you want to submit your email address and name so that we can contact you "
-"if needed?"
+msgid "Do you want to submit your email address and name so that we can contact you if needed?"
 msgstr ""
 
 msgid "Do you want to update your receiver?"
@@ -1944,8 +1918,7 @@ msgstr "Pabeigts - uzstādītas vai atjauninātas %d pakotnes"
 #
 #, python-format
 msgid "Done - Installed, upgraded or removed %d packages with %d errors"
-msgstr ""
-"Pabeigts - uzstādītas, atjauninātas vai dzēstas %d pakotnes ar %d kļūdām"
+msgstr "Pabeigts - uzstādītas, atjauninātas vai dzēstas %d pakotnes ar %d kļūdām"
 
 #
 msgid "Download"
@@ -2680,24 +2653,14 @@ msgstr ""
 
 #
 msgid ""
-"If your TV has a brightness or contrast enhancement, disable it. If there is "
-"something called \"dynamic\", set it to standard. Adjust the backlight level "
-"to a value suiting your taste. Turn down contrast on your TV as much as "
-"possible.\n"
-"Then turn the brightness setting as low as possible, but make sure that the "
-"two lowermost shades of gray stay distinguishable.\n"
-"Do not care about the bright shades now. They will be set up in the next "
-"step.\n"
+"If your TV has a brightness or contrast enhancement, disable it. If there is something called \"dynamic\", set it to standard. Adjust the backlight level to a value suiting your taste. Turn down contrast on your TV as much as possible.\n"
+"Then turn the brightness setting as low as possible, but make sure that the two lowermost shades of gray stay distinguishable.\n"
+"Do not care about the bright shades now. They will be set up in the next step.\n"
 "If you are happy with the result, press OK."
 msgstr ""
-"Ja Jūsu TV ir ieslēgta spilgtuma vai kontrasta uzlabošana, deaktivizējiet "
-"to. Ja ir iestatījums ar nosaukumu \"dinamiskā \", lietojiet standarta "
-"iestatījumu. Noregulējiet fona līmeni līdz jums patīkamai vērtībai. "
-"Noregulējiet iespējami zemu TV kontrastu.\n"
-"Tad noregulējiet iespējami zemu spilgtuma iestatījumu, bet pārliecinieties, "
-"ka divi apakšējie pelēkā toņi ir izšķirami.\n"
-"Pašreiz nepievērsiet uzmanību spilgtajiem toņiem. Tie tiks uzstādīti "
-"nākamajā solī.\n"
+"Ja Jūsu TV ir ieslēgta spilgtuma vai kontrasta uzlabošana, deaktivizējiet to. Ja ir iestatījums ar nosaukumu \"dinamiskā \", lietojiet standarta iestatījumu. Noregulējiet fona līmeni līdz jums patīkamai vērtībai. Noregulējiet iespējami zemu TV kontrastu.\n"
+"Tad noregulējiet iespējami zemu spilgtuma iestatījumu, bet pārliecinieties, ka divi apakšējie pelēkā toņi ir izšķirami.\n"
+"Pašreiz nepievērsiet uzmanību spilgtajiem toņiem. Tie tiks uzstādīti nākamajā solī.\n"
 "Ja esat apmierināts ar rezultātu, spiediet OK."
 
 msgid "Image: "
@@ -2708,10 +2671,8 @@ msgid "In Progress"
 msgstr "Izpilda"
 
 #
-msgid ""
-"In order to record a timer, the TV was switched to the recording service!\n"
-msgstr ""
-"TV tika pārslēgts uz ierakstāmo kanālu, lai uzsāktu ierakstu pēc taimera!\n"
+msgid "In order to record a timer, the TV was switched to the recording service!\n"
+msgstr "TV tika pārslēgts uz ierakstāmo kanālu, lai uzsāktu ierakstu pēc taimera!\n"
 
 msgid "Include AIT in http streams"
 msgstr ""
@@ -3526,9 +3487,7 @@ msgid "No event info found, recording indefinitely."
 msgstr "Nav atrasta informācija par notikumiem, ieraksts turpinās."
 
 #
-msgid ""
-"No fast winding possible yet.. but you can use the number buttons to skip "
-"forward/backward!"
+msgid "No fast winding possible yet.. but you can use the number buttons to skip forward/backward!"
 msgstr ""
 
 msgid "No free index available"
@@ -3547,8 +3506,7 @@ msgid "No networks found"
 msgstr ""
 
 #
-msgid ""
-"No packages were upgraded yet. So you can check your network and try again."
+msgid "No packages were upgraded yet. So you can check your network and try again."
 msgstr "Pakotnes netika atjauninātas. Pārbaudiet tīklu un mēģiniet vēlreiz."
 
 #
@@ -3612,32 +3570,26 @@ msgstr ""
 #
 msgid ""
 "No working local network adapter found.\n"
-"Please verify that you have attached a network cable and your network is "
-"configured correctly."
+"Please verify that you have attached a network cable and your network is configured correctly."
 msgstr ""
 "Netika atrasts strādājošs lokālā tīkla adapteris.\n"
-"Lūdzu pārliecinieties, ka ir pievienots tīkla kabelis un tīkls ir pareizi "
-"konfigurēts."
+"Lūdzu pārliecinieties, ka ir pievienots tīkla kabelis un tīkls ir pareizi konfigurēts."
 
 #
 msgid ""
 "No working wireless network adapter found.\n"
-"Please verify that you have attached a compatible WLAN device and your "
-"network is configured correctly."
+"Please verify that you have attached a compatible WLAN device and your network is configured correctly."
 msgstr ""
 "Netika atrasts strādājošs bezvadu tīkla adapteris.\n"
-"Lūdzu pārliecinieties, ka ir pievienota saderīga bezvadu tīkla ierīce un "
-"tīkls ir pareizi konfigurēts."
+"Lūdzu pārliecinieties, ka ir pievienota saderīga bezvadu tīkla ierīce un tīkls ir pareizi konfigurēts."
 
 #
 msgid ""
 "No working wireless network interface found.\n"
-" Please verify that you have attached a compatible WLAN device or enable "
-"your local network interface."
+" Please verify that you have attached a compatible WLAN device or enable your local network interface."
 msgstr ""
 "Netika atrasts strādājošs bezvadu tīkla interfeiss.\n"
-" Lūdzu pārliecinieties, ka ir pievienota saderīga bezvadu tīkla ierīce vai "
-"aktivizējiet lokālā tīkla interfeisu."
+" Lūdzu pārliecinieties, ka ir pievienota saderīga bezvadu tīkla ierīce vai aktivizējiet lokālā tīkla interfeisu."
 
 #
 msgid "No, but restart from begin"
@@ -3687,12 +3639,8 @@ msgstr "Norvēģu"
 
 #
 #, python-format
-msgid ""
-"Not enough diskspace. Please free up some diskspace and try again. (%d MB "
-"required, %d MB available)"
-msgstr ""
-"Nav pietiekami vietas uz diska. Lūdzu atbrīvot vietu uz diska un mēģināt "
-"vēlreiz. (%d MB nepieciešami, %d MB pieejami)"
+msgid "Not enough diskspace. Please free up some diskspace and try again. (%d MB required, %d MB available)"
+msgstr "Nav pietiekami vietas uz diska. Lūdzu atbrīvot vietu uz diska un mēģināt vēlreiz. (%d MB nepieciešami, %d MB pieejami)"
 
 msgid "Not-Associated"
 msgstr ""
@@ -3717,14 +3665,8 @@ msgid "Now Playing"
 msgstr "Atskaņo"
 
 #
-msgid ""
-"Now, use the contrast setting to turn up the brightness of the background as "
-"much as possible, but make sure that you can still see the difference "
-"between the two brightest levels of shades.If you have done that, press OK."
-msgstr ""
-"Tagad lietojiet kontrasta iestatīšanu, lai palielinātu fona spilgtumu cik "
-"vien iespējams, bet pārliecinieties, ka divi spilgtāko toņu līmeņi joprojām "
-"ir izšķirami. Ja esat to izdarījuši, spiediet OK."
+msgid "Now, use the contrast setting to turn up the brightness of the background as much as possible, but make sure that you can still see the difference between the two brightest levels of shades.If you have done that, press OK."
+msgstr "Tagad lietojiet kontrasta iestatīšanu, lai palielinātu fona spilgtumu cik vien iespējams, bet pārliecinieties, ka divi spilgtāko toņu līmeņi joprojām ir izšķirami. Ja esat to izdarījuši, spiediet OK."
 
 #
 msgid "OK"
@@ -3970,9 +3912,7 @@ msgstr "Lūdzu izvēlēties datu nesēju meklēšanai"
 msgid "Please add titles to the compilation."
 msgstr ""
 
-msgid ""
-"Please be aware, that anyone can disable the parental control, if you have "
-"not set a PIN."
+msgid "Please be aware, that anyone can disable the parental control, if you have not set a PIN."
 msgstr ""
 
 #
@@ -3993,27 +3933,23 @@ msgstr "Lūdzu izvēlieties pakotni..."
 
 #
 msgid "Please choose the default services lists you want to install."
-msgstr ""
-"Lūdzu izvēlieties noklusētos kanālu sarakstus, kurus vēlaties uzstādīt."
+msgstr "Lūdzu izvēlieties noklusētos kanālu sarakstus, kurus vēlaties uzstādīt."
 
 #
 msgid ""
-"Please configure or verify your Nameservers by filling out the required "
-"values.\n"
+"Please configure or verify your Nameservers by filling out the required values.\n"
 "When you are ready press OK to continue."
 msgstr ""
 
 #
 msgid ""
-"Please configure your internet connection by filling out the required "
-"values.\n"
+"Please configure your internet connection by filling out the required values.\n"
 "When you are ready press OK to continue."
 msgstr ""
 
 #
 msgid "Please do not change any values unless you know what you are doing!"
-msgstr ""
-"Lūdzu nemainiet jebkādas vērtības, izņemot ja skaidri apzināties ko darāt!"
+msgstr "Lūdzu nemainiet jebkādas vērtības, izņemot ja skaidri apzināties ko darāt!"
 
 #
 msgid "Please enter a name for the new bouquet"
@@ -4055,12 +3991,8 @@ msgid "Please follow the instructions on the TV"
 msgstr "Lūdzu sekojiet instrukcijām TV ekrānā"
 
 #
-msgid ""
-"Please note that the previously selected media could not be accessed and "
-"therefore the default directory is being used instead."
-msgstr ""
-"Lūdzu ievērojiet, ka iepriekš izvēlētais datu nesējs nebija pieejams, tādēļ "
-"tā vietā tika lietota noklusētā mape."
+msgid "Please note that the previously selected media could not be accessed and therefore the default directory is being used instead."
+msgstr "Lūdzu ievērojiet, ka iepriekš izvēlētais datu nesējs nebija pieejams, tādēļ tā vietā tika lietota noklusētā mape."
 
 #
 msgid "Please press OK to continue."
@@ -4114,8 +4046,7 @@ msgstr "Lūdzu izvēlieties ceļu filmām..."
 
 #
 msgid ""
-"Please select the network interface that you want to use for your internet "
-"connection.\n"
+"Please select the network interface that you want to use for your internet connection.\n"
 "\n"
 "Please press OK to continue."
 msgstr ""
@@ -4150,12 +4081,8 @@ msgstr ""
 "Spiediet OK, lai atgrieztos TV režīmā vai EXIT, lai atceltu pārvietošanu."
 
 #
-msgid ""
-"Please use the UP and DOWN keys to select your language. Afterwards press "
-"the OK button."
-msgstr ""
-"Lūdzu lietojiet UP un DOWN taustiņus, lai izvēlētos valodu. Pēc tam spiediet "
-"OK."
+msgid "Please use the UP and DOWN keys to select your language. Afterwards press the OK button."
+msgstr "Lūdzu lietojiet UP un DOWN taustiņus, lai izvēlētos valodu. Pēc tam spiediet OK."
 
 #
 msgid "Please wait for activation of your network configuration..."
@@ -4960,9 +4887,7 @@ msgstr "Meklēt diapazonā US MID"
 msgid "Scan band US SUPER"
 msgstr "Meklēt diapazonā US SUPER"
 
-msgid ""
-"Scan your network for wireless access points and connect to them using your "
-"selected wireless device.\n"
+msgid "Scan your network for wireless access points and connect to them using your selected wireless device.\n"
 msgstr ""
 
 #, python-format
@@ -4980,11 +4905,8 @@ msgid "Scanning..."
 msgstr ""
 
 #
-msgid ""
-"Scans default lamedbs sorted by satellite with a connected dish positioner"
-msgstr ""
-"Meklē noklusētos lamedbs, sakārtotus pēc pavadoņiem ar pievienotu "
-"pozicioniera antenu"
+msgid "Scans default lamedbs sorted by satellite with a connected dish positioner"
+msgstr "Meklē noklusētos lamedbs, sakārtotus pēc pavadoņiem ar pievienotu pozicioniera antenu"
 
 #
 msgid "Search east"
@@ -5254,9 +5176,7 @@ msgstr ""
 
 #
 #, python-format
-msgid ""
-"Shall the USB stick wizard proceed and program the image file %s into flash "
-"memory?"
+msgid "Shall the USB stick wizard proceed and program the image file %s into flash memory?"
 msgstr ""
 
 #
@@ -5385,9 +5305,7 @@ msgstr "Vienkāršs"
 
 #
 msgid "Simple titleset (compatibility for legacy players)"
-msgstr ""
-"Vienkāršu simbolu lietojums nosaukumos (savietojamībai ar parastiem "
-"atskaņotājiem)"
+msgstr "Vienkāršu simbolu lietojums nosaukumos (savietojamībai ar parastiem atskaņotājiem)"
 
 #
 msgid "Single"
@@ -5517,8 +5435,7 @@ msgstr ""
 "Izvēlētais dublējumkopijas galamērķis nav ierakstāms.\n"
 "Lūdzu izvēlieties citu."
 
-msgid ""
-"Sorry, deleting directories can (for now) only be done through the trash can."
+msgid "Sorry, deleting directories can (for now) only be done through the trash can."
 msgstr ""
 
 #
@@ -5857,10 +5774,7 @@ msgid ""
 "Please press OK to start using your receiver."
 msgstr ""
 
-msgid ""
-"The DVD standard doesn't support H.264 (HDTV) video streams. Do you want to "
-"create a special format data DVD (which will not play in stand-alone DVD "
-"players) instead?"
+msgid "The DVD standard doesn't support H.264 (HDTV) video streams. Do you want to create a special format data DVD (which will not play in stand-alone DVD players) instead?"
 msgstr ""
 
 #
@@ -5896,8 +5810,7 @@ msgstr ""
 
 #
 msgid "The backup failed. Please choose a different backup location."
-msgstr ""
-"Dublējumkopēšana neizdevās. Lūdzu izvēlieties citu vietu dublējumkopijai. "
+msgstr "Dublējumkopēšana neizdevās. Lūdzu izvēlieties citu vietu dublējumkopijai. "
 
 msgid "The current beta image could not be stable"
 msgstr ""
@@ -5932,20 +5845,16 @@ msgstr ""
 # ???
 msgid ""
 "The input port should be configured now.\n"
-"You can now configure the screen by displaying some test pictures. Do you "
-"want to do that now?"
+"You can now configure the screen by displaying some test pictures. Do you want to do that now?"
 msgstr ""
 "Ievada portam būtu jābūt nokonfigurētam.\n"
-"Tagad Jūs varat konfigurēt ekrānu, attēlojot dažus testa attēlus. Vai "
-"vēlaties to darīt tagad?"
+"Tagad Jūs varat konfigurēt ekrānu, attēlojot dažus testa attēlus. Vai vēlaties to darīt tagad?"
 
 #
 msgid "The installation of the default services lists is finished."
 msgstr "Noklusēto kanālu sarakstu uzstādīšana ir pabeigta."
 
-msgid ""
-"The installation of the default settings is finished. You can now continue "
-"configuring your receiver by pressing the OK button on the remote control."
+msgid "The installation of the default settings is finished. You can now continue configuring your receiver by pressing the OK button on the remote control."
 msgstr ""
 
 msgid "The md5sum validation failed, the file may be corrupted!"
@@ -5981,9 +5890,7 @@ msgstr "Miega taimeris tika aktivizēts."
 msgid "The sleep timer has been disabled."
 msgstr "Miega taimeris tika izslēgts."
 
-msgid ""
-"The status of the current beta image could not be checked because www."
-"openpli.org could not be reached for some reason"
+msgid "The status of the current beta image could not be checked because www.openpli.org could not be reached for some reason"
 msgstr ""
 
 #
@@ -6005,16 +5912,11 @@ msgstr ""
 "Lūdzu uzstādiet to."
 
 #
-msgid ""
-"The wizard can backup your current settings. Do you want to do a backup now?"
-msgstr ""
-"Vednis var izveidot pašreizējo iestatījumu dublējumkopiju. Vai vēlaties "
-"veidot dublējumkopiju tagad?"
+msgid "The wizard can backup your current settings. Do you want to do a backup now?"
+msgstr "Vednis var izveidot pašreizējo iestatījumu dublējumkopiju. Vai vēlaties veidot dublējumkopiju tagad?"
 
 #, python-format
-msgid ""
-"The wizard found a configuration backup. Do you want to restore your old "
-"settings from %s?"
+msgid "The wizard found a configuration backup. Do you want to restore your old settings from %s?"
 msgstr ""
 
 #
@@ -6065,25 +5967,18 @@ msgid "There was an error. The package:"
 msgstr ""
 
 #
-msgid ""
-"This DVD RW medium is already formatted - reformatting will erase all "
-"content on the disc."
-msgstr ""
-"Šis DVD RW disks jau ir formatēts - atkārtota formatēšana dzēsīs visu diska "
-"saturu."
+msgid "This DVD RW medium is already formatted - reformatting will erase all content on the disc."
+msgstr "Šis DVD RW disks jau ir formatēts - atkārtota formatēšana dzēsīs visu diska saturu."
 
 #
 msgid "This is step number 2."
 msgstr "Šis ir solis numur 2."
 
 msgid ""
-"This plugin creates a USB stick which can be used to update the firmware of "
-"your receiver without the need for a network or WLAN connection.\n"
+"This plugin creates a USB stick which can be used to update the firmware of your receiver without the need for a network or WLAN connection.\n"
 "First, a USB stick needs to be prepared so that it becomes bootable.\n"
-"In the next step, an NFI image file can be downloaded from the update server "
-"and saved on the USB stick.\n"
-"If you already have a prepared bootable USB stick, please insert it now. "
-"Otherwise plug in a USB stick with a minimum size of 64 MB!"
+"In the next step, an NFI image file can be downloaded from the update server and saved on the USB stick.\n"
+"If you already have a prepared bootable USB stick, please insert it now. Otherwise plug in a USB stick with a minimum size of 64 MB!"
 msgstr ""
 
 #
@@ -6111,14 +6006,12 @@ msgid ""
 "This test checks for configured Nameservers.\n"
 "If you get a \"unconfirmed\" message:\n"
 "- please check your DHCP, cabling and Adapter setup\n"
-"- if you configured your Nameservers manually please verify your entries in "
-"the \"Nameserver\" Configuration"
+"- if you configured your Nameservers manually please verify your entries in the \"Nameserver\" Configuration"
 msgstr ""
 "Šis tests pārbauda domēna vārdu serveru konfigurāciju.\n"
 "Ja Jūs saņemat \"neapstiprināts \" paziņojumu:\n"
 "- lūdzu pārbaudiet DHCP, kabeļus un adaptera iestatni\n"
-"- ja konfigurējāt domēna vārdu serverus manuāli, pārbaudiet savus ierakstus "
-"\"Domēna vārdu serveris \" Konfigurācija"
+"- ja konfigurējāt domēna vārdu serverus manuāli, pārbaudiet savus ierakstus \"Domēna vārdu serveris \" Konfigurācija"
 
 #
 msgid ""
@@ -6146,21 +6039,17 @@ msgstr ""
 
 #
 msgid ""
-"This test checks whether your LAN Adapter is set up for automatic IP Address "
-"configuration with DHCP.\n"
+"This test checks whether your LAN Adapter is set up for automatic IP Address configuration with DHCP.\n"
 "If you get a \"disabled\" message:\n"
 " - then your LAN Adapter is configured for manual IP Setup\n"
-"- verify thay you have entered correct IP informations in the AdapterSetup "
-"dialog.\n"
+"- verify thay you have entered correct IP informations in the AdapterSetup dialog.\n"
 "If you get an \"enabeld\" message:\n"
 "-verify that you have a configured and working DHCP Server in your network."
 msgstr ""
-"Šis tests pārbauda vai tīkla adapteris ir iestatīts automātiskai IP adrešu "
-"konfigurēšanai ar DHCP.\n"
+"Šis tests pārbauda vai tīkla adapteris ir iestatīts automātiskai IP adrešu konfigurēšanai ar DHCP.\n"
 "Ja saņemat \"neaktīvs \" paziņojumu:\n"
 " - tīkla adapteris ir konfigurēts manuālai IP iestatīšanai\n"
-"- pārbaudiet, vai ir ievadīta korekta IP informācija adaptera iestatnes "
-"dialoglogā. \n"
+"- pārbaudiet, vai ir ievadīta korekta IP informācija adaptera iestatnes dialoglogā. \n"
 "Ja saņemat \"aktīvs \" paziņojumu:\n"
 "- pārbaudiet, vai ir konfigurēts un darbojas DHCP serveris Jūsu tīklā."
 
@@ -6169,8 +6058,7 @@ msgid "This test detects your configured LAN-Adapter."
 msgstr "Šis tests atrod konfigurēto tīkla adapteri."
 
 msgid ""
-"This will (re-)calculate all positions of your rotor and may remove "
-"previously memorised positions and fine-tuning!\n"
+"This will (re-)calculate all positions of your rotor and may remove previously memorised positions and fine-tuning!\n"
 "Are you sure?"
 msgstr ""
 
@@ -6292,10 +6180,8 @@ msgstr ""
 
 msgid ""
 "To update your receiver firmware, please follow these steps:\n"
-"1) Turn off your box with the rear power switch and make sure the bootable "
-"USB stick is plugged in.\n"
-"2) Turn mains back on and hold the DOWN button on the front panel pressed "
-"for 10 seconds.\n"
+"1) Turn off your box with the rear power switch and make sure the bootable USB stick is plugged in.\n"
+"2) Turn mains back on and hold the DOWN button on the front panel pressed for 10 seconds.\n"
 "3) Wait for bootup and follow instructions of the wizard."
 msgstr ""
 
@@ -6607,12 +6493,8 @@ msgstr ""
 "Lūdzu iestatiet uztvērēju A"
 
 #
-msgid ""
-"Use the up/down keys on your remote control to select an option. After that, "
-"press OK."
-msgstr ""
-"Lietojiet tālvadības pults up/down taustiņus, lai izdarītu izvēli. Pēc tam "
-"spiediet OK."
+msgid "Use the up/down keys on your remote control to select an option. After that, press OK."
+msgstr "Lietojiet tālvadības pults up/down taustiņus, lai izdarītu izvēli. Pēc tam spiediet OK."
 
 msgid "Use this input device settings?"
 msgstr ""
@@ -6721,8 +6603,7 @@ msgstr ""
 msgid ""
 "Video input selection\n"
 "\n"
-"Please press OK if you can see this page on your TV (or select a different "
-"input port).\n"
+"Please press OK if you can see this page on your TV (or select a different input port).\n"
 "\n"
 "The next input port will be automatically probed in 10 seconds."
 msgstr ""
@@ -6914,39 +6795,31 @@ msgstr ""
 msgid ""
 "Welcome to the Cutlist editor.\n"
 "\n"
-"Seek to the start of the stuff you want to cut away. Press OK, select 'start "
-"cut'.\n"
+"Seek to the start of the stuff you want to cut away. Press OK, select 'start cut'.\n"
 "\n"
 "Then seek to the end, press OK, select 'end cut'. That's it."
 msgstr ""
 "Sveicināti griešanas redaktorā.\n"
 "\n"
-"Ejiet uz fragmenta, kuru jūs vēlaties izgriezt, sākumu. Spiediet OK, lai "
-"izvēlētos 'griezuma sākumu'.\n"
+"Ejiet uz fragmenta, kuru jūs vēlaties izgriezt, sākumu. Spiediet OK, lai izvēlētos 'griezuma sākumu'.\n"
 "\n"
-"Tad ejiet uz beigām, spiediet OK, izvēlieties 'griezuma beigas'. Tas arī "
-"viss."
+"Tad ejiet uz beigām, spiediet OK, izvēlieties 'griezuma beigas'. Tas arī viss."
 
-msgid ""
-"Welcome to the Image upgrade wizard. The wizard will assist you in upgrading "
-"the firmware of your receiver by providing a backup facility for your "
-"current settings and a short explanation of how to upgrade your firmware."
+msgid "Welcome to the Image upgrade wizard. The wizard will assist you in upgrading the firmware of your receiver by providing a backup facility for your current settings and a short explanation of how to upgrade your firmware."
 msgstr ""
 
 msgid ""
 "Welcome to the cleanup wizard.\n"
 "\n"
 "We have detected that your available internal memory has dropped below 2MB.\n"
-"To ensure stable operation of your receiver, the internal memory should be "
-"cleaned up.\n"
+"To ensure stable operation of your receiver, the internal memory should be cleaned up.\n"
 "You can use this wizard to remove some extensions.\n"
 msgstr ""
 
 msgid ""
 "Welcome.\n"
 "\n"
-"If you want to connect your receiver to the Internet, this wizard will guide "
-"you through the basic network setup of your receiver.\n"
+"If you want to connect your receiver to the Internet, this wizard will guide you through the basic network setup of your receiver.\n"
 "\n"
 "Press OK to start configuring your network"
 msgstr ""
@@ -6981,8 +6854,7 @@ msgstr ""
 msgid ""
 "When you do a factory reset, you will lose ALL your configuration data\n"
 "(including bouquets, services, satellite data ...)\n"
-"After completion of factory reset, your receiver will restart "
-"automatically!\n"
+"After completion of factory reset, your receiver will restart automatically!\n"
 "\n"
 "Really do a factory reset?"
 msgstr ""
@@ -7109,12 +6981,8 @@ msgid "You can cancel the removal."
 msgstr ""
 
 #
-msgid ""
-"You can choose some default settings now. Please select the settings you "
-"want to be installed."
-msgstr ""
-"Jūs tagad varat izvēlēties dažus noklusētos iestatījumus. Lūdzu izvēlieties "
-"iestatījumus, kurus vēlaties uzstādīt."
+msgid "You can choose some default settings now. Please select the settings you want to be installed."
+msgstr "Jūs tagad varat izvēlēties dažus noklusētos iestatījumus. Lūdzu izvēlieties iestatījumus, kurus vēlaties uzstādīt."
 
 #
 msgid "You can choose, what you want to install..."
@@ -7143,46 +7011,27 @@ msgid "You chose not to install any default services lists."
 msgstr "Jūs izvēlējāties neuzstādīt noklusētos kanālu sarakstus."
 
 #
-msgid ""
-"You chose not to install any default settings. You can however install the "
-"default settings later in the settings menu."
-msgstr ""
-"Jūs izvēlējāties neuzstādīt noklusētos iestatījumus. Tomēr Jūs varat "
-"uzstādīt noklusētos iestatījumus vēlāk iestatījumu izvēlnē."
+msgid "You chose not to install any default settings. You can however install the default settings later in the settings menu."
+msgstr "Jūs izvēlējāties neuzstādīt noklusētos iestatījumus. Tomēr Jūs varat uzstādīt noklusētos iestatījumus vēlāk iestatījumu izvēlnē."
 
 #
-msgid ""
-"You chose not to install anything. Please press OK finish the install wizard."
-msgstr ""
-"Jūs izvēlējāties neko neuzstādīt. Lūdzu spiediet OK, lai pabeigtu "
-"uzstādīšanas vedni."
+msgid "You chose not to install anything. Please press OK finish the install wizard."
+msgstr "Jūs izvēlējāties neko neuzstādīt. Lūdzu spiediet OK, lai pabeigtu uzstādīšanas vedni."
 
 msgid "You didn't select a channel to record from."
 msgstr ""
 
 #
-msgid ""
-"You have chosen to backup your settings. Please press OK to start the backup "
-"now."
-msgstr ""
-"Jūs izvēlējāties veidot iestatījumu dublējumkopiju. Lūdzu spiediet OK, lai "
-"sāktu kopijas veidošanu."
+msgid "You have chosen to backup your settings. Please press OK to start the backup now."
+msgstr "Jūs izvēlējāties veidot iestatījumu dublējumkopiju. Lūdzu spiediet OK, lai sāktu kopijas veidošanu."
 
 #
-msgid ""
-"You have chosen to create a new .NFI flasher bootable USB stick. This will "
-"repartition the USB stick and therefore all data on it will be erased."
-msgstr ""
-"Jūs izvēlējāties veidot jaunu .NFI lādētāja sāknējamu USB atmiņu. Tadēļ USB "
-"atmiņa tiks pārdalīta un dzēsti visi tajā esošie dati."
+msgid "You have chosen to create a new .NFI flasher bootable USB stick. This will repartition the USB stick and therefore all data on it will be erased."
+msgstr "Jūs izvēlējāties veidot jaunu .NFI lādētāja sāknējamu USB atmiņu. Tadēļ USB atmiņa tiks pārdalīta un dzēsti visi tajā esošie dati."
 
 #
-msgid ""
-"You have chosen to restore your settings. Enigma2 will restart after "
-"restore. Please press OK to start the restore now."
-msgstr ""
-"You have chosen to restore your settings. Enigma2 will restart after "
-"restore. Please press OK to start the restore now."
+msgid "You have chosen to restore your settings. Enigma2 will restart after restore. Please press OK to start the restore now."
+msgstr "You have chosen to restore your settings. Enigma2 will restart after restore. Please press OK to start the restore now."
 
 #
 #, python-format
@@ -7190,11 +7039,8 @@ msgid "You have to wait %s!"
 msgstr "Jums jāuzgaida %s!"
 
 msgid ""
-"You need a PC connected to your receiver. If you need further instructions, "
-"please visit the website http://www.dm7025.de.\n"
-"Your receiver will now be halted. After you have performed the update "
-"instructions from the website, your new firmware will ask you to restore "
-"your settings."
+"You need a PC connected to your receiver. If you need further instructions, please visit the website http://www.dm7025.de.\n"
+"Your receiver will now be halted. After you have performed the update instructions from the website, your new firmware will ask you to restore your settings."
 msgstr ""
 
 msgid ""
@@ -7215,17 +7061,11 @@ msgid ""
 msgstr ""
 
 #
-msgid ""
-"Your backup succeeded. We will now continue to explain the further upgrade "
-"process."
-msgstr ""
-"Dublējumkopija izveidota. Tagad izskaidrosim turpmāko atjaunināšanas "
-"procesu. "
+msgid "Your backup succeeded. We will now continue to explain the further upgrade process."
+msgstr "Dublējumkopija izveidota. Tagad izskaidrosim turpmāko atjaunināšanas procesu. "
 
 #
-msgid ""
-"Your collection exceeds the size of a single layer medium, you will need a "
-"blank dual layer DVD!"
+msgid "Your collection exceeds the size of a single layer medium, you will need a blank dual layer DVD!"
 msgstr ""
 
 #
@@ -7281,9 +7121,7 @@ msgstr ""
 msgid "Your receiver is shutting down. Please stand by..."
 msgstr ""
 
-msgid ""
-"Your receiver isn't connected to the internet properly. Please check it and "
-"try again."
+msgid "Your receiver isn't connected to the internet properly. Please check it and try again."
 msgstr ""
 
 msgid "Your receiver will restart after pressing OK on your remote control."
@@ -8832,9 +8670,7 @@ msgstr "jā"
 msgid "yes (keep feeds)"
 msgstr "jā (paturēt barotnes)"
 
-msgid ""
-"your receiver might be unusable now. Please consult the manual for further "
-"assistance before rebooting your receiver."
+msgid "your receiver might be unusable now. Please consult the manual for further assistance before rebooting your receiver."
 msgstr ""
 
 #
@@ -8845,10 +8681,3 @@ msgstr "pārslēgt"
 msgid "zapped"
 msgstr "pārslēgts"
 
-#
-#~ msgid "Next"
-#~ msgstr "Nākamais"
-
-#
-#~ msgid "Prev"
-#~ msgstr "Iepriekšējais"
