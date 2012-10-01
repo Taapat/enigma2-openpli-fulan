@@ -38,19 +38,13 @@ class AutoDiseqc(Screen, ConfigListScreen):
 		( 10992, 27500, \
 		eDVBFrontendParametersSatellite.Polarisation_Vertical, eDVBFrontendParametersSatellite.FEC_2_3, \
 		eDVBFrontendParametersSatellite.Inversion_Off, 130, \
-		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
-		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
 		12400, 318, "Hotbird 13.0e"),
-
 		# astra 49 tet
 		( 11766, 27500, \
 		eDVBFrontendParametersSatellite.Polarisation_Horizontal, eDVBFrontendParametersSatellite.FEC_3_4, \
 		eDVBFrontendParametersSatellite.Inversion_Off, 49, \
-		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
-		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
 		12, 85, \
 		"49", "Astra 4.9e"),
-
 		# amos -40 otv
 		( 10806, 30000, \
 		eDVBFrontendParametersSatellite.Polarisation_Horizontal, eDVBFrontendParametersSatellite.FEC_3_4, \
@@ -77,6 +71,24 @@ class AutoDiseqc(Screen, ConfigListScreen):
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
 		16, 112, \
 		"360", "Eutelsat 36A/36B 36.0e"),
+
+		# abs 1 
+		( 12640, 22000, \
+		eDVBFrontendParametersSatellite.Polarisation_Vertical, eDVBFrontendParametersSatellite.FEC_3_4, \
+		eDVBFrontendParametersSatellite.Inversion_Unknown, 750, \
+		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
+		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
+		103, 58, \
+		"750", "ABS 1 75.0e"),
+
+		# yamal 900 bbc
+		( 11057, 26471, \
+		eDVBFrontendParametersSatellite.Polarisation_Vertical, eDVBFrontendParametersSatellite.FEC_3_4, \
+		eDVBFrontendParametersSatellite.Inversion_Unknown, 900, \
+		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
+		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
+		101, 100, \
+		"900", "Yamal 201 90.0e"),
 
 		# abs 1 
 		( 12640, 22000, \
