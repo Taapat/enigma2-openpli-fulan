@@ -397,24 +397,22 @@ class InfoBarNumberZap:
 		service = None
 		serviceHandler = eServiceCenter.getInstance()
 		service = self.searchNumberHelper(serviceHandler, number, bouquet)
-		if config.usage.multibouquet.value:
-			service = self.searchNumberHelper(serviceHandler, number, bouquet) #search the current bouqeut first
-			if not service:
-				bouquet = self.servicelist.bouquet_root
-				bouquetlist = serviceHandler.list(bouquet)
-				if bouquetlist:
+		if config.usage.multibouquet.value and not service:
+			bouquet = self.servicelist.bouquet_root
+			bouquetlist = serviceHandler.list(bouquet)
+			if bouquetlist:
+				bouquet = bouquetlist.getNext()
+				while bouquet.valid():
+					if bouquet.flags & eServiceReference.isDirectory:
+						service = self.searchNumberHelper(serviceHandler, number, bouquet)
+						if service:
+							playable = not (service.flags & (eServiceReference.isMarker|eServiceReference.isDirectory)) or (service.flags & eServiceReference.isNumberedMarker)
+							if not playable:
+								service = None
+							break
+						if config.usage.alternative_number_mode.value:
+							break
 					bouquet = bouquetlist.getNext()
-					while bouquet.valid():
-						if bouquet.flags & eServiceReference.isDirectory:
-							service = self.searchNumberHelper(serviceHandler, number, bouquet)
-							if service:
-								playable = not (service.flags & (eServiceReference.isMarker|eServiceReference.isDirectory)) or (service.flags & eServiceReference.isNumberedMarker)
-								if not playable:
-									service = None
-								break
-							if config.usage.alternative_number_mode.value:
-								break
-						bouquet = bouquetlist.getNext()
 		return service, bouquet
 
 	def selectAndStartService(self, service, bouquet):
@@ -1892,25 +1890,20 @@ class InfoBarInstantRecord:
 						 "\n" + _("No HDD found or HDD not initialized!"), MessageBox.TYPE_ERROR)
 			return
 
+		common =((_("Add recording (stop after current event)"), "event"),
+		(_("Add recording (indefinitely)"), "indefinitely"),
+		(_("Add recording (enter recording duration)"), "manualduration"),
+		(_("Add recording (enter recording endtime)"), "manualendtime"),)
 		if self.isInstantRecordRunning():
-			self.session.openWithCallback(self.recordQuestionCallback, ChoiceBox, \
-				title=_("A recording is currently running.\nWhat do you want to do?"), \
-				list=((_("Stop recording"), "stop"), \
-				(_("Add recording (stop after current event)"), "event"), \
-				(_("Add recording (indefinitely)"), "indefinitely"), \
-				(_("Add recording (enter recording duration)"), "manualduration"), \
-				(_("Add recording (enter recording endtime)"), "manualendtime"), \
-				(_("Change recording (duration)"), "changeduration"), \
-				(_("Change recording (endtime)"), "changeendtime"), \
-				(_("Do nothing"), "no")))
+			title =_("A recording is currently running.\nWhat do you want to do?")
+			list = ((_("Stop recording"), "stop"),) + common + \
+			((_("Change recording (duration)"), "changeduration"),
+			(_("Change recording (endtime)"), "changeendtime"),
+			(_("Do nothing"), "no"),)
 		else:
-			self.session.openWithCallback(self.recordQuestionCallback, ChoiceBox, \
-				title=_("Start recording?"), \
-				list=((_("Add recording (stop after current event)"), "event"), \
-				(_("Add recording (indefinitely)"), "indefinitely"), \
-				(_("Add recording (enter recording duration)"), "manualduration"), \
-				(_("Add recording (enter recording endtime)"), "manualendtime"), \
-				(_("Do not record"), "no")))
+			title=_("Start recording?")
+			list = common + ((_("Do not record"), "no"),)
+		self.session.openWithCallback(self.recordQuestionCallback, ChoiceBox,title=title,list=list)
 
 from Tools.ISO639 import LanguageCodes
 
