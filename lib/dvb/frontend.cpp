@@ -308,6 +308,7 @@ RESULT eDVBFrontendParameters::calculateDifference(const iDVBFrontendParameters 
 		return 0;
 	}
 	case iDVBFrontend::feCable:
+	{
 		eDVBFrontendParametersCable ocable;
 		if (parm->getDVBC(ocable))
 			return -2;
@@ -324,7 +325,9 @@ RESULT eDVBFrontendParameters::calculateDifference(const iDVBFrontendParameters 
 			diff += abs(cable.symbol_rate - ocable.symbol_rate);
 		}
 		return 0;
+	}
 	case iDVBFrontend::feTerrestrial:
+	{
 		eDVBFrontendParametersTerrestrial oterrestrial;
 		if (parm->getDVBT(oterrestrial))
 			return -2;
@@ -359,7 +362,9 @@ RESULT eDVBFrontendParameters::calculateDifference(const iDVBFrontendParameters 
 		else
 			diff = abs(terrestrial.frequency - oterrestrial.frequency) / 1000;
 		return 0;
+	}
 	case iDVBFrontend::feATSC:
+	{
 		eDVBFrontendParametersATSC oatsc;
 		if (parm->getATSC(oatsc))
 			return -2;
@@ -373,6 +378,7 @@ RESULT eDVBFrontendParameters::calculateDifference(const iDVBFrontendParameters 
 			diff = abs(atsc.frequency - oatsc.frequency);
 		}
 		return 0;
+	}
 	default:
 		return -1;
 	}
@@ -390,19 +396,28 @@ RESULT eDVBFrontendParameters::getHash(unsigned long &hash) const
 		return 0;
 	}
 	case iDVBFrontend::feCable:
+	{
 		hash = 0xFFFF0000;
 		hash |= (cable.frequency/1000)&0xFFFF;
 		return 0;
+	}
 	case iDVBFrontend::feTerrestrial:
+	{
 		hash = 0xEEEE0000;
 		hash |= (terrestrial.frequency/1000000)&0xFFFF;
 		return 0;
+	}
 	case iDVBFrontend::feATSC:
+	{
 		hash = 0xDDDD0000;
 		hash |= (atsc.frequency/1000)&0xFFFF;
 		return 0;
+	}
 	default:
+	{
 		return -1;
+	}
+	
 	}
 }
 
@@ -427,16 +442,25 @@ RESULT eDVBFrontendParameters::calcLockTimeout(unsigned int &timeout) const
 		return 0;
 	}
 	case iDVBFrontend::feCable:
+	{
 		timeout = 5000;
 		return 0;
+	}
 	case iDVBFrontend::feTerrestrial:
+	{
 		timeout = 5000;
 		return 0;
+	}
 	case iDVBFrontend::feATSC:
+	{
 		timeout = 5000;
 		return 0;
+	}
 	default:
+	{
 		return -1;
+	}
+	
 	}
 }
 
@@ -526,25 +550,31 @@ int eDVBFrontend::openFrontend()
 			switch (fe_info.type)
 			{
 			case FE_QPSK:
+			{
 				m_delsys[SYS_DVBS] = true;
 #if not defined(__sh__)
 				if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBS2] = true;
 #endif
 				break;
+			}
 			case FE_QAM:
+			{
 #ifdef SYS_DVBC_ANNEX_A
 				m_delsys[SYS_DVBC_ANNEX_A] = true;
 #else
 				m_delsys[SYS_DVBC_ANNEX_AC] = true;
 #endif
 				break;
+			}
 			case FE_OFDM:
+			{
 				m_delsys[SYS_DVBT] = true;
 #if not defined(__sh__)
 				if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBT2] = true;
 #endif
 				break;
 			}
+		}
 #endif
 
 			switch (fe_info.type)
@@ -690,7 +720,8 @@ void eDVBFrontend::feEvent(int w)
 		if (event.status & FE_HAS_LOCK)
 		{
 			state = stateLock;
-		} else
+		} 
+		else
 		{
 			if (m_tuning) {
 				state = stateTuning;
