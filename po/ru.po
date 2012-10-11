@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-30 16:54+0200\n"
-"PO-Revision-Date: 2012-09-22 21:56+0100\n"
+"PO-Revision-Date: 2012-10-08 21:05+0100\n"
 "Last-Translator: Jakob Kais <schpuntik@freenet.de>\n"
 "Language-Team: Russian / ar-p team allrussian.info>\n"
 "Language: ru\n"
@@ -3426,7 +3426,7 @@ msgstr "Дальше"
 
 msgctxt "now/next: 'next' event label"
 msgid "Next"
-msgstr ""
+msgstr "След"
 
 #
 msgid "No"
@@ -4281,7 +4281,7 @@ msgstr "Нажмите желтую кнопку для установки эт�
 
 msgctxt "button label, 'previous screen'"
 msgid "Prev"
-msgstr ""
+msgstr "Пред."
 
 #
 msgid "Preview"
@@ -8750,10 +8750,3 @@ msgstr "переключить"
 msgid "zapped"
 msgstr "переключено"
 
-#
-#~ msgid "Next"
-#~ msgstr "Следующий"
-
-#
-#~ msgid "Prev"
-#~ msgstr "Пред."

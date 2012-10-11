@@ -417,6 +417,8 @@ RESULT eDVBFrontendParameters::getHash(unsigned long &hash) const
 		{
 			return -1;
 		}
+	
+	}
 	}
 }
 
@@ -459,6 +461,8 @@ RESULT eDVBFrontendParameters::calcLockTimeout(unsigned int &timeout) const
 		{
 			return -1;
 		}
+	
+	}
 	}
 }
 
