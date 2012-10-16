@@ -3,24 +3,22 @@
 # by Taapat <taapat@gmail.com> 25-08-2012
 # review by <alexeytech@gmail.com> aka technic
 
-from Plugins.Plugin import PluginDescriptor
-from enigma import iPlayableService, eTimer, iServiceInformation, evfd
-from time import localtime, strftime
 from Components.ActionMap import ActionMap
-from Components.ServiceEventTracker import ServiceEventTracker
 from Components.config import config, ConfigSubsection, getConfigListEntry, ConfigSelection
 from Components.ConfigList import ConfigListScreen
+from Components.ServiceEventTracker import ServiceEventTracker
 from Components.Sources.StaticText import StaticText
+from enigma import iPlayableService, eTimer, iServiceInformation, evfd
+from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from ServiceReference import ServiceReference
+from time import localtime, strftime
 
-config.vfdicon = ConfigSubsection()
-config.vfdicon.displayshow = ConfigSelection(default = "channel", choices = [
+config.plugins.vfdicon = ConfigSubsection()
+config.plugins.vfdicon.displayshow = ConfigSelection(default = "channel", choices = [
 		("channel", _("channel")), ("channel number", _("channel number")), ("clock", _("clock")), ("blank", _("blank")) ])
-displayshow = config.vfdicon.displayshow
 
 class ConfigVFDDisplay(Screen, ConfigListScreen):
-
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.skinName = ["Setup"]
@@ -35,7 +33,7 @@ class ConfigVFDDisplay(Screen, ConfigListScreen):
 				"red": self.cancel,
 			}, -2)
 		cfglist = []
-		cfglist.append(getConfigListEntry(_("Show on VFD Display"), displayshow))
+		cfglist.append(getConfigListEntry(_("Show on VFD display"), config.plugins.vfdicon.displayshow))
 		ConfigListScreen.__init__(self, cfglist)
 
 	def cancel(self):
@@ -48,7 +46,7 @@ class ConfigVFDDisplay(Screen, ConfigListScreen):
 
 	def showVFD(self):
 		main(self)
-		if config.vfdicon.displayshow.value != "clock":
+		if config.plugins.vfdicon.displayshow.value != "clock":
 			VFDIconsInstance.WriteName()
 
 def opencfg(session, **kwargs):
@@ -70,56 +68,48 @@ class VFDIcons:
 		self.__event_tracker = ServiceEventTracker(screen=self,eventmap=
 			{
 				iPlayableService.evUpdatedInfo: self.__evUpdatedInfo,
+				iPlayableService.evStart: self.__evUpdatedInfo,
 			})
 
 	def __evUpdatedInfo(self):
-		self.WriteName()
+		if config.plugins.vfdicon.displayshow.value != "clock":
+			self.WriteName()
 
 	def WriteName(self):
-		if config.vfdicon.displayshow.value == "clock":
-			return
-
-		service = self.session.nav.getCurrentService()
-		if service is not None:
-			print "[VFD Display] write name to VFD"
-			# show blank
-			servicename = "    "
-			audio = service.audioTracks()
-			if audio: # show the mp3 tag
-				n = audio.getNumberOfTracks()
-				for x in range(n):
-					i = audio.getTrackInfo(x)
-					description = i.getDescription();
-					if description.find("MP3") != -1:
-							servicename = service.info().getInfoString(iServiceInformation.sTagTitle)
-					elif config.vfdicon.displayshow.value == "channel number":
-						try: # show the service channel number
+		servicename = "    "
+		if config.plugins.vfdicon.displayshow.value != "blank":
+			service = self.session.nav.getCurrentService()
+			if service:
+				servicename = service.info().getInfoString(iServiceInformation.sTagTitle)
+				if servicename == "":
+					if config.plugins.vfdicon.displayshow.value == "channel number":
+						try:
 							servicename = str(self.session.nav.getCurrentlyPlayingServiceReference(False).getChannelNum())
 						except:
 							servicename = "    "
 							print "[VFD Display] ERROR set channel number"
-					elif config.vfdicon.displayshow.value == "channel":
-						try: # show the service name
+					else:
+						try:
 							servicename = ServiceReference(self.session.nav.getCurrentlyPlayingServiceReference(False)).getServiceName()
 						except:
 							servicename = "    "
 							print "[VFD Display] ERROR set service name"
-			print "[VFD Display] text ", servicename[0:20]
-			evfd.getInstance().vfd_write_string(servicename[0:20])
-			return 1
-
+				elif servicename == "not found":
+					servicename = "PLAY"
+		print "[VFD Display] text ", servicename[0:20]
+		evfd.getInstance().vfd_write_string(servicename[0:20])
+		return 1
 
 	def timerEvent(self):
-		if config.vfdicon.displayshow.value == "clock":
+		if config.plugins.vfdicon.displayshow.value == "clock":
 			tm=localtime()
-			servicename = strftime("%H%M",tm)
-			evfd.getInstance().vfd_write_string(servicename[0:17])
+			servicename = strftime("%H%M", tm)
+			evfd.getInstance().vfd_write_string(servicename[0:4])
 			self.timer.startLongTimer(60-tm.tm_sec)
 
 VFDIconsInstance = None
 
 def main(session, **kwargs):
-	# Create Instance if none present, show Dialog afterwards
 	global VFDIconsInstance
 	if VFDIconsInstance is None:
 		VFDIconsInstance = VFDIcons(session)
