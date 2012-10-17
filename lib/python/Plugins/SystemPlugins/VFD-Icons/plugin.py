@@ -12,7 +12,7 @@ from enigma import iPlayableService, eTimer, iServiceInformation, evfd
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from ServiceReference import ServiceReference
-from time import localtime, strftime
+from time import localtime, strftime, sleep
 
 config.plugins.vfdicon = ConfigSubsection()
 config.plugins.vfdicon.displayshow = ConfigSelection(default = "channel", choices = [
@@ -60,7 +60,7 @@ class VFDIcons:
 		self.timer = eTimer()
 		self.timer.callback.append(self.timerEvent)
 		self.onClose = [ ]
-		self.__event_tracker = ServiceEventTracker(screen=self,eventmap=
+		self.__event_tracker = ServiceEventTracker(screen = self,eventmap =
 			{
 				iPlayableService.evStart: self.WriteName,
 			})
@@ -92,7 +92,7 @@ class VFDIcons:
 
 	def timerEvent(self):
 		if config.plugins.vfdicon.displayshow.value == "clock":
-			tm=localtime()
+			tm = localtime()
 			servicename = strftime("%H%M", tm)
 			evfd.getInstance().vfd_write_string(servicename[0:4])
 			self.timer.startLongTimer(60-tm.tm_sec)
@@ -104,11 +104,12 @@ def main(session, **kwargs):
 	if VFDIconsInstance is None:
 		VFDIconsInstance = VFDIcons(session)
 	if config.plugins.vfdicon.displayshow.value == "clock":
+		sleep(1)
 		VFDIconsInstance.timerEvent()
 	else:
 		VFDIconsInstance.WriteName()
 
 def Plugins(**kwargs):
 	return [
-	PluginDescriptor(name="VFDdisplay", description="VFD display config", where = PluginDescriptor.WHERE_MENU, fnc=VFDdisplay),
-	PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc=main ) ]
+	PluginDescriptor(name = "VFDdisplay", description = "VFD display config", where = PluginDescriptor.WHERE_MENU, fnc = VFDdisplay),
+	PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = main ) ]
