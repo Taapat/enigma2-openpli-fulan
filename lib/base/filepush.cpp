@@ -220,7 +220,10 @@ void eFilePushThread::thread()
 			already_empty=false;
 #endif
 			if (m_sg)
+			{
 				current_span_remaining -= buf_end;
+				m_current_position+=buf_end;
+			}
 		}
 	}
 #if defined(__sh__) // closes video device for the reverse playback workaround
