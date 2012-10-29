@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# by Taapat <taapat@gmail.com> 17-10-2012
+# by Taapat <taapat@gmail.com> 29-10-2012
 # review by <alexeytech@gmail.com> aka technic
 
 from Components.ActionMap import ActionMap
@@ -8,10 +8,11 @@ from Components.config import config, ConfigSubsection, getConfigListEntry, Conf
 from Components.ConfigList import ConfigListScreen
 from Components.ServiceEventTracker import ServiceEventTracker
 from Components.Sources.StaticText import StaticText
-from enigma import iPlayableService, eTimer, iServiceInformation, evfd
+from enigma import iPlayableService, eTimer, evfd
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from ServiceReference import ServiceReference
+from string import atoi
 from time import localtime, strftime, sleep
 
 config.plugins.vfdicon = ConfigSubsection()
@@ -69,24 +70,12 @@ class VFDIcons:
 		if config.plugins.vfdicon.displayshow.value != "clock":
 			servicename = "    "
 			if config.plugins.vfdicon.displayshow.value != "blank":
-				service = self.session.nav.getCurrentService()
-				if service:
-					servicename = service.info().getInfoString(iServiceInformation.sTagTitle)
-					if servicename == "":
-						if config.plugins.vfdicon.displayshow.value == "channel number":
-							try:
-								servicename = str(self.session.nav.getCurrentlyPlayingServiceReference(False).getChannelNum())
-							except:
-								servicename = "    "
-								print "[VFD Display] ERROR set channel number"
-						else:
-							try:
-								servicename = ServiceReference(self.session.nav.getCurrentlyPlayingServiceReference(False)).getServiceName()
-							except:
-								servicename = "    "
-								print "[VFD Display] ERROR set service name"
-					elif servicename == "not found":
+				if config.plugins.vfdicon.displayshow.value == "channel number":
+					servicename = str(self.session.nav.getCurrentlyPlayingServiceReference(False).getChannelNum())
+					if atoi(servicename) > 5470000:
 						servicename = "PLAY"
+				else:
+					servicename = ServiceReference(self.session.nav.getCurrentlyPlayingServiceReference(False)).getServiceName()
 			print "[VFD Display] text ", servicename[0:20]
 			evfd.getInstance().vfd_write_string(servicename[0:20])
 
@@ -111,5 +100,5 @@ def main(session, **kwargs):
 
 def Plugins(**kwargs):
 	return [
-	PluginDescriptor(name = "VFDdisplay", description = "VFD display config", where = PluginDescriptor.WHERE_MENU, fnc = VFDdisplay),
-	PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = main ) ]
+	PluginDescriptor(name="VFDdisplay", description="VFD display config", where = PluginDescriptor.WHERE_MENU, fnc=VFDdisplay),
+	PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc=main ) ]
