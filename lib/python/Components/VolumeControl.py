@@ -51,7 +51,6 @@ class VolumeControl:
 		self.setVolume(-1)
 
 	def setVolume(self, direction):
-		oldvol = self.volctrl.getVolume()
 		if direction > 0:
 			self.volctrl.volumeUp()
 		else:
