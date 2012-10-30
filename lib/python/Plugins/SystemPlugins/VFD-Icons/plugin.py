@@ -70,12 +70,14 @@ class VFDIcons:
 		if config.plugins.vfdicon.displayshow.value != "clock":
 			servicename = "    "
 			if config.plugins.vfdicon.displayshow.value != "blank":
-				if config.plugins.vfdicon.displayshow.value == "channel number":
-					servicename = str(self.session.nav.getCurrentlyPlayingServiceReference(False).getChannelNum())
-					if atoi(servicename) > 5470000:
-						servicename = "PLAY"
-				else:
-					servicename = ServiceReference(self.session.nav.getCurrentlyPlayingServiceReference(False)).getServiceName()
+				service = self.session.nav.getCurrentlyPlayingServiceReference(False)
+				if service:
+					if config.plugins.vfdicon.displayshow.value == "channel number":
+						servicename = str(service.getChannelNum())
+						if atoi(servicename) > 5470000:
+							servicename = "PLAY"
+					else:
+						servicename = ServiceReference(service).getServiceName()
 			print "[VFD Display] text ", servicename[0:20]
 			evfd.getInstance().vfd_write_string(servicename[0:20])
 
@@ -100,5 +102,5 @@ def main(session, **kwargs):
 
 def Plugins(**kwargs):
 	return [
-	PluginDescriptor(name="VFDdisplay", description="VFD display config", where = PluginDescriptor.WHERE_MENU, fnc=VFDdisplay),
-	PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc=main ) ]
+	PluginDescriptor(name = "VFDdisplay", description = "VFD display config", where = PluginDescriptor.WHERE_MENU, fnc = VFDdisplay),
+	PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = main ) ]
