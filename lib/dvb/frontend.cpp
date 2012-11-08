@@ -1633,10 +1633,12 @@ void eDVBFrontend::getFrontendData(ePyObject dest)
 		{
 			tmp = "DVB-C";
 		}
+#if not defined(__sh__)
 		else if (supportsDeliverySystem(SYS_DVBT, true) || supportsDeliverySystem(SYS_DVBT2, true))
 		{
 			tmp = "DVB-T";
 		}
+#endif
 		else if (supportsDeliverySystem(SYS_ATSC, true) || supportsDeliverySystem(SYS_DVBC_ANNEX_B, true))
 		{
 			tmp = "ATSC-T";
@@ -2352,12 +2354,14 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			cmdseq.num++;
 
 			p[cmdseq.num].cmd = DTV_BANDWIDTH_HZ, p[cmdseq.num].u.data = parm.bandwidth, cmdseq.num++;
+#if not defined(__sh__)
 			if (system == SYS_DVBT2)
 			{
 #ifdef DTV_DVBT2_PLP_ID
 				p[cmdseq.num].cmd = DTV_DVBT2_PLP_ID, p[cmdseq.num].u.data = parm.plpid, cmdseq.num++;
 #endif
 			}
+#endif
 		}
 		else if (type == iDVBFrontend::feATSC)
 		{
@@ -2797,6 +2801,7 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 		score = 2;
 	}
 #if not defined(__sh__)
+	else if (type == eDVBFrontend::feTerrestrial)
 	{
 		eDVBFrontendParametersTerrestrial parm;
 		bool can_handle_dvbt, can_handle_dvbt2;
@@ -2822,11 +2827,33 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 		}
 	}
 #else
-	else if (m_type == eDVBFrontend::feTerrestrial)
+	else if (type == eDVBFrontend::feTerrestrial)
 	{
+		eDVBFrontendParametersTerrestrial parm;
+		bool can_handle_dvbt;
+		can_handle_dvbt = supportsDeliverySystem(SYS_DVBT, true);
+		if (feparm->getDVBT(parm) < 0)
+		{
+			return 0;
+		}
+		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T)
+		{
+			return 0;
+		}
 		score = 2;
+		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T)
+		{
+			/* prefer to use a T tuner, try to keep T2 free for T2 transponders */
+			score--;
+		}
 	}
 #endif
+         else if (type == eDVBFrontend::feATSC)
+         {
+                 eDVBFrontendParametersATSC parm;
+                 bool can_handle_atsc, can_handle_dvbc_annex_b;
+                 can_handle_dvbc_annex_b = supportsDeliverySystem(SYS_DVBC_ANNEX_B, true);
+                 can_handle_atsc = supportsDeliverySystem(SYS_ATSC, true);
 		if (feparm->getATSC(parm) < 0)
 		{
 			return 0;
