@@ -846,7 +846,7 @@ void eDVBResourceManager::setFrontendType(int index, const char *type)
 				whitelist.push_back(SYS_DVBT2);
 			}
 #else
-			else if (!strcmp(type, "DVB-T2"))
+			else if (!strcmp(type, "DVB-T"))
 			{
 				whitelist.push_back(SYS_DVBT);
 			}
