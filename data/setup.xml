@@ -128,7 +128,7 @@
 		<item level="1" text="Disk space to reserve for recordings (in GB)" description="Configure the minimum amount of disk space to be available for recordings. When the amount of space drops below this value, deleted items will be removed from the trash can.">config.usage.movielist_trashcan_reserve</item>
 		<item level="2" text="Background delete option" description="Configure on which devices the background delete option should be used.">config.misc.erase_flags</item>
 		<item level="2" text="Background delete speed" description="Configure the speed of the background deletion process. A low speed will have less impact on harddisk performance.">config.misc.erase_speed</item>
-			<item level="2" text="Recording data sync size">config.misc.flush_size</item>
+		<item level="2" text="Offline decode delay (ms)" description="Configure the offline decode delay in ms">config.recording.offline_decode_delay</item>
 	</setup>
 	<setup key="harddisk" title="Harddisk setup" >
 		<item level="0" text="Harddisk standby after" description="Configure the harddisk to go to standby after a specified idle time.">config.usage.hdd_standby</item>

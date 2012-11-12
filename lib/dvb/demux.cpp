@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <signal.h>
 #include <aio.h>
-#include <lib/base/systemsettings.h>
 #include <sys/sysinfo.h>
 #include <sys/mman.h>
 // For SYS_ stuff
@@ -31,22 +30,6 @@ static int determineBufferCount()
 }
 
 static int recordingBufferCount = determineBufferCount();
-
-static size_t flushSize = 0;
-
-// Defined and exported to SWIG in systemsettings.h
-int getFlushSize(void)
-{
-	return (int)flushSize;
-}
-
-void setFlushSize(int size)
-{
-	if (size >= 0)
-	{
-		flushSize = (size_t)size;
-	}
-}
 
 #include <linux/dvb/dmx.h>
 
@@ -590,6 +573,7 @@ int eDVBRecordFileThread::asyncWrite(int len)
 			pr = syscall(SYS_fadvise64, m_fd_dest, offset_last_sync, 0, 0, 0, POSIX_FADV_DONTNEED);
 #elif defined SYS_arm_fadvise64_64
 			pr = syscall(SYS_arm_fadvise64_64, m_fd_dest, offset_last_sync, 0, 0, 0, POSIX_FADV_DONTNEED);
+#endif
 	// Count how many buffers are still "busy". Move backwards from current,
 	// because they can reasonably be expected to finish in that order.
 	AsyncIOvector::iterator i = m_current_buffer;
@@ -612,10 +596,6 @@ int eDVBRecordFileThread::asyncWrite(int len)
 	}
 	++m_buffer_use_histogram[busy_count];
 
-#ifdef SHOW_WRITE_TIME
-	gettimeofday(&starttime, NULL);
-#endif
-	
 	++m_current_buffer;
 	if (m_current_buffer == m_aio.end())
 		m_current_buffer = m_aio.begin();
@@ -651,6 +631,10 @@ void eDVBRecordFileThread::flush()
 	if (m_overflow_count)
 	{
 		eDebug("[eDVBRecordFileThread] Demux buffer overflows: %d", m_overflow_count);
+	}
+	if (m_fd_dest >= 0)
+	{
+		posix_fadvise(m_fd_dest, 0, 0, POSIX_FADV_DONTNEED);
 	}
 }
 
