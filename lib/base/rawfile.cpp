@@ -17,7 +17,6 @@ eRawFile::eRawFile(int packetsize)
 	, m_last_offset(0)
 	, m_nrfiles(0)
 	, m_current_file(0)
-	, m_fadvise_chunk(0)
 {
 }
 
@@ -54,8 +53,6 @@ int eRawFile::close()
 	int ret = 0;
 	if (m_fd >= 0)
 	{
-		posix_fadvise(m_fd, 0, 0, POSIX_FADV_DONTNEED);
-		m_fadvise_chunk = 0;
 		ret = ::close(m_fd);
 		m_fd = -1;
 	}
@@ -88,15 +85,7 @@ ssize_t eRawFile::read(off_t offset, void *buf, size_t count)
 	ret = ::read(m_fd, buf, count);
 
 	if (ret > 0)
-	{
 		m_current_offset = m_last_offset += ret;
-		m_fadvise_chunk += ret;
-		if (m_fadvise_chunk >= 4 * 1024 * 1024)
-		{
-			posix_fadvise(m_fd, 0, m_current_offset - m_base_offset, POSIX_FADV_DONTNEED);
-			m_fadvise_chunk = 0;
-		}
-	}
 	return ret;
 }
 
