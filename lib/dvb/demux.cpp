@@ -433,6 +433,8 @@ protected:
 	eMPEGStreamParserTS m_ts_parser;
 	off_t m_current_offset;
 	int m_fd_dest;
+	off_t offset_last_sync;
+        size_t written_since_last_sync;
 	typedef std::vector<AsyncIO> AsyncIOvector;
 	unsigned char* m_allocated_buffer;
 	AsyncIOvector m_aio;
@@ -447,6 +449,8 @@ eDVBRecordFileThread::eDVBRecordFileThread(int packetsize, int bufferCount):
 	 m_ts_parser(packetsize),
 	 m_current_offset(0),
 	 m_fd_dest(-1),
+	 offset_last_sync(0),
+         written_since_last_sync(0),
 	 m_aio(bufferCount),
 	 m_current_buffer(m_aio.begin()),
 	 m_buffer_use_histogram(bufferCount+1, 0)
@@ -585,11 +589,26 @@ int eDVBRecordFileThread::asyncWrite(int len)
 	diff = (1000000 * (now.tv_sec - starttime.tv_sec)) + now.tv_usec - starttime.tv_usec;
 	eDebug("[eFilePushThreadRecorder] aio_write: %9u us", (unsigned int)diff);
 #endif
-			int pr;
+        // do the flush thing if the user wanted it
+        if (flushSize != 0)
+        {
+                written_since_last_sync += len;
+                if (written_since_last_sync > flushSize)
+                {
+                         int pr;
 #if defined SYS_fadvise64
-			pr = syscall(SYS_fadvise64, m_fd_dest, offset_last_sync, 0, 0, 0, POSIX_FADV_DONTNEED);
+                         pr = syscall(SYS_fadvise64, m_fd_dest, offset_last_sync, 0, 0, 0, POSIX_FADV_DONTNEED);
 #elif defined SYS_arm_fadvise64_64
-			pr = syscall(SYS_arm_fadvise64_64, m_fd_dest, offset_last_sync, 0, 0, 0, POSIX_FADV_DONTNEED);
+                        pr = syscall(SYS_arm_fadvise64_64, m_fd_dest, offset_last_sync, 0, 0, 0, POSIX_FADV_DONTNEED);
+#endif
+                        if (pr != 0)
+                        {
+                                eDebug("[eDVBRecordFileThread] POSIX_FADV_DONTNEED returned %d", pr);
+                        }
+                        offset_last_sync += written_since_last_sync;
+                        written_since_last_sync = 0;
+                }
+        }
 	// Count how many buffers are still "busy". Move backwards from current,
 	// because they can reasonably be expected to finish in that order.
 	AsyncIOvector::iterator i = m_current_buffer;
