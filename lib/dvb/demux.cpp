@@ -7,6 +7,8 @@
 #include <aio.h>
 #include <sys/sysinfo.h>
 #include <sys/mman.h>
+// For SYS_ stuff
+#include <syscall.h>
 
 //#define SHOW_WRITE_TIME
 static int determineBufferCount()
@@ -565,6 +567,12 @@ int eDVBRecordFileThread::asyncWrite(int len)
 	gettimeofday(&now, NULL);
 	diff = (1000000 * (now.tv_sec - starttime.tv_sec)) + now.tv_usec - starttime.tv_usec;
 	eDebug("[eFilePushThreadRecorder] aio_write: %9u us", (unsigned int)diff);
+#endif
+			int pr;
+#if defined SYS_fadvise64
+			pr = syscall(SYS_fadvise64, m_fd_dest, offset_last_sync, 0, 0, 0, POSIX_FADV_DONTNEED);
+#elif defined SYS_arm_fadvise64_64
+			pr = syscall(SYS_arm_fadvise64_64, m_fd_dest, offset_last_sync, 0, 0, 0, POSIX_FADV_DONTNEED);
 #endif
 	// Count how many buffers are still "busy". Move backwards from current,
 	// because they can reasonably be expected to finish in that order.
