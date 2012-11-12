@@ -43,6 +43,7 @@ is usually caused by not marking PSignals as immutable.
 #include <lib/base/etpm.h>
 #include <lib/base/nconfig.h>
 #include <lib/base/message.h>
+#include <lib/base/systemsettings.h>
 #include <lib/driver/rc.h>
 #include <lib/service/event.h>
 #include <lib/service/iservice.h>
@@ -184,6 +185,7 @@ typedef long time_t;
 %include <lib/base/message.h>
 %include <lib/base/etpm.h>
 %include <lib/base/nconfig.h>
+%include <lib/base/systemsettings.h>
 %include <lib/driver/rc.h>
 %include <lib/gdi/fb.h>
 %include <lib/gdi/font.h>
