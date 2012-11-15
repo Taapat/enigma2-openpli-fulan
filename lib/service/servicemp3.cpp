@@ -1059,14 +1059,19 @@ RESULT eServiceMP3::seekRelative(int direction, pts_t to)
 #ifndef ENABLE_LIBEPLAYER3
 	if (!m_gst_playbin)
 		return -1;
-#endif
+
 	pts_t ppos;
 	if (getPlayPosition(ppos) < 0) return -1;
 	ppos += to * direction;
 	if (ppos < 0)
 		ppos = 0;
 	return seekTo(ppos);
-}
+#else
+	float pos = direction * to / 90000.0;
+	if (player && player->playback)
+		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
+	return 0;
+#endif}
 
 #ifndef ENABLE_LIBEPLAYER3
 gint eServiceMP3::match_sinktype(GstElement *element, gpointer type)
