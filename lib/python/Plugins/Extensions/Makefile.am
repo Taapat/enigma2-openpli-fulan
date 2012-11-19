@@ -1,13 +1,10 @@
 installdir = $(pkglibdir)/python/Plugins/Extensions
 
 SUBDIRS = CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI ModemSettings
- 
-if ENABLE_TF7700
-SUBDIRS += TopfieldVFD
+if ENABLE_SPARK
+if ENABLE_SPARK7162
+SUBDIRS += SparkVFD
 endif
-
-if ENABLE_CUBEREVO
-SUBDIRS += CuberevoVFD
 endif
 
 if HAVE_LIBDDVD
