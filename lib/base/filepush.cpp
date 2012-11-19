@@ -228,6 +228,9 @@ void eFilePushThread::thread()
 #if defined(__sh__) // Fix to ensure that event evtEOF is called at end of playbackl part 3/3
 			already_empty=false;
 #endif
+			m_current_position += buf_end;
+			bytes_read += buf_end;
+
 			if (m_sg)
 			{
 				current_span_remaining -= buf_end;
