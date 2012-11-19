@@ -75,31 +75,31 @@ class SparkVFDSetup(ConfigListScreen, Screen):
 			x[1].save()
 
 		if config.plugins.SparkVFD.showClock.getValue():
-			cubeVfd.enableClock()
+			sparVfd.enableClock()
 		else:
-			cubeVfd.disableClock()
+			sparVfd.disableClock()
 
 #		if config.plugins.SparkVFD.setDaylight.getValue():
-#			cubeVfd.enableDaylight()
+#			sparVfd.enableDaylight()
 #		else:
-#			cubeVfd.disableDaylight()
+#			sparVfd.disableDaylight()
 
 		if config.plugins.SparkVFD.timeMode.value == "24h":
-			cubeVfd.enableTimeMode()
+			sparVfd.enableTimeMode()
 		else:
-			cubeVfd.disableTimeMode()
+			sparVfd.disableTimeMode()
 
 		# enable/disable fan activity
 		if config.plugins.SparkVFD.setFan.getValue():
-			cubeVfd.enableFan()
+			sparVfd.enableFan()
 		else:
-			cubeVfd.disableFan()
+			sparVfd.disableFan()
 
 		# enable/disable led activity
 		if config.plugins.SparkVFD.setLed.getValue():
-			cubeVfd.enableLed()
+			sparVfd.enableLed()
 		else:
-			cubeVfd.disableLed()
+			sparVfd.disableLed()
 
 	# set the brightness
 		brightness = 3
@@ -284,24 +284,24 @@ class SparkVFD:
 def main(session, **kwargs):
 	session.open(SparkVFDSetup)
 
-cubeVfd = None
+sparVfd = None
 gReason = -1
 mySession = None
 
-def controlcubeVfd():
-	global cubeVfd
+def controlsparVfd():
+	global sparVfd
 	global gReason
 	global mySession
 
-	if gReason == 0 and mySession != None and cubeVfd == None:
+	if gReason == 0 and mySession != None and sparVfd == None:
 		print "Starting SparkVFD"
-		cubeVfd = SparkVFD(mySession)
-	elif gReason == 1 and cubeVfd != None:
+		sparVfd = SparkVFD(mySession)
+	elif gReason == 1 and sparVfd != None:
 		print "Stopping SparkVFD"
-		cubeVfd = None
+		sparVfd = None
 
 def autostart(reason, **kwargs):
-	global cubeVfd
+	global sparVfd
 	global gReason
 	global mySession
 
@@ -310,7 +310,7 @@ def autostart(reason, **kwargs):
 		mySession = kwargs["session"]
 	else:
 		gReason = reason
-	controlcubeVfd()
+	controlsparVfd()
 
 def Plugins(**kwargs):
 	return [ PluginDescriptor(name="SparkVFD", description="Change VFD display settings", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main),
