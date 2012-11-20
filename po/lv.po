@@ -5268,7 +5268,7 @@ msgstr ""
 
 msgid "The backup failed. Please choose a different backup location."
 msgstr ""
-"Dublējumkopēšana neizdevās. Lūdzu izvēlieties citu vietu dublējumkopijai. "
+"Dublējumkopēšana neizdevās. Lūdzu izvēlieties citu vietu rezerves kopijai. "
 
 #, python-format
 msgid ""
@@ -6398,7 +6398,7 @@ msgstr ""
 "Vai tiešām atjaunot rūpnīcas uzstādījumus?"
 
 msgid "Where do you want to backup your settings?"
-msgstr "Kur Jūs vēlaties veidot savu iestatījumu dublējumkopiju?"
+msgstr "Kur Jūs vēlaties veidot savu iestatījumu rezerves kopiju?"
 
 msgid "Where to save temporary timeshift recordings?"
 msgstr "Kur saglabāt pagaidu laikaiztures ierakstus?"
@@ -6455,7 +6455,7 @@ msgid "Yes, and delete this movie"
 msgstr "Jā, un dzēst šo filmu"
 
 msgid "Yes, backup my settings!"
-msgstr "Jā, veidot iestatījumu dublējumkopiju!"
+msgstr "Jā, veidot iestatījumu rezerves kopiju!"
 
 msgid "Yes, do a manual scan now"
 msgstr "Jā, veikt manuālo meklēšanu tagad"
@@ -6516,7 +6516,7 @@ msgid ""
 "You have chosen to backup your settings. Please press OK to start the backup "
 "now."
 msgstr ""
-"Jūs izvēlējāties veidot iestatījumu dublējumkopiju. Lūdzu spiediet Labi, lai "
+"Jūs izvēlējāties veidot iestatījumu rezerves kopiju. Lūdzu spiediet Labi, lai "
 "sāktu kopijas veidošanu."
 
 msgid ""
@@ -6552,7 +6552,7 @@ msgid ""
 "Your backup succeeded. We will now continue to explain the further upgrade "
 "process."
 msgstr ""
-"Dublējumkopija izveidota. Tagad izskaidrosim turpmāko atjaunināšanas "
+"rezerves kopija izveidota. Tagad izskaidrosim turpmāko atjaunināšanas "
 "procesu. "
 
 msgid ""
@@ -7641,16 +7641,16 @@ msgstr "pārslēgts"
 #~ msgstr "Pievienot grāmatzīmi"
 
 #~ msgid "Backup"
-#~ msgstr "Dublējumkopija"
+#~ msgstr "rezerves kopija"
 
 #~ msgid "Backup Location"
-#~ msgstr "Dublējumkopijas vieta"
+#~ msgstr "rezerves kopijas vieta"
 
 #~ msgid "Backup Mode"
-#~ msgstr "Dublējumkopijas režīms"
+#~ msgstr "rezerves kopijas režīms"
 
 #~ msgid "Backup done."
-#~ msgstr "Dublējumkopija izveidota."
+#~ msgstr "rezerves kopija izveidota."
 
 #~ msgid ""
 #~ "By pressing the OK Button on your remote control, the info bar is being "
@@ -7687,7 +7687,7 @@ msgstr "pārslēgts"
 #~ "Do you want to backup now?\n"
 #~ "After pressing OK, please wait!"
 #~ msgstr ""
-#~ "Vai vēlaties veidot dublējumkopiju?\n"
+#~ "Vai vēlaties veidot rezerves kopiju?\n"
 #~ "Nospiediet OK un gaidiet!"
 
 #~ msgid "Do you want to view a tutorial?"
