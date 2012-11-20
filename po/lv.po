@@ -7641,16 +7641,16 @@ msgstr "pārslēgts"
 #~ msgstr "Pievienot grāmatzīmi"
 
 #~ msgid "Backup"
-#~ msgstr "rezerves kopija"
+#~ msgstr "Rezerves kopija"
 
 #~ msgid "Backup Location"
-#~ msgstr "rezerves kopijas vieta"
+#~ msgstr "Rezerves kopijas vieta"
 
 #~ msgid "Backup Mode"
-#~ msgstr "rezerves kopijas režīms"
+#~ msgstr "Rezerves kopijas režīms"
 
 #~ msgid "Backup done."
-#~ msgstr "rezerves kopija izveidota."
+#~ msgstr "Rezerves kopija izveidota."
 
 #~ msgid ""
 #~ "By pressing the OK Button on your remote control, the info bar is being "
