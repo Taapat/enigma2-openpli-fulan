@@ -1639,10 +1639,12 @@ void eDVBFrontend::getFrontendData(ePyObject dest)
 		}
 #if not defined(__sh__)
 		else if (supportsDeliverySystem(SYS_DVBT, true) || supportsDeliverySystem(SYS_DVBT2, true))
+#else
+		else if (supportsDeliverySystem(SYS_DVBT, true))
+#endif
 		{
 			tmp = "DVB-T";
 		}
-#endif
 		else if (supportsDeliverySystem(SYS_ATSC, true) || supportsDeliverySystem(SYS_DVBC_ANNEX_B, true))
 		{
 			tmp = "ATSC-T";

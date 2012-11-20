@@ -710,6 +710,9 @@ void eDVBResourceManager::addAdapter(iDVBAdapter *adapter, bool front)
 			// we must link all dvb-t frontends ( for active antenna voltage )
 #if not defined(__sh__)
 			if (frontend->supportsDeliverySystem(SYS_DVBT, false) || frontend->supportsDeliverySystem(SYS_DVBT2, false))
+#else
+			if (frontend->supportsDeliverySystem(SYS_DVBT, false))
+#endif
 			{
 				if (prev_dvbt_frontend)
 				{
@@ -718,7 +721,6 @@ void eDVBResourceManager::addAdapter(iDVBAdapter *adapter, bool front)
 				}
 				prev_dvbt_frontend = new_fe;
 			}
-#endif
 		}
 	}
 
@@ -735,6 +737,9 @@ void eDVBResourceManager::addAdapter(iDVBAdapter *adapter, bool front)
 			// we must link all dvb-t frontends ( for active antenna voltage )
 #if not defined(__sh__)
 			if (frontend->supportsDeliverySystem(SYS_DVBT, false) || frontend->supportsDeliverySystem(SYS_DVBT2, false))
+#else
+			if (frontend->supportsDeliverySystem(SYS_DVBT, false))
+#endif
 			{
 				if (prev_dvbt_frontend)
 				{
@@ -743,7 +748,6 @@ void eDVBResourceManager::addAdapter(iDVBAdapter *adapter, bool front)
 				}
 				prev_dvbt_frontend = new_fe;
 			}
-#endif
 		}
 	}
 
