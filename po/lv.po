@@ -600,9 +600,6 @@ msgstr ""
 msgid "Advanced options"
 msgstr "Paplašinātās opcijas"
 
-msgid "Advanced pptions"
-msgstr "Paplašinātās opcijas"
-
 msgid "Advanced restore"
 msgstr "Paplašinātā atjaunošana"
 
@@ -666,7 +663,7 @@ msgstr "Datnes nosaukums nevar būt tukšs"
 msgid "An error occurred while downloading the packetlist. Please try again."
 msgstr "Kļūda lejupielādējot pakotņu sarakstu. Lūdzu mēģiniet vēlreiz."
 
-msgid "An unknown error occured!"
+msgid "An unknown error occurred!"
 msgstr "Nezināma kļūda!"
 
 msgid "Any activity"
@@ -1338,7 +1335,7 @@ msgstr ""
 msgid "Configure the second subtitle language."
 msgstr "iet uz nākamo subtitru valodu"
 
-msgid "Configure the secundary EPG language."
+msgid "Configure the secondary EPG language."
 msgstr ""
 
 msgid "Configure the sharpness of the video scaling."
@@ -1931,12 +1928,6 @@ msgstr "Lejuplādēt"
 msgid "Download %s from server"
 msgstr "Lejuplādēt %s no servera"
 
-msgid "Download .NFI-Files for USB-Flasher"
-msgstr "Lejuplādēt .NFI-datnes priekš USB-ielādes"
-
-msgid "Download .NFI-Files for USB-flasher"
-msgstr "Lejuplādēt .NFI-datnes priekš USB-ielādes"
-
 msgid "Download .NFI-files for USB-flasher"
 msgstr "Lejuplādēt .NFI-datnes priekš USB-ielādes"
 
@@ -2330,7 +2321,7 @@ msgstr "OK pogas funkcija"
 
 msgid ""
 "GUI needs a restart to apply a new skin\n"
-"Do you want to Restart the GUI now?"
+"Do you want to restart the GUI now?"
 msgstr ""
 "GUI nepieciešams restartēt, lai lietotu jauno ādiņu\n"
 "Vai vēlaties restartēt GUI tagad?"
@@ -4550,7 +4541,7 @@ msgstr "Sūtīt DiSEqC"
 msgid "Send DiSEqC only on satellite change"
 msgstr "Sūtīt DiSEqC tikai mainoties pavadonim"
 
-msgid "Seperate titles with a main menu"
+msgid "Separate titles with a main menu"
 msgstr "Atdalīt nosaukumus ar galveno izvēlni"
 
 msgid "Sequence repeat"
@@ -6130,7 +6121,7 @@ msgstr "Trešdiena"
 msgid "Weekday"
 msgstr "Nedēļas diena"
 
-msgid "Weigthed position"
+msgid "Weighted position"
 msgstr ""
 
 msgid ""
@@ -6418,7 +6409,7 @@ msgstr "Bezvadu tīkls"
 msgid "Wireless network"
 msgstr "Bezvadu tīkls"
 
-msgid "Wireless network configuartion..."
+msgid "Wireless network configuration..."
 msgstr "Tīkla konfigurācija..."
 
 msgid "Wireless network connection setup"

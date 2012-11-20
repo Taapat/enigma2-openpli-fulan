@@ -587,10 +587,6 @@ msgstr ""
 msgid "Advanced options"
 msgstr "Lisavalikud"
 
-#, fuzzy
-msgid "Advanced pptions"
-msgstr "Lisavalikud"
-
 msgid "Advanced restore"
 msgstr "Laiendatud taastamine"
 
@@ -664,7 +660,7 @@ msgstr "Tühi failinimi ei ole lubatud."
 msgid "An error occurred while downloading the packetlist. Please try again."
 msgstr "Viga nimekirja allalaadimisel.Palun proovi uuesti."
 
-msgid "An unknown error occured!"
+msgid "An unknown error occurred!"
 msgstr "Tundmatu viga!"
 
 msgid "Any activity"
@@ -1356,7 +1352,7 @@ msgstr ""
 msgid "Configure the second subtitle language."
 msgstr "vali järgmine subtiiter"
 
-msgid "Configure the secundary EPG language."
+msgid "Configure the secondary EPG language."
 msgstr ""
 
 msgid "Configure the sharpness of the video scaling."
@@ -1972,14 +1968,6 @@ msgstr "Allalaadimine"
 msgid "Download %s from server"
 msgstr "Laadi alla %s serverist"
 
-msgid "Download .NFI-Files for USB-Flasher"
-msgstr "Allalaadimine .NFI-failid USB-le"
-
-#, fuzzy
-msgid "Download .NFI-Files for USB-flasher"
-msgstr "Allalaadimine .NFI-failid USB-le"
-
-#, fuzzy
 msgid "Download .NFI-files for USB-flasher"
 msgstr "Allalaadimine .NFI-failid USB-le"
 
@@ -2392,7 +2380,7 @@ msgstr ""
 
 msgid ""
 "GUI needs a restart to apply a new skin\n"
-"Do you want to Restart the GUI now?"
+"Do you want to restart the GUI now?"
 msgstr ""
 "Kas taaskäivitada kasutajaliides\n"
 "uue välimuse aktiveerimiseks?"
@@ -4750,7 +4738,7 @@ msgstr "DiSEqC"
 msgid "Send DiSEqC only on satellite change"
 msgstr "Saada DiSEqC anult satelliidi vahetamisel"
 
-msgid "Seperate titles with a main menu"
+msgid "Separate titles with a main menu"
 msgstr "Eraldi pealkirjad koos peamenüüga"
 
 msgid "Sequence repeat"
@@ -6407,7 +6395,7 @@ msgstr "Kolmapäev"
 msgid "Weekday"
 msgstr "Nädalapäev"
 
-msgid "Weigthed position"
+msgid "Weighted position"
 msgstr ""
 
 #, fuzzy
@@ -6685,7 +6673,7 @@ msgid "Wireless network"
 msgstr "Traadita võrk"
 
 #, fuzzy
-msgid "Wireless network configuartion..."
+msgid "Wireless network configuration..."
 msgstr "Võrgu häälestamine"
 
 msgid "Wireless network connection setup"
