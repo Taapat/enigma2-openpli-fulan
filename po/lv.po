@@ -595,9 +595,6 @@ msgstr ""
 "aizvērtu attēla precizēšanu vai izmantojiet ciparu taustiņus, lai izvēlētos "
 "citus testēšanas rastrus."
 
-msgid "Advanced options"
-msgstr "Paplašinātās opcijas"
-
 msgid "Advanced pptions"
 msgstr "Paplašinātās opcijas"
 
@@ -1940,12 +1937,6 @@ msgstr "Lejuplādēt"
 #, python-format
 msgid "Download %s from server"
 msgstr "Lejuplādēt %s no servera"
-
-msgid "Download .NFI-Files for USB-Flasher"
-msgstr "Lejuplādēt .NFI-datnes priekš USB-ielādes"
-
-msgid "Download .NFI-Files for USB-flasher"
-msgstr "Lejuplādēt .NFI-datnes priekš USB-ielādes"
 
 msgid "Download .NFI-files for USB-flasher"
 msgstr "Lejuplādēt .NFI-datnes priekš USB-ielādes"
@@ -6601,7 +6592,7 @@ msgid ""
 "Please wait until your receiver reboots\n"
 "This may take a few minutes"
 msgstr ""
-"Jūsu fronprocesors tiks atjaunots\n"
+"Jūsu frontprocesors tiks atjaunots\n"
 "Lūdzu uzgaidiet kamēr jūsu uztvērējs pārstartēsies\n"
 "Tas var prasīt kādu laiku"
 
