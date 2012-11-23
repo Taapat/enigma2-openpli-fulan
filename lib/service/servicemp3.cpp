@@ -1012,11 +1012,6 @@ RESULT eServiceMP3::seekTo(pts_t to)
 		m_decoder_time_valid_state = 0;
 		ret = seekToImpl(to);
 	}
-#else
-	float pos = to/90000.0;
-	if (player && player->playback)
-		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
-	ret=0;
 #endif
 
 	return ret;
@@ -1073,16 +1068,15 @@ RESULT eServiceMP3::seekRelative(int direction, pts_t to)
 #ifndef ENABLE_LIBEPLAYER3
 	if (!m_gst_playbin)
 		return -1;
-#endif
+
 	pts_t ppos;
 	if (getPlayPosition(ppos) < 0) return -1;
 	ppos += to * direction;
 	if (ppos < 0)
 		ppos = 0;
-#ifndef ENABLE_LIBEPLAYER3
 	return seekTo(ppos);
 #else
-	float pos = ppos/90000.0;
+	float pos = direction*(to/90000.0);
 	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
 
