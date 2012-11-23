@@ -1081,7 +1081,6 @@ RESULT eServiceMP3::seekRelative(int direction, pts_t to)
 		ppos = 0;
 	return seekTo(ppos);
 }
-}
 
 #ifndef ENABLE_LIBEPLAYER3
 gint eServiceMP3::match_sinktype(GstElement *element, gpointer type)
