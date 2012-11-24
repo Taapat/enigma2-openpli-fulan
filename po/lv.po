@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-16 18:48+0100\n"
-"PO-Revision-Date: 2012-11-22 23:15+0200\n"
+"PO-Revision-Date: 2012-11-24 13:02+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
 "Language: lv_LV\n"
@@ -492,10 +492,10 @@ msgid "Accesspoint:"
 msgstr "Piekļuves punkts:"
 
 msgid "Action on long powerbutton press"
-msgstr "Darbība pēc ilgstošas ieslēgšanas taustiņa nospiešanas"
+msgstr "Ilgstoši nospiežot izslēgšanas taustiņu"
 
 msgid "Action on short powerbutton press"
-msgstr "Darbība pēc īsas ieslēgšanas taustiņa nospiešanas"
+msgstr "Īsi nospiežot izslēgšanas taustiņu"
 
 msgid "Action:"
 msgstr "Darbība:"
@@ -649,6 +649,9 @@ msgstr "Alpha"
 msgid "Alternative"
 msgstr "pievienot alternatīvas"
 
+msgid "Alternative SoftCam Manager"
+msgstr "Alternatīvais SoftCam menedžeris"
+
 msgid "Alternative numbering mode"
 msgstr "Alternatīvais radio režīms"
 
@@ -715,6 +718,13 @@ msgid ""
 msgstr ""
 "Vai tiešām vēlaties atjaunot dublējumkopiju?\n"
 "Uztvērējs restartēsies pēc atjaunošanas!"
+
+msgid ""
+"Are you sure you want to save this configuration?\n"
+"\n"
+msgstr ""
+"Vai tiešām vēlaties saglabāt šos uzstādījumus?\n"
+"\n"
 
 msgid "Artist"
 msgstr "Izpildītājs"
@@ -831,7 +841,7 @@ msgid "Background color"
 msgstr "Fona krāsa"
 
 msgid "Background delete option"
-msgstr "Dzēšanas fonā iestatījumi"
+msgstr "Dzēšanu fonā lieto"
 
 msgid "Background delete speed"
 msgstr "Dzēšanas fonā ātrums"
@@ -861,19 +871,19 @@ msgid "Begin time"
 msgstr "Sākuma laiks"
 
 msgid "Behavior of 'pause' when paused"
-msgstr "Pauzes veids"
+msgstr "Kad pauzē nospiež taustiņu 'pauze'"
 
 msgid "Behavior of 0 key in PiP-mode"
 msgstr "0 taustiņa nozīme PiP režīmā"
 
 msgid "Behavior when a movie is started"
-msgstr "Darbība, kad filma ir palaista"
+msgstr "Kad filma ir palaista"
 
 msgid "Behavior when a movie is stopped"
-msgstr "Darbība kad filma ir apturēta"
+msgstr "Kad filma ir apturēta"
 
 msgid "Behavior when a movie reaches the end"
-msgstr "Darbība kad filma beidzas"
+msgstr "Kad filma beidzas"
 
 msgid "Bitrate:"
 msgstr "Bitreits:"
@@ -1782,6 +1792,13 @@ msgstr "Mape"
 msgid "Directory %s does not exist."
 msgstr "Mape %s neeksistē."
 
+msgid ""
+"Directory %s does not exist!\n"
+"Please set the correct directory path!"
+msgstr ""
+"Mape %s neeksistē!\n"
+"Lūdzu norādiet pareizu ceļu uz mapi!"
+
 msgid "Directory browser"
 msgstr "Mapju pārlūks"
 
@@ -2262,7 +2279,7 @@ msgid "Fast epoch"
 msgstr "Ātrā epoha"
 
 msgid "Fast forward speeds"
-msgstr "Ātrās pārtīšanas ātrumi"
+msgstr "Pārtīšanas ātrumi"
 
 msgid "Favourites"
 msgstr "Favorīti"
@@ -2549,7 +2566,7 @@ msgid "ISO path"
 msgstr "ISO ceļš"
 
 msgid "Icons"
-msgstr "Ikonas"
+msgstr "Ikona"
 
 msgid ""
 "If you see this, something is wrong with\n"
@@ -3892,7 +3909,7 @@ msgid "Prefer AC3 track"
 msgstr "Ieteicamais AC3 celiņš"
 
 msgid "Prefer audio track stored by service"
-msgstr "Ieteicamais audio celiņš saglabāts kanālam "
+msgstr "Katram kanālam saglabāt ieteicamo audio celiņu"
 
 msgid "Prefer graphical DVB subtitles"
 msgstr "Ieteicamie grafiskie DVB subtitri "
@@ -3901,7 +3918,7 @@ msgid "Prefer subtitles for hearing impaired"
 msgstr "Ieteicamie subtitri cilvēkiem ar dzirdes traucējumiem"
 
 msgid "Prefer subtitles stored by service"
-msgstr "Ieteicamie subtitri saglabāti kanālam"
+msgstr "Katram kanālam saglabāt ieteicamos subtitrus"
 
 msgid "Preferred tuner"
 msgstr "Ieteicamais uztvērējs"
@@ -4075,7 +4092,7 @@ msgid "Reception settings"
 msgstr "Uztveršanas iestatījumi"
 
 msgid "Record"
-msgstr "Ierakstīt"
+msgstr "Ieraksti"
 
 #, python-format
 msgid "Record time limited due to conflicting timer %s"
@@ -4787,7 +4804,7 @@ msgid "Show shutdown menu"
 msgstr "Rādīt izslēgšanas izvēlni"
 
 msgid "Show status icons in movie list"
-msgstr "Rādīt statusa ikonu filmu sarakstā"
+msgstr "Statusa ikona filmu sarakstā"
 
 msgid "Show status icons in movielist"
 msgstr "Rādīt statusa ikonu filmu sarakstā"
@@ -4809,6 +4826,9 @@ msgstr "Jaukts repertuārs"
 
 msgid "Shutdown"
 msgstr "Izslēgt"
+
+msgid "Show on VFD display"
+msgstr "VFD displejā tiks rādīts"
 
 msgid "Shutdown receiver after"
 msgstr "Izslēgt uztvērēju pēc"
@@ -4912,8 +4932,20 @@ msgstr "Izpilda"
 msgid "Social/Political/Economics"
 msgstr "Sociālie/Politika/Ekonomika"
 
+msgid "SoftCam config directory"
+msgstr "SoftCam konfigurācijas failu mape"
+
 msgid "SoftCam / CI"
 msgstr "SoftCam / CI"
+
+msgid "SoftCam directory"
+msgstr "SoftCam mape"
+
+msgid "SoftCam manager"
+msgstr "SoftCam menedžeris"
+
+msgid "SoftCam path configuration"
+msgstr "SoftCam ceļu konfigurācija"
 
 msgid "Softcam type"
 msgstr "Softcam tips"
@@ -5020,6 +5052,9 @@ msgstr "Sākt bezsaistes atkodēšanu"
 msgid "Start recording?"
 msgstr "Sākt ierakstu?"
 
+msgid "Start, stop, restart SoftCams, change settings."
+msgstr "Startē, apstādina, restartē SoftCam, maina uzstādījumus."
+
 msgid "Start test"
 msgstr "Sākt pārbaudi"
 
@@ -5117,7 +5152,7 @@ msgid "Subtitle alignment"
 msgstr "Subtitru izvēle"
 
 msgid "Subtitle border width"
-msgstr "Subtitru apmale ar"
+msgstr "Subtitru apmales biezums"
 
 msgid "Subtitle delay when timing lacks"
 msgstr "Subtitru aizture kad nav norādīta laika aizture"
@@ -5979,6 +6014,9 @@ msgstr "Vertikālās noskaņošanas ātrums"
 
 msgid "VFD Display"
 msgstr "VFD displejs"
+
+msgid "VFD display configuration"
+msgstr "VFD displeja uzstādījumi"
 
 msgid "Video PID"
 msgstr "Video PID"
@@ -6895,6 +6933,9 @@ msgstr "melns un balts"
 msgid "blacklist"
 msgstr "melnais saraksts"
 
+msgid "blank"
+msgstr "nekas"
+
 msgid "blue"
 msgstr "zils"
 
@@ -6910,6 +6951,12 @@ msgstr "multfilmas/leļļu"
 msgid "center"
 msgstr "centrs"
 
+msgid "channel"
+msgstr "kanāls"
+
+msgid "channel number"
+msgstr "kanāla numurs"
+
 msgid "chapters"
 msgstr "nodaļas"
 
@@ -6921,6 +6968,9 @@ msgstr "cirkulārā kreisā"
 
 msgid "circular right"
 msgstr "cirkulārā labā"
+
+msgid "clock"
+msgstr "pulkstenis"
 
 msgid "comedy"
 msgstr "komēdija"
