@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-16 18:48+0100\n"
-"PO-Revision-Date: 2012-11-24 13:02+0200\n"
+"PO-Revision-Date: 2012-11-24 19:46+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
 "Language: lv_LV\n"
@@ -4258,6 +4258,9 @@ msgstr "Atkārtot testu"
 msgid "Restart your network connection and interfaces.\n"
 msgstr "Restartēt tīkla konfigurāciju un interfeisus. \n"
 
+msgid "Restarting %s"
+msgstr "Restartē %s"
+
 msgid "Restore"
 msgstr "Atjaunot"
 
@@ -5043,6 +5046,9 @@ msgstr "Apturēt ventilatora %d PWM"
 msgid "Standby fan %d voltage"
 msgstr "Apturēt ventilatora %d spriegumu"
 
+msgid "Start"
+msgstr "Palaist"
+
 msgid "Start from the beginning"
 msgstr "Sākt no sākuma"
 
@@ -5069,6 +5075,9 @@ msgstr "Sākt ar saraksta logu"
 
 msgid "Starting on"
 msgstr "Palaižas uz"
+
+msgid "Starting %s"
+msgstr "Startē %s"
 
 msgid "Step east"
 msgstr "Soli uz austrumiem"
@@ -5123,6 +5132,9 @@ msgstr "Apturēt laika aizturi?"
 
 msgid "Stopped"
 msgstr "Apturēt"
+
+msgid "Stopping %s"
+msgstr "Aptur %s"
 
 msgid "Store at index"
 msgstr "Saglabāt indeksā"
