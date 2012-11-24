@@ -51,7 +51,7 @@ def opencfg(session, **kwargs):
 
 def VFDdisplay(menuid, **kwargs):
 	if menuid == "system":
-		return [("VFD Display", opencfg, "vfd_display", 44)]
+		return [(_("VFD Display"), opencfg, "vfd_display", 44)]
 	else:
 		return []
 
@@ -102,5 +102,5 @@ def main(session, **kwargs):
 
 def Plugins(**kwargs):
 	return [
-	PluginDescriptor(name = "VFDdisplay", description = "VFD display config", where = PluginDescriptor.WHERE_MENU, fnc = VFDdisplay),
+	PluginDescriptor(name = _("VFD Display"), description = _("VFD display config"), where = PluginDescriptor.WHERE_MENU, fnc = VFDdisplay),
 	PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = main ) ]
