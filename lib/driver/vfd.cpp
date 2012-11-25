@@ -44,7 +44,7 @@ struct vfd_ioctl_data
 	unsigned char length;
 };
 
-#ifdef PLATFORM_SPARK || PLATFORM_SPARK7162
+#if defined(PLATFORM_SPARK) || defined(PLATFORM_SPARK7162)
 struct set_icon_s {
 	int icon_nr;
 	int on;
@@ -443,23 +443,19 @@ void evfd::vfd_set_icon(tvfd_icon id, bool onoff, bool force)
 	icon_onoff[id] = onoff;
 	if (!blocked || force)
 	{
-#ifdef PLATFORM_SPARK || PLATFORM_SPARK7162
+#if defined(PLATFORM_SPARK) || defined(PLATFORM_SPARK7162)
 	    	struct set_icon_s data;
 #else
 		struct vfd_ioctl_data data;
 #endif
 		if (!startloop_running)
 		{
-#ifdef PLATFORM_SPARK || PLATFORM_SPARK7162
-		    	memset(&data, 0, sizeof(struct set_icon_s));
-#else
-			memset(&data, 0, sizeof(struct vfd_ioctl_data));
-#endif
-
-#ifdef PLATFORM_SPARK || PLATFORM_SPARK7162
+#if defined(PLATFORM_SPARK) || defined(PLATFORM_SPARK7162)
+		    	memset(&data, 0, sizeof(struct set_icon_s));			
 			data.icon_nr=id;
 			data.on = onoff;
 #else
+			memset(&data, 0, sizeof(struct vfd_ioctl_data));
 			data.start = 0x00;
 			data.data[0] = id;
 			data.data[4] = onoff;
