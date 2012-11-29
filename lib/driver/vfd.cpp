@@ -12,10 +12,6 @@
 #include <lib/base/eerror.h>
 #include <lib/driver/vfd.h>
 
-#ifdef PLATFORM_TF7700
-#include "../../misc/tools/tffpctl/frontpanel.h"
-#endif
-
 #define VFD_DEVICE "/dev/vfd"
 #define VFDICONDISPLAYONOFF   0xc0425a0a
 #define VFDDISPLAYCHARS       0xc0425a00
@@ -23,9 +19,10 @@
 //light on off
 #define VFDDISPLAYWRITEONOFF  0xc0425a05
 #define VFDDISPLAYCLR		0xc0425b00
+#define VFDLENGTH 16
 
 bool startloop_running = false;
-static bool icon_onoff[32];
+static bool icon_onoff[45];
 static pthread_t thread_start_loop = 0;
 void * start_loop (void *arg);
 bool blocked = false;
@@ -51,16 +48,6 @@ struct set_icon_s {
 };
 #endif
 
-#ifdef PLATFORM_HS7810A
-	#define VFDLENGTH 4
-#elif defined PLATFORM_OCTAGON1008
-	#define VFDLENGTH 8
-#elif defined (PLATFORM_FORTIS_HDBOX) || defined(PLATFORM_ATEVIO7500)
-	#define VFDLENGTH 12
-#else
-	#define VFDLENGTH 16
-#endif
-
 evfd* evfd::instance = NULL;
 
 evfd* evfd::getInstance()
@@ -74,6 +61,16 @@ evfd::evfd()
 {
 	file_vfd = 0;
 	memset ( chars, ' ', 63 );
+	vfd_type=4;
+	eDebug("--debug-vfd->%d", vfd_type);
+	FILE *vfd_proc = fopen ("/proc/aotom/display_type", "r");
+	if (vfd_proc)
+	{	char buf[2];
+		fread(&buf,sizeof(buf),1,vfd_proc);
+		vfd_type=atoi(&buf[0]);
+		fclose (vfd_proc);	    
+	}
+	eDebug("--debug-vfd->%d", vfd_type);
 }
 
 void evfd::init()
@@ -87,106 +84,6 @@ evfd::~evfd()
 	//close (file_vfd);
 }
 
-#ifdef PLATFORM_TF7700
-char * getProgress()
-{
-	int n;
-	static char progress[20] = "0";
-	int fd = open ("/proc/progress", O_RDONLY);
-
-	if (fd < 0)
-		return 0;
-
-	n = read(fd, progress, sizeof(progress));
-	close(fd);
-
-	if (n < 0)
-		n = 0;
-	else if((n > 1) && (progress[n-1] == 0xa))
-		n--;
-
-	progress[n] = 0;
-	return progress;
-}
-
-#define MAX_CHARS 8
-
-void * start_loop (void *arg)
-{
-	int fplarge = open ("/dev/fplarge", O_WRONLY);
-	int fpsmall = open ("/dev/fpsmall", O_WRONLY);
-	int fpc = open ("/dev/fpc", O_WRONLY);
-
-	if ((fplarge < 0) || (fpsmall < 0) || (fpc < 0))
-	{
-		printf("Failed opening devices (%d, %d, %d)\n", fplarge, fpsmall, fpc);
-		return NULL;
-	}
-
-	blocked = true;
-
-	// set scroll mode
-	//frontpanel_ioctl_scrollmode scrollMode = {2, 10, 15};
-	//ioctl(fpc, FRONTPANELSCROLLMODE, &scrollMode);
-
-	// display string
-	char str[] = "Open AR-P ENIGMA2";
-	int length = strlen(str);
-	char dispData[MAX_CHARS + 1];
-	int offset = 0;
-	int i;
-
-	frontpanel_ioctl_icons icons = {0, 0, 0xf};
-
-	// start the display loop
-	char * progress = getProgress();
-	int index = 2;
-	while (!requested)
-	{
-		// display the CD segments
-		icons.Icons2 = (((1 << index) - 1)) & 0x1ffe;
-		ioctl(fpc, FRONTPANELICON, &icons);
-		index++;
-		if (index > 13)
-		{
-			index = 2;
-			icons.BlinkMode = (~icons.BlinkMode) & 0xf;
-		}
-
-		// display the visible part of the string
-		for (i = 0; i < MAX_CHARS; i++)
-		{
-			dispData[i] = str[(offset + i) % length];
-		}
-		offset++;
-		write(fplarge, dispData, sizeof(dispData));
-		usleep(200000);
-		if ((index % 4) == 0)
-		{
-			// display progress
-			progress = getProgress();
-			write(fpsmall, progress, strlen(progress) + 1);
-			if (strncmp("100", progress, 3) == 0)
-				break;
-		}
-	}
-	// clear all icons
-	frontpanel_ioctl_icons iconsOff = {0xffffffff, 0xffffffff, 0x0};
-	ioctl(fpc, FRONTPANELICON, &iconsOff);
-
-	// clear display
-	write(fpsmall, "    ", 5);
-	write(fplarge, "        ", MAX_CHARS);
-
-	close(fplarge);
-	close(fpsmall);
-	close(fpc);
-	blocked = false;
-
-	return NULL;
-}
-#else
-
 void * start_loop (void *arg)
 {
 	evfd vfd;
@@ -194,16 +91,9 @@ void * start_loop (void *arg)
 	//vfd.vfd_clear_icons();
 	vfd.vfd_write_string("Open AR-P ENIGMA2", true);
 	//run 2 times through all icons 
+	memset(&icon_onoff,0, sizeof(icon_onoff));
 	for (int vloop = 0; vloop < 128; vloop++)
 	{
-#if !defined(PLATFORM_FORTIS_HDBOX) && !defined(PLATFORM_OCTAGON1008) && !defined(PLATFORM_ATEVIO7500) && !defined(PLATFORM_CUBEREVO) && !defined(PLATFORM_CUBEREVO_MINI) && !defined(PLATFORM_CUBEREVO_MINI2) && !defined(PLATFORM_CUBEREVO_MINI_FTA) && !defined(PLATFORM_CUBEREVO_250HD) && !defined(PLATFORM_CUBEREVO_2000HD) && !defined(PLATFORM_CUBEREVO_9500HD) && !defined(PLATFORM_HS7810A)
-		if (vloop%2 == 1)
-		{
-			vfd.vfd_set_icon( (tvfd_icon) (((vloop%32)/2)%16), ICON_OFF, true);
-			//usleep(1000);
-			vfd.vfd_set_icon( (tvfd_icon) ((((vloop%32)/2)%16)+1), ICON_ON, true);
-		}
-#else
 		if (vloop%14 == 0 )
 			vfd.vfd_set_brightness(1);
 		else if (vloop%14 == 1 )
@@ -232,23 +122,14 @@ void * start_loop (void *arg)
 			vfd.vfd_set_brightness(1);
 		else if (vloop%14 == 13 )
 			vfd.vfd_set_brightness(0);
-#endif
 		usleep(75000);
 	}
 	vfd.vfd_set_brightness(7);
-#if !defined(PLATFORM_FORTIS_HDBOX) && !defined(PLATFORM_OCTAGON1008) && !defined(PLATFORM_ATEVIO7500) && !defined(PLATFORM_CUBEREVO) && !defined(PLATFORM_CUBEREVO_MINI) && !defined(PLATFORM_CUBEREVO_MINI2) && !defined(PLATFORM_CUBEREVO_MINI_FTA) && !defined(PLATFORM_CUBEREVO_250HD) && !defined(PLATFORM_CUBEREVO_2000HD) && !defined(PLATFORM_CUBEREVO_9500HD) && !defined(PLATFORM_HS7810A) && !defined(PLATFORM_SPARK7162)
-	//set all blocked icons
-	for (int id = 0x10; id < 0x20; id++)
-	{
-		vfd.vfd_set_icon((tvfd_icon)id, icon_onoff[id]);
-	}
-#endif
 	blocked = false;
 	return NULL;
 }
-#endif
 
-#if defined(PLATFORM_FORTIS_HDBOX) || defined(PLATFORM_OCTAGON1008) || defined(PLATFORM_ATEVIO7500) || defined(PLATFORM_CUBEREVO) || defined(PLATFORM_CUBEREVO_MINI) || defined(PLATFORM_CUBEREVO_MINI2) || defined(PLATFORM_CUBEREVO_MINI_FTA) || defined(PLATFORM_CUBEREVO_250HD) || defined(PLATFORM_CUBEREVO_2000HD) || defined(PLATFORM_CUBEREVO_9500HD) || defined(PLATFORM_HS7810A) && defined(PLATFORM_SPARK7162)
+#if 0//defined(PLATFORM_SPARK7162)
 void evfd::vfd_write_string_scrollText(char* text)
 {
 	return;
@@ -376,15 +257,8 @@ void evfd::vfd_write_string(char * str, bool force)
 	if ( i > 63 ) i = 63;
 	memset ( chars, ' ', 63 );
 	memcpy ( chars, str, i);
-#ifdef PLATFORM_TF7700
-	// request the display to cancel the start loop
-	requested = true;
-	while(blocked) usleep(200000);
-	{
-#else
 	if (!blocked || force)
 	{
-#endif
 		struct vfd_ioctl_data data;
 		memset ( data.data, ' ', 63 );
 		memcpy ( data.data, str, i );
@@ -471,7 +345,7 @@ void evfd::vfd_set_icon(tvfd_icon id, bool onoff, bool force)
 
 void evfd::vfd_clear_icons()
 {
-	for (int id = 0x10; id < 0x20; id++)
+	for (int id = 1; id < 45; id++)
 	{
 		vfd_set_icon((tvfd_icon)id, false);
 	}
@@ -515,22 +389,6 @@ void evfd::vfd_set_light(bool onoff)
 
 void evfd::vfd_set_fan(bool onoff)
 {
-#if defined(PLATFORM_CUBEREVO) || defined(PLATFORM_CUBEREVO_MINI) || defined(PLATFORM_CUBEREVO_MINI2) || defined(PLATFORM_CUBEREVO_MINI_FTA) || defined(PLATFORM_CUBEREVO_250HD) || defined(PLATFORM_CUBEREVO_2000HD) || defined(PLATFORM_CUBEREVO_9500HD)
-	struct vfd_ioctl_data data;
-
-	memset(&data, 0, sizeof(struct vfd_ioctl_data));
-
-	if (onoff)
-		data.start = 0x01;
-	else
-		data.start = 0x00;
-		data.length = 0;
-
-	file_vfd = open (VFD_DEVICE, O_WRONLY);
-	ioctl(file_vfd, 0xc0425af8, &data);
-
-	close (file_vfd);
-#endif
 	return;
 }
 

@@ -4,18 +4,17 @@
 #define ICON_ON  1
 #define ICON_OFF 0
 
-#ifndef PLATFORM_HDBOX
-typedef enum { USB = 0x10, HD, HDD, LOCK, BT, MP3, MUSIC, DD, MAIL, MUTE, PLAY, PAUSE, FF, FR, REC, CLOCK } tvfd_icon;
-#else
-typedef enum { USB = 0x10, STANDBY, SAT, REC, TIMESHIFT, TIMER, HD, LOCK, DD, MUTE, TUNER1, TUNER2, MP3, REPEAT,
-			    PLAY, PAUSE, TER, FILE, 480i, 480p, 576i, 576p, 720p, 1080i, 1080p } tvfd_icon;
-#endif
+typedef enum { PLAYFASTBACKWARD=1, PLAYHEAD, PLAYLOG,  PLAYTAIL, PLAYFASTFORWARD, PLAYPAUSE, REC1, MUTE,
+	CYCLE, DUBI, CA, CI, USB, DOUBLESCREEN, REC2, HDD_A8, HDD_A7, HDD_A6, HDD_A5,HDD_A4, HDD_A3,
+	HDD_FULL, HDD_A2, HDD_A1, MP3, AC3, TVMODE_LOG, AUDIO, ALERT, HDD_A9, CLOCK_PM, CLOCK_AM, CLOCK,
+	TIME_SECOND, DOT2, STANDBY, TER, DISK_S3, DISK_S2, DISK_S1, DISK_S0, SAT, TIMESHIFT, DOT1, CAB } tvfd_icon;
 
 class evfd
 {
 protected:
 	static evfd *instance;
 	int file_vfd;
+	int vfd_type;
 #ifdef SWIG
 	evfd();
 	~evfd();
