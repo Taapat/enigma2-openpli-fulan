@@ -27,6 +27,7 @@ public:
 	void init();
 	static evfd* getInstance();
 
+	int getVfdType() { return vfd_type; }
 	void vfd_set_SCROLL(int id);
 	void vfd_set_CENTER(bool id);
 	void vfd_set_icon(tvfd_icon id, bool onoff);

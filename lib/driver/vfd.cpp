@@ -61,8 +61,7 @@ evfd::evfd()
 {
 	file_vfd = 0;
 	memset ( chars, ' ', 63 );
-	vfd_type=4;
-	eDebug("--debug-vfd->%d", vfd_type);
+	vfd_type=8;
 	FILE *vfd_proc = fopen ("/proc/aotom/display_type", "r");
 	if (vfd_proc)
 	{	char buf[2];
@@ -70,7 +69,6 @@ evfd::evfd()
 		vfd_type=atoi(&buf[0]);
 		fclose (vfd_proc);	    
 	}
-	eDebug("--debug-vfd->%d", vfd_type);
 }
 
 void evfd::init()
@@ -91,159 +89,46 @@ void * start_loop (void *arg)
 	//vfd.vfd_clear_icons();
 	vfd.vfd_write_string("Open AR-P ENIGMA2", true);
 	//run 2 times through all icons 
-	memset(&icon_onoff,0, sizeof(icon_onoff));
-	for (int vloop = 0; vloop < 128; vloop++)
+	if (vfd.getVfdType() != 4)
 	{
-		if (vloop%14 == 0 )
-			vfd.vfd_set_brightness(1);
-		else if (vloop%14 == 1 )
-			vfd.vfd_set_brightness(2);
-		else if (vloop%14 == 2 )
-			vfd.vfd_set_brightness(3);
-		else if (vloop%14 == 3 )
-			vfd.vfd_set_brightness(4);
-		else if (vloop%14 == 4 )
-			vfd.vfd_set_brightness(5);
-		else if (vloop%14 == 5 )
-			vfd.vfd_set_brightness(6);
-		else if (vloop%14 == 6 )
-			vfd.vfd_set_brightness(7);
-		else if (vloop%14 == 7 )
-			vfd.vfd_set_brightness(6);
-		else if (vloop%14 == 8 )
-			vfd.vfd_set_brightness(5);
-		else if (vloop%14 == 9 )
-			vfd.vfd_set_brightness(4);
-		else if (vloop%14 == 10 )
-			vfd.vfd_set_brightness(3);
-		else if (vloop%14 == 11 )
-			vfd.vfd_set_brightness(2);
-		else if (vloop%14 == 12 )
-			vfd.vfd_set_brightness(1);
-		else if (vloop%14 == 13 )
-			vfd.vfd_set_brightness(0);
-		usleep(75000);
-	}
-	vfd.vfd_set_brightness(7);
-	blocked = false;
-	return NULL;
-}
-
-#if 0//defined(PLATFORM_SPARK7162)
-void evfd::vfd_write_string_scrollText(char* text)
-{
-	return;
-}
-
-//we can not use a member function (vfd_write_string_scrollText) in pthread, so we use a second (same content) non member function (vfd_write_string_scrollText1)
-static void *vfd_write_string_scrollText1(void *arg)
-{
-	pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
-	bool scoll_loop = true;
-	char out[VFDLENGTH+1];
-	int i, len;
-	evfd vfd;
-	len = strlen((char *) g_str);
-	memset(out, 0, VFDLENGTH+1);
-	while (scoll_loop && (len > VFDLENGTH))
-	{
-		if (blocked)
-		{
-			usleep(250000);
-		}
-		else
-		{
-			scoll_loop = false;
-		}
-		for (i=0; i<=(len-VFDLENGTH); i++)
-		{
-			if (blocked)
-			{
-				memset(out, ' ', VFDLENGTH);
-				memcpy(out, g_str+i, VFDLENGTH);
-				vfd.vfd_write_string(out,true);
-				usleep(250000);
-			}
-			else
-			{
-				scoll_loop = false;
-				i = len-VFDLENGTH;
-			}
-		}
-		for (i=1; i < VFDLENGTH; i++)
-		{
-			if (blocked)
-			{
-				memset(out, ' ', VFDLENGTH);
-				memcpy(out, g_str+len+i-VFDLENGTH, VFDLENGTH-i);
-				vfd.vfd_write_string(out,true);
-				usleep(250000);
-			}
-			else
-			{
-				scoll_loop = false;
-				i = VFDLENGTH;
-			}
-		}
-		memcpy(out, g_str, VFDLENGTH);
-		vfd.vfd_write_string(out,true);
-		if (VFD_SCROLL != 2 || !blocked)
-			scoll_loop = false;
+	    memset(&icon_onoff,0, sizeof(icon_onoff));
+	    for (int vloop = 0; vloop < 128; vloop++)
+	    {
+		    if (vloop%14 == 0 )
+			    vfd.vfd_set_brightness(1);
+		    else if (vloop%14 == 1 )
+			    vfd.vfd_set_brightness(2);
+		    else if (vloop%14 == 2 )
+			    vfd.vfd_set_brightness(3);
+		    else if (vloop%14 == 3 )
+			    vfd.vfd_set_brightness(4);
+		    else if (vloop%14 == 4 )
+			    vfd.vfd_set_brightness(5);
+		    else if (vloop%14 == 5 )
+			    vfd.vfd_set_brightness(6);
+		    else if (vloop%14 == 6 )
+			    vfd.vfd_set_brightness(7);
+		    else if (vloop%14 == 7 )
+			    vfd.vfd_set_brightness(6);
+		    else if (vloop%14 == 8 )
+			    vfd.vfd_set_brightness(5);
+		    else if (vloop%14 == 9 )
+			    vfd.vfd_set_brightness(4);
+		    else if (vloop%14 == 10 )
+			    vfd.vfd_set_brightness(3);
+		    else if (vloop%14 == 11 )
+			    vfd.vfd_set_brightness(2);
+		    else if (vloop%14 == 12 )
+			    vfd.vfd_set_brightness(1);
+		    else if (vloop%14 == 13 )
+			    vfd.vfd_set_brightness(0);
+		    usleep(75000);
+	    }
+	    vfd.vfd_set_brightness(7);
 	}
 	blocked = false;
 	return NULL;
 }
-
-void evfd::vfd_write_string(char * str)
-{
-	int i = strlen(str);
-	if (blocked)
-	{
-		pthread_cancel(thread_start_loop);
-		pthread_join(thread_start_loop, NULL);
-		blocked=false;
-	}
-	memset(g_str,0,64);
-	strcpy(g_str,str);
-	vfd_write_string(str, false);
-	if (i > VFDLENGTH && VFD_SCROLL)
-	{
-		blocked = true;
-		pthread_create(&thread_start_loop, NULL, vfd_write_string_scrollText1, (void *)str);
-		pthread_detach(thread_start_loop);
-	}
-}
-
-void evfd::vfd_write_string(char * str, bool force)
-{
-	int ws = 0;
-	int i = strlen(str);
-	if (VFD_CENTER)
-	{
-		if (i < VFDLENGTH)
-			ws=(VFDLENGTH-i)/2;
-		else
-			ws=0;
-	}
-	if (i > VFDLENGTH) i = VFDLENGTH;
-	struct vfd_ioctl_data data;
-	memset(data.data, ' ', VFDLENGTH);
-	if (VFD_CENTER)
-		memcpy(data.data+ws, str, VFDLENGTH-ws);
-	else
-		memcpy(data.data, str, i);
-	data.start = 0;
-	if (VFD_CENTER)
-		data.length = i+ws<=VFDLENGTH?i+ws:VFDLENGTH;
-	else
-		data.length = i;
-		file_vfd = open (VFD_DEVICE, O_WRONLY);
-		write(file_vfd,data.data,data.length);
-		close (file_vfd);
-	return;
-}
-
-#else
 
 void evfd::vfd_write_string(char * str)
 {
@@ -299,7 +184,7 @@ void evfd::vfd_write_string_scrollText(char* text)
 	}
 	return;
 }
-#endif
+
 void evfd::vfd_clear_string()
 {
 	vfd_write_string("                ");
@@ -308,12 +193,14 @@ void evfd::vfd_clear_string()
 
 void evfd::vfd_set_icon(tvfd_icon id, bool onoff)
 {
-	vfd_set_icon(id, onoff, false);
+	if (getVfdType() != 4) vfd_set_icon(id, onoff, false);
 	return;
 }
 
 void evfd::vfd_set_icon(tvfd_icon id, bool onoff, bool force)
 {
+    if (getVfdType() != 4)
+    {
 	icon_onoff[id] = onoff;
 	if (!blocked || force)
 	{
@@ -340,20 +227,26 @@ void evfd::vfd_set_icon(tvfd_icon id, bool onoff, bool force)
 			close (file_vfd);
 		}
 	}
-	return;
+    }
+    return;
 }
 
 void evfd::vfd_clear_icons()
 {
+    if (getVfdType() != 4)
+    {
 	for (int id = 1; id < 45; id++)
 	{
 		vfd_set_icon((tvfd_icon)id, false);
 	}
-	return;
+    }
+    return;
 }
 
 void evfd::vfd_set_brightness(unsigned char setting)
 {
+    if (getVfdType() != 4)
+    {
 	struct vfd_ioctl_data data;
 
 	memset(&data, 0, sizeof(struct vfd_ioctl_data));
@@ -364,8 +257,8 @@ void evfd::vfd_set_brightness(unsigned char setting)
 	file_vfd = open (VFD_DEVICE, O_WRONLY);
 	ioctl ( file_vfd, VFDBRIGHTNESS, &data );
 	close (file_vfd);
-
-	return;
+    }
+    return;
 }
 
 void evfd::vfd_set_light(bool onoff)
