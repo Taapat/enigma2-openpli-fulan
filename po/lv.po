@@ -4106,7 +4106,7 @@ msgid "Restart your network connection and interfaces.\n"
 msgstr "Pārstartēt tīkla savienojumu un interfeisus. \n"
 
 msgid "Restarting %s"
-msgstr "Pārstartē %s
+msgstr "Pārstartē %s"
 
 msgid "Restore"
 msgstr "Atjaunot"
