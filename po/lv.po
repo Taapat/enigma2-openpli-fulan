@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-12-01 16:48+0100\n"
-"PO-Revision-Date: 2012-12-01 22:55+0200\n"
+"PO-Revision-Date: 2012-12-02 22:55+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
 "Language: lv_LV\n"
@@ -165,16 +165,16 @@ msgstr "%a %e/%m  %-H:%M"
 #, python-format
 msgid "%d channel found"
 msgid_plural "%d channels found"
-msgstr[0] "%d kanāli atrasti"
-msgstr[1] "%d kanāls atrasts"
+msgstr[0] "%d kanāls atrasts"
+msgstr[1] "%d kanāli atrasti"
 msgstr[2] "%d kanāli atrasti"
 
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d fails"
+msgstr[1] "%d faili"
+msgstr[2] "%d faili"
 
 #, python-format
 msgid "%d hour"
@@ -186,8 +186,8 @@ msgstr[2] "%d stundas"
 #, python-format
 msgid "%d job is running in the background!"
 msgid_plural "%d jobs are running in the background!"
-msgstr[0] "%d darbi tiek veikti fonā!"
-msgstr[1] "%d darbs tiek veikts fonā!"
+msgstr[0] "%d darbs tiek veikts fonā!"
+msgstr[1] "%d darbi tiek veikti fonā!"
 msgstr[2] "%d darbi tiek veikti fonā!"
 
 #, python-format
@@ -215,9 +215,9 @@ msgstr[2] "%d sekundes"
 #, python-format
 msgid "%d subdirectory"
 msgid_plural "%d subdirectories"
-msgstr[0] "%d apakšmapes"
-msgstr[1] "%d apakšmape"
-msgstr[2] "%d apakšmape"
+msgstr[0] "%d apakšmape"
+msgstr[1] "%d apakšmapes"
+msgstr[2] "%d apakšmapes"
 
 #, python-format
 msgid "%d wireless network found!"
@@ -255,7 +255,7 @@ msgstr "%s vairs neizmanto. Vai izdzēst?"
 #, python-format
 msgid "%s updated package available"
 msgid_plural "%s updated packages available"
-msgstr[0] "%s pakotnes atjaunojumi pieejami"
+msgstr[0] "%s pakotnes atjaunojums pieejams"
 msgstr[1] "%s pakotņu atjaunojumi pieejami"
 msgstr[2] "%s pakotņu atjaunojumi pieejami"
 
@@ -648,6 +648,9 @@ msgstr "Alternatīvais radio režīms"
 msgid "Alternative services tuner priority"
 msgstr "Alternatīvo uztvērēju prioritātes"
 
+msgid "Alternative SoftCam Manager"
+msgstr "Alternatīvais SoftCam pārvaldnieks"
+
 msgid "Always ask"
 msgstr "Vienmēr jautāt"
 
@@ -708,6 +711,11 @@ msgid ""
 msgstr ""
 "Vai tiešām vēlaties atjaunot dublējumkopiju?\n"
 "Uztvērējs pārstartēsies pēc atjaunošanas!"
+
+msgid "Are you sure you want to save this configuration?\n"
+"\n"
+msgstr "Vai tiešām vēlaties saglabāt šos iestatījumus?\n"
+"\n"
 
 msgid "Artist"
 msgstr "Izpildītājs"
@@ -994,6 +1002,9 @@ msgstr "Mainīt iestatījumu PIN"
 
 msgid "Change step size"
 msgstr "Mainīt soļa lielumu"
+
+msgid "Change video port"
+msgstr "Mainīt video izeju"
 
 msgid "Changelog"
 msgstr "Izmaiņas"
@@ -1687,6 +1698,11 @@ msgstr "Mape"
 msgid "Directory %s does not exist."
 msgstr "Mape %s neeksistē."
 
+msgid "Directory %s does not exist!\n"
+"Please set the correct directory path!"
+msgstr "Mape %s neeksistē!\n"
+"Lūdzu norādiet pareizu ceļu uz mapi!"
+
 msgid "Directory browser"
 msgstr "Mapju pārlūks"
 
@@ -1851,8 +1867,8 @@ msgstr "Neapturēt pašreizējo notikumu bet izslēgt nākamos notikumus"
 #, python-format
 msgid "Done - Installed, upgraded or removed %d package (%s)"
 msgid_plural "Done - Installed, upgraded or removed %d packages (%s)"
-msgstr[0] "Pabeigts - uzstādītas, atjauninātas vai dzēstas %d pakotnes (%s)"
-msgstr[1] "Pabeigts - uzstādīta, atjaunināta vai dzēsta %d pakotne (%s)"
+msgstr[0] "Pabeigts - uzstādīta, atjaunināta vai dzēsta %d pakotne (%s)"
+msgstr[1] "Pabeigts - uzstādītas, atjauninātas vai dzēstas %d pakotnes (%s)"
 msgstr[2] "Pabeigts - uzstādītas, atjauninātas vai dzēstas %d pakotnes (%s)"
 
 msgid "Download"
@@ -2758,8 +2774,8 @@ msgstr "Saraksta tips"
 #, python-format
 msgid "List version %d, found %d channel"
 msgid_plural "List version %d, found %d channels"
-msgstr[0] "Saraksta versija %d, atrasti %d kanāli"
-msgstr[1] "Saraksta versija %d, atrasts %d kanāls"
+msgstr[0] "Saraksta versija %d, atrasts %d kanāls"
+msgstr[1] "Saraksta versija %d, atrasti %d kanāli"
 msgstr[2] "Saraksta versija %d, atrasti %d kanāli"
 
 msgid "Listen to the radio..."
@@ -3923,7 +3939,7 @@ msgid "Reception settings"
 msgstr "Uztveršanas iestatījumi"
 
 msgid "Record"
-msgstr "Ieraksta uzstādījumi"
+msgstr "Ieraksta iestatījumi"
 
 #, python-format
 msgid "Record time limited due to conflicting timer %s"
@@ -4089,6 +4105,9 @@ msgstr "Atkārtot testu"
 msgid "Restart your network connection and interfaces.\n"
 msgstr "Pārstartēt tīkla savienojumu un interfeisus. \n"
 
+msgid "Restarting %s"
+msgstr "Pārstartē %s
+
 msgid "Restore"
 msgstr "Atjaunot"
 
@@ -4253,15 +4272,15 @@ msgstr "Meklē %s..."
 #, python-format
 msgid "Scanning - %d%% completed"
 msgid_plural "Scanning - %d%% completed"
-msgstr[0] "Meklēšana - %d%% pabeigti"
-msgstr[1] "Meklēšana - %d%% pabeigts"
+msgstr[0] "Meklēšana - %d%% pabeigts"
+msgstr[1] "Meklēšana - %d%% pabeigti"
 msgstr[2] "Meklēšana - %d%% pabeigti"
 
 #, python-format
 msgid "Scanning completed, %d channel found"
 msgid_plural "Scanning completed, %d channels found"
-msgstr[0] "Meklēšana pabeigta, %d kanāli atrasti"
-msgstr[1] "Meklēšana pabeigta, %d kanāls atrasts"
+msgstr[0] "Meklēšana pabeigta, %d kanāls atrasts"
+msgstr[1] "Meklēšana pabeigta, %d kanāli atrasti"
 msgstr[2] "Meklēšana pabeigta, %d kanāli atrasti"
 
 msgid "Scanning failed!"
@@ -4661,6 +4680,9 @@ msgstr "Izslēgt"
 msgid "Shutdown receiver after"
 msgstr "Izslēgt uztvērēju pēc"
 
+msgid "Show on VFD display"
+msgstr "VFD displejā tiks rādīts"
+
 msgid "Side by side"
 msgstr "Salīdzināt pēc satura"
 
@@ -4755,8 +4777,20 @@ msgstr "Izpilda"
 msgid "Social/Political/Economics"
 msgstr "Sociālie/Politika/Ekonomika"
 
+msgid "SoftCam config directory"
+msgstr "SoftCam konfigurācijas failu mape"
+
 msgid "SoftCam / CI"
 msgstr "SoftCam / CI"
+
+msgid "SoftCam directory"
+msgstr "SoftCam mape"
+
+msgid "SoftCam manager"
+msgstr "SoftCam pārvaldnieks"
+
+msgid "SoftCam path configuration"
+msgstr "SoftCam ceļu konfigurācija"
 
 msgid "Softcam type"
 msgstr "Softcam tips"
@@ -4851,6 +4885,9 @@ msgstr "Ventilatora apgriezieni %d gaidstāvē"
 msgid "Standby fan %d voltage"
 msgstr "Ventilatora spriegums %d gaidstāvē"
 
+msgid "Start"
+msgstr "Palaist"
+
 msgid "Start from the beginning"
 msgstr "Sākt no sākuma"
 
@@ -4859,6 +4896,9 @@ msgstr "Sākt bezsaistes atkodēšanu"
 
 msgid "Start recording?"
 msgstr "Sākt ierakstu?"
+
+msgid "Start, stop, restart SoftCams, change settings."
+msgstr "Startē, apstādina, pārstartē SoftCam, maina iestatījumus."
 
 msgid "Start test"
 msgstr "Sākt pārbaudi"
@@ -4874,6 +4914,9 @@ msgstr "Sākt ar saraksta logu"
 
 msgid "Starting on"
 msgstr "Sākot ar"
+
+msgid "Starting %s"
+msgstr "Startē %s"
 
 msgid "Step east"
 msgstr "Soli uz austrumiem"
@@ -4928,6 +4971,9 @@ msgstr "Apturēt laika aizturi?"
 
 msgid "Stopped"
 msgstr "Apturēt"
+
+msgid "Stopping %s"
+msgstr "Aptur %s"
 
 msgid "Store at index"
 msgstr "Saglabāt indeksā"
@@ -5771,6 +5817,12 @@ msgstr "Vertikālās noskaņošanas ātrums"
 msgid "Video PID"
 msgstr "Video PID"
 
+msgid "VFD Display"
+msgstr "VFD displejs"
+
+msgid "VFD display configuration"
+msgstr "VFD displeja iestatījumi"
+
 msgid "Video enhancement preview"
 msgstr "Video uzlabošanas priekšskatījums"
 
@@ -6227,8 +6279,8 @@ msgid ""
 "would you like to remove\n"
 "\"%s\"?"
 msgstr ""
-"Jūs jau esat kanālu sarakstu uzstādījis,\n"
-"vai vēlaties nodzēst\n"
+"Jūs jau esat iestatījis kanālu sarakstu,\n"
+"vai vēlaties to nodzēst\n"
 "\"%s\"?"
 
 msgid "You can cancel the installation."
@@ -6515,6 +6567,9 @@ msgstr "melns un balts"
 msgid "blacklist"
 msgstr "melnais saraksts"
 
+msgid "blank"
+msgstr "nekas"
+
 msgid "blue"
 msgstr "zilā"
 
@@ -6530,6 +6585,12 @@ msgstr "multfilmas/leļļu"
 msgid "center"
 msgstr "centrs"
 
+msgid "channel"
+msgstr "kanāls"
+
+msgid "channel number"
+msgstr "kanāla numurs"
+
 msgid "chapters"
 msgstr "nodaļas"
 
@@ -6541,6 +6602,9 @@ msgstr "cirkulārā kreisā"
 
 msgid "circular right"
 msgstr "cirkulārā labā"
+
+msgid "clock"
+msgstr "pulkstenis"
 
 msgid "comedy"
 msgstr "komēdija"
@@ -7335,9 +7399,9 @@ msgstr "bezvadu tīkla interfeiss"
 #, python-format
 msgid "with %d error"
 msgid_plural "with %d errors"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "ar %d kļūdu"
+msgstr[1] "ar %d kļūdām"
+msgstr[2] "ar %d kļūdām"
 
 msgid "working"
 msgstr "darbojas"
@@ -7357,260 +7421,3 @@ msgstr "pārslēgt"
 msgid "zapped"
 msgstr "pārslēgts"
 
-#~ msgid ""
-#~ "\n"
-#~ "System will restart after the restore!"
-#~ msgstr ""
-#~ "\n"
-#~ "Sistēma pārstartēsies pēc atjaunošanas!"
-
-#~ msgid "/usr/share/enigma2 directory"
-#~ msgstr "/usr/share/enigma2 katalogs"
-
-#~ msgid "/var directory"
-#~ msgstr "/var katalogs"
-
-#~ msgid "AC3 downmix"
-#~ msgstr "AC3 -> stereo pārveidošana"
-
-#~ msgid "Add Bookmark"
-#~ msgstr "Pievienot grāmatzīmi"
-
-#~ msgid "Alternative SoftCam Manager"
-#~ msgstr "Alternatīvais SoftCam pārvaldnieks"
-
-#~ msgid ""
-#~ "Are you sure you want to save this configuration?\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Vai tiešām vēlaties saglabāt šos iestatījumus?\n"
-#~ "\n"
-
-#~ msgid "Audio Source"
-#~ msgstr "Audio avots"
-
-#~ msgid "Backup"
-#~ msgstr "Dublējumkopija"
-
-#~ msgid "Backup Location"
-#~ msgstr "Dublējumkopijas vieta"
-
-#~ msgid "Backup Mode"
-#~ msgstr "Dublējumkopijas režīms"
-
-#~ msgid "Backup done."
-#~ msgstr "Dublējumkopija izveidota."
-
-#~ msgid "By pressing the OK Button on your remote control, the info bar is being displayed."
-#~ msgstr "Nospiežot OK uz tālvadības pults, tiks parādīta informācijas josla."
-
-#~ msgid "CF Drive"
-#~ msgstr "CF lasītājs"
-
-#~ msgid "Change video port"
-#~ msgstr "Mainīt video izeju"
-
-#~ msgid "Choose Tuner"
-#~ msgstr "Izvēlieties uztvērēju"
-
-#~ msgid "Choose bouquet"
-#~ msgstr "Izvēlieties buķeti"
-
-#~ msgid "Choose your Skin"
-#~ msgstr "Izvēlieties ādiņu"
-
-#~ msgid "Convert filesystem ext3 to ext4"
-#~ msgstr "Konvertēt failsistēmu ext3 uz ext4"
-
-#~ msgid "DTS downmix"
-#~ msgstr "DTS pārveidošana"
-
-#~ msgid ""
-#~ "Delete no more configured satellite\n"
-#~ "%s?"
-#~ msgstr ""
-#~ "Dzēst nekonfigurētu pavadoni\n"
-#~ " %s?"
-
-#~ msgid ""
-#~ "Directory %s does not exist!\n"
-#~ "Please set the correct directory path!"
-#~ msgstr ""
-#~ "Mape %s neeksistē!\n"
-#~ "Lūdzu norādiet pareizu ceļu uz mapi!"
-
-#~ msgid ""
-#~ "Do you really want to REMOVE\n"
-#~ "the plugin \"%s\"?"
-#~ msgstr ""
-#~ "Vai tiešām vēlaties DZĒST\n"
-#~ "spraudni \"%s \"?"
-
-#~ msgid ""
-#~ "Do you want to backup now?\n"
-#~ "After pressing OK, please wait!"
-#~ msgstr ""
-#~ "Vai vēlaties veidot dublējumkopiju?\n"
-#~ "Nospiediet OK un gaidiet!"
-
-#~ msgid "Do you want to view a tutorial?"
-#~ msgstr "Vai vēlaties skatīt pamācibu?"
-
-#~ msgid "Done - Installed or upgraded %d packages"
-#~ msgstr "Pabeigts - uzstādītas vai atjauninātas %d pakotnes"
-
-#~ msgid "Edit Title"
-#~ msgstr "Rediģēt nosaukumu"
-
-#~ msgid "EndTime"
-#~ msgstr "Beigu laiks"
-
-#~ msgid "Exit wizard"
-#~ msgstr "Iziet no vedņa"
-
-#~ msgid "General AC3 delay (ms)"
-#~ msgstr "Vispārējā AC3 aizture (ms)"
-
-#~ msgid "General PCM delay (ms)"
-#~ msgstr "Vispārējā PCM aizture (ms)"
-
-#~ msgid "Guard Interval"
-#~ msgstr "Sardzes intervāls"
-
-#~ msgid "Installing default sat lists... Please wait..."
-#~ msgstr "Uzstāda noklusētos pavadoņu sarakstus... Lūdzu gaidiet..."
-
-#~ msgid "Installing defaults... Please wait..."
-#~ msgstr "Uzstāda noklusējumus... Lūdzu gaidiet..."
-
-#~ msgid "Installing package content... Please wait..."
-#~ msgstr "Uzstāda pakotnes saturu... Lūdzu gaidiet..."
-
-#~ msgid "LOF"
-#~ msgstr "LOF"
-
-#~ msgid "LOF/H"
-#~ msgstr "LOF/H"
-
-#~ msgid "LOF/L"
-#~ msgstr "LOF/L"
-
-#~ msgid "Mainmenu"
-#~ msgstr "Galvenā izvēlne"
-
-#~ msgid "Margin after record"
-#~ msgstr "Atstarpe aiz ieraksta"
-
-#~ msgid "MediaPlayer"
-#~ msgstr "Mediju atskaņotājs"
-
-#~ msgid "Network Setup"
-#~ msgstr "Tīkla iestatījumi"
-
-#~ msgid "Next"
-#~ msgstr "Nākamais"
-
-#~ msgid "No packages were upgraded yet. So you can check your network and try again."
-#~ msgstr "Pakotnes netika atjauninātas. Pārbaudiet tīklu un mēģiniet vēlreiz."
-
-#~ msgid "No picture on TV? Press EXIT and retry."
-#~ msgstr "Nav attēla uz TV? Spiediet EXIT mēģiniet vēlreiz."
-
-#~ msgid "No, scan later manually"
-#~ msgstr "Nē, vēlāk meklēt manuāli"
-
-#~ msgid "OSD visibility"
-#~ msgstr "OSD redzamība"
-
-#~ msgid "Orbital Position"
-#~ msgstr "Pozīcija orbītā"
-
-#~ msgid "Please choose he package..."
-#~ msgstr "Lūdzu izvēlieties pakotni..."
-
-#~ msgid "Please choose the default services lists you want to install."
-#~ msgstr "Lūdzu izvēlieties noklusētos kanālu sarakstus, kurus vēlaties uzstādīt."
-
-#~ msgid "Please press OK!"
-#~ msgstr "Lūdzu spiediet OK!"
-
-#~ msgid "Prev"
-#~ msgstr "Iepriekšējais"
-
-#~ msgid "Remove Bookmark"
-#~ msgstr "Dzēst grāmatzīmi"
-
-#~ msgid "Remove Plugins"
-#~ msgstr "Dzēst spraudņus"
-
-#~ msgid "Remove finished."
-#~ msgstr "Dzēst pabeigtos."
-
-#~ msgid "Restarting %s"
-#~ msgstr "Pārstartē %s"
-
-#~ msgid "Restore running"
-#~ msgstr "Notiek atjaunošana"
-
-#~ msgid "Rolloff"
-#~ msgstr "Rolloff"
-
-#~ msgid "Show on VFD display"
-#~ msgstr "VFD displejā tiks rādīts"
-
-#~ msgid "SoftCam config directory"
-#~ msgstr "SoftCam konfigurācijas failu mape"
-
-#~ msgid "SoftCam directory"
-#~ msgstr "SoftCam mape"
-
-#~ msgid "SoftCam manager"
-#~ msgstr "SoftCam pārvaldnieks"
-
-#~ msgid "SoftCam path configuration"
-#~ msgstr "SoftCam ceļu konfigurācija"
-
-#~ msgid "Standby / Restart"
-#~ msgstr "Gaidstāve / Pārstartēt"
-
-#~ msgid "Start"
-#~ msgstr "Palaist"
-
-#~ msgid "Start, stop, restart SoftCams, change settings."
-#~ msgstr "Startē, apstādina, pārstartē SoftCam, maina iestatījumus."
-
-#~ msgid "Starting %s"
-#~ msgstr "Startē %s"
-
-#~ msgid "Stopping %s"
-#~ msgstr "Aptur %s"
-
-#~ msgid "TV system"
-#~ msgstr "TV sistēma"
-
-#~ msgid "VFD Display"
-#~ msgstr "VFD displejs"
-
-#~ msgid "VFD display configuration"
-#~ msgstr "VFD displeja iestatījumi"
-
-#~ msgid "When enabled, your TV will automatically select the SCART input when you switch on your receiver."
-#~ msgstr "Ja iespējots, uztvērējs automātiski ieslēgs SCART ieeju kad ieslēgsiet uztvērēju."
-
-#~ msgid "blank"
-#~ msgstr "nekas"
-
-#~ msgid "channel"
-#~ msgstr "kanāls"
-
-#~ msgid "channel number"
-#~ msgstr "kanāla numurs"
-
-#~ msgid "clock"
-#~ msgstr "pulkstenis"
-
-#~ msgid "scan done!"
-#~ msgstr "meklēšana pabeigta!"
-
-#~ msgid "scan in progress - %d%% done!"
-#~ msgstr "notiek meklēšana - %d%% pabeigts!"
