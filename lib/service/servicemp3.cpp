@@ -1012,8 +1012,13 @@ RESULT eServiceMP3::seekTo(pts_t to)
 		m_decoder_time_valid_state = 0;
 		ret = seekToImpl(to);
 	}
-#endif
+#else
+	float pos = (to/90000.0)-10;
+	if (player && player->playback)
+		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
 
+	ret =0;
+#endif
 	return ret;
 }
 
