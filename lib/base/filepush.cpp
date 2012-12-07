@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #if defined(__sh__) // this allows filesystem tasks to be prioritised
+#include <sys/mman.h>
 #include <sys/vfs.h>
 #define USBDEVICE_SUPER_MAGIC 0x9fa2
 #define EXT2_SUPER_MAGIC      0xEF53
@@ -24,17 +25,30 @@ eFilePushThread::eFilePushThread(int io_prio_class, int io_prio_level, int block
 	 m_stream_mode(0),
 	 m_blocksize(blocksize),
 	 m_buffersize(buffersize),
-	 m_buffer((unsigned char*)malloc(buffersize)),
+#if defined(__sh__)
+	 m_buffer((unsigned char*) mmap(NULL, buffersize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)),
+#else
+	 m_buffer(malloc(buffersize))
+#endif
 	 m_messagepump(eApp, 0)
 {
+#if defined(__sh__)
+	if (m_buffer == MAP_FAILED)
+#else
 	if (m_buffer == NULL)
+#endif
 		eFatal("Failed to allocate %d bytes", buffersize);
 	CONNECT(m_messagepump.recv_msg, eFilePushThread::recvEvent);
 }
 
 eFilePushThread::~eFilePushThread()
 {
+#if defined(__sh__)
+	munmap(m_buffer, m_buffersize);
+#else
 	free(m_buffer);
+#endif
+
 }
 
 static void signal_handler(int x)
@@ -228,13 +242,10 @@ void eFilePushThread::thread()
 #if defined(__sh__) // Fix to ensure that event evtEOF is called at end of playbackl part 3/3
 			already_empty=false;
 #endif
-
-			if (m_sg)
-			{
-				current_span_remaining -= buf_end;
-				m_current_position+=buf_end;
+				m_current_position += buf_end;
 				bytes_read += buf_end;
-			}
+			if (m_sg)
+ 				current_span_remaining -= buf_end;
 		}
 	}
 #if defined(__sh__) // closes video device for the reverse playback workaround
