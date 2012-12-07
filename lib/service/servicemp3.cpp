@@ -2627,10 +2627,10 @@ RESULT eServiceMP3::enableSubtitles(eWidget *parent, ePyObject tuple)
 		m_subtitle_widget = 0;
 		m_subtitle_widget = new eSubtitleWidget(parent);
 		m_subtitle_widget->resize(parent->size()); /* full size */
-
+		
+#ifndef ENABLE_LIBEPLAYER3
 		eDebug ("eServiceMP3::switched to subtitle stream %i", m_currentSubtitleStream);
 
-#ifndef ENABLE_LIBEPLAYER3
 #ifdef GSTREAMER_SUBTITLE_SYNC_MODE_BUG
 		/*
 		 * when we're running the subsink in sync=false mode,
@@ -2655,8 +2655,8 @@ error_out:
 
 RESULT eServiceMP3::disableSubtitles(eWidget *parent)
 {
-	eDebug("eServiceMP3::disableSubtitles");
 #ifndef ENABLE_LIBEPLAYER3
+	eDebug("eServiceMP3::disableSubtitles");
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = m_currentSubtitleStream;
 	g_object_set (G_OBJECT (m_gst_playbin), "current-text", m_currentSubtitleStream, NULL);
