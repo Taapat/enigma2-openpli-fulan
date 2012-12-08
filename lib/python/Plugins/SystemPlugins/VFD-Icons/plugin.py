@@ -70,7 +70,7 @@ class VFDIcons:
 		if config.plugins.vfdicon.displayshow.value != "clock":
 			servicename = "    "
 			if config.plugins.vfdicon.displayshow.value != "blank":
-				service = self.session.nav.getCurrentlyPlayingServiceReference(False)
+				service = self.session.nav.getCurrentlyPlayingServiceReference()
 				if service:
 					if config.plugins.vfdicon.displayshow.value == "channel number":
 						servicename = str(service.getChannelNum())
