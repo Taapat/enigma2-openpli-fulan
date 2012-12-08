@@ -1,11 +1,11 @@
 #ifndef __base_object_h
 #define __base_object_h
 
-#include <ext/atomicity.h>
-
 #include <assert.h>
 #include <lib/base/smartptr.h>
 #include <lib/base/elock.h>
+
+//#define OBJECT_DEBUG
 
 #include <lib/base/eerror.h>
 
@@ -34,24 +34,19 @@ public:
 
 class oRefCount
 {
-	mutable _Atomic_word ref;
+        int ref;
 public:
 	oRefCount(): ref(0) {}
-
-	int operator++()
-	{
-		return __gnu_cxx::__exchange_and_add(&ref, 1) + 1;
-	}
-
-	int operator--()
-	{
-		return __gnu_cxx::__exchange_and_add(&ref, -1) - 1;
-	}
-
-	operator int() const
-	{
-		return __gnu_cxx::__exchange_and_add(&ref, 0);
-	}
+        operator int&() {return ref;}
+#ifdef OBJECT_DEBUG
+      ~oRefCount()
+      { 
+         if (ref)
+            eDebug("OBJECT_DEBUG FATAL: %p has %d references!", this, ref);
+         else
+            eDebug("OBJECT_DEBUG refcount ok! (%p)", this); 
+      }
+#endif       
 };
 
 		#define DECLARE_REF(x) 			\
