@@ -525,7 +525,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 	}
 
 	//create playback path
-	char file[400] = {""};
+	char file[800] = {""};
 
 	if (!strncmp("http://", m_ref.path.c_str(), 7))
 		;
