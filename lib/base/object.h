@@ -37,9 +37,7 @@ class oRefCount
         int ref;
 public:
 	oRefCount(): ref(0) {}
-        operator int() const {return ref;}
-        int operator++() { return ref++; }
-        int operator--() { return ref--; }
+        operator int&() {return ref;}
 #ifdef OBJECT_DEBUG
       ~oRefCount()
       { 
