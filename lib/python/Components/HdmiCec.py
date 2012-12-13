@@ -20,6 +20,7 @@ config.hdmicec.tv_wakeup_detection = ConfigSelection(
 	"sourcerequest": _("Source request"),
 	"streamrequest": _("Stream request"),
 	"osdnamerequest": _("OSD name request"),
+	"vendorid": _("Vendor ID"),
 	"activity": _("Any activity"),
 	},
 	default = "streamrequest")
@@ -265,6 +266,8 @@ class HdmiCec:
 					if physicaladdress == ouraddress:
 						self.wakeup()
 				elif cmd == 0x46 and config.hdmicec.tv_wakeup_detection.value == "osdnamerequest":
+					self.wakeup()
+				elif cmd == 0x87 and config.hdmicec.tv_wakeup_detection.value == "vendorid":
 					self.wakeup()
 				elif cmd != 0x36 and config.hdmicec.tv_wakeup_detection.value == "activity":
 					self.wakeup()
