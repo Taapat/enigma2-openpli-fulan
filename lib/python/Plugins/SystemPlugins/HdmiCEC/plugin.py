@@ -2,6 +2,9 @@ from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
 from Components.config import config, getConfigListEntry
 from Components.Sources.StaticText import StaticText
+from Plugins.Plugin import PluginDescriptor
+
+import Components.HdmiCec
 
 class HdmiCECSetupScreen(Screen, ConfigListScreen):
 	skin = """
@@ -105,9 +108,5 @@ def main(session, **kwargs):
 	session.open(HdmiCECSetupScreen)
 
 def Plugins(**kwargs):
-	from os import path
-	if path.exists("/dev/hdmi_cec") or path.exists("/dev/misc/hdmi_cec0"):
-		import Components.HdmiCec
-		from Plugins.Plugin import PluginDescriptor
-		return [PluginDescriptor(name = "HDMI CEC setup", description = _("Adjust HDMI CEC settings"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc = main)]
-	return []
+	return [PluginDescriptor(name = _("HDMI CEC setup"), description = _("Adjust HDMI CEC settings"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc = main)]
+
