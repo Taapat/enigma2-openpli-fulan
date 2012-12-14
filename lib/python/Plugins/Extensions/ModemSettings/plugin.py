@@ -1,22 +1,25 @@
-from Screens.Screen import Screen
-from Screens.MessageBox import MessageBox
 from Components.ActionMap import ActionMap
-from Components.config import config, ConfigSubsection, getConfigListEntry, ConfigSelection, ConfigText, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
-from Components.Pixmap import Pixmap
+from Components.config import config, ConfigSelection, ConfigText, \
+	getConfigListEntry
 from Components.Sources.StaticText import StaticText
+from Screens.MessageBox import MessageBox
 from Plugins.Plugin import PluginDescriptor
-import os
-from os import path as os_path
+from Screens.Screen import Screen
+
+from os import path
 
 class ModemSetup(Screen, ConfigListScreen):
-
 	def __init__(self, session):
-		self.session = session
-		Screen.__init__(self, self.session)
+		Screen.__init__(self, session)
 		self.skinName = ["Setup"]
 		self.setTitle(_("Modem configuration"))
 		self.createConfig()
+		self.list = []
+		ConfigListScreen.__init__(self, self.list, session)
+		self.createSetup()
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("OK"))
 		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
 			{
 				"cancel": self.cancel,
@@ -24,93 +27,162 @@ class ModemSetup(Screen, ConfigListScreen):
 				"green": self.ok,
 				"red": self.cancel,
 			}, -2)
-		self.list = []
-		ConfigListScreen.__init__(self, self.list, session = self.session)
-		self.createSetup()
-		self["key_red"] = StaticText(_("Cancel"))
-		self["key_green"] = StaticText(_("OK"))
 
 	def createConfig(self):
-		if os.path.exists("/etc/modem.conf"):
-			settings = open("/etc/modem.conf")
-			self.MODEMTYPE = settings.readline().strip()[10:11]
-			self.MODEMPORT = settings.readline().strip()[10:]
-			self.MODEMSPEED = settings.readline().strip()[11:]
-			self.APN = settings.readline().strip()[5:-1]
-			self.MODEMUSERNAME = settings.readline().strip()[15:-1]
-			self.MODEMPASSWORD = settings.readline().strip()[15:-1]
-			self.MODEMMTU = settings.readline().strip()[9:]
-			self.MODEMMRU = settings.readline().strip()[9:]
-			self.MODEMPPPDOPTS = settings.readline().strip()[15:-1]
-			self.DIALNUMBER = settings.readline().strip()[11:]
-			self.MODEMAUTOSTART = settings.readline().strip()[15:16]
-			self.DEBUG = settings.readline().strip()[6:7]
-			self.SHARE = settings.readline().strip()[6:7]
-			settings.close()
-		else:
-			self.MODEMTYPE = "0"
-			self.MODEMPORT = "ttyUSB0"
-			self.MODEMSPEED = ""
-			self.APN = "internet"
-			self.MODEMUSERNAME = "username"
-			self.MODEMPASSWORD = "password"
-			self.MODEMMTU = "auto"
-			self.MODEMMRU = "auto"
-			self.MODEMPPPDOPTS = ""
-			self.DIALNUMBER = '"*99#"'
-			self.MODEMAUTOSTART = "1"
-			self.DEBUG = "0"
-			self.SHARE = "0"
-		
-		self.MODEMTYPEEntry = ConfigSelection(default = self.MODEMTYPE, choices = [ ("0", _("gprs")), ("1", _("cdma")) ])
-		self.MODEMPORTEntry = ConfigSelection(default = self.MODEMPORT, choices = [ ("auto", _("auto")), ("ttyACM0", _("ttyACM0")), ("ttyUSB0", _("ttyUSB0")), ("ttyUSB1", _("ttyUSB1")), ("ttyUSB2", _("ttyUSB2")), ("ttyUSB3", _("ttyUSB3")), ("ttyUSB4", _("ttyUSB4")), ("ttyUSB5", _("ttyUSB5")), ("ttyUSB6", _("ttyUSB6")), ("ttyUSB7", _("ttyUSB7")), ("ttyUSB8", _("ttyUSB8")), ("ttyUSB9", _("ttyUSB9")) ])
-		self.MODEMSPEEDEntry = ConfigSelection(default = self.MODEMSPEED, choices = [ ('""', _("auto")), ("57600", _("57600")), ("115200", _("115200")), ("230400", _("230400")), ("460800", _("460800")), ("921600", _("921600")) ])
-		self.APNEntry = ConfigText(default = self.APN, visible_width = 100, fixed_size = False)
-		self.MODEMUSERNAMEEntry = ConfigText(default = self.MODEMUSERNAME, visible_width = 100, fixed_size = False)
-		self.MODEMPASSWORDEntry = ConfigText(default = self.MODEMPASSWORD, visible_width = 100, fixed_size = False)
-		self.MODEMMTUEntry = ConfigSelection(default = self.MODEMMTU, choices = [ ("auto", _("auto")), ("1000", _("1000")), ("1100", _("1100")), ("1200", _("1200")), ("1300", _("1300")), ("1400", _("1400")), ("1440", _("1440")), ("1460", _("1460")), ("1492", _("1492")), ("1500", _("1500")) ])
-		self.MODEMMRUEntry = ConfigSelection(default = self.MODEMMRU, choices = [ ("auto", _("auto")), ("1000", _("1000")), ("1100", _("1100")), ("1200", _("1200")), ("1300", _("1300")), ("1400", _("1400")), ("1440", _("1440")), ("1460", _("1460")), ("1492", _("1492")), ("1500", _("1500")) ])
-		self.MODEMPPPDOPTSEntry = ConfigText(default = self.MODEMPPPDOPTS, visible_width = 100, fixed_size = False)
-		self.DIALNUMBEREntry = ConfigSelection(default = self.DIALNUMBER, choices = [ ('"*99#"', _("*99#")), ('"*99***1#"', _("*99***1#")), ('"*99**1*1#"', _("*99**1*1#")), ('"#777"', _("#777")) ])
-		self.MODEMAUTOSTARTEntry = ConfigSelection(default = self.MODEMAUTOSTART, choices = [ ("1", _("yes")), ("0", _("no")) ])
-		self.DEBUGEntry = ConfigSelection(default = self.DEBUG, choices = [ ("1", _("yes")), ("0", _("no")) ])
-		self.SHAREEntry = ConfigSelection(default = self.SHARE, choices = [ ("1", _("yes")), ("0", _("no")) ])
+		MODEMTYPE = "0"
+		MODEMPORT = "ttyUSB0"
+		MODEMSPEED = ""
+		APN = "internet"
+		MODEMUSERNAME = "username"
+		MODEMPASSWORD = "password"
+		MODEMMTU = "auto"
+		MODEMMRU = "auto"
+		MODEMPPPDOPTS = ""
+		DIALNUMBER = '"*99#"'
+		MODEMAUTOSTART = "1"
+		DEBUG = "0"
+		SHARE = "0"
+		if path.exists("/etc/modem.conf"):
+			settings = []
+			try:
+				f = open("/etc/modem.conf", "r")
+				for line in f.readlines():
+					settings.append(line)
+				f.close()
+			except:
+				print "[ModemSettings] ERROR in open configuration file"
+			for line in settings:
+				data = line.replace(' ', '').replace('\t', '')
+				name = data.upper()
+				if name.startswith('MODEMTYPE='):
+					MODEMTYPE = data[10:11]
+				elif name.startswith('MODEMPORT='):
+					MODEMPORT = data[10:-1]
+				elif name.startswith('MODEMSPEED='):
+					MODEMSPEED = data[11:-1]
+				elif name.startswith('APN='):
+					start = line.find('"') + 1
+					end = line[start:].find('"') + start
+					APN = line[start:end]
+				elif name.startswith('MODEMUSERNAME='):
+					start = line.find('"') + 1
+					end = line[start:].find('"') + start
+					MODEMUSERNAME = line[start:end]
+				elif name.startswith('MODEMPASSWORD='):
+					start = line.find('"') + 1
+					end = line[start:].find('"') + start
+					MODEMPASSWORD = line[start:end]
+				elif name.startswith('MODEMMTU='):
+					MODEMMTU = data[9:-1]
+				elif name.startswith('MODEMMRU='):
+					MODEMMRU = data[9:-1]
+				elif name.startswith('MODEMPPPDOPTS='):
+					start = line.find('"') + 1
+					end = line[start:].find('"') + start
+					MODEMPPPDOPTS = line[start:end]
+				elif name.startswith('DIALNUMBER='):
+					DIALNUMBER = data[11:-1]
+				elif name.startswith('MODEMAUTOSTART='):
+					MODEMAUTOSTART = data[15:16]
+				elif name.startswith('DEBUG='):
+					DEBUG = data[6:7]
+				elif name.startswith('SHARE='):
+					SHARE = data[6:7]
+		self.MODEMTYPE = ConfigSelection(default = MODEMTYPE,
+			choices = [("0", _("gprs")), ("1", _("cdma"))])
+		self.MODEMPORT = ConfigSelection(default = MODEMPORT,
+			choices = [("auto", _("auto")), ("ttyACM0", _("ttyACM0")),
+			("ttyUSB0", _("ttyUSB0")), ("ttyUSB1", _("ttyUSB1")),
+			("ttyUSB2", _("ttyUSB2")), ("ttyUSB3", _("ttyUSB3")),
+			("ttyUSB4", _("ttyUSB4")), ("ttyUSB5", _("ttyUSB5")),
+			("ttyUSB6", _("ttyUSB6")), ("ttyUSB7", _("ttyUSB7")),
+			("ttyUSB8", _("ttyUSB8")), ("ttyUSB9", _("ttyUSB9"))])
+		self.MODEMSPEED = ConfigSelection(default = MODEMSPEED,
+			choices = [('""', _("auto")), ("57600", _("57600")),
+			("115200", _("115200")), ("230400", _("230400")),
+			("460800", _("460800")), ("921600", _("921600"))])
+		self.APN = ConfigText(default = APN, visible_width = 100,
+			fixed_size = False)
+		self.MODEMUSERNAME = ConfigText(default = MODEMUSERNAME,
+			visible_width = 100, fixed_size = False)
+		self.MODEMPASSWORD = ConfigText(default = MODEMPASSWORD,
+			visible_width = 100, fixed_size = False)
+		self.MODEMMTU = ConfigSelection(default = MODEMMTU,
+			choices = [("auto", _("auto")), ("1000", _("1000")),
+			("1100", _("1100")), ("1200", _("1200")), ("1300", _("1300")),
+			("1400", _("1400")), ("1440", _("1440")), ("1460", _("1460")),
+			("1492", _("1492")), ("1500", _("1500"))])
+		self.MODEMMRU = ConfigSelection(default = MODEMMRU,
+			choices = [("auto", _("auto")), ("1000", _("1000")),
+			("1100", _("1100")), ("1200", _("1200")), ("1300", _("1300")),
+			("1400", _("1400")), ("1440", _("1440")), ("1460", _("1460")),
+			("1492", _("1492")), ("1500", _("1500"))])
+		self.MODEMPPPDOPTS = ConfigText(default = MODEMPPPDOPTS,
+			visible_width = 100, fixed_size = False)
+		self.DIALNUMBER = ConfigSelection(default = DIALNUMBER,
+			choices = [('"*99#"', _("*99#")), ('"*99***1#"', _("*99***1#")),
+			('"*99**1*1#"', _("*99**1*1#")), ('"#777"', _("#777"))])
+		self.MODEMAUTOSTART = ConfigSelection(default = MODEMAUTOSTART,
+			choices = [("1", _("yes")), ("0", _("no"))])
+		self.DEBUG = ConfigSelection(default = DEBUG,
+			choices = [("1", _("yes")), ("0", _("no"))])
+		self.SHARE = ConfigSelection(default = SHARE,
+			choices = [("1", _("yes")), ("0", _("no"))])
 
 	def createSetup(self):
 		self.list = []
-		self.list.append(getConfigListEntry(_("Modem type"), self.MODEMTYPEEntry))
-		self.list.append(getConfigListEntry(_("Port"), self.MODEMPORTEntry))
-		self.list.append(getConfigListEntry(_("Speed"), self.MODEMSPEEDEntry))
-		self.list.append(getConfigListEntry(_("APN"), self.APNEntry))
-		self.list.append(getConfigListEntry(_("Username"), self.MODEMUSERNAMEEntry))
-		self.list.append(getConfigListEntry(_("Password"), self.MODEMPASSWORDEntry))
-		self.list.append(getConfigListEntry(_("MTU"), self.MODEMMTUEntry))
-		self.list.append(getConfigListEntry(_("MRU"), self.MODEMMRUEntry))
-		self.list.append(getConfigListEntry(_("Additional PPPD options"), self.MODEMPPPDOPTSEntry))
-		self.list.append(getConfigListEntry(_("Dial number"), self.DIALNUMBEREntry))
-		self.list.append(getConfigListEntry(_("Auto start"), self.MODEMAUTOSTARTEntry))
-		self.list.append(getConfigListEntry(_("Enable debug"), self.DEBUGEntry))
-		self.list.append(getConfigListEntry(_("Internet connection sharing"), self.SHAREEntry))
+		self.list.append(getConfigListEntry(_("Modem type"), self.MODEMTYPE))
+		self.list.append(getConfigListEntry(_("Port"), self.MODEMPORT))
+		self.list.append(getConfigListEntry(_("Speed"), self.MODEMSPEED))
+		self.list.append(getConfigListEntry(_("APN"), self.APN))
+		self.list.append(getConfigListEntry(_("Username"), self.MODEMUSERNAME))
+		self.list.append(getConfigListEntry(_("Password"), self.MODEMPASSWORD))
+		self.list.append(getConfigListEntry(_("MTU"), self.MODEMMTU))
+		self.list.append(getConfigListEntry(_("MRU"), self.MODEMMRU))
+		self.list.append(getConfigListEntry(_("Additional PPPD options"),
+			self.MODEMPPPDOPTS))
+		self.list.append(getConfigListEntry(_("Dial number"), self.DIALNUMBER))
+		self.list.append(getConfigListEntry(_("Auto start"),
+			self.MODEMAUTOSTART))
+		self.list.append(getConfigListEntry(_("Enable debug"), self.DEBUG))
+		self.list.append(getConfigListEntry(_("Internet connection sharing"),
+			self.SHARE))
 		self["config"].list = self.list
 
 	def ok(self):
 		self.session.openWithCallback(self.updateConfig, MessageBox, (_(" Are you sure to save the current configuration?\n\n") ) )
 
 	def cancel(self):
-		self.close()
+		ConfigListScreen.keyCancel(self)
 
 	def updateConfig(self, ret = False):
-		self["VirtualKB"].setEnabled(False)
-		if (ret == True):
-			self.mbox = self.session.open(MessageBox, _("Configuration saved!"), MessageBox.TYPE_INFO, timeout = 3 )
-			settings = open("/etc/modem.conf", "w")
-			settings.write('MODEMTYPE=%s\nMODEMPORT=%s\nMODEMSPEED=%s\nAPN="%s"\nMODEMUSERNAME="%s"\nMODEMPASSWORD="%s"\nMODEMMTU=%s\nMODEMMRU=%s\nMODEMPPPDOPTS="%s"\nDIALNUMBER=%s\nMODEMAUTOSTART=%s\nDEBUG=%s\nSHARE=%s' % (self.MODEMTYPEEntry.value, self.MODEMPORTEntry.value, self.MODEMSPEEDEntry.value, self.APNEntry.value, self.MODEMUSERNAMEEntry.value, self.MODEMPASSWORDEntry.value, self.MODEMMTUEntry.value, self.MODEMMRUEntry.value, self.MODEMPPPDOPTSEntry.value, self.DIALNUMBEREntry.value, self.MODEMAUTOSTARTEntry.value, self.DEBUGEntry.value, self.SHAREEntry.value))
-			settings.close()
+		if ret == True:
+			data = 'MODEMTYPE=' + self.MODEMTYPE.value
+			data = data + '\nMODEMPORT=' + self.MODEMPORT.value
+			data = data + '\nMODEMSPEED=' + self.MODEMSPEED.value
+			data = data + '\nAPN="' + self.APN.value + '"'
+			data = data + '\nMODEMUSERNAME="' + self.MODEMUSERNAME.value + '"'
+			data = data + '\nMODEMPASSWORD="' + self.MODEMPASSWORD.value + '"'
+			data = data + '\nMODEMMTU=' + self.MODEMMTU.value
+			data = data + '\nMODEMMRU=' + self.MODEMMRU.value
+			data = data + '\nMODEMPPPDOPTS="' + self.MODEMPPPDOPTS.value + '"'
+			data = data + '\nDIALNUMBER='+ self.DIALNUMBER.value
+			data = data + '\nMODEMAUTOSTART='+ self.MODEMAUTOSTART.value
+			data = data + '\nDEBUG='+ self.DEBUG.value
+			data = data + '\nSHARE=' + self.SHARE.value
+			try:
+				settings = open("/etc/modem.conf", "w")
+				settings.write(data)
+				settings.close()
+				self.mbox = self.session.open(MessageBox, _("Configuration saved!"), MessageBox.TYPE_INFO, timeout = 3 )
+			except:
+				print "[ModemSettings] ERROR in save settings"
 			self.close()
 
 def main(session, **kwargs):
 	session.open(ModemSetup)
 
 def Plugins(**kwargs):
-	return PluginDescriptor(name="Modem settings", description="Plugin to set settings for modem connection", where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc=main)
-
+	return PluginDescriptor(name=_("Modem settings"),
+		description=_("Plugin to set settings for modem connection."),
+		where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc=main)
