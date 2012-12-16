@@ -38,7 +38,7 @@ class ModemSetup(Screen, ConfigListScreen):
 		MODEMMTU = "auto"
 		MODEMMRU = "auto"
 		MODEMPPPDOPTS = ""
-		DIALNUMBER = '"*99#"'
+		DIALNUMBER = "auto"
 		MODEMAUTOSTART = "1"
 		DEBUG = "0"
 		SHARE = "0"
@@ -120,8 +120,9 @@ class ModemSetup(Screen, ConfigListScreen):
 		self.MODEMPPPDOPTS = ConfigText(default = MODEMPPPDOPTS,
 			visible_width = 100, fixed_size = False)
 		self.DIALNUMBER = ConfigSelection(default = DIALNUMBER,
-			choices = [('"*99#"', _("*99#")), ('"*99***1#"', _("*99***1#")),
-			('"*99**1*1#"', _("*99**1*1#")), ('"#777"', _("#777"))])
+			choices = [("auto", _("auto")), ('"*99#"', _("*99#")),
+			('"*99***1#"', _("*99***1#")), ('"*99**1*1#"', _("*99**1*1#")),
+			('"#777"', _("#777"))])
 		self.MODEMAUTOSTART = ConfigSelection(default = MODEMAUTOSTART,
 			choices = [("1", _("yes")), ("0", _("no"))])
 		self.DEBUG = ConfigSelection(default = DEBUG,
