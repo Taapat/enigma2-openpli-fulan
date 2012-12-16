@@ -20,7 +20,7 @@ config.hdmicec.tv_wakeup_detection = ConfigSelection(
 	"sourcerequest": _("Source request"),
 	"streamrequest": _("Stream request"),
 	"osdnamerequest": _("OSD name request"),
-	"vendorid": _("Vendor ID"),
+	"vendorid": _("Vendor ID (LG)"),
 	"activity": _("Any activity"),
 	},
 	default = "streamrequest")
@@ -101,6 +101,7 @@ class HdmiCec:
 			physicaladdress = eHdmiCEC.getInstance().getPhysicalAddress()
 			data = str(struct.pack('BB', int(physicaladdress/256), int(physicaladdress%256)))
 		elif message == "osdname":
+			address = 0x0f
 			cmd = 0x47
 			data = os.uname()[1]
 			data = data[:14]
@@ -117,8 +118,9 @@ class HdmiCec:
 			devicetype = eHdmiCEC.getInstance().getDeviceType()
 			data = str(struct.pack('BBB', int(physicaladdress/256), int(physicaladdress%256), devicetype))
 		elif message == "vendorid":
+			address = 0x0f
 			cmd = 0x87
-			data = '\x00\x00\x00'
+			data = '\xB0\x90\x74'
 		elif message == "keypoweron":
 			cmd = 0x44
 			data = str(struct.pack('B', 0x6d))
@@ -267,7 +269,7 @@ class HdmiCec:
 						self.wakeup()
 				elif cmd == 0x46 and config.hdmicec.tv_wakeup_detection.value == "osdnamerequest":
 					self.wakeup()
-				elif cmd == 0x87 and config.hdmicec.tv_wakeup_detection.value == "vendorid":
+				elif cmd == 0x87 and (ord(data[0])==0x00 and ord(data[1])==0xE0 and ord(data[2])==0x91) and config.hdmicec.tv_wakeup_detection.value == "vendorid":
 					self.wakeup()
 				elif cmd != 0x36 and config.hdmicec.tv_wakeup_detection.value == "activity":
 					self.wakeup()
