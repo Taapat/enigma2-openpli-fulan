@@ -2485,6 +2485,19 @@ void eServiceMP3::pullSubtitle(GstBuffer *buffer)
 		{
 			if ( m_subtitleStreams[m_currentSubtitleStream].type < stVOB )
 			{
+				int delay = 0;
+				std::string configvalue;
+				if(ePythonConfigQuery::getConfigValue("config.subtitles.pango_subtitles_delay", configvalue)==0)
+					delay = atoi(configvalue.c_str());
+
+				int subtitle_fps = 1; // = original
+				if(ePythonConfigQuery::getConfigValue("config.subtitles.pango_subtitles_fps", configvalue)==0)
+					subtitle_fps = atoi(configvalue.c_str());
+
+				double convert_fps = 1.0;
+				if (subtitle_fps > 1 && m_framerate > 0)
+					convert_fps = subtitle_fps / (double)m_framerate;
+
 				unsigned char line[len+1];
 				SubtitlePage page;
 #if GST_VERSION_MAJOR < 1
@@ -2497,7 +2510,7 @@ void eServiceMP3::pullSubtitle(GstBuffer *buffer)
 				gRGB rgbcol(0xD0,0xD0,0xD0);
 				page.type = SubtitlePage::Pango;
 				page.pango_page.m_elements.push_back(ePangoSubtitlePageElement(rgbcol, (const char*)line));
-				page.pango_page.m_show_pts = buf_pos / 11111L;
+				page.pango_page.m_show_pts = buf_pos / 11111L * convert_fps + delay;
 				page.pango_page.m_timeout = duration_ns / 1000000;
 				m_subtitle_pages.push_back(page);
 				if (m_subtitle_pages.size()==1)
