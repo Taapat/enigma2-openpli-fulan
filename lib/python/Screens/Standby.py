@@ -13,7 +13,7 @@ class Standby(Screen):
 	def Power(self):
 		print "leave standby"
 #+++>
-		call("/bin/vdstandby -d &")
+		call("/bin/vdstandby -d &", shell="true")
 #+++<
 		#set input to encoder
 		self.avswitch.setInput("ENCODER")
@@ -70,7 +70,7 @@ class Standby(Screen):
 		else:
 			self.avswitch.setInput("AUX")
 #+++>
-		call("/bin/vdstandby -a &")
+		call("/bin/vdstandby -a &", shell="true")
 #+++<
 		self.onFirstExecBegin.append(self.__onFirstExecBegin)
 		self.onClose.append(self.__onClose)
