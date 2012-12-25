@@ -555,7 +555,7 @@ void eDVBTSTools::takeSamples()
 
 	calcBeginAndEnd();
 	if (!(m_begin_valid && m_end_valid))
-		return -1;
+		return;
 	
 	int nr_samples = 30;
 	off_t bytes_per_sample = (m_offset_end - m_offset_begin) / (long long)nr_samples;
