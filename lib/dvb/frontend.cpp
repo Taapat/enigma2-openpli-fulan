@@ -550,7 +550,7 @@ int eDVBFrontend::openFrontend()
 				case FE_QPSK:
 				{
 					m_delsys[SYS_DVBS] = true;
-#if not defined(__sh__)
+#ifdef FE_CAN_2G_MODULATION
 					if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBS2] = true;
 #endif
 					break;
@@ -567,7 +567,7 @@ int eDVBFrontend::openFrontend()
 				case FE_OFDM:
 				{
 					m_delsys[SYS_DVBT] = true;
-#if not defined(__sh__)
+#ifdef FE_CAN_2G_MODULATION
 					if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBT2] = true;
 #endif
 					break;
@@ -1416,9 +1416,7 @@ static void fillDictWithTerrestrialData(ePyObject dict, struct dtv_property *p, 
 				{
 					default:
 					case SYS_DVBT: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T; break;
-#if not defined(__sh__)
 					case SYS_DVBT2: tmp = eDVBFrontendParametersTerrestrial::System_DVB_T2; break;
-#endif
 				}
 				PutToDict(dict, "system", tmp);
 				break;
@@ -1638,11 +1636,7 @@ void eDVBFrontend::getFrontendData(ePyObject dest)
 		{
 			tmp = "DVB-C";
 		}
-#if not defined(__sh__)
 		else if (supportsDeliverySystem(SYS_DVBT, true) || supportsDeliverySystem(SYS_DVBT2, true))
-#else
-		else if (supportsDeliverySystem(SYS_DVBT, true))
-#endif
 		{
 			tmp = "DVB-T";
 		}
@@ -2259,8 +2253,6 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			{
 				default:
 				case eDVBFrontendParametersTerrestrial::System_DVB_T: system = SYS_DVBT; break;
-#if not defined(__sh__)
-#endif
 			}
 
 			p[cmdseq.num].cmd = DTV_DELIVERY_SYSTEM, p[cmdseq.num].u.data = system, cmdseq.num++;
@@ -2354,14 +2346,12 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			cmdseq.num++;
 
 			p[cmdseq.num].cmd = DTV_BANDWIDTH_HZ, p[cmdseq.num].u.data = parm.bandwidth, cmdseq.num++;
-#if not defined(__sh__)
 			if (system == SYS_DVBT2)
 			{
 #ifdef DTV_DVBT2_PLP_ID
 				p[cmdseq.num].cmd = DTV_DVBT2_PLP_ID, p[cmdseq.num].u.data = parm.plpid, cmdseq.num++;
 #endif
 			}
-#endif
 		}
 		else if (type == iDVBFrontend::feATSC)
 		{
