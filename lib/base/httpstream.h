@@ -8,12 +8,13 @@
 #include <lib/base/thread.h>
 #include <lib/base/elock.h>
 
-class eHttpStream: public iTsSource, public eSocketBase, public Object, public eThread
+class eHttpStream: public iTsSource, public Object, public eThread
 {
 	DECLARE_REF(eHttpStream);
 
-	int streamSocket;
-	std::string authorizationData;
+	int m_streamSocket;
+	std::string m_authorizationData;
+        std::string m_url;
 
 	int openUrl(const std::string &url, std::string &newurl);
 
@@ -22,17 +23,12 @@ class eHttpStream: public iTsSource, public eSocketBase, public Object, public e
 	off_t length();
 	off_t offset();
 	int valid();
-	void thread();
-	int openHttpConnection();
 	int close();
-	char *url;
-	int ret_code;
-	eSingleLock sock_mutex;
 
 public:
 	eHttpStream();
 	~eHttpStream();
-	int open(const char *url);
+	int open(const std::string& url);
 };
 
 #endif

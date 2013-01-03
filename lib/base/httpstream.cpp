@@ -6,37 +6,41 @@
 
 DEFINE_REF(eHttpStream);
 
-eHttpStream::eHttpStream() : sock_mutex(), ret_code(-1)
+eHttpStream::eHttpStream() : m_streamSocket(-1)
 {
-	streamSocket = -1;
-	//TODO: malloc and free
-	this->url = new char[1000];
 }
 
 eHttpStream::~eHttpStream()
 {
-	kill();
 	close();
 }
 
-int eHttpStream::open(const char *url)
+int eHttpStream::open(const std::string& url)
 {
-	// lock the mutex until socket is opened for reading
-	sock_mutex.lock();
-	strcpy(this->url, url);
-	eDebug("http thread");
-	int rc = run();
+	std::string currenturl(url), newurl;
+
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		if (openUrl(currenturl, newurl) < 0)
+		{
+			/* connection failed */
+			return -1;
+		}
+		if (newurl.empty())
+		{
+			/* we have a valid stream connection */
+			return run();
+		}
+		/* switch to new url */
+		close();
+		currenturl.swap(newurl);
+		newurl.clear();
+	}
+	/* too many redirect / playlist levels (we accept one redirect + one playlist) */
+	return -1;
 }
 
-void eHttpStream::thread()
-{
-	hasStarted();
-	ret_code = openHttpConnection();
-	eDebug("eHttpStream::open: ret %d", ret_code);
-	sock_mutex.unlock();
-}
-
-int eHttpStream::openHttpConnection()
+int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 {
 	int port;
 	std::string hostname;
@@ -48,17 +52,18 @@ int eHttpStream::openHttpConnection()
 	char proto[100];
 	int statuscode = 0;
 	char statusmsg[100];
-	bool redirected = false;
+	bool playlist = false;
+	bool contenttypeparsed = false;
 
 	close();
 
 	int pathindex = uri.find("/", 7);
-	if (pathindex > 0) 
+	if (pathindex > 0)
 	{
 		hostname = uri.substr(7, pathindex - 7);
 		uri = uri.substr(pathindex, uri.length() - pathindex);
-	} 
-	else 
+	}
+	else
 	{
 		hostname = uri.substr(7, uri.length() - 7);
 		uri = "";
@@ -69,29 +74,29 @@ int eHttpStream::openHttpConnection()
 		BIO *mbio, *b64bio, *bio;
 		char *p = (char*)NULL;
 		int length = 0;
-		authorizationData = hostname.substr(0, authenticationindex);
+		m_authorizationData = hostname.substr(0, authenticationindex);
 		hostname = hostname.substr(authenticationindex + 1);
 		mbio = BIO_new(BIO_s_mem());
 		b64bio = BIO_new(BIO_f_base64());
 		bio = BIO_push(b64bio, mbio);
-		BIO_write(bio, authorizationData.c_str(), authorizationData.length());
+		BIO_write(bio, m_authorizationData.data(), authorizationData.length());
 		BIO_flush(bio);
 		length = BIO_ctrl(mbio, BIO_CTRL_INFO, 0, (char*)&p);
-		authorizationData = "";
+		m_authorizationData = "";
 		if (p && length > 0)
 		{
 			/* base64 output contains a linefeed, which we ignore */
-			authorizationData.append(p, length - 1);
+			m_authorizationData.append(p, length - 1);
 		}
 		BIO_free_all(bio);
 	}
 	int customportindex = hostname.find(":");
-	if (customportindex > 0) 
+	if (customportindex > 0)
 	{
 		port = atoi(hostname.substr(customportindex + 1, hostname.length() - customportindex - 1).c_str());
 		hostname = hostname.substr(0, customportindex);
-	} 
-	else if (customportindex == 0) 
+	}
+	else if (customportindex == 0)
 	{
 		port = atoi(hostname.substr(1, hostname.length() - 1).c_str());
 		hostname = "localhost";
@@ -100,7 +105,7 @@ int eHttpStream::openHttpConnection()
 	{
 		port = 80;
 	}
-	streamSocket = connect(hostname.c_str(), port, 10);
+	streamSocket = eSocketBase::connect(hostname.c_str(), port, 10);
 	if (streamSocket < 0) goto error;
 
 	request = "GET ";
@@ -108,17 +113,17 @@ int eHttpStream::openHttpConnection()
 	request.append("Host: ").append(hostname).append("\r\n");
 	if (authorizationData != "")
 	{
-		request.append("Authorization: Basic ").append(authorizationData).append("\r\n");
+		request.append("Authorization: Basic ").append(m_authorizationData).append("\r\n");
 	}
 	request.append("Accept: */*\r\n");
 	request.append("Connection: close\r\n");
 	request.append("\r\n");
 
-	writeAll(streamSocket, request.c_str(), request.length());
+	eSocketBase::writeAll(streamSocket, request.data(), request.length());
 
 	linebuf = (char*)malloc(buflen);
 
-	result = readLine(streamSocket, &linebuf, &buflen);
+	result = eSocketBase::readLine(streamSocket, &linebuf, &buflen);
 	if (result <= 0) goto error;
 
 	result = sscanf(linebuf, "%99s %d %99s", proto, &statuscode, statusmsg);
@@ -128,18 +133,40 @@ int eHttpStream::openHttpConnection()
 		goto error;
 	}
 
-	while (result > 0)
+	while (1)
 	{
-		result = readLine(streamSocket, &linebuf, &buflen);
-		if (statuscode == 302 && sscanf(linebuf, "Location: %999s", this->url) == 1)
+		result = eSocketBase::readLine(streamSocket, &linebuf, &buflen);
+		if (!contenttypeparsed)
 		{
-				eDebug("eHttpStream::open: redirecting");
-				if (openHttpConnection() < 0) goto error;
-				redirected = true;
-				break;
+			char contenttype[32];
+			if (sscanf(linebuf, "Content-Type: %32s", contenttype) == 1)
+			{
+				contenttypeparsed = true;
+				if (!strcmp(contenttype, "application/text")
+				|| !strcmp(contenttype, "audio/x-mpegurl")
+				|| !strcmp(contenttype, "audio/mpegurl")
+				|| !strcmp(contenttype, "application/m3u"))
+				{
+					/* assume we'll get a playlist, some text file containing a stream url */
+					playlist = true;
+				}
+			}
 		}
+		else if (playlist && !strncmp(linebuf, "http://", 7))
+		{
+			newurl = linebuf;
+			eDebug("%s: playlist entry: %s", __FUNCTION__, newurl.c_str());
+			break;
+		}
+		else if (statuscode == 302 && !strncmp(linebuf, "Location: ", 10))
+		{
+			newurl = &linebuf[10];
+			eDebug("%s: redirecting to: %s", __FUNCTION__, newurl.c_str());
+			break;
+		}
+		if (!playlist && result == 0) break;
+		if (result < 0) break;
 	}
-	if (statuscode == 302 && !redirected) goto error;
 
 	free(linebuf);
 	return 0;
@@ -152,31 +179,47 @@ error:
 
 int eHttpStream::close()
 {
+	kill();
 	eDebug("eHttpStream::close socket");
 	int retval = -1;
-	if (streamSocket >= 0)
+	if (m_streamSocket >= 0)
 	{
-		retval = ::close(streamSocket);
-		streamSocket = -1;
+		retval = ::close(m_streamSocket);
+		m_streamSocket = -1;
 	}
 	return retval;
 }
 
 ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 {
-	sock_mutex.lock();
-	sock_mutex.unlock();
-	if (streamSocket < 0) {
+	if (m_streamSocket < 0) {
 		eDebug("eHttpStream::read not valid fd");
 		return -1;
 	}
-	return timedRead(streamSocket, buf, count, 5000, 500);
+
+	//max 2 reads, normal one and one after reconnect
+	int tryReconnect = 2;
+        
+	while(tryReconnect) {
+		const int nRead = eSocketBase::timedRead(streamSocket, buf, count, 5000, 500);
+		if (!nRead) {
+			close();
+			if (open(m_url)) break;
+		} else return nRead;
+		tryReconnect--
+	}
+
+	return -1;
+}
+
+void eHttpStream::thread()
+{
+	hasStarted();
 }
 
 int eHttpStream::valid()
 {
-	return true;
-	return streamSocket >= 0;
+	return m_streamSocket >= 0;
 }
 
 off_t eHttpStream::length()
@@ -188,3 +231,4 @@ off_t eHttpStream::offset()
 {
 	return 0;
 }
+

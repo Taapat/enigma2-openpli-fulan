@@ -53,7 +53,7 @@ baseinclude_HEADERS = \
 	base/nconfig.h \
 	base/object.h \
 	base/rawfile.h \
-	base/ringbuffer.h \
+	base/ringbuffer_queue.h \
 	base/smartptr.h \
 	base/thread.h \
 	base/httpstream.h \
