@@ -60,7 +60,7 @@ ssize_t RingBuffer::read(char *dest, const ssize_t len)
 	if (toRead > 0) {
 		__sync_synchronize();  // memory barrier
 		const ssize_t r =m_ringBuffer.r ;
-		if (r + toRead <= ) {
+		if (r + toRead <= m_ringBuffer.size) {
 			memcpy(dest, m_ringBuffer.ptr + r, toRead);
 		} else {
 			const ssize_t d = m_ringBuffer.size - r;
