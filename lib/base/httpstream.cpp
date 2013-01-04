@@ -79,7 +79,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		mbio = BIO_new(BIO_s_mem());
 		b64bio = BIO_new(BIO_f_base64());
 		bio = BIO_push(b64bio, mbio);
-		BIO_write(bio, m_authorizationData.data(), authorizationData.length());
+		BIO_write(bio, m_authorizationData.data(), m_authorizationData.length());
 		BIO_flush(bio);
 		length = BIO_ctrl(mbio, BIO_CTRL_INFO, 0, (char*)&p);
 		m_authorizationData = "";
@@ -105,13 +105,13 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	{
 		port = 80;
 	}
-	streamSocket = eSocketBase::connect(hostname.c_str(), port, 10);
+	m_streamSocket = eSocketBase::connect(hostname.c_str(), port, 10);
 	if (streamSocket < 0) goto error;
 
 	request = "GET ";
 	request.append(uri).append(" HTTP/1.1\r\n");
 	request.append("Host: ").append(hostname).append("\r\n");
-	if (authorizationData != "")
+	if (m_authorizationData.length())
 	{
 		request.append("Authorization: Basic ").append(m_authorizationData).append("\r\n");
 	}
@@ -206,7 +206,7 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 			close();
 			if (open(m_url)) break;
 		} else return nRead;
-		tryReconnect--
+		tryReconnect--;
 	}
 
 	return -1;

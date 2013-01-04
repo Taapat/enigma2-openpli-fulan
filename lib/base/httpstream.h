@@ -18,6 +18,8 @@ class eHttpStream: public iTsSource, public Object, public eThread
 
 	int openUrl(const std::string &url, std::string &newurl);
 
+        void thread();
+
 	/* iTsSource */
 	ssize_t read(off_t offset, void *buf, size_t count);
 	off_t length();
