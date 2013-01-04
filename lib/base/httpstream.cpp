@@ -106,7 +106,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		port = 80;
 	}
 	m_streamSocket = eSocketBase::connect(hostname.c_str(), port, 10);
-	if (streamSocket < 0) goto error;
+	if (m_streamSocket < 0) goto error;
 
 	request = "GET ";
 	request.append(uri).append(" HTTP/1.1\r\n");
@@ -119,11 +119,11 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	request.append("Connection: close\r\n");
 	request.append("\r\n");
 
-	eSocketBase::writeAll(streamSocket, request.data(), request.length());
+	eSocketBase::writeAll(m_streamSocket, request.data(), request.length());
 
 	linebuf = (char*)malloc(buflen);
 
-	result = eSocketBase::readLine(streamSocket, &linebuf, &buflen);
+	result = eSocketBase::readLine(m_streamSocket, &linebuf, &buflen);
 	if (result <= 0) goto error;
 
 	result = sscanf(linebuf, "%99s %d %99s", proto, &statuscode, statusmsg);
@@ -135,7 +135,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 
 	while (1)
 	{
-		result = eSocketBase::readLine(streamSocket, &linebuf, &buflen);
+		result = eSocketBase::readLine(m_streamSocket, &linebuf, &buflen);
 		if (!contenttypeparsed)
 		{
 			char contenttype[32];
@@ -201,7 +201,7 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 	int tryReconnect = 2;
         
 	while(tryReconnect) {
-		const int nRead = eSocketBase::timedRead(streamSocket, buf, count, 5000, 500);
+		const int nRead = eSocketBase::timedRead(m_streamSocket, buf, count, 5000, 500);
 		if (!nRead) {
 			close();
 			if (open(m_url)) break;
