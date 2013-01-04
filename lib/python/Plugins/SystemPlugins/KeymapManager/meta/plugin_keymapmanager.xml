@@ -1,0 +1,19 @@
+<default>
+	  <prerequisites>
+                    <tag type="Keymap" />
+                    <tag type="System" />
+	  </prerequisites>
+          <info>
+                    <author>DarkVolli</author>
+                    <name>KeymapManager</name>
+                    <packagename>enigma2-plugin-systemplugins-keymapmanager</packagename>
+                    <shortdescription>KeymapManager setup for optional keymaps</shortdescription>
+                    <description>The KeymapManager plugin setup for optional keymaps.\n
+                    </description>
+                    <screenshot src="http://www.dreamboxupdate.com/preview/plugin_keymapmanager.jpg" />
+          </info>
+	  <files type="package"> <!-- without version, without .ipk -->
+		<file type="package" name="enigma2-plugin-systemplugins-keymapmanager" />
+	</files>
+
+</default>
