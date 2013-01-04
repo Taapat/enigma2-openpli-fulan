@@ -22,10 +22,9 @@ ssize_t RingBuffer::availableToWrite() const
   // we adopt the convention that m_ringBuffer.r == m_ringBuffer.w means that the
   // buffer is empty.
 	if (m_ringBuffer.ptr) {
-		return (m_ringBuffer.size + m_ringBuffer.r - m_ringBuffer.w - 1) % buffer->size;
-	} else {
-		return 0;
+		return (m_ringBuffer.size + m_ringBuffer.r - m_ringBuffer.w - 1) % m_ringBuffer.size;
 	}
+	return 0;
 }
 
 ssize_t RingBuffer::availableToRead() const
@@ -37,7 +36,7 @@ ssize_t RingBuffer::availableToRead() const
 	}
 }
 
-size_t RingBuffer::write(const char *src, const ssize_t len) 
+ssize_t RingBuffer::write(const char *src, const ssize_t len) 
 {
         const ssize_t toWrite = MIN(len, availableToWrite());
 	if (toWrite > 0) {
@@ -55,7 +54,7 @@ size_t RingBuffer::write(const char *src, const ssize_t len)
 	return toWrite; 
 }
 
-size_t RingBuffer::read(char *dest, const ssize_t len)
+ssize_t RingBuffer::read(char *dest, const ssize_t len)
 {
         const ssize_t toRead = MIN(len, availableToRead());
 	if (toRead > 0) {
