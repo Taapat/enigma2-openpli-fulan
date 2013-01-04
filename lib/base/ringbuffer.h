@@ -1,26 +1,28 @@
 #ifndef __RING_BUFFER_H__
 #define __RING_BUFFER_H__
 
-typedef struct ring_buffer {
-    int size;
+typedef struct {
+    ssize_t size;
+    volatile ssize_t w;
+    volatile ssize_t r;
     char *ptr;
-    volatile int w;
-    volatile int r;
-} ring_buffer;
+} ring_buffer_t;
 
 class RingBuffer
 {
 
 public:
-	explicit RingBuffer(ssize_t size);
+	explicit RingBuffer(const ssize_t size);
                 ~RingBuffer();
 
-int rb_available_to_write(ring_buffer *buffer);
-int rb_available_to_read(ring_buffer *buffer);
-int rb_write_to_buffer(ring_buffer *buffer, const char *src, int len);
-int rb_read_from_buffer(ring_buffer *buffer, char *dest, int len);
+	ssize_t availableToWrite() const;
+        ssize_t availableToRead() const;
+        ssize_t write(const char *src, const ssize_t len);
+        ssize_t read(char *dest, const ssize_t len);
 
 private:
+        ring_buffer_t m_ringBuffer;
+
 	RingBuffer();
         RingBuffer(const RingBuffer&);
         const RingBuffer& operator=(const RingBuffer&);

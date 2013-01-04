@@ -6,15 +6,17 @@
 #include <lib/base/itssource.h>
 #include <lib/base/socketbase.h>
 #include <lib/base/thread.h>
-#include <lib/base/elock.h>
+#include <lib/base/ringbuffer.h>
 
 class eHttpStream: public iTsSource, public Object, public eThread
 {
 	DECLARE_REF(eHttpStream);
 
 	int m_streamSocket;
+	volatile bool m_isStreaming;
 	std::string m_authorizationData;
         std::string m_url;
+        RingBuffer m_rbuffer;
 
 	int openUrl(const std::string &url, std::string &newurl);
 

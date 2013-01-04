@@ -1,67 +1,74 @@
 #include "ringbuffer.h"
 
-ring_buffer *rb_create(int size) {
-  if (size & 0xff) return NULL;  // size must be a multiple of 256
-  ring_buffer *buffer = malloc(sizeof(ring_buffer));
-  if (!buffer) return NULL;
-  buffer->buf_ptr = calloc(size, sizeof(char));
-  if (!buffer->buf_ptr) {
-    free(buffer);
-    return NULL;
-  }
-  buffer->size = size;
-  buffer->write_idx = 0;
-  buffer->read_idx = 0;
-  return buffer;
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+
+RingBuffer::RingBuffer(const ssize_t size) 
+{
+	const ssize_t m = size/256 + 1; // size must be a multiple of 256
+	m_ringBuffer.size = m*256;
+	m_ringBuffer.ptr = new char(m_ringBuffer.size);
+	m_ringBuffer.w = 0;
+	m_ringBuffer.r = 0;
 }
 
-void rb_free(ring_buffer *buffer) {
-  free(buffer->buf_ptr);
-  free(buffer);
+RingBuffer::~RingBuffer() 
+{
+	delete m_ringBuffer.ptr;
 }
 
-int rb_available_to_write(ring_buffer *buffer) {
-  // Note: The largest possible result is buffer->size - 1 because
-  // we adopt the convention that read_idx == write_idx means that the
+ssize_t RingBuffer::availableToWrite() const
+{
+  // Note: The largest possible result is m_ringBuffer.size - 1 because
+  // we adopt the convention that m_ringBuffer.r == m_ringBuffer.w means that the
   // buffer is empty.
-  return buffer
-    ? (buffer->size + buffer->read_idx - buffer->write_idx - 1) % buffer->size
-    : 0;
+	if (m_ringBuffer.ptr) {
+		return (m_ringBuffer.size + m_ringBuffer.r - m_ringBuffer.w - 1) % buffer->size;
+	} else {
+		return 0;
+	}
 }
 
-int rb_available_to_read(ring_buffer *buffer) {
-  return buffer
-    ? (buffer->size + buffer->write_idx - buffer->read_idx) % buffer->size : 0;
+ssize_t RingBuffer::availableToRead() const
+{
+	if (m_ringBuffer.ptr) {
+		return (m_ringBuffer.size + m_ringBuffer.w - m_ringBuffer.r) % m_ringBuffer.size;
+	} else {
+		return 0;
+	}
 }
 
-int rb_write_to_buffer(ring_buffer *buffer, const char *src, int len) {
-  if (len > rb_available_to_write(buffer)) return -1;
-  int write_idx = buffer->write_idx;
-  if (write_idx + len <= buffer->size) {
-    memcpy(buffer->buf_ptr + write_idx, src, len);
-  } else {
-    int d = buffer->size - write_idx;
-    memcpy(buffer->buf_ptr + write_idx, src, d);
-    memcpy(buffer->buf_ptr, src + d, len - d);
-  }
-  __sync_synchronize();  // memory barrier
-  __sync_val_compare_and_swap(&(buffer->write_idx), buffer->write_idx,
-       (write_idx + len) % buffer->size);
-  return 0; 
+size_t RingBuffer::write(const char *src, const ssize_t len) 
+{
+        const ssize_t toWrite = MIN(len, availableToWrite());
+	if (toWrite > 0) {
+		const ssize_t w = m_ringBuffer.w;
+		if (w + toWrite <= m_ringBuffer.size) {
+			memcpy(m_ringBuffer.ptr + w, src, toWrite);
+		} else {
+			const ssize_t d = m_ringBuffer.size - w;
+			memcpy(m_ringBuffer.ptr + w, src, d);
+			memcpy(m_ringBuffer.ptr, src + d, toWrite - d);
+		}
+		__sync_synchronize();  // memory barrier
+		__sync_val_compare_and_swap(&(m_ringBuffer.w), m_ringBuffer.w, (w + toWrite) % m_ringBuffer.size);
+	}
+	return toWrite; 
 }
 
-int rb_read_from_buffer(ring_buffer *buffer, char *dest, int len) {
-  if (len > rb_available_to_read(buffer)) return -1;
-  __sync_synchronize();  // memory barrier
-  int read_idx = buffer->read_idx;
-  if (read_idx + len <= buffer->size) {
-    memcpy(dest, buffer->buf_ptr + read_idx, len);
-  } else {
-    int d = buffer->size - read_idx;
-    memcpy(dest, buffer->buf_ptr + read_idx, d);
-    memcpy(dest + d, buffer->buf_ptr, len - d);
-  }
-  __sync_val_compare_and_swap(&(buffer->read_idx), buffer->read_idx,
-       (read_idx + len) % buffer->size);
-  return 0; 
+size_t RingBuffer::read(char *dest, const ssize_t len)
+{
+        const ssize_t toRead = MIN(len, availableToRead());
+	if (toRead > 0) {
+		__sync_synchronize();  // memory barrier
+		const ssize_t r =m_ringBuffer.r ;
+		if (r + toRead <= ) {
+			memcpy(dest, m_ringBuffer.ptr + r, toRead);
+		} else {
+			const ssize_t d = m_ringBuffer.size - r;
+			memcpy(dest, m_ringBuffer.ptr + r, d);
+			memcpy(dest + d, m_ringBuffer.ptr, toRead - d);
+		}
+		__sync_val_compare_and_swap(&(m_ringBuffer.r), m_ringBuffer.r, (r + toRead) % m_ringBuffer.size);
+	}
+        return toRead;
 }

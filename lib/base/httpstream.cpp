@@ -4,15 +4,21 @@
 #include <lib/base/httpstream.h>
 #include <lib/base/eerror.h>
 
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+
 DEFINE_REF(eHttpStream);
 
-eHttpStream::eHttpStream() : m_streamSocket(-1)
+eHttpStream::eHttpStream() : 
+	m_streamSocket(-1)
+	,m_rbuffer(1024*1024)
+	,m_isStreaming(false)
 {
 }
 
 eHttpStream::~eHttpStream()
 {
 	close();
+	kill();
 }
 
 int eHttpStream::open(const std::string& url)
@@ -24,11 +30,12 @@ int eHttpStream::open(const std::string& url)
 		if (openUrl(currenturl, newurl) < 0)
 		{
 			/* connection failed */
-			return -1;
+			break;
 		}
 		if (newurl.empty())
 		{
 			/* we have a valid stream connection */
+			m_isStreaming = true;
 			return run();
 		}
 		/* switch to new url */
@@ -36,6 +43,7 @@ int eHttpStream::open(const std::string& url)
 		currenturl.swap(newurl);
 		newurl.clear();
 	}
+	m_isStreaming = false;
 	/* too many redirect / playlist levels (we accept one redirect + one playlist) */
 	return -1;
 }
@@ -179,9 +187,9 @@ error:
 
 int eHttpStream::close()
 {
-	kill();
 	eDebug("eHttpStream::close socket");
 	int retval = -1;
+	m_isStreaming = false;
 	if (m_streamSocket >= 0)
 	{
 		retval = ::close(m_streamSocket);
@@ -197,24 +205,37 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 		return -1;
 	}
 
-	//max 2 reads, normal one and one after reconnect
-	int tryReconnect = 2;
-        
-	while(tryReconnect) {
-		const int nRead = eSocketBase::timedRead(m_streamSocket, buf, count, 5000, 500);
-		if (!nRead) {
-			close();
-			if (open(m_url)) break;
-		} else return nRead;
-		tryReconnect--;
-	}
+	if (m_rbuffer.availableToRead() <=0) usleep(5000);
+	const ssize_t nRead = m_rbuufer.read(buf, count);
 
-	return -1;
+	return (nRead > 0)? nRead: -1;
 }
 
 void eHttpStream::thread()
 {
+	char buffer[1024*8];
+
+	bool reconnectAttempted = false;
+
 	hasStarted();
+	while(m_isStreaming) {
+		while(m_rbuffer.availableToWrite() <= 0) pthread_yield();
+		ssize_t nRead = MIN(sizeof(buffer), m_rbuffer.availableToWrite());
+		
+		nRead = eSocketBase::timedRead(m_streamSocket, buffer, nRead, 10000, 1000);
+		if (nRead > 0) {
+			m_rbuffer.write(buffer, nRead);
+			reconnectAttempted = false;
+		} else if (!reconnectAttempted && m_isStreaming) {
+			reconnectAttempted = true;
+			close();
+			if (open(m_url)) break;
+		} else {
+			//reconnect did not help
+			break;
+		}
+	}
+	m_isStreaming = false;
 }
 
 int eHttpStream::valid()
