@@ -206,7 +206,7 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 	}
 
 	if (m_rbuffer.availableToRead() <=0) usleep(5000);
-	const ssize_t nRead = m_rbuufer.read(buf, count);
+	const ssize_t nRead = m_rbuffer.read(buf, count);
 
 	return (nRead > 0)? nRead: -1;
 }
