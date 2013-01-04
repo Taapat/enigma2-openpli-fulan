@@ -26,6 +26,6 @@ private:
 	RingBuffer();
         RingBuffer(const RingBuffer&);
         const RingBuffer& operator=(const RingBuffer&);
-}
+};
 
 #endif
