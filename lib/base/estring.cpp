@@ -438,7 +438,7 @@ std::string convertDVBUTF8(const unsigned char *data, int len, int table, int ts
 			{
 				// Attempt to decode Freesat Huffman encoded string
 				std::string decoded_string = huffmanDecoder.decode(data, len);
-				if (!decoded_string.empty()) return decoded_string;
+				if (!decoded_string.empty()) return replaceInvalidUTF8Chars(decoded_string, '?');
 			}
 			i++;
 			eDebug("failed to decode bbc freesat huffman");
