@@ -663,7 +663,7 @@ static inline int isValidUTF8Char(const unsigned char* c, const int len)
         while (l > 2) {
            l--;
            // the 3rd and 4th byte should be between 80-BF
-           if (!(0x80 <= c[l] <= 0xBF)) return 0;
+           if (!(0x80 <= c[l] || c[l] <= 0xBF)) return 0;
         }
 
         // 2nd byte verification
@@ -689,11 +689,11 @@ int isUTF8(const std::string &string)
 {
         int i = 0;
         const int len = string.length();
-        unsigned char* const data = string.data();
+        unsigned char* const data = (unsigned char*)string.data();
 
         while (i < len) {
            unsigned char* const c = (data + i);
-           const int clen = g_utf8TrailingByte[*c]+1;
+           const int clen = UTF8TrailingBytes[*c]+1;
 
            if ( (i+clen > len) || !isValidUTF8Char (c, clen)) return 0;
            i+=clen;
@@ -706,21 +706,21 @@ std::string replaceInvalidUTF8Chars(const std::string &string, const char r)
 	std::string result;
 	int i = 0;
 	const int len = string.length();
-	unsigned char* const data = string.data();
+	unsigned char* const data = (unsigned char*)string.data();
 
 	while (i < len) {
 		unsigned char* const c = (data + i);
 		const int clen = UTF8TrailingBytes[*c]+1;
 
 		if ( (i+clen > len) || !isValidUTF8Char (c, clen)) {
-			result.appen(r, 1);
+			result.append(r, 1);
 			i++;
 		} else {
 			result.appned(c, clen);
 			i+=clen;
 		}
 	}
-        return 1; // can be UTF8 (or pure ASCII, at least no non-UTF-8 8bit characters)
+	return result;
 }
 
 unsigned int truncateUTF8(std::string &s, unsigned int newsize)
@@ -728,7 +728,7 @@ unsigned int truncateUTF8(std::string &s, unsigned int newsize)
 	const unsigned int length = s.length();
 	if (newsize < length) {
 		int i = 0;
-		unsigned char* const data = s.data();
+		unsigned char* const data = (unsigned char*)s.data();
 		while (i < newsize) {
 			unsigned char* const c = (data + i);
 			const int clen = UTF8TrailingBytes[*c]+1;
