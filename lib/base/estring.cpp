@@ -732,7 +732,7 @@ unsigned int truncateUTF8(std::string &s, unsigned int newsize)
 		while (i < newsize) {
 			unsigned char* const c = (data + i);
 			const int clen = UTF8TrailingBytes[*c]+1;
-			if (newlen + clen > newsize) break;
+			if (i + clen > newsize) break;
 			i += clen;
 		}
 		s.resize(i);
