@@ -716,7 +716,7 @@ std::string replaceInvalidUTF8Chars(const std::string &string, const char r)
 			result.append(r, 1);
 			i++;
 		} else {
-			result.appned(c, clen);
+			result.append(c, clen);
 			i+=clen;
 		}
 	}
@@ -727,7 +727,7 @@ unsigned int truncateUTF8(std::string &s, unsigned int newsize)
 {
 	const unsigned int length = s.length();
 	if (newsize < length) {
-		int i = 0;
+		unsigned int i = 0;
 		unsigned char* const data = (unsigned char*)s.data();
 		while (i < newsize) {
 			unsigned char* const c = (data + i);
