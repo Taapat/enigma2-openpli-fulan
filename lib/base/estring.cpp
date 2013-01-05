@@ -713,10 +713,10 @@ std::string replaceInvalidUTF8Chars(const std::string &string, const char r)
 		const int clen = UTF8TrailingBytes[*c]+1;
 
 		if ( (i+clen > len) || !isValidUTF8Char (c, clen)) {
-			result.append(r, 1);
+			result.append(1, r);
 			i++;
 		} else {
-			result.append(c, clen);
+			result.append((char*)c, clen);
 			i+=clen;
 		}
 	}
