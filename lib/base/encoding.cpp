@@ -12,7 +12,7 @@ inline char toupper(char c)
 	switch (c)
 	{
 		case 'a' ... 'z':
-			return c-32;
+			c -= 32;
 	}
 	return c;
 }

@@ -7,6 +7,18 @@
 #include <lib/base/estring.h>
 #include "freesatv2.h"
 
+const char UTF8TrailingBytes[256] =
+{
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+     2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5
+};
+
 std::string buildShortName( const std::string &str )
 {
 	std::string tmp;
@@ -421,7 +433,7 @@ std::string convertDVBUTF8(const unsigned char *data, int len, int table, int ts
 			eDebug("unsup. Big5 subset of ISO/IEC 10646-1 enc.");
 			break;
 		case 0x15: // UTF-8 encoding of ISO/IEC 10646-1
-			return std::string((char*)data+1, len-1);
+			return replaceInvalidUTF8Chars(std::string((char*)data+1, len-1), '?');
 		case 0x1F:
 			{
 				// Attempt to decode Freesat Huffman encoded string
@@ -489,7 +501,7 @@ std::string convertDVBUTF8(const unsigned char *data, int len, int table, int ts
 			break;
 		}
 	}
-	return std::string((char*)res, t);
+	return replaceInvalidUTF8Chars(std::string((char*)res, t), '?');
 }
 
 std::string convertUTF8DVB(const std::string &string, int table)
@@ -621,56 +633,111 @@ std::string convertLatin1UTF8(const std::string &string)
 	return std::string((char*)res, t);
 }
 
+static inline int isValidUTF8Char(const unsigned char* c, const int len)
+{
+       /*
+        * For the latest spec on valid XML characters visit: http://www.w3.org/TR/REC-xml/#charsets
+        * Char ::= #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+        *
+        *
+        Code Points        First Byte Second Byte Third Byte Fourth Byte
+        U+0000..U+007F     00..7F
+        U+0080..U+07FF     C2..DF     80..BF
+        U+0800..U+0FFF     E0         A0..BF      80..BF
+        U+1000..U+CFFF     E1..EC     80..BF      80..BF
+        U+D000..U+D7FF     ED         80..9F      80..BF
+        U+E000..U+FFFF     EE..EF     80..BF      80..BF
+        U+10000..U+3FFFF   F0         90..BF      80..BF     80..BF
+        U+40000..U+FFFFF   F1..F3     80..BF      80..BF     80..BF
+        U+100000..U+10FFFF F4         80..8F      80..BF     80..BF
+        */
+
+        /* Validate the fisrt byte, it should not be between 7F - C2 and bigger then F4
+           as well length should not be bigger then 4, 5 and 6 are invalid for UTF8 
+        */
+        if (len > 4 || *c > 0xF4 || (0x7F < *c && *c < 0xC2))   return 0;
+        if (len == 1 && *c < 0x20 && *c != 0x9 && *c != 0xA && *c != 0xD) return 0;
+
+        int l = len;
+        // 3rd and 4th byte verification
+        while (l > 2) {
+           l--;
+           // the 3rd and 4th byte should be between 80-BF
+           if (!(0x80 <= c[l] <= 0xBF)) return 0;
+        }
+
+        // 2nd byte verification
+        if (l == 2){ 
+           l--;
+           // upper limit for the 2nd byte general case BF, 
+           // if 1st byte is F4 then 8F or if 1st byte is ED then 9F
+           if (c[l] > 0xBF || 
+              (*c == 0xF4 && c[l] > 0x8F) ||
+              (*c == 0xED && c[l] > 0x9F) )  return 0;
+
+           // lower limit general case not < 80
+           if (c[l] < 0x80) return 0;
+           // if first byte == E0 then lower limit is A0
+           if (*c == 0xE0 && c[l] < 0xA0) return 0;
+           // if first byte == F0 then lower limit is  90
+           if (*c == 0xF0 && c[l] < 0x90) return 0;
+        }
+        return 1;
+}
+
 int isUTF8(const std::string &string)
 {
-	unsigned int len=string.size();
+        int i = 0;
+        const int len = string.length();
+        unsigned char* const data = string.data();
 
-	for (unsigned int i=0; i < len; ++i)
-	{
-		if (!(string[i]&0x80)) // normal ASCII
-			continue;
-		if ((string[i] & 0xE0) == 0xC0) // one char following.
-		{
-				// first, length check:
-			if (i+1 >= len)
-				return 0; // certainly NOT utf-8
+        while (i < len) {
+           unsigned char* const c = (data + i);
+           const int clen = g_utf8TrailingByte[*c]+1;
+
+           if ( (i+clen > len) || !isValidUTF8Char (c, clen)) return 0;
+           i+=clen;
+        }
+	return 1; // can be UTF8 (or pure ASCII, at least no non-UTF-8 8bit characters)
+}
+
+std::string replaceInvalidUTF8Chars(const std::string &string, const char r)
+{
+	std::string result;
+	int i = 0;
+	const int len = string.length();
+	unsigned char* const data = string.data();
+
+	while (i < len) {
+		unsigned char* const c = (data + i);
+		const int clen = UTF8TrailingBytes[*c]+1;
+
+		if ( (i+clen > len) || !isValidUTF8Char (c, clen)) {
+			result.appen(r, 1);
 			i++;
-			if ((string[i]&0xC0) != 0x80)
-				return 0; // no, not UTF-8.
-		} else if ((string[i] & 0xF0) == 0xE0)
-		{
-			if ((i+1) >= len)
-				return 0;
-			i++;
-			if ((string[i]&0xC0) != 0x80)
-				return 0;
-			i++;
-			if ((string[i]&0xC0) != 0x80)
-				return 0;
+		} else {
+			result.appned(c, clen);
+			i+=clen;
 		}
 	}
-	return 1; // can be UTF8 (or pure ASCII, at least no non-UTF-8 8bit characters)
+        return 1; // can be UTF8 (or pure ASCII, at least no non-UTF-8 8bit characters)
 }
 
 unsigned int truncateUTF8(std::string &s, unsigned int newsize)
 {
-	unsigned int length = s.size();
-
-	while (length > newsize)
-	{
-		if ((unsigned char)s[length - 1] > 0x7F)
-		{
-			do
-			{
-				/* remove all UTF data bytes, not including the start byte, which is {0xC0 <= startbyte <= 0xFD} */
-				length--;
-			} while (length > 0 && (unsigned char)s[length - 1] <= 0xBF); /* remove only databytes */
+	const unsigned int length = s.length();
+	if (newsize < length) {
+		int i = 0;
+		unsigned char* const data = s.data();
+		while (i < newsize) {
+			unsigned char* const c = (data + i);
+			const int clen = UTF8TrailingBytes[*c]+1;
+			if (newlen + clen > newsize) break;
+			i += clen;
 		}
-		/* remove the UTF startbyte, or normal ascii character */
-		if (length > 0) length--;
+		s.resize(i);
 	}
-	s.resize(length);
-	return length;
+	return s.length();
 }
 
 std::string removeDVBChars(const std::string &s)
