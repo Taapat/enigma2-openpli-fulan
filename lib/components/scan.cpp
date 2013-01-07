@@ -22,7 +22,7 @@ void eComponentScan::scanEvent(int evt)
 			{
 				eDebug("no resource manager");
 				m_failed = 2;
-			} else if ((err = res->getChannelList(db)) != 0)
+			} else if (res->getChannelList(db) != 0)
 			{
 				m_failed = 3;
 				eDebug("no channel list");
@@ -113,7 +113,7 @@ int eComponentScan::start(int feid, int flags, int networkid)
 		ePtr<eDVBResourceManager> res;
 		if (eDVBResourceManager::getInstance(res) != 0)
 			eDebug("no resource manager");
-		else if ((err = res->getChannelList(db)) != 0)
+		else if (res->getChannelList(db) != 0)
 			eDebug("no channel list");
 		else
 		{
