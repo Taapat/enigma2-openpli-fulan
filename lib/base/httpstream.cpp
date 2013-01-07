@@ -81,7 +81,6 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	{
 		BIO *mbio, *b64bio, *bio;
 		char *p = (char*)NULL;
-		int length = 0;
 		m_authorizationData = hostname.substr(0, authenticationindex);
 		hostname = hostname.substr(authenticationindex + 1);
 		mbio = BIO_new(BIO_s_mem());
@@ -89,7 +88,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		bio = BIO_push(b64bio, mbio);
 		BIO_write(bio, m_authorizationData.data(), m_authorizationData.length());
 		BIO_flush(bio);
-		length = BIO_ctrl(mbio, BIO_CTRL_INFO, 0, (char*)&p);
+		int length = BIO_ctrl(mbio, BIO_CTRL_INFO, 0, (char*)&p);
 		m_authorizationData = "";
 		if (p && length > 0)
 		{
@@ -134,7 +133,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	result = eSocketBase::readLine(m_streamSocket, &linebuf, &buflen);
 	if (result <= 0) goto error;
 
-	result = sscanf(linebuf, "%99s %d %99s", proto, &statuscode, statusmsg);
+	result = sscanf(linebuf, "%99s %3d %99s", proto, &statuscode, statusmsg);
 	if (result != 3 || (statuscode != 200 && statuscode != 302))
 	{
 		eDebug("%s: wrong http response code: %d", __FUNCTION__, statuscode);
@@ -147,7 +146,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		if (!contenttypeparsed)
 		{
 			char contenttype[32];
-			if (sscanf(linebuf, "Content-Type: %32s", contenttype) == 1)
+			if (sscanf(linebuf, "Content-Type: %31s", contenttype) == 1)
 			{
 				contenttypeparsed = true;
 				if (!strcmp(contenttype, "application/text")

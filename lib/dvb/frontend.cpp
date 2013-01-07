@@ -1514,10 +1514,9 @@ void eDVBFrontend::getFrontendStatus(ePyObject dest)
 		}
 		if (m_state != stateTuning)
 		{
-			int snr = 0;
 			/* we are not tuning, get the remaining tunerstatus info */
 			status = readFrontendData(iFrontendInformation_ENUMS::frontendStatus);
-			snr = readFrontendData(iFrontendInformation_ENUMS::snrValue);
+			int snr = readFrontendData(iFrontendInformation_ENUMS::snrValue);
 			calculateSignalQuality(snr, signalquality, signalqualitydb);
 			acg = readFrontendData(iFrontendInformation_ENUMS::signalPower);
 			ber = readFrontendData(iFrontendInformation_ENUMS::bitErrorRate);

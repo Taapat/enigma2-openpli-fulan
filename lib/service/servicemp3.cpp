@@ -1142,9 +1142,6 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_PTS, &vpts);
 
-	if (vpts<=0)
-		return -1;
-
 	/* len is in nanoseconds. we have 90 000 pts per second. */
 	pts = vpts>0?vpts:pts;;
 

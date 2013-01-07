@@ -135,7 +135,7 @@ eData eDVBCISlot::sendData(unsigned char* data, int len)
 bool eDVBCISlot::sendCreateTC()
 {
 	//printf("%s:%s >\n", FILENAME, __FUNCTION__);
-	unsigned char* data = (unsigned char*) malloc(sizeof(char) * 5);
+	unsigned char data [sizeof(char) * 5];
 	tx_time.tv_sec = 0;
 	data[0] = getSlotID();
 	data[1] = getSlotID() + 1; 	/* conid */

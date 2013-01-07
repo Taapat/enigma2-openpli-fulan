@@ -63,9 +63,9 @@ int gRegion::do_coalesce(int prevStart, unsigned int curStart)
 	do {
 		if ((prevBox->x1 != curBox->x1) || (prevBox->x2 != curBox->x2))
 			return curStart;
-		prevBox++;
-		curBox++;
-		numRects--;
+		++prevBox;
+		++curBox;
+		--numRects;
 	} while ( numRects );
 	
 		// The bands may be merged, so set the bottom y of each box

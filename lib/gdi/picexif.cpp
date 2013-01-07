@@ -542,12 +542,10 @@ bool Cexif::ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase,
 	}
 
 
-	unsigned char * SubdirStart;
-	unsigned Offset;
-	Offset = Get16u(DirStart+2+12*NumDirEntries);
+	unsigned Offset = Get16u(DirStart+2+12*NumDirEntries);
 	if (Offset)
 	{
-		SubdirStart = OffsetBase + Offset;
+		unsigned char *SubdirStart = OffsetBase + Offset;
 		if (SubdirStart < OffsetBase || SubdirStart > OffsetBase+ExifLength)
 		{
 			strcpy(m_szLastError,"Illegal subdirectory link"); return 0;
@@ -619,9 +617,8 @@ void Cexif::process_COM (const unsigned char * Data, int length)
 
 void Cexif::process_SOFn (const unsigned char * Data, int marker)
 {
-	int data_precision, num_components;
+	int num_components;
 
-	data_precision = Data[2];
 	m_exifinfo->Height = Get16m((void*)(Data+3));
 	m_exifinfo->Width = Get16m((void*)(Data+5));
 	num_components = Data[7];

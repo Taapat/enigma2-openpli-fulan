@@ -763,7 +763,6 @@ void gPixmap::line(const gRegion &clip, ePoint start, ePoint dst, gColor color)
 				if (a == lasthit)
 				{
 					goto fail;
-					lasthit = -1;
 				}
 			} while (!clip.rects[a].contains(x, y));
 			lasthit = a;

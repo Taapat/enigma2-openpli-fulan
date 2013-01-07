@@ -1062,8 +1062,8 @@ eEPGCache::~eEPGCache()
 	messages.send(Message::quit);
 	kill(); // waiting for thread shutdown
 	singleLock s(cache_lock);
-	for (eventCache::iterator evIt = eventDB.begin(); evIt != eventDB.end(); evIt++)
-		for (eventMap::iterator It = evIt->second.first.begin(); It != evIt->second.first.end(); It++)
+	for (eventCache::iterator evIt = eventDB.begin(); evIt != eventDB.end(); ++evIt)
+		for (eventMap::iterator It = evIt->second.first.begin(); It != evIt->second.first.end(); ++It)
 			delete It->second;
 }
 
@@ -1263,10 +1263,9 @@ void eEPGCache::load()
 				{
 					__u8 len=0;
 					__u8 type=0;
-					eventData *event=0;
 					fread( &type, sizeof(__u8), 1, f);
 					fread( &len, sizeof(__u8), 1, f);
-					event = new eventData(0, len, type);
+					eventData *event = new eventData(0, len, type);
 					event->EITdata = new __u8[len];
 					eventData::CacheSize+=len;
 					fread( event->EITdata, len, 1, f);

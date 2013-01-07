@@ -238,7 +238,7 @@ static eXMLRPCVariant *fromXML(XMLTreeNode *n)
 				delete s;
 				return 0;
 			}
-			std::string name=0;
+			std::string name;
 			eXMLRPCVariant *value;
 			for (XMLTreeNode *v=n->GetChild(); v; v=v->GetNext())
 			{
@@ -294,7 +294,7 @@ int eXMLRPCResponse::doCall()
 	eDebug("doing call");
 	result="";
 		// get method name
-	std::string methodName=0;
+	std::string methodName;
 	
 	if (connection->remote_header["Content-Type"]!="text/xml")
 	{

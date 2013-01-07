@@ -345,9 +345,8 @@ void eCableScan::createBouquets()
 	}
 	bouquetFilename = replace_all(providerName, " ", "");
 
-	bool multibouquet = false;
 	std::string value;
-	multibouquet = (ePythonConfigQuery::getConfigValue("config.usage.multibouquet", value) >= 0 && value == "True");
+	bool multibouquet = (ePythonConfigQuery::getConfigValue("config.usage.multibouquet", value) >= 0 && value == "True");
 
 	if (multibouquet)
 	{
@@ -391,7 +390,7 @@ void eCableScan::createBouquets()
 		if (!db->getBouquet(rootref, bouquet) && bouquet)
 		{
 			/* now move the new cable bouquet to the front */
-			for (std::list<eServiceReference>::iterator it = bouquet->m_services.begin(); it != bouquet->m_services.end(); it++)
+			for (std::list<eServiceReference>::iterator it = bouquet->m_services.begin(); it != bouquet->m_services.end(); ++it)
 			{
 				if ((*it).getPath() == bouquetquery)
 				{
@@ -461,7 +460,7 @@ void eCableScan::createBouquets()
 			if (!db->getBouquet(rootref, bouquet) && bouquet)
 			{
 				/* now move the new cable bouquet to the front */
-				for (std::list<eServiceReference>::iterator it = bouquet->m_services.begin(); it != bouquet->m_services.end(); it++)
+				for (std::list<eServiceReference>::iterator it = bouquet->m_services.begin(); it != bouquet->m_services.end(); ++it)
 				{
 					if ((*it).getPath() == bouquetquery)
 					{

@@ -271,20 +271,13 @@ int gAccel::accelAlloc(void *&addr, int &phys_addr, int size)
 		return -1;
 	}
 	
-	int used = 0, free = 0, s = 0;
+	int used = 0, free = 0;
 	for (int i=0; i < m_accel_size; ++i)
 	{
 		if (m_accel_allocation[i] == 0)
 			free++;
-		else if (m_accel_allocation[i] == -1)
-			used++;
-		else
-		{
-			used++;
-			s += m_accel_allocation[i];
-		}
+		else used++;
 	}
-	//eDebug("accel memstat: alloc=%d B used=%d kB, free %d kB, s %d kB", size, used * 4, free * 4, s * 4);
 
 	size += 4095;
 	size >>= 12;

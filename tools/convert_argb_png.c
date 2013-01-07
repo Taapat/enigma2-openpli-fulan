@@ -44,6 +44,7 @@ int main(int argc, char **argv)
 	if (png_sig_cmp(header, 0, 8))
 	{
 		fprintf(stderr, "this is not a PNG file\n");
+		fclose(fpin);
 		return 1;
 	}
 	png_structp png_ptr = png_create_read_struct

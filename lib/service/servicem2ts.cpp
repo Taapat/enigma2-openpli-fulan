@@ -214,7 +214,7 @@ sync:
 	while (rd < count) {
 		size_t ret;
 		ret = ::read(m_fd, tmp, 192);
-		if (ret < 0 || ret < 192)
+		if (ret < 192)
 			return rd ? rd : ret;
 
 		if (tmp[4] != 0x47)

@@ -18,8 +18,7 @@ void eComponentScan::scanEvent(int evt)
 			ePtr<iDVBChannelList> db;
 			ePtr<eDVBResourceManager> res;
 			
-			int err;
-			if ((err = eDVBResourceManager::getInstance(res)) != 0)
+			if (eDVBResourceManager::getInstance(res) != 0)
 			{
 				eDebug("no resource manager");
 				m_failed = 2;
@@ -105,7 +104,6 @@ int eComponentScan::start(int feid, int flags, int networkid)
 		return -1;
 	}
 
-	std::list<ePtr<iDVBFrontendParameters> > list;
 	m_scan = new eDVBScan(channel);
 	m_scan->connectEvent(slot(*this, &eComponentScan::scanEvent), m_scan_event_connection);
 
@@ -113,8 +111,7 @@ int eComponentScan::start(int feid, int flags, int networkid)
 	{
 		ePtr<iDVBChannelList> db;
 		ePtr<eDVBResourceManager> res;
-		int err;
-		if ((err = eDVBResourceManager::getInstance(res)) != 0)
+		if (eDVBResourceManager::getInstance(res) != 0)
 			eDebug("no resource manager");
 		else if ((err = res->getChannelList(db)) != 0)
 			eDebug("no channel list");

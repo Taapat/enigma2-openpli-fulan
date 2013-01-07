@@ -89,7 +89,6 @@ RESULT eBouquet::flushChanges()
 		for (list::iterator i(m_services.begin()); i != m_services.end(); ++i)
 		{
 			eServiceReference tmp = *i;
-			std::string str = tmp.path;
 			if ( fprintf(f, "#SERVICE %s\r\n", tmp.toString().c_str()) < 0 )
 				goto err;
 			if ( i->name.length() )
@@ -826,7 +825,6 @@ int eDVBDB::renumberBouquet(eBouquet &bouquet, int startChannelNum)
 		if ( tmp.flags&eServiceReference::canDescent )
 		{
 			size_t pos = tmp.path.rfind('/');
-			char buf[256];
 			std::string path = tmp.path;
 			if ( pos != std::string::npos )
 				path.erase(0, pos+1);
@@ -847,10 +845,6 @@ int eDVBDB::renumberBouquet(eBouquet &bouquet, int startChannelNum)
 				char *beg = &path[pos+14];
 				char *end = strchr(beg, endchr);
 				path.assign(beg, end - beg);
-			}
-			else
-			{
-				snprintf(buf, 256, "FROM BOUQUET \"%s\" ORDER BY bouquet", path.c_str());
 			}
 
 			if (!path.length())
