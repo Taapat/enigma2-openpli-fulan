@@ -1544,7 +1544,9 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 		current = [x.toString() for x in self.servicePath]
 		if tmp != current or self.rootChanged:
 			self.clearPath()
-			(self.servicePath.append(eServiceReference(i)) for i in tmp)
+			l_sPathAppend = self.servicePath.append
+			for i in tmp:
+				l_sPathAppend(eServiceReference(i))
 			if len(tmp):
 				path = self.servicePath.pop()
 				self.enterPath(path)
