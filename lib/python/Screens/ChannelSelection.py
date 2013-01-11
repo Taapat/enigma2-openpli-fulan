@@ -568,8 +568,10 @@ class ChannelSelectionEdit:
 				if mutableBouquet:
 					mutableBouquet.setListName(bName)
 					if services is not None:
+						# optimize function lookup
+						l_bouquetAdd = mutableBouquet.addService
 						for service in services:
-							if mutableBouquet.addService(service):
+							if l_bouquetAdd(service):
 								print "add", service.toString(), "to new bouquet failed"
 					mutableBouquet.flushChanges()
 				else:
@@ -665,13 +667,9 @@ class ChannelSelectionEdit:
 			old_marked = set(self.__marked)
 			removed = old_marked - new_marked
 			added = new_marked - old_marked
-			changed = False
-			for x in removed:
-				changed = True
-				self.mutableList.removeService(eServiceReference(x))
-			for x in added:
-				changed = True
-				self.mutableList.addService(eServiceReference(x))
+			changed = (len(removed)>0 or len(added)>0)
+			(self.mutableList.removeService(eServiceReference(x)) for x in removed)
+			(self.mutableList.addService(eServiceReference(x)) for x in added)
 			if changed:
 				self.mutableList.flushChanges()
 		self.__marked = []
@@ -1546,11 +1544,8 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 		current = [x.toString() for x in self.servicePath]
 		if tmp != current or self.rootChanged:
 			self.clearPath()
-			cnt = 0
-			for i in tmp:
-				self.servicePath.append(eServiceReference(i))
-				cnt += 1
-			if cnt:
+			(self.servicePath.append(eServiceReference(i)) for i in tmp)
+			if len(tmp):
 				path = self.servicePath.pop()
 				self.enterPath(path)
 			else:
@@ -1732,11 +1727,8 @@ class ChannelSelectionRadio(ChannelSelectionBase, ChannelSelectionEdit, ChannelS
 		tmp = [x for x in config.radio.lastroot.value.split(';') if x != '']
 		current = [x.toString() for x in self.servicePath]
 		if tmp != current or self.rootChanged:
-			cnt = 0
-			for i in tmp:
-				self.servicePathRadio.append(eServiceReference(i))
-				cnt += 1
-			if cnt:
+			(self.servicePathRadio.append(eServiceReference(i)) for i in tmp)
+			if len(tmp):
 				path = self.servicePathRadio.pop()
 				self.enterPath(path)
 			else:
