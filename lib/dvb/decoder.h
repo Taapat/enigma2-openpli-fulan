@@ -43,7 +43,7 @@ public:
 	enum { MPEG2, MPEG4_H264, MPEG1, MPEG4_Part2, VC1, VC1_SM };
 	eDVBVideo(eDVBDemux *demux, int dev);
 	void stop();
-	int startPid(int pid, int type=MPEG2);
+	int startPid(int pid, int type=MPEG2, bool is_pvr=false);
 	void flush();
 	void freeze();
 	int setSlowMotion(int repeat);
@@ -98,7 +98,8 @@ private:
 	ePtr<eDVBVideo> m_video;
 	ePtr<eDVBPCR> m_pcr;
 	ePtr<eDVBTText> m_text;
-	int m_vpid, m_vtype, m_apid, m_atype, m_pcrpid, m_textpid;
+	int m_vpid, m_vtype, m_apid, m_atype, m_pcrpid, m_textpid, m_vstreamtype;
+	bool m_is_pvr;
 	enum
 	{
 		changeVideo = 1, 
@@ -125,7 +126,7 @@ public:
 	enum { pidNone = -1 };
 	eTSMPEGDecoder(eDVBDemux *demux, int decoder);
 	virtual ~eTSMPEGDecoder();
-	RESULT setVideoPID(int vpid, int type);
+	RESULT setVideoPID(int vpid, int type, int streamtype);
 	RESULT setAudioPID(int apid, int type);
 	RESULT setAudioChannel(int channel);
 	int getAudioChannel();
