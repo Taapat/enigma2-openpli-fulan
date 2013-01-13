@@ -1,7 +1,7 @@
 #ifndef __RING_BUFFER_H__
 #define __RING_BUFFER_H__
 
-typedef struct {
+typedef struct __attribute__ ((aligned (4))){
     ssize_t size;
     volatile ssize_t w;
     volatile ssize_t r;
