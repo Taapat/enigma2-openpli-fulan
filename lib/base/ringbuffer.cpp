@@ -6,14 +6,14 @@ RingBuffer::RingBuffer(const ssize_t size)
 {
 	const ssize_t m = size/256 + 1; // size must be a multiple of 256
 	m_ringBuffer.size = m*256;
-	m_ringBuffer.ptr = new char(m_ringBuffer.size);
+	m_ringBuffer.ptr = (char*)malloc(m_ringBuffer.size);
 	m_ringBuffer.w = 0;
 	m_ringBuffer.r = 0;
 }
 
 RingBuffer::~RingBuffer() 
 {
-	delete m_ringBuffer.ptr;
+	 free(m_ringBuffer.ptr);
 }
 
 ssize_t RingBuffer::availableToWrite() const
@@ -48,8 +48,9 @@ ssize_t RingBuffer::write(const char *src, const ssize_t len)
 			memcpy(m_ringBuffer.ptr + w, src, d);
 			memcpy(m_ringBuffer.ptr, src + d, toWrite - d);
 		}
-		__sync_synchronize();  // memory barrier
-		__sync_val_compare_and_swap(&(m_ringBuffer.w), m_ringBuffer.w, (w + toWrite) % m_ringBuffer.size);
+//		__sync_synchronize();  // memory barrier
+//		__sync_val_compare_and_swap(&(m_ringBuffer.w), m_ringBuffer.w, (w + toWrite) % m_ringBuffer.size);
+		m_ringBuffer.w = (w + toWrite) % m_ringBuffer.size;
 	}
 	return toWrite; 
 }
@@ -58,7 +59,7 @@ ssize_t RingBuffer::read(char *dest, const ssize_t len)
 {
         const ssize_t toRead = MIN(len, availableToRead());
 	if (toRead > 0) {
-		__sync_synchronize();  // memory barrier
+//		__sync_synchronize();  // memory barrier
 		const ssize_t r =m_ringBuffer.r ;
 		if (r + toRead <= m_ringBuffer.size) {
 			memcpy(dest, m_ringBuffer.ptr + r, toRead);
@@ -67,7 +68,8 @@ ssize_t RingBuffer::read(char *dest, const ssize_t len)
 			memcpy(dest, m_ringBuffer.ptr + r, d);
 			memcpy(dest + d, m_ringBuffer.ptr, toRead - d);
 		}
-		__sync_val_compare_and_swap(&(m_ringBuffer.r), m_ringBuffer.r, (r + toRead) % m_ringBuffer.size);
+//		__sync_val_compare_and_swap(&(m_ringBuffer.r), m_ringBuffer.r, (r + toRead) % m_ringBuffer.size);
+		m_ringBuffer.r = (r + toRead) % m_ringBuffer.size;
 	}
         return toRead;
 }

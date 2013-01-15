@@ -11,18 +11,17 @@ DEFINE_REF(eHttpStream);
 eHttpStream::eHttpStream() : 
 	m_streamSocket(-1)
 	,m_rbuffer(1024*1024)
-	,m_isStreaming(false)
 {
 }
 
 eHttpStream::~eHttpStream()
 {
 	close();
-	kill();
 }
 
 int eHttpStream::open(const std::string& url)
 {
+	eDebug("eHttpStream::open()");
 	std::string currenturl(url), newurl;
 
 	for (unsigned int i = 0; i < 3; i++)
@@ -35,15 +34,15 @@ int eHttpStream::open(const std::string& url)
 		if (newurl.empty())
 		{
 			/* we have a valid stream connection */
-			m_isStreaming = true;
-			return run();
+			eDebug("eHttpStream::open() - started streaming...");
+			return 0;
 		}
 		/* switch to new url */
 		close();
 		currenturl.swap(newurl);
 		newurl.clear();
 	}
-	m_isStreaming = false;
+	eDebug("eHttpStream::open() - too many redirects...");
 	/* too many redirect / playlist levels (we accept one redirect + one playlist) */
 	return -1;
 }
@@ -188,7 +187,6 @@ int eHttpStream::close()
 {
 	eDebug("eHttpStream::close socket");
 	int retval = -1;
-	m_isStreaming = false;
 	if (m_streamSocket >= 0)
 	{
 		retval = ::close(m_streamSocket);
@@ -203,38 +201,37 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 		eDebug("eHttpStream::read not valid fd");
 		return -1;
 	}
-
-	if (m_rbuffer.availableToRead() <=0) usleep(5000);
-	const ssize_t nRead = m_rbuffer.read((char*)buf, count);
-
-	return (nRead > 0)? nRead: -1;
-}
-
-void eHttpStream::thread()
-{
-	char buffer[1024*8];
-
-	bool reconnectAttempted = false;
-
-	hasStarted();
-	while(m_isStreaming) {
-		while(m_rbuffer.availableToWrite() <= 0) pthread_yield();
-		ssize_t nRead = MIN(sizeof(buffer), m_rbuffer.availableToWrite());
-		
-		nRead = eSocketBase::timedRead(m_streamSocket, buffer, nRead, 10000, 1000);
-		if (nRead > 0) {
-			m_rbuffer.write(buffer, nRead);
-			reconnectAttempted = false;
-		} else if (!reconnectAttempted && m_isStreaming) {
-			reconnectAttempted = true;
-			close();
-			if (open(m_url)) break;
-		} else {
-			//reconnect did not help
-			break;
-		}
+/*
+ * We're using a ring buffer here not as much as for caching as for the fact that the
+ * caller will drop the bytes that are not a multiple of 188, on the next read the
+ * offset should correct that, but it wont work with sockets, so we need to decouple
+ * reading from the socket from the actual read, where we'll pass a multiplier of 188 bytes
+*/
+/* I could not see any difference in having this code, maybe it may be needed for slower internet connections
+	eDebug("eHttpStream::read()");
+	ssize_t toWrite = m_rbuffer.availableToWrite();
+	if (toWrite > 188) {
+		toWrite = MIN(count, toWrite);
+		// reuse the buf for reading from socket, need to rework the ring buffer
+		// so we can read directly in to it.
+		toWrite = eSocketBase::timedRead(m_streamSocket, (char*)buf, toWrite, 5000, 500);
+                if (toWrite > 0) {
+                        eDebug("eHttpStream::read() - writting %i bytes to the ring buffer", toWrite);
+                        m_rbuffer.write((char*)buf, toWrite);
+                } else if (m_rbuffer.availableToRead() < 188) {
+                        eDebug("eHttpStream::read() - failed to red from the socket...");
+                        //we failed to read and there is nothing to play, try to reconnect?
+                       return -1 ;
+                } else{//may be we should try reconnect here?}
 	}
-	m_isStreaming = false;
+
+	ssize_t toRead = m_rbuffer.availableToRead();
+	toRead = MIN(toRead, count);
+	eDebug(" eHttpStream::read() - reading %i bytes", (toRead - (toRead%188)));
+	toRead = m_rbuffer.read((char*)buf, (toRead - (toRead%188)));
+	return (toRead > 0)? toRead: -1;
+*/
+	return eSocketBase::timedRead(m_streamSocket, (char*)buf, count, 5000, 500);
 }
 
 int eHttpStream::valid()

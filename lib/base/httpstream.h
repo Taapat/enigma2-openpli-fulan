@@ -8,19 +8,16 @@
 #include <lib/base/thread.h>
 #include <lib/base/ringbuffer.h>
 
-class eHttpStream: public iTsSource, public Object, public eThread
+class eHttpStream: public iTsSource, public Object
 {
 	DECLARE_REF(eHttpStream);
 
-	int m_streamSocket;
-	volatile bool m_isStreaming;
 	std::string m_authorizationData;
         std::string m_url;
+        int m_streamSocket;
         RingBuffer m_rbuffer;
 
 	int openUrl(const std::string &url, std::string &newurl);
-
-        void thread();
 
 	/* iTsSource */
 	ssize_t read(off_t offset, void *buf, size_t count);
