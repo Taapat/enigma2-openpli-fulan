@@ -35,6 +35,7 @@ int eHttpStream::open(const std::string& url)
 		{
 			/* we have a valid stream connection */
 			eDebug("eHttpStream::open() - started streaming...");
+			m_url = currenturl;
 			return 0;
 		}
 		/* switch to new url */
@@ -201,37 +202,41 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 		eDebug("eHttpStream::read not valid fd");
 		return -1;
 	}
-/*
- * We're using a ring buffer here not as much as for caching as for the fact that the
- * caller will drop the bytes that are not a multiple of 188, on the next read the
- * offset should correct that, but it wont work with sockets, so we need to decouple
- * reading from the socket from the actual read, where we'll pass a multiplier of 188 bytes
-*/
-/* I could not see any difference in having this code, maybe it may be needed for slower internet connections
+
 	eDebug("eHttpStream::read()");
-	ssize_t toWrite = m_rbuffer.availableToWrite();
-	if (toWrite > 188) {
-		toWrite = MIN(count, toWrite);
-		// reuse the buf for reading from socket, need to rework the ring buffer
-		// so we can read directly in to it.
-		toWrite = eSocketBase::timedRead(m_streamSocket, (char*)buf, toWrite, 5000, 500);
+	ssize_t toWrite = m_rbuffer.availableToWritePtr();
+//	eDebug("Ring buffer available to write %i", toWrite);
+	if (toWrite > 0) {
+		if (m_rbuffer.availableToRead() >= 188*42) {
+			//do not starve the reader if we have enough data to read and there is nothing on the socket
+			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 50);
+		} else {
+			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 5000, 500);
+		}
                 if (toWrite > 0) {
-                        eDebug("eHttpStream::read() - writting %i bytes to the ring buffer", toWrite);
-                        m_rbuffer.write((char*)buf, toWrite);
+                       	eDebug("eHttpStream::read() - writting %i bytes to the ring buffer", toWrite);
+                       	m_rbuffer.ptrWriteCommit(toWrite);
                 } else if (m_rbuffer.availableToRead() < 188) {
-                        eDebug("eHttpStream::read() - failed to red from the socket...");
-                        //we failed to read and there is nothing to play, try to reconnect?
-                       return -1 ;
-                } else{//may be we should try reconnect here?}
+                       	eDebug("eHttpStream::read() - failed to red from the socket...");
+			// we failed to read and there is nothing to play, try to reconnect?
+			// so far recoonect worked for me as best effort, it is really doing well 
+			// when initial connection fails for some reason.
+			open(m_url);
+			m_rbuffer.reset();
+			errno = EAGAIN; // tell the caller to try again
+			/*
+			 * IF: the reconnect does not really work during more extensive testing,
+			 *  then we might want to just close the connection and not watse bandwidth
+			 */
+                 	return -1 ;
+               	} else{}//may be we should try reconnect here?
 	}
 
 	ssize_t toRead = m_rbuffer.availableToRead();
 	toRead = MIN(toRead, count);
-	eDebug(" eHttpStream::read() - reading %i bytes", (toRead - (toRead%188)));
+//	eDebug(" eHttpStream::read() - reading %i bytes", (toRead - (toRead%188)));
 	toRead = m_rbuffer.read((char*)buf, (toRead - (toRead%188)));
 	return (toRead > 0)? toRead: -1;
-*/
-	return eSocketBase::timedRead(m_streamSocket, (char*)buf, count, 5000, 500);
 }
 
 int eHttpStream::valid()

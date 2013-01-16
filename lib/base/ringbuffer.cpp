@@ -48,9 +48,12 @@ ssize_t RingBuffer::write(const char *src, const ssize_t len)
 			memcpy(m_ringBuffer.ptr + w, src, d);
 			memcpy(m_ringBuffer.ptr, src + d, toWrite - d);
 		}
-//		__sync_synchronize();  // memory barrier
-//		__sync_val_compare_and_swap(&(m_ringBuffer.w), m_ringBuffer.w, (w + toWrite) % m_ringBuffer.size);
+#if defined(__sh__)
 		m_ringBuffer.w = (w + toWrite) % m_ringBuffer.size;
+#else
+		__sync_synchronize();  // memory barrier
+		__sync_val_compare_and_swap(&(m_ringBuffer.w), m_ringBuffer.w, (w + toWrite) % m_ringBuffer.size);
+#endif
 	}
 	return toWrite; 
 }
@@ -59,8 +62,10 @@ ssize_t RingBuffer::read(char *dest, const ssize_t len)
 {
         const ssize_t toRead = MIN(len, availableToRead());
 	if (toRead > 0) {
-//		__sync_synchronize();  // memory barrier
-		const ssize_t r =m_ringBuffer.r ;
+#if !defined(__sh__)
+		__sync_synchronize();  // memory barrier
+#endif
+		const ssize_t r = m_ringBuffer.r ;
 		if (r + toRead <= m_ringBuffer.size) {
 			memcpy(dest, m_ringBuffer.ptr + r, toRead);
 		} else {
@@ -68,8 +73,25 @@ ssize_t RingBuffer::read(char *dest, const ssize_t len)
 			memcpy(dest, m_ringBuffer.ptr + r, d);
 			memcpy(dest + d, m_ringBuffer.ptr, toRead - d);
 		}
-//		__sync_val_compare_and_swap(&(m_ringBuffer.r), m_ringBuffer.r, (r + toRead) % m_ringBuffer.size);
+#if defined(__sh__)
 		m_ringBuffer.r = (r + toRead) % m_ringBuffer.size;
+#else
+		__sync_val_compare_and_swap(&(m_ringBuffer.r), m_ringBuffer.r, (r + toRead) % m_ringBuffer.size);
+#endif
 	}
         return toRead;
+}
+
+ssize_t RingBuffer::availableToWritePtr()
+{
+	ssize_t toWrite = availableToWrite();
+        if (toWrite > 0) {
+        	toWrite = MIN(toWrite, (m_ringBuffer.size - m_ringBuffer.w));
+	}
+	return toWrite;
+}
+
+void RingBuffer::ptrWriteCommit(const ssize_t toCommit)
+{
+	m_ringBuffer.w = (m_ringBuffer.w + toCommit) % m_ringBuffer.size;
 }
