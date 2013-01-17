@@ -16,6 +16,7 @@ class eHttpStream: public iTsSource, public Object
         std::string m_url;
         int m_streamSocket;
         RingBuffer m_rbuffer;
+	bool m_tryToReconnect;
 
 	int openUrl(const std::string &url, std::string &newurl);
 
