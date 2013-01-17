@@ -11,6 +11,7 @@ DEFINE_REF(eHttpStream);
 eHttpStream::eHttpStream() : 
 	m_streamSocket(-1)
 	,m_rbuffer(1024*1024)
+	,m_tryToReconnect(false)
 {
 }
 
@@ -193,6 +194,8 @@ int eHttpStream::close()
 		retval = ::close(m_streamSocket);
 		m_streamSocket = -1;
 	}
+	// no reconnect attempts after close
+	m_tryToReconnect = false;
 	return retval;
 }
 
@@ -211,19 +214,29 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 			//do not starve the reader if we have enough data to read and there is nothing on the socket
 			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 50);
 		} else {
-			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 5000, 500);
+			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 5000, 50);
 		}
                 if (toWrite > 0) {
                        	eDebug("eHttpStream::read() - writting %i bytes to the ring buffer", toWrite);
                        	m_rbuffer.ptrWriteCommit(toWrite);
+			//try to reconnect on next failure
+			m_tryToReconnect = true;
                 } else if (m_rbuffer.availableToRead() < 188) {
                        	eDebug("eHttpStream::read() - failed to red from the socket...");
 			// we failed to read and there is nothing to play, try to reconnect?
 			// so far recoonect worked for me as best effort, it is really doing well 
 			// when initial connection fails for some reason.
-			open(m_url);
+/* it makes player 191 to crash, commenting out until player's problem is sorted
+			if (m_tryToReconnect) {
+				if (open(m_url) == 0) {
+					// tell the caller to try again
+					errno = EAGAIN;
+				}
+				m_tryToReconnect = false;
+			} else close();
+
 			m_rbuffer.reset();
-			errno = EAGAIN; // tell the caller to try again
+*/
 			/*
 			 * IF: the reconnect does not really work during more extensive testing,
 			 *  then we might want to just close the connection and not watse bandwidth
