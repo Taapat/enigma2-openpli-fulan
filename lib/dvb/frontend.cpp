@@ -14,6 +14,10 @@
 
 #include <linux/dvb/frontend.h>
 
+#ifndef DTV_STREAM_ID
+#define DTV_STREAM_ID DTV_ISDBS_TS_ID
+#endif
+
 #include <dvbsi++/satellite_delivery_system_descriptor.h>
 #include <dvbsi++/cable_delivery_system_descriptor.h>
 #include <dvbsi++/terrestrial_delivery_system_descriptor.h>
@@ -102,7 +106,7 @@ void eDVBFrontendParametersSatellite::set(const SatelliteDeliverySystemDescripto
 		orbital_position = 3600 - orbital_position;
 	system = descriptor.getModulationSystem();
 	modulation = descriptor.getModulation();
-	if (system == System_DVB_S && modulation == Modulation_8PSK)
+	if (system == System_DVB_S && modulation == Modulation_QPSK)
 	{
 		eDebug("satellite_delivery_descriptor invalid modulation type.. force QPSK");
 		modulation = Modulation_QPSK;
@@ -110,13 +114,14 @@ void eDVBFrontendParametersSatellite::set(const SatelliteDeliverySystemDescripto
 	rolloff = descriptor.getRollOff();
 	if (system == System_DVB_S2)
 	{
-		eDebug("SAT DVB-S2 freq %d, %s, pos %d, sr %d, fec %d, modulation %d, rolloff %d",
+		eDebug("SAT DVB-S2 freq %d, %s, pos %d, sr %d, fec %d, modulation %d, rolloff %d is_id %d",
 			frequency,
 			polarisation ? "hor" : "vert",
 			orbital_position,
 			symbol_rate, fec,
 			modulation,
-			rolloff);
+			rolloff,
+			is_id);
 	}
 	else
 	{
@@ -295,6 +300,8 @@ RESULT eDVBFrontendParameters::calculateDifference(const iDVBFrontendParameters 
 				diff = 1<<29;
 			else if (sat.polarisation != osat.polarisation)
 				diff = 1<<28;
+			else if (sat.is_id != osat.is_id)
+				diff = 1<<27;
 			else if (exact && sat.fec != osat.fec && sat.fec != eDVBFrontendParametersSatellite::FEC_Auto && osat.fec != eDVBFrontendParametersSatellite::FEC_Auto)
 				diff = 1<<27;
 			else if (exact && sat.modulation != osat.modulation && sat.modulation != eDVBFrontendParametersSatellite::Modulation_Auto && osat.modulation != eDVBFrontendParametersSatellite::Modulation_Auto)
@@ -1101,6 +1108,7 @@ void PutSatelliteDataToDict(ePyObject &dict, iDVBFrontendParameters *oparm)
 		{
 			PutToDict(dict, "rolloff", feparm.rolloff);
 			PutToDict(dict, "pilot", feparm.pilot);
+			PutToDict(dict, "is_id", feparm.is_id);
 		}
 		PutToDict(dict, "system", feparm.system);
 	}
@@ -1225,6 +1233,8 @@ static void fillDictWithSatelliteData(ePyObject dict, struct dtv_property *p, un
 				default: eDebug("got unsupported modulation from frontend! report as QPSK!");
 				case QPSK: tmp = eDVBFrontendParametersSatellite::Modulation_QPSK; break;
 				case PSK_8: tmp = eDVBFrontendParametersSatellite::Modulation_8PSK; break;
+				case APSK_16: tmp = eDVBFrontendParametersSatellite::Modulation_16APSK; break;
+				case APSK_32: tmp = eDVBFrontendParametersSatellite::Modulation_32APSK; break;
 			}
 			PutToDict(dict, "modulation", tmp);
 			break;
@@ -1254,6 +1264,10 @@ static void fillDictWithSatelliteData(ePyObject dict, struct dtv_property *p, un
 				}
 				PutToDict(dict, "pilot", tmp);
 			}
+			break;
+			case DTV_STREAM_ID:
+			if (system == eDVBFrontendParametersSatellite::System_DVB_S2)
+				PutToDict(dict, "is_id", p[i].u.data);
 			break;
 		}
 	}
@@ -1566,6 +1580,7 @@ void eDVBFrontend::getTransponderData(ePyObject dest, bool original)
 				p[cmdseq.num++].cmd = DTV_INNER_FEC;
 				p[cmdseq.num++].cmd = DTV_ROLLOFF;
 				p[cmdseq.num++].cmd = DTV_PILOT;
+				p[cmdseq.num++].cmd = DTV_STREAM_ID;
 			}
 			else if (type == feCable)
 			{
@@ -2150,7 +2165,8 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			{
 				case eDVBFrontendParametersSatellite::Modulation_QPSK: modulation = QPSK; break;
 				case eDVBFrontendParametersSatellite::Modulation_8PSK: modulation = PSK_8; break;
-				case eDVBFrontendParametersSatellite::Modulation_QAM16: modulation = QAM_16; break;
+				case eDVBFrontendParametersSatellite::Modulation_16APSK: modulation = APSK_16; break;
+				case eDVBFrontendParametersSatellite::Modulation_32APSK: modulation = APSK_32; break;
 			}
 			switch (parm.pilot)
 			{
@@ -2194,6 +2210,7 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			{
 				p[cmdseq.num].cmd = DTV_ROLLOFF, p[cmdseq.num].u.data = rolloff, cmdseq.num++;
 				p[cmdseq.num].cmd = DTV_PILOT, p[cmdseq.num].u.data = pilot, cmdseq.num++;
+				p[cmdseq.num].cmd = DTV_STREAM_ID, p[cmdseq.num].u.data = parm.is_id, cmdseq.num++;
 			}
 		}
 		else if (type == iDVBFrontend::feCable)
@@ -2425,7 +2442,7 @@ RESULT eDVBFrontend::prepare_sat(const eDVBFrontendParametersSatellite &feparm, 
 	res = m_sec->prepare(*this, feparm, satfrequency, 1 << m_slotid, tunetimeout);
 	if (!res)
 	{
-		eDebugNoSimulate("prepare_sat System %d Freq %d Pol %d SR %d INV %d FEC %d orbpos %d system %d modulation %d pilot %d, rolloff %d",
+		eDebugNoSimulate("prepare_sat System %d Freq %d Pol %d SR %d INV %d FEC %d orbpos %d system %d modulation %d pilot %d, rolloff %d, is_id %d",
 			feparm.system,
 			feparm.frequency,
 			feparm.polarisation,
@@ -2436,7 +2453,8 @@ RESULT eDVBFrontend::prepare_sat(const eDVBFrontendParametersSatellite &feparm, 
 			feparm.system,
 			feparm.modulation,
 			feparm.pilot,
-			feparm.rolloff);
+			feparm.rolloff,
+			feparm.is_id);
 		if ((unsigned int)satfrequency < fe_info.frequency_min || (unsigned int)satfrequency > fe_info.frequency_max)
 		{
 			eDebugNoSimulate("%d mhz out of tuner range.. dont tune", satfrequency / 1000);

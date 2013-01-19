@@ -95,6 +95,7 @@ class Satfinder(ScanSetup):
 				self.list.append(self.modulationEntry)
 				self.list.append(getConfigListEntry(_('Roll-off'), self.scan_sat.rolloff))
 				self.list.append(getConfigListEntry(_('Pilot'), self.scan_sat.pilot))
+				self.list.append(getConfigListEntry(_('Input Stream ID'), self.scan_sat.is_id))
 		elif self.tuning_transponder and self.tuning_type.value == "predefined_transponder":
 			self.list.append(getConfigListEntry(_("Transponder"), self.tuning_transponder))
 		self["config"].list = self.list
@@ -130,7 +131,8 @@ class Satfinder(ScanSetup):
 				self.scan_sat.system.value,
 				self.scan_sat.modulation.value,
 				self.scan_sat.rolloff.value,
-				self.scan_sat.pilot.value)
+				self.scan_sat.pilot.value,
+				self.scan_sat.is_id.value)
 			self.tune(returnvalue)
 		elif self.tuning_type.value == "predefined_transponder":
 			tps = nimmanager.getTransponders(satpos)
@@ -138,7 +140,7 @@ class Satfinder(ScanSetup):
 			if l > self.tuning_transponder.index:
 				transponder = tps[self.tuning_transponder.index]
 				returnvalue = (transponder[1] / 1000, transponder[2] / 1000,
-					transponder[3], transponder[4], 2, satpos, transponder[5], transponder[6], transponder[8], transponder[9])
+					transponder[3], transponder[4], 2, satpos, transponder[5], transponder[6], transponder[8], transponder[9], transponder[10])
 				self.tune(returnvalue)
 
 	def createConfig(self, foo):
@@ -156,7 +158,7 @@ class Satfinder(ScanSetup):
 			self.scan_sat.inversion, self.scan_sat.symbolrate,
 			self.scan_sat.polarization, self.scan_sat.fec, self.scan_sat.pilot,
 			self.scan_sat.fec_s2, self.scan_sat.fec, self.scan_sat.modulation,
-			self.scan_sat.rolloff, self.scan_sat.system):
+			self.scan_sat.rolloff, self.scan_sat.system, self.scan_sat.is_id):
 			x.addNotifier(self.retune, initial_call = False)
 
 	def updateSats(self):
@@ -178,30 +180,49 @@ class Satfinder(ScanSetup):
 				else:
 					pol = "??"
 				if x[4] == 0:
-					fec = "FEC Auto"
+					fec = "Auto"
 				elif x[4] == 1:
-					fec = "FEC 1/2"
+					fec = "1/2"
 				elif x[4] == 2:
-					fec = "FEC 2/3"
+					fec = "2/3"
 				elif x[4] == 3:
-					fec = "FEC 3/4"
+					fec = "3/4"
 				elif x[4] == 4:
-					fec = "FEC 5/6"
+					fec = "5/6"
 				elif x[4] == 5:
-					fec = "FEC 7/8"
+					fec = "7/8"
 				elif x[4] == 6:
-					fec = "FEC 8/9"
+					fec = "8/9"
 				elif x[4] == 7:
-					fec = "FEC 3/5"
+					fec = "3/5"
 				elif x[4] == 8:
-					fec = "FEC 4/5"
+					fec = "4/5"
 				elif x[4] == 9:
-					fec = "FEC 9/10"
+					fec = "9/10"
 				elif x[4] == 15:
 					fec = "FEC None"
 				else:
-					fec = "FEC Unknown"
-				e = str(x[1]) + "," + str(x[2]) + "," + pol + "," + fec
+					fec = "??"
+				if x[5] == 1:
+					std = "S2"
+				else:
+					std = "S";
+				if x[6] == 0:
+					mod = "Auto"
+				elif x[6] == 1:
+					mod = "QPSK"
+				elif x[6] == 2:
+					mod = "8PSK"
+				elif x[6] == 3:
+					mod = "16APSK"
+				elif x[6] == 4:
+					mod = "32APSK"
+				else:
+					mod = "Auto"
+				if x[10] < 0 or x[10] > 255:
+					e = str(x[1]) + "," + str(x[2]) + "," + pol + "," + std + "," + mod + "," + fec
+				else:
+					e = str(x[1]) + "," + str(x[2]) + "," + pol + "," + std + "," + mod + "," + fec + "," + str(x[10])
 				if default is None:
 					default = str(index)
 				list.append((str(index), e))

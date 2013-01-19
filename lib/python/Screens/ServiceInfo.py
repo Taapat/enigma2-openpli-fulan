@@ -151,6 +151,7 @@ class ServiceInfo(Screen):
 						 "inversion"		: _("Inversion"),
 						 "pilot"			: _("Pilot"),
 						 "rolloff"			: _("Roll-off"),
+						 "is_id"			: _("Input Stream ID")
 						 "fec_inner"		: _("FEC"),
 						 "code_rate_lp"		: _("Coderate LP"),
 						 "code_rate_hp"		: _("Coderate HP"),
@@ -202,7 +203,8 @@ class ServiceInfo(Screen):
 						(_("Inversion"), frontendData["inversion"], TYPE_TEXT),
 						(_("FEC"), frontendData["fec_inner"], TYPE_TEXT),
 						(_("Pilot"), frontendData.get("pilot", None), TYPE_TEXT),
-						(_("Roll-off"), frontendData.get("rolloff", None), TYPE_TEXT))
+						(_("Roll-off"), frontendData.get("rolloff", None), TYPE_TEXT),
+						(_("Input Stream ID"), frontendData.get("is_id", 0), TYPE_VALUE_DEC))
 			elif frontendDataOrg["tuner_type"] == "DVB-C":
 				return ((_("NIM"), chr(ord('A') + frontendData["tuner_number"]), TYPE_TEXT),
 						(_("Type"), frontendData["tuner_type"], TYPE_TEXT),

@@ -46,6 +46,7 @@ def getInitialTransponderList(tlist, pos):
 			parm.modulation = x[6]
 			parm.rolloff = x[8]
 			parm.pilot = x[9]
+			parm.is_id = x[10]
 			tlist.append(parm)
 
 def getInitialCableTransponderList(tlist, nim):
@@ -380,6 +381,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 					self.list.append(self.modulationEntry)
 					self.list.append(getConfigListEntry(_('Roll-off'), self.scan_sat.rolloff))
 					self.list.append(getConfigListEntry(_('Pilot'), self.scan_sat.pilot))
+					self.list.append(getConfigListEntry(_('Input Stream ID'), self.scan_sat.is_id))
 			elif self.scan_type.value == "single_satellite":
 				self.updateSatList()
 				print self.scan_satselection[index_to_scan]
@@ -480,6 +482,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 						defaultSat["fec_s2"] = frontendData.get("fec_inner", eDVBFrontendParametersSatellite.FEC_Auto)
 						defaultSat["rolloff"] = frontendData.get("rolloff", eDVBFrontendParametersSatellite.RollOff_alpha_0_35)
 						defaultSat["pilot"] = frontendData.get("pilot", eDVBFrontendParametersSatellite.Pilot_Unknown)
+						defaultSat["is_id"] = frontendData.get("is_id", 0)
 					else:
 						defaultSat["fec"] = frontendData.get("fec_inner", eDVBFrontendParametersSatellite.FEC_Auto)
 					defaultSat["modulation"] = frontendData.get("modulation", eDVBFrontendParametersSatellite.Modulation_QPSK)
@@ -572,7 +575,9 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 				(eDVBFrontendParametersSatellite.FEC_9_10, "9/10")])
 			self.scan_sat.modulation = ConfigSelection(default = defaultSat["modulation"], choices = [
 				(eDVBFrontendParametersSatellite.Modulation_QPSK, "QPSK"),
-				(eDVBFrontendParametersSatellite.Modulation_8PSK, "8PSK")])
+				(eDVBFrontendParametersSatellite.Modulation_8PSK, "8PSK"),
+				(eDVBFrontendParametersSatellite.Modulation_16APSK, "16APSK"),
+				(eDVBFrontendParametersSatellite.Modulation_32APSK, "32APSK")])
 			self.scan_sat.rolloff = ConfigSelection(default = defaultSat.get("rolloff", eDVBFrontendParametersSatellite.RollOff_alpha_0_35), choices = [
 				(eDVBFrontendParametersSatellite.RollOff_alpha_0_35, "0.35"),
 				(eDVBFrontendParametersSatellite.RollOff_alpha_0_25, "0.25"),
@@ -582,6 +587,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 				(eDVBFrontendParametersSatellite.Pilot_Off, _("Off")),
 				(eDVBFrontendParametersSatellite.Pilot_On, _("On")),
 				(eDVBFrontendParametersSatellite.Pilot_Unknown, _("Auto"))])
+			self.scan_sat.is_id = ConfigInteger(default = defaultSat.get("is_id",0), limits = (0, 255))
 
 			# cable
 			self.scan_cab.frequency = ConfigInteger(default = defaultCab["frequency"], limits = (50, 999))
@@ -696,8 +702,8 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 	def updateStatus(self):
 		print "updatestatus"
 
-	def addSatTransponder(self, tlist, frequency, symbol_rate, polarisation, fec, inversion, orbital_position, system, modulation, rolloff, pilot):
-		print "Add Sat: frequ: " + str(frequency) + " symbol: " + str(symbol_rate) + " pol: " + str(polarisation) + " fec: " + str(fec) + " inversion: " + str(inversion) + " modulation: " + str(modulation) + " system: " + str(system) + " rolloff" + str(rolloff) + " pilot" + str(pilot)
+	def addSatTransponder(self, tlist, frequency, symbol_rate, polarisation, fec, inversion, orbital_position, system, modulation, rolloff, pilot, is_id):
+		print "Add Sat: frequ: " + str(frequency) + " symbol: " + str(symbol_rate) + " pol: " + str(polarisation) + " fec: " + str(fec) + " inversion: " + str(inversion) + " modulation: " + str(modulation) + " system: " + str(system) + " rolloff" + str(rolloff) + " pilot" + str(pilot) + " is_id" + str(is_id)
 		print "orbpos: " + str(orbital_position)
 		parm = eDVBFrontendParametersSatellite()
 		parm.modulation = modulation
@@ -710,6 +716,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 		parm.orbital_position = orbital_position
 		parm.rolloff = rolloff
 		parm.pilot = pilot
+		parm.is_id = is_id
 		tlist.append(parm)
 
 	def addCabTransponder(self, tlist, frequency, symbol_rate, modulation, fec, inversion):
@@ -767,7 +774,8 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 								self.scan_sat.system.value,
 								self.scan_sat.modulation.value,
 								self.scan_sat.rolloff.value,
-								self.scan_sat.pilot.value)
+								self.scan_sat.pilot.value,
+								self.scan_sat.is_id.value)
 				removeAll = False
 			elif self.scan_type.value == "single_satellite":
 				sat = self.satList[index_to_scan][self.scan_satselection[index_to_scan].index]
