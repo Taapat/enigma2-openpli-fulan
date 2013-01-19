@@ -235,13 +235,14 @@ eDVBVideo::eDVBVideo(eDVBDemux *demux, int dev)
 
 int eDVBVideo::startPid(int pid, int type, bool is_pvr)
 {
-	if ((m_fd < 0) || (m_fd_demux < 0))
-		return -1;
-	dmx_pes_filter_params pes;
-
 	if (is_pvr)
 	{
 		int streamtype = VIDEO_STREAMTYPE_MPEG2;
+
+		if ((m_fd < 0) || (m_fd_demux < 0))
+			return -1;
+		dmx_pes_filter_params pes;
+
 		switch(type)
 		{
 		default:
