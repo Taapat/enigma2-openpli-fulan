@@ -2611,7 +2611,7 @@ void eDVBServicePlay::switchToTimeshift()
 
 void eDVBServicePlay::updateDecoder(bool sendSeekableStateChanged)
 {
-	int vpid = -1, vpidtype = -1, pcrpid = -1, tpid = -1, achannel = -1, ac3_delay=-1, pcm_delay=-1, vstreamtype=-1;
+	int vpid = -1, vpidtype = -1, pcrpid = -1, tpid = -1, achannel = -1, ac3_delay=-1, pcm_delay=-1;
 	bool mustPlay = false;
 
 	eDVBServicePMTHandler &h = m_timeshift_active ? m_service_handler_timeshift : m_service_handler;
@@ -2633,7 +2633,6 @@ void eDVBServicePlay::updateDecoder(bool sendSeekableStateChanged)
 				{
 					vpid = i->pid;
 					vpidtype = i->type;
-					vstreamtype = i->orig_streamtype;
 				}
 				if (i != program.videoStreams.begin())
 					eDebugNoNewLine(", ");
@@ -2717,11 +2716,7 @@ void eDVBServicePlay::updateDecoder(bool sendSeekableStateChanged)
 		setAC3Delay(ac3_delay == -1 ? 0 : ac3_delay);
 		setPCMDelay(pcm_delay == -1 ? 0 : pcm_delay);
 
-		// Viewing recordings and video in PVR Mode
-		if (m_is_pvr) {
-			vstreamtype = 0;
-		}
-		m_decoder->setVideoPID(vpid, vpidtype, vstreamtype);
+		m_decoder->setVideoPID(vpid, vpidtype);
 		m_have_video_pid = (vpid > 0 && vpid < 0x2000);
 
 		selectAudioStream();

@@ -233,42 +233,38 @@ eDVBVideo::eDVBVideo(eDVBDemux *demux, int dev)
 #define VIDEO_STREAMTYPE_VC1_SM 5
 #define VIDEO_STREAMTYPE_MPEG1 6
 
-int eDVBVideo::startPid(int pid, int type, bool is_pvr)
+int eDVBVideo::startPid(int pid, int type)
 {
-	if (is_pvr)
+	int streamtype = VIDEO_STREAMTYPE_MPEG2;
+
+	if ((m_fd < 0) || (m_fd_demux < 0))
+		return -1;
+	dmx_pes_filter_params pes;
+
+	switch(type)
 	{
-		int streamtype = VIDEO_STREAMTYPE_MPEG2;
-
-		if ((m_fd < 0) || (m_fd_demux < 0))
-			return -1;
-		dmx_pes_filter_params pes;
-
-		switch(type)
-		{
-		default:
-		case MPEG2:
-			break;
-		case MPEG4_H264:
-			streamtype = VIDEO_STREAMTYPE_MPEG4_H264;
-			break;
-		case MPEG1:
-			streamtype = VIDEO_STREAMTYPE_MPEG1;
-			break;
-		case MPEG4_Part2:
-			streamtype = VIDEO_STREAMTYPE_MPEG4_Part2;
-			break;
-		case VC1:
-			streamtype = VIDEO_STREAMTYPE_VC1;
-			break;
-		case VC1_SM:
-			streamtype = VIDEO_STREAMTYPE_VC1_SM;
-			break;
-		}
-		type = streamtype;
+	default:
+	case MPEG2:
+		break;
+	case MPEG4_H264:
+		streamtype = VIDEO_STREAMTYPE_MPEG4_H264;
+		break;
+	case MPEG1:
+		streamtype = VIDEO_STREAMTYPE_MPEG1;
+		break;
+	case MPEG4_Part2:
+		streamtype = VIDEO_STREAMTYPE_MPEG4_Part2;
+		break;
+	case VC1:
+		streamtype = VIDEO_STREAMTYPE_VC1;
+		break;
+	case VC1_SM:
+		streamtype = VIDEO_STREAMTYPE_VC1_SM;
+		break;
 	}
 
-	eDebugNoNewLine("VIDEO_SET_STREAMTYPE %x - ", type);
-	if (::ioctl(m_fd, VIDEO_SET_STREAMTYPE, type) < 0)
+	eDebugNoNewLine("VIDEO_SET_STREAMTYPE %d - ", streamtype);
+	if (::ioctl(m_fd, VIDEO_SET_STREAMTYPE, streamtype) < 0)
 		eDebug("failed (%m)");
 	else
 		eDebug("ok");
@@ -717,16 +713,8 @@ int eTSMPEGDecoder::setState()
 		{
 			m_video = new eDVBVideo(m_demux, m_decoder);
 			m_video->connectEvent(slot(*this, &eTSMPEGDecoder::video_event), m_video_event_conn);
-			if (m_vstreamtype != 0)
-			{
-				if (m_video->startPid(m_vpid, m_vstreamtype, m_is_pvr))
-					res = -1;
-			}
-			else
-			{
-				if (m_video->startPid(m_vpid, m_vtype, m_is_pvr))
-					res = -1;
-			}
+			if (m_video->startPid(m_vpid, m_vtype))
+				res = -1;
 		}
 		m_changed &= ~changeVideo;
 	}
@@ -873,19 +861,13 @@ eTSMPEGDecoder::~eTSMPEGDecoder()
 		eTuxtxtApp::getInstance()->freeCache();
 }
 
-RESULT eTSMPEGDecoder::setVideoPID(int vpid, int type, int streamtype)
+RESULT eTSMPEGDecoder::setVideoPID(int vpid, int type)
 {
-	if ((m_vpid != vpid) || (m_vtype != type) || (m_vstreamtype != streamtype))
+	if ((m_vpid != vpid) || (m_vtype != type))
 	{
 		m_changed |= changeVideo;
 		m_vpid = vpid;
 		m_vtype = type;
-		m_vstreamtype = streamtype;
-
-		if (m_vstreamtype == 0)
-			m_is_pvr = true;
-		else
-			m_is_pvr = false;
 	}
 	return 0;
 }
