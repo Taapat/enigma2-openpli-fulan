@@ -30,6 +30,8 @@ int eHttpStream::open(const std::string& url)
 		if (openUrl(currenturl, newurl) < 0)
 		{
 			/* connection failed */
+			close();
+			eDebug("%s failed", __FUNCTION__);
 			break;
 		}
 		if (newurl.empty())
@@ -55,14 +57,10 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	std::string hostname;
 	std::string uri = url;
 	std::string request;
-	size_t buflen = 1024;
-	char *linebuf = NULL;
 	int result;
 	char proto[100];
 	int statuscode = 0;
 	char statusmsg[100];
-	bool playlist = false;
-	bool contenttypeparsed = false;
 
 	close();
 
@@ -114,7 +112,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		port = 80;
 	}
 	m_streamSocket = eSocketBase::connect(hostname.c_str(), port, 10);
-	if (m_streamSocket < 0) goto error;
+	if (m_streamSocket < 0) return -1;
 
 	request = "GET ";
 	request.append(uri).append(" HTTP/1.1\r\n");
@@ -127,62 +125,66 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	request.append("Connection: close\r\n");
 	request.append("\r\n");
 
-	eSocketBase::writeAll(m_streamSocket, request.data(), request.length());
+        std::string hdr;
+        result = eSocketBase::openHTTPConnection(m_streamSocket, request, hdr);
+	if (result < 0) return -1;
 
-	linebuf = (char*)malloc(buflen);
+        size_t pos = hdr.find("\n");
+        const std::string& httpStatus = (pos == std::string::npos)? hdr: hdr.substr(0, pos);
 
-	result = eSocketBase::readLine(m_streamSocket, &linebuf, &buflen);
-	if (result <= 0) goto error;
-
-	result = sscanf(linebuf, "%99s %3d %99s", proto, &statuscode, statusmsg);
+	result = sscanf(httpStatus.c_str(), "%99s %3d %99s", proto, &statuscode, statusmsg);
 	if (result != 3 || (statuscode != 200 && statuscode != 302))
 	{
 		eDebug("%s: wrong http response code: %d", __FUNCTION__, statuscode);
-		goto error;
+		return -1;
 	}
 
-	while (1)
-	{
-		result = eSocketBase::readLine(m_streamSocket, &linebuf, &buflen);
-		if (!contenttypeparsed)
-		{
-			char contenttype[32];
-			if (sscanf(linebuf, "Content-Type: %31s", contenttype) == 1)
-			{
-				contenttypeparsed = true;
-				if (!strcmp(contenttype, "application/text")
-				|| !strcmp(contenttype, "audio/x-mpegurl")
-				|| !strcmp(contenttype, "audio/mpegurl")
-				|| !strcmp(contenttype, "application/m3u"))
-				{
-					/* assume we'll get a playlist, some text file containing a stream url */
-					playlist = true;
-				}
+	hdr = hdr.substr(pos+1);
+
+	if (statuscode == 302) {
+		pos = hdr.find("Location: ");
+		if (pos != std::string::npos) {
+			newurl = hdr.substr(pos+strlen("Location: "));
+			pos = newurl.find("\n");
+			if (pos != std::string::npos) newurl = newurl.substr(0, pos);
+			eDebug("%s: redirecting to: %s", __FUNCTION__, newurl.c_str());
+                        return 0;
+		}
+	}
+
+	pos = hdr.find("Content-Type:");
+	if (pos != std::string::npos) {
+		hdr = hdr.substr(pos);
+		pos = hdr.find("\n");
+		const std::string& contentStr = (pos == std::string::npos)? hdr: hdr.substr(0, pos); 
+		/* assume we'll get a playlist, some text file containing a stream url */
+		const bool playlist = (contentStr.find("application/text") != std::string::npos
+			 	|| contentStr.find("audio/x-mpegurl")  != std::string::npos
+			 	|| contentStr.find("audio/mpegurl")    != std::string::npos
+			 	|| contentStr.find("application/m3u")  != std::string::npos);
+		if (playlist) {
+			hdr = hdr.substr(pos+1);
+			pos = hdr.find("http://");
+			if (pos != std::string::npos) {
+				newurl = hdr.substr(pos);
+				pos = hdr.find("\n");
+				if (pos != std::string::npos) newurl = newurl.substr(0, pos);
+				eDebug("%s: playlist entry: %s", __FUNCTION__, newurl.c_str());
+				return 0;
 			}
 		}
-		else if (playlist && !strncmp(linebuf, "http://", 7))
-		{
-			newurl = linebuf;
-			eDebug("%s: playlist entry: %s", __FUNCTION__, newurl.c_str());
-			break;
-		}
-		else if (statuscode == 302 && !strncmp(linebuf, "Location: ", 10))
-		{
-			newurl = &linebuf[10];
-			eDebug("%s: redirecting to: %s", __FUNCTION__, newurl.c_str());
-			break;
-		}
-		if (!playlist && result == 0) break;
-		if (result < 0) break;
 	}
 
-	free(linebuf);
+        ssize_t toWrite = m_rbuffer.availableToWritePtr();
+	if (toWrite > 0) {
+		toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 50);
+		if (toWrite > 0) {
+			eDebug("eHttpStream::openURL() - writting %i bytes to the ring buffer", toWrite);
+			m_rbuffer.ptrWriteCommit(toWrite);
+		}
+	}
+
 	return 0;
-error:
-	eDebug("%s failed", __FUNCTION__);
-	free(linebuf);
-	close();
-	return -1;
 }
 
 int eHttpStream::close()
@@ -233,12 +235,12 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 				}
 				m_tryToReconnect = false;
 				m_rbuffer.reset();
-			} else if (toWrite == 0)
+			} else if (toWrite == 0) {
 		 		errno = EAGAIN; //timeout
 			} else close();
 
                  	return -1 ;
-               	} else{errno = EAGAIN; return -1;}//may be we should try reconnect here?
+       		} else{errno = EAGAIN; return -1;}//may be we should try reconnect here?
 	}
 
 	ssize_t toRead = m_rbuffer.availableToRead();

@@ -13,6 +13,8 @@
 #include <lib/base/ebase.h>
 #include <lib/base/eerror.h>
 
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+
 int eSocketBase::select(int maxfd, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout)
 {
 	int retval;
@@ -125,6 +127,74 @@ ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize)
 		if ((*buffer)[i] != '\r') i++;
 	}
 	return -1;
+}
+
+ssize_t eSocketBase::openHTTPConnection(int fd, const std::string& getRequest, std::string& httpHdr)
+{
+    fd_set wset, rset;
+    struct timeval timeout;
+
+    size_t wlen = getRequest.length();
+    const char* buf_end = getRequest.data() + wlen;
+
+    while (wlen) {
+        FD_ZERO(&wset);
+        FD_SET(fd, &wset);
+        timeout.tv_sec = 5;
+        timeout.tv_usec = 0;
+
+        const int rc = select(fd+1, NULL, &wset, NULL, &timeout);
+        if (rc <= 0) {
+            return -1;
+        }
+
+        const int sent = send(fd, buf_end-wlen, wlen, 0);
+        if (sent > 0) wlen -= sent;
+        else return -1;
+    }
+
+    const ssize_t rbuff_size = (1024*4);
+    char* rbuff = (char*)malloc(rbuff_size);
+    if (rbuff == NULL) return -1;
+
+    while(true) {
+        FD_ZERO(&rset);
+        FD_SET(fd, &rset);
+        timeout.tv_sec = 5;
+        timeout.tv_usec = 0;
+
+        const int rc = ::select(fd+1, &rset, NULL, NULL, &timeout);
+        if (rc <= 0) {
+            free(rbuff);
+            return -1;
+        }
+        
+        size_t hdroff=0;
+        //read the response header
+        int rcvd = ::recv(fd, rbuff, rbuff_size, MSG_PEEK);
+        int hdr_end = 0;
+        while(hdroff < rcvd && hdr_end < 2) {
+              if (rbuff[hdroff] == '\n') hdr_end++;
+              else if (rbuff[hdroff] != '\r') hdr_end = 0;
+              hdroff++;
+        }
+        while(rbuff[hdroff] == '\n' || rbuff[hdroff] == '\r') hdroff++;
+
+        httpHdr.append(rbuff, hdroff);
+        if (hdroff <= rcvd) break;
+    }
+
+    //flush the header
+    int bytesToFlush = httpHdr.length();
+    while (bytesToFlush > 0) {
+        int rc = MIN(bytesToFlush, rbuff_size);
+        rc = ::recv(fd, rbuff, rc, 0);
+        if (rc > 0) bytesToFlush -= rc;
+        else{free(rbuff); return -1;}
+    }
+
+    free(rbuff);
+    return 0;
 }
 
 int eSocketBase::connect(const char *hostname, int port, int timeoutsec)
