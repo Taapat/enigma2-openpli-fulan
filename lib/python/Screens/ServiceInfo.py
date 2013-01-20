@@ -151,7 +151,7 @@ class ServiceInfo(Screen):
 						 "inversion"		: _("Inversion"),
 						 "pilot"			: _("Pilot"),
 						 "rolloff"			: _("Roll-off"),
-						 "is_id"			: _("Input Stream ID")
+						 "is_id"			: _("Input Stream ID"),
 						 "fec_inner"		: _("FEC"),
 						 "code_rate_lp"		: _("Coderate LP"),
 						 "code_rate_hp"		: _("Coderate HP"),
