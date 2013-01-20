@@ -92,7 +92,7 @@ ssize_t eSocketBase::timedRead(int fd, void *buf, size_t count, int initialtimeo
 		}
 		if ((result = select(fd + 1, &rset, NULL, NULL, &timeout)) < 0) return -1; /* error */
 		if (result == 0) break;
-		if ((result = singleRead(fd, ((char*)buf) + totalread, count - totalread)) < 0)
+		if ((result = singleRead(fd, ((char*)buf) + totalread, count - totalread)) <= 0)
 		{
 			return -1;
 		}
