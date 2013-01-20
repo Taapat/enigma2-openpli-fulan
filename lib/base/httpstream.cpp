@@ -222,27 +222,23 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 			//try to reconnect on next failure
 			m_tryToReconnect = true;
                 } else if (m_rbuffer.availableToRead() < 188) {
-                       	eDebug("eHttpStream::read() - failed to red from the socket...");
+                       	eDebug("eHttpStream::read() - failed to read from the socket...");
 			// we failed to read and there is nothing to play, try to reconnect?
-			// so far recoonect worked for me as best effort, it is really doing well 
+			// so far reconnect worked for me as best effort, it is really doing well 
 			// when initial connection fails for some reason.
-/* it makes player 191 to crash, commenting out until player's problem is sorted
-			if (m_tryToReconnect) {
+			if (toWrite < 0 && m_tryToReconnect) {
 				if (open(m_url) == 0) {
 					// tell the caller to try again
 					errno = EAGAIN;
 				}
 				m_tryToReconnect = false;
+				m_rbuffer.reset();
+			} else if (toWrite == 0)
+		 		errno = EAGAIN; //timeout
 			} else close();
 
-			m_rbuffer.reset();
-*/
-			/*
-			 * IF: the reconnect does not really work during more extensive testing,
-			 *  then we might want to just close the connection and not watse bandwidth
-			 */
                  	return -1 ;
-               	} else{}//may be we should try reconnect here?
+               	} else{errno = EAGAIN; return -1;}//may be we should try reconnect here?
 	}
 
 	ssize_t toRead = m_rbuffer.availableToRead();
