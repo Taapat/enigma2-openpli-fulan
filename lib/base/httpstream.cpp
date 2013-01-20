@@ -125,12 +125,12 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	request.append("Connection: close\r\n");
 	request.append("\r\n");
 
-        std::string hdr;
-        result = eSocketBase::openHTTPConnection(m_streamSocket, request, hdr);
+	std::string hdr;
+	result = eSocketBase::openHTTPConnection(m_streamSocket, request, hdr);
 	if (result < 0) return -1;
 
-        size_t pos = hdr.find("\n");
-        const std::string& httpStatus = (pos == std::string::npos)? hdr: hdr.substr(0, pos);
+	size_t pos = hdr.find("\n");
+	const std::string& httpStatus = (pos == std::string::npos)? hdr: hdr.substr(0, pos);
 
 	result = sscanf(httpStatus.c_str(), "%99s %3d %99s", proto, &statuscode, statusmsg);
 	if (result != 3 || (statuscode != 200 && statuscode != 302))
@@ -148,7 +148,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 			pos = newurl.find("\n");
 			if (pos != std::string::npos) newurl = newurl.substr(0, pos);
 			eDebug("%s: redirecting to: %s", __FUNCTION__, newurl.c_str());
-                        return 0;
+			return 0;
 		}
 	}
 
@@ -159,9 +159,9 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		const std::string& contentStr = (pos == std::string::npos)? hdr: hdr.substr(0, pos); 
 		/* assume we'll get a playlist, some text file containing a stream url */
 		const bool playlist = (contentStr.find("application/text") != std::string::npos
-			 	|| contentStr.find("audio/x-mpegurl")  != std::string::npos
-			 	|| contentStr.find("audio/mpegurl")    != std::string::npos
-			 	|| contentStr.find("application/m3u")  != std::string::npos);
+				|| contentStr.find("audio/x-mpegurl")  != std::string::npos
+				|| contentStr.find("audio/mpegurl")    != std::string::npos
+				|| contentStr.find("application/m3u")  != std::string::npos);
 		if (playlist) {
 			hdr = hdr.substr(pos+1);
 			pos = hdr.find("http://");
@@ -175,7 +175,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		}
 	}
 
-        ssize_t toWrite = m_rbuffer.availableToWritePtr();
+	ssize_t toWrite = m_rbuffer.availableToWritePtr();
 	if (toWrite > 0) {
 		toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 50);
 		if (toWrite > 0) {
@@ -218,13 +218,13 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 		} else {
 			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 5000, 50);
 		}
-                if (toWrite > 0) {
-                       	eDebug("eHttpStream::read() - writting %i bytes to the ring buffer", toWrite);
-                       	m_rbuffer.ptrWriteCommit(toWrite);
+		if (toWrite > 0) {
+			eDebug("eHttpStream::read() - writting %i bytes to the ring buffer", toWrite);
+			m_rbuffer.ptrWriteCommit(toWrite);
 			//try to reconnect on next failure
 			m_tryToReconnect = true;
-                } else if (m_rbuffer.availableToRead() < 188) {
-                       	eDebug("eHttpStream::read() - failed to read from the socket...");
+		} else if (m_rbuffer.availableToRead() < 188) {
+			eDebug("eHttpStream::read() - failed to read from the socket...");
 			// we failed to read and there is nothing to play, try to reconnect?
 			// so far reconnect worked for me as best effort, it is really doing well 
 			// when initial connection fails for some reason.
@@ -236,11 +236,11 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 				m_tryToReconnect = false;
 				m_rbuffer.reset();
 			} else if (toWrite == 0) {
-		 		errno = EAGAIN; //timeout
+				errno = EAGAIN; //timeout
 			} else close();
 
-                 	return -1 ;
-       		} else{errno = EAGAIN; return -1;}//may be we should try reconnect here?
+			return -1 ;
+		} else{errno = EAGAIN; return -1;}//may be we should try reconnect here?
 	}
 
 	ssize_t toRead = m_rbuffer.availableToRead();
