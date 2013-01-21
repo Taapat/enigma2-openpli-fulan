@@ -12,11 +12,15 @@ eHttpStream::eHttpStream() :
 	m_streamSocket(-1)
 	,m_rbuffer(1024*1024)
 	,m_tryToReconnect(false)
+//	,m_chunkedTransfer(false)
+//	,m_chunkedBuffer(NULL)
 {
+//	m_chunkedBuffer = (char*)malloc(1024*4);
 }
 
 eHttpStream::~eHttpStream()
 {
+//	free(m_chunkedBuffer);
 	close();
 }
 
@@ -122,6 +126,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		request.append("Authorization: Basic ").append(m_authorizationData).append("\r\n");
 	}
 	request.append("Accept: */*\r\n");
+	request.append("Range: bytes=0-\r\n");
 	request.append("Connection: close\r\n");
 	request.append("\r\n");
 
@@ -152,6 +157,8 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		}
 	}
 
+//	m_chunkedTransfer = (hdr.find("Transfer-Encoding: chunked") != std::string::npos);
+
 	pos = hdr.find("Content-Type:");
 	if (pos != std::string::npos) {
 		hdr = hdr.substr(pos);
@@ -177,7 +184,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
 	if (toWrite > 0) {
-		toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 50);
+		toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 5);
 		if (toWrite > 0) {
 			eDebug("eHttpStream::openURL() - writting %i bytes to the ring buffer", toWrite);
 			m_rbuffer.ptrWriteCommit(toWrite);
@@ -219,8 +226,16 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 5000, 50);
 		}
 		if (toWrite > 0) {
+/*
+			ssize_t skipBytes = 0;
+			if (m_rbuffer.availableToRead() == 0) {
+				char* ptr = m_rbuffer.ptr();
+				while (skipBytes <= toWrite && ptr[skipBytes] != 0x47) ++skipBytes;
+			}
+*/
 			eDebug("eHttpStream::read() - writting %i bytes to the ring buffer", toWrite);
 			m_rbuffer.ptrWriteCommit(toWrite);
+//			if (skipBytes > 0) m_rbuffer.skip(skipBytes);
 			//try to reconnect on next failure
 			m_tryToReconnect = true;
 		} else if (m_rbuffer.availableToRead() < 188) {
@@ -240,14 +255,56 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 			} else close();
 
 			return -1 ;
-		} else{errno = EAGAIN; return -1;}//may be we should try reconnect here?
+		}
 	}
 
+/*
 	ssize_t toRead = m_rbuffer.availableToRead();
-	toRead = MIN(toRead, count);
-//	eDebug(" eHttpStream::read() - reading %i bytes", (toRead - (toRead%188)));
-	toRead = m_rbuffer.read((char*)buf, (toRead - (toRead%188)));
-	return (toRead > 0)? toRead: -1;
+	if (m_chunkedTransfer) {
+		eDebug("Chunked transfer available to read: %i", toRead);
+		ssize_t sz = MIN(count, 1024*4);
+		sz = MIN(toRead, sz);
+		sz = (sz > 188)? sz-188: sz;
+		eDebug("Chunked transfer will read max: %i", sz);
+		m_rbuffer.read(m_chunkedBuffer, sz);
+		const char* end = m_chunkedBuffer+sz;
+		ssize_t toSkip = 0;
+		while(toSkip < sz && m_chunkedBuffer[toSkip] != 0x47) ++toSkip;
+		if ((sz-toSkip) < 188) {
+			ssize_t ex = 188 - (sz-toSkip);
+			m_rbuffer.read(m_chunkedBuffer+sz, ex);
+			sz +=ex;
+		}
+		eDebug("Chunked transfer will skip: %i", toSkip);
+		toRead = (sz - toSkip) - (sz - toSkip)%188;
+		eDebug("Chunked transfer recalculated read max: %i", toRead);
+		ssize_t countTotal=0;
+		char* ptr = m_chunkedBuffer + toSkip;
+		while(ptr < end) {
+			ssize_t count188=0;
+			while(ptr < end && *ptr != 0x47) ++ptr;
+			while((ptr + 188) <= end && ptr[count188] == 0x47) count188+=188;
+			eDebug("Chunked transfer will read %i of 188 bytes, total bytes %i", count188/188, count188);
+			if (count188 > 0) {
+				memcpy(buf, ptr, count188);
+				countTotal += count188;
+				ptr+=countTotal;
+			}
+		}
+		if (countTotal > 0) {
+			return countTotal;
+		} else {
+			errno = EAGAIN;
+			return -1;
+		}
+	} else {
+*/
+		ssize_t toRead = m_rbuffer.availableToRead();
+		toRead = MIN(toRead, count);
+//		eDebug(" eHttpStream::read() - reading %i bytes", (toRead - (toRead%188)));
+		toRead = m_rbuffer.read((char*)buf, (toRead - (toRead%188)));
+		return (toRead > 0)? toRead: -1;
+//	}
 }
 
 int eHttpStream::valid()
