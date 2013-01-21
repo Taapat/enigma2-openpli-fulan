@@ -25,6 +25,7 @@ public:
         char*   ptr(){return (m_ringBuffer.ptr + m_ringBuffer.w);}
         ssize_t write(const char *src, const ssize_t len);
         ssize_t read(char *dest, const ssize_t len);
+	void    skip(const ssize_t len);
 
 private:
         ring_buffer_t m_ringBuffer;

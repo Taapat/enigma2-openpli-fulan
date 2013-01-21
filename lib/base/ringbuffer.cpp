@@ -82,6 +82,12 @@ ssize_t RingBuffer::read(char *dest, const ssize_t len)
         return toRead;
 }
 
+void RingBuffer::skip(const ssize_t len)
+{
+	const ssize_t toSkip = MIN(len, availableToRead());
+	m_ringBuffer.r = (m_ringBuffer.r + toSkip) % m_ringBuffer.size;
+}
+
 ssize_t RingBuffer::availableToWritePtr()
 {
 	ssize_t toWrite = availableToWrite();
