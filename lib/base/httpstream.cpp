@@ -5,6 +5,7 @@
 #include <lib/base/eerror.h>
 
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
+#define CHUNKED_BUFF_SIZE (1024*1024)
 
 DEFINE_REF(eHttpStream);
 
@@ -12,15 +13,14 @@ eHttpStream::eHttpStream() :
 	m_streamSocket(-1)
 	,m_rbuffer(1024*1024)
 	,m_tryToReconnect(false)
-//	,m_chunkedTransfer(false)
-//	,m_chunkedBuffer(NULL)
+	,m_chunkedTransfer(false)
+	,m_chunkedBuffer(NULL)
 {
-//	m_chunkedBuffer = (char*)malloc(1024*4);
 }
 
 eHttpStream::~eHttpStream()
 {
-//	free(m_chunkedBuffer);
+	if (m_chunkedBuffer) free(m_chunkedBuffer);
 	close();
 }
 
@@ -157,7 +157,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		}
 	}
 
-//	m_chunkedTransfer = (hdr.find("Transfer-Encoding: chunked") != std::string::npos);
+	m_chunkedTransfer = (hdr.find("Transfer-Encoding: chunked") != std::string::npos);
 
 	pos = hdr.find("Content-Type:");
 	if (pos != std::string::npos) {
@@ -186,9 +186,26 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	if (toWrite > 0) {
 		toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 5);
 		if (toWrite > 0) {
-			eDebug("eHttpStream::openURL() - writting %i bytes to the ring buffer", toWrite);
+                        ssize_t skipBytes = 0;
+                        char* ptr = m_rbuffer.ptr();
+                        while (skipBytes <= toWrite && ptr[skipBytes] != 0x47) ++skipBytes;
+			eDebug("%s: writting %i bytes to the ring buffer", __FUNCTION__, toWrite);
 			m_rbuffer.ptrWriteCommit(toWrite);
+			m_rbuffer.skip(skipBytes);
 		}
+	}
+
+	if (m_chunkedTransfer) {
+		if (m_chunkedBuffer == NULL) {
+			m_chunkedBuffer = (char*)malloc(CHUNKED_BUFF_SIZE);
+			if (m_chunkedBuffer == NULL) {
+				eDebug("%s: failed to allocate a buffer for chunked transfer", __FUNCTION__);
+				return -1;
+			}
+		}
+	} else if (m_chunkedBuffer != NULL) {
+		free(m_chunkedBuffer);
+		m_chunkedBuffer=NULL;
 	}
 
 	return 0;
@@ -219,23 +236,15 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
 //	eDebug("Ring buffer available to write %i", toWrite);
 	if (toWrite > 0) {
-		if (m_rbuffer.availableToRead() >= 188*42) {
+		if (m_rbuffer.availableToRead() >= count) {
 			//do not starve the reader if we have enough data to read and there is nothing on the socket
 			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 50);
 		} else {
-			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 5000, 50);
+			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 5000, 500);
 		}
 		if (toWrite > 0) {
-/*
-			ssize_t skipBytes = 0;
-			if (m_rbuffer.availableToRead() == 0) {
-				char* ptr = m_rbuffer.ptr();
-				while (skipBytes <= toWrite && ptr[skipBytes] != 0x47) ++skipBytes;
-			}
-*/
 			eDebug("eHttpStream::read() - writting %i bytes to the ring buffer", toWrite);
 			m_rbuffer.ptrWriteCommit(toWrite);
-//			if (skipBytes > 0) m_rbuffer.skip(skipBytes);
 			//try to reconnect on next failure
 			m_tryToReconnect = true;
 		} else if (m_rbuffer.availableToRead() < 188) {
@@ -258,53 +267,48 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 		}
 	}
 
-/*
-	ssize_t toRead = m_rbuffer.availableToRead();
 	if (m_chunkedTransfer) {
-		eDebug("Chunked transfer available to read: %i", toRead);
-		ssize_t sz = MIN(count, 1024*4);
-		sz = MIN(toRead, sz);
-		sz = (sz > 188)? sz-188: sz;
-		eDebug("Chunked transfer will read max: %i", sz);
-		m_rbuffer.read(m_chunkedBuffer, sz);
-		const char* end = m_chunkedBuffer+sz;
-		ssize_t toSkip = 0;
-		while(toSkip < sz && m_chunkedBuffer[toSkip] != 0x47) ++toSkip;
-		if ((sz-toSkip) < 188) {
-			ssize_t ex = 188 - (sz-toSkip);
-			m_rbuffer.read(m_chunkedBuffer+sz, ex);
-			sz +=ex;
-		}
-		eDebug("Chunked transfer will skip: %i", toSkip);
-		toRead = (sz - toSkip) - (sz - toSkip)%188;
-		eDebug("Chunked transfer recalculated read max: %i", toRead);
-		ssize_t countTotal=0;
-		char* ptr = m_chunkedBuffer + toSkip;
-		while(ptr < end) {
-			ssize_t count188=0;
-			while(ptr < end && *ptr != 0x47) ++ptr;
-			while((ptr + 188) <= end && ptr[count188] == 0x47) count188+=188;
-			eDebug("Chunked transfer will read %i of 188 bytes, total bytes %i", count188/188, count188);
-			if (count188 > 0) {
-				memcpy(buf, ptr, count188);
-				countTotal += count188;
-				ptr+=countTotal;
+		ssize_t totalRead=0;
+		const ssize_t availableToRead = m_rbuffer.availableToRead();
+		eDebug("%s: chunked transfer available to read: %i", __FUNCTION__, availableToRead);
+		while(availableToRead > (188*2) && totalRead < (count - count%188)){
+			ssize_t toRead = MIN(availableToRead - 188, count);
+			eDebug("%s: chunked transfer will read max: %i", __FUNCTION__, toRead - toRead%188);
+			toRead = m_rbuffer.read(m_chunkedBuffer, toRead - toRead%188);
+			char* ptr = m_chunkedBuffer;
+			char* end = (m_chunkedBuffer + toRead);
+			while(ptr < end) {
+				while(ptr < end && *ptr != 0x47) ++ptr;
+				ssize_t count188=0;
+				while((ptr + 188) <= end && ptr[count188] == 0x47) count188+=188;
+				eDebug("%s: chunked transfer will read %i of 188 bytes", __FUNCTION__, count188/188);
+				if (count188 > 0) {
+					memcpy((char*)buf+totalRead, ptr, count188);
+					totalRead += count188;
+					ptr+=count188;
+				} else if (ptr < end) {
+					memcpy((char*)buf+totalRead, ptr, (end - ptr));
+					totalRead += (end - ptr);
+					ptr = end;
+				}
 			}
+			if (totalRead%188) {
+				ssize_t last188Tail = (188 - (totalRead%188));
+				eDebug("%s: chunked transfer will read the last %i of 188 bytes", __FUNCTION__, last188Tail);
+				m_rbuffer.read((char*)buf+totalRead, last188Tail);
+				totalRead += last188Tail;
+			}
+			eDebug("%s: chunked transfer read total %i", __FUNCTION__, totalRead);
+			return totalRead;
 		}
-		if (countTotal > 0) {
-			return countTotal;
-		} else {
-			errno = EAGAIN;
-			return -1;
-		}
+		return totalRead;
 	} else {
-*/
 		ssize_t toRead = m_rbuffer.availableToRead();
 		toRead = MIN(toRead, count);
 //		eDebug(" eHttpStream::read() - reading %i bytes", (toRead - (toRead%188)));
 		toRead = m_rbuffer.read((char*)buf, (toRead - (toRead%188)));
 		return (toRead > 0)? toRead: -1;
-//	}
+	}
 }
 
 int eHttpStream::valid()
