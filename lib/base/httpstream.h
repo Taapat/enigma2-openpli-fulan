@@ -15,6 +15,9 @@ class eHttpStream: public iTsSource, public Object
 	std::string m_authorizationData;
 	std::string m_url;
 	int m_streamSocket;
+	size_t m_lbuffSize;
+	char* m_lbuff;
+	int m_chunkSize;
 	RingBuffer m_rbuffer;
 	bool m_tryToReconnect;
 	bool m_chunkedTransfer;
