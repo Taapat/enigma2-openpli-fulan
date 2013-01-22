@@ -21,6 +21,7 @@ eHttpStream::eHttpStream() :
 
 eHttpStream::~eHttpStream()
 {
+	if (m_lbuff) free(m_lbuff);
 	close();
 }
 
