@@ -24,6 +24,7 @@ class eHttpStream: public iTsSource, public Object
 	char* m_chunkedBuffer;
 
 	int openUrl(const std::string &url, std::string &newurl);
+	void fillbuff(int timems);
 
 	/* iTsSource */
 	ssize_t read(off_t offset, void *buf, size_t count);

@@ -127,7 +127,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		request.append("Authorization: Basic ").append(m_authorizationData).append("\r\n");
 	}
 	request.append("Accept: */*\r\n");
-	request.append("Range: bytes=0-\r\n");
+//	request.append("Range: bytes=0-\r\n");
 	request.append("Connection: close\r\n");
 	request.append("\r\n");
 
@@ -159,6 +159,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	}
 
 	m_chunkedTransfer = (hdr.find("Transfer-Encoding: chunked") != std::string::npos);
+	if(m_chunkedTransfer) eDebug("m_chunkedTransfer");
 
 	pos = hdr.find("Content-Type:");
 	if (pos != std::string::npos) {
@@ -183,28 +184,35 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		}
 	}
 	m_chunkSize = 0;
+	
+	if (m_lbuff == NULL) {
+		m_lbuff = (char*)malloc(64);
+		m_lbuffSize = 64;
+	}
+	m_rbuffer.reset();
 
-
+/*
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
 	if (m_chunkedTransfer && m_chunkSize==0) {
 		if (m_lbuff == NULL) m_lbuff = (char*)malloc(64);
 		int c = eSocketBase::readLine(m_streamSocket, &m_lbuff, &m_lbuffSize);
 		if (c <=0) return -1;
 		m_chunkSize = strtol(m_lbuff, NULL, 16);
+		eDebug("chunk size %d", m_chunkSize);
 	}
 
 	if (toWrite > 0) {
 		if (m_chunkedTransfer) toWrite = MIN(toWrite, m_chunkSize);
-		toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 2000, 200);
+		toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 2000);
 		if (toWrite > 0) {
 			eDebug("%s: writting %i bytes to the ring buffer", __FUNCTION__, toWrite);
 			m_rbuffer.ptrWriteCommit(toWrite);
 			if (m_chunkedTransfer) {
 				m_chunkSize -= toWrite;
-				continue;
+			//	continue;
 			}
 		}
-	}
+	} */
 
 	return 0;
 }
@@ -223,6 +231,34 @@ int eHttpStream::close()
 	return retval;
 }
 
+void eHttpStream::fillbuff(int timems)
+{
+	eDebug("fillbuff");
+	int toWrite;
+	while (m_rbuffer.availableToWritePtr() > 0 && timems > 0) {
+		toWrite = m_rbuffer.availableToWritePtr();
+		if (m_chunkedTransfer) {
+			if (m_chunkSize == 0) {
+				int c = eSocketBase::readLine(m_streamSocket, &m_lbuff, &m_lbuffSize, &timems);
+				if (c > 0) {
+					m_chunkSize = strtol(m_lbuff, NULL, 16);
+					eDebug("chunk size %d", m_chunkSize);
+					if (m_chunkSize == 0) break;
+				} else break;
+			}
+			toWrite = MIN(toWrite, m_chunkSize);
+		}
+		toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, &timems);
+		if (toWrite > 0) {
+			m_rbuffer.ptrWriteCommit(toWrite);
+			if (m_chunkedTransfer) {
+				m_chunkSize -= toWrite;
+			}
+		} else break;
+		eDebug("time %d", timems);
+	}
+}
+
 ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 {
 	if (m_streamSocket < 0) {
@@ -232,30 +268,11 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 
 	eDebug("eHttpStream::read()");
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
-//	eDebug("Ring buffer available to write %i", toWrite);
+	eDebug("Ring buffer available to write %i", toWrite);
 	if (toWrite > 188) {
-		if (m_chunkedTransfer && m_chunkSize==0) {
-			int c = eSocketBase::readLine(m_streamSocket, &m_lbuff, &m_lbuffSize);
-			if (c <= 0) return -1;
-			m_chunkSize = strtol(m_lbuff, NULL, 16);
-			if (m_chunkSize == 0) return -1;
-			toWrite = MIN(toWrite, m_chunkSize);
-		}
-		if (m_rbuffer.availableToRead() >= count || m_chunkSize > 0) {
-			//do not starve the reader if we have enough data to read and there is nothing on the socket
-			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 50);
-		} else {
-			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 5000, 500);
-		}
-		if (toWrite > 0) {
-			eDebug("eHttpStream::read() - writting %i bytes to the ring buffer", toWrite);
-			m_rbuffer.ptrWriteCommit(toWrite);
-			if (m_chunkedTransfer) {
-				m_chunkSize -= toWrite;
-			}
-			//try to reconnect on next failure
-			m_tryToReconnect = true;
-		} else if (m_rbuffer.availableToRead() < 188) {
+		int timeoutms = (m_rbuffer.availableToRead() >= 188)? 1: 5000;
+		fillbuff(timeoutms);
+		if (m_rbuffer.availableToRead() < 188) {
 			eDebug("eHttpStream::read() - failed to read from the socket...");
 			// we failed to read and there is nothing to play, try to reconnect?
 			// so far reconnect worked for me as best effort, it is really doing well 
@@ -277,7 +294,7 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 
 	ssize_t toRead = m_rbuffer.availableToRead();
 	toRead = MIN(toRead, count);
-//		eDebug(" eHttpStream::read() - reading %i bytes", (toRead - (toRead%188)));
+	eDebug(" eHttpStream::read() - reading %i bytes", (toRead - (toRead%188)));
 	toRead = m_rbuffer.read((char*)buf, (toRead - (toRead%188)));
 	return (toRead > 0)? toRead: -1;
 }
