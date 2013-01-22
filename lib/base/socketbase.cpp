@@ -148,6 +148,7 @@ ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize, int* timeo
 
 	size_t pos = 0;
 	size_t read = 0;
+	size_t bytesToFlush = 0;
 	bool is_end = false;
 
 	while (!is_end) {
@@ -172,7 +173,8 @@ ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize, int* timeo
 		for(pos = read - rcvd; pos + 1 < read; pos++) {
 			if (lbuf[pos] == '\r' && lbuf[pos+1] == '\n') {
 				is_end = true;
-				while(lbuf[pos] == '\n' || lbuf[pos] == '\r') pos++;
+				bytesToFlush = pos;
+				while(lbuf[bytesToFlush] == '\n' || lbuf[bytesToFlush] == '\r') bytesToFlush++;
 				break;
 			}
 		}
@@ -181,7 +183,6 @@ ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize, int* timeo
 	//flush the line
 	eDebug("to flush %d", pos);
 	char tmpbuf[1024];
-	int bytesToFlush = pos;
 	while (bytesToFlush > 0) {
 		int rc = MIN(bytesToFlush, sizeof(tmpbuf));
 		rc = ::recv(fd, tmpbuf, rc, 0);
@@ -189,9 +190,9 @@ ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize, int* timeo
 		else return -1;
 	}
 	
-	lbuf[pos-2] = '\0';
+	lbuf[pos] = '\0';
 	*timeoutms = timeout.tv_sec * 1000 + timeout.tv_usec / 1000;
-	return pos-1;
+	return pos;
 }
 
 ssize_t eSocketBase::openHTTPConnection(int fd, const std::string& getRequest, std::string& httpHdr)
