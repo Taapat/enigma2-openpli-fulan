@@ -181,7 +181,7 @@ ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize, int* timeo
 	}
 
 	//flush the line
-	eDebug("to flush %d", pos);
+	eDebug("to flush %d", bytesToFlush);
 	char tmpbuf[1024];
 	while (bytesToFlush > 0) {
 		int rc = MIN(bytesToFlush, sizeof(tmpbuf));
