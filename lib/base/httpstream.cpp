@@ -244,7 +244,7 @@ void eHttpStream::fillbuff(int timems)
 					m_chunkSize = strtol(m_lbuff, NULL, 16);
 					eDebug("chunk size %d", m_chunkSize);
 					if (m_chunkSize == 0) break;
-				} else break;
+				} else continue;
 			}
 			toWrite = MIN(toWrite, m_chunkSize);
 		}
@@ -270,10 +270,12 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
 	eDebug("Ring buffer available to write %i", toWrite);
 	if (toWrite > 188) {
-		int timeoutms = (m_rbuffer.availableToRead() >= 188)? 1: 5000;
+		int timeoutms = (m_rbuffer.availableToRead() >= count)? 1: 5000;
 		fillbuff(timeoutms);
 		if (m_rbuffer.availableToRead() < 188) {
 			eDebug("eHttpStream::read() - failed to read from the socket...");
+			errno = EAGAIN; //timeout
+			return -1; /*
 			// we failed to read and there is nothing to play, try to reconnect?
 			// so far reconnect worked for me as best effort, it is really doing well 
 			// when initial connection fails for some reason.
@@ -288,7 +290,7 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 				errno = EAGAIN; //timeout
 			} else close();
 
-			return -1 ;
+			return -1 ; */
 		}
 	}
 
