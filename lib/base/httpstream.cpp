@@ -184,27 +184,26 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	}
 	m_chunkSize = 0;
 
-	while(true) {
-		ssize_t toWrite = m_rbuffer.availableToWritePtr();
-		if (m_chunkedTransfer && m_chunkSize==0) {
-			int c = eSocketBase::readLine(m_streamSocket, &m_lbuff, &m_lbuffSize);
-			if (c <=0) return -1;
-			m_chunkSize = strtol(m_lbuff, NULL, 16);
-		}
 
+	ssize_t toWrite = m_rbuffer.availableToWritePtr();
+	if (m_chunkedTransfer && m_chunkSize==0) {
+		if (m_lbuff == NULL) m_lbuff = (char*)malloc(64);
+		int c = eSocketBase::readLine(m_streamSocket, &m_lbuff, &m_lbuffSize);
+		if (c <=0) return -1;
+		m_chunkSize = strtol(m_lbuff, NULL, 16);
+	}
+
+	if (toWrite > 0) {
+		if (m_chunkedTransfer) toWrite = MIN(toWrite, m_chunkSize);
+		toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 2000, 200);
 		if (toWrite > 0) {
-			if (m_chunkedTransfer) toWrite = MIN(toWrite, m_chunkSize);
-			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 1000, 50);
-			if (toWrite > 0) {
-				eDebug("%s: writting %i bytes to the ring buffer", __FUNCTION__, toWrite);
-				m_rbuffer.ptrWriteCommit(toWrite);
-				if (m_chunkedTransfer) {
-					m_chunkSize -= toWrite;
-					continue;
-				}
-				break;
-			} break;
-		} break;
+			eDebug("%s: writting %i bytes to the ring buffer", __FUNCTION__, toWrite);
+			m_rbuffer.ptrWriteCommit(toWrite);
+			if (m_chunkedTransfer) {
+				m_chunkSize -= toWrite;
+				continue;
+			}
+		}
 	}
 
 	return 0;
@@ -235,7 +234,6 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
 //	eDebug("Ring buffer available to write %i", toWrite);
 	if (toWrite > 188) {
-READAGAIN:
 		if (m_chunkedTransfer && m_chunkSize==0) {
 			int c = eSocketBase::readLine(m_streamSocket, &m_lbuff, &m_lbuffSize);
 			if (c <= 0) return -1;
@@ -254,7 +252,6 @@ READAGAIN:
 			m_rbuffer.ptrWriteCommit(toWrite);
 			if (m_chunkedTransfer) {
 				m_chunkSize -= toWrite;
-				goto READAGAIN;
 			}
 			//try to reconnect on next failure
 			m_tryToReconnect = true;
