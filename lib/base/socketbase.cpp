@@ -180,17 +180,18 @@ ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize, int* timeo
 
 	//flush the line
 	eDebug("to flush %d", pos);
+	char tmpbuf[1024];
 	int bytesToFlush = pos;
 	while (bytesToFlush > 0) {
-		int rc = MIN(bytesToFlush, *bufsize);
-		rc = ::recv(fd, lbuf, rc, 0);
+		int rc = MIN(bytesToFlush, sizeof(tmpbuf));
+		rc = ::recv(fd, tmpbuf, rc, 0);
 		if (rc > 0) bytesToFlush -= rc;
 		else return -1;
 	}
 	
-	lbuf[pos-1] = '\0';
+	lbuf[pos-2] = '\0';
 	*timeoutms = timeout.tv_sec * 1000 + timeout.tv_usec / 1000;
-	return pos;
+	return pos-1;
 }
 
 ssize_t eSocketBase::openHTTPConnection(int fd, const std::string& getRequest, std::string& httpHdr)
