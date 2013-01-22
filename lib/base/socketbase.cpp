@@ -71,27 +71,26 @@ ssize_t eSocketBase::singleRead(int fd, void *buf, size_t count)
 	}
 }
 
-ssize_t eSocketBase::timedRead(int fd, void *buf, size_t count, int initialtimeout, int interbytetimeout)
+ssize_t eSocketBase::timedRead(int fd, void *buf, size_t count, const int timeoutms)
+{
+	int timeout = timeoutms;
+	return timedRead(fd, buf, count, &timeout);
+}
+
+ssize_t eSocketBase::timedRead(int fd, void *buf, size_t count, int* timeoutms)
 {
 	fd_set rset;
 	struct timeval timeout;
 	int result;
 	size_t totalread = 0;
-
+	
+	timeout.tv_sec = *timeoutms/1000;
+	timeout.tv_usec = (*timeoutms % 1000) * 1000;
+	
 	while (totalread < count)
 	{
 		FD_ZERO(&rset);
 		FD_SET(fd, &rset);
-		if (totalread == 0)
-		{
-			timeout.tv_sec = initialtimeout/1000;
-			timeout.tv_usec = (initialtimeout%1000) * 1000;
-		}
-		else
-		{
-			timeout.tv_sec = interbytetimeout / 1000;
-			timeout.tv_usec = (interbytetimeout%1000) * 1000;
-		}
 		if ((result = select(fd + 1, &rset, NULL, NULL, &timeout)) < 0) return -1; /* error */
 		if (result == 0) break;
 		if ((result = singleRead(fd, ((char*)buf) + totalread, count - totalread)) <= 0)
@@ -101,9 +100,12 @@ ssize_t eSocketBase::timedRead(int fd, void *buf, size_t count, int initialtimeo
 		if (result == 0) break;
 		totalread += result;
 	}
+	*timeoutms = timeout.tv_sec * 1000 + timeout.tv_usec / 1000;
+	eDebug("timedRead %d", totalread);
 	return totalread;
 }
 
+/*
 ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize)
 {
 	size_t i = 0;
@@ -118,7 +120,7 @@ ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize)
 			*buffer = newbuf;
 			*bufsize = (*bufsize) + 1024;
 		}
-		result = timedRead(fd, (*buffer) + i, 1, 3000, 100);
+		result = timedRead(fd, (*buffer) + i, 1, 3000);
 		if (result <= 0 || (*buffer)[i] == '\n')
 		{
 			(*buffer)[i] = '\0';
@@ -127,6 +129,68 @@ ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize)
 		if ((*buffer)[i] != '\r') i++;
 	}
 	return -1;
+} */
+
+ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize, const int timeoutms)
+{
+	int timeout = timeoutms;
+	return readLine(fd, buffer, bufsize, &timeout);
+}
+
+ssize_t eSocketBase::readLine(int fd, char** buffer, size_t* bufsize, int* timeoutms)
+{
+	fd_set rset;
+	struct timeval timeout;
+	char *lbuf = *buffer;
+	
+	timeout.tv_sec = *timeoutms/1000;
+	timeout.tv_usec = (*timeoutms % 1000) * 1000;
+
+	size_t pos = 0;
+	size_t read = 0;
+	bool is_end = false;
+
+	while (!is_end) {
+		if (read >= *bufsize) {
+			char *newbuf = (char*)realloc(lbuf, (*bufsize)+1024);
+			if (newbuf == NULL)
+				return -ENOMEM;
+			*buffer = newbuf;
+			lbuf = newbuf;
+			*bufsize = (*bufsize) + 1024;
+		}
+		
+		FD_ZERO(&rset);
+		FD_SET(fd, &rset);
+		const int rc = ::select(fd+1, &rset, NULL, NULL, &timeout);
+		if (rc <= 0) {
+			break;
+		}
+		int rcvd = ::recv(fd, lbuf+read, *bufsize-read, MSG_PEEK);
+		read += rcvd;
+
+		for(pos = read - rcvd; pos + 1 < read; pos++) {
+			if (lbuf[pos] == '\r' && lbuf[pos+1] == '\n') {
+				is_end = true;
+				while(lbuf[pos] == '\n' || lbuf[pos] == '\r') pos++;
+				break;
+			}
+		}
+	}
+
+	//flush the line
+	eDebug("to flush %d", pos);
+	int bytesToFlush = pos;
+	while (bytesToFlush > 0) {
+		int rc = MIN(bytesToFlush, *bufsize);
+		rc = ::recv(fd, lbuf, rc, 0);
+		if (rc > 0) bytesToFlush -= rc;
+		else return -1;
+	}
+	
+	lbuf[pos-1] = '\0';
+	*timeoutms = timeout.tv_sec * 1000 + timeout.tv_usec / 1000;
+	return pos;
 }
 
 ssize_t eSocketBase::openHTTPConnection(int fd, const std::string& getRequest, std::string& httpHdr)
