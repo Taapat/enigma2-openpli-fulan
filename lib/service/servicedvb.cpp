@@ -1309,7 +1309,7 @@ RESULT eDVBServicePlay::start()
 		scrambled = (m_reference.type == eServiceFactoryDVB::id + 0x100);
 		type = eDVBServicePMTHandler::streamclient;
 		//will skip on calling findPMT() for streams, as it is not needed
-		m_dvb_service.setServiceID(eServiceFactoryDVB::id);
+		service.setServiceID(eServiceFactoryDVB::id);
 	}
 
 	m_first_program_info = 1;
