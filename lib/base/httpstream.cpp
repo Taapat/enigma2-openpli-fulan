@@ -139,7 +139,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	const std::string& httpStatus = (pos == std::string::npos)? hdr: hdr.substr(0, pos);
 
 	result = sscanf(httpStatus.c_str(), "%99s %3d %99s", proto, &statuscode, statusmsg);
-	if (result != 3 || (statuscode != 200 && statuscode != 302))
+	if (result != 3 || (statuscode != 200 && statuscode != 302 && statuscode != 206))
 	{
 		eDebug("%s: wrong http response code: %d", __FUNCTION__, statuscode);
 		return -1;
@@ -233,7 +233,7 @@ int eHttpStream::close()
 
 void eHttpStream::fillbuff(int timems)
 {
-	eDebug("fillbuff");
+//	eDebug("fillbuff");
 	int toWrite;
 	while (m_rbuffer.availableToWritePtr() > 0 && timems > 0) {
 		toWrite = m_rbuffer.availableToWritePtr();
@@ -242,7 +242,6 @@ void eHttpStream::fillbuff(int timems)
 				int c = eSocketBase::readLine(m_streamSocket, &m_lbuff, &m_lbuffSize, &timems);
 				if (c > 0) {
 					m_chunkSize = strtol(m_lbuff, NULL, 16);
-					eDebug("chunk size %d", m_chunkSize);
 					if (m_chunkSize == 0) break;
 				} else continue;
 			}
@@ -255,7 +254,7 @@ void eHttpStream::fillbuff(int timems)
 				m_chunkSize -= toWrite;
 			}
 		} else break;
-		eDebug("time %d", timems);
+//		eDebug("time %d", timems);
 	}
 }
 
@@ -269,8 +268,8 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 	eDebug("eHttpStream::read()");
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
 	eDebug("Ring buffer available to write %i", toWrite);
-	if (toWrite > 188) {
-		int timeoutms = (m_rbuffer.availableToRead() >= count)? 1: 5000;
+	if (toWrite > 0) {
+		int timeoutms = (m_rbuffer.availableToRead() >= (1024*4) || m_rbuffer.availableToRead() >= count)? 1: 1000;
 		fillbuff(timeoutms);
 		if (m_rbuffer.availableToRead() < 188) {
 			eDebug("eHttpStream::read() - failed to read from the socket...");
