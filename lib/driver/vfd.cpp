@@ -235,7 +235,7 @@ void evfd::vfd_clear_icons()
 {
     if (getVfdType() != 4)
     {
-	for (int id = 1; id < 45; id++)
+	for (int id = 1; id <= 45; id++)
 	{
 		vfd_set_icon((tvfd_icon)id, false);
 	}
