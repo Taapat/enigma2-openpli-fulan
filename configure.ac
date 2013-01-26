@@ -125,6 +125,16 @@ if test x"$withgraphlcd" != xno ; then
 fi
 AM_CONDITIONAL(HAVE_GRAPHLCD, test x"$withgraphlcd" != xno)
 
+AC_ARG_WITH(lcd,
+	AC_HELP_STRING([--with-lcd], [use LCD display, yes or no]),
+	[[withlcd=$withval]],
+	[[withlcd=no]]
+)
+if ! test x"$withlcd" != xno ; then
+	AC_DEFINE(NO_LCD, 1,[Define when not using a LCD display device])
+fi
+AM_CONDITIONAL(NO_LCD, test x"$withlcd" != xno)
+
 AC_ARG_WITH(oldpvr,
 	AC_HELP_STRING([--with-oldpvr], [use /dev/misc/pvr instead of /dev/dvb/adapterX/dvrX, yes or no]),
 	[[witholdpvr=$withval]],
