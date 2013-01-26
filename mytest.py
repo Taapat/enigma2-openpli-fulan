@@ -577,9 +577,9 @@ profile("LCD")
 import Components.Lcd
 Components.Lcd.InitLcd()
 
-profile("RFMod")
-import Components.RFmod
-Components.RFmod.InitRFmod()
+#profile("RFMod")
+#import Components.RFmod
+#Components.RFmod.InitRFmod()
 
 profile("Init:CI")
 import Screens.Ci

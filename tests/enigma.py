@@ -213,36 +213,37 @@ eAVSwitch()
 
 eDVBVolumecontrol = None
 
-class eRFmod:
-	@classmethod
-	def getInstance(self):
-		return self.instance
+#--->
+#class eRFmod:
+#	@classmethod
+#	def getInstance(self):
+#		return self.instance
 
-	instance = None
+#	instance = None
 
-	def __init__(self):
-		eRFmod.instance = self
+#	def __init__(self):
+#		eRFmod.instance = self
 
-	def setFunction(self, value):
-		print "[eRFmod] set function to %d" % value
+#	def setFunction(self, value):
+#		print "[eRFmod] set function to %d" % value
 
-	def setTestmode(self, value):
-		print "[eRFmod] set testmode to %d" % value
+#	def setTestmode(self, value):
+#		print "[eRFmod] set testmode to %d" % value
 
-	def setSoundFunction(self, value):
-		print "[eRFmod] set sound function to %d" % value
+#	def setSoundFunction(self, value):
+#		print "[eRFmod] set sound function to %d" % value
 
-	def setSoundCarrier(self, value):
-		print "[eRFmod] set sound carrier to %d" % value
+#	def setSoundCarrier(self, value):
+#		print "[eRFmod] set sound carrier to %d" % value
 
-	def setChannel(self, value):
-		print "[eRFmod] set channel to %d" % value
+#	def setChannel(self, value):
+#		print "[eRFmod] set channel to %d" % value
 
-	def setFinetune(self, value):
-		print "[eRFmod] set finetune to %d" % value
+#	def setFinetune(self, value):
+#		print "[eRFmod] set finetune to %d" % value
 
-eRFmod()
-
+#eRFmod()
+#---<
 
 class eDBoxLCD:
 	@classmethod
@@ -357,8 +358,10 @@ def init_all():
 	import Components.SetupDevices
 	Components.SetupDevices.InitSetupDevices()
 
-	import Components.RFmod
-	Components.RFmod.InitRFmod()
+#--->
+#	import Components.RFmod
+#	Components.RFmod.InitRFmod()
+#---<
 
 	import Screens.Ci
 	Screens.Ci.InitCiConfig()

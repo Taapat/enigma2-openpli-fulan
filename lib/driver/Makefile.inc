@@ -8,7 +8,6 @@ driver_libenigma_driver_a_SOURCES = \
 	driver/misc_options.cpp \
 	driver/rc.cpp \
 	driver/rcinput.cpp \
-	driver/rfmod.cpp \
 	driver/hdmi_cec.cpp \
 	driver/vfd.cpp
 
@@ -24,7 +23,6 @@ driverinclude_HEADERS = \
 	driver/rcdreambox2.h \
 	driver/rcinput.h \
 	driver/rcinput_swig.h \
-	driver/rfmod.h \
 	driver/hdmi_cec.h \
 	driver/vfd.h
 

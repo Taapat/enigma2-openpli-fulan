@@ -132,14 +132,14 @@
 		<item text="Nameserver" description="Configure the nameserver (DNS).">config.network.dns</item>
 		<item text="Activate network settings" description="Activate the configured network settings.">config.network.activate</item>
 	</setup>
-	<setup key="RFmod" title="RF output">
+	<!--<setup key="RFmod" title="RF output">
 		<item level="1" text="Modulator">config.rfmod.enable</item>
 		<item level="2" text="Test mode">config.rfmod.test</item>
 		<item level="2" text="Sound">config.rfmod.sound</item>
 		<item level="2" text="Sound carrier">config.rfmod.soundcarrier</item>
 		<item level="1" text="Channel">config.rfmod.channel</item>
 		<item level="1" text="Finetune">config.rfmod.finetune</item>
-	</setup>
+	</setup>-->
 	<setup key="keyboard" title="Keyboard setup">
 		<item level="0" text="Keyboard map">config.keyboard.keymap</item>
 	</setup>
