@@ -58,4 +58,4 @@ dist_install_DATA = \
 	volback.png \
 	vol.png \
 	v-white.png \
-	white.png \
+	white.png
