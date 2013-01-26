@@ -60,7 +60,7 @@ void eLCD::renderText(ePoint start, const char *text)
 }
 #endif
 
-#ifndef HAVE_GRAPHLCD
+#ifdef HAVE_GRAPHLCD
 eDBoxLCD::eDBoxLCD()
 {
 	int xres=132, yres=64, bpp=8;
