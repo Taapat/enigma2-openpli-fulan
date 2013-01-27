@@ -5,8 +5,6 @@ from Components.Button import Button
 from Components.ServiceList import ServiceList
 #+++>
 from Components.Sources.StaticText import StaticText
-from Components.Label import Label
-from os import path as os_path, system, unlink
 #+++<
 from Components.ActionMap import NumberActionMap, ActionMap, HelpableActionMap
 from Components.MenuList import MenuList
@@ -816,7 +814,6 @@ class ChannelSelectionBase(Screen):
 		self.servicelist = self["list"]
 
 #+++>
-		self["boquet"] = Label(_("Channel Selection"))
 		self["title"] = StaticText()
 #+++<
 
@@ -976,9 +973,6 @@ class ChannelSelectionBase(Screen):
 					end_ref = None
 				nameStr = self.getServiceName(base_ref)
 				titleStr += ' - ' + nameStr
-#+++>
-				self["boquet"].setText("Channel Selection")
-#+++<
 				if end_ref is not None:
 					if Len > 2:
 						titleStr += '/../'
@@ -986,9 +980,6 @@ class ChannelSelectionBase(Screen):
 						titleStr += '/'
 					nameStr = self.getServiceName(end_ref)
 					titleStr += nameStr
-#+++>
-					self["boquet"].setText(nameStr)
-#+++<
 				self.setTitle(titleStr)
 #+++>
 				self["title"].setText(titleStr)
