@@ -21,6 +21,7 @@ class eHttpStream: public iTsSource, public Object
 	RingBuffer m_rbuffer;
 	bool m_tryToReconnect;
 	bool m_chunkedTransfer;
+	bool m_firstOffset;
 	char* m_chunkedBuffer;
 
 	int openUrl(const std::string &url, std::string &newurl);

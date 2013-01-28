@@ -16,6 +16,7 @@ eHttpStream::eHttpStream() :
 	,m_rbuffer(1024*1024*2)
 	,m_tryToReconnect(false)
 	,m_chunkedTransfer(false)
+	,m_firstOffset(true)
 {
 }
 
@@ -184,6 +185,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		}
 	}
 	m_chunkSize = 0;
+	m_firstOffset = true;
 	
 	if (m_lbuff == NULL) {
 		m_lbuff = (char*)malloc(64);
@@ -226,7 +228,22 @@ void eHttpStream::fillbuff(int timems)
 		}
 		toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, &timems);
 		if (toWrite > 0) {
+			eDebug("%s: writting %i bytes to the ring buffer", __FUNCTION__, toWrite);
+			ssize_t skipBytes = 0;
+			if (m_firstOffset) {
+				char* ptr = m_rbuffer.ptr();
+				while (skipBytes <= toWrite) {
+					if (ptr[skipBytes] == 0x47) {
+						m_firstOffset = false;
+						break;
+					}
+					++skipBytes;
+				}
+				eDebug("%s: skipping %i bytes", __FUNCTION__, skipBytes);
+			}
 			m_rbuffer.ptrWriteCommit(toWrite);
+			m_rbuffer.skip(skipBytes);
+			
 			if (m_chunkedTransfer) {
 				m_chunkSize -= toWrite;
 			}
