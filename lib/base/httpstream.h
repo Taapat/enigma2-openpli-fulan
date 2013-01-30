@@ -7,8 +7,10 @@
 #include <lib/base/socketbase.h>
 #include <lib/base/thread.h>
 #include <lib/base/ringbuffer.h>
+#include <lib/base/thread.h>
+#include <lib/base/elock.h>
 
-class eHttpStream: public iTsSource, public Object
+class eHttpStream: public iTsSource, public Object, public eThread
 {
 	DECLARE_REF(eHttpStream);
 
@@ -22,10 +24,13 @@ class eHttpStream: public iTsSource, public Object
 	bool m_tryToReconnect;
 	bool m_chunkedTransfer;
 	bool m_firstOffset;
-	char* m_chunkedBuffer;
 
 	int openUrl(const std::string &url, std::string &newurl);
+	int doOpen(const std::string& url);
 	void fillbuff(int timems);
+	
+	void thread();
+	eSingleLock m_mutex;
 
 	/* iTsSource */
 	ssize_t read(off_t offset, void *buf, size_t count);

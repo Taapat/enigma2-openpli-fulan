@@ -16,6 +16,7 @@ eHttpStream::eHttpStream() :
 	,m_rbuffer(1024*1024*2)
 	,m_tryToReconnect(false)
 	,m_chunkedTransfer(false)
+	,m_mutex()
 	,m_firstOffset(true)
 {
 }
@@ -26,7 +27,22 @@ eHttpStream::~eHttpStream()
 	close();
 }
 
+void eHttpStream::thread()
+{
+	hasStarted();
+	doOpen(m_url);
+	m_mutex.unlock();
+}
+
 int eHttpStream::open(const std::string& url)
+{
+	m_mutex.lock();
+	m_url = url;
+	run();
+	return 0;
+}
+
+int eHttpStream::doOpen(const std::string& url)
 {
 	eDebug("eHttpStream::open()");
 	std::string currenturl(url), newurl;
@@ -128,7 +144,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		request.append("Authorization: Basic ").append(m_authorizationData).append("\r\n");
 	}
 	request.append("Accept: */*\r\n");
-//	request.append("Range: bytes=0-\r\n");
+	request.append("Range: bytes=0-\r\n");
 	request.append("Connection: close\r\n");
 	request.append("\r\n");
 
@@ -199,6 +215,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 int eHttpStream::close()
 {
 	eDebug("eHttpStream::close socket");
+	kill();
 	int retval = -1;
 	if (m_streamSocket >= 0)
 	{
@@ -254,6 +271,10 @@ void eHttpStream::fillbuff(int timems)
 
 ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 {
+	//block util connection is open
+	m_mutex.lock();
+	m_mutex.unlock();
+	
 	if (m_streamSocket < 0) {
 		eDebug("eHttpStream::read not valid fd");
 		return -1;
@@ -296,6 +317,7 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 
 int eHttpStream::valid()
 {
+	return true;
 	return m_streamSocket >= 0;
 }
 
