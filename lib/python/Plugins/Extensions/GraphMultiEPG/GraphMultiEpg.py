@@ -10,6 +10,7 @@ from Components.Sources.Event import Event
 from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
 from Components.TimerList import TimerList
 from Components.Renderer.Picon import getPiconName
+from Components.Sources.ServiceEvent import ServiceEvent
 from Screens.Screen import Screen
 from Screens.HelpMenu import HelpableScreen
 from Screens.EventView import EventViewEPGSelect
@@ -251,7 +252,7 @@ class EPGList(HTMLComponent, GUIComponent):
 			self.cur_event = None
 			events = cur_service[2]
 			if events and len(events):
-				idx = 0
+				self.cur_event = idx = 0
 				for event in events: #iterate all events
 					if event[2] <= self.last_time and event[2]+event[3] > self.last_time:
 						self.cur_event = idx
@@ -470,11 +471,15 @@ class EPGList(HTMLComponent, GUIComponent):
 				evH = height - 2 * self.eventBorderWidth
 				if evW > 0:
 					res.append(MultiContentEntryText(
-						pos = (evX, evY), size = (evW, evH),
-						font = 1, flags = RT_HALIGN_LEFT | RT_VALIGN_CENTER,
+						pos = (evX, evY),
+						size = (evW, evH),
+						font = 1,
+						flags = RT_HALIGN_LEFT
+						 | RT_VALIGN_CENTER,
 						text = ev[1],
-						color = foreColor, color_sel = self.foreColorSelected,
-						backcolor_sel = backColorSel))
+						color = foreColor,
+						color_sel
+						 = self.foreColorSelected))
 				# recording icons
 				if rec is not None and ewidth > 23:
 					res.append(MultiContentEntryPixmapAlphaTest(
@@ -703,6 +708,7 @@ class GraphMultiEPG(Screen, HelpableScreen):
 		self.key_green_choice = self.EMPTY
 		self.key_red_choice = self.EMPTY
 		self["timeline_text"] = TimelineText()
+		self["ServiceEvent"] = ServiceEvent()
 		self["Event"] = Event()
 		self.time_lines = [ ]
 		for x in range(0, MAX_TIMELINES):
@@ -994,6 +1000,9 @@ class GraphMultiEPG(Screen, HelpableScreen):
 				self.key_red_choice = self.EMPTY
 			return
 
+		servicerefref = cur[1].ref
+		self["ServiceEvent"].newService(servicerefref)
+
 		if self.key_red_choice != self.ZAP:
 			self["key_red"].setText(_("Zap"))
 			self.key_red_choice = self.ZAP
@@ -1004,9 +1013,8 @@ class GraphMultiEPG(Screen, HelpableScreen):
 				self.key_green_choice = self.EMPTY
 			return
 		
-		serviceref = cur[1]
 		eventid = event.getEventId()
-		refstr = serviceref.ref.toString()
+		refstr = servicerefref.toString()
 		isRecordEvent = False
 		for timer in self.session.nav.RecordTimer.timer_list:
 			if timer.eit == eventid and timer.service_ref.ref.toString() == refstr:
