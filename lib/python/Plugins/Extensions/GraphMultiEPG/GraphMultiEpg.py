@@ -21,12 +21,13 @@ from Screens.TimerEdit import TimerSanityConflict
 from Screens.MessageBox import MessageBox
 from Tools.Directories import resolveFilename, SCOPE_CURRENT_SKIN
 from RecordTimer import RecordTimerEntry, parseEvent, AFTEREVENT
-from ServiceReference import ServiceReference
+from ServiceReference import ServiceReference, isPlayableForCur
 from Tools.LoadPixmap import LoadPixmap
 from Tools.Alternatives import CompareWithAlternatives
-from enigma import eEPGCache, eListbox, ePicLoad, gFont, eListboxPythonMultiContent, \
-	RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_HALIGN_CENTER, RT_VALIGN_CENTER, RT_WRAP, \
-	eSize, eRect, eTimer
+from enigma import eEPGCache, eListbox, ePicLoad, gFont, \
+ eListboxPythonMultiContent, \
+ RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_HALIGN_CENTER, RT_VALIGN_CENTER, RT_WRAP,\
+ eSize, eRect, eTimer, getBestPlayableServiceReference
 from GraphMultiEpgSetup import GraphMultiEpgSetup
 from time import localtime, time, strftime
 
@@ -153,8 +154,10 @@ class EPGList(HTMLComponent, GUIComponent):
 				else:
 					attribs.append((attrib,value))
 			self.skinAttributes = attribs
+		self.l.setFont(0, self.serviceFont)
+		self.setEventFontsize()
 		rc = GUIComponent.applySkin(self, desktop, screen)
-		# now we know our size and can savely set items per page
+		# now we know our size and can safely set items per page
 		self.listHeight = self.instance.size().height()
 		self.listWidth = self.instance.size().width()
 		self.setItemsPerPage()
@@ -304,8 +307,6 @@ class EPGList(HTMLComponent, GUIComponent):
 		instance.selectionChanged.get().append(self.serviceChanged)
 		instance.setContent(self.l)
 		self.l.setSelectionClip(eRect(0, 0, 0, 0), False)
-		self.l.setFont(0, self.serviceFont)
-		self.setEventFontsize()
 
 	def preWidgetRemove(self, instance):
 		instance.selectionChanged.get().remove(self.serviceChanged)
@@ -434,12 +435,16 @@ class EPGList(HTMLComponent, GUIComponent):
 				rec = self.timer.isInTimer(ev[0], stime, duration, service)
 
 				# event box background
+				foreColorSelected = foreColor = self.foreColor
 				if stime <= now and now < stime + duration:
 					backColor = self.backColorNow
-					foreColor = self.foreColorNow
+					if isPlayableForCur( \
+					 ServiceReference(service).ref):
+						foreColor = self.foreColorNow
+						foreColorSelected \
+					 	 = self.foreColorSelected
 				else:
 					backColor = self.backColor
-					foreColor = self.foreColor
 
 				if selected and self.select_rect.x == xpos + left and self.selEvPix:
 					bgpng = self.selEvPix
@@ -478,8 +483,7 @@ class EPGList(HTMLComponent, GUIComponent):
 						 | RT_VALIGN_CENTER,
 						text = ev[1],
 						color = foreColor,
-						color_sel
-						 = self.foreColorSelected))
+						color_sel = foreColorSelected))
 				# recording icons
 				if rec is not None and ewidth > 23:
 					res.append(MultiContentEntryPixmapAlphaTest(
@@ -622,11 +626,11 @@ class TimelineText(HTMLComponent, GUIComponent):
 				else:
 					attribs.append((attrib,value))
 			self.skinAttributes = attribs
+		self.l.setFont(0, self.font)
 		return GUIComponent.applySkin(self, desktop, screen)
 
 	def postWidgetCreate(self, instance):
 		instance.setContent(self.l)
-		self.l.setFont(0, self.font)
 
 	def setEntries(self, l, timeline_now, time_lines, force):
 		event_rect = l.getEventRect()
