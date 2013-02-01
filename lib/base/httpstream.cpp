@@ -168,7 +168,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		pos = hdr.find("Location: ");
 		if (pos != std::string::npos) {
 			newurl = hdr.substr(pos+strlen("Location: "));
-			pos = newurl.find("\n");
+			pos = MIN(newurl.find("\n"), newurl.find("\r"));
 			if (pos != std::string::npos) newurl = newurl.substr(0, pos);
 			eDebug("%s: redirecting to: %s", __FUNCTION__, newurl.c_str());
 			return 0;
