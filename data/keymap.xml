@@ -180,9 +180,13 @@
 		<key id="KEY_RED" mapto="audioSelection" flags="m" />
 	</map>
 				
+	<map context="InfobarTimerButtonActions">
+			<key id="KEY_PROGRAM" mapto="timerSelection" flags="m" />
+	</map>
 	<map context="InfobarAudioSelectionActions">
 		<key id="KEY_RED" mapto="audioSelection" flags="m" />
 		<key id="KEY_LANGUAGE" mapto="audioSelection" flags="m" />
+
 	</map>
 
 	<map context="InfobarAspectSelectionActions">
