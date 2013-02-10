@@ -87,8 +87,7 @@ void * start_loop (void *arg)
 	evfd vfd;
 	blocked = true;
 	//vfd.vfd_clear_icons();
-	char string[] = "Open AR-P ENIGMA2";
-	vfd.vfd_write_string(string, true);
+	vfd.vfd_write_string((char*)"Open AR-P ENIGMA2", true);
 	//run 2 times through all icons 
 	if (vfd.getVfdType() != 4)
 	{
@@ -188,8 +187,7 @@ void evfd::vfd_write_string_scrollText(char* text)
 
 void evfd::vfd_clear_string()
 {
-	char string[] = "                ";
-	vfd_write_string(string);
+	vfd_write_string((char*)"                ");
 	return;
 }
 
