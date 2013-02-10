@@ -758,7 +758,7 @@ class ChannelSelectionEdit:
 			self.setTitle(new_title);
 		self["Service"].editmode = True
 #+++>
-			self["title"].setText(new_title)
+		self["title"].setText(new_title)
 #+++<
 
 	def handleEditCancel(self):
