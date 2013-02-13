@@ -84,23 +84,24 @@ freesatHuffmanDecoder::~freesatHuffmanDecoder()
 */
 static unsigned char resolveChar(const char *str)
 {
-	const unsigned char*p = str;
+	const unsigned char* p = (const unsigned char*) str;
 	unsigned c0 = *p++, c1 = *p++;
+	const char *sp = (const char*) p;
 	if (c1)
 		switch(c0|c1<<8)
 		{
 			case '0'|'x'<<8:
-				if ( sscanf(p,"%02x", &c1) == 1 )
+				if ( sscanf(sp,"%02x", &c1) == 1 )
 					c0 = c1;
 				break;
 			case 'E'|'S'<<8:
-				if ( !strcmp(p,"CAPE") )
+				if ( !strcmp(sp,"CAPE") )
 					c0 = ESCAPE;
 				break;
 			case 'S'|'T'<<8:
-				if ( !strcmp(p,"OP") )
+				if ( !strcmp(sp,"OP") )
 					c0 = STOP;
-				else if ( !strcmp(p,"ART") )
+				else if ( !strcmp(sp,"ART") )
 					c0 = START;
 				break;
 		}
