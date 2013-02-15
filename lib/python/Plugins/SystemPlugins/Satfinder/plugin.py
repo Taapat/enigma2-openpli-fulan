@@ -15,6 +15,33 @@ from Components.config import ConfigSelection, getConfigListEntry
 from Components.TuneTest import Tuner
 
 class Satfinder(ScanSetup):
+	def __init__(self, session, feid):
+		self.initcomplete = False
+		self.feid = feid
+		self.oldref = None
+		self.frontendData = None
+		service = session and session.nav.getCurrentService()
+		feinfo = service and service.frontendInfo()
+		self.frontendData = feinfo and feinfo.getAll(True)
+		del feinfo
+		del service
+
+		ScanSetup.__init__(self, session)
+
+		self["introduction"].setText(_("Press OK to scan"))
+		self["Frontend"] = FrontendStatus(frontend_source = lambda : self.frontend, update_interval = 100)
+
+		self["actions"] = ActionMap(["SetupActions"],
+		{
+			"save": self.keyGoScan,
+			"ok": self.keyGoScan,
+			"cancel": self.keyCancel,
+		}, -3)
+
+		self.initcomplete = True
+		self.onClose.append(self.__onClose)
+		self.onShow.append(self.__onShow)
+
 	def openFrontend(self):
 		res_mgr = eDVBResourceManager.getInstance()
 		if res_mgr:
@@ -31,33 +58,18 @@ class Satfinder(ScanSetup):
 			print "getResourceManager instance failed"
 		return False
 
-	def __init__(self, session, feid):
-		self.initcomplete = False
-		self.feid = feid
-		self.oldref = None
-		self.frontendData = None
-		service = session and session.nav.getCurrentService()
-		feinfo = service and service.frontendInfo()
-		self.frontendData = feinfo and feinfo.getAll(True)
-		del feinfo
-		del service
-
+	def __onShow(self):
 		if not self.openFrontend():
-			self.oldref = session.nav.getCurrentlyPlayingServiceReference()
-			session.nav.stopService() # try to disable foreground service
+			self.oldref = self.session.nav.getCurrentlyPlayingServiceReference()
+			self.session.nav.stopService() # try to disable foreground service
 			if not self.openFrontend():
-				if session.pipshown: # try to disable pip
-					session.pipshown = False
-					del session.pip
+				if self.session.pipshown: # try to disable pip
+					self.session.pipshown = False
+					del self.session.pip
 					if not self.openFrontend():
 						self.frontend = None # in normal case this should not happen
-
-		ScanSetup.__init__(self, session)
 		self.tuner = Tuner(self.frontend)
-		self["introduction"].setText("")
-		self["Frontend"] = FrontendStatus(frontend_source = lambda : self.frontend, update_interval = 100)
-		self.initcomplete = True
-		self.onClose.append(self.__onClose)
+		self.retune(None)
 
 	def __onClose(self):
 		self.session.nav.playService(self.oldref)
@@ -68,10 +80,10 @@ class Satfinder(ScanSetup):
 
 		self.list = []
 
-		self.typeOfTuningEntry = getConfigListEntry(_('Tune'), self.tuning_type)
-		self.list.append(self.typeOfTuningEntry)
 		self.satEntry = getConfigListEntry(_('Satellite'), self.tuning_sat)
 		self.list.append(self.satEntry)
+		self.typeOfTuningEntry = getConfigListEntry(_('Tune'), self.tuning_type)
+		self.list.append(self.typeOfTuningEntry)
 
 		nim = nimmanager.nim_slots[self.feid]
 
@@ -84,9 +96,9 @@ class Satfinder(ScanSetup):
 				# downgrade to dvb-s, in case a -s2 config was active
 				self.scan_sat.system.value = eDVBFrontendParametersSatellite.System_DVB_S
 			self.list.append(getConfigListEntry(_('Frequency'), self.scan_sat.frequency))
-			self.list.append(getConfigListEntry(_('Inversion'), self.scan_sat.inversion))
-			self.list.append(getConfigListEntry(_('Symbol rate'), self.scan_sat.symbolrate))
 			self.list.append(getConfigListEntry(_('Polarization'), self.scan_sat.polarization))
+			self.list.append(getConfigListEntry(_('Symbol rate'), self.scan_sat.symbolrate))
+			self.list.append(getConfigListEntry(_('Inversion'), self.scan_sat.inversion))
 			if self.scan_sat.system.value == eDVBFrontendParametersSatellite.System_DVB_S:
 				self.list.append(getConfigListEntry(_("FEC"), self.scan_sat.fec))
 			elif self.scan_sat.system.value == eDVBFrontendParametersSatellite.System_DVB_S2:
@@ -202,7 +214,7 @@ class Satfinder(ScanSetup):
 				elif x[4] == 15:
 					fec = "FEC None"
 				else:
-					fec = "??"
+					fec = "FEC Unknown"
 				if x[5] == 1:
 					std = "S2"
 				else:
@@ -220,9 +232,9 @@ class Satfinder(ScanSetup):
 				else:
 					mod = "Auto"
 				if x[10] < 0 or x[10] > 255:
-					e = str(x[1]) + "," + str(x[2]) + "," + pol + "," + std + "," + mod + "," + fec
+					e = "%d %s %d %s %s %s" % ((x[1] / 1000), pol, (x[2] / 1000), std, mod, fec)
 				else:
-					e = str(x[1]) + "," + str(x[2]) + "," + pol + "," + std + "," + mod + "," + fec + "," + str(x[10])
+					e = "%d %s %d %s %s %s %d" % ((x[1] / 1000), pol, (x[2] / 1000), std, mod, fec, (x[10] / 1000))
 				if default is None:
 					default = str(index)
 				list.append((str(index), e))
@@ -230,8 +242,25 @@ class Satfinder(ScanSetup):
 			self.tuning_transponder = ConfigSelection(choices = list, default = default)
 			self.tuning_transponder.addNotifier(self.retune, initial_call = False)
 
-	def keyGo(self):
-		self.retune(self.tuning_type)
+	def keyGoScan(self):
+		self.frontend = None
+		del self.raw_channel
+
+		self.updateSatList()
+
+		self.scan_satselection = [ self.tuning_sat ]
+
+		self.scan_sat.frequency.setValue(self.transponder[0])
+		self.scan_sat.symbolrate.setValue(self.transponder[1])
+		self.scan_sat.polarization.setValue(self.transponder[2])
+		self.scan_sat.fec.setValue(self.transponder[3])
+		self.scan_sat.inversion.setValue(self.transponder[4])
+		self.scan_sat.system.setValue(self.transponder[6])
+		self.scan_sat.modulation.setValue(self.transponder[7])
+		self.scan_sat.rolloff.setValue(self.transponder[8])
+		self.scan_sat.pilot.setValue(self.transponder[9])
+
+		self.keyGo()
 
 	def restartPrevService(self, yesno):
 		if yesno:
@@ -252,6 +281,7 @@ class Satfinder(ScanSetup):
 		if self.initcomplete:
 			if transponder is not None:
 				self.tuner.tune(transponder)
+				self.transponder = transponder
 
 class SatNimSelection(Screen):
 	skin = """
@@ -306,6 +336,6 @@ def SatfinderStart(menuid, **kwargs):
 
 def Plugins(**kwargs):
 	if (nimmanager.hasNimType("DVB-S")):
-		return PluginDescriptor(name=_("Satfinder"), description="Helps setting up your dish", where = PluginDescriptor.WHERE_MENU, needsRestart = False, fnc=SatfinderStart)
+		return PluginDescriptor(name=_("Satfinder"), description=_("Helps setting up your dish"), where = PluginDescriptor.WHERE_MENU, needsRestart = False, fnc=SatfinderStart)
 	else:
 		return []
