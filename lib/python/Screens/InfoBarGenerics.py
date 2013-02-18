@@ -23,6 +23,7 @@ from Screens.MessageBox import MessageBox
 from Screens.MinuteInput import MinuteInput
 from Screens.TimerSelection import TimerSelection
 from Screens.PictureInPicture import PictureInPicture
+import Screens.Standby
 from Screens.SubtitleDisplay import SubtitleDisplay
 from Screens.RdsDisplay import RdsInfoDisplay, RassInteractive
 from Screens.TimeDateInput import TimeDateInput
@@ -1494,12 +1495,10 @@ class InfoBarTimeshift:
 		self.activateTimeshiftEnd(False)
 
 	def __seekableStatusChanged(self):
-		# when the service is already seekable so the actual recording did already startand timeshift
-		# is enabled, this means we can activate the timeshift ActivateActions and SeekActions
-		enabled = self.getSeek and self.timeshift_enabled
-		self["TimeshiftActivateActions"].setEnabled(enabled)
-		self["SeekActions"].setEnabled(enabled)
-		if not enabled:
+		self["TimeshiftActivateActions"].setEnabled(not self.isSeekable() and self.timeshift_enabled)
+		state = self.getSeek() is not None and self.timeshift_enabled
+		self["SeekActions"].setEnabled(state)
+		if not state:
 			self.setSeekState(self.SEEK_STATE_PLAY)
 
 	def __serviceStarted(self):
@@ -2538,6 +2537,47 @@ class InfoBarServiceErrorPopupSupport:
 			else:
 				Notifications.RemovePopup(id = "ZapError")
 
+class InfoBarInactivity:
+	def __init__(self):
+		self.inactivityTimer = eTimer()
+		self.inactivityTimer.callback.append(self.inactiveTimeout)
+		self.restartInactiveTimer()
+		from sys import maxint
+		eActionMap.getInstance().bindAction('', -maxint - 1, self.keypress)
+
+	def keypress(self, key, flag):
+		if flag == 1:
+			self.restartInactiveTimer()
+
+	def restartInactiveTimer(self):
+		time = int(config.usage.inactivity_timer.value)
+		if time:
+			self.inactivityTimer.startLongTimer(time)
+		else:
+			self.inactivityTimer.stop()
+
+	def inactiveTimeout(self, answer = None):
+		self.inactivityTimer.stop()
+		if answer == None and not Screens.Standby.inStandby:
+			if config.usage.inactivity_action.value == "shutdown":
+				message = _("Your receiver will shutdown due to inactivity\nDo you want to abort this")
+			else:
+				message = _("Your receiver will got to standby due to inactivity\nDo you want to abort this")
+			self.session.openWithCallback(self.inactiveTimeout, MessageBox, message, MessageBox.TYPE_YESNO, timeout=60, default=False, simple = True)
+		elif answer:
+			print "[InfoBarInactivityTimer] abort"
+			self.restartInactiveTimer()
+		elif config.usage.inactivity_action.value == "shutdown":
+			if Screens.Standby.inStandby:
+				print "[InfoBarInactivityTimer] already in standby now shut down"
+				RecordTimerEntry.TryQuitMainloop(True)
+			elif not Screens.Standby.inTryQuitMainloop:
+				print "[InfoBarInactivityTimer] goto shutdown"
+				self.session.open(Screens.Standby.TryQuitMainloop, 1)
+		elif not Screens.Standby.inStandby:
+			print "[InfoBarInactivityTimer] goto standby"
+			self.session.open(Screens.Standby.Standby)
+				
 class InfoBarAspectSelection:
 	def __init__(self):
 		self["AspectSelectionAction"] = HelpableActionMap(self, "InfobarAspectSelectionActions",
