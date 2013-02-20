@@ -389,8 +389,11 @@ class InfoBarNumberZap:
 			else:
 				self.servicelist.recallPrevService()
 		else:
-			if self.has_key("TimeshiftActions") and not self.timeshift_enabled:
-				self.session.openWithCallback(self.numberEntered, NumberZap, number, self.searchNumber)
+			if self.has_key("TimeshiftActions") and self.timeshift_enabled:
+				ts = self.getTimeshift()
+				if ts and ts.isTimeshiftActive():
+					return
+			self.session.openWithCallback(self.numberEntered, NumberZap, number, self.searchNumber)
 
 	def numberEntered(self, service = None, bouquet = None):
 		if service:
@@ -1416,7 +1419,7 @@ class InfoBarTimeshift:
 
 		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
 			{
-				iPlayableService.evNewProgramInfo: self.__serviceStarted,
+				iPlayableService.evStart: self.__serviceStarted,
 				iPlayableService.evSeekableStatusChanged: self.__seekableStatusChanged
 			})
 
