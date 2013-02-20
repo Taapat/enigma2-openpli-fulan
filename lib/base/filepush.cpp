@@ -95,7 +95,7 @@ void eFilePushThread::thread()
 				// inform the player about the jump in the stream data
 				// this only works if the video device allows the discontinuity ioctl in read-only mode (patched)
 				int param = DVB_DISCONTINUITY_SKIP; // | DVB_DISCONTINUITY_CONTINUOUS_REVERSE;
-				//int rc = ioctl(fd_video, VIDEO_DISCONTINUITY, (void*)param);
+				int rc = ioctl(fd_video, VIDEO_DISCONTINUITY, (void*)param);
 				//eDebug("VIDEO_DISCONTINUITY (fd %d, rc %d)", fd_video, rc);
 			}
 #endif
