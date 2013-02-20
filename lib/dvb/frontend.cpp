@@ -579,12 +579,10 @@ int eDVBFrontend::openFrontend()
 #endif
 					break;
 				}
-#if not defined(__sh__)
 				case FE_ATSC:	// placeholder to prevent warning
 				{
 					break;
 				}
-#endif
 			}
 #endif
 		}
@@ -2819,7 +2817,6 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 		}
 		score = 2;
 	}
-#if not defined(__sh__)
 	else if (type == eDVBFrontend::feTerrestrial)
 	{
 		eDVBFrontendParametersTerrestrial parm;
@@ -2845,30 +2842,8 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 			score--;
 		}
 	}
-#else
-	else if (type == eDVBFrontend::feTerrestrial)
+	else if (type == eDVBFrontend::feATSC)
 	{
-		eDVBFrontendParametersTerrestrial parm;
-		bool can_handle_dvbt;
-		can_handle_dvbt = supportsDeliverySystem(SYS_DVBT, true);
-		if (feparm->getDVBT(parm) < 0)
-		{
-			return 0;
-		}
-		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T)
-		{
-			return 0;
-		}
-		score = 2;
-		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T)
-		{
-			/* prefer to use a T tuner, try to keep T2 free for T2 transponders */
-			score--;
-		}
-	}
-#endif
-         else if (type == eDVBFrontend::feATSC)
-         {
                  eDVBFrontendParametersATSC parm;
                  bool can_handle_atsc, can_handle_dvbc_annex_b;
                  can_handle_dvbc_annex_b = supportsDeliverySystem(SYS_DVBC_ANNEX_B, true);
