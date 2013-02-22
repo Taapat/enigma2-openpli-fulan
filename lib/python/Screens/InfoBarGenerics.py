@@ -40,6 +40,7 @@ from enigma import eTimer, eServiceCenter, eDVBServicePMTHandler, iServiceInform
 from time import time, localtime, strftime
 from os import stat as os_stat
 from bisect import insort
+from sys import maxint
 
 from RecordTimer import RecordTimerEntry, RecordTimer, findSafeRecordPath
 
@@ -129,8 +130,8 @@ class InfoBarUnhandledKey:
 		self.checkUnusedTimer = eTimer()
 		self.checkUnusedTimer.callback.append(self.checkUnused)
 		self.onLayoutFinish.append(self.unhandledKeyDialog.hide)
-		eActionMap.getInstance().bindAction('', -0x7FFFFFFF, self.actionA) #highest prio
-		eActionMap.getInstance().bindAction('', 0x7FFFFFFF, self.actionB) #lowest prio
+		eActionMap.getInstance().bindAction('', -maxint -1, self.actionA) #highest prio
+		eActionMap.getInstance().bindAction('', maxint, self.actionB) #lowest prio
 		self.flags = (1<<1)
 		self.uflags = 0
 
@@ -2545,7 +2546,6 @@ class InfoBarInactivity:
 		self.inactivityTimer = eTimer()
 		self.inactivityTimer.callback.append(self.inactiveTimeout)
 		self.restartInactiveTimer()
-		from sys import maxint
 		eActionMap.getInstance().bindAction('', -maxint - 1, self.keypress)
 
 	def keypress(self, key, flag):
@@ -2553,7 +2553,7 @@ class InfoBarInactivity:
 			self.restartInactiveTimer()
 
 	def restartInactiveTimer(self):
-		time = int(config.usage.inactivity_timer.value)
+		time = abs(int(config.usage.inactivity_timer.value))
 		if time:
 			self.inactivityTimer.startLongTimer(time)
 		else:
@@ -2562,23 +2562,23 @@ class InfoBarInactivity:
 	def inactiveTimeout(self, answer = None):
 		self.inactivityTimer.stop()
 		if answer == None and not Screens.Standby.inStandby:
-			if config.usage.inactivity_action.value == "shutdown":
-				message = _("Your receiver will shutdown due to inactivity\nDo you want to abort this")
+			if int(config.usage.inactivity_timer.value) < 0:
+				message = _("Your receiver will shutdown due to inactivity\nDo you want to abort this?")
 			else:
-				message = _("Your receiver will got to standby due to inactivity\nDo you want to abort this")
+				message = _("Your receiver will got to standby due to inactivity\nDo you want to abort this?")
 			self.session.openWithCallback(self.inactiveTimeout, MessageBox, message, MessageBox.TYPE_YESNO, timeout=60, default=False, simple = True)
 		elif answer:
-			print "[InfoBarInactivityTimer] abort"
+			print "[InfoBarInactivity] abort"
 			self.restartInactiveTimer()
-		elif config.usage.inactivity_action.value == "shutdown":
+		elif int(config.usage.inactivity_timer.value) < 0:
 			if Screens.Standby.inStandby:
-				print "[InfoBarInactivityTimer] already in standby now shut down"
+				print "[InfoBarInactivity] already in standby now shut down"
 				RecordTimerEntry.TryQuitMainloop(True)
 			elif not Screens.Standby.inTryQuitMainloop:
-				print "[InfoBarInactivityTimer] goto shutdown"
+				print "[InfoBarInactivity] goto shutdown"
 				self.session.open(Screens.Standby.TryQuitMainloop, 1)
 		elif not Screens.Standby.inStandby:
-			print "[InfoBarInactivityTimer] goto standby"
+			print "[InfoBarInactivity] goto standby"
 			self.session.open(Screens.Standby.Standby)
 				
 class InfoBarAspectSelection:
