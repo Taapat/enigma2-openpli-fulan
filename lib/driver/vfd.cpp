@@ -95,6 +95,7 @@ void * start_loop (void *arg)
 	    {
                     
 		    vfd.vfd_set_brightness(brightness[vloop%14]);
+		    usleep(75000);
 	    }
 	    vfd.vfd_set_brightness(7);
 	}
