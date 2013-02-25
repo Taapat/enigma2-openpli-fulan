@@ -31,7 +31,6 @@ bool VFD_CENTER = false;
 bool scoll_loop = false;
 int VFD_SCROLL = 1;
 
-char chars[64];
 char g_str[64];
 
 struct vfd_ioctl_data
@@ -60,7 +59,6 @@ evfd* evfd::getInstance()
 evfd::evfd()
 {
 	file_vfd = 0;
-	memset ( chars, ' ', 63 );
 	vfd_type=8;
 	FILE *vfd_proc = fopen ("/proc/aotom/display_type", "r");
 	if (vfd_proc)
@@ -87,42 +85,16 @@ void * start_loop (void *arg)
 	evfd vfd;
 	blocked = true;
 	//vfd.vfd_clear_icons();
-	vfd.vfd_write_string((char*)"Open AR-P ENIGMA2", true);
+	vfd.vfd_write_string("Open AR-P ENIGMA2", true);
 	//run 2 times through all icons 
 	if (vfd.getVfdType() != 4)
 	{
 	    memset(&icon_onoff,0, sizeof(icon_onoff));
+            static const unsigned char brightness[14]={1,2,3,4,5,6,7,6,5,4,3,2,1,0};
 	    for (int vloop = 0; vloop < 128; vloop++)
 	    {
-		    if (vloop%14 == 0 )
-			    vfd.vfd_set_brightness(1);
-		    else if (vloop%14 == 1 )
-			    vfd.vfd_set_brightness(2);
-		    else if (vloop%14 == 2 )
-			    vfd.vfd_set_brightness(3);
-		    else if (vloop%14 == 3 )
-			    vfd.vfd_set_brightness(4);
-		    else if (vloop%14 == 4 )
-			    vfd.vfd_set_brightness(5);
-		    else if (vloop%14 == 5 )
-			    vfd.vfd_set_brightness(6);
-		    else if (vloop%14 == 6 )
-			    vfd.vfd_set_brightness(7);
-		    else if (vloop%14 == 7 )
-			    vfd.vfd_set_brightness(6);
-		    else if (vloop%14 == 8 )
-			    vfd.vfd_set_brightness(5);
-		    else if (vloop%14 == 9 )
-			    vfd.vfd_set_brightness(4);
-		    else if (vloop%14 == 10 )
-			    vfd.vfd_set_brightness(3);
-		    else if (vloop%14 == 11 )
-			    vfd.vfd_set_brightness(2);
-		    else if (vloop%14 == 12 )
-			    vfd.vfd_set_brightness(1);
-		    else if (vloop%14 == 13 )
-			    vfd.vfd_set_brightness(0);
-		    usleep(75000);
+                    
+		    vfd.vfd_set_brightness(brightness[vloop%14]);
 	    }
 	    vfd.vfd_set_brightness(7);
 	}
@@ -130,35 +102,26 @@ void * start_loop (void *arg)
 	return NULL;
 }
 
-void evfd::vfd_write_string(char * str)
+void evfd::vfd_write_string(const char * str)
 {
 	vfd_write_string(str, false);
 }
 
-void evfd::vfd_write_string(char * str, bool force)
+void evfd::vfd_write_string(const char * str, bool force)
 {
-	int i;
-	i = strlen ( str );
-	if ( i > 63 ) i = 63;
-	memset ( chars, ' ', 63 );
-	memcpy ( chars, str, i);
 	if (!blocked || force)
 	{
 		struct vfd_ioctl_data data;
-		memset ( data.data, ' ', 63 );
-		memcpy ( data.data, str, i );
-
+		data.length = (unsigned char)snprintf((char*)data.data, sizeof(data.data), "%-*s", sizeof(data.data)-1, str);
 		data.start = 0;
-		data.length = i;
 
 		file_vfd = open (VFD_DEVICE, O_WRONLY);
 		ioctl ( file_vfd, VFDDISPLAYCHARS, &data );
 		close (file_vfd);
 	}
-	return;
 }
 
-void evfd::vfd_write_string_scrollText(char* text)
+void evfd::vfd_write_string_scrollText(const char* text)
 {
 	if (!blocked)
 	{
@@ -187,14 +150,12 @@ void evfd::vfd_write_string_scrollText(char* text)
 
 void evfd::vfd_clear_string()
 {
-	vfd_write_string((char*)"                ");
-	return;
+	vfd_write_string("                ");
 }
 
 void evfd::vfd_set_icon(tvfd_icon id, bool onoff)
 {
 	if (getVfdType() != 4) vfd_set_icon(id, onoff, false);
-	return;
 }
 
 void evfd::vfd_set_icon(tvfd_icon id, bool onoff, bool force)

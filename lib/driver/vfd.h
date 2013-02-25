@@ -34,9 +34,9 @@ public:
 	void vfd_set_icon(tvfd_icon id, bool onoff, bool force);
 	void vfd_clear_icons();
 
-	void vfd_write_string(char * string);
-	void vfd_write_string(char * str, bool force);
-	void vfd_write_string_scrollText(char* text);
+	void vfd_write_string(const char * string);
+	void vfd_write_string(const char * str, bool force);
+	void vfd_write_string_scrollText(const char* text);
 	void vfd_clear_string();
 	
 	void vfd_set_brightness(unsigned char setting);
