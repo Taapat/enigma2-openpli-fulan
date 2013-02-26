@@ -1,10 +1,6 @@
 installdir = $(pkglibdir)/python/Plugins/Extensions
 
-SUBDIRS = CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI ModemSettings
-
-if HAVE_LIBDDVD
-SUBDIRS += DVDPlayer
-endif
+SUBDIRS = CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG ModemSettings
 
 install_PYTHON =	\
 	__init__.py
