@@ -113,7 +113,7 @@ void evfd::vfd_write_string(const char * str, bool force)
 	if (!blocked || force)
 	{
 		struct vfd_ioctl_data data;
-		data.length = (unsigned char)snprintf((char*)data.data, sizeof(data.data), "%-*s", sizeof(data.data)-1, str);
+		data.length = (unsigned char)snprintf((char*)data.data, sizeof(data.data), "%s", str);
 		data.start = 0;
 
 		file_vfd = open (VFD_DEVICE, O_WRONLY);
