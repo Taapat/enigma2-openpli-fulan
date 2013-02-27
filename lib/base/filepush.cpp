@@ -4,7 +4,6 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #if defined(__sh__) // this allows filesystem tasks to be prioritised
-#include <sys/mman.h>
 #include <sys/vfs.h>
 #define USBDEVICE_SUPER_MAGIC 0x9fa2
 #define EXT2_SUPER_MAGIC      0xEF53
@@ -25,30 +24,19 @@ eFilePushThread::eFilePushThread(int io_prio_class, int io_prio_level, int block
 	 m_stream_mode(0),
 	 m_blocksize(blocksize),
 	 m_buffersize(buffersize),
-#if defined(__sh__)
-	 m_buffer((unsigned char*) mmap(NULL, buffersize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)),
-#else
-	 m_buffer(malloc(buffersize))
-#endif
+	 m_buffer((unsigned char*)malloc(buffersize)),
 	 m_messagepump(eApp, 0)
 {
-#if defined(__sh__)
-	if (m_buffer == MAP_FAILED)
-#else
 	if (m_buffer == NULL)
-#endif
 		eFatal("Failed to allocate %d bytes", buffersize);
 	CONNECT(m_messagepump.recv_msg, eFilePushThread::recvEvent);
 }
 
 eFilePushThread::~eFilePushThread()
 {
-#if defined(__sh__)
-	munmap(m_buffer, m_buffersize);
-#else
-	free(m_buffer);
-#endif
-
+	if (m_buffer) {
+		free(m_buffer);
+	}
 }
 
 static void signal_handler(int x)
@@ -57,6 +45,11 @@ static void signal_handler(int x)
 
 void eFilePushThread::thread()
 {
+	if (m_buffer == NULL) {
+		eFatal("Failed to allocate %d bytes", m_buffersize);
+		return;
+	}
+
 	int eofcount = 0;
 	setIoPrio(prio_class, prio);
 	int buf_end = 0;
@@ -190,16 +183,15 @@ void eFilePushThread::thread()
 						continue;
 				}
 			}
-
-			if (m_stop)
-				break;
-
+			
 				/* in stream_mode, we are sending EOF events 
 				   over and over until somebody responds.
 				   
 				   in stream_mode, think of evtEOF as "buffer underrun occurred". */
 			sendEvent(evtEOF);
 
+			if (m_stop)
+				break;
 			if (m_stream_mode)
 			{
 				eDebug("reached EOF, but we are in stream mode. delaying 1 second.");
@@ -220,6 +212,10 @@ void eFilePushThread::thread()
 			filterRecordData(m_buffer, buf_end);
 			while ((buf_start != buf_end) && !m_stop)
 			{
+				struct pollfd pfd;
+                                pfd.fd = m_fd_dest;
+                                pfd.events = POLLOUT;
+                                if (0 == poll(&pfd, 1, 50)) continue;
 				int w = write(m_fd_dest, m_buffer + buf_start, buf_end - buf_start);
 
 				if (w <= 0)
@@ -244,10 +240,11 @@ void eFilePushThread::thread()
 #if defined(__sh__) // Fix to ensure that event evtEOF is called at end of playbackl part 3/3
 			already_empty=false;
 #endif
-				m_current_position += buf_end;
+			m_current_position+=buf_end;
+			if (m_sg) {
+				current_span_remaining -= buf_end;
 				bytes_read += buf_end;
-			if (m_sg)
- 				current_span_remaining -= buf_end;
+			}
 		}
 	}
 #if defined(__sh__) // closes video device for the reverse playback workaround
