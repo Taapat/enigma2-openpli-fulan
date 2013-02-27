@@ -197,13 +197,13 @@
       <convert type="FrontendInfo">SNRdB</convert>
     </widget>
     <widget source="session.FrontendStatus" render="Label" position="980,95" size="50,22" font="Regular;17" backgroundColor="black" transparent="1">
-      <convert type="FrontendInfo">SNR</convert>
-    </widget>
+  <convert type="FrontendInfo">AGC</convert>
+</widget>
     <eLabel text="BER:" position="925,120" size="50,22" font="Regular; 17" backgroundColor="black" foregroundColor="yellow" transparent="1" halign="right" />
     <widget source="session.FrontendStatus" render="Label" position="980,120" size="75,22" font="Regular;16" backgroundColor="black" transparent="1">
       <convert type="FrontendInfo">BER</convert>
     </widget>
-    <eLabel position="925,95" size="50,22" font="Regular; 17" text="AGP:" transparent="1" foregroundColor="yellow" halign="right" />
+    <eLabel position="925,95" size="50,22" font="Regular; 17" text="AGC:" transparent="1" foregroundColor="yellow" halign="right" />
     <widget source="session.FrontendStatus" render="Progress" position="1028,76" zPosition="1" pixmap="dTV-HD-Reloaded/snr.png" size="98,10" borderWidth="1" borderColor="darkgrey" transparent="0">
       <convert type="FrontendInfo">SNR</convert>
     </widget>
@@ -1477,8 +1477,8 @@
       <convert type="FrontendInfo">SNR</convert>
     </widget>
     <widget source="Frontend" render="Label" position="601,135" size="60,22" font="Regular;21">
-      <convert type="FrontendInfo">SNR</convert>
-    </widget>
+  <convert type="FrontendInfo">SNRdB</convert>
+</widget>
     <eLabel name="agc" text="AGC:" position="211,160" size="60,22" font="Regular;21" halign="right" transparent="1" />
     <widget source="Frontend" render="Progress" position="301,160" size="280,20" pixmap="skin_default/bar_snr.png" borderWidth="2" borderColor="uncccccc">
       <convert type="FrontendInfo">AGC</convert>
