@@ -102,6 +102,17 @@ eDVBResourceManager::eDVBResourceManager()
 	if (fd >= 0)
 		close(fd);
 
+#if defined(__sh__)
+	if (!strncmp(tmp, "spark\n", rd))
+		m_boxtype = SPARK;
+	else if (!strncmp(tmp, "spark7162\n", rd))
+		m_boxtype = SPARK7162;
+	else
+	{
+		eDebug("boxtype detection via /proc/stb/info not possible... use SPARK!\n");
+		m_boxtype = SPARK;
+	}
+#else
 	if (!strncmp(tmp, "dm7025\n", rd))
 		m_boxtype = DM7025;
 	else if (!strncmp(tmp, "dm8000\n", rd))
@@ -114,56 +125,7 @@ eDVBResourceManager::eDVBResourceManager()
 		m_boxtype = DM800SE;
 	else if (!strncmp(tmp, "dm7020hd\n", rd))
 		m_boxtype = DM7020HD;
-#if defined(__sh__)
-	else if (!strncmp(tmp, "adb_box\n", rd))
-		m_boxtype = ADB_BOX;
-	else if (!strncmp(tmp, "ufs910\n", rd))
-		m_boxtype = UFS910;
-	else if (!strncmp(tmp, "ufs912\n", rd))
-		m_boxtype = UFS912;
-	else if (!strncmp(tmp, "ufs913\n", rd))
-		m_boxtype = UFS913;
-	else if (!strncmp(tmp, "ufs922\n", rd))
-		m_boxtype = UFS922;
-	else if (!strncmp(tmp, "tf7700hdpvr\n", rd))
-		m_boxtype = TF7700HDPVR;
-	else if (!strncmp(tmp, "hdbox\n", rd))
-		m_boxtype = HDBOX;
-	else if (!strncmp(tmp, "hl101\n", rd))
-		m_boxtype = HL101;
-	else if (!strncmp(tmp, "spark\n", rd))
-		m_boxtype = SPARK;
-	else if (!strncmp(tmp, "spark7162\n", rd))
-		m_boxtype = SPARK7162;
-	else if (!strncmp(tmp, "vip1-v2\n", rd))
-		m_boxtype = VIP1_V2;
-	else if (!strncmp(tmp, "vip2-v1\n", rd))
-		m_boxtype = VIP2_V1;
-	else if (!strncmp(tmp, "cuberevo\n", rd))
-		m_boxtype = CUBEREVO;
-	else if (!strncmp(tmp, "cuberevo-9500hd\n", rd))
-		m_boxtype = CUBEREVO_9500HD;
-	else if (!strncmp(tmp, "cuberevo-mini\n", rd))
-		m_boxtype = CUBEREVO_MINI;
-	else if (!strncmp(tmp, "cuberevo-mini2\n", rd))
-		m_boxtype = CUBEREVO_MINI2;
-	else if (!strncmp(tmp, "cuberevo-2000hd\n", rd))
-		m_boxtype = CUBEREVO_2000HD;
-	else if (!strncmp(tmp, "cuberevo-250hd\n", rd))
-		m_boxtype = CUBEREVO_250HD;
-	else if (!strncmp(tmp, "cuberevo-mini-fta\n", rd))
-		m_boxtype = CUBEREVO_MINI_FTA;
-	else if (!strncmp(tmp, "octagon1008\n", rd))
-		m_boxtype = OCTAGON1008;
-	else if (!strncmp(tmp, "hs7810a\n", rd))
-		m_boxtype = HS7810A;
-	else if (!strncmp(tmp, "hs7110\n", rd))
-		m_boxtype = HS7110;
-	else if (!strncmp(tmp, "whitebox\n", rd))
-		m_boxtype = WHITEBOX;
-	else if (!strncmp(tmp, "atevio7500\n", rd))
-		m_boxtype = ATEVIO7500;
-#else
+
 	else {
 		eDebug("boxtype detection via /proc/stb/info not possible... use fallback via demux count!\n");
 		if (m_demux.size() == 3)
@@ -856,18 +818,11 @@ void eDVBResourceManager::setFrontendType(int index, const char *type)
 				whitelist.push_back(SYS_DVBS);
 				whitelist.push_back(SYS_DVBS2);
 			}
-#if not defined(__sh__)
 			else if (!strcmp(type, "DVB-T2") || !strcmp(type, "DVB-T"))
 			{
 				whitelist.push_back(SYS_DVBT);
 				whitelist.push_back(SYS_DVBT2);
 			}
-#else
-			else if (!strcmp(type, "DVB-T"))
-			{
-				whitelist.push_back(SYS_DVBT);
-			}
-#endif
 			else if (!strcmp(type, "DVB-C"))
 			{
 #ifdef SYS_DVBC_ANNEX_A
@@ -998,38 +953,8 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 
 	ePtr<eDVBRegisteredDemux> unused;
 
-	if (m_boxtype == DM7025) // ATI
-	{
-		/* FIXME: hardware demux policy */
-		int n=0;
-		if (!(cap & iDVBChannel::capDecode))
-		{
-			if (m_demux.size() > 2)  /* assumed to be true, otherwise we have lost anyway */
-			{
-				++i, ++n;
-				++i, ++n;
-			}
-		}
-
-		for (; i != m_demux.end(); ++i, ++n)
-		{
-			int is_decode = n < 2;
-
-			int in_use = is_decode ? (i->m_demux->getRefCount() != 2) : i->m_inuse;
-
-			if ((!in_use) && ((!fe) || (i->m_adapter == fe->m_adapter)))
-			{
-				if ((cap & iDVBChannel::capDecode) && !is_decode)
-					continue;
-				unused = i;
-				break;
-			}
-		}
-	}
-#if defined(__sh__) // we use our own algo for demux detection
-	else if (m_boxtype == ADB_BOX || m_boxtype == UFS910 || m_boxtype == UFS912 || m_boxtype == UFS913 || m_boxtype == SPARK || m_boxtype == SPARK7162 || m_boxtype == UFS922 || m_boxtype == TF7700HDPVR || m_boxtype == HDBOX ||
-		m_boxtype == HL101 || m_boxtype == CUBEREVO || m_boxtype == CUBEREVO_MINI || m_boxtype == CUBEREVO_MINI2 || m_boxtype == VIP1_V2 || m_boxtype == VIP2_V1 || m_boxtype == HS7810A || m_boxtype == HS7110 || m_boxtype == WHITEBOX ||
-		m_boxtype == CUBEREVO_MINI_FTA || m_boxtype == CUBEREVO_250HD || m_boxtype == CUBEREVO_2000HD || m_boxtype == CUBEREVO_9500HD || m_boxtype == OCTAGON1008 || m_boxtype == ATEVIO7500)
+#if defined(__sh__)
+	if (m_boxtype == SPARK || m_boxtype == SPARK7162) // sh use our own algo for demux detection
 	{
 		int n=0;
 		for (; i != m_demux.end(); ++i, ++n)
@@ -1072,6 +997,35 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 				}
 				unused = i;
 				//eDebug("\nallocate demux d = %d\n", n);
+				break;
+			}
+		}
+	}
+#else
+	if (m_boxtype == DM7025) // ATI
+	{
+		/* FIXME: hardware demux policy */
+		int n=0;
+		if (!(cap & iDVBChannel::capDecode))
+		{
+			if (m_demux.size() > 2)  /* assumed to be true, otherwise we have lost anyway */
+			{
+				++i, ++n;
+				++i, ++n;
+			}
+		}
+
+		for (; i != m_demux.end(); ++i, ++n)
+		{
+			int is_decode = n < 2;
+
+			int in_use = is_decode ? (i->m_demux->getRefCount() != 2) : i->m_inuse;
+
+			if ((!in_use) && ((!fe) || (i->m_adapter == fe->m_adapter)))
+			{
+				if ((cap & iDVBChannel::capDecode) && !is_decode)
+					continue;
+				unused = i;
 				break;
 			}
 		}
