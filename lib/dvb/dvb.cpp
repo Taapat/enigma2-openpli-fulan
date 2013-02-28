@@ -979,7 +979,7 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 					return 0;
 				}
 			}
-			else if(n == (m_demux.size() - 1))
+			else if(n == ((int)m_demux.size() - 1))
 			{
 				// Always use the last demux for PVR
 				// it is assumed that the last demux is not
