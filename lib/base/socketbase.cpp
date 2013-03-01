@@ -265,133 +265,112 @@ ssize_t eSocketBase::openHTTPConnection(int fd, const std::string& getRequest, s
 
 int eSocketBase::connect(const char *hostname, int port, int timeoutsec)
 {
-	int sd = -1;
-	std::vector<struct addrinfo *> addresses;
-	struct addrinfo *info = NULL;
-	struct addrinfo hints;
-	memset(&hints, 0, sizeof(hints));
-	hints.ai_family = AF_UNSPEC; /* both ipv4 and ipv6 */
-	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_protocol = 0; /* any */
-#ifdef AI_ADDRCONFIG
-	hints.ai_flags = AI_ADDRCONFIG; /* only return ipv6 if we have an ipv6 address ourselves, and ipv4 if we have an ipv4 address ourselves */
-#else
-	hints.ai_flags = 0; /* we have only IPV4 support, if AI_ADDRCONFIG is not available */
-#endif
-	char portstring[15];
-	/* this is suboptimal, but the alternative would require us to mess with the memberdata of an 'abstract' addressinfo struct */
-	snprintf(portstring, sizeof(portstring), "%d", port);
-	if (getaddrinfo(hostname, portstring, &hints, &info) || !info) return -1;
-	struct addrinfo *ptr = info;
-	while (ptr)
-	{
-		addresses.push_back(ptr);
-		ptr = ptr->ai_next;
+	struct hostent *server=gethostbyname(hostname);
+	if (server == NULL) {
+		eDebug("can't resolve %s", hostname);
+		return -1;
+	}
+	int sd = ::socket(AF_INET, SOCK_STREAM, 0);
+	if (sd < 0) return sd;
+
+	sockaddr_in  addr_in;
+	bzero(&addr_in, sizeof(addr_in));
+	addr_in.sin_family=AF_INET;
+	bcopy(server->h_addr, &addr_in.sin_addr.s_addr, server->h_length);
+	addr_in.sin_port=htons(port);
+
+	int flags = fcntl(sd, F_GETFL, 0);
+	bool setblocking = false;
+	if (!(flags & O_NONBLOCK)) {
+		/* set socket nonblocking, to allow for our own timeout on a nonblocking connect */
+		flags |= O_NONBLOCK;
+		if (fcntl(sd, F_SETFL, flags) == 0) setblocking = true;
 	}
 
-	for (unsigned int i = 0; i < addresses.size(); i++)
-	{
-		sd = ::socket(addresses[i]->ai_family, addresses[i]->ai_socktype, addresses[i]->ai_protocol);
-		if (sd < 0) break;
-		int flags;
-		bool setblocking = false;
-		if ((flags = fcntl(sd, F_GETFL, 0)) < 0)
-		{
+	int connectresult = ::connect(sd, (const sockaddr*)&addr_in, sizeof(addr_in)); 
+	if (connectresult < 0 && (errno == EINTR || errno == EINPROGRESS)) {
+		if (!timeoutsec) return sd; // do not wait connect to finish, the caller should take care about this
+		timeval timeout = {timeoutsec, 0};
+		fd_set wset;
+		FD_ZERO(&wset);
+		FD_SET(sd, &wset);
+
+		if (select(sd + 1, NULL, &wset, NULL, &timeout) > 0) {
+			int error = 0;
+			socklen_t len = sizeof(error);
+			if (getsockopt(sd, SOL_SOCKET, SO_ERROR, &error, &len) == 0 && !error) connectresult = 0; /* we are connected */
+		}
+	}
+	if (connectresult < 0) {
+		::close(sd);
+		return -1;
+	}
+	if (setblocking) {
+		/* set socket blocking again */
+		flags &= ~O_NONBLOCK;
+		if (fcntl(sd, F_SETFL, flags) < 0) {
 			::close(sd);
-			sd = -1;
-			continue;
+			return -1;
 		}
-		if (!(flags & O_NONBLOCK))
-		{
-			/* set socket nonblocking, to allow for our own timeout on a nonblocking connect */
-			flags |= O_NONBLOCK;
-			if (fcntl(sd, F_SETFL, flags) < 0)
-			{
-				::close(sd);
-				sd = -1;
-				continue;
-			}
-			/* remember to restore O_NONBLOCK when we're connected */
-			setblocking = true;
-		}
-		int connectresult;
-		while (1)
-		{
-			connectresult = ::connect(sd, addresses[i]->ai_addr, addresses[i]->ai_addrlen);
-			if (connectresult < 0)
-			{
-				if (errno == EINTR || errno == EINPROGRESS)
-				{
-					int error;
-					socklen_t len = sizeof(error);
-					timeval timeout;
-					fd_set wset;
-					FD_ZERO(&wset);
-					FD_SET(sd, &wset);
-
-					timeout.tv_sec = timeoutsec;
-					timeout.tv_usec = 0;
-
-					if (select(sd + 1, NULL, &wset, NULL, &timeout) <= 0) break;
-
-					if (getsockopt(sd, SOL_SOCKET, SO_ERROR, &error, &len) < 0) break;
-
-					if (error) break;
-					/* we are connected */
-					connectresult = 0;
-					break;
-				}
-			}
-			break;
-		}
-		if (connectresult < 0)
-		{
-			::close(sd);
-			sd = -1;
-			continue;
-		}
-		if (setblocking)
-		{
-			/* set socket blocking again */
-			flags &= ~O_NONBLOCK;
-			if (fcntl(sd, F_SETFL, flags) < 0)
-			{
-				::close(sd);
-				sd = -1;
-				continue;
-			}
-		}
-		if (sd >= 0)
-		{
+	}
 #ifdef SO_NOSIGPIPE
-			int val = 1;
-			setsockopt(sd, SOL_SOCKET, SO_NOSIGPIPE, (char*)&val, sizeof(val));
+	int val = 1;
+	setsockopt(sd, SOL_SOCKET, SO_NOSIGPIPE, (char*)&val, sizeof(val));
 #endif
-			/* we have a working connection */
-			break;
-		}
-	}
-	freeaddrinfo(info);
 	return sd;
+}
+
+int eSocketBase::finishConnect(int fd, int timeoutsec)
+{
+	timeval timeout = {timeoutsec, 0};
+	fd_set wset;
+	FD_ZERO(&wset);
+	FD_SET(fd, &wset);
+
+        int connectresult = -1;
+	if (select(fd + 1, NULL, &wset, NULL, &timeout) > 0) {
+		int error = 0;
+		socklen_t len = sizeof(error);
+		if (getsockopt(fd, SOL_SOCKET, SO_ERROR, &error, &len) == 0 && !error) connectresult = 0; /* we are connected */
+	}
+        if (connectresult < 0) {
+                ::close(fd);
+                return -1;
+        }
+
+	int flags = fcntl(fd, F_GETFL, 0);
+	if(flags < 0) {
+		::close(fd);
+		return -1;
+	} 
+	/* set socket blocking again */
+	flags &= ~O_NONBLOCK;
+        if (fcntl(fd, F_SETFL, flags) < 0) {
+		::close(fd);
+		return -1;
+	}
+#ifdef SO_NOSIGPIPE
+        int val = 1;
+        setsockopt(fd, SOL_SOCKET, SO_NOSIGPIPE, (char*)&val, sizeof(val));
+#endif
+        return fd;
 }
 
 ssize_t eSocketBase::writeAll(int fd, const void *buf, size_t count)
 {
-	int retval;
-	char *ptr = (char*)buf;
-	size_t handledcount = 0;
-	while (handledcount < count)
+	char *ptr_end = (char*)buf + count;
+	size_t tosend = count;
+	while (tosend > 0)
 	{
-		retval = ::write(fd, &ptr[handledcount], count - handledcount);
+		const int retval = ::write(fd, (ptr_end-tosend), tosend);
 
-		if (retval == 0) return -1;
-		if (retval < 0)
+		if (retval <= 0)
 		{
-			if (errno == EINTR) continue;
+			if (retval == 0 && errno == EINTR) continue;
 			eDebug("eSocketBase::writeAll error (%m)");
 			return retval;
 		}
-		handledcount += retval;
+		tosend -= retval;
 	}
-	return handledcount;
+	return (count - tosend);
 }

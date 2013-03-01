@@ -12,10 +12,19 @@ class eHttpStream: public iTsSource, public Object
 {
 	DECLARE_REF(eHttpStream);
 
+	enum ConnectStatus{
+		NotConnected=-1,
+		ConnectInProgress,
+		Connected
+	};
+
+        ConnectStatus m_connectStatus;
 	std::string m_authorizationData;
 	std::string m_url;
 	int m_streamSocket;
 	size_t m_lbuffSize;
+	size_t m_contentLength;
+	size_t m_contentServed;
 	char* m_lbuff;
 	int m_chunkSize;
 	RingBuffer m_rbuffer;

@@ -9,11 +9,14 @@
 DEFINE_REF(eHttpStream);
 
 eHttpStream::eHttpStream() : 
-	m_streamSocket(-1)
+	m_connectStatus(NotConnected)
+	,m_streamSocket(-1)
 	,m_chunkSize(0)
 	,m_lbuffSize(0)
+	,m_contentLength(0)
+	,m_contentServed(0)
 	,m_lbuff(NULL)
-	,m_rbuffer(1024*1024*2)
+	,m_rbuffer(1024*1024*4)
 	,m_tryToReconnect(false)
 	,m_chunkedTransfer(false)
 {
@@ -27,7 +30,8 @@ eHttpStream::~eHttpStream()
 int eHttpStream::open(const std::string& url)
 {
 	m_url = url;
-	return 0;
+	//this will just initiate socket connection
+	return openStream(m_url);
 }
 
 int eHttpStream::openStream(const std::string& url)
@@ -72,7 +76,9 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	int statuscode = 0;
 	char statusmsg[100];
 
-	close();
+	if (m_connectStatus != ConnectInProgress) {
+		close();
+	}
 
 	int pathindex = uri.find("/", 7);
 	if (pathindex > 0)
@@ -121,8 +127,20 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	{
 		port = 80;
 	}
-	m_streamSocket = eSocketBase::connect(hostname.c_str(), port, 10);
-	if (m_streamSocket < 0) return -1;
+
+	if (m_streamSocket == -1) {
+		m_streamSocket = eSocketBase::connect(hostname.c_str(), port, 0);
+		if (m_streamSocket < 0) return -1;
+		//if (errno == EINTR || errno == EINPROGRESS) {
+		//	m_connectStatus = ConnectInProgress;
+		//	return 0;
+		//}
+		m_connectStatus = ConnectInProgress;
+		return 0;
+	} else {
+		m_streamSocket = eSocketBase::finishConnect(m_streamSocket, 10);
+		if (m_streamSocket < 0) return -1;
+	}
 
 	request = "GET ";
 	request.append(uri).append(" HTTP/1.1\r\n");
@@ -164,6 +182,15 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	}
 
 	m_chunkedTransfer = (hdr.find("Transfer-Encoding: chunked") != std::string::npos);
+	pos = hdr.find("Content-Length:");
+	if (pos != std::string::npos) {
+		std::string clen = hdr.substr(pos+strlen("Content-Length:"));
+		pos = clen.find("\n");
+		if (pos != std::string::npos) {
+			clen = clen.substr(0, pos);
+		}
+		m_contentLength = strtol(clen.c_str(), NULL, 16);
+	}
 
 	pos = hdr.find("Content-Type:");
 	if (pos != std::string::npos) {
@@ -220,6 +247,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		}
 	}
 
+	m_connectStatus = Connected;
 	return 0;
 }
 
@@ -234,6 +262,7 @@ int eHttpStream::close()
 	}
 	// no reconnect attempts after close
 	m_tryToReconnect = false;
+	m_connectStatus = NotConnected;
 	return retval;
 }
 
@@ -241,14 +270,16 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 {
 	if (m_streamSocket < 0) {
 		eDebug("eHttpStream::read not valid fd");
+		return -1;
+	}
+	if (m_connectStatus == ConnectInProgress) {
 		if (openStream(m_url) < 0) return -1;
 	}
 
-	int read2Chunks=22;
-	eDebug("eHttpStream::read()");
+	int read2Chunks=2;
 READAGAIN:
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
-	eDebug("Ring buffer available to write %i", toWrite);
+	eDebug("eHttpStream::read() - Ring buffer available to write %i", toWrite);
 	if (toWrite > 0) {
 
 		if (m_chunkedTransfer){
@@ -257,25 +288,22 @@ READAGAIN:
 				if (c <= 0) return -1;
 				m_chunkSize = strtol(m_lbuff, NULL, 16);
 				if (m_chunkSize == 0) return -1;
-				eDebug("eHttpStream::read() - reading next chunk size %i", m_chunkSize);
 			}
 			toWrite = MIN(toWrite, m_chunkSize);
 		}
 		if (m_rbuffer.availableToRead() >= (1024*6) || m_rbuffer.availableToRead() >= count) {
 			//do not starve the reader if we have enough data to read and there is nothing on the socket
-			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 50);
+			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 0);
 		} else {
 			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 3000, 500);
 		}
 		if (toWrite > 0) {
-			eDebug("eHttpStream::read() - writting %i bytes to the ring buffer", toWrite);
 			m_rbuffer.ptrWriteCommit(toWrite);
 			if (m_chunkedTransfer) {
                                 --read2Chunks;
 				m_chunkSize -= toWrite;
 				if (m_chunkSize==0){
 					int rc = eSocketBase::readLine(m_streamSocket, &m_lbuff, &m_lbuffSize);
-					eDebug("eHttpStream::read() - reading the end of the chunk rc(%i)(%s)", rc, m_lbuff);
 				} else if (read2Chunks > 0) {
 					goto READAGAIN;
 				}
@@ -288,13 +316,14 @@ READAGAIN:
 			// so far reconnect worked for me as best effort, it is really doing well 
 			// when initial connection fails for some reason.
 			// for some reason select() returns EAGAIN
-			if ((toWrite < 0 || errno == EAGAIN) && m_tryToReconnect) {
-				if (open(m_url) == 0) {
+			// do not reconnect if sream has a content length and all lentgh is served
+			if ((toWrite <= 0 || errno == EAGAIN) && m_tryToReconnect && (!m_contentLength || m_contentLength > m_contentServed)) {
+				if (openStream(m_url) == 0) {
 					// tell the caller to try again
 					errno = EAGAIN;
 				}
 				m_tryToReconnect = false;
-			} else if (toWrite == 0) {
+			} else if (toWrite == 0 && (!m_contentLength || m_contentLength > m_contentServed)) {
 				errno = EAGAIN; //timeout
 			} else close();
 
@@ -305,14 +334,14 @@ READAGAIN:
 
 	ssize_t toRead = m_rbuffer.availableToRead();
 	toRead = MIN(toRead, count);
-	eDebug(" eHttpStream::read() - reading %i bytes", (toRead - (toRead%188)));
 	toRead = m_rbuffer.read((char*)buf, (toRead - (toRead%188)));
+	m_contentServed += toRead;
 	return (toRead > 0)? toRead: -1;
 }
 
 int eHttpStream::valid()
 {
-	return m_streamSocket >= 0;
+	return (m_streamSocket != -1);
 }
 
 off_t eHttpStream::length()
