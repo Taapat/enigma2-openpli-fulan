@@ -1421,31 +1421,31 @@ std::string eServiceMP3::getInfoString(int w)
 	switch (w)
 	{
 	case sTagTitle:
-		tag = strdup("Title");
+		tag = "Title";
 		break;
 	case sTagArtist:
-		tag = strdup("Artist");
+		tag = "Artist";
 		break;
 	case sTagAlbum:
-		tag = strdup("Album");
+		tag = "Album";
 		break;
 	case sTagComment:
-		tag = strdup("Comment");
+		tag = "Comment";
 		break;
 	case sTagTrackNumber:
-		tag = strdup("Track");
+		tag = "Track";
 		break;
 	case sTagGenre:
-		tag = strdup("Genre");
+		tag = "Genre";
 		break;
 	case sTagDate:
-		tag = strdup("Year");
+		tag = "Year";
 		break;
 	case sTagVideoCodec:
-		tag = strdup("VideoType");
+		tag = "VideoType";
 		break;
 	case sTagAudioCodec:
-		tag = strdup("AudioType");
+		tag = "AudioType";
 		break;
 	default:
 		return "";
@@ -1453,26 +1453,13 @@ std::string eServiceMP3::getInfoString(int w)
 
 	if (player && player->playback)
 	{
-		/*Hellmaster1024: we need to save the adress of tag to free the strduped mem
-		  the command will retun a new adress for a new strduped string.
-		  Both Strings need to be freed! */
-		res_str = tag;
-		player->playback->Command(player, PLAYBACK_INFO, &res_str);
-		/* Hellmaster1024: in case something went wrong maybe no new adress is returned */
-		if (tag != res_str)
+		if (player->playback->Command(player, PLAYBACK_INFO, &tag) == 0)
 		{
-			std::string res = res_str;
+			std::string res (tag);
 			free(tag);
-			free(res_str);
 			return res;
 		}
-		else
-		{
-			free(tag);
-			return "";
-		}
 	}
-	free(tag);
 #endif
 	return "";
 }
