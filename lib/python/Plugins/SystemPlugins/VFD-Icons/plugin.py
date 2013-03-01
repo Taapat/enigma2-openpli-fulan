@@ -12,7 +12,6 @@ from enigma import iPlayableService, eTimer, evfd
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from ServiceReference import ServiceReference
-from string import atoi
 from time import localtime, strftime, sleep
 
 config.plugins.vfdicon = ConfigSubsection()
@@ -72,12 +71,14 @@ class VFDIcons:
 			if config.plugins.vfdicon.displayshow.value != "blank":
 				service = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 				if service:
-					if config.plugins.vfdicon.displayshow.value == "channel number":
-						servicename = str(service.getChannelNum())
-						if atoi(servicename) > 5470000:
-							servicename = "PLAY"
+					path = service.getPath()
+					if path:
+						servicename = "PLAY"
 					else:
-						servicename = ServiceReference(service).getServiceName()
+						if config.plugins.vfdicon.displayshow.value == "channel number":
+							servicename = str(service.getChannelNum())
+						else:
+							servicename = ServiceReference(service).getServiceName()
 			print "[VFD Display] text ", servicename[0:20]
 			evfd.getInstance().vfd_write_string(servicename[0:20])
 
