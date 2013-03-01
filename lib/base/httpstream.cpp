@@ -150,7 +150,17 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		request.append("Authorization: Basic ").append(m_authorizationData).append("\r\n");
 	}
 	request.append("Accept: */*\r\n");
-	request.append("Range: bytes=0-\r\n");
+	if (!m_tryToReconnect) {
+		m_contentServed = 0;
+		request.append("Range: bytes=0-\r\n");
+	} else {
+		char buffer [33];
+		sprintf(buffer, "%d", m_contentServed);
+		request.append("Range: bytes=");
+		request.append(buffer);
+		request.append("-\r\n");
+
+	}	
 	request.append("Connection: close\r\n");
 	request.append("\r\n");
 
