@@ -1170,7 +1170,7 @@ void eDVBServicePlay::serviceEvent(int event)
 		break;
 	}
 	case eDVBServicePMTHandler::eventPreStart:
-		loadCuesheet();
+		if (!m_is_stream) loadCuesheet();
 		break;
 	case eDVBServicePMTHandler::eventEOF:
 		m_event((iPlayableService*)this, evEOF);
