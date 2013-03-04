@@ -100,7 +100,7 @@ static unsigned char resolveChar(const char *str)
 			case 'S'|'T'<<8:
 				if ( !strcmp(p,"OP") )
 					c0 = STOP;
-				else if ( !strcmp(sp,"ART") )
+				else if ( !strcmp(p,"ART") )
 					c0 = START;
 				break;
 		}
