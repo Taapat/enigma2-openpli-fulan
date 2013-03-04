@@ -76,7 +76,7 @@ class HdmiCec:
 		if message == "wakeup":
 			cmd = 0x04
 		elif message == "sourceactive":
-			address = 0x0f # use broadcast for active source command
+			address = 0x4f # use broadcast for active source command
 			cmd = 0x82
 			physicaladdress = eHdmiCEC.getInstance().getPhysicalAddress()
 			data = str(struct.pack('BB', int(physicaladdress/256), int(physicaladdress%256)))
@@ -94,14 +94,14 @@ class HdmiCec:
 			data = str(struct.pack('B', 0x01))
 		elif message == "givesystemaudiostatus":
 			cmd = 0x7d
-			address = 0x05
+			address = 0x40
 		elif message == "setsystemaudiomode":
 			cmd = 0x70
-			address = 0x05
+			address = 0x40
 			physicaladdress = eHdmiCEC.getInstance().getPhysicalAddress()
 			data = str(struct.pack('BB', int(physicaladdress/256), int(physicaladdress%256)))
 		elif message == "osdname":
-			address = 0x0f
+			address = 0x4f
 			cmd = 0x47
 			data = os.uname()[1]
 			data = data[:14]
@@ -112,13 +112,13 @@ class HdmiCec:
 			cmd = 0x90
 			data = str(struct.pack('B', 0x01))
 		elif message == "reportaddress":
-			address = 0x0f # use broadcast address
+			address = 0x4f # use broadcast address
 			cmd = 0x84
 			physicaladdress = eHdmiCEC.getInstance().getPhysicalAddress()
 			devicetype = eHdmiCEC.getInstance().getDeviceType()
 			data = str(struct.pack('BBB', int(physicaladdress/256), int(physicaladdress%256), devicetype))
 		elif message == "vendorid":
-			address = 0x0f
+			address = 0x4f
 			cmd = 0x87
 			data = '\xB0\x90\x74'
 		elif message == "keypoweron":
