@@ -1417,7 +1417,6 @@ std::string eServiceMP3::getInfoString(int w)
 	}
 #else
 	char * tag = NULL;
-	char * res_str = NULL;
 	switch (w)
 	{
 	case sTagTitle:
@@ -1625,15 +1624,16 @@ int eServiceMP3::selectAudioStream(int i)
 		m_currentAudioStream = i;
 		return 0;
 	}
-	return -1;
 #else
 	if (i != m_currentAudioStream)
 	{
 		if (player && player->playback)
 			player->playback->Command(player, PLAYBACK_SWITCH_AUDIO, (void*)&i);
 		m_currentAudioStream=i;
+		return 0;
 	}
 #endif
+	return -1;
 }
 
 int eServiceMP3::getCurrentChannel()

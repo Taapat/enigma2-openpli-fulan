@@ -1828,7 +1828,7 @@ void eEPGCache::channel_data::readData( const __u8 *data, int source)
  * e2 and all libs into an IDE for better overview ;)
  *
  */
-	const __u8 *aligned_data;
+	const __u8 *aligned_data = NULL;
 	bool isNotAligned = false;
 	
 	if ((unsigned int) data % 4 != 0)

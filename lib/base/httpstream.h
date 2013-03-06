@@ -12,27 +12,23 @@ class eHttpStream: public iTsSource, public Object
 {
 	DECLARE_REF(eHttpStream);
 
-	enum ConnectStatus{
-		NotConnected=-1,
-		ConnectInProgress,
-		Connected
-	};
 
-        ConnectStatus m_connectStatus;
-	std::string m_authorizationData;
+	RingBuffer m_rbuffer;
+
 	std::string m_url;
 	int m_streamSocket;
-	size_t m_lbuffSize;
+
+	char*  m_scratch;
+	size_t m_scratchSize;
 	size_t m_contentLength;
 	size_t m_contentServed;
-	char* m_lbuff;
-	int m_chunkSize;
-	RingBuffer m_rbuffer;
+	size_t m_currentChunkSize;
+
 	bool m_tryToReconnect;
 	bool m_chunkedTransfer;
-	char* m_chunkedBuffer;
 
-	int openUrl(const std::string &url, std::string &newurl);
+	int openUrl(const std::string& url, std::string &newurl);
+	int _open(const std::string& url);
 
 	/* iTsSource */
 	ssize_t read(off_t offset, void *buf, size_t count);
@@ -40,7 +36,6 @@ class eHttpStream: public iTsSource, public Object
 	off_t offset();
 	int valid();
 	int close();
-	int openStream(const std::string& url);
 
 public:
 	eHttpStream();

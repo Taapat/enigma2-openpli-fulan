@@ -169,7 +169,7 @@ ssize_t eSocketBase::openHTTPConnection(int fd, const std::string& getRequest, s
 			return -1;
 		}
 	
-		size_t hdroff=0;
+		ssize_t hdroff=0;
 		//read the response header
 		int rcvd = ::recv(fd, rbuff, rbuff_size, MSG_PEEK);
 		int hdr_end = 0;
