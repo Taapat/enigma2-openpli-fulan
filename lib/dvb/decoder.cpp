@@ -1075,9 +1075,9 @@ RESULT eTSMPEGDecoder::showSinglePic(const char *filename)
 				static const unsigned char seq_end[] = { 0x00, 0x00, 0x01, 0xB7 };
 				unsigned char iframe[s.st_size];
 				unsigned char stuffing[8192];
-				int streamtype;
-				memset(stuffing, 0, 8192);
+				memset(stuffing, 0, sizeof stuffing);
 				read(f, iframe, s.st_size);
+				int streamtype = VIDEO_STREAMTYPE_MPEG4_H264;
 				if (iframe[0] == 0x00 && iframe[1] == 0x00 && iframe[2] == 0x00 && iframe[3] == 0x01 && (iframe[4] & 0x0f) == 0x07)
 					streamtype = VIDEO_STREAMTYPE_MPEG4_H264;
 				else
@@ -1104,7 +1104,7 @@ RESULT eTSMPEGDecoder::showSinglePic(const char *filename)
 				write(m_video_clip_fd, iframe, s.st_size);
 				if (!seq_end_avail)
 					write(m_video_clip_fd, seq_end, sizeof(seq_end));
-				write(m_video_clip_fd, stuffing, 8192);
+				write(m_video_clip_fd, stuffing, sizeof stuffing);
 #if not defined(__sh__)
 				m_showSinglePicTimer->start(150, true);
 #endif 

@@ -15,9 +15,7 @@
 
 void eRCDeviceInputDev::handleCode(long rccode)
 {
-	struct input_event *ev = (struct input_event *)rccode;
-	if (ev->type!=EV_KEY)
-		return;
+	struct input_event *ev = reinterpret_cast<struct input_event*>(rccode);
 
 	if (ev->type!=EV_KEY)
 		return;
@@ -152,7 +150,6 @@ class eInputDeviceInit
 	private:
 		element(const element& other); /* no copy */
 	};
-	typedef std::vector<element*> itemlist;
 	std::vector<element*> items;
 	int consoleFd;
 
@@ -174,11 +171,10 @@ public:
 	
 	~eInputDeviceInit()
 	{
-		for (itemlist::iterator it = items.begin();
-		     it != items.end();
-		     ++it)
+		while(!items.empty())
 		{
-			delete *it;
+			delete items.back();
+			items.pop_back();
 		}
 		if (consoleFd >= 0)
 		{
@@ -188,20 +184,19 @@ public:
 
 	void add(const char* filename)
 	{
+		// should we check here for duplicates?
 		eRCInputEventDriver *p = new eRCInputEventDriver(filename);
 		items.push_back(new element(filename, p, new eRCDeviceInputDev(p, consoleFd)));
 	}
 
 	void remove(const char* filename)
 	{
-		for (itemlist::iterator it = items.begin();
-		     it != items.end();
-		     ++it)
+		for (int i = 0; i < items.size() ; ++i)
 		{
-			if (strcmp((*it)->filename, filename) == 0)
+			if (strcmp(items[i]->filename, filename) == 0)
 			{
-				delete *it;
-				items.erase(it);
+				delete items[i];
+				items.erase(items.begin()+i);
 				return;
 			}
 		}
