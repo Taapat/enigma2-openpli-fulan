@@ -1456,10 +1456,12 @@ class InfoBarTimeshift:
 				print "timeshift failed"
 
 	def stopTimeshift(self, answer = True):
-		if not answer or self.checkTimeshiftRunning(self.stopTimeshift):
-			return
+		if not self.timeshift_enabled:
+			return 0
 		ts = self.getTimeshift()
 		if ts is None:
+			return 0
+		if not answer or self.checkTimeshiftRunning(self.stopTimeshift):
 			return
 		ts.stopTimeshift()
 		self.timeshift_enabled = False
@@ -1520,9 +1522,9 @@ class InfoBarTimeshift:
 				return False
 		elif answer:
 			self.check_timeshift = False
-			boundFunction(returnFunction, True)()
+			returnFunction(True)
 		else:
-			boundFunction(returnFunction, False)()
+			returnFunction(False)
 
 from Screens.PiPSetup import PiPSetup
 
