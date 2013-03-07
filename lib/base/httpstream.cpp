@@ -268,7 +268,7 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 	}
 
 	bool outBufferHasData = false;
-	if (m_rbuffer.availableToRead() > count) {
+	if (m_rbuffer.availableToRead() >= count) {
         	m_contentServed += m_rbuffer.read((char*)buf, (count - (count%188)));
 		outBufferHasData = true;
 	}
@@ -339,7 +339,8 @@ READAGAIN:
 
 int eHttpStream::valid()
 {
-	return (m_streamSocket != -1);
+	return 1;
+//	return (m_streamSocket != -1);
 }
 
 off_t eHttpStream::length()
