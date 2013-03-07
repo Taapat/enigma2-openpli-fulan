@@ -289,7 +289,7 @@ READAGAIN:
 			}
 			toWrite = MIN(toWrite, m_currentChunkSize);
 		}
-		if (m_rbuffer.availableToRead() >= (1024*6) || m_rbuffer.availableToRead() >= count) {
+		if (outBufferHasData || m_rbuffer.availableToRead() >= (1024*6) || m_rbuffer.availableToRead() >= count) {
 			//do not starve the reader if we have enough data to read and there is nothing on the socket
 			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 0);
 		} else {
@@ -308,7 +308,7 @@ READAGAIN:
 			}
 			//try to reconnect on next failure
 			m_tryToReconnect = true;
-		} else if (m_rbuffer.availableToRead() < 188) {
+		} else if (!outBufferHasData && m_rbuffer.availableToRead() < 188) {
 			eDebug("%s: failed to read from the socket errno(%i) timedRead(%i)...", __FUNCTION__, errno, toWrite);
 			// we failed to read and there is nothing to play, try to reconnect?
 			// for some reason select() returns EAGAIN sometimes
