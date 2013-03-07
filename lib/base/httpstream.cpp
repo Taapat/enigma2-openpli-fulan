@@ -272,6 +272,7 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
         	m_contentServed += m_rbuffer.read((char*)buf, (count - (count%188)));
 		outBufferHasData = true;
 	}
+	
 
 	int read2Chunks=2;
 READAGAIN:
