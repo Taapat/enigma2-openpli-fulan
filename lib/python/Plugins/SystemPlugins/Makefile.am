@@ -4,7 +4,11 @@ SUBDIRS = SoftwareManager PositionerSetup Satfinder \
 	SkinSelector SatelliteEquipmentControl Videomode VideoTune Hotplug \
 	KeymapManager DefaultServicesScanner DiseqcTester \
 	FastScan OSDPositionSetup OSD3DSetup HdmiCEC \
-	VideoEnhancement WirelessLan NetworkWizard VFD-Icons OnErrorRestartService
+	VideoEnhancement NetworkWizard VFD-Icons OnErrorRestartService
+
+if ! ENABLE_MINIMAL
+SUBDIRS += WirelessLan
+endif
 
 if HAVE_TEMPFANCONTROL
 SUBDIRS += TempFanControl

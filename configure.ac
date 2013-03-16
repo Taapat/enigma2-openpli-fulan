@@ -57,6 +57,15 @@ if test "$enable_libeplayer3" = "yes"; then
 	AC_DEFINE(ENABLE_LIBEPLAYER3,1,[include TDT libeplayer3 as player engine support])
 fi
 
+AC_ARG_ENABLE(minimal,
+	[  --enable-minimal          enable minimal config],
+	[AC_DEFINE(ENABLE_MINIMAL,1,[enable minimal config])])
+
+AM_CONDITIONAL(ENABLE_MINIMAL,test "$enable_minimal" = "yes")
+if test "$enable_minimal" = "yes"; then
+	AC_DEFINE(ENABLE_MINIMAL,1,[enable minimal config])
+fi
+
 if ! test "$enable_libeplayer3" = "yes"; then
 dnl versions of gstreamer and plugins-base
 AC_ARG_WITH(gstversion,
