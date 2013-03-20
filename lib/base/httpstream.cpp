@@ -3,6 +3,7 @@
 
 #include <lib/base/httpstream.h>
 #include <lib/base/eerror.h>
+#include <lib/base/wrappers.h>
 
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 

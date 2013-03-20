@@ -4,7 +4,6 @@
 #include <string>
 #include <lib/base/ebase.h>
 #include <lib/base/itssource.h>
-#include <lib/base/socketbase.h>
 #include <lib/base/thread.h>
 #include <lib/base/ringbuffer.h>
 

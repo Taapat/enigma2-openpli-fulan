@@ -24,7 +24,7 @@ base_libenigma_base_a_SOURCES = \
 	base/smartptr.cpp \
 	base/thread.cpp \
 	base/httpstream.cpp \
-	base/socketbase.cpp
+	base/wrappers.cpp
 
 EXTRA_DIST += \
 	base/eenv.cpp.in
@@ -59,4 +59,4 @@ baseinclude_HEADERS = \
 	base/smartptr.h \
 	base/thread.h \
 	base/httpstream.h \
-	base/socketbase.h
+	base/wrappers.h
