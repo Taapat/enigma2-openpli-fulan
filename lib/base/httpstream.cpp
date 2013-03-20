@@ -126,7 +126,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		port = 80;
 	}
 
-	m_streamSocket = eSocketBase::connect(hostname.c_str(), port, 100);
+	m_streamSocket = Connect(hostname.c_str(), port, 100);
 	if (m_streamSocket < 0) return -1;
 
 	request = "GET ";
@@ -152,7 +152,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	request.append("\r\n");
 
 	std::string hdr;
-	result = eSocketBase::openHTTPConnection(m_streamSocket, request, hdr);
+	result = openHTTPConnection(m_streamSocket, request, hdr);
 	if (result < 0) return -1;
 
 	size_t pos = hdr.find("\n");
@@ -215,7 +215,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	if (m_chunkedTransfer) {
 		eDebug("%s: chunked transfer enabled", __FUNCTION__);
 		if (m_scratch == NULL) { m_scratchSize=64; m_scratch=(char*)malloc(m_scratchSize);}
-		int c = eSocketBase::readLine(m_streamSocket, &m_scratch, &m_scratchSize);
+		int c = readLine(m_streamSocket, &m_scratch, &m_scratchSize);
 		if (c <=0) return -1;
 		m_currentChunkSize = strtol(m_scratch, NULL, 16);
 		eDebug("%s: chunked transfer enabled, fisrt chunk size %i", __FUNCTION__, m_currentChunkSize);
@@ -225,7 +225,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
 	if (toWrite > 0) {
 		if (m_chunkedTransfer) toWrite = MIN(toWrite, m_currentChunkSize);
-		toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 2000, 50);
+		toWrite = timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 2000, 50);
 		if (toWrite > 0) {
 			eDebug("%s: writting %i bytes to the ring buffer", __FUNCTION__, toWrite);
                         ssize_t skipBytes = 0;
@@ -237,7 +237,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 			if (m_chunkedTransfer) {
 				m_currentChunkSize -= toWrite;
                                 if (m_currentChunkSize==0){
-                                        int rc = eSocketBase::readLine(m_streamSocket, &m_scratch, &m_scratchSize);
+                                        int rc = readLine(m_streamSocket, &m_scratch, &m_scratchSize);
                                         eDebug("%s: reading the end of the chunk rc(%i)(%s)", __FUNCTION__, rc, m_scratch);
                                 }
 			}
@@ -283,7 +283,7 @@ READAGAIN:
 
 		if (m_chunkedTransfer){
 			if (m_currentChunkSize==0) {
-				int c = eSocketBase::readLine(m_streamSocket, &m_scratch, &m_scratchSize);
+				int c = readLine(m_streamSocket, &m_scratch, &m_scratchSize);
 				if (c <= 0) return -1;
 				m_currentChunkSize = strtol(m_scratch, NULL, 16);
 				if (m_currentChunkSize == 0) return -1;
@@ -292,9 +292,9 @@ READAGAIN:
 		}
 		if (outBufferHasData || m_rbuffer.availableToRead() >= (1024*6) || m_rbuffer.availableToRead() >= count) {
 			//do not starve the reader if we have enough data to read and there is nothing on the socket
-			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 0);
+			toWrite = timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 0);
 		} else {
-			toWrite = eSocketBase::timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 3000, 500);
+			toWrite = timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 3000, 500);
 		}
 		if (toWrite > 0) {
 			m_rbuffer.ptrWriteCommit(toWrite);
@@ -302,7 +302,7 @@ READAGAIN:
                                 --read2Chunks;
 				m_currentChunkSize -= toWrite;
 				if (m_currentChunkSize==0){
-					eSocketBase::readLine(m_streamSocket, &m_scratch, &m_scratchSize);
+					readLine(m_streamSocket, &m_scratch, &m_scratchSize);
 				} else if (read2Chunks > 0) {
 					goto READAGAIN;
 				}
