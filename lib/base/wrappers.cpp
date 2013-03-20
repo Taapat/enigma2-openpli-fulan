@@ -130,7 +130,7 @@ ssize_t readLine(int fd, char** buffer, size_t* bufsize)
 	return -1;
 }
 
-int Connect(const char *hostname, int port, int timeoutsec)
+ssize_t openHTTPConnection(int fd, const std::string& getRequest, std::string& httpHdr
 {
 	fd_set wset, rset;
 	struct timeval timeout;
@@ -198,7 +198,7 @@ int Connect(const char *hostname, int port, int timeoutsec)
 	return 0;
 }
 
-int eSocketBase::connect(const char *hostname, int port, int timeoutsec)
+int Connect(const char *hostname, int port, int timeoutsec)
 {
 	struct hostent *server=gethostbyname(hostname);
 	if (server == NULL) {
