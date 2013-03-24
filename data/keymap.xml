@@ -187,6 +187,10 @@
 		<key id="KEY_RED" mapto="audioSelection" flags="m" />
 		<key id="KEY_LANGUAGE" mapto="audioSelection" flags="m" />
 
+	<map context="InfobarVmodeButtonActions">
+			<key id="KEY_VMODE" mapto="vmodeSelection" flags="m" />
+	</map>
+
 	</map>
 
 	<map context="InfobarAspectSelectionActions">
