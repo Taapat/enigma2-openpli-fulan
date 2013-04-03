@@ -87,7 +87,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	else
 	{
 		hostname = uri.substr(7, uri.length() - 7);
-		uri = "";
+		uri = "/";
 	}
 	int authenticationindex = hostname.find("@");
 	if (authenticationindex > 0)
@@ -176,6 +176,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 			eDebug("%s: redirecting to: %s", __FUNCTION__, newurl.c_str());
 			return 0;
 		}
+				continue;
 	}
 
 	m_chunkedTransfer = (hdr.find("Transfer-Encoding: chunked") != std::string::npos);
