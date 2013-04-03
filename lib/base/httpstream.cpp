@@ -176,7 +176,6 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 			eDebug("%s: redirecting to: %s", __FUNCTION__, newurl.c_str());
 			return 0;
 		}
-				continue;
 	}
 
 	m_chunkedTransfer = (hdr.find("Transfer-Encoding: chunked") != std::string::npos);
