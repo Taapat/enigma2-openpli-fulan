@@ -446,7 +446,7 @@ class InfoBarNumberZap:
 			else:
 				self.servicelist.recallPrevService()
 		else:
-			if self.has_key("TimeshiftActions") and self.timeshift_enabled:
+			if self.has_key("TimeshiftActions") and self.timeshiftEnabled():
 				ts = self.getTimeshift()
 				if ts and ts.isTimeshiftActive():
 					return
@@ -1125,7 +1125,7 @@ class InfoBarSeek:
 		return seek
 
 	def isSeekable(self):
-		if self.getSeek() is None or (isStandardInfoBar(self) and not self.timeshift_enabled):
+		if self.getSeek() is None or (isStandardInfoBar(self) and not self.timeshiftEnabled()):
 			return False
 		return True
 
@@ -1415,7 +1415,7 @@ class InfoBarTimeshiftState(InfoBarPVRState):
 		self.__hideTimer.callback.append(self.__hideTimeshiftState)
 
 	def _mayShow(self):
-		if self.execing and self.timeshift_enabled:
+		if self.execing and self.timeshiftEnabled():
 			self.pvrStateDialog.show()
 			if self.seekstate == self.SEEK_STATE_PLAY and not self.shown:
 				self.__hideTimer.start(5*1000, True)
@@ -1477,7 +1477,6 @@ class InfoBarTimeshift:
 				"timeshiftActivateEndAndPause": self.activateTimeshiftEndAndPause  # something like "pause key"
 			}, prio=-1) # priority over record
 
-		self.timeshift_enabled = False
 		self.save_timeshift_file = False
 		self.save_timeshift_in_movie_dir = False
 		self.current_timeshift_filename = ""
@@ -1498,6 +1497,10 @@ class InfoBarTimeshift:
 		service = self.session.nav.getCurrentService()
 		return service and service.timeshift()
 
+	def timeshiftEnabled(self):
+		ts = self.getTimeshift()
+		return ts and ts.isTimeshiftEnabled()
+
 	def startTimeshift(self):
 		print "enable timeshift"
 		ts = self.getTimeshift()
@@ -1506,12 +1509,10 @@ class InfoBarTimeshift:
 			print "no ts interface"
 			return 0
 
-		if self.timeshift_enabled:
+		if ts.isTimeshiftEnabled():
 			print "hu, timeshift already enabled?"
 		else:
 			if not ts.startTimeshift():
-				self.timeshift_enabled = True
-
 				# we remove the "relative time" for now.
 				#self.pvrStateDialog["timeshift"].setRelative(time.time())
 
@@ -1530,18 +1531,16 @@ class InfoBarTimeshift:
 				print "timeshift failed"
 
 	def stopTimeshift(self):
-		if not self.timeshift_enabled:
-			return 0
 		ts = self.getTimeshift()
-		if ts is None:
+		if ts and ts.isTimeshiftEnabled():
+			self.checkTimeshiftRunning(boundFunction(self.stopTimeshiftcheckTimeshiftRunningCallback, ts))
+		else:
 			return 0
-		self.checkTimeshiftRunning(boundFunction(self.stopTimeshiftcheckTimeshiftRunningCallback, ts))
 
 	def stopTimeshiftcheckTimeshiftRunningCallback(self, ts, answer):
 		if answer:
 			self.saveTimeshiftFiles()
 			ts.stopTimeshift()
-			self.timeshift_enabled = False
 			self.save_timeshift_file = False
 			self.pvrStateDialog.hide()
 
@@ -1606,15 +1605,14 @@ class InfoBarTimeshift:
 		self.activateTimeshiftEnd(False)
 
 	def __seekableStatusChanged(self):
-		self["TimeshiftActivateActions"].setEnabled(not self.isSeekable() and self.timeshift_enabled)
-		state = self.getSeek() is not None and self.timeshift_enabled
+		self["TimeshiftActivateActions"].setEnabled(not self.isSeekable() and self.timeshiftEnabled())
+		state = self.getSeek() is not None and self.timeshiftEnabled()
 		self["SeekActions"].setEnabled(state)
 		if not state:
 			self.setSeekState(self.SEEK_STATE_PLAY)
 
 	def __serviceStarted(self):
 		self.pvrStateDialog.hide()
-		self.timeshift_enabled = False
 		self.save_timeshift_file = False
 		self.save_timeshift_in_movie_dir = False
 		self.current_timeshift_filename = ""
@@ -1622,7 +1620,7 @@ class InfoBarTimeshift:
 		self.__seekableStatusChanged()
 
 	def checkTimeshiftRunning(self, returnFunction):
-		if self.timeshift_enabled and config.usage.check_timeshift.value:
+		if self.timeshiftEnabled() and config.usage.check_timeshift.value:
 			self.session.openWithCallback(returnFunction, MessageBox, _("Stop timeshift?"), simple = True)
 		else:
 			returnFunction(True)
@@ -1632,7 +1630,7 @@ class InfoBarTimeshift:
 		self.saveTimeshiftFiles()
 
 	def saveTimeshiftFiles(self):
-		if self.timeshift_enabled and self.save_timeshift_file and self.current_timeshift_filename != "" and self.new_timeshift_filename != "":
+		if self.timeshiftEnabled() and self.save_timeshift_file and self.current_timeshift_filename != "" and self.new_timeshift_filename != "":
 			if config.usage.timeshift_path.value is not None and not self.save_timeshift_in_movie_dir:
 				dirname = config.usage.timeshift_path.value
 			else:
@@ -2053,7 +2051,7 @@ class InfoBarInstantRecord:
 		else:
 			title=_("Start recording?")
 			list = common + ((_("Do not record"), "no"),)
-		if self.timeshift_enabled:
+		if self.timeshiftEnabled():
 			list = list + ((_("Save timeshift file"), "timeshift"),
 			(_("Save timeshift file in movie directory"), "timeshift_movie"))
 		self.session.openWithCallback(self.recordQuestionCallback, ChoiceBox,title=title,list=list)
@@ -2754,17 +2752,17 @@ class InfoBarPowersaver:
 	def inactivityTimeout(self):
 		if config.usage.inactivity_timer_blocktime.value:
 			curtime = localtime(time())
-			if curtime.tm_year != "1970":
-				curtime = (curtime.tm_hour, curtime.tm_min)
+			if curtime.tm_year != "1970": #check if the current time is valid
+				curtime = (curtime.tm_hour, curtime.tm_min, curtime.tm_sec)
 				begintime = tuple(config.usage.inactivity_timer_blocktime_begin.value)
 				endtime = tuple(config.usage.inactivity_timer_blocktime_end.value)
-				if begintime <= endtime and (curtime > begintime and curtime <= endtime) or begintime > endtime and (curtime > begintime or curtime <= endtime):
-					curtime = curtime[0]*3600 + curtime[1]*60
-					endtime = endtime[0]*3600 + endtime[1]*60
-					if curtime > endtime:
-						endtime += 24*3600
-					self.inactivityTimer.startLongTimer(endtime - curtime + 60)
-					return
+				if begintime <= endtime and (curtime >= begintime and curtime < endtime) or begintime > endtime and (curtime >= begintime or curtime < endtime):
+					duration = (endtime[0]*3600 + endtime[1]*60) - (curtime[0]*3600 + curtime[1]*60 + curtime[2])
+					if duration:
+						if duration < 0:
+							duration += 24*3600
+						self.inactivityTimer.startLongTimer(duration)
+						return
 		if Screens.Standby.inStandby:
 			self.inactivityTimeoutCallback(True)
 		else:
