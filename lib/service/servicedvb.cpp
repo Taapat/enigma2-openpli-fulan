@@ -563,7 +563,7 @@ static int reindex_work(const std::string& filename)
 			return err;
 		}
 		eDebug("reindex: pcr_pid=0x%x", pcr_pid);
-		parser.setPid(pcr_pid, -1); /* -1 = automatic MPEG2/h264 detection */
+		parser.setPid(pcr_pid, iDVBTSRecorder::video_pid, -1); /* -1 = automatic MPEG2/h264 detection */
 	}
 
 	parser.startSave(filename);
@@ -2501,7 +2501,8 @@ void eDVBServicePlay::updateTimeshiftPids()
 	else
 	{
 		int timing_pid = -1;
-		int timing_pid_type = -1;
+		int timing_stream_type = -1;
+		iDVBTSRecorder::timing_pid_type timing_pid_type = iDVBTSRecorder::none;
 		std::set<int> pids_to_record;
 		pids_to_record.insert(0); // PAT
 		if (program.pmtPid != -1)
@@ -2517,7 +2518,8 @@ void eDVBServicePlay::updateTimeshiftPids()
 			if (timing_pid == -1)
 			{
 				timing_pid = i->pid;
-				timing_pid_type = i->type;
+				timing_stream_type = i->type;
+				timing_pid_type = iDVBTSRecorder::video_pid;
 			}
 			pids_to_record.insert(i->pid);
 		}
@@ -2529,7 +2531,8 @@ void eDVBServicePlay::updateTimeshiftPids()
 			if (timing_pid == -1)
 			{
 				timing_pid = i->pid;
-				timing_pid_type = -1;
+				timing_stream_type = i->type;
+				timing_pid_type = iDVBTSRecorder::audio_pid;
 			}
 			pids_to_record.insert(i->pid);
 		}
@@ -2558,7 +2561,7 @@ void eDVBServicePlay::updateTimeshiftPids()
 			m_record->removePID(*i);
 
 		if (timing_pid != -1)
-			m_record->setTimingPID(timing_pid, timing_pid_type);
+			m_record->setTimingPID(timing_pid, timing_pid_type, timing_stream_type);
 	}
 }
 
