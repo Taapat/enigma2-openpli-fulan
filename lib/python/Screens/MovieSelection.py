@@ -548,7 +548,6 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 				"cancel": (self.abort, _("Exit movie list")),
 				"ok": (self.itemSelected, _("Select movie")),
 			})
-
 		self["DirectionActions"] = HelpableActionMap(self, "DirectionActions",
 			{
 				"up": (self.keyUp, _("Go up the list")),
