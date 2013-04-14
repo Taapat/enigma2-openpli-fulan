@@ -328,10 +328,10 @@ long eHdmiCEC::translateKey(unsigned char code)
 			key = 0xd0;
 			break;
 		case 0x4B:
-			key = 0x208;
+			key = 0xd0;
 			break;
 		case 0x4C:
-			key = 0x168;
+			key = 0xa8;
 			break;
 		case 0x53:
 			key = 0x166;
