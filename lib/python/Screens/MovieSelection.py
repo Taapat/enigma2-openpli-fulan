@@ -501,7 +501,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 
 		self["InfobarActions"] = HelpableActionMap(self, "InfobarActions",
 			{
-				"showMovies": (self.doPathSelect, _("Select the movie path")),
+				"showMovies": (self.itemSelected, _("Select movie")),
 				"showRadio": (self.btn_radio, "?"),
 				"showTv": (self.btn_tv, _("Home")),
 				"showText": (self.btn_text, _("On end of movie")),
@@ -524,7 +524,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 
 		self["playbackActions"] = HelpableActionMap(self, "MoviePlayerActions",
 			{
-				"leavePlayer": (self.playbackStop, _("Stop")),
+				"leavePlayer": (self.abort, _("Exit movie list")),
 				"moveNext": (self.playNext, _("Play next")),
 				"movePrev": (self.playPrev, _("Play previous")),
 				"channelUp": (self.moveToFirstOrFirstFile, _("Go to first movie or top of list")),
@@ -548,6 +548,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 				"cancel": (self.abort, _("Exit movie list")),
 				"ok": (self.itemSelected, _("Select movie")),
 			})
+
 		self["DirectionActions"] = HelpableActionMap(self, "DirectionActions",
 			{
 				"up": (self.keyUp, _("Go up the list")),
