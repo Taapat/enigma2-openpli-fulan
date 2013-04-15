@@ -9,8 +9,8 @@
 #ifndef ENABLE_LIBEPLAYER3
 #include <gst/gst.h>
 #else
-#include <common.h>
-#include <subtitle.h>
+#include <libeplayer/common.h>
+#include <libeplayer/subtitle.h>
 #define gint int
 #define gint64 int64_t
 extern OutputHandler_t		OutputHandler;
