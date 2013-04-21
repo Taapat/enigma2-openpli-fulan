@@ -106,6 +106,14 @@ void eHdmiCEC::getAddressInfo()
 			unsigned char type;
 		} addressinfo;
 
+#else
+		struct
+		{
+			unsigned char logical;
+			unsigned char physical[2];
+			unsigned char type;
+		} addressinfo;
+#endif 
 		if (::ioctl(hdmiFd, 1, &addressinfo) >= 0)
 		{
 			hasdata = true;
@@ -130,18 +138,6 @@ void eHdmiCEC::getAddressInfo()
 				break;
 			}
 		}
-#else
-		struct
-		{
-			unsigned char logical;
-			unsigned char physical[2];
-			unsigned char type;
-		} addressinfo;
-		if (::ioctl(hdmiFd, 1, &addressinfo) >= 0)
-		{
-			hasdata = true;
-		}
-#endif
 		if (hasdata)
 		{
 			deviceType = addressinfo.type;
