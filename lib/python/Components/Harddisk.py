@@ -6,10 +6,13 @@ from Components.Console import Console
 import Task
 
 def readFile(filename):
-	file = open(filename)
-	data = file.read().strip()
-	file.close()
-	return data
+	if os.path.exists(filename):
+		file = open(filename)
+		data = file.read().strip()
+		file.close()
+		return data
+	else:	
+		return ""
 
 def getProcMounts():
 	try:
