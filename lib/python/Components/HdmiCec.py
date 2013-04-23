@@ -49,7 +49,7 @@ class HdmiCec:
 		config.misc.standbyCounter.addNotifier(self.onEnterStandby, initial_call = False)
 		config.misc.DeepStandby.addNotifier(self.onEnterDeepStandby, initial_call = False)
 		self.setFixedPhysicalAddress(config.hdmicec.fixed_physical_address.value)
-		self.devicetype = eHdmiCEC.getInstance().getDeviceType()
+		self.logicaladdress = eHdmiCEC.getInstance().getLogicalAddress()
 
 		self.volumeForwardingEnabled = False
 		self.volumeForwardingDestination = 0
@@ -77,7 +77,7 @@ class HdmiCec:
 		if message == "wakeup":
 			cmd = 0x04
 		elif message == "sourceactive":
-			address = self.devicetype * 0x10 + 0x0f # use broadcast for active source command
+			address = self.logicaladdress * 0x10 + 0x0f # use broadcast for active source command
 			cmd = 0x82
 			physicaladdress = eHdmiCEC.getInstance().getPhysicalAddress()
 			data = str(struct.pack('BB', int(physicaladdress/256), int(physicaladdress%256)))
@@ -95,31 +95,32 @@ class HdmiCec:
 			data = str(struct.pack('B', 0x01))
 		elif message == "givesystemaudiostatus":
 			cmd = 0x7d
-			address = self.devicetype * 0x10
+			address = self.logicaladdress * 0x10
 		elif message == "setsystemaudiomode":
 			cmd = 0x70
-			address = self.devicetype * 0x10
+			address = self.logicaladdress * 0x10
 			physicaladdress = eHdmiCEC.getInstance().getPhysicalAddress()
 			data = str(struct.pack('BB', int(physicaladdress/256), int(physicaladdress%256)))
 		elif message == "osdname":
-			address = self.devicetype * 0x10
+			address = self.logicaladdress * 0x10
 			cmd = 0x47
 			data = "Enigma2"
 		elif message == "poweractive":
-			address = self.devicetype * 0x10
+			address = self.logicaladdress * 0x10
 			cmd = 0x90
 			data = str(struct.pack('B', 0x00))
 		elif message == "powerinactive":
-			address = self.devicetype * 0x10
+			address = self.logicaladdress * 0x10
 			cmd = 0x90
 			data = str(struct.pack('B', 0x01))
 		elif message == "reportaddress":
-			address = self.devicetype * 0x10 + 0x0f # use broadcast address
+			address = self.logicaladdress * 0x10 + 0x0f # use broadcast address
 			cmd = 0x84
 			physicaladdress = eHdmiCEC.getInstance().getPhysicalAddress()
+			devicetype = eHdmiCEC.getInstance().getDeviceType()
 			data = str(struct.pack('BBB', int(physicaladdress/256), int(physicaladdress%256), self.devicetype))
 		elif message == "vendorid":
-			address = self.devicetype * 0x10 + 0x0f
+			address = self.logicaladdress * 0x10 + 0x0f
 			cmd = 0x87
 			data = '\x00\xE0\x91'
 		elif message == "keypoweron":
@@ -129,23 +130,23 @@ class HdmiCec:
 			cmd = 0x44
 			data = str(struct.pack('B', 0x6c))
 		elif message == "playstatus":
-			address = self.devicetype * 0x10
+			address = self.logicaladdress * 0x10
 			cmd = 0x1B
 			data = '\x11'
 		elif message == "vendorcommand0":
-			address = self.devicetype * 0x10
+			address = self.logicaladdress * 0x10
 			cmd = 0x89
 			data = '\x02\x05'
 		elif message == "vendorcommand1":
-			address = self.devicetype * 0x10
+			address = self.logicaladdress * 0x10
 			cmd = 0x89
 			data = '\xA1\x01'
 		elif message == "vendorcommand2":
-			address = self.devicetype * 0x10
+			address = self.logicaladdress * 0x10
 			cmd = 0x89
 			data = '\x0C\x05'
 		elif message == "vendorcommand3":
-			address = self.devicetype * 0x10
+			address = self.logicaladdress * 0x10
 			cmd = 0x89
 			data = '\x05\x01' 
 		if cmd:
