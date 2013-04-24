@@ -118,7 +118,7 @@ class HdmiCec:
 			cmd = 0x84
 			physicaladdress = eHdmiCEC.getInstance().getPhysicalAddress()
 			devicetype = eHdmiCEC.getInstance().getDeviceType()
-			data = str(struct.pack('BBB', int(physicaladdress/256), int(physicaladdress%256), self.devicetype))
+			data = str(struct.pack('BBB', int(physicaladdress/256), int(physicaladdress%256), devicetype))
 		elif message == "vendorid":
 			address = self.logicaladdress * 0x10 + 0x0f
 			cmd = 0x87
