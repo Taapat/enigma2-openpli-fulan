@@ -10,12 +10,10 @@ DEFINE_REF(eHttpStream);
 eHttpStream::eHttpStream()
 {
 	streamSocket = -1;
-	connectionStatus = FAILED;
 }
 
 eHttpStream::~eHttpStream()
 {
-	kill(true);
 	close();
 }
 
@@ -159,38 +157,19 @@ error:
 
 int eHttpStream::open(const char *url)
 {
-	streamUrl = url;
-	/*
-	 * We're in gui thread context here, and establishing
-	 * a connection might block for up to 10 seconds.
-	 * Spawn a new thread to establish the connection.
-	 */
-	connectionStatus = BUSY;
-	eDebug("eHttpStream::Start thread");
-	run();
-	return 0;
-}
-
-void eHttpStream::thread()
-{
-	hasStarted();
 	std::string currenturl, newurl;
-	currenturl = streamUrl;
+	currenturl = url;
 	for (unsigned int i = 0; i < 3; i++)
 	{
 		if (openUrl(currenturl, newurl) < 0)
 		{
 			/* connection failed */
-			eDebug("eHttpStream::Thread end NO connection");
-			connectionStatus = FAILED;
-			return;
+			return -1;
 		}
 		if (newurl == "")
 		{
 			/* we have a valid stream connection */
-			eDebug("eHttpStream::Thread end connection");
-			connectionStatus = CONNECTED;
-			return;
+			return 0;
 		}
 		/* switch to new url */
 		close();
@@ -198,9 +177,7 @@ void eHttpStream::thread()
 		newurl = "";
 	}
 	/* too many redirect / playlist levels (we accept one redirect + one playlist) */
-	eDebug("eHttpStream::Thread end NO connection");
-	connectionStatus = FAILED;
-	return;
+	return -1;
 }
 
 int eHttpStream::close()
@@ -216,17 +193,11 @@ int eHttpStream::close()
 
 ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 {
-	if (connectionStatus == BUSY)
-		return 0;
-	else if (connectionStatus == FAILED)
-		return -1;
 	return timedRead(streamSocket, buf, count, 5000, 500);
 }
 
 int eHttpStream::valid()
 {
-	if (connectionStatus == BUSY)
-		return 0;
 	return streamSocket >= 0;
 }
 
