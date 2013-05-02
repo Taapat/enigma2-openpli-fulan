@@ -27,7 +27,7 @@ void eTSFileSectionReader::data(unsigned char *packet, unsigned int size)
 		memcpy(&sectionData[sectionSize], packet, size);
 		sectionSize += size;
 	}
-	if (sectionSize >= 3 + ((sectionData[1] & 0x0f) << 8) + sectionData[2])
+	if (sectionSize >= (unsigned int)(3 + ((sectionData[1] & 0x0f) << 8) + sectionData[2]))
 	{
 		sectionSize = 0;
 		read(sectionData);
@@ -767,7 +767,7 @@ int eDVBTSTools::findPMT(eDVBPMTParser::program &program)
 				((eTSFileSectionReader*)(iDVBSectionReader*)sectionreader)->data(&sec[1], 188 - (sec + 1 - packet));
 			}
 		}
-		else if (pmtpid == ((packet[1] << 8) | packet[2]) & 0x1FFF)
+		else if (pmtpid == (((packet[1] << 8) | packet[2]) & 0x1FFF))
 		{
 			((eTSFileSectionReader*)(iDVBSectionReader*)sectionreader)->data(sec, 188 - (sec - packet));
 		}
