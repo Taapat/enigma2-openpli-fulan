@@ -1054,6 +1054,20 @@ int eDVBFrontend::readFrontendData(int type)
 			}
 			return (FE_HAS_SYNC | FE_HAS_LOCK);
 		}
+		case iFrontendInformation_ENUMS::frequency:
+		{
+			struct dtv_property p;
+			struct dtv_properties cmdseq;
+			oparm.getSystem(type);
+			cmdseq.props = &p;
+			cmdseq.num = 1;
+			p.cmd = DTV_FREQUENCY;
+			if (ioctl(m_fd, FE_GET_PROPERTY, &cmdseq) < 0)
+			{
+				return 0;
+			}
+			return p.u.data + m_data[FREQ_OFFSET];
+		}
 	}
 	return 0;
 }
@@ -2589,12 +2603,10 @@ RESULT eDVBFrontend::tune(const iDVBFrontendParameters &where)
 		if (res)
 			goto tune_error;
 
-		std::string enable_5V;
 		char configStr[255];
 		snprintf(configStr, 255, "config.Nims.%d.terrestrial_5V", m_slotid);
 		m_sec_sequence.push_back( eSecCommand(eSecCommand::START_TUNE_TIMEOUT, timeout) );
-		ePythonConfigQuery::getConfigValue(configStr, enable_5V);
-		if (enable_5V == "True")
+		if (eConfigManager::getConfigBoolValue(configStr))
 			m_sec_sequence.push_back( eSecCommand(eSecCommand::SET_VOLTAGE, iDVBFrontend::voltage13) );
 		else
 			m_sec_sequence.push_back( eSecCommand(eSecCommand::SET_VOLTAGE, iDVBFrontend::voltageOff) );
@@ -2908,41 +2920,27 @@ void eDVBFrontend::setDeliverySystemWhitelist(const std::vector<fe_delivery_syst
 	}
 }
 
-bool eDVBFrontend::setSlotInfo(ePyObject obj)
+bool eDVBFrontend::setSlotInfo(int id, const char *descr, bool enabled, bool isDVBS2, int frontendid)
 {
-	ePyObject Id, Descr, Enabled, IsDVBS2, frontendId;
-	if (!PyTuple_Check(obj) || PyTuple_Size(obj) != 5)
-		goto arg_error;
-	Id = PyTuple_GET_ITEM(obj, 0);
-	Descr = PyTuple_GET_ITEM(obj, 1);
-	Enabled = PyTuple_GET_ITEM(obj, 2);
-	IsDVBS2 = PyTuple_GET_ITEM(obj, 3);
-	frontendId = PyTuple_GET_ITEM(obj, 4);
-	m_slotid = PyInt_AsLong(Id);
-	if (!PyInt_Check(Id) || !PyString_Check(Descr) || !PyBool_Check(Enabled) || !PyBool_Check(IsDVBS2) || !PyInt_Check(frontendId))
-		goto arg_error;
-	strcpy(m_description, PyString_AS_STRING(Descr));
-	if (PyInt_AsLong(frontendId) == -1 || PyInt_AsLong(frontendId) != m_dvbid) {
-//		eDebugNoSimulate("skip slotinfo for slotid %d, descr %s",
-//			m_slotid, m_description);
+	if (frontendid < 0 || frontendid != m_dvbid) 
+	{
 		return false;
 	}
-	m_enabled = Enabled == Py_True;
+	m_slotid = id;
+	m_enabled = enabled;
+	strncpy(m_description, descr, sizeof(m_description));
+
 	// HACK.. the rotor workaround is neede for all NIMs with LNBP21 voltage regulator...
 	m_need_rotor_workaround = !!strstr(m_description, "Alps BSBE1") ||
 		!!strstr(m_description, "Alps BSBE2") ||
 		!!strstr(m_description, "Alps -S") ||
 		!!strstr(m_description, "BCM4501");
-	if (IsDVBS2 == Py_True)
+	if (isDVBS2)
 	{
 		/* HACK for legacy dvb api without DELSYS support */
 		m_delsys[SYS_DVBS2] = true;
 	}
 	eDebugNoSimulate("setSlotInfo for dvb frontend %d to slotid %d, descr %s, need rotorworkaround %s, enabled %s, DVB-S2 %s",
-		m_dvbid, m_slotid, m_description, m_need_rotor_workaround ? "Yes" : "No", m_enabled ? "Yes" : "No", (IsDVBS2 == Py_True) ? "Yes" : "No" );
+		m_dvbid, m_slotid, m_description, m_need_rotor_workaround ? "Yes" : "No", m_enabled ? "Yes" : "No", isDVBS2 ? "Yes" : "No" );
 	return true;
-arg_error:
-	PyErr_SetString(PyExc_StandardError,
-		"eDVBFrontend::setSlotInfo must get a tuple with first param slotid, second param slot description and third param enabled boolean");
-	return false;
 }

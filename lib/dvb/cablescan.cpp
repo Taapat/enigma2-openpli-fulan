@@ -345,8 +345,7 @@ void eCableScan::createBouquets()
 	}
 	bouquetFilename = replace_all(providerName, " ", "");
 
-	std::string value;
-	bool multibouquet = (ePythonConfigQuery::getConfigValue("config.usage.multibouquet", value) >= 0 && value == "True");
+	bool multibouquet = eConfigManager::getConfigBoolValue("config.usage.multibouquet");
 
 	if (multibouquet)
 	{
