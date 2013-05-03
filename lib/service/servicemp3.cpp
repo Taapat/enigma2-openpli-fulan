@@ -270,6 +270,93 @@ long long eStaticServiceMP3Info::getFileSize(const eServiceReference &ref)
 	return 0;
 }
 
+DEFINE_REF(eStreamBufferInfo)
+
+eStreamBufferInfo::eStreamBufferInfo(int percentage, int inputrate, int outputrate, int space, int size)
+: bufferPercentage(percentage),
+	inputRate(inputrate),
+	outputRate(outputrate),
+	bufferSpace(space),
+	bufferSize(size)
+{
+}
+
+int eStreamBufferInfo::getBufferPercentage() const
+{
+	return bufferPercentage;
+}
+
+int eStreamBufferInfo::getAverageInputRate() const
+{
+	return inputRate;
+}
+
+int eStreamBufferInfo::getAverageOutputRate() const
+{
+	return outputRate;
+}
+
+int eStreamBufferInfo::getBufferSpace() const
+{
+	return bufferSpace;
+}
+
+int eStreamBufferInfo::getBufferSize() const
+{
+	return bufferSize;
+}
+
+DEFINE_REF(eServiceMP3InfoContainer);
+
+eServiceMP3InfoContainer::eServiceMP3InfoContainer()
+: doubleValue(0.0), bufferValue(NULL), bufferData(NULL), bufferSize(0)
+{
+}
+
+eServiceMP3InfoContainer::~eServiceMP3InfoContainer()
+{
+	if (bufferValue)
+	{
+#if GST_VERSION_MAJOR >= 1
+		gst_buffer_unmap(bufferValue, &map);
+#endif
+		gst_buffer_unref(bufferValue);
+		bufferValue = NULL;
+		bufferData = NULL;
+		bufferSize = 0;
+	}
+}
+
+double eServiceMP3InfoContainer::getDouble(unsigned int index) const
+{
+	return doubleValue;
+}
+
+unsigned char *eServiceMP3InfoContainer::getBuffer(unsigned int &size) const
+{
+	size = bufferSize;
+	return bufferData;
+}
+
+void eServiceMP3InfoContainer::setDouble(double value)
+{
+	doubleValue = value;
+}
+
+void eServiceMP3InfoContainer::setBuffer(GstBuffer *buffer)
+{
+	bufferValue = buffer;
+	gst_buffer_ref(bufferValue);
+#if GST_VERSION_MAJOR < 1
+	bufferData = GST_BUFFER_DATA(bufferValue);
+	bufferSize = GST_BUFFER_SIZE(bufferValue);
+#else
+	gst_buffer_map(bufferValue, &map, GST_MAP_READ);
+	bufferData = map.data;
+	bufferSize = map.size;
+#endif
+}
+
 // eServiceMP3
 int eServiceMP3::ac3_delay = 0,
     eServiceMP3::pcm_delay = 0;
@@ -1465,8 +1552,10 @@ std::string eServiceMP3::getInfoString(int w)
 }
 
 #ifndef ENABLE_LIBEPLAYER3
-PyObject *eServiceMP3::getInfoObject(int w)
+ePtr<iServiceInfoContainer> eServiceMP3::getInfoObject(int w)
 {
+	eServiceMP3InfoContainer *container = new eServiceMP3InfoContainer;
+	ePtr<iServiceInfoContainer> retval = container;
 	const gchar *tag = 0;
 	bool isBuffer = false;
 	switch (w)
@@ -1512,36 +1601,19 @@ PyObject *eServiceMP3::getInfoObject(int w)
 			const GValue *gv_buffer = gst_tag_list_get_value_index(m_stream_tags, tag, 0);
 			if ( gv_buffer )
 			{
-				PyObject *retval = NULL;
-				guint8 *data;
-				gsize size;
 				GstBuffer *buffer;
 				buffer = gst_value_get_buffer (gv_buffer);
-#if GST_VERSION_MAJOR < 1
-				data = GST_BUFFER_DATA(buffer);
-				size = GST_BUFFER_SIZE(buffer);
-#else
-				GstMapInfo map;
-				gst_buffer_map(buffer, &map, GST_MAP_READ);
-				data = map.data;
-				size = map.size;
-#endif
-				retval = PyBuffer_FromMemory(data, size);
-#if GST_VERSION_MAJOR >= 1
-				gst_buffer_unmap(buffer, &map);
-#endif
-				return retval;
+				container->setBuffer(buffer);
 			}
 		}
 		else
 		{
 			gdouble value = 0.0;
 			gst_tag_list_get_double(m_stream_tags, tag, &value);
-			return PyFloat_FromDouble(value);
+			container->setDouble(value);
 		}
 	}
-
-	Py_RETURN_NONE;
+	return retval;
 }
 #endif
 
@@ -2713,15 +2785,9 @@ RESULT eServiceMP3::streamed(ePtr<iStreamedService> &ptr)
 	return 0;
 }
 
-PyObject *eServiceMP3::getBufferCharge()
+ePtr<iStreamBufferInfo> eServiceMP3::getBufferCharge()
 {
-	ePyObject tuple = PyTuple_New(5);
-	PyTuple_SET_ITEM(tuple, 0, PyInt_FromLong(m_bufferInfo.bufferPercent));
-	PyTuple_SET_ITEM(tuple, 1, PyInt_FromLong(m_bufferInfo.avgInRate));
-	PyTuple_SET_ITEM(tuple, 2, PyInt_FromLong(m_bufferInfo.avgOutRate));
-	PyTuple_SET_ITEM(tuple, 3, PyInt_FromLong(m_bufferInfo.bufferingLeft));
-	PyTuple_SET_ITEM(tuple, 4, PyInt_FromLong(m_buffer_size));
-	return tuple;
+	return new eStreamBufferInfo(m_bufferInfo.bufferPercent, m_bufferInfo.avgInRate, m_bufferInfo.avgOutRate, m_bufferInfo.bufferingLeft, m_buffer_size);
 }
 
 int eServiceMP3::setBufferSize(int size)

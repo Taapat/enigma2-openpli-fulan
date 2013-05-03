@@ -57,6 +57,49 @@ public:
 };
 
 #ifndef ENABLE_LIBEPLAYER3
+class eStreamBufferInfo: public iStreamBufferInfo
+{
+	DECLARE_REF(eStreamBufferInfo);
+	int bufferPercentage;
+	int inputRate;
+	int outputRate;
+	int bufferSpace;
+	int bufferSize;
+
+public:
+	eStreamBufferInfo(int percentage, int inputrate, int outputrate, int space, int size);
+
+	int getBufferPercentage() const;
+	int getAverageInputRate() const;
+	int getAverageOutputRate() const;
+	int getBufferSpace() const;
+	int getBufferSize() const;
+};
+
+class eServiceMP3InfoContainer: public iServiceInfoContainer
+{
+	DECLARE_REF(eServiceMP3InfoContainer);
+
+	double doubleValue;
+	GstBuffer *bufferValue;
+
+	unsigned char *bufferData;
+	unsigned int bufferSize;
+#if GST_VERSION_MAJOR >= 1
+	GstMapInfo map;
+#endif
+
+public:
+	eServiceMP3InfoContainer();
+	~eServiceMP3InfoContainer();
+
+	double getDouble(unsigned int index) const;
+	unsigned char *getBuffer(unsigned int &size) const;
+
+	void setDouble(double value);
+	void setBuffer(GstBuffer *buffer);
+};
+
 typedef struct _GstElement GstElement;
 #endif
 
@@ -117,7 +160,7 @@ public:
 	int getInfo(int w);
 	std::string getInfoString(int w);
 #ifndef ENABLE_LIBEPLAYER3
-	PyObject *getInfoObject(int w);
+	ePtr<iServiceInfoContainer> getInfoObject(int w);
 #endif
 
 		// iAudioTrackSelection	
@@ -138,7 +181,7 @@ public:
 
 		// iStreamedService
 	RESULT streamed(ePtr<iStreamedService> &ptr);
-	PyObject *getBufferCharge();
+	ePtr<iStreamBufferInfo> getBufferCharge();
 	int setBufferSize(int size);
 
 		// iAudioDelay
