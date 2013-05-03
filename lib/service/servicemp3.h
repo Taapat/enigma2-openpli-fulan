@@ -53,7 +53,7 @@ public:
 	int getLength(const eServiceReference &ref);
 	int getInfo(const eServiceReference &ref, int w);
 	int isPlayable(const eServiceReference &ref, const eServiceReference &ignore, bool simulate) { return 1; }
-	PyObject* getInfoObject(const eServiceReference &ref, int w);
+	long long getFileSize(const eServiceReference &ref);
 };
 
 #ifndef ENABLE_LIBEPLAYER3
