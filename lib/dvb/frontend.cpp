@@ -1070,13 +1070,7 @@ void eDVBFrontend::getFrontendStatus(ePtr<iDVBFrontendStatus> &dest)
 {
 	ePtr<eDVBFrontend> fe = this;
 	dest = new eDVBFrontendStatus(fe);
-			PutToDict(dict, "is_id", feparm.is_id);
-				case APSK_16: tmp = eDVBFrontendParametersSatellite::Modulation_16APSK; break;
-				case APSK_32: tmp = eDVBFrontendParametersSatellite::Modulation_32APSK; break;
-			case DTV_STREAM_ID:
-			if (system == eDVBFrontendParametersSatellite::System_DVB_S2)
-				PutToDict(dict, "is_id", p[i].u.data);
-			break;
+
 }
 
 void eDVBFrontend::getTransponderData(ePtr<iDVBTransponderData> &dest, bool original)
