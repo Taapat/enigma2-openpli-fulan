@@ -239,6 +239,15 @@ typedef long long pts_t;
 class eServiceEvent;
 class iDVBTransponderData;
 
+class iServiceInfoContainer: public iObject
+{
+public:
+	virtual int getInteger(unsigned int index) const { return 0; }
+	virtual std::string getString(unsigned int index) const { return ""; }
+	virtual double getDouble(unsigned int index) const { return 0.0; }
+	virtual unsigned char *getBuffer(unsigned int &size) const { return NULL; }
+};
+
 class iStaticServiceInformation: public iObject
 {
 #ifdef SWIG
@@ -256,7 +265,7 @@ public:
 
 	virtual int getInfo(const eServiceReference &ref, int w);
 	virtual std::string getInfoString(const eServiceReference &ref,int w);
-	void getInfoObject() {}
+	virtual ePtr<iServiceInfoContainer> getInfoObject(int w);
 	virtual ePtr<iDVBTransponderData> getTransponderData(const eServiceReference &ref);
 	virtual long long getFileSize(const eServiceReference &ref);
 
@@ -408,7 +417,7 @@ public:
 
 	virtual int getInfo(int w);
 	virtual std::string getInfoString(int w);
-	void getInfoObject() {}
+	virtual ePtr<iServiceInfoContainer> getInfoObject(int w);
 	virtual ePtr<iDVBTransponderData> getTransponderData();
 	virtual long long getFileSize();
 
@@ -760,10 +769,6 @@ SWIG_TEMPLATE_TYPEDEF(ePtr<iServiceOfflineOperations>, iServiceOfflineOperations
 
 class iStreamData: public iObject
 {
-#ifdef SWIG
-	iStreamData();
-	~iStreamData();
-#endif
 public:
 	virtual SWIG_VOID(RESULT) getAllPids(std::vector<int> &result) const = 0;
 	virtual SWIG_VOID(RESULT) getVideoPids(std::vector<int> &result) const = 0;
@@ -777,7 +782,6 @@ public:
 	virtual SWIG_VOID(RESULT) getAdapterId(int &result) const = 0;
 	virtual SWIG_VOID(RESULT) getDemuxId(int &result) const = 0;
 };
-SWIG_TEMPLATE_TYPEDEF(ePtr<iStreamData>, iStreamDataPtr);
 
 class iStreamableService: public iObject
 {
@@ -790,7 +794,16 @@ public:
 };
 SWIG_TEMPLATE_TYPEDEF(ePtr<iStreamableService>, iStreamableServicePtr);
 
-SWIG_IGNORE(iStreamedService);
+class iStreamBufferInfo: public iObject
+{
+public:
+	virtual int getBufferPercentage() const = 0;
+	virtual int getAverageInputRate() const = 0;
+	virtual int getAverageOutputRate() const = 0;
+	virtual int getBufferSpace() const = 0;
+	virtual int getBufferSize() const = 0;
+};
+
 class iStreamedService: public iObject
 {
 #ifdef SWIG
@@ -798,7 +811,7 @@ class iStreamedService: public iObject
 	~iStreamedService();
 #endif
 public:
-	virtual PyObject *getBufferCharge()=0;
+	virtual ePtr<iStreamBufferInfo> getBufferCharge()=0;
 	virtual int setBufferSize(int size)=0;
 };
 SWIG_TEMPLATE_TYPEDEF(ePtr<iStreamedService>, iStreamedServicePtr);
