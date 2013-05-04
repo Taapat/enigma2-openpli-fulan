@@ -56,7 +56,6 @@ public:
 	long long getFileSize(const eServiceReference &ref);
 };
 
-#ifndef ENABLE_LIBEPLAYER3
 class eStreamBufferInfo: public iStreamBufferInfo
 {
 	DECLARE_REF(eStreamBufferInfo);
@@ -81,12 +80,16 @@ class eServiceMP3InfoContainer: public iServiceInfoContainer
 	DECLARE_REF(eServiceMP3InfoContainer);
 
 	double doubleValue;
+#ifndef ENABLE_LIBEPLAYER3
 	GstBuffer *bufferValue;
+#endif
 
 	unsigned char *bufferData;
 	unsigned int bufferSize;
+#ifndef ENABLE_LIBEPLAYER3
 #if GST_VERSION_MAJOR >= 1
 	GstMapInfo map;
+#endif
 #endif
 
 public:
@@ -97,9 +100,12 @@ public:
 	unsigned char *getBuffer(unsigned int &size) const;
 
 	void setDouble(double value);
+#ifndef ENABLE_LIBEPLAYER3
 	void setBuffer(GstBuffer *buffer);
+#endif
 };
 
+#ifndef ENABLE_LIBEPLAYER3
 typedef struct _GstElement GstElement;
 #endif
 
