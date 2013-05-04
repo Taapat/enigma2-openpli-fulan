@@ -23,7 +23,11 @@ noinst_PYTHON += \
 EXTRA_DIST += \
 	python/enigma_python.i \
 	python/python_service.i \
-	python/python_dvb.i
+	python/python_dvb.i \
+	python/python_base.i \
+	python/python_console.i \
+	python/python_pmt.i \
+	python/python/pcore.i
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/python/enigma_python.Pcpp@am__quote@
 

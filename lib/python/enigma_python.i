@@ -148,6 +148,8 @@ typedef long time_t;
 
 %include <lib/python/python_dvb.i>
 %include <lib/python/python_service.i>
+%include <lib/python/python_pmt.i>
+%include <lib/python/python_pcore.i>
 
 %immutable eSocketNotifier::activated;
 %include <lib/base/ebase.h>
@@ -185,6 +187,7 @@ typedef long time_t;
 %immutable iCryptoInfo::decodetime;
 %immutable iCryptoInfo::usedcardid;
 %immutable eTuxtxtApp::appClosed;
+%immutable iDVBChannel::receivedTsidOnid;
 %include <lib/base/message.h>
 %include <lib/base/etpm.h>
 %include <lib/driver/rc.h>
@@ -415,3 +418,6 @@ extern eApplication *getApplication();
 extern const char *getEnigmaVersionString();
 extern const char *getBoxType();
 extern void dump_malloc_stats(void);
+
+%include <lib/python/python_console.i>
+%include <lib/python/python_base.i>
