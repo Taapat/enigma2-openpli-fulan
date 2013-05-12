@@ -86,10 +86,8 @@ class eServiceMP3InfoContainer: public iServiceInfoContainer
 
 	unsigned char *bufferData;
 	unsigned int bufferSize;
-#ifndef ENABLE_LIBEPLAYER3
 #if GST_VERSION_MAJOR >= 1
 	GstMapInfo map;
-#endif
 #endif
 
 public:

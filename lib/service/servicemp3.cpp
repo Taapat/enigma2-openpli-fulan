@@ -1231,6 +1231,8 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 	unsigned long long int vpts = 0;
 	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_PTS, &vpts);
+	if (vpts<=0)
+		return -1;
 
 	/* len is in nanoseconds. we have 90 000 pts per second. */
 	pts = vpts>0?vpts:pts;;
@@ -2714,8 +2716,8 @@ error_out:
 
 RESULT eServiceMP3::disableSubtitles(eWidget *parent)
 {
-#ifndef ENABLE_LIBEPLAYER3
 	eDebug("eServiceMP3::disableSubtitles");
+#ifndef ENABLE_LIBEPLAYER3
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = m_currentSubtitleStream;
 	g_object_set (G_OBJECT (m_gst_playbin), "current-text", m_currentSubtitleStream, NULL);
