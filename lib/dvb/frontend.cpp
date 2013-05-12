@@ -1764,6 +1764,7 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			{
 				default:
 				case eDVBFrontendParametersTerrestrial::System_DVB_T: system = SYS_DVBT; break;
+				case eDVBFrontendParametersTerrestrial::System_DVB_T2: system = SYS_DVBT2; break;
 			}
 
 			p[cmdseq.num].cmd = DTV_DELIVERY_SYSTEM, p[cmdseq.num].u.data = system, cmdseq.num++;
