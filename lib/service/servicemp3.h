@@ -2,6 +2,7 @@
 #define __servicemp3_h
 
 #include <lib/base/message.h>
+#include <lib/base/elock.h>
 #include <lib/service/iservice.h>
 #include <lib/dvb/pmt.h>
 #include <lib/dvb/subtitle.h>
@@ -371,15 +372,23 @@ private:
 	static void eplayerCBsubtitleAvail(long int duration_ns, size_t len, char * buffer, void* user_data);
 #endif
 
-	struct SubtitlePage
+	struct subtitle_page_t
 	{
-		enum { Unknown, Pango, Vob } type;
-		ePangoSubtitlePage pango_page;
-		eVobSubtitlePage vob_page;
+		uint32_t start_ms;
+		uint32_t end_ms;
+		std::string text;
+
+		subtitle_page_t(uint32_t start_ms_in, uint32_t end_ms_in, std::string text_in)
+			: start_ms(start_ms_in), end_ms(end_ms_in), text(text_in)
+		{
+		}
 	};
 
-	std::list<SubtitlePage> m_subtitle_pages;
+	typedef std::map<uint32_t, subtitle_page_t> subtitle_pages_map_t;
+	typedef std::pair<uint32_t, subtitle_page_t> subtitle_pages_map_pair_t;
+	subtitle_pages_map_t m_subtitle_pages;
 	ePtr<eTimer> m_subtitle_sync_timer;
+	eSingleLock m_subtitle_lock;
 	
 	ePtr<eTimer> m_streamingsrc_timeout;
 	pts_t m_prev_decoder_time;
