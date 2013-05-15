@@ -2702,11 +2702,11 @@ exit:
 		eDebug("*** next timer = 0, set default timer!");
 		next_timer = 1000;
 	}
-#endif
 
 	m_subtitle_sync_timer->start(next_timer, true);
 
 	eDebug("\n\n");
+#endif
 }
 
 RESULT eServiceMP3::enableSubtitles(eWidget *parent, ePyObject tuple)
