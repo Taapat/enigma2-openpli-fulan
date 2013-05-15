@@ -28,9 +28,9 @@ def onMountpointAdded(mountpoint):
 		print "[Picon] Failed to investigate %s:" % mountpoint, ex
 
 def findPicon(serviceName):
-	for path in searchPaths:
-		if pathExists(path):
-			pngname = path + serviceName + ".png"
+	for piconPath in searchPaths:
+		if pathExists(piconPath):
+			pngname = piconPath + serviceName + ".png"
 			if pathExists(pngname):
 				return pngname
 	return ""
@@ -51,7 +51,6 @@ class Picon(Renderer):
 	def __init__(self):
 		Renderer.__init__(self)
 		self.pngname = ""
-		self.lastPath = None
 		pngname = findPicon("picon_default")
 		self.defaultpngname = None
 		if not pngname:

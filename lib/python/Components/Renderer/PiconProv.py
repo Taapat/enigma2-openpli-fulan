@@ -46,7 +46,6 @@ class PiconProv(Renderer):
 	def __init__(self):
 		Renderer.__init__(self)
 		self.pngname = ""
-		self.lastPath = None
 		pngname = findPicon("picon_default")
 		self.defaultpngname = None
 		if not pngname:
