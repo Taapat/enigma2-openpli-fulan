@@ -1,61 +1,37 @@
-import os
 from Renderer import Renderer
-from enigma import ePixmap
 from Tools.Alternatives import GetWithAlternative
-from Tools.Directories import pathExists, SCOPE_SKIN_IMAGE, SCOPE_CURRENT_SKIN, resolveFilename
-from Components.Harddisk import harddiskmanager
+from Tools.Directories import pathExists, SCOPE_SKIN_IMAGE, \
+	SCOPE_CURRENT_SKIN, resolveFilename
+
+from enigma import ePixmap
+from os import path, listdir
 
 searchPaths = []
-lastPiconPath = None
 
 def initPiconPaths():
 	global searchPaths
 	searchPaths = []
-	for mp in ('/usr/share/enigma2/', '/'):
+	for mp in ('/tmp/', '/media/hdd/', '/usr/share/enigma2/'):
 		onMountpointAdded(mp)
-	for part in harddiskmanager.getMountedPartitions():
-		onMountpointAdded(part.mountpoint)
 
 def onMountpointAdded(mountpoint):
 	global searchPaths
 	try:
-		path = os.path.join(mountpoint, 'picon') + '/'
-		if os.path.isdir(path) and path not in searchPaths:
-			for fn in os.listdir(path):
+		piconPath = path.join(mountpoint, 'picon') + '/'
+		if path.isdir(piconPath) and piconPath not in searchPaths:
+			for fn in listdir(piconPath):
 				if fn.endswith('.png'):
-					print "[Picon] adding path:", path
-					searchPaths.append(path)
+					print "[Picon] adding path:", piconPath
+					searchPaths.append(piconPath)
 					break
 	except Exception, ex:
 		print "[Picon] Failed to investigate %s:" % mountpoint, ex
 
-def onMountpointRemoved(mountpoint):
-	global searchPaths
-	path = os.path.join(mountpoint, 'picon') + '/'
-	try:
-		searchPaths.remove(path)
-		print "[Picon] removed path:", path
-	except:
-		pass
-
-def onPartitionChange(why, part):
-	if why == 'add':
-		onMountpointAdded(part.mountpoint)
-	elif why == 'remove':
-		onMountpointRemoved(part.mountpoint)
-
 def findPicon(serviceName):
-	global lastPiconPath
-	if lastPiconPath is not None:
-		pngname = lastPiconPath + serviceName + ".png"
-		if pathExists(pngname):
-			return pngname
-	global searchPaths
 	for path in searchPaths:
 		if pathExists(path):
 			pngname = path + serviceName + ".png"
 			if pathExists(pngname):
-				lastPiconPath = path
 				return pngname
 	return ""
 
@@ -84,7 +60,7 @@ class Picon(Renderer):
 				pngname = tmp
 			else:
 				pngname = resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/picon_default.png")
-		if os.path.getsize(pngname):
+		if path.getsize(pngname):
 			self.defaultpngname = pngname
 
 	def addPath(self, value):
@@ -122,5 +98,4 @@ class Picon(Renderer):
 					self.instance.hide()
 				self.pngname = pngname
 
-harddiskmanager.on_partition_list_change.append(onPartitionChange)
 initPiconPaths()
