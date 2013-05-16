@@ -1,5 +1,4 @@
 from Renderer import Renderer
-from Tools.Alternatives import GetWithAlternative
 from Tools.Directories import pathExists, SCOPE_SKIN_IMAGE, \
 	SCOPE_CURRENT_SKIN, resolveFilename
 
