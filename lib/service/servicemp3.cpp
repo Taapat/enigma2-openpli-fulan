@@ -364,7 +364,7 @@ int eServiceMP3::ac3_delay = 0,
     eServiceMP3::pcm_delay = 0;
 
 eServiceMP3::eServiceMP3(eServiceReference ref)
-	:m_ref(ref), m_pump(eApp, 1), m_subtitle_lock(false)
+	:m_ref(ref), m_pump(eApp, 1)
 {
 	m_subtitle_sync_timer = eTimer::create(eApp);
 	m_streamingsrc_timeout = 0;
@@ -2564,10 +2564,7 @@ void eServiceMP3::pullSubtitle(GstBuffer *buffer)
 
 				start_ms = ((buf_pos / 1000000ULL) * convert_fps) + delay;
 				end_ms = start_ms + (duration_ns / 1000000ULL);
-				{
-					eSingleLocker lock(m_subtitle_lock);
-					m_subtitle_pages.insert(subtitle_pages_map_pair_t(end_ms, subtitle_page_t(start_ms, end_ms, (const char *)line)));
-				}
+				m_subtitle_pages.insert(subtitle_pages_map_pair_t(end_ms, subtitle_page_t(start_ms, end_ms, (const char *)line)));
 				m_subtitle_sync_timer->start(1, true);
 			}
 			else
@@ -2605,7 +2602,6 @@ void eServiceMP3::pushSubtitles()
 	int32_t next_timer = 0, decoder_ms, start_ms, end_ms, diff_start_ms, diff_end_ms;
 	subtitle_pages_map_t::iterator current;
 	std::vector<ePangoSubtitlePageElement>::iterator element;
-	eSingleLocker lock(m_subtitle_lock);
 
 	// wait until clock is stable
 
@@ -2730,10 +2726,7 @@ RESULT eServiceMP3::enableSubtitles(eWidget *parent, ePyObject tuple)
 		g_object_set (G_OBJECT (m_gst_playbin), "current-text", -1, NULL);
 #endif
 		m_subtitle_sync_timer->stop();
-		{
-			eSingleLocker lock(m_subtitle_lock);
-			m_subtitle_pages.clear();
-		}
+		m_subtitle_pages.clear();
 		m_prev_decoder_time = -1;
 		m_decoder_time_valid_state = 0;
 #ifndef ENABLE_LIBEPLAYER3
@@ -2780,10 +2773,7 @@ RESULT eServiceMP3::disableSubtitles(eWidget *parent)
 	g_object_set (G_OBJECT (m_gst_playbin), "current-text", m_currentSubtitleStream, NULL);
 #endif
 	m_subtitle_sync_timer->stop();
-	{
-		eSingleLocker lock(m_subtitle_lock);
-		m_subtitle_pages.clear();
-	}
+	m_subtitle_pages.clear();
 	m_prev_decoder_time = -1;
 	m_decoder_time_valid_state = 0;
 	delete m_subtitle_widget;
