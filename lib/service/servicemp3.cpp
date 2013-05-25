@@ -2737,7 +2737,7 @@ RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &t
 	}
 #ifdef ENABLE_LIBEPLAYER3
 	if (player && player->playback)
-		player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&pid);
+		player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&track.pid);
 #endif
 
 	return 0;
