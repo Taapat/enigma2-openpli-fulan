@@ -24,11 +24,11 @@ eFilePushThread::eFilePushThread(int io_prio_class, int io_prio_level, int block
 	 m_stream_mode(0),
 	 m_blocksize(blocksize),
 	 m_buffersize(buffersize),
-	 m_buffer((unsigned char *)malloc(buffersize)),
+	 m_buffer((unsigned char*)malloc(m_buffersize)),
 	 m_messagepump(eApp, 0)
 {
 	if (m_buffer == NULL)
-		eFatal("Failed to allocate %d bytes", buffersize);
+		eFatal("Failed to allocate %d bytes", m_buffersize);
 	CONNECT(m_messagepump.recv_msg, eFilePushThread::recvEvent);
 }
 
@@ -43,6 +43,31 @@ static void signal_handler(int x)
 {
 }
 
+bool eFilePushThread::getNextSourceSpan(off_t current_offset, size_t bytes_read, off_t &current_span_offset, size_t &current_span_remaining)
+{
+	if (m_sg && !current_span_remaining)
+	{
+#if defined (__sh__) // tells the player to play in reverse
+#define VIDEO_DISCONTINUITY                   _IO('o', 84)
+#define DVB_DISCONTINUITY_SKIP                0x01
+#define DVB_DISCONTINUITY_CONTINUOUS_REVERSE  0x02
+		if ((m_sg->getSkipMode() != 0))
+		{
+			// inform the player about the jump in the stream data
+			// this only works if the video device allows the discontinuity ioctl in read-only mode (patched)
+			int param = DVB_DISCONTINUITY_SKIP; // | DVB_DISCONTINUITY_CONTINUOUS_REVERSE;
+			int rc = ioctl(fd_video, VIDEO_DISCONTINUITY, (void*)param);
+			//eDebug("VIDEO_DISCONTINUITY (fd %d, rc %d)", fd_video, rc);
+		}
+#endif
+		m_sg->getNextSourceSpan(m_current_position, bytes_read, current_span_offset, current_span_remaining);
+		ASSERT(!(current_span_remaining % m_blocksize));
+		m_current_position = current_span_offset;
+		return true;
+	}
+	return false;
+}
+
 void eFilePushThread::thread()
 {
 	if (m_buffer == NULL) {
@@ -52,7 +77,6 @@ void eFilePushThread::thread()
 
 	int eofcount = 0;
 	setIoPrio(prio_class, prio);
-	int buf_end = 0;
 
 	size_t bytes_read = 0;
 	off_t current_span_offset = 0;
@@ -77,34 +101,16 @@ void eFilePushThread::thread()
 #endif
 	while (!m_stop)
 	{
-		if (m_sg && !current_span_remaining)
+		int  read_len = 0;
+		if (getNextSourceSpan(m_current_position, bytes_read, current_span_offset, current_span_remaining))
 		{
-#if defined (__sh__) // tells the player to play in reverse
-#define VIDEO_DISCONTINUITY                   _IO('o', 84)
-#define DVB_DISCONTINUITY_SKIP                0x01
-#define DVB_DISCONTINUITY_CONTINUOUS_REVERSE  0x02
-			if ((m_sg->getSkipMode() != 0))
-			{
-				// inform the player about the jump in the stream data
-				// this only works if the video device allows the discontinuity ioctl in read-only mode (patched)
-				int param = DVB_DISCONTINUITY_SKIP; // | DVB_DISCONTINUITY_CONTINUOUS_REVERSE;
-				int rc = ioctl(fd_video, VIDEO_DISCONTINUITY, (void*)param);
-				//eDebug("VIDEO_DISCONTINUITY (fd %d, rc %d)", fd_video, rc);
-			}
-#endif
-			m_sg->getNextSourceSpan(m_current_position, bytes_read, current_span_offset, current_span_remaining);
-			ASSERT(!(current_span_remaining % m_blocksize));
-			m_current_position = current_span_offset;
 			bytes_read = 0;
 		}
 		
-		size_t maxread = m_buffersize;
-		
-			/* if we have a source span, don't read past the end */
-		if (m_sg && maxread > current_span_remaining)
-			maxread = current_span_remaining;
+		/* if we have a source span, don't read past the end */
+		const size_t maxread = (m_sg && m_buffersize > current_span_remaining)? current_span_remaining: m_buffersize;
 
-			/* align to blocksize */
+		/* align to blocksize */
 		maxread -= maxread % m_blocksize;
 
 		if (maxread)
@@ -114,42 +120,33 @@ void eFilePushThread::thread()
 			struct timeval now;
 			gettimeofday(&starttime, NULL);
 #endif
-			buf_end = m_source->read(m_current_position, m_buffer, maxread);
+			read_len = m_source->read(m_current_position, m_buffer, maxread);
 #ifdef SHOW_WRITE_TIME
 			gettimeofday(&now, NULL);
 			suseconds_t diff = (1000000 * (now.tv_sec - starttime.tv_sec)) + now.tv_usec - starttime.tv_usec;
 			eDebug("[eFilePushThread] read %d bytes time: %9u us", buf_end, (unsigned int)diff);
 #endif
-		}
-		else
-			buf_end = 0;
 
-		if (buf_end < 0)
-		{
-			buf_end = 0;
-			/* Check m_stop after interrupted syscall. */
-			if (m_stop) {
-				break;
-			}
-			if (errno == EINTR || errno == EBUSY || errno == EAGAIN)
-				continue;
-			if (errno == EOVERFLOW)
+			if (read_len < 0)
 			{
-				eWarning("OVERFLOW while playback?");
-				continue;
+				/* Check m_stop after interrupted syscall. */
+				if (m_stop) break;
+				if (errno == EINTR || errno == EBUSY || errno == EAGAIN) continue;
+				if (errno == EOVERFLOW)
+				{
+					eWarning("OVERFLOW while playback?");
+					continue;
+				}
+				eDebug("eFilePushThread *read error* (%m) - not yet handled");
+				read_len = 0;
 			}
-			eDebug("eFilePushThread *read error* (%m) - not yet handled");
-			continue; //not sure if we have to continue, but we can not let it go futher
+			/* a read might be mis-aligned in case of a short read. */
+			read_len -= (read_len % m_blocksize);
 		}
 
-			/* a read might be mis-aligned in case of a short read. */
-		int d = buf_end % m_blocksize;
-		if (d)
-			buf_end -= d;
-
-		if (buf_end == 0)
+		if (!read_len)
 		{
-				/* on EOF, try COMMITting once. */
+			/* on EOF, try COMMITting once. */
 			if (m_send_pvr_commit)
 			{
 				struct pollfd pfd;
@@ -160,37 +157,26 @@ void eFilePushThread::thread()
 					case 0:
 						eDebug("wait for driver eof timeout");
 #if defined(__sh__) // Fix to ensure that event evtEOF is called at end of playbackl part 2/3
-						if (already_empty)
-						{
-							break;
-						}
-						else
-						{
-							already_empty=true;
-							continue;
-						}
-#else
-						continue;
+						if (already_empty) break;
+						already_empty=true;
 #endif
+						continue;
 					case 1:
 						eDebug("wait for driver eof ok");
 						break;
 					default:
 						eDebug("wait for driver eof aborted by signal");
 						/* Check m_stop after interrupted syscall. */
-						if (m_stop)
-							break;
+						if (m_stop) break;
 						continue;
 				}
 			}
 
-			if (m_stop)
-				break;
+			if (m_stop) break;
 
-				/* in stream_mode, we are sending EOF events 
-				   over and over until somebody responds.
-				   
-				   in stream_mode, think of evtEOF as "buffer underrun occurred". */
+			/* in stream_mode, we are sending EOF events 
+			   over and over until somebody responds.
+			   in stream_mode, think of evtEOF as "buffer underrun occurred". */
 			sendEvent(evtEOF);
 
 			if (m_stream_mode)
@@ -209,42 +195,48 @@ void eFilePushThread::thread()
 		} else
 		{
 			/* Write data to mux */
-			int buf_start = 0;
-			filterRecordData(m_buffer, buf_end);
-			while ((buf_start != buf_end) && !m_stop)
+			filterRecordData(m_buffer, read_len);
+			unsigned char* buf_end = m_buffer + read_len;
+			int sent = 0;
+			while (read_len && !m_stop)
 			{
 				struct pollfd pfd;
                                 pfd.fd = m_fd_dest;
                                 pfd.events = POLLOUT;
-                                if (0 == poll(&pfd, 1, 50)) continue;
-				int w = write(m_fd_dest, m_buffer + buf_start, buf_end - buf_start);
+				const int p = poll(&pfd, 1, 1000);
+                                if (p <= 0)
+				{
+					if (p == 0 || (p < 0 && errno == EINTR)) continue;
+					break;
+					
+				}
+				const int w = write(m_fd_dest, buf_end - read_len, read_len);
 
-				if (w <= 0)
+				if (w > 0)
+				{
+					read_len -= w;
+					sent += w;
+				}
+				else
 				{
 					/* Check m_stop after interrupted syscall. */
-					if (m_stop) {
-						w = 0;
-						buf_start = 0;
-						buf_end = 0;
-						break;
-					}
+					if (m_stop) break;
 					if (w < 0 && (errno == EINTR || errno == EAGAIN || errno == EBUSY))
 						continue;
 					eDebug("eFilePushThread WRITE ERROR");
 					sendEvent(evtWriteError);
 					break;
 				}
-				buf_start += w;
 			}
 
 			eofcount = 0;
 #if defined(__sh__) // Fix to ensure that event evtEOF is called at end of playbackl part 3/3
 			already_empty=false;
 #endif
-			m_current_position+=buf_end;
+			m_current_position += sent;
 			if (m_sg) {
-				current_span_remaining -= buf_end;
-				bytes_read += buf_end;
+				current_span_remaining -= sent;
+				bytes_read += sent;
 			}
 		}
 	}

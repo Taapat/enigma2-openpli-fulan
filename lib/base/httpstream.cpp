@@ -17,9 +17,8 @@ eHttpStream::eHttpStream() :
 	,m_scratchSize(0)
 	,m_contentLength(0)
 	,m_contentServed(0)
-	,m_currentChunkSize(0)
+	,m_currentChunkSize(-1)
 	,m_tryToReconnect(false)
-	,m_chunkedTransfer(false)
 {
 }
 
@@ -178,7 +177,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		}
 	}
 
-	m_chunkedTransfer = (hdr.find("Transfer-Encoding: chunked") != std::string::npos);
+	m_currentChunkSize = (hdr.find("Transfer-Encoding: chunked") != std::string::npos)? 0: -1;
 	pos = hdr.find("Content-Length:");
 	if (pos != std::string::npos) {
 		std::string clen = hdr.substr(pos+strlen("Content-Length:"));
@@ -212,7 +211,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		}
 	}
 
-	if (m_chunkedTransfer) {
+	if (!m_currentChunkSize) {
 		eDebug("%s: chunked transfer enabled", __FUNCTION__);
 		if (m_scratch == NULL) { m_scratchSize=64; m_scratch=(char*)malloc(m_scratchSize);}
 		int c = readLine(m_streamSocket, &m_scratch, &m_scratchSize);
@@ -224,7 +223,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	m_rbuffer.reset();
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
 	if (toWrite > 0) {
-		if (m_chunkedTransfer) toWrite = MIN(toWrite, m_currentChunkSize);
+		if (m_currentChunkSize > 0) toWrite = MIN(toWrite, m_currentChunkSize);
 		toWrite = timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 2000, 50);
 		if (toWrite > 0) {
 			eDebug("%s: writting %i bytes to the ring buffer", __FUNCTION__, toWrite);
@@ -234,12 +233,8 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 			m_rbuffer.ptrWriteCommit(toWrite);
 			m_rbuffer.skip(skipBytes);
 
-			if (m_chunkedTransfer) {
+			if (m_currentChunkSize > 0) {
 				m_currentChunkSize -= toWrite;
-                                if (m_currentChunkSize==0){
-                                        int rc = readLine(m_streamSocket, &m_scratch, &m_scratchSize);
-                                        eDebug("%s: reading the end of the chunk rc(%i)(%s)", __FUNCTION__, rc, m_scratch);
-                                }
 			}
 		}
 	}
@@ -275,16 +270,19 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 	}
 	
 
-	int read2Chunks=2;
 READAGAIN:
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
 	eDebug("%s: Ring buffer available to write %i", __FUNCTION__, toWrite);
 	if (toWrite > 0) {
 
-		if (m_chunkedTransfer){
-			if (m_currentChunkSize==0) {
-				int c = readLine(m_streamSocket, &m_scratch, &m_scratchSize);
-				if (c <= 0) return -1;
+		if (m_currentChunkSize >= 0){
+			if (!m_currentChunkSize) {
+				int c;
+				do {
+					if ((c = eSocketBase::readLine(m_streamSocket, &m_scratch, &m_scratchSize)) < 0) {
+				        	return -1;
+					}
+				}while (!c); /* skip CR LF from last chunk */
 				m_currentChunkSize = strtol(m_scratch, NULL, 16);
 				if (m_currentChunkSize == 0) return -1;
 			}
@@ -298,14 +296,8 @@ READAGAIN:
 		}
 		if (toWrite > 0) {
 			m_rbuffer.ptrWriteCommit(toWrite);
-			if (m_chunkedTransfer) {
-                                --read2Chunks;
+			if (m_currentChunkSize > 0) {
 				m_currentChunkSize -= toWrite;
-				if (m_currentChunkSize==0){
-					readLine(m_streamSocket, &m_scratch, &m_scratchSize);
-				} else if (read2Chunks > 0) {
-					goto READAGAIN;
-				}
 			}
 			//try to reconnect on next failure
 			m_tryToReconnect = true;

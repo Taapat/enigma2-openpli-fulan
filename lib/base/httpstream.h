@@ -24,7 +24,6 @@ class eHttpStream: public iTsSource, public Object
 	size_t m_currentChunkSize;
 
 	bool m_tryToReconnect;
-	bool m_chunkedTransfer;
 
 	int openUrl(const std::string& url, std::string &newurl);
 	int _open(const std::string& url);
