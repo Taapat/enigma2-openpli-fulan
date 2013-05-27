@@ -639,6 +639,8 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 		;
 	else if (!strncmp("file://", m_ref.path.c_str(), 7))
 		;
+	else if (!strncmp("udp://", m_ref.path.c_str(), 6))
+		;
 	else
 		strcat(file, "file://");
 	strcat(file, m_ref.path.c_str());
@@ -1220,10 +1222,11 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 #else
 	if (player && player->playback && !player->playback->isPlaying)
 	{
-		eDebug("eServiceMP3::%s !!!!EOF!!!! < -1", __func__);
+		eDebug("eServiceMP3::%s !!!!EOF!!!!", __func__);
 		if(m_state == stRunning)
 			m_event((iPlayableService*)this, evEOF);
 		pts = 0;
+		eDebug("eServiceMP3::%s !!!!EOF!!!! return -1", __func__);
 		return -1;
 	}
 
