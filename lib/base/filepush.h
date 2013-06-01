@@ -65,7 +65,6 @@ private:
 	eFixedMessagePump<int> m_messagepump;
 
 	void recvEvent(const int &evt);
-	bool getNextSourceSpan(off_t current_offset, size_t bytes_read, off_t &start, size_t &size);
 };
 
 class eFilePushThreadRecorder: public eThread, public Object
