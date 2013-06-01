@@ -279,7 +279,7 @@ READAGAIN:
 			if (!m_currentChunkSize) {
 				int c;
 				do {
-					if ((c = readLine(m_streamSocket, &m_scratch, &m_scratchSize)) < 0) {
+					if ((c = eSocketBase::readLine(m_streamSocket, &m_scratch, &m_scratchSize)) < 0) {
 				        	return -1;
 					}
 				}while (!c); /* skip CR LF from last chunk */
