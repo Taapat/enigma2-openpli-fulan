@@ -53,7 +53,7 @@ from RecordTimer import RecordTimerEntry, RecordTimer, findSafeRecordPath
 from Menu import MainMenu, mdom
 
 def isStandardInfoBar(self):
-	return ".InfoBar'>" in `self`
+	return self.__class__.__name__ == "InfoBar"
 
 def setResumePoint(session):
 	global resumePointCache, resumePointCacheLast
@@ -1442,7 +1442,7 @@ class InfoBarPVRState:
 		self.force_show = force_show
 
 	def _mayShow(self):
-		if self.execing and self.seekstate != self.SEEK_STATE_PLAY:
+		if self.shown and self.seekstate != self.SEEK_STATE_PLAY:
 			self.pvrStateDialog.show()
 
 	def __playStateChanged(self, state):
@@ -1462,7 +1462,7 @@ class InfoBarTimeshiftState(InfoBarPVRState):
 		self.__hideTimer.callback.append(self.__hideTimeshiftState)
 
 	def _mayShow(self):
-		if self.execing and self.timeshiftEnabled():
+		if self.shown and self.timeshiftEnabled():
 			self.pvrStateDialog.show()
 			if self.seekstate == self.SEEK_STATE_PLAY and not self.shown:
 				self.__hideTimer.start(5*1000, True)
@@ -2131,15 +2131,18 @@ class InfoBarInstantRecord:
 						 "\n" + _("No HDD found or HDD not initialized!"), MessageBox.TYPE_ERROR)
 			return
 
-		common =((_("Add recording (stop after current event)"), "event"),
-		(_("Add recording (indefinitely)"), "indefinitely"),
-		(_("Add recording (enter recording duration)"), "manualduration"),
-		(_("Add recording (enter recording endtime)"), "manualendtime"),)
+		if isStandardInfoBar(self):
+			common = ((_("Add recording (stop after current event)"), "event"),
+				(_("Add recording (indefinitely)"), "indefinitely"),
+				(_("Add recording (enter recording duration)"), "manualduration"),
+				(_("Add recording (enter recording endtime)"), "manualendtime"),)
+		else:
+			common = ()
 		if self.isInstantRecordRunning():
 			title =_("A recording is currently running.\nWhat do you want to do?")
 			list = ((_("Stop recording"), "stop"),) + common + \
-			((_("Change recording (duration)"), "changeduration"),
-			(_("Change recording (endtime)"), "changeendtime"),)
+				((_("Change recording (duration)"), "changeduration"),
+				(_("Change recording (endtime)"), "changeendtime"),)
 			if self.isTimerRecordRunning():
 				list += ((_("Stop timer recording"), "timer"),)
 			list += ((_("Do nothing"), "no"),)
@@ -2148,11 +2151,15 @@ class InfoBarInstantRecord:
 			list = common
 			if self.isTimerRecordRunning():
 				list += ((_("Stop timer recording"), "timer"),)
-			list += ((_("Do not record"), "no"),)
-		if self.timeshiftEnabled():
+			if isStandardInfoBar(self):
+				list += ((_("Do not record"), "no"),)
+		if isStandardInfoBar(self) and self.timeshiftEnabled():
 			list = list + ((_("Save timeshift file"), "timeshift"),
-			(_("Save timeshift file in movie directory"), "timeshift_movie"))
-		self.session.openWithCallback(self.recordQuestionCallback, ChoiceBox,title=title,list=list)
+				(_("Save timeshift file in movie directory"), "timeshift_movie"))
+		if list:
+			self.session.openWithCallback(self.recordQuestionCallback, ChoiceBox, title=title, list=list)
+		else:
+			return 0
 
 from Tools.ISO639 import LanguageCodes
 
