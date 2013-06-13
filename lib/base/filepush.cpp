@@ -43,13 +43,13 @@ static void signal_handler(int x)
 {
 }
 
+void eFilePushThread::thread()
+{
 	if (m_buffer == NULL) {
 		eFatal("Failed to allocate %d bytes", m_buffersize);
 		return;
 	}
 
-void eFilePushThread::thread()
-{
 	int eofcount = 0;
 	setIoPrio(prio_class, prio);
 	int buf_end = 0;
