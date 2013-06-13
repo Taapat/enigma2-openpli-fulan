@@ -5,6 +5,7 @@ from Components.AVSwitch import AVSwitch
 from Components.SystemInfo import SystemInfo
 from Tools import Notifications
 from GlobalActions import globalActionMap
+import RecordTimer
 from enigma import eDVBVolumecontrol, eTimer
 from subprocess import call
 
@@ -92,7 +93,9 @@ class Standby(Screen):
 			self.paused_service.unPauseService()
 		self.session.screen["Standby"].boolean = False
 		globalActionMap.setEnabled(True)
-		Notifications.RemovePopup(id = "RecordTimerQuitMainloop")
+		if RecordTimer.RecordTimerEntry.receiveRecordEvents:
+			Notifications.RemovePopup(id = "RecordTimerQuitMainloop")
+			RecordTimer.RecordTimerEntry.stopTryQuitMainloop()
 
 	def __onFirstExecBegin(self):
 		global inStandby
