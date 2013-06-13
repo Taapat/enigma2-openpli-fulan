@@ -610,8 +610,8 @@ class Network:
 			return True
 
 		# r871x_usb_drv on kernel 2.6.12 is not identifiable over /sys/class/net/'ifacename'/wireless so look also inside /proc/net/wireless
-		if os_path.exists('/proc/net/wireless'):
-			device = re_compile('[a-z]{2,}[0-9]*:')
+		if os.path.exists('/proc/net/wireless'):
+			device = re.compile('[a-z]{2,}[0-9]*:')
 			ifnames = []
 			fp = open('/proc/net/wireless', 'r')
 			for line in fp:
