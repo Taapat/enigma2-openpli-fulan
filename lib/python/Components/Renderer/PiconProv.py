@@ -3,7 +3,7 @@ from Tools.Directories import pathExists, SCOPE_SKIN_IMAGE, \
 	SCOPE_CURRENT_SKIN, resolveFilename
 
 from enigma import ePixmap
-from os import path, listdir
+import os
 
 searchPaths = []
 
@@ -16,9 +16,9 @@ def initPiconPaths():
 def onMountpointAdded(mountpoint):
 	global searchPaths
 	try:
-		piconPath = path.join(mountpoint, 'piconProv') + '/'
-		if path.isdir(piconPath) and piconPath not in searchPaths:
-			for fn in listdir(piconPath):
+		piconPath = os.path.join(mountpoint, 'piconProv') + '/'
+		if os.path.isdir(piconPath) and piconPath not in searchPaths:
+			for fn in os.listdir(piconPath):
 				if fn.endswith('.png'):
 					print "[PiconProv] adding path:", piconPath
 					searchPaths.append(piconPath)
@@ -53,7 +53,7 @@ class PiconProv(Renderer):
 				pngname = tmp
 			else:
 				pngname = resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/picon_default.png")
-		if path.getsize(pngname):
+		if os.path.getsize(pngname):
 			self.defaultpngname = pngname
 
 	def addPath(self, value):
@@ -92,3 +92,4 @@ class PiconProv(Renderer):
 				self.pngname = pngname
 
 initPiconPaths()
+
