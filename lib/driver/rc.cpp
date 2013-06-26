@@ -148,7 +148,7 @@ bool eRCInputEventDriver::hasCap(unsigned char *caps, int bit)
 
 bool eRCInputEventDriver::isKeyboard()
 {
-#ifdef VUPLUS_RC_WORKAROUND
+#if defined (VUPLUS_RC_WORKAROUND) || (ENABLE_SPARK) || (ENABLE_SPARK7162)
 	return(false);
 #else
 	/* check whether the input device has KEY_A, in which case we assume it is a keyboard */
@@ -158,7 +158,7 @@ bool eRCInputEventDriver::isKeyboard()
 
 bool eRCInputEventDriver::isPointerDevice()
 {
-#ifdef VUPLUS_RC_WORKAROUND
+#if defined (VUPLUS_RC_WORKAROUND) || (ENABLE_SPARK) || (ENABLE_SPARK7162)
 	return(false);
 #else
 	return hasCap(evCaps, EV_REL) || hasCap(evCaps, EV_ABS);
