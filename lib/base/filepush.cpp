@@ -247,7 +247,8 @@ void eFilePushThread::thread()
 				bytes_read += buf_end;
 			}
 		}
-	}
+		eSingleLocker lock(m_run_mutex);
+		}
 #if defined(__sh__) // closes video device for the reverse playback workaround
 	close(fd_video);
 #endif
