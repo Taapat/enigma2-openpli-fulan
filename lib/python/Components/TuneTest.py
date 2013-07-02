@@ -5,8 +5,8 @@ class Tuner:
 		self.frontend = frontend
 		self.ignore_rotor = ignore_rotor
 
-	# transponder = (frequency, symbolrate, polarisation, fec, inversion, orbpos, system, modulation, rolloff, pilot, is_id, tsid, onid)
-	#                    0         1             2         3       4         5       6        7          8       9      10    11   12
+	# transponder = (frequency, symbolrate, polarisation, fec, inversion, orbpos, system, modulation, rolloff, pilot, is_id, pls_mode, pls_code, tsid, onid)
+	#                    0         1             2         3       4         5       6        7          8       9      10    11        12        13    14
 	def tune(self, transponder):
 		if self.frontend:
 			print "tuning to transponder with data", transponder
@@ -22,6 +22,8 @@ class Tuner:
 			parm.rolloff = transponder[8]
 			parm.pilot = transponder[9]
 			parm.is_id = transponder[10]
+			parm.pls_mode = transponder[11]
+			parm.pls_code = transponder[12]
 			feparm = eDVBFrontendParameters()
 			feparm.setDVBS(parm, self.ignore_rotor)
 			self.lastparm = feparm
@@ -206,8 +208,8 @@ class TuneTest:
 		self.progressCallback((self.getProgressLength(), self.tuningtransponder, self.STATUS_START, self.currTuned))
 		self.timer.start(100, True)
 	
-	# transponder = (frequency, symbolrate, polarisation, fec, inversion, orbpos, <system>, <modulation>, <rolloff>, <pilot>, <is_id>, <tsid>, <onid>)
-	#                    0         1             2         3       4         5       6        7              8         9        10       11      12
+	# transponder = (frequency, symbolrate, polarisation, fec, inversion, orbpos, system, modulation, rolloff, pilot, is_id, pls_mode, pls_code, tsid, onid)
+	#                    0         1             2         3       4         5       6        7          8       9      10    11        12        13    14
 	def addTransponder(self, transponder):
 		self.transponderlist.append(transponder)
 		

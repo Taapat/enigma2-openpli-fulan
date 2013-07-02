@@ -102,22 +102,41 @@ class ServiceScan:
 					elif tp_type == iDVBFrontend.feTerrestrial:
 						network = _("Terrestrial")
 						tp = transponder.getDVBT()
-						tp_text = ("%s %s %d %s") %(
-							{
-								tp.System_DVB_T : "DVB-T",
-								tp.System_DVB_T2 : "DVB-T2"
-							}.get(tp.system, ""),
-							{
-								tp.Modulation_QPSK : "QPSK",
-								tp.Modulation_QAM16 : "QAM16", tp.Modulation_QAM64 : "QAM64",
-								tp.Modulation_Auto : "AUTO", tp.Modulation_QAM256 : "QAM256"
-							}.get(tp.modulation, ""),
-							tp.frequency,
-							{
-								tp.Bandwidth_8MHz : "Bw 8MHz", tp.Bandwidth_7MHz : "Bw 7MHz", tp.Bandwidth_6MHz : "Bw 6MHz",
-								tp.Bandwidth_Auto : "Bw Auto", tp.Bandwidth_5MHz : "Bw 5MHz",
-								tp.Bandwidth_1_712MHz : "Bw 1.712MHz", tp.Bandwidth_10MHz : "Bw 10MHz"
-							}.get(tp.bandwidth, ""))
+						if tp.plp_id > -1 and tp.system == tp.System_DVB_T2:
+							tp_text = ("%s %s %d %s PLP %d") %( 
+								{ 
+									tp.System_DVB_T : "DVB-T",
+									tp.System_DVB_T2 : "DVB-T2"
+								}.get(tp.system, ""),
+								{ 
+									tp.Modulation_QPSK : "QPSK",
+									tp.Modulation_QAM16 : "QAM16", tp.Modulation_QAM64 : "QAM64",
+									tp.Modulation_Auto : "AUTO", tp.Modulation_QAM256 : "QAM256"
+								}.get(tp.modulation, ""),
+								tp.frequency / 1000,
+								{
+									tp.Bandwidth_8MHz : "Bw 8MHz", tp.Bandwidth_7MHz : "Bw 7MHz", tp.Bandwidth_6MHz : "Bw 6MHz",
+									tp.Bandwidth_Auto : "Bw Auto", tp.Bandwidth_5MHz : "Bw 5MHz",
+									tp.Bandwidth_1_712MHz : "Bw 1.712MHz", tp.Bandwidth_10MHz : "Bw 10MHz"
+								}.get(tp.bandwidth, ""),
+								tp.plp_id)
+						else:
+							tp_text = ("%s %s %d %s") %( 
+								{ 
+									tp.System_DVB_T : "DVB-T",
+									tp.System_DVB_T2 : "DVB-T2"
+								}.get(tp.system, ""),
+								{ 
+									tp.Modulation_QPSK : "QPSK",
+									tp.Modulation_QAM16 : "QAM16", tp.Modulation_QAM64 : "QAM64",
+									tp.Modulation_Auto : "AUTO", tp.Modulation_QAM256 : "QAM256"
+								}.get(tp.modulation, ""),
+								tp.frequency / 1000,
+								{
+									tp.Bandwidth_8MHz : "Bw 8MHz", tp.Bandwidth_7MHz : "Bw 7MHz", tp.Bandwidth_6MHz : "Bw 6MHz",
+									tp.Bandwidth_Auto : "Bw Auto", tp.Bandwidth_5MHz : "Bw 5MHz",
+									tp.Bandwidth_1_712MHz : "Bw 1.712MHz", tp.Bandwidth_10MHz : "Bw 10MHz"
+								}.get(tp.bandwidth, ""))
 					else:
 						print "unknown transponder type in scanStatusChanged"
 				self.network.setText(network)

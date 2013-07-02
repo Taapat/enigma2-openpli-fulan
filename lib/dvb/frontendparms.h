@@ -49,7 +49,7 @@ struct eDVBFrontendParametersSatellite
 
 	bool no_rotor_command_on_tune;
 	unsigned int frequency, symbol_rate;
-	int polarisation, fec, inversion, orbital_position, system, modulation, rolloff, pilot, is_id;
+	int polarisation, fec, inversion, orbital_position, system, modulation, rolloff, pilot, is_id, pls_mode, pls_code;
 };
 SWIG_ALLOW_OUTPUT_SIMPLE(eDVBFrontendParametersSatellite);
 
@@ -98,7 +98,7 @@ struct eDVBFrontendParametersTerrestrial
 	 * (and it's too late to fix this now, we would break backward compatibility)
 	 */
 	enum {
-		FEC_1_2=0, FEC_2_3=1, FEC_3_4=2, FEC_5_6=3, FEC_7_8=4, FEC_Auto=5, FEC_6_7=6, FEC_8_9=7
+		FEC_1_2=0, FEC_2_3=1, FEC_3_4=2, FEC_5_6=3, FEC_7_8=4, FEC_Auto=5, FEC_3_5=6, FEC_4_5=7
 	};
 
 	enum {
@@ -106,11 +106,11 @@ struct eDVBFrontendParametersTerrestrial
 	};
 
 	enum {
-		TransmissionMode_2k, TransmissionMode_8k, TransmissionMode_Auto, TransmissionMode_4k
+		TransmissionMode_2k, TransmissionMode_8k, TransmissionMode_Auto, TransmissionMode_1k, TransmissionMode_4k, TransmissionMode_16k, TransmissionMode_32k
 	};
 
 	enum {
-		GuardInterval_1_32, GuardInterval_1_16, GuardInterval_1_8, GuardInterval_1_4, GuardInterval_Auto
+		GuardInterval_1_32, GuardInterval_1_16, GuardInterval_1_8, GuardInterval_1_4, GuardInterval_Auto, GuardInterval_1_128, GuardInterval_19_128, GuardInterval_19_256
 	};
 
 	enum {
@@ -134,7 +134,7 @@ struct eDVBFrontendParametersTerrestrial
 	int hierarchy;
 	int inversion;
 	int system;
-	int plpid;
+	int plp_id;
 };
 SWIG_ALLOW_OUTPUT_SIMPLE(eDVBFrontendParametersTerrestrial);
 

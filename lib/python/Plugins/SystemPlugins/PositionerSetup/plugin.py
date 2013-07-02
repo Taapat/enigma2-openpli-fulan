@@ -154,7 +154,9 @@ class PositionerSetup(Screen):
 			cur.get("modulation", eDVBFrontendParametersSatellite.Modulation_QPSK),
 			cur.get("rolloff", eDVBFrontendParametersSatellite.RollOff_alpha_0_35),
 			cur.get("pilot", eDVBFrontendParametersSatellite.Pilot_Unknown),
-			cur.get("is_id", 0))
+			cur.get("is_id", 0),
+			cur.get("pls_mode", eDVBFrontendParametersSatellite.PLS_Root),
+			cur.get("pls_code", 1))
 
 		self.tuner.tune(tp)
 		self.isMoving = False
@@ -1219,6 +1221,8 @@ class TunerScreen(ConfigListScreen, Screen):
 				self.list.append(getConfigListEntry(_('Roll-off'), self.scan_sat.rolloff))
 				self.list.append(getConfigListEntry(_('Pilot'), self.scan_sat.pilot))
 				self.list.append(getConfigListEntry(_('Input Stream ID'), self.scan_sat.is_id))
+				self.list.append(getConfigListEntry(_("PLS Mode"), self.scan_sat.pls_mode))
+				self.list.append(getConfigListEntry(_('PLS Code'), self.scan_sat.pls_code))
 		else: # "predefined_transponder"
 			self.list.append(getConfigListEntry(_("Transponder"), self.tuning.transponder))
 			currtp = self.transponderToString([None, self.scan_sat.frequency.value, self.scan_sat.symbolrate.value, self.scan_sat.polarization.value])
@@ -1282,7 +1286,9 @@ class TunerScreen(ConfigListScreen, Screen):
 				self.scan_sat.modulation.value,
 				self.scan_sat.rolloff.value,
 				self.scan_sat.pilot.value,
-				self.scan_sat.is_id.value)
+				self.scan_sat.is_id.value,
+				self.scan_sat.pls_mode.value,
+				self.scan_sat.pls_code.value)
 		elif self.tuning.type.value == "predefined_transponder":
 			transponder = nimmanager.getTransponders(satpos)[self.tuning.transponder.index]
 			returnvalue = (transponder[1] / 1000, transponder[2] / 1000,

@@ -13,7 +13,11 @@
 #endif
 
 #ifndef DTV_STREAM_ID
-#define DTV_STREAM_ID DTV_ISDBS_TS_ID
+	#define DTV_STREAM_ID DTV_ISDBS_TS_ID
+#endif
+
+#ifndef NO_STREAM_ID_FILTER
+	#define NO_STREAM_ID_FILTER	(~0U)
 #endif
 
 #define eDebugNoSimulate(x...) \
@@ -106,16 +110,20 @@ void eDVBFrontendParametersSatellite::set(const SatelliteDeliverySystemDescripto
 		modulation = Modulation_QPSK;
 	}
 	rolloff = descriptor.getRollOff();
+	is_id = NO_STREAM_ID_FILTER;
+	pls_mode = 0; pls_code = 1;
 	if (system == System_DVB_S2)
 	{
-		eDebug("SAT DVB-S2 freq %d, %s, pos %d, sr %d, fec %d, modulation %d, rolloff %d is_id %d",
+		eDebug("SAT DVB-S2 freq %d, %s, pos %d, sr %d, fec %d, modulation %d, rolloff %d, is_id %d, pls_mode %d, pls_code %d",
 			frequency,
 			polarisation ? "hor" : "vert",
 			orbital_position,
 			symbol_rate, fec,
 			modulation,
 			rolloff,
-			is_id);
+			is_id,
+			pls_mode,
+			pls_code);
 	}
 	else
 	{
@@ -190,7 +198,7 @@ void eDVBFrontendParametersTerrestrial::set(const TerrestrialDeliverySystemDescr
 		modulation = Modulation_Auto;
 	inversion = Inversion_Unknown;
 	system = System_DVB_T;
-	plpid = 0;
+	plp_id = 0;
 	eDebug("Terr freq %d, bw %d, cr_hp %d, cr_lp %d, tm_mode %d, guard %d, hierarchy %d, const %d",
 		frequency, bandwidth, code_rate_HP, code_rate_LP, transmission_mode,
 		guard_interval, hierarchy, modulation);
@@ -295,6 +303,10 @@ RESULT eDVBFrontendParameters::calculateDifference(const iDVBFrontendParameters 
 			else if (sat.polarisation != osat.polarisation)
 				diff = 1<<28;
 			else if (sat.is_id != osat.is_id)
+				diff = 1<<27;
+			else if (sat.pls_mode != osat.pls_mode)
+				diff = 1<<27;
+			else if (sat.pls_code != osat.pls_code)
 				diff = 1<<27;
 			else if (exact && sat.fec != osat.fec && sat.fec != eDVBFrontendParametersSatellite::FEC_Auto && osat.fec != eDVBFrontendParametersSatellite::FEC_Auto)
 				diff = 1<<27;
@@ -1057,6 +1069,11 @@ int eDVBFrontend::readFrontendData(int type)
 			return (FE_HAS_SYNC | FE_HAS_LOCK);
 		}
 		case iFrontendInformation_ENUMS::frequency:
+			PutToDict(dict, "pls_mode", feparm.pls_mode);
+			PutToDict(dict, "pls_code", feparm.pls_code);
+		PutToDict(dict, "plp_id", feparm.plp_id);
+			{
+			}
 		{
 			struct dtv_property p;
 			struct dtv_properties cmdseq;
@@ -1701,7 +1718,7 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			{
 				p[cmdseq.num].cmd = DTV_ROLLOFF, p[cmdseq.num].u.data = rolloff, cmdseq.num++;
 				p[cmdseq.num].cmd = DTV_PILOT, p[cmdseq.num].u.data = pilot, cmdseq.num++;
-				p[cmdseq.num].cmd = DTV_STREAM_ID, p[cmdseq.num].u.data = parm.is_id, cmdseq.num++;
+				p[cmdseq.num].cmd = DTV_STREAM_ID, p[cmdseq.num].u.data = parm.is_id | (parm.pls_code << 8) | (parm.pls_mode << 26), cmdseq.num++;
 			}
 		}
 		else if (type == iDVBFrontend::feCable)
@@ -1792,12 +1809,12 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			switch (parm.code_rate_LP)
 			{
 				case eDVBFrontendParametersTerrestrial::FEC_1_2: p[cmdseq.num].u.data = FEC_1_2; break;
+				case eDVBFrontendParametersTerrestrial::FEC_3_5: p[cmdseq.num].u.data = FEC_3_5; break;
 				case eDVBFrontendParametersTerrestrial::FEC_2_3: p[cmdseq.num].u.data = FEC_2_3; break;
 				case eDVBFrontendParametersTerrestrial::FEC_3_4: p[cmdseq.num].u.data = FEC_3_4; break;
+				case eDVBFrontendParametersTerrestrial::FEC_4_5: p[cmdseq.num].u.data = FEC_4_5; break;
 				case eDVBFrontendParametersTerrestrial::FEC_5_6: p[cmdseq.num].u.data = FEC_5_6; break;
-				case eDVBFrontendParametersTerrestrial::FEC_6_7: p[cmdseq.num].u.data = FEC_6_7; break;
 				case eDVBFrontendParametersTerrestrial::FEC_7_8: p[cmdseq.num].u.data = FEC_7_8; break;
-				case eDVBFrontendParametersTerrestrial::FEC_8_9: p[cmdseq.num].u.data = FEC_8_9; break;
 				default:
 				case eDVBFrontendParametersTerrestrial::FEC_Auto: p[cmdseq.num].u.data = FEC_AUTO; break;
 			}
@@ -1807,12 +1824,12 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			switch (parm.code_rate_HP)
 			{
 				case eDVBFrontendParametersTerrestrial::FEC_1_2: p[cmdseq.num].u.data = FEC_1_2; break;
+				case eDVBFrontendParametersTerrestrial::FEC_3_5: p[cmdseq.num].u.data = FEC_3_5; break;
 				case eDVBFrontendParametersTerrestrial::FEC_2_3: p[cmdseq.num].u.data = FEC_2_3; break;
 				case eDVBFrontendParametersTerrestrial::FEC_3_4: p[cmdseq.num].u.data = FEC_3_4; break;
+				case eDVBFrontendParametersTerrestrial::FEC_4_5: p[cmdseq.num].u.data = FEC_4_5; break;
 				case eDVBFrontendParametersTerrestrial::FEC_5_6: p[cmdseq.num].u.data = FEC_5_6; break;
-				case eDVBFrontendParametersTerrestrial::FEC_6_7: p[cmdseq.num].u.data = FEC_6_7; break;
 				case eDVBFrontendParametersTerrestrial::FEC_7_8: p[cmdseq.num].u.data = FEC_7_8; break;
-				case eDVBFrontendParametersTerrestrial::FEC_8_9: p[cmdseq.num].u.data = FEC_8_9; break;
 				default:
 				case eDVBFrontendParametersTerrestrial::FEC_Auto: p[cmdseq.num].u.data = FEC_AUTO; break;
 			}
@@ -1868,9 +1885,7 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			p[cmdseq.num].cmd = DTV_BANDWIDTH_HZ, p[cmdseq.num].u.data = parm.bandwidth, cmdseq.num++;
 			if (system == SYS_DVBT2)
 			{
-#ifdef DTV_DVBT2_PLP_ID
-				p[cmdseq.num].cmd = DTV_DVBT2_PLP_ID, p[cmdseq.num].u.data = parm.plpid, cmdseq.num++;
-#endif
+				p[cmdseq.num].cmd = DTV_STREAM_ID, p[cmdseq.num].u.data = parm.plp_id, cmdseq.num++;
 			}
 		}
 		else if (type == iDVBFrontend::feATSC)
@@ -1934,7 +1949,7 @@ RESULT eDVBFrontend::prepare_sat(const eDVBFrontendParametersSatellite &feparm, 
 	res = m_sec->prepare(*this, feparm, satfrequency, 1 << m_slotid, tunetimeout);
 	if (!res)
 	{
-		eDebugNoSimulate("prepare_sat System %d Freq %d Pol %d SR %d INV %d FEC %d orbpos %d system %d modulation %d pilot %d, rolloff %d, is_id %d",
+		eDebugNoSimulate("prepare_sat System %d Freq %d Pol %d SR %d INV %d FEC %d orbpos %d system %d modulation %d pilot %d, rolloff %d, is_id %d, pls_mode %d, pls_code %d",
 			feparm.system,
 			feparm.frequency,
 			feparm.polarisation,
@@ -1946,7 +1961,9 @@ RESULT eDVBFrontend::prepare_sat(const eDVBFrontendParametersSatellite &feparm, 
 			feparm.modulation,
 			feparm.pilot,
 			feparm.rolloff,
-			feparm.is_id);
+			feparm.is_id,
+			feparm.pls_mode,
+			feparm.pls_code);
 		if ((unsigned int)satfrequency < fe_info.frequency_min || (unsigned int)satfrequency > fe_info.frequency_max)
 		{
 			eDebugNoSimulate("%d mhz out of tuner range.. dont tune", satfrequency / 1000);

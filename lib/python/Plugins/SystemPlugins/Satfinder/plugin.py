@@ -108,6 +108,8 @@ class Satfinder(ScanSetup):
 				self.list.append(getConfigListEntry(_('Roll-off'), self.scan_sat.rolloff))
 				self.list.append(getConfigListEntry(_('Pilot'), self.scan_sat.pilot))
 				self.list.append(getConfigListEntry(_('Input Stream ID'), self.scan_sat.is_id))
+				self.list.append(getConfigListEntry(_("PLS Mode"), self.scan_sat.pls_mode))
+				self.list.append(getConfigListEntry(_('PLS Code'), self.scan_sat.pls_code))
 		elif self.tuning_transponder and self.tuning_type.value == "predefined_transponder":
 			self.list.append(getConfigListEntry(_("Transponder"), self.tuning_transponder))
 		self["config"].list = self.list
@@ -144,7 +146,9 @@ class Satfinder(ScanSetup):
 				self.scan_sat.modulation.value,
 				self.scan_sat.rolloff.value,
 				self.scan_sat.pilot.value,
-				self.scan_sat.is_id.value)
+				self.scan_sat.is_id.value,
+				self.scan_sat.pls_mode.value,
+				self.scan_sat.pls_code.value)
 			self.tune(returnvalue)
 		elif self.tuning_type.value == "predefined_transponder":
 			tps = nimmanager.getTransponders(satpos)
@@ -170,7 +174,7 @@ class Satfinder(ScanSetup):
 			self.scan_sat.inversion, self.scan_sat.symbolrate,
 			self.scan_sat.polarization, self.scan_sat.fec, self.scan_sat.pilot,
 			self.scan_sat.fec_s2, self.scan_sat.fec, self.scan_sat.modulation,
-			self.scan_sat.rolloff, self.scan_sat.system, self.scan_sat.is_id):
+			self.scan_sat.rolloff, self.scan_sat.system, self.scan_sat.is_id, self.scan_sat.pls_mode, self.scan_sat.pls_code):
 			x.addNotifier(self.retune, initial_call = False)
 
 	def updateSats(self):
