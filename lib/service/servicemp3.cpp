@@ -1514,31 +1514,31 @@ std::string eServiceMP3::getInfoString(int w)
 	switch (w)
 	{
 	case sTagTitle:
-		tag = "Title";
+		tag = strdup("Title");
 		break;
 	case sTagArtist:
-		tag = "Artist";
+		tag = strdup("Artist");
 		break;
 	case sTagAlbum:
-		tag = "Album";
+		tag = strdup("Album");
 		break;
 	case sTagComment:
-		tag = "Comment";
+		tag = strdup("Comment");
 		break;
 	case sTagTrackNumber:
-		tag = "Track";
+		tag = strdup("Track");
 		break;
 	case sTagGenre:
-		tag = "Genre";
+		tag = strdup("Genre");
 		break;
 	case sTagDate:
-		tag = "Year";
+		tag = strdup("Year");
 		break;
 	case sTagVideoCodec:
-		tag = "VideoType";
+		tag = strdup("VideoType");
 		break;
 	case sTagAudioCodec:
-		tag = "AudioType";
+		tag = strdup("AudioType");
 		break;
 	default:
 		return "";
