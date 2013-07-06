@@ -47,6 +47,10 @@ struct eDVBFrontendParametersSatellite
 		Pilot_Off, Pilot_On, Pilot_Unknown
 	};
 
+	enum {
+		PLS_Root, PLS_Gold, PLS_Combo, PLS_Unknown
+	};
+
 	bool no_rotor_command_on_tune;
 	unsigned int frequency, symbol_rate;
 	int polarisation, fec, inversion, orbital_position, system, modulation, rolloff, pilot, is_id, pls_mode, pls_code;
