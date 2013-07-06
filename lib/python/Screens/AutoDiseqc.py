@@ -108,9 +108,12 @@ class AutoDiseqc(Screen, ConfigListScreen):
 	SAT_TABLE_MODULATION = 7
 	SAT_TABLE_ROLLOFF = 8
 	SAT_TABLE_PILOT = 9
-	SAT_TABLE_TSID = 10
-	SAT_TABLE_ONID = 11
-	SAT_TABLE_NAME = 12
+	SAT_TABLE_IS_ID = 10
+	SAT_TABLE_PLS_MODE = 11
+	SAT_TABLE_PLS_CODE = 12
+	SAT_TABLE_TSID = 13
+	SAT_TABLE_ONID = 14
+	SAT_TABLE_NAME = 15
 
 	def __init__(self, session, feid, nr_of_ports, simple_tone, simple_sat_change):
 		self.skin = AutoDiseqc.skin
