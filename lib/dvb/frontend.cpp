@@ -1069,11 +1069,6 @@ int eDVBFrontend::readFrontendData(int type)
 			return (FE_HAS_SYNC | FE_HAS_LOCK);
 		}
 		case iFrontendInformation_ENUMS::frequency:
-			PutToDict(dict, "pls_mode", feparm.pls_mode);
-			PutToDict(dict, "pls_code", feparm.pls_code);
-		PutToDict(dict, "plp_id", feparm.plp_id);
-			{
-			}
 		{
 			struct dtv_property p;
 			struct dtv_properties cmdseq;
