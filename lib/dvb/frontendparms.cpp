@@ -451,7 +451,6 @@ int eDVBTerrestrialTransponderData::getCodeRateLp() const
 	case FEC_1_2: return eDVBFrontendParametersTerrestrial::FEC_1_2;
 	case FEC_3_5: return eDVBFrontendParametersTerrestrial::FEC_3_5;
 	case FEC_2_3: return eDVBFrontendParametersTerrestrial::FEC_2_3;
-	case FEC_2_3: return eDVBFrontendParametersTerrestrial::FEC_2_3;
 	case FEC_3_4: return eDVBFrontendParametersTerrestrial::FEC_3_4;
 	case FEC_4_5: return eDVBFrontendParametersTerrestrial::FEC_4_5;
 	case FEC_5_6: return eDVBFrontendParametersTerrestrial::FEC_5_6;
