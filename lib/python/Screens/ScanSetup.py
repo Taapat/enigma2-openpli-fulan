@@ -703,7 +703,6 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 				(eDVBFrontendParametersTerrestrial.Modulation_Auto, _("Auto"))])
 			self.scan_ter.transmission = ConfigSelection(default = defaultTer["transmission_mode"], choices = [
 				(eDVBFrontendParametersTerrestrial.TransmissionMode_2k, "2K"),
-				(eDVBFrontendParametersTerrestrial.TransmissionMode_4k, "4K"),
 				(eDVBFrontendParametersTerrestrial.TransmissionMode_8k, "8K"),
 				(eDVBFrontendParametersTerrestrial.TransmissionMode_Auto, _("Auto"))])
 			self.scan_ter.transmission_t2 = ConfigSelection(default = defaultTer["transmission_mode"], choices = [
