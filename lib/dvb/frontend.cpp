@@ -1069,22 +1069,6 @@ int eDVBFrontend::readFrontendData(int type)
 			return (FE_HAS_SYNC | FE_HAS_LOCK);
 		}
 		case iFrontendInformation_ENUMS::frequency:
-		PutToDict(dict, "system", feparm.system);
-					case FEC_3_5: tmp = eDVBFrontendParametersTerrestrial::FEC_3_5; break;
-					case FEC_4_5: tmp = eDVBFrontendParametersTerrestrial::FEC_4_5; break;
-					case FEC_3_5: tmp = eDVBFrontendParametersTerrestrial::FEC_3_5; break;
-					case FEC_4_5: tmp = eDVBFrontendParametersTerrestrial::FEC_4_5; break;
-#if 0
-					case TRANSMISSION_MODE_1K: tmp = eDVBFrontendParametersTerrestrial::TransmissionMode_1k; break;
-					case TRANSMISSION_MODE_4K: tmp = eDVBFrontendParametersTerrestrial::TransmissionMode_4k; break;
-					case TRANSMISSION_MODE_16K: tmp = eDVBFrontendParametersTerrestrial::TransmissionMode_16k; break;
-					case TRANSMISSION_MODE_32K: tmp = eDVBFrontendParametersTerrestrial::TransmissionMode_32k; break;
-#endif
-#if 0
-					case GUARD_INTERVAL_1_128: tmp = eDVBFrontendParametersTerrestrial::GuardInterval_1_128; break;
-					case GUARD_INTERVAL_19_128: tmp = eDVBFrontendParametersTerrestrial::GuardInterval_19_128; break;
-					case GUARD_INTERVAL_19_256: tmp = eDVBFrontendParametersTerrestrial::GuardInterval_19_256; break;
-#endif
 		{
 			struct dtv_property p;
 			struct dtv_properties cmdseq;
@@ -1097,9 +1081,6 @@ int eDVBFrontend::readFrontendData(int type)
 				return 0;
 			}
 			return p.u.data + m_data[FREQ_OFFSET];
-			case DTV_STREAM_ID:
-				PutToDict(dict, "plp_id", p[i].u.data);
-				break;
 		}
 	}
 	return 0;
