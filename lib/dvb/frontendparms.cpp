@@ -191,6 +191,21 @@ int eDVBTransponderData::getHierarchyInformation() const
 	return -1;
 }
 
+int eDVBTransponderData::getIsId() const
+{
+	return -1;
+}
+
+int eDVBTransponderData::getPlsMode() const
+{
+	return -1;
+}
+
+int eDVBTransponderData::getPlsCode() const
+{
+	return -1;
+}
+
 DEFINE_REF(eDVBSatelliteTransponderData);
 
 eDVBSatelliteTransponderData::eDVBSatelliteTransponderData(struct dtv_property *dtvproperties, unsigned int propertycount, eDVBFrontendParametersSatellite &transponderparms, int frequencyoffset, bool original)
@@ -311,6 +326,21 @@ int eDVBSatelliteTransponderData::getSystem() const
 	case SYS_DVBS: return eDVBFrontendParametersSatellite::System_DVB_S;
 	case SYS_DVBS2: return eDVBFrontendParametersSatellite::System_DVB_S2;
 	}
+}
+
+int eDVBSatelliteTransponderData::getIsId() const
+{
+	return transponderParameters.is_id;
+}
+
+int eDVBSatelliteTransponderData::getPlsMode() const
+{
+	return transponderParameters.pls_mode;
+}
+
+int eDVBSatelliteTransponderData::getPlsCode() const
+{
+	return transponderParameters.pls_code;
 }
 
 DEFINE_REF(eDVBCableTransponderData);

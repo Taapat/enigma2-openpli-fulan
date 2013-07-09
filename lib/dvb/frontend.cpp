@@ -1117,7 +1117,7 @@ void eDVBFrontend::getTransponderData(ePtr<iDVBTransponderData> &dest, bool orig
 			p[cmdseq.num++].cmd = DTV_INNER_FEC;
 			p[cmdseq.num++].cmd = DTV_ROLLOFF;
 			p[cmdseq.num++].cmd = DTV_PILOT;
-				p[cmdseq.num++].cmd = DTV_STREAM_ID;
+			p[cmdseq.num++].cmd = DTV_STREAM_ID;
 		}
 		else if (type == feCable)
 		{
