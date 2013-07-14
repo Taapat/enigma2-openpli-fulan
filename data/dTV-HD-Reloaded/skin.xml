@@ -844,7 +844,8 @@
       <convert type="ClockToText">Default</convert>
     </widget>
     <eLabel position="750,0" size="2,518" backgroundColor="grey" />
-    <widget name="epg_description" position="30,30" size="700,458" font="Regular; 20" backgroundColor="black" transparent="1" />
+    <widget name="epg_description" position="30,30" size="700,230" font="Regular; 20" backgroundColor="black" transparent="1" />
+    <widget name="FullDescription" position="30,270" size="700,230" font="Regular; 20" backgroundColor="black" transparent="1" />
     <eLabel position="0,518" size="1100,2" backgroundColor="grey" />
     <ePixmap pixmap="dTV-HD-Reloaded/button.png" position=" 20,532" zPosition="1" size="250,38" />
     <ePixmap pixmap="dTV-HD-Reloaded/button.png" position="290,532" zPosition="1" size="250,38" />
@@ -865,14 +866,16 @@
       <convert type="EventTime">Progress</convert>
     </widget>
     <ePixmap position="835,113" size="180,15" zPosition="1" pixmap="dTV-HD-Reloaded/slider_back.png" alphatest="blend" />
-    <widget source="session.Event_Next" render="Label" position="760,139" size="330,48" font="Regular; 22" halign="center" foregroundColor="darkgrey">
+    <widget name="duration" position="890,134" size="80,22" />
+    <widget source="session.Event_Next" render="Label" position="760,170" size="330,48" font="Regular; 22" halign="center" foregroundColor="darkgrey">
       <convert type="EventName">Name</convert>
     </widget>
-    <widget source="session.Event_Next" render="Label" position="856,194" size="60,22" foregroundColor="darkgrey" font="Regular; 20" halign="right">
+    <widget source="session.Event_Next" render="Label" position="856,225" size="60,22" foregroundColor="darkgrey" font="Regular; 20" halign="right">
       <convert type="EventTime">StartTime</convert>
       <convert type="ClockToText">Default</convert>
     </widget>
-    <widget source="session.Event_Next" render="Label" position="945,194" size="60,22" font="Regular; 20" foregroundColor="darkgrey">
+    <eLabel name="fromto" position="920,225" size="20,22" font="Regular; 20" halign="center" text="-" foregroundColor="darkgrey" />
+    <widget source="session.Event_Next" render="Label" position="945,225" size="60,22" font="Regular; 20" foregroundColor="darkgrey">
       <convert type="EventTime">EndTime</convert>
       <convert type="ClockToText">Default</convert>
     </widget>
@@ -900,7 +903,7 @@
     <widget source="session.CurrentService" render="Label" position="925,450" size="150,21" font="Regular; 18" foregroundColor="grey" zPosition="2">
       <convert type="CaidInfo2">%P</convert>
     </widget>
-    <eLabel name="new eLabel" position="920,194" size="20,22" font="Regular; 20" halign="center" text="-" foregroundColor="darkgrey" />
+    <widget name="FullDescription" position="30,270" size="700,230" font="Regular; 20" backgroundColor="black" transparent="1" />
   </screen>
   <screen name="genuineDreambox" position="center,74" size="742,572" title="Genuine Dreambox" backgroundColor="transparent2" flags="wfNoBorder">
     <ePixmap pixmap="dTV-HD-Reloaded/menu/menuback.png" position="1,1" size="740,570" zPosition="-5" alphatest="on" />
@@ -963,10 +966,12 @@
       <convert type="ClockToText">
       </convert>
     </widget>
-    <ePixmap pixmap="dTV-HD-Reloaded/button.png" position="290,532" zPosition="1" size="250,38" />
-    <ePixmap pixmap="dTV-HD-Reloaded/button.png" position="560,532" zPosition="1" size="250,38" />
-    <widget name="key_red" position="290,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="red" backgroundColor="black" transparent="1" />
-    <widget name="key_green" position="560,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="green" backgroundColor="black" transparent="1" />
+    <ePixmap pixmap="dTV-HD-Reloaded/button.png" position="160,532" zPosition="1" size="250,38" />
+    <ePixmap pixmap="dTV-HD-Reloaded/button.png" position="690,532" zPosition="1" size="250,38" />
+    <ePixmap pixmap="dTV-HD-Reloaded/button.png" position="425,531" zPosition="1" size="250,38" />
+    <widget name="key_red" position="160,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="red" backgroundColor="black" transparent="1" />
+    <widget name="key_green" position="690,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="green" backgroundColor="black" transparent="1" />
+    <widget name="key_yellow" position="425,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="yellow" backgroundColor="black" transparent="1" />
   </screen>
   <screen name="HarddiskSelection" position="center,74" size="742,572" title="Select HDD" backgroundColor="transparent2" flags="wfNoBorder">
     <ePixmap pixmap="dTV-HD-Reloaded/menu/menuback.png" position="1,1" size="740,570" zPosition="-5" alphatest="on" />
