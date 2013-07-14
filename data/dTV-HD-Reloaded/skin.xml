@@ -1113,9 +1113,12 @@
     <eLabel position="780,0" size="2,518" backgroundColor="grey" />
     <eLabel position="1098,0" size="2,518" backgroundColor="grey" />
     <widget name="waitingtext" position="10,20" size="760,450" zPosition="4" font="Regular;22" halign="center" valign="center" />
+    <widget name="chosenletter" position="10,20" size="760,450" zPosition="4" font="Regular;50" halign="center" valign="center" />
     <widget name="list" position="10,20" size="760,450" scrollbarMode="showOnDemand" selectionPixmap="dTV-HD-Reloaded/menu/select780_75.png" backgroundPixmap="dTV-HD-Reloaded/menu/sep1080.png" transparent="1" />
     <ePixmap pixmap="dTV-HD-Reloaded/menu/sep1080.png" position="10,470" size="760,1" />
-    <widget name="freeDiskSpace" position="10,485" size="760,25" font="Regular;22" halign="center" />
+    <widget name="freeDiskSpace" position="85,485" size="675,25" font="Regular;22" halign="center" />
+    <widget name="movie_sort" pixmaps="dTV-HD-Reloaded/icons/az.png,dTV-HD-Reloaded/icons/newtop.png,dTV-HD-Reloaded/icons/shuffle.png,dTV-HD-Reloaded/icons/za.png,dTV-HD-Reloaded/icons/oldtop.png,dTV-HD-Reloaded/icons/faz.png,dTV-HD-Reloaded/icons/fza.png" position="10,485" zPosition="10" size="35,20" transparent="1" alphatest="on" />
+    <widget name="movie_off" pixmaps="dTV-HD-Reloaded/icons/ask.png,dTV-HD-Reloaded/icons/movielist.png,dTV-HD-Reloaded/icons/quit.png,dTV-HD-Reloaded/icons/pause.png,dTV-HD-Reloaded/icons/playlist.png,dTV-HD-Reloaded/icons/playlistquit.png,dTV-HD-Reloaded/icons/loop.png,dTV-HD-Reloaded/icons/rep.png" position="50,485" zPosition="10" size="35,20" transparent="1" alphatest="on" />
     <widget source="Service" render="Label" position="790,10" zPosition="1" size="300,50" font="Regular;24" halign="center" foregroundColor="white">
       <convert type="MovieInfo">RecordServiceName</convert>
     </widget>
