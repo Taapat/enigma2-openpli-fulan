@@ -839,13 +839,8 @@
     <eLabel position="1098,0" size="2,518" backgroundColor="grey" />
     <widget name="channel" position="760,20" size="330,26" font="Regular; 24" backgroundColor="black" transparent="1" halign="center" />
     <widget name="datetime" position="881,485" size="200,22" font="Regular;22" halign="right" backgroundColor="black" transparent="1" />
-    <widget source="session.Event_Now" render="Label" position="769,109" size="60,22" font="Regular; 20" halign="right" backgroundColor="black" transparent="1">
-      <convert type="EventTime">StartTime</convert>
-      <convert type="ClockToText">Default</convert>
-    </widget>
     <eLabel position="750,0" size="2,518" backgroundColor="grey" />
-    <widget name="epg_description" position="30,30" size="700,230" font="Regular; 20" backgroundColor="black" transparent="1" />
-    <widget name="FullDescription" position="30,270" size="700,230" font="Regular; 20" backgroundColor="black" transparent="1" />
+    <widget name="epg_description" position="30,30" size="700,460" font="Regular; 20" backgroundColor="black" transparent="1" />
     <eLabel position="0,518" size="1100,2" backgroundColor="grey" />
     <ePixmap pixmap="dTV-HD-Reloaded/button.png" position=" 20,532" zPosition="1" size="250,38" />
     <ePixmap pixmap="dTV-HD-Reloaded/button.png" position="290,532" zPosition="1" size="250,38" />
@@ -858,15 +853,19 @@
     <widget source="session.Event_Now" render="Label" position="760,54" size="330,48" font="Regular; 22" foregroundColor="yellow" halign="center">
       <convert type="EventName">Name</convert>
     </widget>
-    <widget source="session.Event_Now" render="Label" position="1020,109" size="60,22" font="Regular; 20" halign="left">
+    <widget name="duration" position="890,109" size="80,22" font="Regular; 20" />
+    <widget source="session.Event_Now" render="Label" position="769,134" size="60,22" font="Regular; 20" halign="right" backgroundColor="black" transparent="1">
+      <convert type="EventTime">StartTime</convert>
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <widget source="session.Event_Now" render="Progress" position="835,138" size="180,15" zPosition="2" pixmap="dTV-HD-Reloaded/slider.png" transparent="1">
+      <convert type="EventTime">Progress</convert>
+    </widget>
+    <ePixmap position="835,138" size="180,15" zPosition="1" pixmap="dTV-HD-Reloaded/slider_back.png" alphatest="blend" />
+    <widget source="session.Event_Now" render="Label" position="1020,134" size="60,22" font="Regular; 20" halign="left">
       <convert type="EventTime">EndTime</convert>
       <convert type="ClockToText">Default</convert>
     </widget>
-    <widget source="session.Event_Now" render="Progress" position="835,113" size="180,15" zPosition="2" pixmap="dTV-HD-Reloaded/slider.png" transparent="1">
-      <convert type="EventTime">Progress</convert>
-    </widget>
-    <ePixmap position="835,113" size="180,15" zPosition="1" pixmap="dTV-HD-Reloaded/slider_back.png" alphatest="blend" />
-    <widget name="duration" position="890,134" size="80,22" />
     <widget source="session.Event_Next" render="Label" position="760,170" size="330,48" font="Regular; 22" halign="center" foregroundColor="darkgrey">
       <convert type="EventName">Name</convert>
     </widget>
@@ -903,7 +902,6 @@
     <widget source="session.CurrentService" render="Label" position="925,450" size="150,21" font="Regular; 18" foregroundColor="grey" zPosition="2">
       <convert type="CaidInfo2">%P</convert>
     </widget>
-    <widget name="FullDescription" position="30,270" size="700,230" font="Regular; 20" backgroundColor="black" transparent="1" />
   </screen>
   <screen name="genuineDreambox" position="center,74" size="742,572" title="Genuine Dreambox" backgroundColor="transparent2" flags="wfNoBorder">
     <ePixmap pixmap="dTV-HD-Reloaded/menu/menuback.png" position="1,1" size="740,570" zPosition="-5" alphatest="on" />
