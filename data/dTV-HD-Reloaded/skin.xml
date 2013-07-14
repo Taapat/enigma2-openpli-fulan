@@ -565,7 +565,7 @@
       <convert type="EventTime">Progress</convert>
     </widget>
     <widget source="ServiceEvent" render="Label" position="792,180" zPosition="1" size="322,235" font="Regular; 18" foregroundColor="foreground">
-      <convert type="EventName">ExtendedDescription</convert>
+      <convert type="EventName">FullDescription</convert>
     </widget>
     <eLabel position="0,518" size="1120,2" backgroundColor="grey" />
     <ePixmap pixmap="dTV-HD-Reloaded/button.png" position=" 30,532" zPosition="1" size="250,38" />
@@ -793,7 +793,7 @@
     <eLabel position="0,518" size="1100,2" backgroundColor="grey" />
     <eLabel position="800,0" size="2,518" backgroundColor="grey" />
     <widget source="Event" render="Label" position="810,20" size="280,464" font="Regular;20" foregroundColor="white" backgroundColor="black" transparent="1">
-      <convert type="EventName">ExtendedDescription</convert>
+      <convert type="EventName">FullDescription</convert>
     </widget>
     <ePixmap pixmap="skin_default/icons/clock.png" position="1005,495" zPosition="1" size="14,14" alphatest="on" />
     <widget source="global.CurrentTime" render="Label" position="1025,490" zPosition="1" size="70,20" font="Regular;22" halign="center">
@@ -959,7 +959,7 @@
       <convert type="EventTime">Progress</convert>
     </widget>
     <widget source="Event" render="Label" position="540,400" zPosition="1" size="570,100" font="Regular;18" foregroundColor="foreground">
-      <convert type="EventName">ExtendedDescription</convert>
+      <convert type="EventName">FullDescription</convert>
     </widget>
     <ePixmap pixmap="skin_default/icons/clock.png" position="1025,547" zPosition="1" size="14,14" alphatest="on" />
     <widget source="global.CurrentTime" render="Label" position="1045,542" zPosition="1" size="70,20" font="Regular;22" halign="center">
@@ -1135,7 +1135,7 @@
       <convert type="ClockToText">AsLength</convert>
     </widget>
     <widget source="Service" render="Label" position="790,166" zPosition="1" size="300,344" font="Regular;20" foregroundColor="foreground">
-      <convert type="EventName">ExtendedDescription</convert>
+      <convert type="EventName">FullDescription</convert>
     </widget>
     <eLabel position="0,518" size="1100,2" backgroundColor="grey" />
     <ePixmap pixmap="dTV-HD-Reloaded/button.png" position=" 20,532" zPosition="1" size="250,38" />
@@ -2543,7 +2543,7 @@ self.instance.move(ePoint(orgpos.x() + (orgwidth - newwidth)/2, orgpos.y()))
       <convert type="ClockToText">AsLength</convert>
     </widget>
     <widget source="Service" render="Label" position="790,166" zPosition="1" size="300,344" font="Regular;20" foregroundColor="foreground">
-      <convert type="EventName">ExtendedDescription</convert>
+      <convert type="EventName">FullDescription</convert>
     </widget>
     <eLabel position="0,518" size="1100,2" backgroundColor="grey" />
     <ePixmap pixmap="dTV-HD-Reloaded/button.png" position=" 20,532" zPosition="1" size="250,38" />
