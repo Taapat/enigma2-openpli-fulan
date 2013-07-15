@@ -1,5 +1,5 @@
 <skin>
-	<!-- dTV-HD-Reloaded Skin by Kerni-->
+	<!-- dTV-HD-Reloaded Skin by Kerni, modificed by Taapat-->
 	<!-- This skin and all it's graphics are free. -->
 	<!-- You can modify and redistribute it as long as you keep this License for the skin and all of your modifications -->
 	<output id="0">
@@ -3101,5 +3101,43 @@ self.instance.move(ePoint(orgpos.x() + (orgwidth - newwidth)/2, orgpos.y()))
 			<convert type="ConfigEntryTest">config.usage.blinking_display_clock_during_recording,True,CheckSourceBoolean</convert>
 			<convert type="ConditionalShowHide">Blink</convert>
 		</widget>
+	</screen>
+	<screen name="AltCamManager" position="center,center" size="700,450" title="SoftCam manager">
+		<eLabel position="0,0" size="700,2" backgroundColor="grey" />
+		<eLabel position="0,0" size="2,345" backgroundColor="grey" />
+		<eLabel position="698,0" size="2,345" backgroundColor="grey" />
+		<eLabel position="0,345" size="700,2" backgroundColor="grey" />
+		<eLabel position="390,0" size="2,345" backgroundColor="grey" />
+		<widget source="list" render="Listbox" position="20,19" size="350,300" zPosition="10" scrollbarMode="showOnDemand" selectionPixmap="dTV-HD-Reloaded/menu/select1080_60.png">
+			<convert type="TemplatedMultiContent">
+				{
+					"template": [MultiContentEntryPixmapAlphaTest(pos=(5, 5), size=(51, 40), png=1),
+						MultiContentEntryText(pos=(65, 10), size=(275, 40), font=0, flags=RT_HALIGN_LEFT, text=0),
+						MultiContentEntryText(pos=(5, 25), size=(51, 16), font=1, flags=RT_HALIGN_CENTER, text=2),],
+					"fonts": [gFont("Regular", 26), gFont("Regular", 12)], 
+					"itemHeight": 50
+				}
+			</convert>
+		</widget>
+		<eLabel halign="center" position="440,15" size="210,35" font="Regular;20" text="Ecm info" transparent="1" />
+		<widget name="status" position="410,65" size="270,260" font="Regular;16" halign="left" noWrap="1" />
+		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="100,362" zPosition="1" size="250,38" />
+		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="380,362" zPosition="1" size="250,38" />
+		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="100,411" zPosition="1" size="250,38" />
+		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="380,411" zPosition="1" size="250,38" />
+		<widget name="key_red" position="100,361" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="red" backgroundColor="black" transparent="1" />
+		<widget name="key_green" position="380,361" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="green" backgroundColor="black" transparent="1" />
+		<widget name="key_yellow" position="100,410" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="yellow" backgroundColor="black" transparent="1" />
+		<widget name="key_blue" position="380,410" zPosition="2" size="250,38" font="Regular;23" halign="center" valign="center" foregroundColor="blue" backgroundColor="black" transparent="1" />
+	</screen>
+	<screen name="ConfigEdit" position="center,350" size="602,285" title="SoftCam path configuration">
+		<eLabel position="0,0" size="600,2" backgroundColor="grey" zPosition="5" />
+		<eLabel position="0,0" size="2,150" backgroundColor="grey" zPosition="5" />
+		<eLabel position="600,0" size="2,150" backgroundColor="grey" zPosition="5" />
+		<widget name="config" position="20,20" size="570,100" zPosition="1" scrollbarMode="showOnDemand" selectionPixmap="dTV-HD-Reloaded/menu/select1080_25.png" transparent="1" />
+		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position=" 55,249" zPosition="1" size="250,38" />
+		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="325,249" zPosition="1" size="250,38" />
+		<widget source="key_red" render="Label" position=" 55,248" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="red" backgroundColor="black" transparent="1" />
+		<widget source="key_green" render="Label" position="325,248" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="green" backgroundColor="black" transparent="1" />
 	</screen>
 </skin>
