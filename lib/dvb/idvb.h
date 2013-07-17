@@ -469,6 +469,9 @@ public:
 	virtual int getRolloff() const = 0;
 	virtual int getPilot() const = 0;
 	virtual int getSystem() const = 0;
+	virtual int getIsId() const = 0;
+	virtual int getPLSMode() const = 0;
+	virtual int getPLSCode() const = 0;
 	virtual int getBandwidth() const = 0;
 	virtual int getCodeRateLp() const = 0;
 	virtual int getCodeRateHp() const = 0;
@@ -476,9 +479,7 @@ public:
 	virtual int getTransmissionMode() const = 0;
 	virtual int getGuardInterval() const = 0;
 	virtual int getHierarchyInformation() const = 0;
-	virtual int getIsId() const = 0;
-	virtual int getPlsMode() const = 0;
-	virtual int getPlsCode() const = 0;
+	virtual int getPlpId() const = 0;
 };
 
 class iDVBFrontendData: public iDVBFrontend_ENUMS, public iObject

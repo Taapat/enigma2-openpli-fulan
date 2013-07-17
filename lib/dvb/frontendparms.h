@@ -12,6 +12,14 @@
 
 #include <linux/dvb/frontend.h>
 
+#ifndef DTV_STREAM_ID
+	#define DTV_STREAM_ID DTV_ISDBS_TS_ID
+#endif
+
+#ifndef NO_STREAM_ID_FILTER
+	#define NO_STREAM_ID_FILTER	(~0U)
+#endif
+
 struct eDVBFrontendParametersSatellite
 {
 #ifndef SWIG
@@ -204,6 +212,9 @@ public:
 	int getRolloff() const;
 	int getPilot() const;
 	int getSystem() const;
+	int getIsId() const;
+	int getPLSMode() const;
+	int getPLSCode() const;
 	int getBandwidth() const;
 	int getCodeRateLp() const;
 	int getCodeRateHp() const;
@@ -211,9 +222,7 @@ public:
 	int getTransmissionMode() const;
 	int getGuardInterval() const;
 	int getHierarchyInformation() const;
-	int getIsId() const;
-	int getPlsMode() const;
-	int getPlsCode() const;
+	int getPlpId() const;
 };
 
 class eDVBSatelliteTransponderData : public eDVBTransponderData
@@ -238,8 +247,8 @@ public:
 	int getPilot() const;
 	int getSystem() const;
 	int getIsId() const;
-	int getPlsMode() const;
-	int getPlsCode() const;
+	int getPLSMode() const;
+	int getPLSCode() const;
 };
 
 class eDVBCableTransponderData : public eDVBTransponderData
@@ -280,6 +289,7 @@ public:
 	int getGuardInterval() const;
 	int getHierarchyInformation() const;
 	int getSystem() const;
+	int getPlpId() const;
 };
 
 class eDVBATSCTransponderData : public eDVBTransponderData

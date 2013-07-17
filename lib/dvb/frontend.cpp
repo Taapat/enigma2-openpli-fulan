@@ -12,14 +12,6 @@
 #define I2C_SLAVE_FORCE	0x0706
 #endif
 
-#ifndef DTV_STREAM_ID
-	#define DTV_STREAM_ID DTV_ISDBS_TS_ID
-#endif
-
-#ifndef NO_STREAM_ID_FILTER
-	#define NO_STREAM_ID_FILTER	(~0U)
-#endif
-
 #define eDebugNoSimulate(x...) \
 	do { \
 		if (!m_simulate) \
@@ -767,12 +759,7 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 {
 	int sat_max = 1600; // for stv0288 / bsbe2
 	int ret = 0x12345678;
-	if (strstr(m_description, "STV090x Multistandard"))
-	{
-		ret = (int)(snr / 32.768);
-		sat_max = 2000;
-	}	
-	else if (!strcmp(m_description, "AVL2108")) // ET9000
+	if (!strcmp(m_description, "AVL2108")) // ET9000
 	{
 		ret = (int)(snr / 40.5);
 		sat_max = 1618;
@@ -1117,7 +1104,6 @@ void eDVBFrontend::getTransponderData(ePtr<iDVBTransponderData> &dest, bool orig
 			p[cmdseq.num++].cmd = DTV_INNER_FEC;
 			p[cmdseq.num++].cmd = DTV_ROLLOFF;
 			p[cmdseq.num++].cmd = DTV_PILOT;
-			p[cmdseq.num++].cmd = DTV_STREAM_ID;
 		}
 		else if (type == feCable)
 		{

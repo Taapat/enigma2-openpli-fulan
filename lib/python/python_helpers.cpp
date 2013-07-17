@@ -101,6 +101,12 @@ void transponderDataToDict(ePyObject &dest, ePtr<iDVBTransponderData> data)
 		if (value >= 0) PutToDict(dest, "pilot", value);
 		value = data->getSystem();
 		if (value >= 0) PutToDict(dest, "system", value);
+		value = data->getIsId();
+		if (value >= 0) PutToDict(dest, "is_id", value);
+		value = data->getPLSMode();
+		if (value >= 0) PutToDict(dest, "pls_mode", value);
+		value = data->getPLSCode();
+		if (value >= 0) PutToDict(dest, "pls_code", value);
 
 		/* additional terrestrial fields */
 		value = data->getBandwidth();
@@ -117,12 +123,8 @@ void transponderDataToDict(ePyObject &dest, ePtr<iDVBTransponderData> data)
 		if (value >= 0) PutToDict(dest, "guard_interval", value);
 		value = data->getHierarchyInformation();
 		if (value >= 0) PutToDict(dest, "hierarchy_information", value);
-		value = data->getIsId();
-		if (value >= 0) PutToDict(dest, "is_id", value);
-		value = data->getPlsMode();
-		if (value >= 0) PutToDict(dest, "pls_mode", value);
-		value = data->getPlsCode();
-		if (value >= 0) PutToDict(dest, "pls_code", value);
+		value = data->getPlpId();
+		if (value >= 0) PutToDict(dest, "plp_id", value);
 	}
 }
 

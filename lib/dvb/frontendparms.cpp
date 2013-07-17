@@ -156,6 +156,21 @@ int eDVBTransponderData::getSystem() const
 	return -1;
 }
 
+int eDVBTransponderData::getIsId() const
+{
+	return -1;
+}
+
+int eDVBTransponderData::getPLSMode() const
+{
+	return -1;
+}
+
+int eDVBTransponderData::getPLSCode() const
+{
+	return -1;
+}
+
 int eDVBTransponderData::getBandwidth() const
 {
 	return -1;
@@ -191,17 +206,7 @@ int eDVBTransponderData::getHierarchyInformation() const
 	return -1;
 }
 
-int eDVBTransponderData::getIsId() const
-{
-	return -1;
-}
-
-int eDVBTransponderData::getPlsMode() const
-{
-	return -1;
-}
-
-int eDVBTransponderData::getPlsCode() const
+int eDVBTransponderData::getPlpId() const
 {
 	return -1;
 }
@@ -281,6 +286,8 @@ int eDVBSatelliteTransponderData::getModulation() const
 	default: eDebug("got unsupported modulation from frontend! report as QPSK!");
 	case QPSK: return eDVBFrontendParametersSatellite::Modulation_QPSK;
 	case PSK_8: return eDVBFrontendParametersSatellite::Modulation_8PSK;
+	case APSK_16: return eDVBFrontendParametersSatellite::Modulation_16APSK;
+	case APSK_32: return eDVBFrontendParametersSatellite::Modulation_32APSK;
 	}
 }
 
@@ -330,17 +337,23 @@ int eDVBSatelliteTransponderData::getSystem() const
 
 int eDVBSatelliteTransponderData::getIsId() const
 {
-	return transponderParameters.is_id;
+	if (originalValues) return transponderParameters.is_id;
+
+	return getProperty(DTV_STREAM_ID) & 0xFF;
 }
 
-int eDVBSatelliteTransponderData::getPlsMode() const
+int eDVBSatelliteTransponderData::getPLSMode() const
 {
-	return transponderParameters.pls_mode;
+	if (originalValues) return transponderParameters.pls_mode;
+
+	return (getProperty(DTV_STREAM_ID) >> 26) & 0x3;
 }
 
-int eDVBSatelliteTransponderData::getPlsCode() const
+int eDVBSatelliteTransponderData::getPLSCode() const
 {
-	return transponderParameters.pls_code;
+	if (originalValues) return transponderParameters.pls_code;
+
+	return (getProperty(DTV_STREAM_ID) >> 8) & 0x3FFFF;
 }
 
 DEFINE_REF(eDVBCableTransponderData);
@@ -531,6 +544,12 @@ int eDVBTerrestrialTransponderData::getTransmissionMode() const
 	{
 	case TRANSMISSION_MODE_2K: return eDVBFrontendParametersTerrestrial::TransmissionMode_2k;
 	case TRANSMISSION_MODE_8K: return eDVBFrontendParametersTerrestrial::TransmissionMode_8k;
+#if 0
+	case TRANSMISSION_MODE_4K: return eDVBFrontendParametersTerrestrial::TransmissionMode_4k;
+	case TRANSMISSION_MODE_1K: return eDVBFrontendParametersTerrestrial::TransmissionMode_1k;
+	case TRANSMISSION_MODE_16K: return eDVBFrontendParametersTerrestrial::TransmissionMode_16k;
+	case TRANSMISSION_MODE_32K: return eDVBFrontendParametersTerrestrial::TransmissionMode_32k;
+#endif
 	default:
 	case TRANSMISSION_MODE_AUTO: return eDVBFrontendParametersTerrestrial::TransmissionMode_Auto;
 	}
@@ -546,6 +565,11 @@ int eDVBTerrestrialTransponderData::getGuardInterval() const
 	case GUARD_INTERVAL_1_16: return eDVBFrontendParametersTerrestrial::GuardInterval_1_16;
 	case GUARD_INTERVAL_1_8: return eDVBFrontendParametersTerrestrial::GuardInterval_1_8;
 	case GUARD_INTERVAL_1_4: return eDVBFrontendParametersTerrestrial::GuardInterval_1_4;
+#if 0
+	case GUARD_INTERVAL_1_128: return eDVBFrontendParametersTerrestrial::GuardInterval_1_128;
+	case GUARD_INTERVAL_19_128: return eDVBFrontendParametersTerrestrial::GuardInterval_19_128;
+	case GUARD_INTERVAL_19_256: return eDVBFrontendParametersTerrestrial::GuardInterval_19_256;
+#endif
 	default:
 	case GUARD_INTERVAL_AUTO: return eDVBFrontendParametersTerrestrial::GuardInterval_Auto;
 	}
@@ -576,6 +600,13 @@ int eDVBTerrestrialTransponderData::getSystem() const
 	case SYS_DVBT: return eDVBFrontendParametersTerrestrial::System_DVB_T;
 	case SYS_DVBT2: return eDVBFrontendParametersTerrestrial::System_DVB_T2;
 	}
+}
+
+int eDVBTerrestrialTransponderData::getPlpId() const
+{
+	if (originalValues) return transponderParameters.plp_id;
+
+	return getProperty(DTV_STREAM_ID);
 }
 
 DEFINE_REF(eDVBATSCTransponderData);
