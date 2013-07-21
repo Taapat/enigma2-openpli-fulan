@@ -349,7 +349,7 @@ private:
 	static void gstCBsubtitleAvail(GstElement *element, GstBuffer *buffer, gpointer user_data);
 	GstPad* gstCreateSubtitleSink(eServiceMP3* _this, subtype_t type);
 	void gstPoll(ePtr<GstMessageContainer> const &);
-	static void gstHTTPSourceSetAgent(GObject *source, GParamSpec *unused, gpointer user_data);
+	static void playbinNotifySource(GObject *object, GParamSpec *unused, gpointer user_data);
 	static gint match_sinktype(GstElement *element, gpointer type);
 	static void handleElementAdded(GstBin *bin, GstElement *element, gpointer user_data);
 #else
@@ -404,6 +404,7 @@ private:
 
 	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
 	std::string m_useragent;
+	std::string m_extra_headers;
 #ifndef ENABLE_LIBEPLAYER3
 	RESULT trickSeek(gdouble ratio);
 #endif
