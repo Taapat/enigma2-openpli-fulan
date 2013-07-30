@@ -183,28 +183,26 @@ void gFBDC::setResolution(int xres, int yres, int bpp)
 	 * without changing the frambuffer dimensions
 	 */
 	if (xres<0 && yres<0 ) {
-		fb->SetMode(m_xres, m_yres, bpp);
+		fb->SetMode(surface.x, surface.y, surface.bpp);
 		return;
 	}
 #else
 	if (m_pixmap && (surface.x == xres) && (surface.y == yres) && (surface.bpp == bpp))
 		return;
 #endif
-
 	if (gAccel::getInstance())
 		gAccel::getInstance()->releaseAccelMemorySpace();
 
 	fb->SetMode(xres, yres, bpp);
 
+#if defined(__sh__)
+	for (int y = 0; y<yres; y++) // make whole screen transparent
+		memset(fb->lfb+y*fb->Stride(), 0x00, fb->Stride());
+#endif
 	surface.x = xres;
 	surface.y = yres;
 	surface.bpp = bpp;
 	surface.bypp = bpp / 8;
-#if defined(__sh__)
-
-	for (int y = 0; y<m_yres; y++) // make whole screen transparent
-		memset(fb->lfb+y*fb->Stride(), 0x00, fb->Stride());
-#endif
 	surface.stride = fb->Stride();
 	surface.data = fb->lfb;
 
