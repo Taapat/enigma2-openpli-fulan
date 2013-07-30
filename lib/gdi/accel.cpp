@@ -138,8 +138,41 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 	else if ((src->bpp == 8) && (dst->bpp == 32))
 	{
 		src_format = 1;
-		if (accelAlloc(data, data_phys, area.height() * area.width() * 4))
+
+		/* as before changes in accelAlloc, todo: move this to the surface*/
+		int size = area.height() * area.width() * 4;
+		if ((!size) || (!m_accel_allocation))
+		{
+			eDebug("size: %d, alloc %p", size, m_accel_allocation);
+			data = 0;
+			data_phys = 0;
 			return -1;
+		}
+		size += 4095;
+		size >>= 12;
+		int set_size = 0;
+		for (int i = m_accel_size - size; i >= 0 ; --i)
+		{
+			int a;
+			for (a=0; a<size; ++a)
+				if (m_accel_allocation[i+a])
+					break;
+			if (a == size)
+			{
+				m_accel_allocation[i] = (gUnmanagedSurface*)size;
+				for (a=1; a<size; ++a)
+					m_accel_allocation[i+a] = (gUnmanagedSurface*)-1;
+				data = ((unsigned char*)m_accel_addr) + (i << 12);
+				data_phys = m_accel_phys_addr + (i << 12);
+				set_size = 1;
+				break;
+			}
+		}
+		if (!set_size)
+		{
+			eDebug("accel alloc failed");
+			return -1;
+		}
 
 		__u8 *srcptr=(__u8*)src->data;
 		__u8 *dstptr=(__u8*)data;
@@ -305,6 +338,17 @@ void gAccel::accelFree(int phys_addr)
 	
 	ASSERT(size > 0);
 	
+	while (size--)
+		m_accel_allocation[phys_addr++] = 0;
+}
+
+/* as before changes in accelAlloc, todo: move this to the surface*/
+void gAccel::accelFreeOld(int phys_addr)
+{
+	phys_addr -= m_accel_phys_addr;
+	phys_addr >>= 12;
+	int size = (int)m_accel_allocation[phys_addr];
+	ASSERT(size > 0);
 	while (size--)
 		m_accel_allocation[phys_addr++] = 0;
 }

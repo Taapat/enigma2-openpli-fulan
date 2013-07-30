@@ -18,6 +18,8 @@ public:
 	int blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRect &p, const eRect &area, int flags);
 	int fill(gUnmanagedSurface *dst, const eRect &area, unsigned long col);
 	
+	void accelFreeOld(int phys_addr); // for STMFB_ACCEL, fix me
+	
 	int accelAlloc(void *&addr, int &phys_addr, int size);
 	void accelFree(int phys_addr);
 private:
