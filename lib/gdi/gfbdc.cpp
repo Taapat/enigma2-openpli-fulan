@@ -186,10 +186,10 @@ void gFBDC::setResolution(int xres, int yres, int bpp)
 		fb->SetMode(surface.x, surface.y, surface.bpp);
 		return;
 	}
-#else
+#endif
 	if (m_pixmap && (surface.x == xres) && (surface.y == yres) && (surface.bpp == bpp))
 		return;
-#endif
+
 	if (gAccel::getInstance())
 		gAccel::getInstance()->releaseAccelMemorySpace();
 
