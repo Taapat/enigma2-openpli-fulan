@@ -8,6 +8,10 @@
 #include <lib/gdi/erect.h>
 #include <lib/gdi/gpixmap.h>
 
+/* Apparently, surfaces must be 64-byte aligned */
+#define ACCEL_ALIGNMENT_SHIFT	6
+#define ACCEL_ALIGNMENT_MASK	((1<<ACCEL_ALIGNMENT_SHIFT)-1)
+
 // #define ACCEL_DEBUG
 
 gAccel *gAccel::instance;
@@ -101,11 +105,14 @@ void gAccel::dumpDebug()
 	 {
 		 gUnmanagedSurface *surface = it->surface;
 		 if (surface)
-			eDebug("surface: (%d, %d) %p %dx%d:%d",
-					it->index, it->size,
+			eDebug("surface: (%d (%dk), %d (%dk)) %p %dx%d:%d",
+					it->index, it->index >> (10 - ACCEL_ALIGNMENT_SHIFT),
+					it->size, it->size >> (10 - ACCEL_ALIGNMENT_SHIFT),
 					surface, surface->stride, surface->y, surface->bpp);
 		else
-			eDebug("   free: (%d, %d)", it->index, it->size);
+			eDebug("   free: (%d (%dk), %d (%dk))",
+					it->index, it->index >> (10 - ACCEL_ALIGNMENT_SHIFT),
+					it->size, it->size >> (10 - ACCEL_ALIGNMENT_SHIFT));
 	 }
 	eDebug("--");
 }
@@ -143,7 +150,7 @@ void gAccel::setAccelMemorySpace(void *addr, int phys_addr, int size)
 	if (size > 0)
 	{
 		eSingleLocker lock(m_allocation_lock);
-		m_accel_size = size >> 12;
+		m_accel_size = size >> ACCEL_ALIGNMENT_SHIFT;
 		m_accel_addr = addr;
 		m_accel_phys_addr = phys_addr;
 		m_accel_allocation.push_back(MemoryBlock(NULL, 0, m_accel_size));
@@ -342,7 +349,7 @@ int gAccel::fill(gUnmanagedSurface *dst, const eRect &area, unsigned long col)
 
 int gAccel::accelAlloc(gUnmanagedSurface* surface)
 {
-	int stride = (surface->stride + 63) & ~63;
+	int stride = (surface->stride + ACCEL_ALIGNMENT_MASK) & ~ACCEL_ALIGNMENT_MASK;
 	int size = stride * surface->y;
 	if (!size)
 	{
@@ -361,8 +368,8 @@ int gAccel::accelAlloc(gUnmanagedSurface* surface)
 	eDebug("[%s] %p size=%d %dx%d:%d", __func__, surface, size, surface->x, surface->y, surface->bpp);
 #endif
 
-	size += 4095;
-	size >>= 12;
+	size += ACCEL_ALIGNMENT_MASK;
+	size >>= ACCEL_ALIGNMENT_SHIFT;
 
 	eSingleLocker lock(m_allocation_lock);
 
@@ -382,8 +389,8 @@ int gAccel::accelAlloc(gUnmanagedSurface* surface)
 				it->size = size;
 			}
 			it->surface = surface;
-			surface->data = ((unsigned char*)m_accel_addr) + (it->index << 12);
-			surface->data_phys = m_accel_phys_addr + (it->index << 12);
+			surface->data = ((unsigned char*)m_accel_addr) + (it->index << ACCEL_ALIGNMENT_SHIFT);
+			surface->data_phys = m_accel_phys_addr + (it->index << ACCEL_ALIGNMENT_SHIFT);
 			surface->stride = stride;
 			dumpDebug();
 			return 0;
@@ -408,7 +415,7 @@ void gAccel::accelFree(gUnmanagedSurface* surface)
 		eSingleLocker lock(m_allocation_lock);
 		
 		phys_addr -= m_accel_phys_addr;
-		phys_addr >>= 12;
+		phys_addr >>= ACCEL_ALIGNMENT_SHIFT;
 
 		for (MemoryBlockList::iterator it = m_accel_allocation.begin();
 			 it != m_accel_allocation.end();
