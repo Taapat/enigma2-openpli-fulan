@@ -172,7 +172,15 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 
 	int src_format = 0;
 	void *data = 0;
-	int data_phys = 0;
+
+	gUnmanagedSurface *stm_src = 0;
+	stm_src->data = 0;
+	stm_src->data_phys = 0;
+#ifdef ACCEL_DEBUG
+	stm_src->x = 0;
+	stm_src->y = 0;
+	stm_src->bpp = dst->bpp;
+#endif
 
 	if (src->bpp == 32)
 		src_format = 0;
@@ -180,18 +188,18 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 	{
 		src_format = 1;
 
-		/* as before changes in accelAlloc, todo: move this to the surface*/
+		/* Accel start here, todo: move it to the accelAlloc */
+		int set_size = 0;
 		int size = area.height() * area.width() * 4;
 		if ((!size))
 		{
-			eDebug("accelAlloc for STMFB_ACCEL called with size 0");
-			data = 0;
-			data_phys = 0;
+			eDebug("STMFB ACCEL alloc called with size 0");
+			stm_src->data = 0;
+			stm_src->data_phys = 0;
 			return -1;
 		}
 		size += 4095;
 		size >>= 12;
-		int set_size = 0;
 		eSingleLocker lock(m_allocation_lock);
 		for (MemoryBlockList::iterator it = m_accel_allocation.begin();
 			 it != m_accel_allocation.end();
@@ -207,14 +215,14 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 					it->size = size;
 				}
 				data = ((unsigned char*)m_accel_addr) + (it->index << 12);
-				data_phys = m_accel_phys_addr + (it->index << 12);
+				stm_src->data_phys = m_accel_phys_addr + (it->index << 12);
 				set_size = 1;
 				break;
 			}
 		}
 		if (!set_size)
 		{
-			eDebug("accel alloc failed");
+			eDebug("STMFB ACCEL alloc failed");
 			return -1;
 		}
 
@@ -247,19 +255,18 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 			dstptr+=area.width() * 4;
 		}
 	} else {
-		if (data_phys)
-			accelFreeOld(data_phys);
+		accelFree(stm_src);
 		return -1;
 	}
 
-	if (data_phys)
+	if (stm_src->data_phys)
 	{
 		stmfb_accel_blit(
-			data_phys, 0, 0, area.width() * 4, src_format,
+			stm_src->data_phys, 0, 0, area.width() * 4, src_format,
 			dst->data_phys, dst->x, dst->y, dst->stride,
 			0, 0, area.width(), area.height(),
 			p.x(), p.y(), p.width(), p.height());
-		accelFreeOld(data_phys);
+		accelFree(stm_src);
 	} else {
 		stmfb_accel_blit(
 			src->data_phys, src->x, src->y, src->stride, src_format,
@@ -443,44 +450,6 @@ void gAccel::accelFree(gUnmanagedSurface* surface)
 		surface->data = 0;
 		surface->data_phys = 0;
 		dumpDebug();
-	}
-}
-
-/* as before changes in accelAlloc, todo: move this to the surface*/
-void gAccel::accelFreeOld(int phys_addr)
-{
-	eSingleLocker lock(m_allocation_lock);
-	phys_addr -= m_accel_phys_addr;
-	phys_addr >>= 12;
-	for (MemoryBlockList::iterator it = m_accel_allocation.begin();
-		 it != m_accel_allocation.end();
-		 ++it)
-	{
-		ASSERT(it->index == phys_addr);
-		it->surface = NULL;
-		MemoryBlockList::iterator current = it;
-		if (it != m_accel_allocation.begin())
-		{
-			MemoryBlockList::iterator previous = it;
-			--previous;
-			if (previous->surface == NULL)
-			{
-				current = previous;
-				previous->size += it->size;
-				m_accel_allocation.erase(it);
-			}
-		}
-		if (current != m_accel_allocation.end())
-		{
-			it = current;
-			++it;
-			if ((it != m_accel_allocation.end()) && (it->surface == NULL))
-			{
-				current->size += it->size;
-				m_accel_allocation.erase(it);
-			}
-		}
-		break;
 	}
 }
 
