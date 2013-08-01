@@ -195,7 +195,7 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 	{
 		src_format = 1;
 
-		/* Accel start here, todo: move it to the accelAlloc */
+		/* Accel alloc start here, todo: move it to the accelAlloc */
 		int set_size = 0;
 		int size = area.height() * area.width() * 4;
 		if ((!size))
@@ -205,8 +205,8 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 			stm_src->data_phys = 0;
 			return -1;
 		}
-		size += 4095;
-		size >>= 12;
+		size += ACCEL_ALIGNMENT_MASK;
+		size >>= ACCEL_ALIGNMENT_SHIFT;
 		eSingleLocker lock(m_allocation_lock);
 		for (MemoryBlockList::iterator it = m_accel_allocation.begin();
 			 it != m_accel_allocation.end();
@@ -221,8 +221,8 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 					it->index += remain;
 					it->size = size;
 				}
-				data = ((unsigned char*)m_accel_addr) + (it->index << 12);
-				stm_src->data_phys = m_accel_phys_addr + (it->index << 12);
+				data = ((unsigned char*)m_accel_addr) + (it->index << ACCEL_ALIGNMENT_SHIFT);
+				stm_src->data_phys = m_accel_phys_addr + (it->index << ACCEL_ALIGNMENT_SHIFT);
 				set_size = 1;
 				break;
 			}
