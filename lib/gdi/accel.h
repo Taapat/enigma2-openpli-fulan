@@ -22,8 +22,6 @@ public:
 	int blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRect &p, const eRect &area, int flags);
 	int fill(gUnmanagedSurface *dst, const eRect &area, unsigned long col);
 	
-	void accelFreeOld(int phys_addr); // for STMFB_ACCEL, fix me
-	
 	int accelAlloc(gUnmanagedSurface* surface);
 	void accelFree(gUnmanagedSurface* surface);
 
