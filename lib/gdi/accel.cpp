@@ -183,10 +183,9 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 	gUnmanagedSurface *stm_src = 0;
 	stm_src->data = 0;
 	stm_src->data_phys = 0;
+	stm_src->bpp = 32;
 #ifdef ACCEL_DEBUG
 	stm_src->x = 0;
-	stm_src->y = 0;
-	stm_src->bpp = dst->bpp;
 #endif
 
 	if (src->bpp == 32)
@@ -194,44 +193,10 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 	else if ((src->bpp == 8) && (dst->bpp == 32))
 	{
 		src_format = 1;
-
-		/* Accel alloc start here, todo: move it to the accelAlloc */
-		int set_size = 0;
-		int size = area.height() * area.width() * 4;
-		if ((!size))
-		{
-			eDebug("STMFB ACCEL alloc called with size 0");
-			stm_src->data = 0;
-			stm_src->data_phys = 0;
+		stm_src->stride = (area.height() * 4) - ACCEL_ALIGNMENT_MASK;
+		stm_src->y = area.height();
+		if (accelAlloc(stm_src))
 			return -1;
-		}
-		size += ACCEL_ALIGNMENT_MASK;
-		size >>= ACCEL_ALIGNMENT_SHIFT;
-		eSingleLocker lock(m_allocation_lock);
-		for (MemoryBlockList::iterator it = m_accel_allocation.begin();
-			 it != m_accel_allocation.end();
-			 ++it)
-		{
-			if ((it->surface == NULL) && (it->size >= size))
-			{
-				int remain = it->size - size;
-				if (remain)
-				{
-					m_accel_allocation.insert(it, MemoryBlock(NULL, it->index, remain));
-					it->index += remain;
-					it->size = size;
-				}
-				data = ((unsigned char*)m_accel_addr) + (it->index << ACCEL_ALIGNMENT_SHIFT);
-				stm_src->data_phys = m_accel_phys_addr + (it->index << ACCEL_ALIGNMENT_SHIFT);
-				set_size = 1;
-				break;
-			}
-		}
-		if (!set_size)
-		{
-			eDebug("STMFB ACCEL alloc failed");
-			return -1;
-		}
 
 		__u8 *srcptr=(__u8*)src->data;
 		__u8 *dstptr=(__u8*)data;
