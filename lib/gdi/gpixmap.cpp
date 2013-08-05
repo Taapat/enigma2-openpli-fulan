@@ -115,9 +115,13 @@ gSurface::gSurface(int width, int height, int _bpp, int accel):
 	gUnmanagedSurface(width, height, _bpp)
 {
 	const int size = y * stride;
+#if defined(__sh__)
+	if (accel)
+#else
 	if ((accel) ||
 		((accel == gPixmap::accelAuto) &&
 	     ((_bpp==8) && (size > 800) && (size < 1024*512) && (stride > 32))))
+#endif
 	{
 		if (gAccel::getInstance()->accelAlloc(this) != 0)
 				eDebug("ERROR: accelAlloc failed");
