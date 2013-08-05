@@ -48,8 +48,6 @@ private:
 	MemoryBlockList m_accel_allocation;
 	int m_bcm_accel_state;
 	
-	int m_stmfb_accel_state;
-	
 	static gAccel *instance;
 };
 
