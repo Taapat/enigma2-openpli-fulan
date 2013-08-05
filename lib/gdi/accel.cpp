@@ -178,7 +178,6 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 	//		p.x(), p.y(), p.width(), p.height());
 
 	int src_format = 0;
-	void *data = 0;
 
 	gUnmanagedSurface *stm_src = 0;
 	stm_src->data = 0;
@@ -199,7 +198,7 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 			return -1;
 
 		__u8 *srcptr=(__u8*)src->data;
-		__u8 *dstptr=(__u8*)data;
+		__u8 *dstptr=(__u8*)stm_src->data;
 		__u32 pal[256];
 
 		for (int i=0; i<256; ++i)
