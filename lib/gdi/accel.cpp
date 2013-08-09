@@ -180,18 +180,18 @@ int gAccel::blit(gUnmanagedSurface *dst, const gUnmanagedSurface *src, const eRe
 	int src_format = 0;
 
 	gUnmanagedSurface *stm_src = 0;
-	stm_src->data = 0;
 	stm_src->data_phys = 0;
-	stm_src->bpp = 32;
-#ifdef ACCEL_DEBUG
-	stm_src->x = 0;
-#endif
 
 	if (src->bpp == 32)
 		src_format = 0;
 	else if ((src->bpp == 8) && (dst->bpp == 32))
 	{
 		src_format = 1;
+		stm_src->data = 0;
+		stm_src->bpp = 32;
+#ifdef ACCEL_DEBUG
+		stm_src->x = 0;
+#endif
 		stm_src->stride = (area.height() * 4) - ACCEL_ALIGNMENT_MASK;
 		stm_src->y = area.height();
 		if (accelAlloc(stm_src))
