@@ -539,7 +539,13 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 					}
 				for(; i != 256; ++i)
 				{
+#if defined(__sh__)
+					pal[i]=0x010101*i;
+					if ((pal[i]&0xFF000000) >= 0xE0000000) pal[i] = 0xFF000000;
+					pal[i]^=0xFF000000;
+#else
 					pal[i] = (0x010101*i) | 0xFF000000;
+#endif
 				}
 			}
 
