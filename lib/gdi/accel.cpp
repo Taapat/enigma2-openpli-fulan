@@ -197,23 +197,27 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 		if (accelAlloc(stm_src))
 			return -1;
 
-		__u8 *srcptr=(__u8*)src->data;
+		const __u8 *srcptr=(__u8*)src->data;
 		__u8 *dstptr=(__u8*)stm_src->data;
 		__u32 pal[256];
 
-		for (int i=0; i<256; ++i)
 		{
-			if (src->clut.data && (i<src->clut.colors))
-				pal[i]=(src->clut.data[i].a<<24)|(src->clut.data[i].r<<16)|(src->clut.data[i].g<<8)|(src->clut.data[i].b);
-			else
+			int i = 0;
+			if (src->clut.data)
+				while (i < src->clut.colors)
+				{
+					pal[i] = src->clut.data[i].argb() ^ 0xFF000000;
+					++i;
+				}
+			for(; i != 256; ++i)
+			{
 				pal[i]=0x010101*i;
-			if ((pal[i]&0xFF000000) >= 0xE0000000)
-				pal[i] = 0xFF000000;
-			pal[i]^=0xFF000000;
+				if ((pal[i]&0xFF000000) >= 0xE0000000) pal[i] = 0xFF000000;
+				pal[i]^=0xFF000000;
+			}
 		}
 		srcptr+=area.left()*src->bypp+area.top()*src->stride;
-
-		for (int y=0; y<area.height(); y++)
+		for (int y = area.height(); y != 0; --y)
 		{
 			int width=area.width();
 			unsigned char *psrc=(unsigned char*)srcptr;
