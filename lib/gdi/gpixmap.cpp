@@ -356,7 +356,13 @@ static void convert_palette(__u32* pal, const gPalette& clut)
 	}
 	for(; i != 256; ++i)
 	{
+#if defined(__sh__)
+		pal[i]=0x010101*i;
+		if ((pal[i]&0xFF000000) >= 0xE0000000) pal[i] = 0xFF000000;
+		pal[i]^=0xFF000000;
+#else
 		pal[i] = (0x010101*i) | 0xFF000000;
+#endif
 	}
 }
 
@@ -652,12 +658,6 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 			__u8 *dstptr=(__u8*)surface->data; // !!
 			__u32 pal[256];
 			convert_palette(pal, src.surface->clut);
-#if defined(__sh__)
-					pal[i]=0x010101*i;
-					if ((pal[i]&0xFF000000) >= 0xE0000000) pal[i] = 0xFF000000;
-					pal[i]^=0xFF000000;
-#else
-#endif
 
 			srcptr+=srcarea.left()*src.surface->bypp+srcarea.top()*src.surface->stride;
 			dstptr+=area.left()*surface->bypp+area.top()*surface->stride;
