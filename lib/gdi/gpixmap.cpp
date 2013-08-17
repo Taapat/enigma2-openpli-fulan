@@ -489,7 +489,7 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 					}
 				}
 			}
-			else if ((surface->bpp == 32) && (src.surface->bpp==8))
+			else if ((surface->bpp == 32) && (src.surface->bpp==32))
 			{
 				const int src_stride = src.surface->stride;
 				const __u8* srcptr = (const __u8*)src.surface->data + srcarea.left()*src.surface->bypp + srcarea.top()*src_stride;
