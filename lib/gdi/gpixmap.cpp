@@ -206,9 +206,6 @@ void gPixmap::fill(const gRegion &region, const gColor &color)
 			else
 				col = 0x10101 * color;
 			
-#if defined(__sh__)
-if ((col&0xFF000000) == 0xFF000000) col = 0xFF000000;
-#endif
 			col^=0xFF000000;
 			
 			if (surface->data_phys)
@@ -241,9 +238,6 @@ void gPixmap::fill(const gRegion &region, const gRGB &color)
 			__u32 col;
 
 			col = color.argb();
-#if defined(__sh__)
-if ((col&0xFF000000) == 0xFF000000) col = 0xFF000000;
-#endif
 			col^=0xFF000000;
 
 			if (surface->data_phys)
@@ -356,13 +350,7 @@ static void convert_palette(__u32* pal, const gPalette& clut)
 	}
 	for(; i != 256; ++i)
 	{
-#if defined(__sh__)
-		pal[i]=0x010101*i;
-		if ((pal[i]&0xFF000000) >= 0xE0000000) pal[i] = 0xFF000000;
-		pal[i]^=0xFF000000;
-#else
 		pal[i] = (0x010101*i) | 0xFF000000;
-#endif
 	}
 }
 
@@ -461,7 +449,6 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 
 		if (flag & blitScale)
 		{
-#if not defined (__sh__) //if accel blit fails, do direkt blit
 			if ((surface->bpp == 32) && (src.surface->bpp==8))
 			{	
 				const __u8 *srcptr = (__u8*)src.surface->data;
@@ -547,7 +534,6 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 			eDebug("[BLITBENCH] CPU scale blit took %u us", s.elapsed_us());
 #endif
 			continue;
-#endif
 		}
 
 		if ((surface->bpp == 8) && (src.surface->bpp==8))

@@ -211,9 +211,7 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 				}
 			for(; i != 256; ++i)
 			{
-				pal[i]=0x010101*i;
-				if ((pal[i]&0xFF000000) >= 0xE0000000) pal[i] = 0xFF000000;
-				pal[i]^=0xFF000000;
+				pal[i] = (0x010101*i) | 0xFF000000;
 			}
 		}
 		srcptr+=area.left()*src->bypp+area.top()*src->stride;
