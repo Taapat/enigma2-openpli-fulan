@@ -361,6 +361,22 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 		ASSERT(src.size().height());
 		scale_x = pos.size().width() * FIX / src.size().width();
 		scale_y = pos.size().height() * FIX / src.size().height();
+		if (flag & blitKeepAspectRatio)
+		{
+			if (scale_x > scale_y)
+			{
+				pos = eRect(ePoint(pos.x() + (scale_x - scale_y) * pos.width() / (2 * FIX), pos.y()),
+					eSize(src.size().width() * pos.height() / src.size().height(), pos.height()));
+				scale_x = scale_y;
+
+			}
+			else
+			{
+				pos = eRect(ePoint(pos.x(), pos.y()  + (scale_y - scale_x) * pos.height() / (2 * FIX)),
+					eSize(pos.width(), src.size().height() * pos.width() / src.size().width()));
+				scale_y = scale_x;
+			}
+		}
 	}
 	
 //	eDebug("SCALE %x %x", scale_x, scale_y);
@@ -489,7 +505,7 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 					}
 				}
 			}
-			else if ((surface->bpp == 32) && (src.surface->bpp==32))
+			else if ((surface->bpp == 32) && (src.surface->bpp == 32))
 			{
 				const int src_stride = src.surface->stride;
 				const __u8* srcptr = (const __u8*)src.surface->data + srcarea.left()*src.surface->bypp + srcarea.top()*src_stride;
@@ -554,7 +570,7 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 			continue;
 		}
 
-		if ((surface->bpp == 8) && (src.surface->bpp==8))
+		if ((surface->bpp == 8) && (src.surface->bpp == 8))
 		{
 			__u8 *srcptr=(__u8*)src.surface->data;
 			__u8 *dstptr=(__u8*)surface->data;
