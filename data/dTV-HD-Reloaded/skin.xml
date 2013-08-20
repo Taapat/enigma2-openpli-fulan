@@ -197,8 +197,8 @@
 			<convert type="FrontendInfo">SNRdB</convert>
 		</widget>
 		<widget source="session.FrontendStatus" render="Label" position="980,95" size="50,22" font="Regular;17" backgroundColor="black" transparent="1">
-	<convert type="FrontendInfo">AGC</convert>
-</widget>
+			<convert type="FrontendInfo">AGC</convert>
+		</widget>
 		<eLabel text="BER:" position="925,120" size="50,22" font="Regular; 17" backgroundColor="black" foregroundColor="yellow" transparent="1" halign="right" />
 		<widget source="session.FrontendStatus" render="Label" position="980,120" size="75,22" font="Regular;16" backgroundColor="black" transparent="1">
 			<convert type="FrontendInfo">BER</convert>
@@ -937,7 +937,7 @@
 		<widget name="timeline_now" position="0,53" zPosition="2" size="19,314" pixmap="dTV-HD-Reloaded/timeline-now.png" alphatest="on" />
 		<eLabel position="0,518" size="1120,2" backgroundColor="grey" />
 		<widget source="Event" render="Label" position="15,400" zPosition="1" size="500,25" font="Regular;22" foregroundColor="yellow">
-			<convert type="EventName">Name</convert>
+		<convert type="EventName">Name</convert>
 		</widget>
 		<widget source="Event" render="Label" position="15,440" zPosition="1" size="500,25" font="Regular;22" foregroundColor="darkgrey">
 			<convert type="EventTime">StartTime</convert>
@@ -960,16 +960,18 @@
 			<convert type="EventName">FullDescription</convert>
 		</widget>
 		<ePixmap pixmap="skin_default/icons/clock.png" position="1025,547" zPosition="1" size="14,14" alphatest="on" />
-		<widget source="global.CurrentTime" render="Label" position="1045,542" zPosition="1" size="70,20" font="Regular;22" halign="center">
+		<widget source="global.CurrentTime" render="Label" position="1045,-30" zPosition="1" size="70,20" font="Regular;22" halign="center">
 			<convert type="ClockToText">
 			</convert>
 		</widget>
-		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="160,532" zPosition="1" size="250,38" />
-		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="690,532" zPosition="1" size="250,38" />
-		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="425,531" zPosition="1" size="250,38" />
-		<widget name="key_red" position="160,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="red" backgroundColor="black" transparent="1" />
-		<widget name="key_green" position="690,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="green" backgroundColor="black" transparent="1" />
-		<widget name="key_yellow" position="425,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="yellow" backgroundColor="black" transparent="1" />
+		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="30,532" zPosition="1" size="250,38" />
+		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="300,532" zPosition="1" size="250,38" />
+		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="570,531" zPosition="1" size="250,38" />
+		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="840,531" zPosition="1" size="250,38" />
+		<widget name="key_red" position="30,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="red" backgroundColor="black" transparent="1" />
+		<widget name="key_green" position="300,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="green" backgroundColor="black" transparent="1" />
+		<widget name="key_yellow" position="570,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="yellow" backgroundColor="black" transparent="1" />
+		<widget name="key_blue" position="840,531" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="blue" backgroundColor="black" transparent="1" />
 	</screen>
 	<screen name="HarddiskSelection" position="center,74" size="742,572" title="Select HDD" backgroundColor="transparent2" flags="wfNoBorder">
 		<ePixmap pixmap="dTV-HD-Reloaded/menu/menuback.png" position="1,1" size="740,570" zPosition="-5" alphatest="on" />
@@ -1483,8 +1485,8 @@
 			<convert type="FrontendInfo">SNR</convert>
 		</widget>
 		<widget source="Frontend" render="Label" position="601,135" size="60,22" font="Regular;21">
-	<convert type="FrontendInfo">SNRdB</convert>
-</widget>
+			<convert type="FrontendInfo">SNRdB</convert>
+		</widget>
 		<eLabel name="agc" text="AGC:" position="211,160" size="60,22" font="Regular;21" halign="right" transparent="1" />
 		<widget source="Frontend" render="Progress" position="301,160" size="280,20" pixmap="skin_default/bar_snr.png" borderWidth="2" borderColor="uncccccc">
 			<convert type="FrontendInfo">AGC</convert>
