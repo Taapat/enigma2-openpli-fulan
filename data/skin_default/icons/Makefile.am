@@ -97,4 +97,9 @@ dist_install_DATA = \
 	trashcan.png \
 	unlock.png \
 	unlockBouquet.png \
-	za.png
+	za.png \
+        zapclock.png \
+        zapclock_add.png \
+        zapclock_post.png \
+        zapclock_pre.png \
+        zapclock_prepost.png
