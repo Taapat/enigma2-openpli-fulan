@@ -735,7 +735,6 @@ class RecordTimer(timer.Timer):
 
 	def isInTimer(self, eventid, begin, duration, service):
 		time_match = 0
-		type = 0
 		bt = None
 		end = begin + duration
 		refstr = str(service)
@@ -769,10 +768,14 @@ class RecordTimer(timer.Timer):
 							break
 			if check:
 				timer_end = x.end
+				type = 0
 				if x.justplay:
 					type = 5
 					if (timer_end - x.begin) <= 1:
 						timer_end += 60
+				if x.always_zap:
+					type = 10
+
 				if x.repeated != 0:
 					if bt is None:
 						bt = localtime(begin)
@@ -816,12 +819,9 @@ class RecordTimer(timer.Timer):
 						else:           # recording whole event
 							time_match = end - begin
 							type += 2
-				if type == 2 or type == 7: # stop searching if a full recording is found
-					break
-		if time_match:
-			return (time_match, type)
-		else:
-			return None
+				if time_match: # stop searching if time_match is not 0
+					return (time_match, type)
+		return None
 
 	def removeEntry(self, entry):
 		print "[Timer] Remove " + str(entry)
