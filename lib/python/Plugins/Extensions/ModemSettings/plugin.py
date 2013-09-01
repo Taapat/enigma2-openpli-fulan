@@ -151,7 +151,7 @@ class ModemSetup(Screen, ConfigListScreen):
 		self["config"].list = self.list
 
 	def ok(self):
-		self.session.openWithCallback(self.updateConfig, MessageBox, (_(" Are you sure to save the current configuration?\n\n") ) )
+		self.session.openWithCallback(self.updateConfig, MessageBox, (_("Are you sure to save the current configuration?\n\n")))
 
 	def cancel(self):
 		ConfigListScreen.keyCancel(self)
