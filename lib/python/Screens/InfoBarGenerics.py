@@ -2518,7 +2518,7 @@ class InfoBarCueSheetSupport:
 				self.resume_point = last
 				l = last / 90000
 				if config.usage.on_movie_start.value == "ask" or not length[1]:
-					Notifications.AddNotificationWithCallback(self.playLastCB, MessageBox, _("Do you want to resume this playback?") + "\n" + (_("Resume position at %s") % ("%d:%02d:%02d" % (l/3600, l%3600/60, l%60))), timeout=10)
+					Notifications.AddNotificationWithCallback(self.playLastCB, MessageBox, _("Do you want to not resume this playback?") + "\n" + (_("Resume position at %s") % ("%d:%02d:%02d" % (l/3600, l%3600/60, l%60))), timeout=10)
 				elif config.usage.on_movie_start.value == "resume":
 # TRANSLATORS: The string "Resuming playback" flashes for a moment
 # TRANSLATORS: at the start of a movie, when the user has selected
@@ -2530,7 +2530,7 @@ class InfoBarCueSheetSupport:
 					Notifications.AddNotificationWithCallback(self.playLastCB, MessageBox, _("Resuming playback"), timeout=2, type=MessageBox.TYPE_INFO)
 
 	def playLastCB(self, answer):
-		if answer == True:
+		if not answer:
 			self.doSeek(self.resume_point)
 		self.hideAfterResume()
 
