@@ -710,7 +710,7 @@ msgid  ""
 "Are you sure to save the current configuration?\n"
 "\n"
 msgstr  ""
-" Vai tiešām vēlaties saglabāt esošos uzstādījumus?\n"
+"Vai tiešām vēlaties saglabāt esošos uzstādījumus?\n"
 "\n"
 
 msgid ""
@@ -4394,10 +4394,10 @@ msgid "Save playlist"
 msgstr "Saglabāt repertuāru"
 
 msgid "Save timeshift file"
-msgstr "Saglabāt laika aizture failu"
+msgstr "Saglabāt laika aiztures failu"
 
 msgid "Save timeshift file in movie directory"
-msgstr "Saglabāt laika aizture failu filmu mapē"
+msgstr "Saglabāt laika aiztures failu filmu mapē"
 
 msgid "Scaler sharpness"
 msgstr "Asuma skala"
@@ -4943,7 +4943,7 @@ msgid "Sleeptimer"
 msgstr "Miega taimeris"
 
 msgid "SleepTimer Configuration"
-msgstr "Miega taimeria iestatījumi"
+msgstr "Miega taimera iestatījumi"
 
 msgid "Sleep timer action:"
 msgstr "Miega taimera darb.:"
@@ -5734,7 +5734,7 @@ msgid "Today"
 msgstr "Šodien"
 
 msgid "Toggle a cut mark at the current position"
-msgstr "Pārslēgt griešanas iezīmi pašreizējā pozīcijā"
+msgstr "Pārvietot griešanas iezīmi pašreizējā pozīcijā"
 
 msgid "Tone amplitude"
 msgstr "Toņa amplitūda"
@@ -6668,7 +6668,7 @@ msgid "Your receiver will shutdown due to inactivity."
 msgstr "Jūsu uztvērējs izslēgsies ja nebūs aktivitātes."
 
 msgid "Your receiver will shutdown due to the sleeptimer."
-msgstr "Jūsu uztvērējs dēļ miega taimera izslēdzas."
+msgstr "Jūsu uztvērējs izslēdzas dēļ miega taimera."
 
 msgid ""
 "Your wireless LAN internet connection could not be started!\n"
