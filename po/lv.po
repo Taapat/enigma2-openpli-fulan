@@ -588,6 +588,9 @@ msgstr "Pievienot nosaukumu"
 msgid "Add to bouquet"
 msgstr "Pievienot buķetei"
 
+msgid "Add to Bouquets"
+msgstr "Pievienot buķetēm"
+
 msgid "Add to favourites"
 msgstr "Pievienot favorītiem"
 
@@ -850,8 +853,17 @@ msgstr "Palaist automātiski"
 msgid "Automatic"
 msgstr "Automātiski"
 
+msgid "Automatic Scan"
+msgstr "Automātiskā meklēšana"
+
 msgid "Automatic scan"
 msgstr "Automātiskā meklēšana"
+
+msgid "Automatically start timeshift after"
+msgstr "Automātiski startēt laika aizturi pēc"
+
+msgid "Automatically turn on external subtitles"
+msgstr "Automātiski ieslēgt ārējos subtitrus"
 
 msgid "Available format variables"
 msgstr "Pieejamie mainīgo formāti"
@@ -1113,6 +1125,9 @@ msgstr ""
 
 msgid "Children/Youth"
 msgstr "Bērni/Jaunieši"
+
+msgid "Choose Tuner"
+msgstr "Izvēlieties uztvērēju"
 
 msgid "Choose which tuner to configure."
 msgstr "Izvēlieties kuru uztvērēju konfigurēt"
@@ -1514,6 +1529,9 @@ msgstr "Konvertēt ext3 uz ext4"
 msgid "Converting ext3 to ext4..."
 msgstr "Konvertē ext3 uz ext4..."
 
+msgid "Convert filesystem ext3 to ext4"
+msgstr "Konvertēt failsistēmu ext3 uz ext4"
+
 msgid "Copy"
 msgstr "Kopēt"
 
@@ -1539,6 +1557,12 @@ msgstr "Nevar ierakstīt dēļ kļūdaina kanāla %s"
 
 msgid "Create DVD-ISO"
 msgstr "Izveidot DVD-ISO"
+
+msgid "CrashlogAutoSubmit settings"
+msgstr "Avārijas loga iestatījumi"
+
+msgid "CrashlogAutoSubmit settings..."
+msgstr "Avārijas loga iestatījumi"
 
 msgid "Create more detailed crash log"
 msgstr "Izveidot detalizētāku avārijas logu"
@@ -1670,11 +1694,20 @@ msgstr "Noklusējuma"
 msgid "Default movie location"
 msgstr "Filmu atrašanās vieta pēc noklusējuma"
 
+msgid "Default Satlists"
+msgstr "Noklusējuma pavadoņu saraksts"
+
+msgid "Default services lists"
+msgstr "Noklusējuma kanālu saraksts"
+
 msgid "Default settings"
 msgstr "Noklusējuma iestatījumi"
 
 msgid "Delay before key repeat starts:"
 msgstr "Aizture pirms taustiņu atkārtošanas:"
+
+msgid "Delay for external subtitles"
+msgstr "Aizture ārējiem subtitriem"
 
 msgid "Delete"
 msgstr "Dzēst"
@@ -1723,6 +1756,9 @@ msgstr "Atrasts HDD:"
 
 msgid "Detected NIMs:"
 msgstr "Atrasts NIMs:"
+
+msgid "Device Setup..."
+msgstr "Iekārtas ieststījumi..."
 
 msgid "Devicename:"
 msgstr "Iekārtas nosaukums:"
@@ -1978,6 +2014,9 @@ msgstr "Dinamiskais kontrasts"
 msgid "E"
 msgstr "E"
 
+msgid "ECM time:"
+msgstr "ECM laiks:"
+
 msgid "EPG"
 msgstr "EPG"
 
@@ -2009,6 +2048,9 @@ msgstr "Rediģēt"
 msgid "Edit DNS"
 msgstr "Rediģēt DNS"
 
+msgid "Edit Bouquets"
+msgstr "Rediģēt buķetes"
+
 msgid "Edit bouquets list"
 msgstr "Rediģēt buķešu sarakstu"
 
@@ -2029,6 +2071,9 @@ msgstr "Rediģēt uztvērēja tīkla konfigurāciju.\n"
 
 msgid "Edit title"
 msgstr "Rediģēt nosaukumu"
+
+msgid "Edit Transponder"
+msgstr "Rediģēt transponderu"
 
 msgid "Edit upgrade source url."
 msgstr "Rediģēt atjaunināšanas avota adresi."
@@ -2221,6 +2266,9 @@ msgstr "Paplašinājumi"
 msgid "Extensions management"
 msgstr "Paplašinājumu pārvaldīšana"
 
+msgid "External subtitle color"
+msgstr "Ārējo subtitru krāsa"
+
 msgid "FEC"
 msgstr "FEC"
 
@@ -2232,6 +2280,9 @@ msgstr "Rūpnīcas iestatījumi"
 
 msgid "Failed"
 msgstr "Neizdevās"
+
+msgid "Failed:"
+msgstr "Neizdevās:"
 
 msgid "Failed to write /tmp/positionersetup.log: "
 msgstr "Neizdevās ierakstīt /tmp/positionersetup.log:"
@@ -2268,6 +2319,9 @@ msgstr "Favorīti"
 
 msgid "File appears to be busy.\n"
 msgstr "Fails šķiet aizņemts.\n"
+
+msgid "Filesystem Check"
+msgstr "Failsistēmas pārbaude"
 
 msgid "Filesystem check"
 msgstr "Failsistēmas pārbaude"
@@ -2325,6 +2379,9 @@ msgstr "Franču"
 
 msgid "Frequency"
 msgstr "Frekvence"
+
+msgid "Frequency:"
+msgstr "Frekvence:"
 
 msgid "Frequency bands"
 msgstr "Frekvenču joslas"
@@ -2514,6 +2571,9 @@ msgstr "Slēpt kanālu sarakstu radio režīmā"
 msgid "Hide known extensions"
 msgstr "Slēpt zināmos paplašinājumus"
 
+msgid "Hide number markers"
+msgstr "Slēpt numurus"
+
 msgid "Hide player"
 msgstr "Slēpt atskaņotāju"
 
@@ -2564,6 +2624,9 @@ msgstr "ISO ceļš"
 
 msgid "Icons"
 msgstr "Ikona"
+
+msgid "Ident:"
+msgstr "Idents:"
 
 msgid ""
 "If you see this, something is wrong with\n"
@@ -3184,6 +3247,9 @@ msgstr "Nosaukums"
 msgid "Nameserver"
 msgstr "Domēna vārdu serveris"
 
+msgid "Nameserver Setup..."
+msgstr "Domēna vārdu servera ietstījumi..."
+
 #, python-format
 msgid "Nameserver %d"
 msgstr "Domēna vārdu serveris %d"
@@ -3245,6 +3311,9 @@ msgstr "Jauns"
 
 msgid "New PIN"
 msgstr "Jauns PIN"
+
+msgid "New Bouquets"
+msgstr "Jaunas buķetes"
 
 msgid "New version:"
 msgstr "Jauna versija:"
@@ -3444,6 +3513,9 @@ msgstr "Nav piešķirts"
 msgid "Not enough disk space. Please free up some disk space and try again. (%d MB required, %d MB available)"
 msgstr "Nav pietiekami vietas uz diska. Lūdzu atbrīvot vietu uz diska un mēģināt vēlreiz. (%d MB nepieciešami, %d MB pieejami)"
 
+msgid "Not tested:"
+msgstr "Nav pārbaudīts:"
+
 msgid ""
 "Nothing to scan!\n"
 "Please setup your tuner settings before you start a service scan."
@@ -3527,6 +3599,9 @@ msgstr "Cits"
 msgid "Output"
 msgstr "Izeja"
 
+msgid "Overall progress:"
+msgstr "Kopējais progress:"
+
 msgid "Overwrite configuration files during software upgrade?"
 msgstr "Pārrakstīt konfigurācijas failus atjaunojot programmatūru?"
 
@@ -3564,8 +3639,14 @@ msgstr "Pan&Scan"
 msgid "Parent directory"
 msgstr "Iepriekšējā mape"
 
+msgid "Parental Control"
+msgstr "Vecāku kontrole"
+
 msgid "Parental control"
 msgstr "Vecāku kontrole"
+
+msgid "Parental control services Editor"
+msgstr "Vecāku kontroles kanālu redaktors"
 
 msgid "Parental control services editor"
 msgstr "Vecāku kontroles kanālu redaktors"
@@ -3864,6 +3945,9 @@ msgstr "Spraudņi"
 msgid "Polarisation"
 msgstr "Polarizācija"
 
+msgid "Polarisation:"
+msgstr "Polarizācija:"
+
 msgid "Polarization"
 msgstr "Polarizācija"
 
@@ -3995,6 +4079,9 @@ msgstr "Norise"
 msgid "Progress"
 msgstr "Progress"
 
+msgid "Progress:"
+msgstr "Progress:"
+
 msgid "Progress bar left"
 msgstr "Progresa josla pa kreisi"
 
@@ -4009,6 +4096,9 @@ msgstr "Aizsargāt kanālus"
 
 msgid "Protect setup"
 msgstr "Aizsargāt iestatījumus"
+
+msgid "Protocol:"
+msgstr "Protokols:"
 
 msgid "Provider"
 msgstr "Operators"
@@ -4088,6 +4178,9 @@ msgstr "Pārstartēt"
 
 msgid "Rec"
 msgstr "Ier"
+
+msgid "Reception Settings"
+msgstr "Uztveršanas iestatījumi"
 
 msgid "Reception settings"
 msgstr "Uztveršanas iestatījumi"
@@ -4320,6 +4413,9 @@ msgstr "Rumāņu"
 
 msgid "Root directory"
 msgstr "Root mape"
+
+msgid "Rotor Control"
+msgstr "Pozicioniera kontrole"
 
 msgid "Rotor step position:"
 msgstr "Pozicioniera soļa pozīcija:"
