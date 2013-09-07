@@ -760,10 +760,10 @@ class ChannelSelectionEdit:
 			pos = self.saved_title.find(')')
 			new_title = self.saved_title[:pos+1] + ' ' + _("[move mode]") + self.saved_title[pos+1:]
 			self.setTitle(new_title);
-		self["Service"].editmode = True
 #+++>
-		self["title"].setText(new_title)
+			self["title"].setText(new_title)
 #+++<
+		self["Service"].editmode = True
 
 	def handleEditCancel(self):
 		if self.movemode: #movemode active?
