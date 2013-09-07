@@ -359,7 +359,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 			if not self.justplay:
 				NavigationInstance.instance.stopRecordService(self.record_service)
 				self.record_service = None
-			if self.afterEvent == AFTEREVENT.DEEPSTANDBY or (Screens.Standby.inStandby or self.wasInStandby) and NavigationInstance.instance.wasTimerWakeup() and config.misc.standbyCounter.value == 1:
+			if self.afterEvent == AFTEREVENT.DEEPSTANDBY or (Screens.Standby.inStandby or self.wasInStandby) and NavigationInstance.instance.wasTimerWakeup() and not config.misc.standbyCounter.value:
 				if not Screens.Standby.inTryQuitMainloop: # not a shutdown messagebox is open
 					if Screens.Standby.inStandby: # in standby
 						RecordTimerEntry.TryQuitMainloop() # start shutdown handling without screen
