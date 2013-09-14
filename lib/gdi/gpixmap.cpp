@@ -133,12 +133,8 @@ static bool is_a_candidate_for_accel(const gUnmanagedSurface* surface)
 gSurface::gSurface(int width, int height, int _bpp, int accel):
 	gUnmanagedSurface(width, height, _bpp)
 {
-#if defined(__sh__)
-	if (accel)
-#else
 	if ((accel > gPixmap::accelAuto) ||
 		((accel == gPixmap::accelAuto) && (is_a_candidate_for_accel(this))))
-#endif
 	{
 		if (gAccel::getInstance()->accelAlloc(this) != 0)
 				eDebug("ERROR: accelAlloc failed");
