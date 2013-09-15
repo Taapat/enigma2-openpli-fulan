@@ -217,11 +217,12 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 				it->surface = src;
 				data = ((unsigned char*)m_accel_addr) + (it->index << ACCEL_ALIGNMENT_SHIFT);
 				data_phys = m_accel_phys_addr + (it->index << ACCEL_ALIGNMENT_SHIFT);
+				break;
 			}
 		}
 		if (!data_phys)
 		{
-			eDebug("accel alloc failed\n");
+			eDebug("STMFB accel alloc failed\n");
 			return -1;
 		}
 		/* End accelAlloc here */
