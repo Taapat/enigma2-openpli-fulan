@@ -178,57 +178,26 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 	//		p.x(), p.y(), p.width(), p.height());
 
 	int src_format = 0;
-	int data_phys = 0;
+	gUnmanagedSurface *stm_src = new gUnmanagedSurface();
+	stm_src->data_phys = 0;
 
 	if (src->bpp == 32)
 		src_format = 0;
 	else if ((src->bpp == 8) && (dst->bpp == 32))
 	{
 		src_format = 1;
-
-		/* Start accelAlloc here */
-		void *data = 0;
-		int size = ((area.height() + ACCEL_ALIGNMENT_MASK) & ~ACCEL_ALIGNMENT_MASK) * area.width() * 4;
-		if (!size)
-		{
-			eDebug("STMFB accelAlloc called with size 0");
+		stm_src->data = 0;
+		stm_src->stride = area.width() * 4;
+		stm_src->y = area.height();
+		stm_src->bpp = 32;
+#ifdef ACCEL_DEBUG
+		stm_src->x = 0;
+#endif		
+		if (accelAlloc(stm_src))
 			return -1;
-		}
-		size += ACCEL_ALIGNMENT_MASK;
-		size >>= ACCEL_ALIGNMENT_SHIFT;
-
-		eSingleLocker lock(m_allocation_lock);
-
-		for (MemoryBlockList::iterator it = m_accel_allocation.begin();
-			 it != m_accel_allocation.end();
-			 ++it)
-		{
-			if ((it->surface == NULL) && (it->size >= size))
-			{
-				int remain = it->size - size;
-				if (remain)
-				{
-					/* Add empty item before this one with the remaining memory */
-					m_accel_allocation.insert(it, MemoryBlock(NULL, it->index, remain));
-					/* it points behind the new item */
-					it->index += remain;
-					it->size = size;
-				}
-				it->surface = src;
-				data = ((unsigned char*)m_accel_addr) + (it->index << ACCEL_ALIGNMENT_SHIFT);
-				data_phys = m_accel_phys_addr + (it->index << ACCEL_ALIGNMENT_SHIFT);
-				break;
-			}
-		}
-		if (!data_phys)
-		{
-			eDebug("STMFB accel alloc failed\n");
-			return -1;
-		}
-		/* End accelAlloc here */
 
 		const __u8 *srcptr=(__u8*)src->data;
-		__u8 *dstptr=(__u8*)data;
+		__u8 *dstptr=(__u8*)stm_src->data;
 		__u32 pal[256];
 
 		{
@@ -260,58 +229,15 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 	} else
 		return -1; /* unsupported source format */
 
-	if (data_phys)
+	if (stm_src->data_phys)
 	{
 		stmfb_accel_blit(
-			data_phys, 0, 0, area.width() * 4, src_format,
+			stm_src->data_phys, 0, 0, area.width() * 4, src_format,
 			dst->data_phys, dst->x, dst->y, dst->stride,
 			0, 0, area.width(), area.height(),
 			p.x(), p.y(), p.width(), p.height());
-
-		/* Start accelFree here */
-		eSingleLocker lock(m_allocation_lock);
-		
-		data_phys -= m_accel_phys_addr;
-		data_phys >>= ACCEL_ALIGNMENT_SHIFT;
-
-		for (MemoryBlockList::iterator it = m_accel_allocation.begin();
-			 it != m_accel_allocation.end();
-			 ++it)
-		{
-			if (it->surface == src)
-			{
-				ASSERT(it->index == data_phys);
-				/* Mark as free */
-				it->surface = NULL;
-				MemoryBlockList::iterator current = it;
-				/* Merge with previous item if possible */
-				if (it != m_accel_allocation.begin())
-				{
-					MemoryBlockList::iterator previous = it;
-					--previous;
-					if (previous->surface == NULL)
-					{
-						current = previous;
-						previous->size += it->size;
-						m_accel_allocation.erase(it);
-					}
-				}
-				/* Merge with next item if possible */
-				if (current != m_accel_allocation.end())
-				{
-					it = current;
-					++it;
-					if ((it != m_accel_allocation.end()) && (it->surface == NULL))
-					{
-						current->size += it->size;
-						m_accel_allocation.erase(it);
-					}
-				}
-				break;
-			}
-		}
-		/* End accelFree here */
-
+		accelFree(stm_src);
+		delete stm_src;
 	} else {
 		stmfb_accel_blit(
 			src->data_phys, src->x, src->y, src->stride, src_format,
