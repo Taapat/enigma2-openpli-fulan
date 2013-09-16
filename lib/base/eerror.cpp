@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <unistd.h>
+#include <stdio.h>
 
 #include <string>
 
@@ -76,7 +77,23 @@ void DumpUnfreed()
 #endif
 
 Signal2<void, int, const std::string&> logOutput;
-int logOutputConsole=1;
+int logOutputConsole = 1;
+
+void CheckPrintkLevel()
+{
+	FILE *f = fopen("/proc/sys/kernel/printk", "r");
+	if (f)
+	{
+		unsigned int level;
+		fscanf(f, "%u", &level);
+		if (level == 0)
+		{
+			logOutputConsole = 0;
+			printf("Printk level is 0, disble Enigma log!\n");
+		}
+		fclose(f);
+	}
+}
 
 static pthread_mutex_t DebugLock =
 	PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP;

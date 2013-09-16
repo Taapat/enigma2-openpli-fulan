@@ -150,6 +150,8 @@ int main(int argc, char **argv)
 	
 	bsodLogInit();
 
+	CheckPrintkLevel();
+
 	ePython python;
 	eMain main;
 
