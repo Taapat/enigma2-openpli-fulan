@@ -188,7 +188,7 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 
 		/* Start accelAlloc here */
 		void *data = 0;
-		int size = area.height() * area.width() * 4;
+		int size = ((area.height() + ACCEL_ALIGNMENT_MASK) & ~ACCEL_ALIGNMENT_MASK) * area.width() * 4;
 		if (!size)
 		{
 			eDebug("STMFB accelAlloc called with size 0");
