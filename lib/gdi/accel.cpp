@@ -178,26 +178,21 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 	//		p.x(), p.y(), p.width(), p.height());
 
 	int src_format = 0;
-	gUnmanagedSurface *stm_src = new gUnmanagedSurface();
-	stm_src->data_phys = 0;
+	gUnmanagedSurface tmp;
 
 	if (src->bpp == 32)
 		src_format = 0;
 	else if ((src->bpp == 8) && (dst->bpp == 32))
 	{
+		tmp.bpp = 32;
+		tmp.stride = area.width() * 4;
+		tmp.y = area.height();
 		src_format = 1;
-		stm_src->data = 0;
-		stm_src->stride = area.width() * 4;
-		stm_src->y = area.height();
-		stm_src->bpp = 32;
-#ifdef ACCEL_DEBUG
-		stm_src->x = 0;
-#endif		
-		if (accelAlloc(stm_src))
+		if (accelAlloc(&tmp))
 			return -1;
 
 		const __u8 *srcptr=(__u8*)src->data;
-		__u8 *dstptr=(__u8*)stm_src->data;
+		__u8 *dstptr=(__u8*)tmp.data;
 		__u32 pal[256];
 
 		{
@@ -227,17 +222,16 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 			dstptr+=area.width() * 4;
 		}
 	} else
-		return -1; /* unsupported source format */
+		return -1;
 
-	if (stm_src->data_phys)
+	if (tmp.data_phys)
 	{
 		stmfb_accel_blit(
-			stm_src->data_phys, 0, 0, area.width() * 4, src_format,
+			tmp.data_phys, 0, 0, area.width() * 4, src_format,
 			dst->data_phys, dst->x, dst->y, dst->stride,
 			0, 0, area.width(), area.height(),
 			p.x(), p.y(), p.width(), p.height());
-		accelFree(stm_src);
-		delete stm_src;
+		accelFree(&tmp);
 	} else {
 		stmfb_accel_blit(
 			src->data_phys, src->x, src->y, src->stride, src_format,
