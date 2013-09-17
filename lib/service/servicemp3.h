@@ -404,8 +404,8 @@ private:
 
 	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
 	std::string m_useragent;
-	std::string m_extra_headers;
 #ifndef ENABLE_LIBEPLAYER3
+	std::string m_extra_headers;
 	RESULT trickSeek(gdouble ratio);
 #endif
 };
