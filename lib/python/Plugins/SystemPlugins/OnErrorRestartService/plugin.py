@@ -56,8 +56,15 @@ ErrorCheckInstance = None
 def main(session, **kwargs):
 	global ErrorCheckInstance
 	if ErrorCheckInstance is None:
-		ErrorCheckInstance = OnErrorRestart(session)
-		ErrorCheckInstance.StartLongTimer()
+		try:
+			f = open("/proc/sys/kernel/printk", "r")
+			for line in f:
+				if int(line[:1]) > 0:
+					ErrorCheckInstance = OnErrorRestart(session)
+					ErrorCheckInstance.StartLongTimer()
+			f.close()
+		except:
+			pass
 
 def Plugins(**kwargs):
 	return [ PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc=main ) ]
