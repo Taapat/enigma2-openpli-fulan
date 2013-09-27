@@ -126,11 +126,15 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		port = 80;
 	}
 
-	m_streamSocket = Connect(hostname.c_str(), port, 100);
-	if (m_streamSocket < 0) return -1;
+	m_streamSocket = Connect(hostname.c_str(), port, 10);
+	if (m_streamSocket < 0){
+		eDebug("%s: could not connect : %s", __FUNCTION__, strerror(errno));
+		return -1;
+	}
 
-	request = "GET ";
+	request = "GET /";
 	request.append(uri).append(" HTTP/1.1\r\n");
+	request.append("User-Agent: enigma/2\r\n");
 	request.append("Host: ").append(hostname).append("\r\n");
 	if (authorizationData.length())
 	{
@@ -148,12 +152,14 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		request.append("-\r\n");
 
 	}	
-	request.append("Connection: close\r\n");
-	request.append("\r\n");
+	request.append("Connection: close\r\n\r\n");
 
 	std::string hdr;
 	result = openHTTPConnection(m_streamSocket, request, hdr);
-	if (result < 0) return -1;
+	if (result < 0){
+		eDebug("%s: did not receive http header : %s", __FUNCTION__, strerror(errno));
+		return -1;
+	}
 
 	size_t pos = hdr.find("\n");
 	const std::string& httpStatus = (pos == std::string::npos)? hdr: hdr.substr(0, pos);
@@ -162,6 +168,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	if (result != 3 || (statuscode != 200 && statuscode != 206 && statuscode != 302))
 	{
 		eDebug("%s: wrong http response code: %d", __FUNCTION__, statuscode);
+		eDebug("%s: http response header: %d", __FUNCTION__, hdr.c_str());
 		return -1;
 	}
 
@@ -225,7 +232,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	ssize_t toWrite = m_rbuffer.availableToWritePtr();
 	if (toWrite > 0) {
 		if (m_chunkedTransfer) toWrite = MIN(toWrite, m_currentChunkSize);
-		toWrite = timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 2000, 50);
+		toWrite = timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 5000, 50);
 		if (toWrite > 0) {
 			eDebug("%s: writting %i bytes to the ring buffer", __FUNCTION__, toWrite);
                         ssize_t skipBytes = 0;
@@ -292,9 +299,9 @@ READAGAIN:
 		}
 		if (outBufferHasData || m_rbuffer.availableToRead() >= (1024*6) || m_rbuffer.availableToRead() >= count) {
 			//do not starve the reader if we have enough data to read and there is nothing on the socket
-			toWrite = timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 0);
+			toWrite = timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 0, 500);
 		} else {
-			toWrite = timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 3000, 500);
+			toWrite = timedRead(m_streamSocket, m_rbuffer.ptr(), toWrite, 15000, 0);
 		}
 		if (toWrite > 0) {
 			m_rbuffer.ptrWriteCommit(toWrite);
