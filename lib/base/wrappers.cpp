@@ -139,14 +139,13 @@ ssize_t openHTTPConnection(int fd, const std::string& getRequest, std::string& h
 	const char* buf_end = getRequest.data() + wlen;
 
 	while (wlen) {
-		FD_ZERO(&wset);
-		FD_SET(fd, &wset);
-		timeout.tv_sec = 5;
-		timeout.tv_usec = 0;
-
-		const int rc = select(fd+1, NULL, &wset, NULL, &timeout);
+		struct pollfd pfd;
+		pfd.fd = fd;
+                pfd.events = POLLOUT;
+                const int rc = poll(&pfd, 1, 5000);
 		if (rc <= 0) {
-		return -1;
+			eDebug("%s: waiting to write timedout : %s", __FUNCTION__, strerror(errno));
+			return -1;
 		}
 
 		const int sent = send(fd, buf_end-wlen, wlen, 0);
@@ -159,13 +158,12 @@ ssize_t openHTTPConnection(int fd, const std::string& getRequest, std::string& h
 	if (rbuff == NULL) return -1;
 
 	while(true) {
-		FD_ZERO(&rset);
-		FD_SET(fd, &rset);
-		timeout.tv_sec = 5;
-		timeout.tv_usec = 0;
-
-		const int rc = ::select(fd+1, &rset, NULL, NULL, &timeout);
+                struct pollfd pfd;
+                pfd.fd = fd;
+                pfd.events = POLLIN;
+                const int rc = poll(&pfd, 1, 5000);
 		if (rc <= 0) {
+			eDebug("%s: waiting to read timedout : %s", __FUNCTION__, strerror(errno));
 			free(rbuff);
 			return -1;
 		}
@@ -173,25 +171,21 @@ ssize_t openHTTPConnection(int fd, const std::string& getRequest, std::string& h
 		ssize_t hdroff=0;
 		//read the response header
 		int rcvd = ::recv(fd, rbuff, rbuff_size, MSG_PEEK);
-		int hdr_end = 0;
-		while(hdroff < rcvd && hdr_end < 2) {
-			if (rbuff[hdroff] == '\n') hdr_end++;
-			else if (rbuff[hdroff] != '\r') hdr_end = 0;
-			hdroff++;
+		
+		if (rcvd <= 0) {
+			eDebug("%s: did not receive http header : %s", __FUNCTION__, strerror(errno));
+			return -1;
 		}
-		while(rbuff[hdroff] == '\n' || rbuff[hdroff] == '\r') hdroff++;
-
-		httpHdr.append(rbuff, hdroff);
-		if (hdroff <= rcvd) break;
-	}
-
-	//flush the header
-	int bytesToFlush = httpHdr.length();
-	while (bytesToFlush > 0) {
-		int rc = MIN(bytesToFlush, rbuff_size);
-		rc = ::recv(fd, rbuff, rc, 0);
-		if (rc > 0) bytesToFlush -= rc;
-		else{free(rbuff); return -1;}
+		char* hdrend=NULL;
+		if ((hdrend=strstr(rbuff, "\r\n\r\n")) || (hdrend=strstr(rbuff, "\n\n"))) {
+			while((hdrend-rbuff) < rcvd && (*hdrend=='\n' || *hdrend=='\r')) hdrend++;  
+			httpHdr.append(rbuff, hdrend-rbuff);
+			::recv(fd, rbuff, hdrend-rbuff, 0);
+			break;
+		} else {
+			httpHdr.append(rbuff, rcvd);
+			::recv(fd, rbuff, rcvd, 0);
+		} 
 	}
 
 	free(rbuff);
