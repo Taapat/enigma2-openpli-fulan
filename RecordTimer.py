@@ -71,26 +71,35 @@ def findSafeRecordPath(dirname):
 def chechForRecordings():
 	if NavigationInstance.instance.getRecordings():
 		return True
-	rec_time = NavigationInstance.instance.RecordTimer.getNextRecordingTime()
+	rec_time = NavigationInstance.instance.RecordTimer.getNextTimerTime()
 	return rec_time > 0 and (rec_time - time()) < 360
 
 # please do not translate log messages
 class RecordTimerEntry(timer.TimerEntry, object):
 ######### the following static methods and members are only in use when the box is in (soft) standby
 	wasInStandby = False
+	wasInDeepStandby = False
 	receiveRecordEvents = False
 
 	@staticmethod
 	def keypress(key=None, flag=1):
-		if flag and RecordTimerEntry.wasInStandby:
+		if flag and (RecordTimerEntry.wasInStandby or RecordTimerEntry.wasInDeepStandby):
 			RecordTimerEntry.wasInStandby = False
+			RecordTimerEntry.wasInDeepStandby = False
 			eActionMap.getInstance().unbindAction('', RecordTimerEntry.keypress)
+
+	@staticmethod
+	def setWasInDeepStandby():
+		RecordTimerEntry.wasInDeepStandby = True
+		eActionMap.getInstance().bindAction('', -maxint - 1, RecordTimerEntry.keypress)
 
 	@staticmethod
 	def setWasInStandby():
 		if not RecordTimerEntry.wasInStandby:
+			if not RecordTimerEntry.wasInDeepStandby:
+				eActionMap.getInstance().bindAction('', -maxint - 1, RecordTimerEntry.keypress)
+			RecordTimerEntry.wasInDeepStandby = False
 			RecordTimerEntry.wasInStandby = True
-			eActionMap.getInstance().bindAction('', -maxint - 1, RecordTimerEntry.keypress)
 
 	@staticmethod
 	def shutdown():
@@ -281,6 +290,8 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					#wakeup standby
 					Screens.Standby.inStandby.Power()
 				else:
+					if RecordTimerEntry.wasInDeepStandby:
+						RecordTimerEntry.setWasInStandby()
 					cur_zap_ref = NavigationInstance.instance.getCurrentlyPlayingServiceReference()
 					if cur_zap_ref and not cur_zap_ref.getPath():# we do not zap away if it is no live service
 						Notifications.AddNotification(MessageBox, _("In order to record a timer, the TV was switched to the recording service!\n"), type=MessageBox.TYPE_INFO, timeout=20)
@@ -341,11 +352,21 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					#wakeup standby
 					Screens.Standby.inStandby.Power()
 				else:
+					if RecordTimerEntry.wasInDeepStandby:
+						RecordTimerEntry.setWasInStandby()
 					self.log(11, "zapping")
 					NavigationInstance.instance.playService(self.service_ref.ref)
 				return True
 			else:
 				self.log(11, "start recording")
+
+				if RecordTimerEntry.wasInDeepStandby:
+					RecordTimerEntry.keypress()
+					if Screens.Standby.inStandby: #In case some plugin did put the receiver already in standby
+						config.misc.standbyCounter.value = 0
+					else:
+						Notifications.AddNotification(Screens.Standby.Standby, StandbyCounterIncrease=False)
+
 				record_res = self.record_service.start()
 				
 				if record_res:

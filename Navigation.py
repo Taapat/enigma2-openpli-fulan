@@ -35,24 +35,7 @@ class Navigation:
 		self.RecordTimer = RecordTimer.RecordTimer()
 		self.__wasTimerWakeup = getFPWasTimerWakeup()
 		if self.__wasTimerWakeup:
-			# We need to give the systemclock the chance to sync with the transponder time
-			self.recordshutdowntimer = eTimer()
-			self.recordshutdowntimer.callback.append(self.checkShutdownAfterRecording)
-			self.recordshutdowntimer.startLongTimer(30)
-			eActionMap.getInstance().bindAction('', -maxint - 1, self.keypress)
-
-	def checkShutdownAfterRecording(self):
-		if len(self.getRecordings()) or abs(self.RecordTimer.getNextTimerTime() - time()) <= 360:
-			if Screens.Standby.inStandby: #In case some plugin did put the receiver already in standby
-				config.misc.standbyCounter.value = 0
-			else:
-				Notifications.AddNotification(Screens.Standby.Standby, StandbyCounterIncrease=False)
-			self.keypress() #this ensures to unbind the keypress detection	
-
-	def keypress(self, key=None, flag=1):
-		if flag:
-			eActionMap.getInstance().unbindAction('', self.keypress)
-			self.recordshutdowntimer.stop()
+			RecordTimer.RecordTimerEntry.setWasInDeepStandby()
 
 	def wasTimerWakeup(self):
 		return self.__wasTimerWakeup
