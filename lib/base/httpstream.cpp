@@ -87,7 +87,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	else
 	{
 		hostname = uri.substr(7, uri.length() - 7);
-		uri = "/";
+		uri = "/"; // default to root path if there is non in the url
 	}
 	int authenticationindex = hostname.find("@");
 	if (authenticationindex > 0)
@@ -132,7 +132,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		return -1;
 	}
 
-	request = "GET /";
+	request = "GET ";
 	request.append(uri).append(" HTTP/1.1\r\n");
 	request.append("User-Agent: enigma/2\r\n");
 	request.append("Host: ").append(hostname).append("\r\n");
