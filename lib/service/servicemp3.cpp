@@ -617,7 +617,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 		out.screen_height = fb->getScreenResY();
 		out.shareFramebuffer = 1;
 		out.framebufferFD = fb->getFD();
-		out.destination = fb->getLFB_Direct();
+		out.destination = (uint32_t *)fb->getLFB_Direct();
 		out.destStride = fb->Stride();
 		player->output->subtitle->Command(player, (OutputCmd_t)OUTPUT_SET_SUBTITLE_OUTPUT, (void*) &out);
 	}
