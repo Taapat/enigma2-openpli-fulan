@@ -4389,9 +4389,6 @@ msgid "Scan"
 msgstr ""
 
 msgid "Scan "
-msgstr "Meklēt"
-
-msgid "Scan "
 msgstr "Meklēt "
 
 #. TRANSLATORS: option name, indicating which type of (DVB-C) modulation should be scanned. The modulation type is printed in '%s'. E.g.: 'Scan QAM16'
