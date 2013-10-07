@@ -4386,7 +4386,7 @@ msgid "Scaling mode"
 msgstr "Mērogošanas režīms"
 
 msgid "Scan"
-msgstr ""
+msgstr "Meklēt"
 
 msgid "Scan "
 msgstr "Meklēt "
