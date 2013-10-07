@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# by Taapat <taapat@gmail.com> 01-01-2013
+# by Taapat <taapat@gmail.com> 08-10-2013
 
 from Components.ServiceEventTracker import ServiceEventTracker
 from Plugins.Plugin import PluginDescriptor
@@ -17,8 +16,7 @@ class VFDIcons:
 	def WriteName(self):
 		service = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		if service:
-			path = service.getPath()
-			if path:
+			if service.getPath():
 				servicename = "PLAY"
 			else:
 				servicename = str(service.getChannelNum())
@@ -32,8 +30,9 @@ def main(session, **kwargs):
 	global VFDIconsInstance
 	if VFDIconsInstance is None:
 		VFDIconsInstance = VFDIcons(session)
-	VFDIconsInstance.WriteName()
+		VFDIconsInstance.WriteName()
 
 def Plugins(**kwargs):
 	return [PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART,
 		fnc = main)]
+
