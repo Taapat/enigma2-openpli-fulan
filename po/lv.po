@@ -1041,6 +1041,9 @@ msgstr "Mainīt iestatījumu PIN"
 msgid "Change step size"
 msgstr "Mainīt soļa lielumu"
 
+msgid "Change video port"
+msgstr "Mainīt video izeju"
+
 msgid "Changelog"
 msgstr "Izmaiņas"
 
@@ -1913,8 +1916,8 @@ msgstr "Vai vēlaties dzēst pakotni:\n"
 msgid "Do you want to restore your settings?"
 msgstr "Vai vēlaties atjaunot savus iestatījumus?"
 
-msgid "Do you want to resume this playback?"
-msgstr "Vai vēlaties atsākt šo atskaņošanu?"
+msgid "Do you want to not resume this playback?"
+msgstr "Vai vēlaties neturpināt šo atskaņošanu?"
 
 #, python-format
 msgid "Do you want to update your receiver to %s?"
@@ -4258,11 +4261,11 @@ msgid "Restoring..."
 msgstr "Atjauno..."
 
 msgid "Resume from last position"
-msgstr "Atsākt no pēdējā stāvokļa"
+msgstr "Turpina no pēdējā stāvokļa"
 
 #, python-format
 msgid "Resume position at %s"
-msgstr "Atsākt no vietas %s"
+msgstr "Turpinās no vietas %s"
 
 #. TRANSLATORS: The string "Resuming playback" flashes for a moment
 #. TRANSLATORS: at the start of a movie, when the user has selected
@@ -4272,7 +4275,7 @@ msgstr "Atsākt no vietas %s"
 #. TRANSLATORS: (Some translators seem to have interpreted it as a
 #. TRANSLATORS: question or a choice, but it is a statement.)
 msgid "Resuming playback"
-msgstr "Atsāk atskaņošanu"
+msgstr "Turpina atskaņošanu"
 
 msgid "Return to movie list"
 msgstr "Atgriezties uz filmu sarakstu"
