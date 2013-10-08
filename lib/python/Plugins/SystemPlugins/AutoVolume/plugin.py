@@ -1,7 +1,6 @@
 from Components.config import config
 from Components.ServiceEventTracker import ServiceEventTracker
 from Plugins.Plugin import PluginDescriptor
-
 from enigma import iPlayableService, eDVBVolumecontrol
 
 class AutoVolume:
@@ -47,7 +46,7 @@ class AutoVolume:
 			try:
 				tracknr = audio.getCurrentTrack()
 				i = audio.getTrackInfo(tracknr)
-				description = i.getDescription() or "";
+				description = i.getDescription() or ""
 				if "AC3" in description or "DTS" in description:
 					return True
 			except:
@@ -73,4 +72,5 @@ def autoend(reason, **kwargs):
 
 def Plugins(**kwargs):
 	return [PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = main),
-		PluginDescriptor(where = [PluginDescriptor.WHERE_AUTOSTART], fnc = autoend)]
+		PluginDescriptor(where = PluginDescriptor.WHERE_AUTOSTART, fnc = autoend)]
+		
