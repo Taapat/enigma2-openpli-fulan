@@ -7,10 +7,10 @@ class AutoVolume:
 	def __init__(self, session):
 		self.session = session
 		self.onClose = [ ]
+		self.pluginStarted = False
 		self.volumeUp = False
-		self.newService = True
+		self.newService = False
 		self.volctrl = eDVBVolumecontrol.getInstance()
-		self.volumeValue = self.volctrl.getVolume()
 		self.__event_tracker = ServiceEventTracker(screen = self, eventmap =
 			{
 				iPlayableService.evUpdatedInfo: self.updateInfo,
@@ -26,18 +26,23 @@ class AutoVolume:
 			if self.isCurrentAudioAC3DTS():
 				if not self.volumeUp:
 					self.volumeUp = True
-					self.volumeValue = self.volctrl.getVolume()
-					vol = self.volumeValue + 40
-					if vol > 100:
-						vol = 100
-					self.setVolume(vol)
+					if self.pluginStarted:
+						vol = self.volctrl.getVolume()
+						vol += 40
+						if vol > 100:
+							vol = 100
+						self.setVolume(vol)
+					else:
+						self.pluginStarted = True
 			elif self.volumeUp:
 				self.volumeUp = False
-				self.setVolume(self.volumeValue)
-
-	def enigmaStop(self):
-		if self.volumeUp:
-			self.setVolume(self.volumeValue)
+				vol = self.volctrl.getVolume()
+				vol -= 40
+				if vol < 1:
+					vol = 1
+				self.setVolume(vol)
+			elif not self.pluginStarted:
+				self.pluginStarted = True
 
 	def isCurrentAudioAC3DTS(self):
 		service = self.session.nav.getCurrentService()
@@ -66,11 +71,6 @@ def main(session, **kwargs):
 		AutoVolumeInstance = AutoVolume(session)
 		AutoVolumeInstance.updateInfo()
 
-def autoend(reason, **kwargs):
-	if reason == 1:
-		AutoVolumeInstance.enigmaStop()
-
 def Plugins(**kwargs):
-	return [PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = main),
-		PluginDescriptor(where = PluginDescriptor.WHERE_AUTOSTART, fnc = autoend)]
+	return [PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = main)]
 		
