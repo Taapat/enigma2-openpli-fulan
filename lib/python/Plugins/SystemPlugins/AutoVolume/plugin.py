@@ -3,7 +3,6 @@ from Components.ServiceEventTracker import ServiceEventTracker
 from Plugins.Plugin import PluginDescriptor
 
 from enigma import iPlayableService, eDVBVolumecontrol
-#from ServiceReference import ServiceReference
 
 class AutoVolume:
 	def __init__(self, session):
