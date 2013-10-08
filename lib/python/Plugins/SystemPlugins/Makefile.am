@@ -1,6 +1,6 @@
 installdir = $(pkglibdir)/python/Plugins/SystemPlugins
 
-SUBDIRS = SoftwareManager Satfinder \
+SUBDIRS = AutoVolume SoftwareManager Satfinder \
 	SkinSelector Videomode VideoTune Hotplug \
 	DefaultServicesScanner DiseqcTester \
 	FastScan HdmiCEC \

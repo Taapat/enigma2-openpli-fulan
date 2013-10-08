@@ -1,0 +1,16 @@
+<default>
+	<prerequisites>
+		<tag type="System" />
+	</prerequisites>
+	<info>
+		<author>Taapat</author>
+		<name>AutoVolume</name>
+		<packagename>enigma2-plugin-systemplugins-autovolume</packagename>
+		<packagetype>public</packagetype>
+		<shortdescription>Automatic volume</shortdescription>
+		<description>Simple automatic volume adjustment.</description>
+	</info>
+	<files type="package">
+		<file type="package" name="enigma2-plugin-systemplugins-autovolume" />
+	</files>
+</default>
