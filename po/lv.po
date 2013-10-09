@@ -1422,6 +1422,9 @@ msgstr "Uzstāda video izejas režīmu (vai izšķirtspēju)."
 msgid "Configure the way in which the receiver changes channels."
 msgstr "Uzstāda kā uztvērējs pārslēdz kanālus."
 
+msgid "Configure to keep focus on the current played service while entering the servicelist via the bouquet buttons."
+msgstr "Atverot kanālu sarakstu taustiņiem uz augšu vai leju paliek uz esošā kanāla."
+
 msgid "Configure where completed timers show up in the timer list."
 msgstr "Uzstāda cik ilgi pabeigtie taimeri tiek parādīti taimeru sarakstā."
 
@@ -2769,8 +2772,11 @@ msgstr "Pārlēkt uz iepriekšējo iezīmēto pozīciju"
 msgid "Just scale"
 msgstr "Vienkārši mērogot"
 
+msgid "Keep focus on current service while entering servicelist"
+msgstr "Atverot kanālu sarakstu palikt uz esošā kanāla"
+
 msgid "Kernel version: "
-msgstr "Kerneļa versija:"
+msgstr "Kodola versija: "
 
 msgid "Keyboard"
 msgstr "Klaviatūra"
