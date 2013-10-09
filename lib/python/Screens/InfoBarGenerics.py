@@ -567,11 +567,13 @@ class InfoBarChannelSelection:
 			self.servicelist.historyNext()
 
 	def switchChannelUp(self):
-		self.servicelist.moveUp()
+		if not config.usage.servicelist_keep_service.value:
+			self.servicelist.moveUp()
 		self.session.execDialog(self.servicelist)
 
 	def switchChannelDown(self):
-		self.servicelist.moveDown()
+		if not config.usage.servicelist_keep_service.value:
+			self.servicelist.moveDown()
 		self.session.execDialog(self.servicelist)
 
 	def openServiceList(self):
@@ -2299,8 +2301,6 @@ class InfoBarSubserviceSelection:
 				selection += 3
 
 			self.session.openWithCallback(self.subserviceSelected, ChoiceBox, title=_("Please select a sub service..."), list = tlist, selection = selection, keys = keys, skin_name = "SubserviceSelection")
-		else: #When there are no subservices then show the ChannelSelection list instead
-			self.openServiceList()
 
 	def subserviceSelected(self, service):
 		del self.bouquets
