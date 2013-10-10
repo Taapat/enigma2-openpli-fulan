@@ -10,12 +10,16 @@ class eHttpStream: public iTsSource, public Object, public eThread
 {
 	DECLARE_REF(eHttpStream);
 
-	int streamSocket;
-	enum { BUSY, CONNECTED, FAILED } connectionStatus;
-	std::string streamUrl;
-	std::string authorizationData;
+	int m_streamSocket;
+	bool m_isChunked;
+	size_t m_currentChunkSize;
+	enum { BUSY, CONNECTED, FAILED } m_connectionStatus;
+	char* m_tmp;
+	size_t m_tmpSize;
+	std::string m_streamUrl;
 
 	int openUrl(const std::string &url, std::string &newurl);
+	void streamReader();
 	void thread();
 
 	/* iTsSource */

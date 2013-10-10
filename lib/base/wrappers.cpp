@@ -122,6 +122,7 @@ ssize_t readLine(int fd, char** buffer, size_t* bufsize)
 		result = timedRead(fd, (*buffer) + i, 1, 3000, 100);
 		if (result <= 0 || (*buffer)[i] == '\n')
 		{
+			if (i > 0 && (*buffer)[i-1] == '\r') i--;
 			(*buffer)[i] = '\0';
 			return result <= 0 ? -1 : i;
 		}

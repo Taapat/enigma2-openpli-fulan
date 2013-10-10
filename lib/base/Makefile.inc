@@ -20,7 +20,6 @@ base_libenigma_base_a_SOURCES = \
 	base/message.cpp \
 	base/nconfig.cpp \
 	base/rawfile.cpp \
-	base/ringbuffer.cpp \
 	base/smartptr.cpp \
 	base/thread.cpp \
 	base/httpstream.cpp \
@@ -55,7 +54,6 @@ baseinclude_HEADERS = \
 	base/object.h \
 	base/rawfile.h \
 	base/ringbuffer.h \
-	base/ringbuffer_queue.h \
 	base/smartptr.h \
 	base/thread.h \
 	base/httpstream.h \
