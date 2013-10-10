@@ -5,41 +5,31 @@
 #include <lib/base/ebase.h>
 #include <lib/base/itssource.h>
 #include <lib/base/thread.h>
-#include <lib/base/ringbuffer.h>
 
-class eHttpStream: public iTsSource, public Object
+class eHttpStream: public iTsSource, public Object, public eThread
 {
 	DECLARE_REF(eHttpStream);
 
+	int streamSocket;
+	enum { BUSY, CONNECTED, FAILED } connectionStatus;
+	std::string streamUrl;
+	std::string authorizationData;
 
-	RingBuffer m_rbuffer;
-
-	std::string m_url;
-	int m_streamSocket;
-
-	char*  m_scratch;
-	size_t m_scratchSize;
-	size_t m_contentLength;
-	size_t m_contentServed;
-	size_t m_currentChunkSize;
-
-	bool m_tryToReconnect;
-	bool m_chunkedTransfer;
-
-	int openUrl(const std::string& url, std::string &newurl);
-	int _open(const std::string& url);
+	int openUrl(const std::string &url, std::string &newurl);
+	void thread();
 
 	/* iTsSource */
 	ssize_t read(off_t offset, void *buf, size_t count);
 	off_t length();
 	off_t offset();
 	int valid();
-	int close();
+	bool isStream() { return true; };
 
 public:
 	eHttpStream();
 	~eHttpStream();
-	int open(const std::string& url);
+	int open(const char *url);
+	int close();
 };
 
 #endif
