@@ -174,9 +174,9 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	}
 
 	// kernel will normally double this value, if it does not exceed max configured
-	int sndbuf = 1024*1024;
+	int sndbuf = 1024*1024*2;
 	//try and set a bigger receive buffer, ask OS to do some buffering for us
-	setsockopt(m_streamSocket, SOL_SOCKET, SO_SNDBUF, &sndbuf, sizeof sndbuf);  
+	setsockopt(m_streamSocket, SOL_SOCKET, SO_RCVBUF, &sndbuf, sizeof sndbuf);  
 
 	return 0;
 }
@@ -238,6 +238,22 @@ int eHttpStream::close()
 	return retval;
 }
 
+ssize_t eHttpStream::filter(void* buf, size_t count)
+{
+	ssize_t ret = timedRead(m_streamSocket, m_partialPkt, sizeof m_partialPkt, 5000, 100);
+	if (ret <= 0) return ret;
+	if (m_isChunked) m_currentChunkSize -= ret;
+	int i=0;
+	while(i < ret && m_partialPkt[i] != 0x47) i++;
+	if (i < ret)
+	{
+		ret -= i;
+		memcpy(buf, m_partialPkt+i, ret);
+	} 
+
+	return ret;
+}
+
 ssize_t eHttpStream::httpChunkedRead(void* buf, size_t count)
 {
 	ssize_t ret = -1;
@@ -265,17 +281,10 @@ ssize_t eHttpStream::httpChunkedRead(void* buf, size_t count)
 			// filter the stream, when strating streamming or read should start at the start of the packet
 			if (total_read==0 && m_partialPktSz==0)
 			{
-				ret = timedRead(m_streamSocket, m_partialPkt, sizeof m_partialPkt, 5000, 100);
-				if (ret <= 0) return ret;
-				m_currentChunkSize -= ret;
-				int i=0;
-				while(i < sizeof(m_partialPkt) && m_partialPkt[i] != 0x47) i++;
-				if (i < sizeof(m_partialPkt))
-				{
-					total_read = ret - i;
-					memcpy(buf, m_partialPkt+i, total_read);
-				} 
+				if ((ret = filter(buf, count)) <= 0) return ret;
+				total_read = ret;
 			}
+
 			size_t to_read = count - total_read;
 			if (m_currentChunkSize < to_read) to_read = m_currentChunkSize;
 
@@ -292,15 +301,8 @@ ssize_t eHttpStream::httpChunkedRead(void* buf, size_t count)
 		// filter the stream, when strating streamming or read should start at the start of the packet
 		if (m_partialPktSz==0)
 		{
-			ret = timedRead(m_streamSocket, m_partialPkt, sizeof m_partialPkt, 5000, 100);
-			if (ret <= 0) return ret;
-			int i=0;
-			while(i < sizeof(m_partialPkt) && m_partialPkt[i] != 0x47) i++;
-			if (i < sizeof(m_partialPkt))
-			{
-				m_partialPktSz = ret-i;
-				memcpy(buf, m_partialPkt+i, m_partialPktSz);
-			} 
+			if ((ret = filter(buf, count)) <= 0) return ret;
+			m_partialPktSz = ret;
 		}
 
 		ret = timedRead(m_streamSocket, buf+m_partialPktSz, count-m_partialPktSz, 5000, 100);
@@ -313,6 +315,7 @@ ssize_t eHttpStream::httpChunkedRead(void* buf, size_t count)
 		ret = ret - m_partialPktSz;
 		memcpy(m_partialPkt, buf+ret, m_partialPktSz);		
 	}
+
 	return ret;
 }
  
