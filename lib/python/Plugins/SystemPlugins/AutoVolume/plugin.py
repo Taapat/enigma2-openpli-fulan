@@ -58,9 +58,9 @@ class AutoVolume:
 				return False
 		return False
 
-	def setVolume(self, value):
-		self.volctrl.setVolume(value, value)
-		config.audio.volume.value = self.volctrl.getVolume()
+	def setVolume(self, volume):
+		self.volctrl.setVolume(volume, volume)
+		config.audio.volume.value = volume
 		config.audio.volume.save()
 
 AutoVolumeInstance = None
