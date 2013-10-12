@@ -13,13 +13,15 @@ class eHttpStream: public iTsSource, public Object, public eThread
 	int m_streamSocket;
 	bool m_isChunked;
 	size_t m_currentChunkSize;
+	char m_partialPkt[188];
+	int  m_partialPktSz;
 	enum { BUSY, CONNECTED, FAILED } m_connectionStatus;
 	char* m_tmp;
 	size_t m_tmpSize;
 	std::string m_streamUrl;
 
 	int openUrl(const std::string &url, std::string &newurl);
-	void streamReader();
+	ssize_t httpChunkedRead(void* buf, size_t count);
 	void thread();
 
 	/* iTsSource */

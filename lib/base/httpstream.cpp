@@ -15,6 +15,7 @@ eHttpStream::eHttpStream():
 	,m_connectionStatus(FAILED)
 	,m_tmp(NULL)
 	,m_tmpSize(32)
+	,m_partialPktSz(0)
 {
 	m_tmp = (char*)malloc(m_tmpSize);
 }
@@ -237,30 +238,89 @@ int eHttpStream::close()
 	return retval;
 }
 
-ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
+ssize_t eHttpStream::httpChunkedRead(void* buf, size_t count)
 {
-	if (m_connectionStatus == CONNECTED)
+	ssize_t ret = -1;
+	size_t total_read = m_partialPktSz;
+
+	// write partial packet from the previous read
+	if (m_partialPktSz > 0) memcpy(buf, m_partialPkt, m_partialPktSz);
+
+	if (m_isChunked)
 	{
-		size_t to_read = count;
-		if (m_isChunked)
+		while (total_read < count)
 		{
 			if (m_currentChunkSize==0)
 			{
 				do 
 				{
-					int c = readLine(m_streamSocket, &m_tmp, &m_tmpSize);
-					if (c < 0) return -1;
-				}while(!*m_tmp); /* skip CR LF from last chunk */
+					ret = readLine(m_streamSocket, &m_tmp, &m_tmpSize);
+					if (ret < 0) return -1;
+				}while(!*m_tmp && ret > 0); /* skip CR LF from last chunk */
+				if (ret == 0) break;
 				m_currentChunkSize = strtol(m_tmp, NULL, 16);
-				if (m_currentChunkSize == 0) return -1; 
+				if (m_currentChunkSize == 0) return -1;
 			}
-			if (m_currentChunkSize < to_read) to_read = m_currentChunkSize; 
+
+			// filter the stream, when strating streamming or read should start at the start of the packet
+			if (total_read==0 && m_partialPktSz==0)
+			{
+				ret = timedRead(m_streamSocket, m_partialPkt, sizeof m_partialPkt, 5000, 100);
+				if (ret <= 0) return ret;
+				m_currentChunkSize -= ret;
+				int i=0;
+				while(i < sizeof(m_partialPkt) && m_partialPkt[i] != 0x47) i++;
+				if (i < sizeof(m_partialPkt))
+				{
+					total_read = ret - i;
+					memcpy(buf, m_partialPkt+i, total_read);
+				} 
+			}
+			size_t to_read = count - total_read;
+			if (m_currentChunkSize < to_read) to_read = m_currentChunkSize;
+
+			// do not wait too long if we have something in the buffer already
+			ret = timedRead(m_streamSocket, buf+total_read, to_read, ((total_read)? 100:5000), 100);
+			if (ret <=0) break;
+			m_currentChunkSize -= ret;
+			total_read += ret;
+		}
+		if (total_read > 0) ret = total_read;
+	}
+	else
+	{
+		// filter the stream, when strating streamming or read should start at the start of the packet
+		if (m_partialPktSz==0)
+		{
+			ret = timedRead(m_streamSocket, m_partialPkt, sizeof m_partialPkt, 5000, 100);
+			if (ret <= 0) return ret;
+			int i=0;
+			while(i < sizeof(m_partialPkt) && m_partialPkt[i] != 0x47) i++;
+			if (i < sizeof(m_partialPkt))
+			{
+				m_partialPktSz = ret-i;
+				memcpy(buf, m_partialPkt+i, m_partialPktSz);
+			} 
 		}
 
-		ssize_t ret = timedRead(m_streamSocket, buf, to_read, 5000, 500);
+		ret = timedRead(m_streamSocket, buf+m_partialPktSz, count-m_partialPktSz, 5000, 100);
+		if (ret > 0) ret+=m_partialPktSz;
+	}
 
-		if (ret > 0 && m_currentChunkSize) m_currentChunkSize -= ret;
-		return ret;
+	if (ret > 0)
+	{
+		m_partialPktSz = ret%188;
+		ret = ret - m_partialPktSz;
+		memcpy(m_partialPkt, buf+ret, m_partialPktSz);		
+	}
+	return ret;
+}
+ 
+ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
+{
+	if (m_connectionStatus == CONNECTED)
+	{
+		return httpChunkedRead(buf, count);
 	}
 	else if (m_connectionStatus == BUSY)
 	{

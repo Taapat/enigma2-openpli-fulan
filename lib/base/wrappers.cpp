@@ -59,10 +59,9 @@ int Select(int maxfd, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, stru
 
 ssize_t singleRead(int fd, void *buf, size_t count)
 {
-	int retval;
 	while (1)
 	{
-		retval = ::read(fd, buf, count);
+		int retval = ::read(fd, buf, count);
 		if (retval < 0)
 		{
 			if (errno == EINTR) continue;
@@ -74,30 +73,23 @@ ssize_t singleRead(int fd, void *buf, size_t count)
 
 ssize_t timedRead(int fd, void *buf, size_t count, int initialtimeout, int interbytetimeout)
 {
-	fd_set rset;
-	struct timeval timeout;
-	int result;
 	size_t totalread = 0;
 
 	while (totalread < count)
 	{
-		FD_ZERO(&rset);
-		FD_SET(fd, &rset);
-		if (totalread == 0)
-		{
-			timeout.tv_sec = initialtimeout/1000;
-			timeout.tv_usec = (initialtimeout%1000) * 1000;
-		}
-		else
-		{
-			timeout.tv_sec = interbytetimeout / 1000;
-			timeout.tv_usec = (interbytetimeout%1000) * 1000;
-		}
-		if ((result = select(fd + 1, &rset, NULL, NULL, &timeout)) < 0) return -1; /* error */
-		if (result == 0) break;
-		if ((result = singleRead(fd, ((char*)buf) + totalread, count - totalread)) <= 0)
+                struct pollfd pfd;
+                pfd.fd = fd;
+                pfd.events = POLLIN|POLLPRI;		
+                int result = poll(&pfd, 1, ((totalread==0)?initialtimeout:interbytetimeout));
+		if (result == 1 && (result = singleRead(fd, ((char*)buf) + totalread, count - totalread)) <= 0)
 		{
 			return -1;
+		}
+
+		if (result < 0)
+		{
+			if (totalread > 0) return totalread;
+			else return result;
 		}
 		if (result == 0) break;
 		totalread += result;
@@ -124,7 +116,7 @@ ssize_t readLine(int fd, char** buffer, size_t* bufsize)
 		{
 			if (i > 0 && (*buffer)[i-1] == '\r') i--;
 			(*buffer)[i] = '\0';
-			return result <= 0 ? -1 : i;
+			return (result <= 0)? result : i;
 		}
 		if ((*buffer)[i] != '\r') i++;
 	}
