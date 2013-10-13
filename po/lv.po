@@ -656,7 +656,7 @@ msgid "Allocate unused memory index"
 msgstr "Piešķirt neizmantoto atmiņas indeksu"
 
 msgid "Allow quit movieplayer with exit"
-msgstr "Izejot atļut izslēgs filmu atskaņotāju"
+msgstr "Izejot atļut izslēgt filmu atskaņotāju"
 
 msgid "Allow subtitle language to equal audio language"
 msgstr "Atļaut subtitru valodu vienādu ar audio valodu"

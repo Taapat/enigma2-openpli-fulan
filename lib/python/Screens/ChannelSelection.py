@@ -761,17 +761,13 @@ class ChannelSelectionEdit:
 			self.servicelist.addMarked(ref)
 
 	def removeCurrentService(self):
-		self.session.openWithCallback(self.removeCurrentServiceCallback, MessageBox, _("Are you sure to remove this entry?"))
-
-	def removeCurrentServiceCallback(self, confirmation):
-		if confirmation:
-			ref = self.servicelist.getCurrent()
-			mutableList = self.getMutableList()
-			if ref.valid() and mutableList is not None:
-				if not mutableList.removeService(ref):
-					mutableList.flushChanges() #FIXME dont flush on each single removed service
-					self.servicelist.removeCurrent()
-					self.servicelist.resetRoot()
+		ref = self.servicelist.getCurrent()
+		mutableList = self.getMutableList()
+		if ref.valid() and mutableList is not None:
+			if not mutableList.removeService(ref):
+				mutableList.flushChanges() #FIXME dont flush on each single removed service
+				self.servicelist.removeCurrent()
+				self.servicelist.resetRoot()
 
 	def addServiceToBouquet(self, dest, service=None):
 		mutableList = self.getMutableList(dest)
@@ -1211,10 +1207,16 @@ class ChannelSelectionBase(Screen):
 		return self.servicelist.atEnd()
 
 	def nextBouquet(self):
-		self.changeBouquet(-1)
+		if "reverseB" in config.usage.servicelist_cursor_behavior.value:
+			self.changeBouquet(-1)
+		else:
+			self.changeBouquet(+1)
 
 	def prevBouquet(self):
-		self.changeBouquet(+1)
+		if "reverseB" in config.usage.servicelist_cursor_behavior.value:
+			self.changeBouquet(+1)
+		else:
+			self.changeBouquet(-1)
 
 	def showFavourites(self):
 		if not self.pathChangeDisabled:
@@ -1257,9 +1259,13 @@ class ChannelSelectionBase(Screen):
 		elif number == 4:
 			self.renameEntry()
 		elif number == 5:
-			self.removeCurrentService()
+			self.session.openWithCallback(self.removeCurrentServiceCallback, MessageBox, _("Are you sure to remove this entry?"))
 		elif number == 6:
 			self.toggleMoveMode()
+
+	def removeCurrentServiceCallback(self, confirmation):
+		if confirmation:
+			self.removeCurrentService()
 
 	def keyAsciiCode(self):
 		unichar = unichr(getPrevAsciiCode())
