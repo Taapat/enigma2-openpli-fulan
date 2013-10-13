@@ -761,7 +761,7 @@ class ChannelSelectionEdit:
 			self.servicelist.addMarked(ref)
 
 	def removeCurrentService(self):
-		self.session.openWithCallback(self.removeCurrentServiceCallback, MessageBox, _("Are you sure to remove this entry."))
+		self.session.openWithCallback(self.removeCurrentServiceCallback, MessageBox, _("Are you sure to remove this entry?"))
 
 	def removeCurrentServiceCallback(self, confirmation):
 		if confirmation:
@@ -1906,6 +1906,7 @@ class SimpleChannelSelection(ChannelSelectionBase):
 				"keyRadio": self.setModeRadio,
 				"keyTV": self.setModeTv,
 			})
+		self.bouquet_mark_edit = OFF
 		self.title = title
 		self.onLayoutFinish.append(self.layoutFinished)
 
