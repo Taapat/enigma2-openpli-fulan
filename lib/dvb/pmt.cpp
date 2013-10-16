@@ -544,6 +544,8 @@ int eDVBServicePMTHandler::getProgramInfo(program &program)
 				program.defaultSubtitleStream = autosub_txt_hearing;
 			else if (autosub_txt_normal != -1)
 				program.defaultSubtitleStream = autosub_txt_normal;
+			else if (allow_hearingimpaired && autosub_txt_hearing != -1)
+				program.defaultSubtitleStream = autosub_txt_hearing;
 		}
 		else
 		{
@@ -557,6 +559,8 @@ int eDVBServicePMTHandler::getProgramInfo(program &program)
 				program.defaultSubtitleStream = autosub_dvb_hearing;
 			else if (autosub_dvb_normal != -1)
 				program.defaultSubtitleStream = autosub_dvb_normal;
+			else if (allow_hearingimpaired && autosub_dvb_hearing != -1)
+				program.defaultSubtitleStream = autosub_dvb_hearing;
 		}
 		if (program.defaultSubtitleStream != -1 && (equallanguagemask & (1<<(autosub_level-1))) == 0 && program.subtitleStreams[program.defaultSubtitleStream].language_code.compare(program.audioStreams[program.defaultAudioStream].language_code) == 0 )
 			program.defaultSubtitleStream = -1;
