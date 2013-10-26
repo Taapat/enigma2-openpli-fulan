@@ -15,7 +15,7 @@ def PluginEntryComponent(plugin, width=440):
 	return [
 		plugin,
 		MultiContentEntryText(pos=(120, 5), size=(width-120, 25), font=0, text=plugin.name),
-		MultiContentEntryText(pos=(120, 26), size=(width-10, 17), font=1, text=plugin.description),
+		MultiContentEntryText(pos=(120, 26), size=(width-120, 17), font=1, text=plugin.description),
 		MultiContentEntryPixmapAlphaTest(pos=(10, 5), size=(100, 40), png = png)
 	]
 
