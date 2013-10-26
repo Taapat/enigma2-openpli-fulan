@@ -25,7 +25,7 @@ def enumTrashFolders():
 	# Walk through all Trash folders. This may access network
 	# drives and similar, so might block for minutes.
 	for mount in Harddisk.getProcMounts():
-		if mount[1].startswith('/media/'):
+		if mount[1][:7] == '/media/':
 			mountpoint = mount[1]
 			movie = os.path.join(mountpoint, 'movie')
 			if os.path.isdir(movie):

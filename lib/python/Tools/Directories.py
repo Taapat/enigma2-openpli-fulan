@@ -67,13 +67,13 @@ fallbackPaths = {
 	}
 
 def resolveFilename(scope, base = "", path_prefix = None):
-	if base.startswith("~/"):
+	if base[:2] == "~/":
 		# you can only use the ~/ if we have a prefix directory
 		assert path_prefix is not None
 		base = os.path.join(path_prefix, base[2:])
 
 	# don't resolve absolute paths
-	if base.startswith('/'):
+	if base[0] == '/':
 		return base
 
 	if scope == SCOPE_CURRENT_SKIN:
@@ -171,12 +171,12 @@ def defaultRecordingLocation(candidate=None):
 		path = ''
 		# Find the largest local disk
 		from Components import Harddisk
-		mounts = [m for m in Harddisk.getProcMounts() if m[1].startswith('/media/')]
+		mounts = [m for m in Harddisk.getProcMounts() if m[1][:7] == '/media/']
 		biggest = 0
 		havelocal = False
 		for candidate in mounts:
 			try:
-				islocal = candidate[1].startswith('/dev/') # Good enough
+				islocal = candidate[1][:5] == '/dev/' # Good enough
 				stat = os.statvfs(candidate[1])
 				# Free space counts double
 				size = (stat.f_blocks + stat.f_bavail) * stat.f_bsize
@@ -191,7 +191,7 @@ def defaultRecordingLocation(candidate=None):
 		movie = os.path.join(path, 'movie')
 		if os.path.isdir(movie):
 			path = movie
-		if not path.endswith('/'):
+		if path[-1] != '/':
 			path += '/' # Bad habits die hard, old code relies on this
 	return path
 	
@@ -240,7 +240,7 @@ def getRecordingFilename(basename, dirname = None):
 	filename = filename[:247]
 
 	if dirname is not None:
-		if not dirname.startswith('/'):
+		if dirname[0] != '/':
 			dirname = os.path.join(defaultRecordingLocation(), dirname)
 	else:
 		dirname = defaultRecordingLocation()
