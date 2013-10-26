@@ -28,7 +28,7 @@ class RcModel:
 	def readRcTypeFromProc(self):
 		if os.path.exists('/proc/stb/info/boxtype'):
 			model = self.readFile('/proc/stb/info/boxtype')
-			if model.startswith('et') or model.startswith('xp'):
+			if model[:2] == 'et' or model[:2] == 'xp':
 				rc = self.readFile('/proc/stb/ir/rc/type')
 				if rc == '4':
 					self.currentRcType = self.RCTYPE_DMM

@@ -634,7 +634,7 @@ class Network:
 		# identification is not possible over default moduledir
 		for x in os.listdir(devicedir):
 			# rt3070 on kernel 2.6.18 registers wireless devices as usb_device (e.g. 1-1.3:1.0) and identification is only possible over /sys/class/net/'ifacename'/device/1-xxx
-			if x.startswith("1-"):
+			if x[:2] == "1-":
 				moduledir = devicedir + '/' + x + '/driver/module'
 				if os.path.isdir(moduledir):
 					return moduledir

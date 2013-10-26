@@ -54,7 +54,7 @@ class ServiceOrbitalPosition(Converter, object):
 			refString = ref.toString().lower()
 			if "%3a//" in refString:
 				return _("Stream")
-			if refString.startswith("1:134:"):
+			if refString[:6] == "1:134:":
 				return _("Alternative")
 		return ""
 

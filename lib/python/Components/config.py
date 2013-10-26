@@ -1384,7 +1384,7 @@ class ConfigLocations(ConfigElement):
 	def getMountpoint(self, file):
 		file = os_path.realpath(file)+"/"
 		for m in self.mountpoints:
-			if file.startswith(m):
+			if file[:len(m)] == m:
 				return m
 		return None
 

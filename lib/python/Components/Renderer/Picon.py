@@ -20,7 +20,7 @@ def onMountpointAdded(mountpoint):
 		piconPath = os.path.join(mountpoint, 'picon') + '/'
 		if os.path.isdir(piconPath) and piconPath not in searchPaths:
 			for fn in os.listdir(piconPath):
-				if fn.endswith('.png'):
+				if fn[-4:] == '.png':
 					print "[Picon] adding path:", piconPath
 					searchPaths.append(piconPath)
 					break
@@ -65,7 +65,7 @@ class Picon(Renderer):
 	def addPath(self, value):
 		if pathExists(value):
 			global searchPaths
-			if not value.endswith('/'):
+			if value[-1] != '/':
 				value += '/'
 			if value not in searchPaths:
 				searchPaths.append(value)

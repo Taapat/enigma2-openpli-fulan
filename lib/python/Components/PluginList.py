@@ -35,7 +35,7 @@ def PluginDownloadComponent(plugin, name, version=None, width=440):
 		if "+git" in version:
 			# remove git "hash"
 			version = "+".join(version.split("+")[:2])
-		elif version.startswith('experimental-'):
+		elif version[:13] == 'experimental-':
 			version = version[13:]
 		name += "  (" + version + ")"
 	return [

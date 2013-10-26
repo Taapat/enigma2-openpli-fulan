@@ -85,7 +85,7 @@ class FileList(MenuList):
 	def getMountpoint(self, file):
 		file = os.path.join(os.path.realpath(file), "")
 		for m in self.mountpoints:
-			if file.startswith(m):
+			if file[:len(m)] == m:
 				return m
 		return False
 
@@ -121,7 +121,7 @@ class FileList(MenuList):
 	def inParentDirs(self, dir, parents):
 		dir = os.path.realpath(dir)
 		for p in parents:
-			if dir.startswith(p):
+			if dir[:len(p)] == p:
 				return True
 		return False
 
@@ -280,7 +280,7 @@ def MultiFileSelectEntryComponent(name, absolute = None, isDir = False, selected
 			png = None
 	if png is not None:
 		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 30, 2, 20, 20, png))
-	if not name.startswith('<'):
+	if name[0] != '<':
 		if selected:
 			icon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/icons/lock_on.png"))
 		else:
@@ -309,7 +309,7 @@ class MultiFileSelectList(FileList):
 		idx = self.l.getCurrentSelectionIndex()
 		newList = self.list[:]
 		x = self.list[idx]
-		if not x[0][3].startswith('<'):
+		if x[0][3][0] != '<':
 			if x[0][1] is True:
 				realPathname = x[0][0]
 			else:

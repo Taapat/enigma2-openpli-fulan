@@ -26,7 +26,7 @@ def getProcMounts():
 def isFileSystemSupported(filesystem):
 	try:
 		for fs in open('/proc/filesystems', 'r'):
-			if fs.strip().endswith(filesystem):
+			if fs.strip()[-len(filesystem):] == filesystem:
 				return True
 		return False
 	except Exception, ex:
@@ -160,7 +160,7 @@ class Harddisk:
 			except OSError:
 				return -1
 			for filename in devdir:
-				if filename.startswith(self.device):
+				if filename[:len(self.device)] == self.device:
 					numPart += 1
 
 		elif self.type == DEVTYPE_DEVFS:
@@ -169,22 +169,22 @@ class Harddisk:
 			except OSError:
 				return -1
 			for filename in idedir:
-				if filename.startswith("disc"):
+				if filename[:4] == "disc":
 					numPart += 1
-				if filename.startswith("part"):
+				if filename[:4] == "part":
 					numPart += 1
 		return numPart
 
 	def mountDevice(self):
 		for parts in getProcMounts():
-			if os.path.realpath(parts[0]).startswith(self.dev_path):
+			if os.path.realpath(parts[0])[:len(self.dev_path)] == self.dev_path:
 				self.mount_device = parts[0]
 				self.mount_path = parts[1]
 				return parts[1]
 
 	def enumMountDevices(self):
 		for parts in getProcMounts():
-			if os.path.realpath(parts[0]).startswith(self.dev_path):
+			if os.path.realpath(parts[0])[:len(self.dev_path)] == self.dev_path:
 				yield parts[1]
 
 	def findMount(self):
@@ -525,7 +525,7 @@ class Partition:
 			return None
 
 	def tabbedDescription(self):
-		if self.mountpoint.startswith('/media/net'):
+		if self.mountpoint[:10] == '/media/net':
 			# Network devices have a user defined name
 			return self.description
 		return self.description + '\t' + self.mountpoint
@@ -691,7 +691,7 @@ class HarddiskManager:
 		if not blacklisted and medium_found:
 			description = self.getUserfriendlyDeviceName(device, physdev)
 #+++>
-			if description.startswith("External Storage"):
+			if description[:16] == "External Storage":
 				return False, False, False, False, [], False
 #+++<
 			p = Partition(mountpoint = self.getMountpoint(device), description = description, force_mounted = True, device = device)
@@ -770,7 +770,7 @@ class HarddiskManager:
 			print "couldn't read model: ", s
 		from Tools.HardwareInfo import HardwareInfo
 		for physdevprefix, pdescription in DEVICEDB.get(HardwareInfo().device_name,{}).items():
-			if phys.startswith(physdevprefix):
+			if phys[:len(physdevprefix)] == physdevprefix:
 				description = pdescription
 		# not wholedisk and not partition 1
 		if part and part != 1:
@@ -792,7 +792,7 @@ class HarddiskManager:
 
 	def setDVDSpeed(self, device, speed = 0):
 		ioctl_flag=int(0x5322)
-		if not device.startswith('/'):
+		if device[0] != '/':
 			device = "/dev/" + device
 		try:
 			from fcntl import ioctl

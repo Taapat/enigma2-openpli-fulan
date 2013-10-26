@@ -133,23 +133,23 @@ class IpkgComponent:
 			self.callCallbacks(self.EVENT_LISTITEM, item)
 			return
 		try:
-			if data.startswith('Downloading'):
+			if data[:11] == 'Downloading':
 				self.callCallbacks(self.EVENT_DOWNLOAD, data.split(' ', 5)[1].strip())
-			elif data.startswith('Upgrading'):
+			elif data[:9] == 'Upgrading':
 				self.callCallbacks(self.EVENT_UPGRADE, data.split(' ', 2)[1])
-			elif data.startswith('Installing'):
+			elif data[:10] == 'Installing':
 				self.callCallbacks(self.EVENT_INSTALL, data.split(' ', 2)[1])
-			elif data.startswith('Removing'):
+			elif data[:8] == 'Removing':
 				self.callCallbacks(self.EVENT_REMOVE, data.split(' ', 3)[2])
-			elif data.startswith('Configuring'):
+			elif data[:11] == 'Configuring':
 				self.callCallbacks(self.EVENT_CONFIGURING, data.split(' ', 2)[1])
-			elif data.startswith('An error occurred'):
+			elif data[:17] == 'An error occurred':
 				self.callCallbacks(self.EVENT_ERROR, None)
-			elif data.startswith('Failed to download'):
+			elif data[:18] == 'Failed to download':
 				self.callCallbacks(self.EVENT_ERROR, None)
-			elif data.startswith('ipkg_download: ERROR:'):
+			elif data[:21] == 'ipkg_download: ERROR:':
 				self.callCallbacks(self.EVENT_ERROR, None)
-			elif data.find('Configuration file \'') >= 0:
+			elif 'Configuration file \'' in data:
 				# Note: the config file update question doesn't end with a newline, so
 				# if we get multiple config file update questions, the next ones
 				# don't necessarily start at the beginning of a line

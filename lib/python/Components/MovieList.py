@@ -534,7 +534,7 @@ class MovieList(GUIComponent):
 			parent = os.path.split(os.path.normpath(rootPath))[0]
 			if parent and (parent not in defaultInhibitDirs):
 				# enigma wants an extra '/' appended
-				if not parent.endswith('/'):
+				if parent[-1] != '/':
 					parent += '/'
 				ref = eServiceReference("2:0:1:0:0:0:0:0:0:0:" + parent)
 				ref.flags = eServiceReference.flagDirectory
@@ -599,7 +599,7 @@ class MovieList(GUIComponent):
 	
 		if self.root and numberOfDirs > 0:
 			rootPath = os.path.normpath(self.root.getPath())
-			if not rootPath.endswith('/'):
+			if rootPath[-1] != '/':
 				rootPath += '/'
 			if rootPath != parent:
 				# with new sort types directories may be in between files, so scan whole
@@ -607,7 +607,7 @@ class MovieList(GUIComponent):
 				for index, item in enumerate(self.list):
 					if item[0].flags & eServiceReference.mustDescent:
 						itempath = os.path.normpath(item[0].getPath())
-						if not itempath.endswith('/'):
+						if itempath[-1] != '/':
 							itempath += '/'
 						if itempath == rootPath:
 							self.parentDirectory = index
@@ -639,9 +639,9 @@ class MovieList(GUIComponent):
 			# Check if the set has a complete sentence in common, and how far
 			for m in movies[1:]:
 				if m[start:end] != match:
-					if not m.startswith(movie[:last]):
+					if m[:len(movie[:last])] != movie[:last]:
 						start = first
-					if not m.endswith(movie[first:]):
+					if m[-len(movie[first:]):] != movie[first:]:
 						end = last
 					match = movie[start:end]
 					if m[start:end] != match:
@@ -728,11 +728,11 @@ class MovieList(GUIComponent):
 			for index, item in enumerate(itemsBelow):
 				ref = item[0]
 				itemName = getShortName(item[1].getName(ref).upper(), ref)
-				if len(self._char) == 1 and itemName.startswith(self._char):
+				if len(self._char) == 1 and itemName[0] == self._char:
 					found = True
 					self.instance.moveSelectionTo(index + currentIndex + 1)
 					break
-				elif len(self._char) > 1 and itemName.find(self._char) >= 0:
+				elif len(self._char) > 1 and self._char in itemName:
 					found = True
 					self.instance.moveSelectionTo(index + currentIndex + 1)
 					break
@@ -741,11 +741,11 @@ class MovieList(GUIComponent):
 			for index, item in enumerate(itemsAbove):
 				ref = item[0]
 				itemName = getShortName(item[1].getName(ref).upper(), ref)
-				if len(self._char) == 1 and itemName.startswith(self._char):
+				if len(self._char) == 1 and itemName[0] == self._char:
 					found = True
 					self.instance.moveSelectionTo(index + 1)
 					break
-				elif len(self._char) > 1 and itemName.find(self._char) >= 0:
+				elif len(self._char) > 1 and self._char in itemName:
 					found = True
 					self.instance.moveSelectionTo(index + 1)
 					break

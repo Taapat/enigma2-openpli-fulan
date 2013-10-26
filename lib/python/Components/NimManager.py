@@ -741,26 +741,26 @@ class NimManager:
 			if not line:
 				break
 			line = line.strip()
-			if line.startswith("NIM Socket"):
+			if line[:10] == "NIM Socket":
 				parts = line.split(" ")
 				current_slot = int(parts[2][:-1])
 				entries[current_slot] = {}
-			elif line.startswith("Type:"):
+			elif line[:5] == "Type:":
 				entries[current_slot]["type"] = str(line[6:])
 				entries[current_slot]["isempty"] = False
-			elif line.startswith("Name:"):
+			elif line[:5] == "Name:":
 				entries[current_slot]["name"] = str(line[6:])
 				entries[current_slot]["isempty"] = False
-			elif line.startswith("Has_Outputs:"):
+			elif line[:12] == "Has_Outputs:":
 				input = str(line[len("Has_Outputs:") + 1:])
 				entries[current_slot]["has_outputs"] = (input == "yes")
-			elif line.startswith("Internally_Connectable:"):
+			elif line[:23] == ("Internally_Connectable:":
 				input = int(line[len("Internally_Connectable:") + 1:])
 				entries[current_slot]["internally_connectable"] = input
-			elif line.startswith("Frontend_Device:"):
+			elif line[:16] == "Frontend_Device:":
 				input = int(line[len("Frontend_Device:") + 1:])
 				entries[current_slot]["frontend_device"] = input
-			elif  line.startswith("Mode"):
+			elif  line[:4] == "Mode":
 				# "Mode 0: DVB-T" -> ["Mode 0", "DVB-T"]
 				split = line.split(": ")
 				if len(split) > 1 and split[1]:
@@ -769,10 +769,10 @@ class NimManager:
 					modes = entries[current_slot].get("multi_type", {})
 					modes[split2[1]] = split[1]
 					entries[current_slot]["multi_type"] = modes
-			elif line.startswith("I2C_Device:"):
+			elif line[:11] == "I2C_Device:":
 				input = int(line[len("I2C_Device:") + 1:])
 				entries[current_slot]["i2c"] = input
-			elif line.startswith("empty"):
+			elif line[:5] == "empty":
 				entries[current_slot]["type"] = None
 				entries[current_slot]["name"] = _("N/A")
 				entries[current_slot]["isempty"] = True

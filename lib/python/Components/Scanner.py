@@ -131,7 +131,7 @@ def scanDevice(mountpoint):
 		for root, dirs, files in os_walk(path):
 			for f in files:
 				path = os_path.join(root, f)
-				if is_cdrom and f.endswith(".wav") and f.startswith("track"):
+				if is_cdrom and f[-4:] == ".wav" and f[:5] == "track":
 					sfile = ScanFile(path,"audio/x-cda")
 				else:
 					sfile = ScanFile(path)
