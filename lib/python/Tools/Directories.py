@@ -73,7 +73,7 @@ def resolveFilename(scope, base = "", path_prefix = None):
 		base = os.path.join(path_prefix, base[2:])
 
 	# don't resolve absolute paths
-	if base[0] == '/':
+	if base[:1] == '/':
 		return base
 
 	if scope == SCOPE_CURRENT_SKIN:

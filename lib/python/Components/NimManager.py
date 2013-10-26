@@ -754,7 +754,7 @@ class NimManager:
 			elif line[:12] == "Has_Outputs:":
 				input = str(line[len("Has_Outputs:") + 1:])
 				entries[current_slot]["has_outputs"] = (input == "yes")
-			elif line[:23] == ("Internally_Connectable:":
+			elif line[:23] == "Internally_Connectable:":
 				input = int(line[len("Internally_Connectable:") + 1:])
 				entries[current_slot]["internally_connectable"] = input
 			elif line[:16] == "Frontend_Device:":
