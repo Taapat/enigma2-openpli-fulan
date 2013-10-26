@@ -220,7 +220,7 @@ class PluginDownloadBrowser(Screen):
 	def installDestinationCallback(self, result):
 		if result is not None:
 			dest = result[1]
-			if dest.startswith('/'):
+			if dest[0] == '/':
 				# Custom install path, add it to the list too
 				dest = os.path.normpath(dest)
 				extra = '--add-dest %s:%s -d %s' % (dest,dest,dest)
@@ -234,7 +234,7 @@ class PluginDownloadBrowser(Screen):
 	def runInstall(self, val):
 		if val:
 			if self.type == self.DOWNLOAD:
-				if self["list"].l.getCurrentSelection()[0].name.startswith("picons-"):
+				if self["list"].l.getCurrentSelection()[0].name[:7] == "picons-":
 					supported_filesystems = frozenset(('ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
 					candidates = []
 					import Components.Harddisk
@@ -248,7 +248,7 @@ class PluginDownloadBrowser(Screen):
 						self.session.openWithCallback(self.installDestinationCallback, ChoiceBox, title=_("Install picons on"), list=candidates)
 					return
 				self.install_settings_name = self["list"].l.getCurrentSelection()[0].name
-				if self["list"].l.getCurrentSelection()[0].name.startswith('settings-'):
+				if self["list"].l.getCurrentSelection()[0].name[:9] == "settings-":
 					self.check_settings = True
 					self.startIpkgListInstalled(self.PLUGIN_PREFIX + 'settings-*')
 				else:
@@ -314,7 +314,7 @@ class PluginDownloadBrowser(Screen):
 				self.pluginlist.remove(plugin)
 				break
 		self.plugins_changed = True
-		if self["list"].l.getCurrentSelection()[0].name.startswith("settings-"):
+		if self["list"].l.getCurrentSelection()[0].name[:9] == "settings-":
 			self.reload_settings = True
 		self.expanded = []
 		self.updateList()
@@ -375,7 +375,7 @@ class PluginDownloadBrowser(Screen):
 				plugin = x.split(" - ", 2)
 				# 'opkg list_installed' only returns name + version, no description field
 				if len(plugin) >= 2:
-					if not plugin[0].endswith('-dev') and not plugin[0].endswith('-staticdev') and not plugin[0].endswith('-dbg') and not plugin[0].endswith('-doc') and not plugin[0].endswith('-src'):
+					if plugin[0][-4:] != '-dev' and plugin[0][-10:] != '-staticdev' and plugin[0][-4:] != '-dbg' and plugin[0][-4:] != '-doc' and plugin[0][-4:] != '-src':
 						if plugin[0] not in self.installedplugins:
 							if self.type == self.DOWNLOAD:
 								self.installedplugins.append(plugin[0])

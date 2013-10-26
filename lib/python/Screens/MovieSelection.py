@@ -89,13 +89,13 @@ def isTrashFolder(ref):
 	if not config.usage.movielist_trashcan.value or not ref.flags & eServiceReference.mustDescent:
 		return False
 	path = os.path.realpath(ref.getPath())
-	return path.endswith('.Trash') and path.startswith(Tools.Trashcan.getTrashFolder(path))
+	return path[-6:] == '.Trash' and path[:len(Tools.Trashcan.getTrashFolder(path))] == Tools.Trashcan.getTrashFolder(path)
 
 def isInTrashFolder(ref):
 	if not config.usage.movielist_trashcan.value or not ref.flags & eServiceReference.mustDescent:
 		return False
 	path = os.path.realpath(ref.getPath())
-	return path.startswith(Tools.Trashcan.getTrashFolder(path))
+	return path[:len(Tools.Trashcan.getTrashFolder(path))] == Tools.Trashcan.getTrashFolder(path)
 
 def isSimpleFile(item):
 	if not item:
@@ -628,7 +628,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 			}
 
 	def _callButton(self, name):
-		if name.startswith('@'):
+		if name[0] == '@':
 			item = self.getCurrentSelection()
 			if isSimpleFile(item):
 				name = name[1:]
@@ -718,7 +718,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 			path = service.getPath()
 			if path:
 				path = os.path.split(os.path.normpath(path))[0]
-				if not path.endswith('/'):
+				if not path[-1] == '/':
 					path += '/'
 				self.gotFilename(path, selItem = service)
 				return True
@@ -800,7 +800,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 		item = self.getCurrentSelection()
 		for name in ('red', 'green', 'yellow', 'blue'):
 			action = userDefinedButtons[name].value
-			if action.startswith('@'):
+			if action[0] == '@':
 				check = self.can_default
 			else:
 				try:
@@ -843,7 +843,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 	def playAsDVD(self, path):
 		try:
 			from Screens import DVD
-			if path.endswith('VIDEO_TS/'):
+			if path[-9:] == 'VIDEO_TS/':
 				# strip away VIDEO_TS/ part
 				path = os.path.split(path.rstrip('/'))[0]
 			self.session.open(DVD.DVDPlayer, dvd_filelist=[path])
@@ -957,7 +957,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 		if current is not None:
 			path = current.getPath()
 			if current.flags & eServiceReference.mustDescent:
-				if path.endswith("VIDEO_TS/") or os.path.exists(os.path.join(path, 'VIDEO_TS.IFO')):
+				if path[-9:] == "VIDEO_TS/" or os.path.exists(os.path.join(path, 'VIDEO_TS.IFO')):
 					#force a DVD extention
 					Screens.InfoBar.InfoBar.instance.checkTimeshiftRunning(boundFunction(self.itemSelectedCheckTimeshiftCallback, ".iso", path))
 					return
@@ -1194,7 +1194,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 		if not res:
 			return
 		# serviceref must end with /
-		if not res.endswith('/'):
+		if not res[-1] == '/':
 			res += '/'
 		currentDir = config.movielist.last_videodir.value
 		if res != currentDir:
@@ -1352,7 +1352,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 		try:
 			path = os.path.join(config.movielist.last_videodir.value, name)
 			os.mkdir(path)
-			if not path.endswith('/'):
+			if not path[-1] == '/':
 				path += '/'
 			self.reloadList(sel = eServiceReference("2:0:1:0:0:0:0:0:0:0:" + path))
 		except OSError, e:
@@ -1470,7 +1470,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 			try:
 				base = os.path.split(path)[0]
 				for fn in os.listdir(base):
-					if not fn.startswith('.'): # Skip hidden things
+					if not fn[0] == '.': # Skip hidden things
 						d = os.path.join(base, fn)
 						if os.path.isdir(d) and (d not in inlist):
 							bookmarks.append((fn,d))
@@ -1655,7 +1655,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 		else:
 			if not args:
 				rec_filename = os.path.split(current.getPath())[1]
-				if rec_filename.endswith(".ts"): rec_filename = rec_filename[:-3]
+				if rec_filename[-3:] == ".ts": rec_filename = rec_filename[:-3]
 				for timer in NavigationInstance.instance.RecordTimer.timer_list:
 					if timer.isRunning() and not timer.justplay and timer.Filename.find(rec_filename)>=0:
 						choices = [
@@ -1672,7 +1672,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 				try:
 					trash = Tools.Trashcan.createTrashFolder(cur_path)
 					# Also check whether we're INSIDE the trash, then it's a purge.
-					if cur_path.startswith(trash):
+					if cur_path[:len(trash)] == trash:
 						msg = _("Deleted items") + "\n"
 					else:
 						moveServiceFiles(current, trash, name, allowCopy=False)

@@ -431,7 +431,8 @@ class DVDPlayer(Screen, InfoBarBase, InfoBarNotifications, InfoBarSeek, InfoBarP
 		choices = [(_("Exit"), "exit"), (_("Continue playing"), "play")]
 		if self.physicalDVD:
 			cur = self.session.nav.getCurrentlyPlayingServiceOrGroup()
-			if cur and not cur.toString().endswith(harddiskmanager.getAutofsMountpoint(harddiskmanager.getCD())):
+			cd = harddiskmanager.getAutofsMountpoint(harddiskmanager.getCD())
+			if cur and cur.toString()[-len(cd):] != cd:
 			    choices.insert(0,(_("Play DVD"), "playPhysical" ))
 		self.session.openWithCallback(self.exitCB, ChoiceBox, title=_("Leave DVD player?"), list = choices)
 
@@ -531,9 +532,9 @@ class DVDPlayer(Screen, InfoBarBase, InfoBarNotifications, InfoBarSeek, InfoBarP
 			newref = eServiceReference(4369, 0, val)
 			print "play", newref.toString()
 			if curref is None or curref != newref:
-				if newref.toString().endswith("/VIDEO_TS") or newref.toString().endswith("/"):
+				if newref.toString()[-9:] == "/VIDEO_TS" or newref.toString()[-1] == "/":
 					names = newref.toString().rsplit("/",3)
-					if names[2].startswith("Disk ") or names[2].startswith("DVD "):
+					if names[2][:5] == "Disk " or names[2][:4] == "DVD ":
 						name = str(names[1]) + " - " + str(names[2])
 					else:
 						name = names[2]
@@ -542,7 +543,7 @@ class DVDPlayer(Screen, InfoBarBase, InfoBarNotifications, InfoBarSeek, InfoBarP
 
 #				Construct a path for the IFO header assuming it exists
 				ifofilename = val
-				if not ifofilename.upper().endswith("/VIDEO_TS"):
+				if ifofilename.upper()[-9:] != "/VIDEO_TS":
 					ifofilename += "/VIDEO_TS"
 				files = [("/VIDEO_TS.IFO", 0x100), ("/VTS_01_0.IFO", 0x100), ("/VTS_01_0.IFO", 0x200)] # ( filename, offset )
 				for name in files:
