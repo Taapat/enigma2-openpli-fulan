@@ -65,7 +65,7 @@ class ServiceName2(Converter, object):
 		if isinstance(ref, eServiceReference):
 			isRadioService = ref.getData(0) in (2,10)
 			lastpath = isRadioService and config.radio.lastroot.value or config.tv.lastroot.value
-			if lastpath.find('FROM BOUQUET') == -1:
+			if not 'FROM BOUQUET' in lastpath:
 				if 'FROM PROVIDERS' in lastpath:
 					return 'P', 'Provider'
 				if 'FROM SATELLITES' in lastpath:
