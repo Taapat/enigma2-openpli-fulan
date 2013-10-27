@@ -46,6 +46,11 @@ typedef enum
 #define GSTREAMER_SUBTITLE_SYNC_MODE_BUG
 /**/
 
+void ep3Blit(){
+	fbClass *fb = fbClass::getInstance();
+	fb->blit();
+}
+
 eServiceFactoryMP3::eServiceFactoryMP3()
 {
 	ePtr<eServiceCenter> sc;
@@ -619,6 +624,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
 		out.framebufferFD = fb->getFD();
 		out.destination = fb->getLFB_Direct();
 		out.destStride = fb->Stride();
+		out.framebufferBlit = ep3Blit;
 		player->output->subtitle->Command(player, (OutputCmd_t)OUTPUT_SET_SUBTITLE_OUTPUT, (void*) &out);
 	}
 
