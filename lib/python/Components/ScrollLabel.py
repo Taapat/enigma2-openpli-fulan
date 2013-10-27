@@ -20,7 +20,7 @@ class ScrollLabel(HTMLComponent, GUIComponent):
 			widget_attribs = [ ]
 			scrollbar_attribs = [ ]
 			for (attrib, value) in self.skinAttributes:
-				if "borderColor"in attrib or "borderWidth" in attrib:
+				if "borderColor" in attrib or "borderWidth" in attrib:
 					scrollbar_attribs.append((attrib,value))
 				if "transparent" in attrib or "backgroundColor" in attrib:
 					widget_attribs.append((attrib,value))
