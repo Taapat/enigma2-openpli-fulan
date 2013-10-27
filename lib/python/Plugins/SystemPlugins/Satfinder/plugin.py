@@ -148,7 +148,7 @@ class Satfinder(ScanSetup):
 			if l > self.preDefTransponders.index:
 				transponder = tps[self.preDefTransponders.index]
 				returnvalue = (transponder[1] / 1000, transponder[2] / 1000,
-					transponder[3], transponder[4], 2, satpos, transponder[5], transponder[6], transponder[8], transponder[9], transponder[10])
+					transponder[3], transponder[4], 2, satpos, transponder[5], transponder[6], transponder[8], transponder[9], transponder[10], transponder[11], transponder[12])
 				self.tune(returnvalue)
 
 	def createConfig(self, foo):
