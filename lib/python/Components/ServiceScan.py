@@ -204,8 +204,9 @@ class ServiceScan:
 
 	def newService(self):
 		newServiceName = self.scan.getLastServiceName()
-		self.servicelist.addItem(newServiceName)
-		self.lcd_summary.updateService(self.scan.getLastServiceName())
+		newServiceRef = self.scan.getLastServiceRef()
+		self.servicelist.addItem((newServiceName, newServiceRef))
+		self.lcd_summary.updateService(newServiceName)
 
 	def destroy(self):
 		pass
