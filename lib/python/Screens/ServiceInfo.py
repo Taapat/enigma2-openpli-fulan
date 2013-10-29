@@ -191,24 +191,8 @@ class ServiceInfo(Screen):
 	def getFEData(self, frontendDataOrg):
 		if frontendDataOrg and len(frontendDataOrg):
 			frontendData = ConvertToHumanReadable(frontendDataOrg)
-			if frontendDataOrg["tuner_type"] == "DVB-S" and frontendData["system"] == "DVB-S2":
-				return ((_("NIM"), chr(ord('A') + frontendData["tuner_number"]), TYPE_TEXT),
-						(_("Type"), frontendData["tuner_type"], TYPE_TEXT),
-						(_("System"), frontendData["system"], TYPE_TEXT),
-						(_("Modulation"), frontendData["modulation"], TYPE_TEXT),
-						(_("Orbital position"), frontendData["orbital_position"], TYPE_VALUE_DEC),
-						(_("Frequency"), frontendData["frequency"], TYPE_VALUE_DEC),
-						(_("Symbol rate"), frontendData["symbol_rate"], TYPE_VALUE_DEC),
-						(_("Polarization"), frontendData["polarization"], TYPE_TEXT),
-						(_("Inversion"), frontendData["inversion"], TYPE_TEXT),
-						(_("FEC"), frontendData["fec_inner"], TYPE_TEXT),
-						(_("Pilot"), frontendData.get("pilot", None), TYPE_TEXT),
-						(_("Roll-off"), frontendData.get("rolloff", None), TYPE_TEXT),
-						(_("Input Stream ID"), frontendData["is_id"], TYPE_VALUE_DEC),
-						(_("PLS Mode"), frontendData["pls_mode"], TYPE_TEXT),
-						(_("PLS Code"), frontendData["pls_code"], TYPE_VALUE_DEC))
-			elif frontendDataOrg["tuner_type"] == "DVB-S" and frontendData["system"] == "DVB-S":
-				return ((_("NIM"), chr(ord('A') + frontendData["tuner_number"]), TYPE_TEXT),
+			if frontendDataOrg["tuner_type"] == "DVB-S":
+				data = ((_("NIM"), chr(ord('A') + frontendData["tuner_number"]), TYPE_TEXT),
 						(_("Type"), frontendData["tuner_type"], TYPE_TEXT),
 						(_("System"), frontendData["system"], TYPE_TEXT),
 						(_("Modulation"), frontendData["modulation"], TYPE_TEXT),
@@ -218,6 +202,13 @@ class ServiceInfo(Screen):
 						(_("Polarization"), frontendData["polarization"], TYPE_TEXT),
 						(_("Inversion"), frontendData["inversion"], TYPE_TEXT),
 						(_("FEC"), frontendData["fec_inner"], TYPE_TEXT))
+				if frontendData["system"] == "DVB-S2":
+					data += ((_("Pilot"), frontendData.get("pilot", None), TYPE_TEXT),
+						(_("Roll-off"), frontendData.get("rolloff", None), TYPE_TEXT),
+						(_("Input Stream ID"), frontendData["is_id"], TYPE_VALUE_DEC),
+						(_("PLS Mode"), frontendData["pls_mode"], TYPE_TEXT),
+						(_("PLS Code"), frontendData["pls_code"], TYPE_VALUE_DEC))
+				return data
 			elif frontendDataOrg["tuner_type"] == "DVB-C":
 				return ((_("NIM"), chr(ord('A') + frontendData["tuner_number"]), TYPE_TEXT),
 						(_("Type"), frontendData["tuner_type"], TYPE_TEXT),
