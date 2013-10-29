@@ -217,7 +217,10 @@ class Satfinder(ScanSetup, ServiceScan):
 			self.transponder[6], # system
 			self.transponder[7], # modulation
 			self.transponder[8], # rolloff
-			self.transponder[9]  # pilot
+			self.transponder[9], # pilot
+			self.transponder[10],# input stream id
+			self.transponder[11],# pls mode
+			self.transponder[12] # pls mode
 		)
 		self.startScan(tlist, self.feid)
 
