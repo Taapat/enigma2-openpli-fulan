@@ -33,7 +33,9 @@
 		<key id="KEY_7" mapto="seek:-90" flags="m" />
 		<key id="KEY_9" mapto="seek:90" flags="m" />
 		<key id="KEY_PREVIOUS" mapto="seek:-300" flags="m" />
+		<key id="KEY_PAGEUP" mapto="seek:-300" flags="m" />
 		<key id="KEY_NEXT" mapto="seek:300" flags="m" />
+		<key id="KEY_PAGEDOWN" mapto="seek:300" flags="m" />
 	</map>
 
 	<map context="CutListEditorActions">
@@ -44,7 +46,9 @@
 		<key id="KEY_CHANNELDOWN" mapto="removeMark" flags="m" /> -->
 		<key id="KEY_EXIT" mapto="leave" flags="m" />
 		<key id="KEY_ESC" mapto="leave" flags="m" />
+		<key id="KEY_HOME" mapto="leave" flags="m" />
 		<key id="KEY_OK" mapto="showMenu" flags="m" />
 		<key id="KEY_ENTER" mapto="showMenu" flags="m" />
+		<key id="KEY_MENU" mapto="showMenu" flags="mr" />
 	</map>
 </keymap>
