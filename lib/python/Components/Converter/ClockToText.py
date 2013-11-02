@@ -2,6 +2,42 @@ from Converter import Converter
 from time import localtime, strftime
 from Components.Element import cached
 
+MONTHS = (_("January"),
+          _("February"),
+          _("March"),
+          _("April"),
+          _("May"),
+          _("June"),
+          _("July"),
+          _("August"),
+          _("September"),
+          _("October"),
+          _("November"),
+          _("December"))
+
+shortMONTHS = (_("Jan"),
+               _("Feb"),
+               _("Mar"),
+               _("Apr"),
+               _("May"),
+               _("Jun"),
+               _("Jul"),
+               _("Aug"),
+               _("Sep"),
+               _("Oct"),
+               _("Nov"),
+               _("Dec"))
+
+DAYWEEK = (_("Monday"),
+           _("Tuesday"),
+           _("Wednesday"),
+           _("Thursday"),
+           _("Friday"),
+           _("Saturday"),
+           _("Sunday"))
+
+dayOfWeek = (_("Mon"), _("Tue"), _("Wed"), _("Thu"), _("Fri"), _("Sat"), _("Sun"))
+
 class ClockToText(Converter, object):
 	DEFAULT = 0
 	WITH_SECONDS = 1
@@ -85,21 +121,29 @@ class ClockToText(Converter, object):
 			return _("%2d:%02d") % (t.tm_hour, t.tm_min)
 		elif self.type == self.DATE:
 			# TRANSLATORS: full date representation dayname daynum monthname year in strftime() format! See 'man strftime'
-			d = _("%A %e %B %Y")
+			d = _(strftime("%A",t)) + " " + str(t[2]) + " " + MONTHS[t[1]-1] + " " + str(t[0])
 		elif self.type == self.FULL:
 			# TRANSLATORS: long date representation short dayname daynum short monthname hour:minute in strftime() format! See 'man strftime'
-			d = _("%a %e/%m  %-H:%M")
+			d = dayOfWeek[t[6]] + _(" %d/%d  %2d:%02d") % (t[2],t[1], t.tm_hour, t.tm_min)
 		elif self.type == self.SHORT_DATE:
 			# TRANSLATORS: short date representation short dayname daynum short monthname in strftime() format! See 'man strftime'
-			d = _("%a %e/%m")
+			d = dayOfWeek[t[6]] + _(" %d/%d") % (t[2], t[1])
 		elif self.type == self.LONG_DATE:
 			# TRANSLATORS: long date representations dayname daynum monthname in strftime() format! See 'man strftime'
-			d = _("%A %e %B")
+			d = dayOfWeek[t[6]] + " " + str(t[2]) + " " + MONTHS[t[1]-1]
 		elif self.type == self.VFD:
 			# TRANSLATORS: VFD hour:minute daynum short monthname in strftime() format! See 'man strftime'
-			d = _("%k:%M %e/%m")
+			d = _("%2d:%02d %d/%d") % (t.tm_hour, t.tm_min, t[2], t[1])
 		elif self.type == self.FORMAT:
-			d = self.fmt_string
+			spos = self.fmt_string.find('%')
+			self.fmt_string = self.fmt_string.replace('%A',_(DAYWEEK[t.tm_wday]))
+			self.fmt_string = self.fmt_string.replace('%B',_(MONTHS[t.tm_mon-1]))
+			self.fmt_string = self.fmt_string.replace('%a',_(dayOfWeek[t.tm_wday]))
+			self.fmt_string = self.fmt_string.replace('%b',_(shortMONTHS[t.tm_mon-1]))
+			if spos > 0:
+				d = str(self.fmt_string[:spos]+self.fmt_string[spos:])
+			else:
+				d = self.fmt_string
 		else:
 			return "???"
 		return strftime(d, t)

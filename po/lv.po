@@ -697,6 +697,12 @@ msgstr "Un izslēgt uztvērēju pēc "
 msgid "Any activity"
 msgstr "Jebkura aktivitāte"
 
+msgid "Apr"
+msgstr "apr"
+
+msgid "April"
+msgstr "aprīlis"
+
 msgid "Arabic"
 msgstr "Arābu"
 
@@ -798,6 +804,12 @@ msgstr "Skaņas celiņa (%s) formāts"
 #, python-format
 msgid "Audio track (%s) language"
 msgstr "Skaņas celiņa (%s) valoda"
+
+msgid "Aug"
+msgstr "aug"
+
+msgid "August"
+msgstr "augusts"
 
 msgid "Author: "
 msgstr "Autors: "
@@ -1668,6 +1680,12 @@ msgstr "Datums"
 msgid "Date/time input"
 msgstr "Datuma/laika ievade"
 
+msgid "Dec"
+msgstr "dec"
+
+msgid "December"
+msgstr "decembris"
+
 msgid "Deep standby"
 msgstr "Dziļā gaidstāve"
 
@@ -2273,6 +2291,12 @@ msgstr "Pārtīšanas ātrumi"
 msgid "Favourites"
 msgstr "Favorīti"
 
+msgid "Feb"
+msgstr "feb"
+
+msgid "February"
+msgstr "februāris"
+
 msgid "File appears to be busy.\n"
 msgstr "Fails šķiet aizņemts.\n"
 
@@ -2762,6 +2786,12 @@ msgstr "Daudzums lapā"
 msgid "Items per page for list screen"
 msgstr "Daudzums lapā saraksta logā"
 
+msgid "Jan"
+msgstr "jan"
+
+msgid "January"
+msgstr "janvāris"
+
 msgid "Job overview"
 msgstr "Darbu skats"
 
@@ -2773,6 +2803,18 @@ msgstr "Pārlēkt uz saraksta beigām"
 
 msgid "Jump to next marked position"
 msgstr "Pārlēkt uz nākamo iezīmēto pozīciju"
+
+msgid "Jul"
+msgstr "jūl"
+
+msgid "July"
+msgstr "jūlijs"
+
+msgid "Jun"
+msgstr "jūn"
+
+msgid "June"
+msgstr "jūnijs"
 
 msgid "Jump to previous marked position"
 msgstr "Pārlēkt uz iepriekšējo iezīmēto pozīciju"
@@ -2990,11 +3032,20 @@ msgstr "Manuāls transponderis"
 msgid "Manufacturer"
 msgstr "Ražotājs"
 
+msgid "Mar"
+msgstr "mar"
+
+msgid "March"
+msgstr "marts"
+
 msgid "Margin after recording (minutes)"
 msgstr "Atstarpe pēc ieraksta (minūtēs)"
 
 msgid "Margin before recording (minutes)"
 msgstr "Atstarpe pirms ieraksta (minūtēs)"
+
+msgid "May"
+msgstr "maijs"
 
 msgid "Max. bitrate: "
 msgstr "Max. bitreits:"
@@ -3449,6 +3500,12 @@ msgstr ""
 "Nav ko meklēt!\n"
 "Lūdzu iestatiet uztvērēju pirms sākat meklēt kanālus."
 
+msgid "Nov"
+msgstr "nov"
+
+msgid "November"
+msgstr "novembris"
+
 msgctxt "now/next: 'now' event label"
 msgid "Now"
 msgstr "Pašreiz"
@@ -3476,6 +3533,12 @@ msgstr "OSD iestatījumi"
 
 msgid "OSD transparency"
 msgstr "OSD caurspīdīgums"
+
+msgid "Oct"
+msgstr "okt"
+
+msgid "October"
+msgstr "oktobris"
 
 msgid "Off"
 msgstr "Izslēgts"
@@ -4617,6 +4680,12 @@ msgstr "Sūtīt DiSEqC tikai mainoties pavadonim"
 
 msgid "Separate titles with a main menu"
 msgstr "Atsevišķi nosaukumi ar galveno izvēlni"
+
+msgid "Sep"
+msgstr "sep"
+
+msgid "September"
+msgstr "septembris"
 
 msgid "Sequence repeat"
 msgstr "Secības atkārtojums"
