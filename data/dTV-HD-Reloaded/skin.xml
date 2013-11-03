@@ -3112,13 +3112,16 @@ self.instance.move(ePoint(orgpos.x() + (orgwidth - newwidth)/2, orgpos.y()))
 		<eLabel position="390,0" size="2,345" backgroundColor="grey" />
 		<widget source="list" render="Listbox" position="20,19" size="350,300" zPosition="10" scrollbarMode="showOnDemand" selectionPixmap="dTV-HD-Reloaded/menu/select1080_60.png">
 			<convert type="TemplatedMultiContent">
-				{
-					"template": [MultiContentEntryPixmapAlphaTest(pos=(5, 5), size=(51, 40), png=1),
-						MultiContentEntryText(pos=(65, 10), size=(275, 40), font=0, flags=RT_HALIGN_LEFT, text=0),
-						MultiContentEntryText(pos=(5, 25), size=(51, 16), font=1, flags=RT_HALIGN_CENTER, text=2),],
-					"fonts": [gFont("Regular", 26), gFont("Regular", 12)], 
-					"itemHeight": 50
-				}
+			{
+				"template": [MultiContentEntryText(pos=(65, 10), size=(275, 40), \
+						font=0, flags=RT_HALIGN_LEFT, text=0), 
+					MultiContentEntryPixmapAlphaTest(pos=(5, 5), \
+						size=(51, 40), png=1), 
+					MultiContentEntryText(pos=(5, 25), size=(51, 16), font=1, \
+						flags=RT_HALIGN_CENTER, text=2),],
+				"fonts": [gFont("Regular", 26), gFont("Regular", 12)],
+				"itemHeight": 50
+			}
 			</convert>
 		</widget>
 		<eLabel halign="center" position="440,15" size="210,35" font="Regular;20" text="Ecm info" transparent="1" />
