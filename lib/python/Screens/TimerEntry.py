@@ -107,7 +107,7 @@ class TimerEntry(Screen, ConfigListScreen):
 
 			self.timerentry_justplay = ConfigSelection(choices = [
 				("zap", _("zap")), ("record", _("record")), ("zap+record", _("zap and record"))],
-				default = {0: "record", 1: "zap", 2: "zap+record"}[justplay + 2*always_zap])
+				default = "zap")
 			if SystemInfo["DeepstandbySupport"]:
 				shutdownString = _("go to deep standby")
 			else:
