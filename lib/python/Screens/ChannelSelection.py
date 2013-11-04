@@ -818,8 +818,6 @@ class ChannelSelectionEdit:
 			self.saved_title = None
 			self.servicelist.resetRoot()
 		else:
-			if not self.entry_marked:
-				self.toggleMoveMarked() # mark current entry
 			self.mutableList = self.getMutableList()
 			self.movemode = True
 			self.pathChangeDisabled = True # no path change allowed in movemode
@@ -1277,6 +1275,8 @@ class ChannelSelectionBase(Screen):
 			self.session.openWithCallback(self.removeCurrentServiceCallback, MessageBox, _("Are you sure to remove this entry?"))
 		elif number == 6:
 			self.toggleMoveMode()
+			if self.movemode and not self.entry_marked:
+				self.toggleMoveMarked()
 
 	def removeCurrentServiceCallback(self, confirmation):
 		if confirmation:
@@ -1576,14 +1576,14 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 		ref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		if enable_pipzap and self.dopipzap:
 			ref = self.session.pip.getCurrentService()
-			if not checkParentalControl or Components.ParentalControl.parentalControl.isServicePlayable(nref, boundFunction(self.zap, enable_pipzap=True, checkParentalControl=False)):
-				if ref is None or ref != nref:
+			if ref is None or ref != nref:
+				if not checkParentalControl or Components.ParentalControl.parentalControl.isServicePlayable(nref, boundFunction(self.zap, enable_pipzap=True, checkParentalControl=False)):
 					if not self.session.pip.playService(nref):
 						# XXX: Make sure we set an invalid ref
 						self.session.pip.playService(None)
-			else:
-				self.setStartRoot(self.curRoot)
-				self.setCurrentSelection(ref)
+				else:
+					self.setStartRoot(self.curRoot)
+					self.setCurrentSelection(ref)
 		elif ref is None or ref != nref:
 			Screens.InfoBar.InfoBar.instance.checkTimeshiftRunning(boundFunction(self.zapCheckTimeshiftCallback, enable_pipzap, preview_zap, nref))
 		elif self.rootChanged and not preview_zap:
