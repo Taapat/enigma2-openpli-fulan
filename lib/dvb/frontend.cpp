@@ -1079,7 +1079,6 @@ void eDVBFrontend::getFrontendStatus(ePtr<iDVBFrontendStatus> &dest)
 {
 	ePtr<eDVBFrontend> fe = this;
 	dest = new eDVBFrontendStatus(fe);
-
 }
 
 void eDVBFrontend::getTransponderData(ePtr<iDVBTransponderData> &dest, bool original)

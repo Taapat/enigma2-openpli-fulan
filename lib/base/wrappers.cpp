@@ -16,7 +16,6 @@
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 
 int Select(int maxfd, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout)
-
 {
 	int retval;
 	fd_set rset, wset, xset;

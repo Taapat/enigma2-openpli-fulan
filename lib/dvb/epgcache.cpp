@@ -230,7 +230,7 @@ const eit_event_struct* eventData::get() const
 	while (tmp > 3)
 	{
 #ifndef __sh__
-	descriptorMap::iterator it = descriptors.find(*p++);
+		descriptorMap::iterator it = descriptors.find(*p++);
 #else
 		__u32 index = p[3] << 24 | p[2] << 16 | p[1] << 8 | p[0];
 // eDebug("index %d %x, %x %x %x %x\n", index, index, p[0], p[1], p[2], p[3]);

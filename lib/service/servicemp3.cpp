@@ -1243,7 +1243,6 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 		if(m_state == stRunning)
 			m_event((iPlayableService*)this, evEOF);
 		pts = 0;
-		eDebug("eServiceMP3::%s !!!!EOF!!!! return -1", __func__);
 		return -1;
 	}
 
