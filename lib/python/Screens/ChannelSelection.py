@@ -125,6 +125,7 @@ class ChannelContextMenu(Screen):
 		current_sel_path = current.getPath()
 		current_sel_flags = current.flags
 		inBouquetRootList = current_root and 'FROM BOUQUET "bouquets.' in current_root.getPath() #FIXME HACK
+		inAlternativeList = current_root and 'FROM BOUQUET "alternatives' in current_root.getPath()
 		inBouquet = csel.getMutableList() is not None
 		haveBouquets = config.usage.multibouquet.value
 
@@ -173,8 +174,9 @@ class ChannelContextMenu(Screen):
 					if ("flags == %d" %(FLAG_SERVICE_NEW_FOUND)) in current_sel_path:
 						append_when_current_valid(current, menu, (_("remove all new found flags"), self.removeAllNewFoundFlags), level = 0)
 				if inBouquet:
-					append_when_current_valid(current, menu, (_("rename entry"), self.renameEntry), level = 0)					
-					append_when_current_valid(current, menu, (_("remove entry"), self.removeCurrentService), level = 0)
+					append_when_current_valid(current, menu, (_("rename entry"), self.renameEntry), level = 0)
+					if not inAlternativeList:
+						append_when_current_valid(current, menu, (_("remove entry"), self.removeCurrentService), level = 0)
 				if current_root and ("flags == %d" %(FLAG_SERVICE_NEW_FOUND)) in current_root.getPath():
 					append_when_current_valid(current, menu, (_("remove new found flag"), self.removeNewFoundFlag), level = 0)
 			else:
@@ -604,9 +606,11 @@ class ChannelSelectionEdit:
 					if mutableAlternatives.addService(cur_service.ref):
 						print "add", cur_service.ref.toString(), "to new alternatives failed"
 					mutableAlternatives.flushChanges()
+					end = self.atEnd()
 					self.servicelist.addService(new_ref.ref, True)
 					self.servicelist.removeCurrent()
-					self.servicelist.moveUp()
+					if not end:
+						self.servicelist.moveUp()
 					if cur_service.ref.toString() == self.lastservice.value:
 						self.saveChannel(new_ref.ref)
 					if self.startServiceRef and cur_service.ref == self.startServiceRef:
@@ -666,6 +670,7 @@ class ChannelSelectionEdit:
 
 	def removeAlternativeServices(self):
 		cur_service = ServiceReference(self.getCurrentSelection())
+		end = self.atEnd()
 		root = self.getRoot()
 		cur_root = root and ServiceReference(root)
 		list = cur_service.list()
@@ -686,7 +691,8 @@ class ChannelSelectionEdit:
 		else:
 			print "remove empty alternative list !!"
 		self.removeBouquet()
-		self.servicelist.moveUp()
+		if not end:
+			self.servicelist.moveUp()
 
 	def removeBouquet(self):
 		refstr = self.getCurrentSelection().toString()
@@ -745,6 +751,8 @@ class ChannelSelectionEdit:
 			(self.mutableList.removeService(eServiceReference(x)) for x in removed)
 			(self.mutableList.addService(eServiceReference(x)) for x in added)
 			if changed:
+				if self.bouquet_mark_edit == EDIT_ALTERNATIVES and not new_marked and self.__marked:
+					self.mutableList.addService(eServiceReference(self.__marked[0]))	
 				self.mutableList.flushChanges()
 		self.__marked = []
 		self.clearMarks()
@@ -1817,7 +1825,6 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 			if tmp_ref and pip_ref and tmp_ref.getChannelNum() != pip_ref.getChannelNum():
 				self.session.pip.currentService = tmp_ref
 			self.setCurrentSelection(tmp_ref)
-
 
 class RadioInfoBar(Screen):
 	def __init__(self, session):
