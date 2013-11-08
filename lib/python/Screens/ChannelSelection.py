@@ -1813,9 +1813,11 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 				self.setCurrentSelection(current_ref)
 		selected_ref = self.getCurrentSelection()
 		if selected_ref and current_ref and selected_ref.getChannelNum() != current_ref.getChannelNum():
-			self.session.nav.currentlyPlayingServiceOrGroup = selected_ref
-			from Components.Renderer.ChannelNumber import doRenumber
-			doRenumber()
+			oldref = self.session.nav.currentlyPlayingServiceReference
+			if oldref and selected_ref == oldref or (oldref != current_ref and selected_ref == current_ref):
+				self.session.nav.currentlyPlayingServiceOrGroup = selected_ref
+				from Components.Renderer.ChannelNumber import doRenumber
+				doRenumber()
 		if self.dopipzap:
 			if tmp_mode == "tv":
 				self.setModeTv()
