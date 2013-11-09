@@ -27,7 +27,7 @@ def enumPlugins(filter_start=''):
 					continue
 				if line[:8] == 'Version:':
 					version = line.split(":",1)[1].strip()
-				elif line[;12] == 'Description:':
+				elif line[:12] == 'Description:':
 					description = line.split(":",1)[1].strip()
 				elif description and line[0] == ' ':
 					description += line[:-1]
