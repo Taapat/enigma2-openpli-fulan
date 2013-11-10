@@ -884,7 +884,7 @@ class ChannelSelectionBase(Screen):
 		self["key_yellow"] = Button(_("Provider"))
 		self["key_blue"] = Button(_("Favourites"))
 
-		self["list"] = ServiceList()
+		self["list"] = ServiceList(self)
 		self.servicelist = self["list"]
 
 #+++>
@@ -1394,10 +1394,7 @@ config.servicelist.startuproot = ConfigText()
 config.servicelist.startupmode = ConfigText(default = "tv")
 
 class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelectionEPG, SelectionEventInfo):
-	instance = None
-
 	def __init__(self, session):
-		ChannelSelection.instance = self
 		ChannelSelectionBase.__init__(self,session)
 		ChannelSelectionEdit.__init__(self)
 		ChannelSelectionEPG.__init__(self)
