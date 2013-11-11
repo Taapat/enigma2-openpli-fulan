@@ -4,7 +4,7 @@ SUBDIRS = AutoVolume SoftwareManager Satfinder \
 	SkinSelector Videomode VideoTune \
 	DefaultServicesScanner DiseqcTester \
 	FastScan HdmiCEC \
-	NetworkWizard VFD-Icons OnErrorRestartService
+	NetworkWizard VFD-Icons
 
 if ! ENABLE_MINIMAL
 SUBDIRS += Hotplug KeymapManager PositionerSetup SatelliteEquipmentControl \
