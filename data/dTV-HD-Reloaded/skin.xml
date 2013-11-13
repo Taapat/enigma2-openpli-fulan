@@ -587,7 +587,7 @@
 			<convert type="ServiceName2">%F %Y %p %f %M %s</convert>
 		</widget>
 		<widget source="ServiceEvent" render="Label" position="788,466" size="325,20" font="Regular; 18" halign="center" foregroundColor="yellow" backgroundColor="background" transparent="1">
-			<convert type="ServiceName2">%S</convert>
+			<convert type="ServiceName2">Satellite</convert>
 		</widget>
 	</screen>
 	<screen name="ChannelSelectionRadio" position="center,90" size="1076,370" title="Channel Selection">
