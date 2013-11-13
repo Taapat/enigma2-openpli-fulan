@@ -109,7 +109,7 @@ class ServiceName2(Converter, object):
 					result += x in range(4) and {0:'H',1:'V',2:'L',3:'R'}[x] or '?' + ' '
 				elif f == 'Y':	# %Y - symbol_rate (dvb-s/s2/c)
 					result += '%d'%(self.tpdata.get('symbol_rate', 0) / 1000) + ' '
-			return '%s'%(result.replace('N/A', ''))
+			return '%s'%(result[:-1].replace('N/A', ''))
 
 	text = property(getText)
 
