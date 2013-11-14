@@ -99,6 +99,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	std::string request = "GET ";
 	request.append(uri).append(" HTTP/1.1\r\n");
 	request.append("Host: ").append(hostname).append("\r\n");
+	request.append("User-Agent: ").append("Enigma2").append("\r\n");
 	if (authorizationData != "")
 	{
 		request.append("Authorization: Basic ").append(authorizationData).append("\r\n");
@@ -200,7 +201,7 @@ void eHttpStream::thread()
 	hasStarted();
 	std::string currenturl(m_streamUrl), newurl;
 
-	for (unsigned int i = 0; i < 3; i++)
+	for (unsigned int i = 0; i < 5; i++)
 	{
 		if (openUrl(currenturl, newurl) < 0)
 		{
@@ -221,7 +222,7 @@ void eHttpStream::thread()
 		currenturl.swap(newurl);
 		newurl.clear();
 	}
-	/* too many redirect / playlist levels (we accept one redirect + one playlist) */
+	/* too many redirect / playlist levels */
 	eDebug("%s: too many redirects...", __FUNCTION__);
 	m_connectionStatus = FAILED;
 	return;
