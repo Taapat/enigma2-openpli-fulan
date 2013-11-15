@@ -1,5 +1,6 @@
 from enigma import eComponentScan, iDVBFrontend
 from Components.NimManager import nimmanager as nimmgr
+from Components.Converter.ChannelNumbers import channelnumbers
 
 class ServiceScan:
 
@@ -91,6 +92,9 @@ class ServiceScan:
 					elif tp_type == iDVBFrontend.feTerrestrial:
 						network = _("Terrestrial")
 						tp = transponder.getDVBT()
+						channel = channelnumbers.getChannelNumber(tp.frequency, self.scanList[self.run]["feid"])
+						if channel:
+							channel = _("CH") + "%s " % channel
 						if tp.plp_id > -1 and tp.system == tp.System_DVB_T2:
 							tp_text = ("%s %s %d %s PLP %d") %( 
 								{ 
@@ -102,7 +106,7 @@ class ServiceScan:
 									tp.Modulation_QAM16 : "QAM16", tp.Modulation_QAM64 : "QAM64",
 									tp.Modulation_Auto : "AUTO", tp.Modulation_QAM256 : "QAM256"
 								}.get(tp.modulation, ""),
-								tp.frequency / 1000,
+								"%s%s" % (channel , tp.frequency/1000),
 								{
 									tp.Bandwidth_8MHz : "Bw 8MHz", tp.Bandwidth_7MHz : "Bw 7MHz", tp.Bandwidth_6MHz : "Bw 6MHz",
 									tp.Bandwidth_Auto : "Bw Auto", tp.Bandwidth_5MHz : "Bw 5MHz",
@@ -120,7 +124,7 @@ class ServiceScan:
 									tp.Modulation_QAM16 : "QAM16", tp.Modulation_QAM64 : "QAM64",
 									tp.Modulation_Auto : "AUTO", tp.Modulation_QAM256 : "QAM256"
 								}.get(tp.modulation, ""),
-								tp.frequency / 1000,
+								"%s%s" % (channel , tp.frequency/1000),
 								{
 									tp.Bandwidth_8MHz : "Bw 8MHz", tp.Bandwidth_7MHz : "Bw 7MHz", tp.Bandwidth_6MHz : "Bw 6MHz",
 									tp.Bandwidth_Auto : "Bw Auto", tp.Bandwidth_5MHz : "Bw 5MHz",
