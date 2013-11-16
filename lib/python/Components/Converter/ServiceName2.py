@@ -86,30 +86,22 @@ class ServiceName2(Converter, object):
 		elif self.type == self.SATELLITE:
 			return self.getSatelliteName(ref or eServiceReference(info.getInfoString(iServiceInformation.sServiceref)))
 		elif self.type == self.FORMAT:
-			result = ''
 			if self.tpdata is None:
 				self.tpdata = ref and (info.getInfoObject(ref, iServiceInformation.sTransponderData) or -1) or info.getInfoObject(iServiceInformation.sTransponderData)
 				if not isinstance(self.tpdata, dict):
 					self.tpdata = None
-					return result
-			for f in self.sfmt.replace(' ', '').split('%'):
-				if f == 's':	# %s - system (dvb-s/s2/c/t)
-					x = self.tpdata.get('system', 0)
-					result += x in range(2) and {0:'DVB-S',1:'DVB-S2'}[x] or '' + ' '
-				elif f == 'F':	# %F - frequency (dvb-s/s2/c/t) in KHz
-					result += '%d'%(self.tpdata.get('frequency', 0) / 1000) + ' '
-				elif f == 'f':	# %f - fec_inner (dvb-s/s2/c/t)
-					x = self.tpdata.get('fec_inner', 15)
-					result += x in range(10)+[15] and {0:'Auto',1:'1/2',2:'2/3',3:'3/4',4:'5/6',5:'7/8',6:'8/9',7:'3/5',8:'4/5',9:'9/10',15:'None'}[x] or '' + ' '
-				elif f == 'M':	# %M - modulation (dvb-s/s2/c)
-					x = self.tpdata.get('modulation', 1)
-					result += x in range(4) and {0:'Auto',1:'QPSK',2:'8PSK',3:'QAM16'}[x] or '' + ' '
-				elif f == 'p':	# %p - polarization (dvb-s/s2)
-					x = self.tpdata.get('polarization', 0)
-					result += x in range(4) and {0:'H',1:'V',2:'L',3:'R'}[x] or '?' + ' '
-				elif f == 'Y':	# %Y - symbol_rate (dvb-s/s2/c)
-					result += '%d'%(self.tpdata.get('symbol_rate', 0) / 1000) + ' '
-			return '%s'%(result[:-1].replace('N/A', ''))
+					return ''
+			result = '%d '%(self.tpdata.get('frequency', 0) / 1000)
+			result += '%d '%(self.tpdata.get('symbol_rate', 0) / 1000)
+			x = self.tpdata.get('polarization', 0)
+			result += (x in range(4) and {0:'H',1:'V',2:'L',3:'R'}[x] or '?') + ' '
+			x = self.tpdata.get('fec_inner', 15)
+			result += (x in range(10)+[15] and {0:'Auto',1:'1/2',2:'2/3',3:'3/4',4:'5/6',5:'7/8',6:'8/9',7:'3/5',8:'4/5',9:'9/10',15:'None'}[x] or '') + ' '
+			x = self.tpdata.get('modulation', 1)
+			result += (x in range(4) and {0:'Auto',1:'QPSK',2:'8PSK',3:'QAM16'}[x] or '') + ' '
+			x = self.tpdata.get('system', 0)
+			result += x in range(2) and {0:'DVB-S',1:'DVB-S2'}[x] or ''
+			return '%s'%(result)
 
 	text = property(getText)
 
