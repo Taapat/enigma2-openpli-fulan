@@ -24,9 +24,10 @@ class ChannelNumbers:
 			elif 202 <= f < 209: 	# CH9A
 				return "9A" + ds
 			elif 209 <= f < 230: 	# CH10-CH12
-				return str(int(f - 209)/7 + 6 - 1) + ds
+				return str(int(f - 209)/7 + 10) + ds
 			elif 526 < f < 820: 	# CH28-CH69
-				return str(int(f - 526)/7 + 28) + ds
+				d = (f - 1) % 7
+				return str(int(f - 526)/7 + 28) + (d < 3 and "-" or d > 4 and "+" or "")
 
 		return ""
 
