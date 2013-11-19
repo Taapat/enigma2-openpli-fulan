@@ -63,6 +63,9 @@ private:
 	ePtr<iTsSource> m_source;
 
 	eFixedMessagePump<int> m_messagepump;
+	eSingleLock m_run_mutex;
+	eCondition m_run_cond;
+	int m_run_state;
 
 	void recvEvent(const int &evt);
 };
