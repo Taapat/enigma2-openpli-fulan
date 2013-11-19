@@ -21,7 +21,7 @@ class eHttpStream: public iTsSource, public Object, public eThread
 	std::string m_streamUrl;
 
 	int openUrl(const std::string &url, std::string &newurl);
-	ssize_t filter(void* buf, ssize_t count);
+	ssize_t syncNextRead(void* buf, ssize_t count);
 	ssize_t httpChunkedRead(void* buf, size_t count);
 	void thread();
 

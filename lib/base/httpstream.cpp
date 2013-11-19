@@ -12,9 +12,9 @@ eHttpStream::eHttpStream():
 	m_streamSocket(-1)
 	,m_isChunked(false)
 	,m_currentChunkSize(0)
+	,m_partialPktSz(0)
 	,m_connectionStatus(FAILED)
 	,m_tmp(NULL)
-	,m_partialPktSz(0)
 	,m_tmpSize(32)
 {
 	m_tmp = (char*)malloc(m_tmpSize);
@@ -239,19 +239,32 @@ int eHttpStream::close()
 	return retval;
 }
 
-ssize_t eHttpStream::filter(void* buf, ssize_t length)
+ssize_t eHttpStream::syncNextRead(void* buf, ssize_t length)
 {
 	unsigned char* b = (unsigned char*)buf;
 	unsigned char* e = b + length;
-	while (e != b && *e != 0x47) e--;
+	m_partialPktSz = 0;
+
+	if (*(char*)buf != 0x47)
+	{
+		// get the head position of the last packet
+		while (e != b && *e != 0x47) e--;
+	}
+	else
+	{
+		e -= length%188;
+	}
 
 	if (e != b)
 	{
 		m_partialPktSz = (b + length) - e;
-		memcpy(m_partialPkt, e, m_partialPktSz);
-		return (length - m_partialPktSz);
+		// if packet is read partially save it to align the next read
+		if (m_partialPktSz > 0 && m_partialPktSz < sizeof(m_partialPkt))
+		{
+			memcpy(m_partialPkt, e, m_partialPktSz);
+		}
 	} 
-	return length; 
+	return (length - m_partialPktSz);
 }
 
 ssize_t eHttpStream::httpChunkedRead(void* buf, size_t count)
@@ -298,6 +311,11 @@ ssize_t eHttpStream::httpChunkedRead(void* buf, size_t count)
 		ret = timedRead(m_streamSocket, ((char*)buf)+total_read, count-total_read, 5000, 100);
 		if (ret > 0) ret+=total_read;
 	}
+
+	if (ret > 0)
+	{
+		ret = syncNextRead(buf, ret);
+	}
 	return ret;
 }
  
@@ -305,12 +323,7 @@ ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 {
 	if (m_connectionStatus == CONNECTED)
 	{
-		ssize_t ret = httpChunkedRead(buf, count);
-		if (ret > 0 && *(char*)buf != 0x47)
-		{
-			ret = filter(buf, ret);	
-		}
-		return ret;
+		return httpChunkedRead(buf, count);
 	}
 	else if (m_connectionStatus == BUSY)
 	{
