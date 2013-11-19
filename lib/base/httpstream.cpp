@@ -18,7 +18,6 @@ eHttpStream::eHttpStream():
 	,m_tmpSize(32)
 {
 	m_tmp = (char*)malloc(m_tmpSize);
-	connectionStatus = FAILED;
 }
 
 eHttpStream::~eHttpStream()
