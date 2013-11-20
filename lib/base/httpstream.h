@@ -24,6 +24,7 @@ class eHttpStream: public iTsSource, public Object, public eThread
 	ssize_t syncNextRead(void* buf, ssize_t count);
 	ssize_t httpChunkedRead(void* buf, size_t count);
 	void thread();
+	ssize_t httpChunkedRead(void* buf, size_t count);
 
 	/* iTsSource */
 	ssize_t read(off_t offset, void *buf, size_t count);
