@@ -24,6 +24,7 @@ gAccel *gAccel::instance;
 #ifdef STMFB_ACCEL
 extern int stmfb_accel_init(void);
 extern void stmfb_accel_close(void);
+#if 0
 extern void stmfb_accel_blit(
 		int src_addr, int src_width, int src_height, int src_stride, int src_format,
 		int dst_addr, int dst_width, int dst_height, int dst_stride,
@@ -33,6 +34,7 @@ extern void stmfb_accel_fill(
 		int dst_addr, int dst_width, int dst_height, int dst_stride,
 		int x, int y, int width, int height,
 		unsigned long color);
+#endif
 #endif
 #ifdef ATI_ACCEL
 extern int ati_accel_init(void);
@@ -170,6 +172,7 @@ bool gAccel::hasAlphaBlendingSupport()
 int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p, const eRect &area, int flags)
 {
 #ifdef STMFB_ACCEL
+#if 0
 	//eDebug( "src: %4d %4d %4d %4d\tdst: %4d %4d %4d %4d\n"
 	//		"area: %4d %4d %4d %4d\tp: %4d %4d %4d %4d\n",
 	//		src->data_phys, src->x, src->y, src->stride,
@@ -240,6 +243,7 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 			p.x(), p.y(), p.width(), p.height());
 	}
 	return 0;
+#endif
 #endif
 #ifdef ATI_ACCEL
 	ati_accel_blit(
