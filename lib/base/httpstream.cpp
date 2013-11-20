@@ -18,11 +18,6 @@ eHttpStream::eHttpStream():
 	,m_tmpSize(32)
 {
 	m_tmp = (char*)malloc(m_tmpSize);
-	isChunked = false;
-	currentChunkSize = 0;
-
-	tmpBufSize = 32;
-	tmpBuf = (char*)malloc(tmpBufSize);
 }
 
 eHttpStream::~eHttpStream()
@@ -176,11 +171,6 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 				if (pos != std::string::npos) newurl = newurl.substr(0, pos);
 				eDebug("%s: playlist entry: %s", __FUNCTION__, newurl.c_str());
 			}
-		}
-
-		if (statuscode == 206 && strncmp(linebuf, "Transfer-Encoding: chunked", strlen("Transfer-Encoding: chunked")))
-		{
-			isChunked = true;
 		}
 	}
 
