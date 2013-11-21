@@ -255,7 +255,7 @@ ssize_t eHttpStream::syncNextRead(void* buf, ssize_t length)
 		e -= length%188;
 	}
 
-	if (e != b)
+	if (e != b &&  e != (b + length))
 	{
 		m_partialPktSz = (b + length) - e;
 		// if packet is read partially save it to align the next read
