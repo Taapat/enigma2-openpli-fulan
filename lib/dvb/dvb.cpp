@@ -534,7 +534,6 @@ void *eDVBUsbAdapter::vtunerPump()
 			if (FD_ISSET(vtunerFd, &xset))
 			{
 				int i, j;
-				int count = 0;
 				struct vtuner_message message;
 				memset(message.pidlist, 0xff, sizeof(message.pidlist));
 				::ioctl(vtunerFd, VTUNER_GET_MESSAGE, &message);
