@@ -124,9 +124,6 @@ ssize_t readLine(int fd, char** buffer, size_t* bufsize)
 
 ssize_t openHTTPConnection(int fd, const std::string& getRequest, std::string& httpHdr)
 {
-	fd_set wset, rset;
-	struct timeval timeout;
-
 	size_t wlen = getRequest.length();
 	const char* buf_end = getRequest.data() + wlen;
 
@@ -160,7 +157,6 @@ ssize_t openHTTPConnection(int fd, const std::string& getRequest, std::string& h
 			return -1;
 		}
 	
-		ssize_t hdroff=0;
 		//read the response header
 		int rcvd = ::recv(fd, rbuff, rbuff_size, MSG_PEEK);
 		
