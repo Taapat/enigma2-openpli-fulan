@@ -117,7 +117,6 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 
 	size_t pos = hdr.find("\n");
 	const std::string& httpStatus = (pos == std::string::npos)? hdr: hdr.substr(0, pos);
-		goto error;
 
 	result = sscanf(httpStatus.c_str(), "%99s %3d %99s", proto, &statuscode, statusmsg);
 	if (result != 3 || (statuscode != 200 && statuscode != 206 && statuscode != 302))
@@ -173,8 +172,6 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 				eDebug("%s: playlist entry: %s", __FUNCTION__, newurl.c_str());
 			}
 		}
-		if (result < 0)
-			break;
 	}
 
 	// kernel will normally double this value, if it does not exceed max configured
@@ -204,7 +201,7 @@ void eHttpStream::thread()
 	hasStarted();
 	std::string currenturl(m_streamUrl), newurl;
 
-	for (unsigned int i = 0; i < 5; i++)
+	for (unsigned int i = 0; i < 3; i++)
 	{
 		if (openUrl(currenturl, newurl) < 0)
 		{
@@ -270,31 +267,16 @@ ssize_t eHttpStream::syncNextRead(void* buf, ssize_t length)
 	return (length - m_partialPktSz);
 }
 
-	} 
-	return (length - partialPktSz);
-}
-
 ssize_t eHttpStream::httpChunkedRead(void *buf, size_t count)
 {
 	ssize_t ret = -1;
 	size_t total_read = m_partialPktSz;
 
 	// write partial packet from the previous read
-	if (partialPktSz > 0)
-	{
-		memcpy(buf, partialPkt, partialPktSz);
-		partialPktSz = 0;
-	}
-
-	// write partial packet from the previous read
 	if (m_partialPktSz > 0)
 	{
 		memcpy(buf, m_partialPkt, m_partialPktSz);
 		m_partialPktSz = 0;
-		{
-			ret += total_read;
-			ret = syncNextRead(buf, ret);
-		}
 	}
 
 	if (m_isChunked)
@@ -308,14 +290,13 @@ ssize_t eHttpStream::httpChunkedRead(void *buf, size_t count)
 					ret = readLine(m_streamSocket, &m_tmp, &m_tmpSize);
 					if (ret < 0) return -1;
 				}while(!*m_tmp && ret > 0); /* skip CR LF from last chunk */
-				if (ret == 0)
+				if (ret == 0) break;
 				m_currentChunkSize = strtol(m_tmp, NULL, 16);
 				if (m_currentChunkSize == 0) return -1;
 			}
 
 			size_t to_read = count - total_read;
 			if (m_currentChunkSize < to_read) to_read = m_currentChunkSize;
-				to_read = currentChunkSize;
 
 			// do not wait too long if we have something in the buffer already
 			ret = timedRead(m_streamSocket, ((char*)buf)+total_read, to_read, ((total_read)? 100:5000), 100);
@@ -340,7 +321,7 @@ ssize_t eHttpStream::httpChunkedRead(void *buf, size_t count)
 	}
 	return ret;
 }
- 
+
 ssize_t eHttpStream::read(off_t offset, void *buf, size_t count)
 {
 	if (m_connectionStatus == CONNECTED)
