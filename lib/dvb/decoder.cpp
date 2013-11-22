@@ -363,10 +363,12 @@ int eDVBVideo::startPid(int pid, int type)
 			return -errno;
 		}
 		eDebug("ok");
+#endif
 	}
 
 	if (m_fd >= 0)
 	{
+#if not defined(__sh__) // this is a hack which only matters for dm drivers
 		freeze();  // why freeze here?!? this is a problem when only a pid change is requested... because of the unfreeze logic in Decoder::setState
 #endif
 		eDebugNoNewLine("VIDEO_PLAY - ");
