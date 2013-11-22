@@ -83,6 +83,7 @@ int eDVBAudio::startPid(int pid, int type)
 		}
 		eDebug("ok");
 #endif
+	}
 
 	if (m_fd >= 0)
 	{
