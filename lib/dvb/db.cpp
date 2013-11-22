@@ -349,8 +349,8 @@ ePtr<eDVBFrontendParameters> eDVBDB::parseFrontendData(char * line, int version)
 			system=eDVBFrontendParametersSatellite::System_DVB_S,
 			modulation=eDVBFrontendParametersSatellite::Modulation_QPSK,
 			rolloff=eDVBFrontendParametersSatellite::RollOff_alpha_0_35,
-					pilot=eDVBFrontendParametersSatellite::Pilot_Unknown,
-					is_id = -1, pls_code = 1, pls_mode = 0;
+			pilot=eDVBFrontendParametersSatellite::Pilot_Unknown,
+			is_id = -1, pls_code = 1, pls_mode = 0;
 		if (version == 3)
 			sscanf(line+2, "%d:%d:%d:%d:%d:%d:%d:%d:%d:%d",
 				&frequency, &symbol_rate, &polarisation, &fec, &orbital_position,

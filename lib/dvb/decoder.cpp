@@ -58,7 +58,7 @@ int eDVBAudio::startPid(int pid, int type)
 #if defined(__sh__) // increases zapping speed
 	pes.flags    = DMX_IMMEDIATE_START;
 #else
-		pes.flags    = 0;
+	pes.flags    = 0;
 #endif
 	eDebugNoNewLine("DMX_SET_PES_FILTER(0x%02x) - audio - ", pid);
 	if (::ioctl(m_fd_demux, DMX_SET_PES_FILTER, &pes) < 0)
@@ -303,7 +303,7 @@ int eDVBVideo::startPid(int pid, int type)
 		break;
 	}
 #if defined(__sh__) // increases zapping speed
-	epes.flags    = DMX_IMMEDIATE_START;
+	pes.flags    = DMX_IMMEDIATE_START;
 #else
 	pes.flags    = 0;
 #endif
