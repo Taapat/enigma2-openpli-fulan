@@ -190,7 +190,7 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 	{
 		gUnmanagedSurface tmp;
 		tmp.bpp = 32;
-		tmp.stride = area.width() * 4;
+		tmp.x = area.width();
 		tmp.y = area.height();
 		if (accelAlloc(&tmp))
 			return -1;
