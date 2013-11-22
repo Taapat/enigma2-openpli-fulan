@@ -22,7 +22,7 @@ class eHttpStream: public iTsSource, public Object, public eThread
 
 	int openUrl(const std::string &url, std::string &newurl);
 	ssize_t syncNextRead(void* buf, ssize_t count);
-	ssize_t httpChunkedRead(void* buf, size_t count);
+	ssize_t httpChunkedRead(void *buf, size_t count);
 	void thread();
 
 	/* iTsSource */
