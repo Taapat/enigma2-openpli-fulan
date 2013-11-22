@@ -11,6 +11,8 @@
 from Components.Converter.Converter import Converter
 from enigma import iServiceInformation, iPlayableService, iPlayableServicePtr, eServiceReference, eServiceCenter
 from Components.Element import cached
+from Components.NimManager import nimmanager
+from Screens.ChannelSelection import service_types_radio, service_types_tv
 
 class ServiceName2(Converter, object):
 	PROVIDER = 0
@@ -29,11 +31,10 @@ class ServiceName2(Converter, object):
 		else:
 			self.type = self.FORMAT
 			self.sfmt = type[:]
-		self.what = self.tpdata = None
+		self.what = None
 
 	def getProviderName(self, ref):
 		if isinstance(ref, eServiceReference):
-			from Screens.ChannelSelection import service_types_radio, service_types_tv
 			typestr = ref.getData(0) in (2,10) and service_types_radio or service_types_tv
 			pos = typestr.rfind(':')
 			rootstr = '%s (channelID == %08x%04x%04x) && %s FROM PROVIDERS ORDER BY name' %(typestr[:pos+1],ref.getUnsignedData(4),ref.getUnsignedData(2),ref.getUnsignedData(3),typestr[pos+1:])
@@ -53,20 +54,19 @@ class ServiceName2(Converter, object):
 								if service == ref:
 									info = serviceHandler.info(provider)
 									return info and info.getName(provider) or "Unknown"
-		return 'N/A'
+		return " "
 
 	def getSatelliteName(self, ref):
-		name = ''
 		if isinstance(ref, eServiceReference):
 			orbpos = ref.getData(4) >> 16
-			if orbpos != 0:
-				if orbpos < 0: orbpos += 3600
-				try:
-					from Components.NimManager import nimmanager
-					name = str(nimmanager.getSatDescription(orbpos))
-				except:
-					name = orbpos > 1800 and "%d.%d°W"%((3600-orbpos)/10, (3600-orbpos)%10) or "%d.%d°E"%(orbpos/10, orbpos%10)
-		return name
+			if orbpos == 0:
+				return ""
+			if orbpos < 0: orbpos += 3600
+			try:
+				return str(nimmanager.getSatDescription(orbpos))
+			except:
+				return orbpos > 1800 and "%d.%d°W"%((3600-orbpos)/10, (3600-orbpos)%10) or "%d.%d°E"%(orbpos/10, orbpos%10)
+		return ""
 
 	@cached
 	def getText(self):
@@ -77,8 +77,8 @@ class ServiceName2(Converter, object):
 		else: # reference
 			info = service and self.source.info
 			ref = service
-		if info is None: return ""
-		
+		if info is None:
+			return ""
 		if self.type == self.PROVIDER:
 			return ref and self.getProviderName(ref) or info.getInfoString(iServiceInformation.sProvider)
 		elif self.type == self.REFERENCE:
@@ -86,20 +86,21 @@ class ServiceName2(Converter, object):
 		elif self.type == self.SATELLITE:
 			return self.getSatelliteName(ref or eServiceReference(info.getInfoString(iServiceInformation.sServiceref)))
 		elif self.type == self.FORMAT:
-			if self.tpdata is None:
-				self.tpdata = ref and (info.getInfoObject(ref, iServiceInformation.sTransponderData) or -1) or info.getInfoObject(iServiceInformation.sTransponderData)
-				if not isinstance(self.tpdata, dict):
-					self.tpdata = None
-					return ''
-			result = '%d '%(self.tpdata.get('frequency', 0) / 1000)
-			result += '%d '%(self.tpdata.get('symbol_rate', 0) / 1000)
-			x = self.tpdata.get('polarization', 0)
+			sname = ref and ref.toString() or info.getInfoString(iServiceInformation.sServiceref)
+			if "%3a//" in sname:
+				return sname.split("%3a//")[1].split("/")[0].replace("%3a", ":")
+			tpdata = ref and (info.getInfoObject(ref, iServiceInformation.sTransponderData) or -1) or info.getInfoObject(iServiceInformation.sTransponderData)
+			if not isinstance(tpdata, dict):
+				return ""
+			result = '%d '%(tpdata.get('frequency', 0) / 1000)
+			result += '%d '%(tpdata.get('symbol_rate', 0) / 1000)
+			x = tpdata.get('polarization', 0)
 			result += (x in range(4) and {0:'H',1:'V',2:'L',3:'R'}[x] or '?') + ' '
-			x = self.tpdata.get('fec_inner', 15)
+			x = tpdata.get('fec_inner', 15)
 			result += (x in range(10)+[15] and {0:'Auto',1:'1/2',2:'2/3',3:'3/4',4:'5/6',5:'7/8',6:'8/9',7:'3/5',8:'4/5',9:'9/10',15:'None'}[x] or '') + ' '
-			x = self.tpdata.get('modulation', 1)
+			x = tpdata.get('modulation', 1)
 			result += (x in range(4) and {0:'Auto',1:'QPSK',2:'8PSK',3:'QAM16'}[x] or '') + ' '
-			x = self.tpdata.get('system', 0)
+			x = tpdata.get('system', 0)
 			result += x in range(2) and {0:'DVB-S',1:'DVB-S2'}[x] or ''
 			return '%s'%(result)
 
@@ -107,5 +108,4 @@ class ServiceName2(Converter, object):
 
 	def changed(self, what):
 		if what[0] != self.CHANGED_SPECIFIC or what[1] in (iPlayableService.evStart,):
-			self.tpdata = None
 			Converter.changed(self, what)
