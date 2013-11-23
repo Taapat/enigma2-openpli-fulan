@@ -6,6 +6,7 @@ import Screens.MovieSelection
 
 from Screen import Screen
 from Screens.MessageBox import MessageBox
+from Components.VolumeControl import VolumeControl
 
 profile("LOAD:enigma")
 import enigma
@@ -52,8 +53,8 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 				"showRadio": (self.showRadio, _("Show the radio player...")),
 				"showTv": (self.showTv, _("Show the tv player...")),
 				"toogleTvRadio": (self.toogleTvRadio, _("toggels betwenn tv and radio...")),
-				"volumeUp": (self._volUp, _("...")),
-				"volumeDown": (self._volDown, _("...")),
+				"volumeUp": (self._volUp, _("volume up")),
+				"volumeDown": (self._volDown, _("volume down")),
 			}, prio=2)
 		
 		self.allowPiP = True
@@ -81,13 +82,9 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 		InfoBar.instance = self
 
 	def _volUp(self):
-		print "_volUp"
-		from Components.VolumeControl import VolumeControl
 		VolumeControl.instance.volUp()
 
 	def _volDown(self):
-		print "_volDown"
-		from Components.VolumeControl import VolumeControl
 		VolumeControl.instance.volDown()
 
 	def __onClose(self):
