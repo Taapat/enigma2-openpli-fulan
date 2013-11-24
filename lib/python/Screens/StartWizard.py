@@ -19,15 +19,16 @@ class StartWizard(WizardLanguage, Rc):
 
 	def markDone(self):
 		# setup remote control, all stb have same settings except dm8000 which uses a different settings
-		import os
-		boxType = ''
-		if os.path.isfile("/proc/stb/info/model"):
-			boxType = open("/proc/stb/info/model").read().strip().lower()
+		#import os
+		#boxType = ''
+		#if os.path.isfile("/proc/stb/info/model"):
+			#boxType = open("/proc/stb/info/model").read().strip().lower()
 
-		if 'dm8000' in boxType:
-			config.misc.rcused.value = 0
-		else:
-			config.misc.rcused.value = 1
+		#if 'dm8000' in boxType:
+			#config.misc.rcused.value = 0
+		#else:
+			#config.misc.rcused.value = 1
+		config.misc.rcused.value = 1
 		config.misc.rcused.save()
 
 		config.misc.firstrun.value = 0
