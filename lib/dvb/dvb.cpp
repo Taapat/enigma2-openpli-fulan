@@ -96,24 +96,13 @@ eDVBResourceManager::eDVBResourceManager()
 		adapter->scanDevices();
 		addAdapter(adapter, true);
 	}
-
+#if not defined(__sh__)
 	int fd = open("/proc/stb/info/model", O_RDONLY);
 	char tmp[16];
 	int rd = fd >= 0 ? read(fd, tmp, sizeof(tmp)) : 0;
 	if (fd >= 0)
 		close(fd);
 
-#if defined(__sh__)
-	if (!strncmp(tmp, "spark\n", rd))
-		m_boxtype = SPARK;
-	else if (!strncmp(tmp, "spark7162\n", rd))
-		m_boxtype = SPARK7162;
-	else
-	{
-		eDebug("boxtype detection via /proc/stb/info not possible... use SPARK!\n");
-		m_boxtype = SPARK;
-	}
-#else
 	if (!strncmp(tmp, "dm7025\n", rd))
 		m_boxtype = DM7025;
 	else if (!strncmp(tmp, "dm8000\n", rd))
@@ -136,9 +125,13 @@ eDVBResourceManager::eDVBResourceManager()
 		else
 			m_boxtype = DM8000;
 	}
-#endif
+
 	eDebug("found %zd adapter, %zd frontends(%zd sim) and %zd demux, boxtype %d",
 		m_adapter.size(), m_frontend.size(), m_simulate_frontend.size(), m_demux.size(), m_boxtype);
+#else
+	eDebug("found %zd adapter, %zd frontends(%zd sim) and %zd demux",
+		m_adapter.size(), m_frontend.size(), m_simulate_frontend.size(), m_demux.size());
+#endif
 
 	CONNECT(m_releaseCachedChannelTimer->timeout, eDVBResourceManager::releaseCachedChannel);
 }
@@ -947,51 +940,48 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 	ePtr<eDVBRegisteredDemux> unused;
 
 #if defined(__sh__)
-	if (m_boxtype == SPARK || m_boxtype == SPARK7162) // sh use our own algo for demux detection
+	int n=0;
+	for (; i != m_demux.end(); ++i, ++n)
 	{
-		int n=0;
-		for (; i != m_demux.end(); ++i, ++n)
+		if(fe)
 		{
-			if(fe)
+			if (!i->m_inuse)
 			{
-				if (!i->m_inuse)
+				if (!unused)
 				{
-					if (!unused)
-					{
-						// take the first unused
-						//eDebug("\nallocate demux b = %d\n",n);
-						unused = i;
-					}
-				}
-				else if (i->m_adapter == fe->m_adapter && i->m_demux->getSource() == fe->m_frontend->getDVBID())
-				{
-					// take the demux allocated to the same
-					// frontend,  just create a new reference
-					demux = new eDVBAllocatedDemux(i);
+					// take the first unused
 					//eDebug("\nallocate demux b = %d\n",n);
-					return 0;
+					unused = i;
 				}
 			}
-			else if(n == ((int)m_demux.size() - 1))
+			else if (i->m_adapter == fe->m_adapter && i->m_demux->getSource() == fe->m_frontend->getDVBID())
 			{
-				// Always use the last demux for PVR
-				// it is assumed that the last demux is not
-				// attached to a frontend. That is, there
-				// should be one instance of dvr & demux
-				// devices more than of frontend devices.
-				// Otherwise, playback and timeshift might
-				// interfere recording.
-				if (i->m_inuse)
-				{
-					// just create a new reference
-					demux = new eDVBAllocatedDemux(i);
-					//eDebug("\nallocate demux c = %d\n",n);
-					return 0;
-				}
-				unused = i;
-				//eDebug("\nallocate demux d = %d\n", n);
-				break;
+				// take the demux allocated to the same
+				// frontend,  just create a new reference
+				demux = new eDVBAllocatedDemux(i);
+				//eDebug("\nallocate demux b = %d\n",n);
+				return 0;
 			}
+		}
+		else if(n == ((int)m_demux.size() - 1))
+		{
+			// Always use the last demux for PVR
+			// it is assumed that the last demux is not
+			// attached to a frontend. That is, there
+			// should be one instance of dvr & demux
+			// devices more than of frontend devices.
+			// Otherwise, playback and timeshift might
+			// interfere recording.
+			if (i->m_inuse)
+			{
+				// just create a new reference
+				demux = new eDVBAllocatedDemux(i);
+				//eDebug("\nallocate demux c = %d\n",n);
+				return 0;
+			}
+			unused = i;
+			//eDebug("\nallocate demux d = %d\n", n);
+			break;
 		}
 	}
 #else
@@ -1023,7 +1013,6 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 			}
 		}
 	}
-#endif
 	else
 	{
 		iDVBAdapter *adapter = fe ? fe->m_adapter : m_adapter.begin(); /* look for a demux on the same adapter as the frontend, or the first adapter for dvr playback */
@@ -1069,7 +1058,7 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 			}
 		}
 	}
-
+#endif
 	if (unused)
 	{
 		demux = new eDVBAllocatedDemux(unused);
