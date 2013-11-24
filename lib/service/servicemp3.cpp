@@ -18,7 +18,6 @@
 #ifndef ENABLE_LIBEPLAYER3
 #include <gst/gst.h>
 #include <gst/pbutils/missing-plugins.h>
-#endif
 #include <sys/stat.h>
 
 #define HTTP_TIMEOUT 30
@@ -62,6 +61,7 @@ typedef enum
 #define GSTREAMER_SUBTITLE_SYNC_MODE_BUG
 /**/
 
+#endif
 #ifdef ENABLE_LIBEPLAYER3
 void ep3Blit(){
 	fbClass *fb = fbClass::getInstance();
@@ -110,13 +110,7 @@ eServiceFactoryMP3::eServiceFactoryMP3()
 		extensions.push_back("img");
 		extensions.push_back("iso");
 		extensions.push_back("ifo");
-		int fd = open("/proc/stb/info/model", O_RDONLY);
-		char tmp[255];
-		int rd = fd >= 0 ? read(fd, tmp, 255) : 0;
-		if (fd >= 0)
-			close(fd);
-		if (!strncmp(tmp, "ufs912\n", rd) || !strncmp(tmp, "ufs913\n", rd) || !strncmp(tmp, "atevio7500\n", rd) || !strncmp(tmp, "hs7110\n", rd) || !strncmp(tmp, "hs7810a\n", rd) || !strncmp(tmp, "spark7162\n", rd) || !strncmp(tmp, "whitebox\n", rd))
-			extensions.push_back("wmv");
+		extensions.push_back("wmv");
 #endif
 		extensions.push_back("wma");
 		sc->addServiceFactory(eServiceFactoryMP3::id, this, extensions);
