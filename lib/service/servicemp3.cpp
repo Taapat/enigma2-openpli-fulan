@@ -922,6 +922,7 @@ RESULT eServiceMP3::start()
 	{
 		player->output->Command(player, OUTPUT_OPEN, NULL);
 		player->playback->Command(player, PLAYBACK_PLAY, NULL);
+		updateEpgCacheNowNext();
 	}
 #endif
 
