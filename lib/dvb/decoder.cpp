@@ -1226,11 +1226,13 @@ RESULT eTSMPEGDecoder::showSinglePic(const char *filename)
 				unsigned char stuffing[8192];
 				memset(stuffing, 0, sizeof stuffing);
 				read(f, iframe, s.st_size);
+#if not defined(__sh__)
 				int streamtype = VIDEO_STREAMTYPE_MPEG4_H264;
 				if (iframe[0] == 0x00 && iframe[1] == 0x00 && iframe[2] == 0x00 && iframe[3] == 0x01 && (iframe[4] & 0x0f) == 0x07)
 					streamtype = VIDEO_STREAMTYPE_MPEG4_H264;
 				else
 					streamtype = VIDEO_STREAMTYPE_MPEG2;
+#endif
 
 				if (ioctl(m_video_clip_fd, VIDEO_SELECT_SOURCE, VIDEO_SOURCE_MEMORY) < 0)
 					eDebug("VIDEO_SELECT_SOURCE MEMORY failed (%m)");
