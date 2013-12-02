@@ -46,10 +46,10 @@ def getPiconName(serviceName):
 				#fallback to 1 for iptv gstreeamer services
 				fields[0] = '1'
 				pngname = findPicon('_'.join(fields))
-				if not pngname and fields[2] != '2':
-					#fallback to 1 for tv services with nonstandard servicetypes
-					fields[2] = '1'
-					pngname = findPicon('_'.join(fields))
+			if not pngname and fields[2] != '2':
+				#fallback to 1 for tv services with nonstandard servicetypes
+				fields[2] = '1'
+				pngname = findPicon('_'.join(fields))
 	return pngname
 
 class Picon(Renderer):
