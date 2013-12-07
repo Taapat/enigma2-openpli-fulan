@@ -1,4 +1,4 @@
-SUBDIRS = countries fonts extensions keymaps Magic skin_default rc_models dTV-HD-Reloaded
+SUBDIRS = countries fonts extensions keymaps skin_default rc_models dTV-HD-Reloaded
 
 dist_pkgdata_DATA = \
 	encoding.conf \
