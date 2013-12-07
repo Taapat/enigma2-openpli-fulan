@@ -183,7 +183,7 @@ void gFBDC::setResolution(int xres, int yres, int bpp)
 	 * without changing the frambuffer dimensions
 	 */
 	if (xres<0 && yres<0 ) {
-		fb->SetMode(surface.x, surface.y, surface.bpp);
+		fb->SetMode(surface.x, surface.y, bpp);
 		return;
 	}
 #endif
