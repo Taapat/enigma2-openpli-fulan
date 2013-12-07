@@ -15,7 +15,7 @@
 
 void eRCDeviceInputDev::handleCode(long rccode)
 {
-	struct input_event *ev = (struct input_event *)rccode;
+	struct input_event *ev = reinterpret_cast<struct input_event*>(rccode);
 
 	if (ev->type != EV_KEY)
 		return;
@@ -156,7 +156,6 @@ class eInputDeviceInit
 		private:
 			element(const element& other); /* no copy */
 	};
-	typedef std::vector<element*> itemlist;
 	std::vector<element*> items;
 	int consoleFd;
 
@@ -178,11 +177,15 @@ public:
 	
 	~eInputDeviceInit()
 	{
-		for (itemlist::iterator it = items.begin(); it != items.end(); ++it)
-			delete *it;
-
+		while(!items.empty())
+		{
+			delete items.back();
+			items.pop_back();
+		}
 		if (consoleFd >= 0)
+		{
 			::close(consoleFd);
+		}
 	}
 
 	void add(const char* filename)
@@ -193,12 +196,12 @@ public:
 
 	void remove(const char* filename)
 	{
-		for (itemlist::iterator it = items.begin(); it != items.end(); ++it)
+		for (int i = 0; i < items.size() ; ++i)
 		{
-			if (strcmp((*it)->filename, filename) == 0)
+			if (strcmp(items[i]->filename, filename) == 0)
 			{
-				delete *it;
-				items.erase(it);
+				delete items[i];
+				items.erase(items.begin()+i);
 				return;
 			}
 		}
