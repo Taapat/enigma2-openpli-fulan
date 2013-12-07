@@ -317,7 +317,6 @@ void eDVBServicePMTHandler::AITready(int error)
 
 void eDVBServicePMTHandler::OCready(int error)
 {
-/*
 	eDebug("OCready");
 	ePtr<eTable<OCSection> > ptr;
 	if (!m_OC.getCurrent(ptr))
@@ -327,9 +326,8 @@ void eDVBServicePMTHandler::OCready(int error)
 		{
 		}
 	}
-*/
 	/* for now, do not keep listening for table updates */
-//	m_OC.stop();
+	m_OC.stop();
 }
 
 void eDVBServicePMTHandler::getAITApplications(std::map<int, std::string> &aitlist)
