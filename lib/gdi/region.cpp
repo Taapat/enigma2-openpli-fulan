@@ -40,7 +40,7 @@ gRegion::~gRegion()
 
 int gRegion::do_coalesce(int prevStart, unsigned int curStart)
 {
-		// Figure out how many rectangles are in the band.
+	// Figure out how many rectangles are in the band.
 	unsigned int numRects = curStart - prevStart;
 	ASSERT(numRects == rects.size() - curStart);
 	if (!numRects)
@@ -48,15 +48,15 @@ int gRegion::do_coalesce(int prevStart, unsigned int curStart)
 	std::vector<eRect>::iterator prevBox = rects.begin() + prevStart;
 	std::vector<eRect>::const_iterator  curBox = rects.begin() + curStart;
 		
-		// The bands may only be coalesced if the bottom of the previous
-		// matches the top scanline of the current.
+	// The bands may only be coalesced if the bottom of the previous
+	// matches the top scanline of the current.
 	if (prevBox->y2 != curBox->y1)
 		return curStart;
 	
-		// Make sure the bands have boxes in the same places. This
-		// assumes that boxes have been added in such a way that they
-		// cover the most area possible. I.e. two boxes in a band must
-		// have some horizontal space between them.
+	// Make sure the bands have boxes in the same places. This
+	// assumes that boxes have been added in such a way that they
+	// cover the most area possible. I.e. two boxes in a band must
+	// have some horizontal space between them.
 	
 	int y2 = curBox->y2;
 	
@@ -68,15 +68,15 @@ int gRegion::do_coalesce(int prevStart, unsigned int curStart)
 		--numRects;
 	} while ( numRects );
 	
-		// The bands may be merged, so set the bottom y of each box
-		// in the previous band to the bottom y of the current band.
+	// The bands may be merged, so set the bottom y of each box
+	// in the previous band to the bottom y of the current band.
 	numRects = curStart - prevStart;
-	rects.resize(rects.size() - numRects);
 	do {
 		prevBox--;
 		prevBox->y2 = y2;
 		numRects--;
 	} while (numRects);
+	rects.resize(rects.size() - (curStart - prevStart));
 	return prevStart;
 }
 
