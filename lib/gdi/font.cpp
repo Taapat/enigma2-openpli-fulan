@@ -768,13 +768,13 @@ int eTextPara::renderString(const char *string, int rflags, int border)
 					switch (c)
 					{
 						case 'n':
-							i++;
+							++i;
 							goto newline;
 						case 't':
-							i++;
+							++i;
 							goto tab;
 						case 'r':
-							i++;
+							++i;
 							goto nprint;
 						case 'c':
 						{

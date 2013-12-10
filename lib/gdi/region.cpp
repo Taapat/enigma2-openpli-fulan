@@ -72,7 +72,7 @@ int gRegion::do_coalesce(int prevStart, unsigned int curStart)
 	// in the previous band to the bottom y of the current band.
 	numRects = curStart - prevStart;
 	do {
-		prevBox--;
+		--prevBox;
 		prevBox->y2 = y2;
 		numRects--;
 	} while (numRects);
@@ -90,7 +90,7 @@ void gRegion::appendNonO(std::vector<eRect>::const_iterator r,
 	do {
 		ASSERT(r->x1 < r->x2);
 		rects.push_back(eRect(r->x1, y1, r->x2 - r->x1, y2 - y1));
-		r++;
+		++r;
 	} while (r != rEnd);
 }
 
@@ -114,9 +114,9 @@ void gRegion::intersectO(
 		if (x1 < x2)
 			rects.push_back(eRect(x1, y1, x2 - x1, y2 - y1));
 		if (r1->x2 == x2)
-			r1++;
+			++r1;
 		if (r2->x2 == x2)
-			r2++;
+			++r2;
 	} while ( (r1 != r1End) && (r2 != r2End));
 }
 
@@ -186,7 +186,7 @@ void gRegion::subtractO(
 		x1 = r->x1;                                             \
 		x2 = r->x2;                                             \
 	}                                                         \
-	r++;                                                      \
+	++r;                                                      \
 }
 
 void gRegion::mergeO(

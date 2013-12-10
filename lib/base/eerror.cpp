@@ -28,7 +28,7 @@ void DumpUnfreed()
 		return;
 	size_t len = 1024;
 	char *buffer = (char*)malloc(1024);
-	for(i = allocList->begin(); i != allocList->end(); i++)
+	for(i = allocList->begin(); i != allocList->end(); ++i)
 	{
 		unsigned int tmp;
 		fprintf(f, "%s\tLINE %d\tADDRESS %p\t%d unfreed\ttype %d (btcount %d)\n",
