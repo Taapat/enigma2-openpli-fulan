@@ -1,4 +1,4 @@
-#!/home/ubuntu/amikoAR-P/tdt/tufsbox/devkit/sh4/bin/python
+#!/usr/bin/python
 import sys
 import os
 import string
