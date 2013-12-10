@@ -1950,9 +1950,6 @@ msgstr "Vai vēlaties atjaunot jūsu iestatījumus?"
 msgid "Do you want to resume this playback?"
 msgstr "Vai vēlaties turpināt atskaņošanu?"
 
-msgid "Do you want to not resume this playback?"
-msgstr "Vai vēlaties neturpināt atskaņošanu?"
-
 #, python-format
 msgid "Do you want to update your receiver to %s?"
 msgstr "Vai vēlaties atjaunot uztvērēju uz %s?"
