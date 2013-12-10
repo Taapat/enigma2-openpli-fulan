@@ -5,7 +5,7 @@
 #include <lib/base/init.h>
 #include <lib/dvb/idvb.h>
 
-static std::string encode(const std::string s)
+static std::string encode(const std::string& s)
 {
 	int len = s.size();
 	std::string res;

@@ -127,24 +127,22 @@ void evfd::vfd_write_string_scrollText(const char* text)
 	if (!blocked)
 	{
 		int i, len = strlen(text);
-		char* out = (char *) malloc(16);
+		char out[17]={'\0'};
 		for (i=0; i<=(len-16); i++)
 		{ // scroll text till end
-			memset(out, ' ', 16);
 			memcpy(out, text+i, 16);
 			vfd_write_string(out);
 			usleep(200000);
 		}
 		for (i=1; i<16; i++)
 		{ // scroll text with whitespaces from right
-			memset(out, ' ', 16);
 			memcpy(out, text+len+i-16, 16-i);
+			memset(out+(16-i-1), ' ', i);
 			vfd_write_string(out);
 			usleep(200000);
 		}
 		memcpy(out, text, 16); // display first 16 chars after scrolling
 		vfd_write_string(out);
-		free (out);
 	}
 	return;
 }
