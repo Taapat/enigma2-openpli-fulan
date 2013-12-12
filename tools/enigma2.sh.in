@@ -45,7 +45,10 @@ case $ret in
 		/sbin/reboot
 		;;
 	3)
-		rm -fR /home/root/.gstreamer-0.10
+		[ -f /home/root/.gstreamer-0.10 ] && rm -fR /home/root/.gstreamer-0.10
+		cat /etc/videomode > /proc/stb/video/videomode
+		echo "0" > /proc/progress
+		/bin/showiframe -p /boot/bootlogo.mvi &
 		;;
 	4)
 		/sbin/rmmod lcd
