@@ -3142,7 +3142,7 @@ self.instance.move(ePoint(orgpos.x() + (orgwidth - newwidth)/2, orgpos.y()))
 		<widget name="config" position="20,20" size="570,100" zPosition="1" scrollbarMode="showOnDemand" selectionPixmap="dTV-HD-Reloaded/menu/select1080_25.png" transparent="1" />
 		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position=" 55,249" zPosition="1" size="250,38" />
 		<ePixmap pixmap="dTV-HD-Reloaded/button.png" position="325,249" zPosition="1" size="250,38" />
-		<widget source="key_red" render="Label" position=" 55,248" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="red" backgroundColor="black" transparent="1" />
-		<widget source="key_green" render="Label" position="325,248" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="green" backgroundColor="black" transparent="1" />
+		<widget name="key_red" position=" 55,248" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="red" backgroundColor="black" transparent="1" />
+		<widget name="key_green" position="325,248" zPosition="2" size="250,38" font="Regular;24" halign="center" valign="center" foregroundColor="green" backgroundColor="black" transparent="1" />
 	</screen>
 </skin>
