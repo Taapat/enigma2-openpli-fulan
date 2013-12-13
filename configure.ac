@@ -236,13 +236,6 @@ data/skin_default/menu/Makefile
 data/skin_default/icons/Makefile
 data/skin_default/buttons/Makefile
 data/skin_default/spinner/Makefile
-data/dTV-HD-Reloaded/Makefile
-data/dTV-HD-Reloaded/buttons/Makefile
-data/dTV-HD-Reloaded/extensions/Makefile
-data/dTV-HD-Reloaded/icons/Makefile
-data/dTV-HD-Reloaded/menu/Makefile
-data/dTV-HD-Reloaded/skin_default/Makefile
-data/dTV-HD-Reloaded/skin_default/icons/Makefile
 include/Makefile
 lib/Makefile
 lib/base/eenv.cpp
