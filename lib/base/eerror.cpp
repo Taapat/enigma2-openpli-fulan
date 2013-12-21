@@ -86,7 +86,7 @@ void CheckPrintkLevel()
 	{
 		unsigned int level;
 		fscanf(f, "%u", &level);
-		if (level < 2)
+		if (level < 1)
 		{
 			logOutputConsole = 0;
 			printf("Printk level is %u, disble Enigma log!\n", level);
