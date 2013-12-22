@@ -102,7 +102,7 @@ void transponderDataToDict(ePyObject &dest, ePtr<iDVBTransponderData> data)
 		value = data->getSystem();
 		if (value >= 0) PutToDict(dest, "system", value);
 		value = data->getIsId();
-		if (value >= 0) PutToDict(dest, "is_id", value);
+		if (value >= -1) PutToDict(dest, "is_id", value);
 		value = data->getPLSMode();
 		if (value >= 0) PutToDict(dest, "pls_mode", value);
 		value = data->getPLSCode();
@@ -124,7 +124,7 @@ void transponderDataToDict(ePyObject &dest, ePtr<iDVBTransponderData> data)
 		value = data->getHierarchyInformation();
 		if (value >= 0) PutToDict(dest, "hierarchy_information", value);
 		value = data->getPlpId();
-		if (value >= 0) PutToDict(dest, "plp_id", value);
+		if (value >= -1) PutToDict(dest, "plp_id", value);
 	}
 }
 
