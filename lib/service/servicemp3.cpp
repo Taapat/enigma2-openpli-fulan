@@ -653,9 +653,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		out.framebufferFD = fb->getFD();
 		out.destination = fb->getLFB_Direct();
 		out.destStride = fb->Stride();
-#ifdef ENABLE_LIBEPLAYER3
 		out.framebufferBlit = ep3Blit;
-#endif
 		player->output->subtitle->Command(player, (OutputCmd_t)OUTPUT_SET_SUBTITLE_OUTPUT, (void*) &out);
 	}
 
