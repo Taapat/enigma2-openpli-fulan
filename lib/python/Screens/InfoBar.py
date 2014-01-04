@@ -193,6 +193,8 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 			{
 				"channelUp": (self.openEPGserviceList, _("open EPG channel selection...")),
 				"channelDown": (self.openEPGserviceList, _("open EPG channel selection...")),
+				"moveNext": (self.openEPGserviceList, _("open EPG channel selection...")),
+				"movePrev": (self.openEPGserviceList, _("open EPG channel selection...")),
 				"leavePlayer": (self.leavePlayer, _("leave movie player...")),
 				"leavePlayerOnExit": (self.leavePlayerOnExit, _("leave movie player..."))
 			})
