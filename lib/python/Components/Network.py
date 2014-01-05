@@ -618,7 +618,7 @@ class Network:
 					ifnames.append(device.search(line).group()[:-1])
 				except AttributeError:
 					pass
-			fp.close
+			fp.close()
 			if iface in ifnames:
 				return True
 
