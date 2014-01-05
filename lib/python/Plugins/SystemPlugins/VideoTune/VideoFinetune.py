@@ -252,7 +252,7 @@ class VideoFinetune(Screen):
 		c.flush()
 
 	def testpic_gamma(self):
-		self.next = self.testpic_fullhd
+		self.next = self.testpic_brightness
 
 		c = self["Canvas"]
 
