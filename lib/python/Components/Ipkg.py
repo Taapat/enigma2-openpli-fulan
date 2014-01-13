@@ -99,7 +99,7 @@ class IpkgComponent:
 			self.runCmd("remove " + args['package'])
 		elif cmd == self.CMD_UPGRADE_LIST:
 			self.fetchedList = []
-			self.runCmdEx("list-upgradable")
+			self.runCmdEx("list_upgradable")
 		self.setCurrentCommand(cmd)
 
 	def cmdFinished(self, retval):
