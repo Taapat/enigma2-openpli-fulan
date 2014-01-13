@@ -223,7 +223,7 @@ class PluginDownloadBrowser(Screen):
 			if dest[0] == '/':
 				# Custom install path, add it to the list too
 				dest = os.path.normpath(dest)
-				extra = '--add-dest %s:%s -d %s' % (dest,dest,dest)
+				extra = '--dest %s:%s -d %s' % (dest,dest,dest)
 				Ipkg.opkgAddDestination(dest)
 			else:
 				extra = '-d ' + dest
