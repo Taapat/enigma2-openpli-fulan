@@ -177,15 +177,12 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 		InfoBarAudioSelection, HelpableScreen, InfoBarNotifications, InfoBarServiceNotifications, InfoBarPVRState,
 		InfoBarCueSheetSupport, InfoBarSimpleEventView, InfoBarMoviePlayerSummarySupport, InfoBarSubtitleSupport,
 		Screen, InfoBarTeletextPlugin, InfoBarServiceErrorPopupSupport, InfoBarExtensions, InfoBarPlugins, InfoBarPiP):
-		InfoBarAspectSelection, InfoBarSubserviceSelection,
 
 	ENABLE_RESUME_SUPPORT = True
 	ALLOW_SUSPEND = True
 		
 	def __init__(self, session, service, slist=None, lastservice=None, infobar=None):
 		Screen.__init__(self, session)
-		
-		InfoBarAspectSelection.__init__(self)
 
 		self["actions"] = HelpableActionMap(self, "MoviePlayerActions",
 			{
