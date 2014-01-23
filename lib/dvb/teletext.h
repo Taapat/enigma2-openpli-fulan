@@ -48,6 +48,7 @@ public:
 private:
 	std::map<int, unsigned int> m_modifications;
 	void processPESPacket(__u8 *pkt, int len);
+	void getNationalSubsetOverwrite();
 	
 	ePtr<iDVBPESReader> m_pes_reader;
 	ePtr<eConnection> m_read_connection;
