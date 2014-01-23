@@ -171,28 +171,26 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 			if ref and not self.session.nav.getCurrentlyPlayingServiceOrGroup():
 				self.session.nav.playService(ref)
 		else:
-			self.session.open(MoviePlayer, service, slist = self.servicelist, lastservice = ref)
+			self.session.open(MoviePlayer, service, slist=self.servicelist, lastservice=ref, infobar=self)
 
-class MoviePlayer(InfoBarBase, InfoBarShowHide, \
-		InfoBarMenu, \
-		InfoBarSeek, InfoBarShowMovies, InfoBarInstantRecord, InfoBarAudioSelection, HelpableScreen, InfoBarNotifications,
-		InfoBarServiceNotifications, InfoBarPVRState, InfoBarCueSheetSupport, InfoBarSimpleEventView,
-		InfoBarMoviePlayerSummarySupport, InfoBarSubtitleSupport, Screen, InfoBarTeletextPlugin,
+class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBarShowMovies, InfoBarInstantRecord,
+		InfoBarAudioSelection, HelpableScreen, InfoBarNotifications, InfoBarServiceNotifications, InfoBarPVRState,
+		InfoBarCueSheetSupport, InfoBarSimpleEventView, InfoBarMoviePlayerSummarySupport, InfoBarSubtitleSupport,
+		Screen, InfoBarTeletextPlugin, InfoBarServiceErrorPopupSupport, InfoBarExtensions, InfoBarPlugins, InfoBarPiP):
 		InfoBarAspectSelection, InfoBarSubserviceSelection,
-		InfoBarServiceErrorPopupSupport, InfoBarExtensions, InfoBarPlugins, InfoBarPiP):
 
 	ENABLE_RESUME_SUPPORT = True
 	ALLOW_SUSPEND = True
 		
-	def __init__(self, session, service, slist = None, lastservice = None):
+	def __init__(self, session, service, slist=None, lastservice=None, infobar=None):
 		Screen.__init__(self, session)
 		
 		InfoBarAspectSelection.__init__(self)
 
 		self["actions"] = HelpableActionMap(self, "MoviePlayerActions",
 			{
-				"channelUp": (self.openEPGserviceList, _("open EPG channel selection...")),
-				"channelDown": (self.openEPGserviceList, _("open EPG channel selection...")),
+				"InfoButtonPressed": (self.showDefaultInfo, _("open Info...")),
+				"EPGButtonPressed": (self.showDefaultEPG,  _("open EPG...")),
 				"leavePlayer": (self.leavePlayer, _("leave movie player...")),
 				"leavePlayerOnExit": (self.leavePlayerOnExit, _("leave movie player..."))
 			})
@@ -215,6 +213,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 			x.__init__(self)
 
 		self.servicelist = slist
+		self.infobar = infobar
 		self.lastservice = lastservice or session.nav.getCurrentlyPlayingServiceOrGroup()
 		session.nav.playService(service)
 		self.cur_service = service
@@ -450,8 +449,13 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 	def swapPiP(self):
 		pass
 
-	def openEPGserviceList(self):
-		self.session.open(MoviePlayerEPGselection, _("EPG Channel Selection"))
+	def showDefaultEPG(self):
+		if self.infobar:
+			self.infobar.showMultiEPG()
+
+	def showDefaultInfo(self):
+		if self.infobar:
+			self.infobar.showDefaultEPG()
 
 	def showMovies(self):
 		ref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
@@ -498,24 +502,3 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, \
 		from Screens.SleepTimerEdit import SleepTimerEdit
 		self.session.open(SleepTimerEdit)
 
-from Screens.ChannelSelection import SimpleChannelSelection
-from Screens.EpgSelection import EPGSelection
-from enigma import eServiceReference
-
-class MoviePlayerEPGselection(SimpleChannelSelection):
-	def __init__(self, session, title):
-		SimpleChannelSelection.__init__(self, session, title)
-		self.skinName = "SimpleChannelSelection"
-
-	def channelSelected(self):
-		ref = self.getCurrentSelection()
-		if (ref.flags & eServiceReference.flagDirectory) == eServiceReference.flagDirectory:
-			self.enterPath(ref)
-			self.gotoCurrentServiceOrProvider(ref)
-		elif not (ref.flags & eServiceReference.isMarker):
-			ref = self.getCurrentSelection()
-			self.session.openWithCallback(self.closed, EPGSelection, ref)
-
-	def closed(self, ret=None):
-		if ret:
-			self.close(ret)

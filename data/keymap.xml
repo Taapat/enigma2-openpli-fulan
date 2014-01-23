@@ -252,6 +252,8 @@
 		<key id="KEY_HOME" mapto="leavePlayer" flags="m" />
 		<key id="KEY_PAGEUP" mapto="movePrev" flags="b" />
 		<key id="KEY_PAGEDOWN" mapto="moveNext" flags="b" />
+		<key id="KEY_INFO" mapto="InfoButtonPressed" flags="m" />
+		<key id="KEY_EPG" mapto="EPGButtonPressed" flags="m" />
 	</map>
 
 	<map context="InfobarCueSheetActions">
