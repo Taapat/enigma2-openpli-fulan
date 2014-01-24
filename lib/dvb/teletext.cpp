@@ -2,7 +2,6 @@
 #include <lib/dvb/teletext.h>
 #include <lib/dvb/idemux.h>
 #include <lib/gdi/gpixmap.h>
-#include <stdio.h>
 
 // G0 and G2 national option table
 // see table 33 in ETSI EN 300 706
@@ -467,7 +466,6 @@ void eDVBTeletextParser::processPESPacket(__u8 *pkt, int len)
 
 int eDVBTeletextParser::start(int pid)
 {
-	force_national_subset = -1;
 	m_page_open = 0;
 
 	if (m_pes_reader && pid >= 0 && pid < 0x1fff)
@@ -601,11 +599,7 @@ void eDVBTeletextParser::handleLine(unsigned char *data, int len)
 				/* no more than one whitespace, only printable chars */
 			if (((!last_was_white) || (b != ' ')) && (b >= 0x20))
 			{
-				int cur_nat_subset;
-				if (force_national_subset != -1)
-					cur_nat_subset = force_national_subset;
-				else
-					cur_nat_subset = second_G0_set ? nat_subset_2 : nat_subset;
+				int cur_nat_subset = second_G0_set ? nat_subset_2 : nat_subset;
 
 				unsigned char offs = NationalReplaceMap[b];
 				if (offs)
@@ -644,10 +638,7 @@ void eDVBTeletextParser::handlePageEnd(int have_pts, const pts_t &pts)
 void eDVBTeletextParser::setPageAndMagazine(int page, int magazine)
 {
 	if (page > 0)
-	{
 		eDebug("enable teletext subtitle page %x%02x", magazine, page);
-		getNationalSubsetOverwrite();
-	}
 	else
 		eDebug("disable teletext subtitles");
 	m_M29_0_valid = 0;
@@ -679,36 +670,5 @@ void eDVBTeletextParser::addSubtitleString(int color, std::string string, int so
 	if (string.empty()) return;
 
 	m_subtitle_page.m_elements.push_back(eDVBTeletextSubtitlePageElement(pal[color], string, source_line));
-}
-
-void eDVBTeletextParser::getNationalSubsetOverwrite()
-{
-	const char prop_str[] = "NationalSubset %d";
-	const char fnam[] = "/etc/teletext_overwrite.conf";
-	FILE *fp;
-	int read_subset;
-
-	eDebug("Trying to read national subset overwrite from %s", fnam);
-	fp = fopen(fnam, "r");
-
-	if ( fp != NULL) // file successfully opened
-	{
-		if ( fscanf(fp, prop_str, &read_subset) == 1)
-		{
-			force_national_subset = read_subset;
-			eDebug("Read national subset overwrite %d from %s", read_subset, fnam);
-			fclose(fp);
-			return;
-		}
-	}
-
-	eDebug("Failed to read national subset overwrite from %s", fnam);
-	fp = fopen(fnam, "w");
-	if ( fp != NULL)
-	{
-		fprintf(fp, prop_str, force_national_subset);
-		eDebug("Wrote default national subset overwrite to %s", fnam);
-		fclose(fp);
-	}
 }
 
