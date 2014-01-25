@@ -58,6 +58,8 @@ private:
 	int m_X28_0_valid, m_X28_t1, m_X28_t2;
 	int m_M29_0_valid, m_M29_t1, m_M29_t2;
 
+	int force_national_subset;
+
 	void handlePageStart();
 	void handleLine(unsigned char *line, int len);
 	void handlePageEnd(int have_pts, const pts_t &pts);

@@ -384,6 +384,21 @@ def InitUsageConfig():
 		("29970", _("29.97")),
 		("30000", _("30"))])
 	config.subtitles.pango_autoturnon = ConfigYesNo(default = True)
+	config.subtitles.teletext_subtitles_lang = ConfigSelection(default = "-1", choices = [
+		("-1", _("Auto")),
+		("0", _("Slovak/Czech")),
+		("1", _("English")),
+		("2", _("Estonian")),
+		("3", _("French")),
+		("4", _("German")),
+		("5", _("Italian")),
+		("6", _("Lithuanian/Lettish")),
+		("7", _("Polish")),
+		("8", _("Spanish/Portuguese")),
+		("9", _("Rumanian")),
+		("10", _("Slovenian/Serbian/Croation")),
+		("11", _("Finnish/Hungarian/Swedish")),
+		("12", _("Turkish"))])
 
 	config.autolanguage = ConfigSubsection()
 	audio_language_choices=[
