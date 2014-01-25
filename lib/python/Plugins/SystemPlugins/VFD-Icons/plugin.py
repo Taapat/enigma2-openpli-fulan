@@ -60,7 +60,6 @@ def main(session, **kwargs):
 	global VFDIconsInstance
 	if VFDIconsInstance is None:
 		VFDIconsInstance = VFDIcons(session)
-		VFDIconsInstance.WriteName()
 
 def Plugins(**kwargs):
 	return [PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART,
