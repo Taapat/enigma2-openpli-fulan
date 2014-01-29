@@ -37,7 +37,14 @@ class HTTPProgressDownloader(client.HTTPDownloader):
 
 class downloadWithProgress:
 	def __init__(self, url, outputfile, contextFactory=None, *args, **kwargs):
-		scheme, host, port, path = client._parse(url)
+		# twisted 13.1 fix
+		if hasattr(client, '_parse'):
+			scheme, host, port, path = client._parse(url)
+		else:
+			from twisted.web.client import _URI
+			uri = _URI.fromBytes(url)
+			host = uri.host
+			port = uri.port
 		self.factory = HTTPProgressDownloader(url, outputfile, *args, **kwargs)
 		self.connection = reactor.connectTCP(host, port, self.factory)
 
