@@ -13,8 +13,6 @@
 #include <lib/base/ebase.h>
 #include <lib/base/eerror.h>
 
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
-
 int Select(int maxfd, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout)
 {
 	int retval;
@@ -58,9 +56,10 @@ int Select(int maxfd, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, stru
 
 ssize_t singleRead(int fd, void *buf, size_t count)
 {
+	int retval;
 	while (1)
 	{
-		int retval = ::read(fd, buf, count);
+		retval = ::read(fd, buf, count);
 		if (retval < 0)
 		{
 			if (errno == EINTR) continue;
@@ -72,23 +71,30 @@ ssize_t singleRead(int fd, void *buf, size_t count)
 
 ssize_t timedRead(int fd, void *buf, size_t count, int initialtimeout, int interbytetimeout)
 {
+	fd_set rset;
+	struct timeval timeout;
+	int result;
 	size_t totalread = 0;
 
 	while (totalread < count)
 	{
-                struct pollfd pfd;
-                pfd.fd = fd;
-                pfd.events = POLLIN|POLLPRI;		
-                int result = poll(&pfd, 1, ((totalread==0)?initialtimeout:interbytetimeout));
-		if (result == 1 && (result = singleRead(fd, ((char*)buf) + totalread, count - totalread)) <= 0)
+		FD_ZERO(&rset);
+		FD_SET(fd, &rset);
+		if (totalread == 0)
+		{
+			timeout.tv_sec = initialtimeout/1000;
+			timeout.tv_usec = (initialtimeout%1000) * 1000;
+		}
+		else
+		{
+			timeout.tv_sec = interbytetimeout / 1000;
+			timeout.tv_usec = (interbytetimeout%1000) * 1000;
+		}
+		if ((result = select(fd + 1, &rset, NULL, NULL, &timeout)) < 0) return -1; /* error */
+		if (result == 0) break;
+		if ((result = singleRead(fd, ((char*)buf) + totalread, count - totalread)) < 0)
 		{
 			return -1;
-		}
-
-		if (result < 0)
-		{
-			if (totalread > 0) return totalread;
-			else return result;
 		}
 		if (result == 0) break;
 		totalread += result;
@@ -113,181 +119,143 @@ ssize_t readLine(int fd, char** buffer, size_t* bufsize)
 		result = timedRead(fd, (*buffer) + i, 1, 3000, 100);
 		if (result <= 0 || (*buffer)[i] == '\n')
 		{
-			if (i > 0 && (*buffer)[i-1] == '\r') i--;
 			(*buffer)[i] = '\0';
-			return (result <= 0)? result : i;
+			return result <= 0 ? -1 : i;
 		}
 		if ((*buffer)[i] != '\r') i++;
 	}
 	return -1;
 }
 
-ssize_t openHTTPConnection(int fd, const std::string& getRequest, std::string& httpHdr)
-{
-	size_t wlen = getRequest.length();
-	const char* buf_end = getRequest.data() + wlen;
-
-	while (wlen) {
-		struct pollfd pfd;
-		pfd.fd = fd;
-                pfd.events = POLLOUT;
-                const int rc = poll(&pfd, 1, 5000);
-		if (rc <= 0) {
-			eDebug("%s: waiting to write timedout : %s", __FUNCTION__, strerror(errno));
-			return -1;
-		}
-
-		const int sent = send(fd, buf_end-wlen, wlen, 0);
-		if (sent > 0) wlen -= sent;
-		else return -1;
-	}
-
-	const ssize_t rbuff_size = (1024*4);
-	char* rbuff = (char*)malloc(rbuff_size);
-	if (rbuff == NULL) return -1;
-
-	while(true) {
-                struct pollfd pfd;
-                pfd.fd = fd;
-                pfd.events = POLLIN;
-                const int rc = poll(&pfd, 1, 5000);
-		if (rc <= 0) {
-			eDebug("%s: waiting to read timedout : %s", __FUNCTION__, strerror(errno));
-			free(rbuff);
-			return -1;
-		}
-	
-		//read the response header
-		int rcvd = ::recv(fd, rbuff, rbuff_size, MSG_PEEK);
-		
-		if (rcvd <= 0) {
-			eDebug("%s: did not receive http header : %s", __FUNCTION__, strerror(errno));
-			return -1;
-		}
-		char* hdrend=NULL;
-		if ((hdrend=strstr(rbuff, "\r\n\r\n")) || (hdrend=strstr(rbuff, "\n\n"))) {
-			while((hdrend-rbuff) < rcvd && (*hdrend=='\n' || *hdrend=='\r')) hdrend++;  
-			httpHdr.append(rbuff, hdrend-rbuff);
-			::recv(fd, rbuff, hdrend-rbuff, 0);
-			break;
-		} else {
-			httpHdr.append(rbuff, rcvd);
-			::recv(fd, rbuff, rcvd, 0);
-		} 
-	}
-
-	free(rbuff);
-	return 0;
-}
-
 int Connect(const char *hostname, int port, int timeoutsec)
 {
-	struct hostent *server=gethostbyname(hostname);
-	if (server == NULL) {
-		eDebug("can't resolve %s", hostname);
-		return -1;
+	int sd = -1;
+	std::vector<struct addrinfo *> addresses;
+	struct addrinfo *info = NULL;
+	struct addrinfo hints;
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_UNSPEC; /* both ipv4 and ipv6 */
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_protocol = 0; /* any */
+#ifdef AI_ADDRCONFIG
+	hints.ai_flags = AI_ADDRCONFIG; /* only return ipv6 if we have an ipv6 address ourselves, and ipv4 if we have an ipv4 address ourselves */
+#else
+	hints.ai_flags = 0; /* we have only IPV4 support, if AI_ADDRCONFIG is not available */
+#endif
+	char portstring[15];
+	/* this is suboptimal, but the alternative would require us to mess with the memberdata of an 'abstract' addressinfo struct */
+	snprintf(portstring, sizeof(portstring), "%d", port);
+	if (getaddrinfo(hostname, portstring, &hints, &info) || !info) return -1;
+	struct addrinfo *ptr = info;
+	while (ptr)
+	{
+		addresses.push_back(ptr);
+		ptr = ptr->ai_next;
 	}
-	int sd = ::socket(AF_INET, SOCK_STREAM, 0);
-	if (sd < 0) return sd;
 
-	sockaddr_in  addr_in;
-	bzero(&addr_in, sizeof(addr_in));
-	addr_in.sin_family=AF_INET;
-	bcopy(server->h_addr, &addr_in.sin_addr.s_addr, server->h_length);
-	addr_in.sin_port=htons(port);
-
-	int flags = fcntl(sd, F_GETFL, 0);
-	bool setblocking = false;
-	if (!(flags & O_NONBLOCK)) {
-		/* set socket nonblocking, to allow for our own timeout on a nonblocking connect */
-		flags |= O_NONBLOCK;
-		if (fcntl(sd, F_SETFL, flags) == 0) setblocking = true;
-	}
-
-	int connectresult = ::connect(sd, (const sockaddr*)&addr_in, sizeof(addr_in)); 
-	if (connectresult < 0 && (errno == EINTR || errno == EINPROGRESS)) {
-		if (!timeoutsec) return sd; // do not wait connect to finish, the caller should take care about this
-		timeval timeout = {timeoutsec, 0};
-		fd_set wset;
-		FD_ZERO(&wset);
-		FD_SET(sd, &wset);
-
-		if (select(sd + 1, NULL, &wset, NULL, &timeout) > 0) {
-			int error = 0;
-			socklen_t len = sizeof(error);
-			if (getsockopt(sd, SOL_SOCKET, SO_ERROR, &error, &len) == 0 && !error) connectresult = 0; /* we are connected */
-		}
-	}
-	if (connectresult < 0) {
-		::close(sd);
-		return -1;
-	}
-	if (setblocking) {
-		/* set socket blocking again */
-		flags &= ~O_NONBLOCK;
-		if (fcntl(sd, F_SETFL, flags) < 0) {
+	for (unsigned int i = 0; i < addresses.size(); i++)
+	{
+		sd = ::socket(addresses[i]->ai_family, addresses[i]->ai_socktype, addresses[i]->ai_protocol);
+		if (sd < 0) break;
+		int flags;
+		bool setblocking = false;
+		if ((flags = fcntl(sd, F_GETFL, 0)) < 0)
+		{
 			::close(sd);
-			return -1;
+			sd = -1;
+			continue;
+		}
+		if (!(flags & O_NONBLOCK))
+		{
+			/* set socket nonblocking, to allow for our own timeout on a nonblocking connect */
+			flags |= O_NONBLOCK;
+			if (fcntl(sd, F_SETFL, flags) < 0)
+			{
+				::close(sd);
+				sd = -1;
+				continue;
+			}
+			/* remember to restore O_NONBLOCK when we're connected */
+			setblocking = true;
+		}
+		int connectresult;
+		while (1)
+		{
+			connectresult = ::connect(sd, addresses[i]->ai_addr, addresses[i]->ai_addrlen);
+			if (connectresult < 0)
+			{
+				if (errno == EINTR || errno == EINPROGRESS)
+				{
+					int error;
+					socklen_t len = sizeof(error);
+					timeval timeout;
+					fd_set wset;
+					FD_ZERO(&wset);
+					FD_SET(sd, &wset);
+
+					timeout.tv_sec = timeoutsec;
+					timeout.tv_usec = 0;
+
+					if (select(sd + 1, NULL, &wset, NULL, &timeout) <= 0) break;
+
+					if (getsockopt(sd, SOL_SOCKET, SO_ERROR, &error, &len) < 0) break;
+
+					if (error) break;
+					/* we are connected */
+					connectresult = 0;
+					break;
+				}
+			}
+			break;
+		}
+		if (connectresult < 0)
+		{
+			::close(sd);
+			sd = -1;
+			continue;
+		}
+		if (setblocking)
+		{
+			/* set socket blocking again */
+			flags &= ~O_NONBLOCK;
+			if (fcntl(sd, F_SETFL, flags) < 0)
+			{
+				::close(sd);
+				sd = -1;
+				continue;
+			}
+		}
+		if (sd >= 0)
+		{
+#ifdef SO_NOSIGPIPE
+			int val = 1;
+			setsockopt(sd, SOL_SOCKET, SO_NOSIGPIPE, (char*)&val, sizeof(val));
+#endif
+			/* we have a working connection */
+			break;
 		}
 	}
-#ifdef SO_NOSIGPIPE
-	int val = 1;
-	setsockopt(sd, SOL_SOCKET, SO_NOSIGPIPE, (char*)&val, sizeof(val));
-#endif
+	freeaddrinfo(info);
 	return sd;
-}
-
-int finishConnect(int fd, int timeoutsec)
-{
-	timeval timeout = {timeoutsec, 0};
-	fd_set wset;
-	FD_ZERO(&wset);
-	FD_SET(fd, &wset);
-
-        int connectresult = -1;
-	if (select(fd + 1, NULL, &wset, NULL, &timeout) > 0) {
-		int error = 0;
-		socklen_t len = sizeof(error);
-		if (getsockopt(fd, SOL_SOCKET, SO_ERROR, &error, &len) == 0 && !error) connectresult = 0; /* we are connected */
-	}
-        if (connectresult < 0) {
-                ::close(fd);
-                return -1;
-        }
-
-	int flags = fcntl(fd, F_GETFL, 0);
-	if(flags < 0) {
-		::close(fd);
-		return -1;
-	} 
-	/* set socket blocking again */
-	flags &= ~O_NONBLOCK;
-        if (fcntl(fd, F_SETFL, flags) < 0) {
-		::close(fd);
-		return -1;
-	}
-#ifdef SO_NOSIGPIPE
-        int val = 1;
-        setsockopt(fd, SOL_SOCKET, SO_NOSIGPIPE, (char*)&val, sizeof(val));
-#endif
-        return fd;
 }
 
 ssize_t writeAll(int fd, const void *buf, size_t count)
 {
-	char *ptr_end = (char*)buf + count;
-	size_t tosend = count;
-	while (tosend > 0)
+	int retval;
+	char *ptr = (char*)buf;
+	size_t handledcount = 0;
+	while (handledcount < count)
 	{
-		const int retval = ::write(fd, (ptr_end-tosend), tosend);
+		retval = ::write(fd, &ptr[handledcount], count - handledcount);
 
-		if (retval <= 0)
+		if (retval == 0) return -1;
+		if (retval < 0)
 		{
-			if (retval == 0 && errno == EINTR) continue;
+			if (errno == EINTR) continue;
 			eDebug("writeAll error (%m)");
 			return retval;
 		}
-		tosend -= retval;
+		handledcount += retval;
 	}
-	return (count - tosend);
+	return handledcount;
 }

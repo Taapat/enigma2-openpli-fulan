@@ -10,20 +10,21 @@ class eHttpStream: public iTsSource, public Object, public eThread
 {
 	DECLARE_REF(eHttpStream);
 
-	int m_streamSocket;
-	bool m_isChunked;
-	size_t m_currentChunkSize;
-	char m_partialPkt[188];
-	int  m_partialPktSz;
-	enum { BUSY, CONNECTED, FAILED } m_connectionStatus;
-	char* m_tmp;
-	size_t m_tmpSize;
-	std::string m_streamUrl;
+	int streamSocket;
+	enum { BUSY, CONNECTED, FAILED } connectionStatus;
+	bool isChunked;
+	size_t currentChunkSize;
+	std::string streamUrl;
+	std::string authorizationData;
+	char partialPkt[192];
+	size_t partialPktSz;
+	char* tmpBuf;
+	size_t tmpBufSize;
 
 	int openUrl(const std::string &url, std::string &newurl);
-	ssize_t syncNextRead(void* buf, ssize_t count);
-	ssize_t httpChunkedRead(void *buf, size_t count);
 	void thread();
+	ssize_t httpChunkedRead(void *buf, size_t count);
+	ssize_t syncNextRead(void *buf, ssize_t count);
 
 	/* iTsSource */
 	ssize_t read(off_t offset, void *buf, size_t count);
