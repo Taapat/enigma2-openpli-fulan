@@ -1,14 +1,12 @@
 installdir = $(pkglibdir)/python/Plugins/SystemPlugins
 
 SUBDIRS = AutoVolume SoftwareManager Satfinder \
-	SkinSelector Videomode VideoTune \
-	DefaultServicesScanner DiseqcTester \
-	FastScan HdmiCEC \
-	NetworkWizard VFD-Icons OnErrorRestartService
+	SkinSelector Videomode VideoTune DefaultServicesScanner \
+	HdmiCEC NetworkWizard VFD-Icons OnErrorRestartService
 
 if ! ENABLE_MINIMAL
 SUBDIRS += Hotplug KeymapManager PositionerSetup SatelliteEquipmentControl \
-	VideoEnhancement OSDPositionSetup OSD3DSetup WirelessLan
+	VideoEnhancement OSDPositionSetup OSD3DSetup WirelessLan FastScan DiseqcTester
 endif
 
 if HAVE_TEMPFANCONTROL
