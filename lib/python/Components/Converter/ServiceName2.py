@@ -61,7 +61,10 @@ class ServiceName2(Converter, object):
 			orbpos = ref.getData(4) >> 16
 			if orbpos == 0:
 				return ""
-			if orbpos < 0: orbpos += 3600
+			if orbpos < 0:
+				orbpos += 3600
+			if orbpos < 0:
+				return ""
 			try:
 				return str(nimmanager.getSatDescription(orbpos))
 			except:
@@ -88,7 +91,7 @@ class ServiceName2(Converter, object):
 		elif self.type == self.FORMAT:
 			sname = ref and ref.toString() or info.getInfoString(iServiceInformation.sServiceref)
 			if "%3a//" in sname:
-				return sname.split("%3a//")[1].split("/")[0].replace("%3a", ":")
+				return sname.split("%3a//")[1].split("/")[0]
 			tpdata = ref and (info.getInfoObject(ref, iServiceInformation.sTransponderData) or -1) or info.getInfoObject(iServiceInformation.sTransponderData)
 			if not isinstance(tpdata, dict):
 				return ""
