@@ -2860,7 +2860,7 @@ void eDVBServicePlay::updateDecoder(bool sendSeekableStateChanged)
 					if (track.type == 0) // dvb
 						m_subtitle_parser->start(track.pid, track.page_number, track.magazine_number);
 					else if (track.type == 1) // ttx
-						m_teletext_parser->setPageAndMagazine(track.page_number, track.magazine_number);
+						m_teletext_parser->setPageAndMagazine(track.page_number, track.magazine_number, track.language_code.c_str());
 				}
 			}
 			m_teletext_parser->start(program.textPid);
@@ -3032,6 +3032,7 @@ RESULT eDVBServicePlay::enableSubtitles(iSubtitleUser *user, SubtitleTrack &trac
 	if (track.type == 1)  // teletext subtitles
 	{
 		int page, magazine, pid;
+		std::string lang;
 
 		if (!m_teletext_parser)
 		{
@@ -3042,11 +3043,18 @@ RESULT eDVBServicePlay::enableSubtitles(iSubtitleUser *user, SubtitleTrack &trac
 		pid = track.pid;
 		page = track.page_number;
 		magazine = track.magazine_number;
+		lang = track.language_code;		
 
 		m_subtitle_widget = user;
-		m_teletext_parser->setPageAndMagazine(page, magazine);
+		m_teletext_parser->setPageAndMagazine(page, magazine, lang.c_str());
 		if (m_dvb_service)
-			m_dvb_service->setCacheEntry(eDVBService::cSUBTITLE,((pid&0xFFFF)<<16)|((page&0xFF)<<8)|(magazine&0xFF));
+		{
+			for (int ii=0; ii < m_teletext_parser->max_id; ii++){
+				if (!memcmp(m_teletext_parser->my_country_codes[ii], lang.c_str(), 3)) break;
+			}
+			if (ii > m_teletext_parser->max_id-2) ii = 0;
+			m_dvb_service->setCacheEntry(eDVBService::cSUBTITLE,((pid&0xFFFF)<<16)|((page&0xFF)<<8)|((ii&0x1F)<<3)|(magazine&0x7));
+		}
 	}
 	else if (track.type == 0)
 	{
@@ -3087,7 +3095,7 @@ RESULT eDVBServicePlay::disableSubtitles()
 	}
 	if (m_teletext_parser)
 	{
-		m_teletext_parser->setPageAndMagazine(-1, -1);
+		m_teletext_parser->setPageAndMagazine(-1, -1, "und");
 		m_subtitle_pages.clear();
 	}
 	if (m_dvb_service)
@@ -3119,7 +3127,9 @@ RESULT eDVBServicePlay::getCachedSubtitle(struct SubtitleTrack &track)
 						track.type = 0; // type dvb
 					track.pid = pid; // pid
 					track.page_number = (data >> 8) & 0xff; // composition_page / page
-					track.magazine_number = data & 0xff; // ancillary_page / magazine
+					int k = (data >> 3) & 0x1f;
+					track.magazine_number = data & 0x7; // ancillary_page / magazine
+					track.language_code = m_teletext_parser->my_country_codes[k];
 					return 0;
 				}
 			}
@@ -3131,6 +3141,7 @@ RESULT eDVBServicePlay::getCachedSubtitle(struct SubtitleTrack &track)
 					track.pid = program.subtitleStreams[stream].pid;
 					track.page_number = program.subtitleStreams[stream].teletext_page_number & 0xff;
 					track.magazine_number = program.subtitleStreams[stream].teletext_magazine_number & 0x07;
+					track.language_code = program.subtitleStreams[stream].language_code;
 					return 0;
 				}
 				else
@@ -3139,6 +3150,7 @@ RESULT eDVBServicePlay::getCachedSubtitle(struct SubtitleTrack &track)
 					track.pid = program.subtitleStreams[stream].pid;
 					track.page_number = program.subtitleStreams[stream].composition_page_id;
 					track.magazine_number = program.subtitleStreams[stream].ancillary_page_id;
+					track.language_code = program.subtitleStreams[stream].language_code;
 					return 0;
 				}
 			}
