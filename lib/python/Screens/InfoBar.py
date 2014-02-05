@@ -57,7 +57,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 				"volumeDown": (self._volDown, _("volume down")),
 			}, prio=2)
 		
-		self.allowPiP = True
+		self.allowPiP = False
 		
 		for x in HelpableScreen, \
 				InfoBarBase, InfoBarShowHide, \
@@ -200,7 +200,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 				"right": self.right
 			}, prio = -2)
 
-		self.allowPiP = True
+		self.allowPiP = False
 		
 		for x in HelpableScreen, InfoBarShowHide, InfoBarMenu, \
 				InfoBarBase, InfoBarSeek, InfoBarShowMovies, InfoBarInstantRecord, \
