@@ -1,5 +1,4 @@
 #include <lib/base/eerror.h>
-#include <lib/base/nconfig.h>
 #include <lib/dvb/teletext.h>
 #include <lib/dvb/idemux.h>
 #include <lib/gdi/gpixmap.h>
@@ -467,7 +466,6 @@ void eDVBTeletextParser::processPESPacket(__u8 *pkt, int len)
 
 int eDVBTeletextParser::start(int pid)
 {
-	force_national_subset = -1;
 	m_page_open = 0;
 
 	if (m_pes_reader && pid >= 0 && pid < 0x1fff)
@@ -601,11 +599,7 @@ void eDVBTeletextParser::handleLine(unsigned char *data, int len)
 				/* no more than one whitespace, only printable chars */
 			if (((!last_was_white) || (b != ' ')) && (b >= 0x20))
 			{
-				int cur_nat_subset;
-				if (force_national_subset != -1)
-					cur_nat_subset = force_national_subset;
-				else
-					cur_nat_subset = second_G0_set ? nat_subset_2 : nat_subset;
+				int cur_nat_subset = second_G0_set ? nat_subset_2 : nat_subset;
 
 				unsigned char offs = NationalReplaceMap[b];
 				if (offs)
@@ -644,12 +638,7 @@ void eDVBTeletextParser::handlePageEnd(int have_pts, const pts_t &pts)
 void eDVBTeletextParser::setPageAndMagazine(int page, int magazine)
 {
 	if (page > 0)
-	{
 		eDebug("enable teletext subtitle page %x%02x", magazine, page);
-		force_national_subset = eConfigManager::getConfigIntValue("config.subtitles.teletext_subtitles_lang", -1);
-		if (force_national_subset != -1)
-			eDebug("use default national subset overwrite %x", force_national_subset);
-	}
 	else
 		eDebug("disable teletext subtitles");
 	m_M29_0_valid = 0;
