@@ -3049,7 +3049,8 @@ RESULT eDVBServicePlay::enableSubtitles(iSubtitleUser *user, SubtitleTrack &trac
 		m_teletext_parser->setPageAndMagazine(page, magazine, lang.c_str());
 		if (m_dvb_service)
 		{
-			for (int ii=0; ii < m_teletext_parser->max_id; ii++){
+			int ii;
+			for (ii=0; ii < m_teletext_parser->max_id; ii++){
 				if (!memcmp(m_teletext_parser->my_country_codes[ii], lang.c_str(), 3)) break;
 			}
 			if (ii > m_teletext_parser->max_id-2) ii = 0;
