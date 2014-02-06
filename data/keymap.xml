@@ -290,6 +290,7 @@
 		<key id="KEY_TEXT" mapto="exit" flags="m" />
 		<key id="KEY_EXIT" mapto="exit" flags="m" />
 		<key id="KEY_POWER" mapto="exit" flags="m" />
+		<key id="KEY_HOME" mapto="exit" flags="m" />
 	</map>
 
 	<map context="InfobarRdsActions">
