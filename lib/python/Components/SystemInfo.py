@@ -6,10 +6,11 @@ SystemInfo = { }
 
 #FIXMEE...
 def getNumVideoDecoders():
-	idx = 0
-	while fileExists("/dev/dvb/adapter0/video%d"%(idx), 'f'):
-		idx += 1
-	return idx
+	return 0 #To disable PiP
+	#idx = 0
+	#while fileExists("/dev/dvb/adapter0/video%d"%(idx), 'f'):
+		#idx += 1
+	#return idx
 
 SystemInfo["NumVideoDecoders"] = getNumVideoDecoders()
 SystemInfo["CanMeasureFrontendInputPower"] = eDVBResourceManager.getInstance().canMeasureFrontendInputPower()
