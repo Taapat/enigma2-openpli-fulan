@@ -3043,18 +3043,22 @@ RESULT eDVBServicePlay::enableSubtitles(iSubtitleUser *user, SubtitleTrack &trac
 		pid = track.pid;
 		page = track.page_number;
 		magazine = track.magazine_number;
-		lang = track.language_code;		
+		lang = track.language_code;
 
 		m_subtitle_widget = user;
 		m_teletext_parser->setPageAndMagazine(page, magazine, lang.c_str());
 		if (m_dvb_service)
 		{
-			int ii;
-			for (ii=0; ii < m_teletext_parser->max_id; ii++){
-				if (!memcmp(m_teletext_parser->my_country_codes[ii], lang.c_str(), 3)) break;
+			int i, sub = 0;
+			for (i=0; i < m_teletext_parser->max_id; i++)
+			{
+				if (!memcmp(m_teletext_parser->my_country_codes[i], lang.c_str(), 3))
+				{
+					sub = i;
+					break;
+				}
 			}
-			if (ii > m_teletext_parser->max_id-2) ii = 0;
-			m_dvb_service->setCacheEntry(eDVBService::cSUBTITLE,((pid&0xFFFF)<<16)|((page&0xFF)<<8)|((ii&0x1F)<<3)|(magazine&0x7));
+			m_dvb_service->setCacheEntry(eDVBService::cSUBTITLE,((pid&0xFFFF)<<16)|((page&0xFF)<<8)|((sub&0x1F)<<3)|(magazine&0x7));
 		}
 	}
 	else if (track.type == 0)

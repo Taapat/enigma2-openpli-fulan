@@ -58,7 +58,7 @@ unsigned int NationalOptionSubsets[13*14] = {
 	0, 0xee8080/*FIXME*/, 0xc7a7, 0xc4b0, 0xc59e, 0xc396, 0xc387, 0xc39c, 0xc7a6, 0xc4b1, 0xc59f, 0xc3b6, 0xc3a7, 0xc3bc  // Turkish
 };
 
-const char * const eDVBTeletextParser::my_country_codes[] = 
+const char * const eDVBTeletextParser::my_country_codes[] =
 { "und", "eng", "ger", "swe", "fin", "hun", "ita", "fra",
   "por", "spa", "cze", "slk", "pol", "tur", "srp", "hrv",
   "slv", "rom", "est", "lav", "lit", "dan", "nor", "rus",
@@ -572,14 +572,10 @@ void eDVBTeletextParser::handleLine(unsigned char *data, int len)
 					(m_C & (1<<12) ? 4 : 0),
 		nat_subset,nat_subset_2,second_G0_set=0;
 					
-	if (m_L > 0)
-	{
-		nat_subset_2 = country_lookup[m_L];
-	}
-	else
-	{	
-		nat_subset_2 = NationalOptionSubsetsLookup[Gtriplet*8+nat_opts];
-	}
+		if (m_L > 0)
+			nat_subset_2 = country_lookup[m_L];
+		else
+			nat_subset_2 = NationalOptionSubsetsLookup[Gtriplet*8+nat_opts];
 		nat_subset = nat_subset_2;
 //		eDebug("m_C=%04x, cd=%d nat_opts=%d, nat_subset=%d", m_C,m_L,nat_opts,nat_subset);
 	if (m_X28_0_valid)
@@ -715,15 +711,20 @@ void eDVBTeletextParser::handlePageEnd(int have_pts, const pts_t &pts)
 
 void eDVBTeletextParser::setPageAndMagazine(int page, int magazine, const char * lang)
 {
-	for (m_L=0; m_L < max_id; m_L++){
-		if (!memcmp(my_country_codes[m_L], lang, 3)) break;
+	m_L = 0;
+	for (m_M29_0_valid=0; m_M29_0_valid < max_id; m_M29_0_valid++)
+	{
+		if (!memcmp(my_country_codes[m_M29_0_valid], lang, 3))
+		{
+			m_L = m_M29_0_valid;
+			break;
+		}
 	}
 
 	if (page > 0)
 		eDebug("enable teletext subtitle page %x%02x (%s)%d", magazine, page, lang, m_L);
 	else
 		eDebug("disable teletext subtitles page %x%02x (%s)", magazine, page, lang);
-	if (m_L > max_id-2) m_L = 0;
 	m_M29_0_valid = 0;
 	m_X28_0_valid = 0;
 	m_page_M = magazine; /* magazine to look for */
