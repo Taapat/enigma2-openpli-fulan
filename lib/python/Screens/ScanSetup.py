@@ -541,7 +541,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 					defaultCab["modulation"] = frontendData.get("modulation", eDVBFrontendParametersCable.Modulation_QAM16)
 					defaultTer["system"] = frontendData.get("system", eDVBFrontendParametersCable.System_DVB_C_ANNEX_A)
 				elif ttype == "DVB-T" or ttype == "DVB-T2":
-					defaultTer["frequency"] = frontendData.get("frequency", 0)
+					defaultTer["frequency"] = frontendData.get("frequency", 474000)
 					defaultTer["inversion"] = frontendData.get("inversion", eDVBFrontendParametersTerrestrial.Inversion_Unknown)
 					defaultTer["bandwidth"] = frontendData.get("bandwidth", 8000000)
 					defaultTer["fechigh"] = frontendData.get("code_rate_hp", eDVBFrontendParametersTerrestrial.FEC_Auto)
@@ -671,7 +671,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 				(eDVBFrontendParametersCable.System_DVB_C_ANNEX_C, _("DVB-C ANNEX C"))])
 
 			# terrestial
-			self.scan_ter.frequency = ConfigInteger(default = 474000, limits = (50000, 999000))
+			self.scan_ter.frequency = ConfigInteger(default = defaultTer["frequency"], limits = (50000, 999000))
 			self.scan_ter.channel = ConfigInteger(default = 21, limits = (1, 99))
 			self.scan_ter.inversion = ConfigSelection(default = defaultTer["inversion"], choices = [
 				(eDVBFrontendParametersTerrestrial.Inversion_Off, _("Off")),
@@ -926,7 +926,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 
 		elif nim.isCompatible("DVB-T"):
 			if self.scan_typeterrestrial.value == "single_transponder":
-				if self.scan_input_as.value == "channel":
+				if self.ter_channel_input and self.scan_input_as.value == "channel":
 					frequency = channelnumbers.channel2frequency(self.scan_ter.channel.value, self.ter_tnumber)
 				else:
 					frequency = self.scan_ter.frequency.value * 1000
