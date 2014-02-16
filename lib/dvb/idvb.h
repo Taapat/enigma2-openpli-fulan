@@ -3,6 +3,7 @@
 
 #ifndef SWIG
 
+#include <linux/dvb/version.h>
 #include <linux/dvb/frontend.h>
 #include <linux/dvb/video.h>
 #include <lib/base/object.h>
