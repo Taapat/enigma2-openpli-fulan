@@ -482,8 +482,8 @@ void eDVBScan::addChannelToScan(const eDVBChannelID &chid, iDVBFrontendParameter
 	{
 		eDVBFrontendParametersSatellite parm;
 		feparm->getDVBS(parm);
-		SCAN_eDebug("try to add %d %d %d %d %d %d",
-			parm.orbital_position, parm.frequency, parm.symbol_rate, parm.polarisation, parm.fec, parm.modulation);
+		SCAN_eDebug("try to add %d %d %d %d %d %d %d",
+			parm.orbital_position, parm.frequency, parm.symbol_rate, parm.polarisation, parm.fec, parm.modulation, parm.is_id);
 		break;
 	}
 	case iDVBFrontend::feCable:
@@ -498,9 +498,9 @@ void eDVBScan::addChannelToScan(const eDVBChannelID &chid, iDVBFrontendParameter
 	{
 		eDVBFrontendParametersTerrestrial parm;
 		feparm->getDVBT(parm);
-		SCAN_eDebug("try to add %d %d %d %d %d %d %d %d",
+		SCAN_eDebug("try to add %d %d %d %d %d %d %d %d %d",
 			parm.frequency, parm.modulation, parm.transmission_mode, parm.hierarchy,
-			parm.guard_interval, parm.code_rate_LP, parm.code_rate_HP, parm.bandwidth);
+			parm.guard_interval, parm.code_rate_LP, parm.code_rate_HP, parm.bandwidth, parm.plp_id);
 		break;
 	}
 	}
