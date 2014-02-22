@@ -2,11 +2,10 @@
 
 from time import localtime, strftime
 
+from enigma import iPlayableService, eTimer, evfd 
 from Components.ServiceEventTracker import ServiceEventTracker
 from Plugins.Plugin import PluginDescriptor
 
-from enigma import iPlayableService, eTimer, evfd 
-from ServiceReference import ServiceReference
 
 class VFDIcons:
 	def __init__(self, session):
