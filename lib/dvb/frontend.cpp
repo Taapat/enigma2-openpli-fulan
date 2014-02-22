@@ -763,12 +763,16 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 {
 	int sat_max = 1600; // for stv0288 / bsbe2
 	int ret = 0x12345678;
-	if (!strcmp(m_description, "AVL2108")) // ET9000
+	if (strstr(m_description, "STV090x Multistandard"))
+	{
+		ret = (int)(snr / 32.768);
+	}
+	else if (!strcmp(m_description, "AVL2108")) // ET9000
 	{
 		ret = (int)(snr / 40.5);
 		sat_max = 1618;
 	}
-	if (!strcmp(m_description, "AVL6211")) // ET10000
+	else if (!strcmp(m_description, "AVL6211")) // ET10000
 	{
 		ret = (int)(snr / 37.5);
 		sat_max = 1700;
@@ -956,10 +960,6 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 		case eDVBFrontendParametersCable::Modulation_QAM128: ret = (int)(-875 * log(((double)mse) / 650)); break;
 		default: break;
 		}
-	}
-	else if (strstr(m_description, "STV090x Multistandard"))
-	{
-		ret = (int)(snr / 32.768);
 	}
 
 	signalqualitydb = ret;
