@@ -224,6 +224,7 @@ data/fonts/Makefile
 data/countries/Makefile
 data/extensions/Makefile
 data/keymaps/Makefile
+data/hw_info/Makefile
 data/rc_models/Makefile
 data/rc_models/spark/Makefile
 data/rc_models/et4x00/Makefile
