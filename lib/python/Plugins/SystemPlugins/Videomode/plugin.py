@@ -67,7 +67,7 @@ class VideoSetup(Screen, ConfigListScreen):
 				self.list.append(getConfigListEntry(_("Resolution"), config.av.videorate[config.av.videomode[config.av.videoport.value].value], _("Configure the screen resolution in PC output mode.")))
 			else:
 				self.list.append(getConfigListEntry(_("Refresh rate"), config.av.videorate[config.av.videomode[config.av.videoport.value].value], _("Configure the refresh rate of the screen.")))
-		self.list.append(getConfigListEntry(_("3D Mode"), config.av.threedmode))
+		self.list.append(getConfigListEntry(_("3d mode"), config.av.threedmode))
 
 		port = config.av.videoport.value
 		if port not in config.av.videomode:

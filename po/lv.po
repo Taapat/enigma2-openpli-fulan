@@ -801,6 +801,9 @@ msgstr "Audio valodas izvēle 4"
 msgid "Audio options..."
 msgstr "Skaņas opcijas..."
 
+msgid "Audio source"
+msgstr "Audio avots"
+
 #, python-format
 msgid "Audio track (%s) format"
 msgstr "Skaņas celiņa (%s) formāts"
