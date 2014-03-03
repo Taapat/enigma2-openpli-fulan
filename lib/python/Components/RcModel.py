@@ -1,4 +1,4 @@
-import os
+# import os
 from Tools.HardwareInfo import HardwareInfo
 from Tools.Directories import SCOPE_SKIN, resolveFilename
 
@@ -10,15 +10,20 @@ class RcModel:
 		# cfg files has modelname  rcname entries.
 		# modelname is boxname optionally followed by .rctype
 		for line in open((resolveFilename(SCOPE_SKIN, 'rc_models/rc_models.cfg')), 'r'):
-			if line.startswith(self.model):
+			if line[:len(self.model)] == self.model:
 				m, r = line.strip().split()
 				self.RcModels[m] = r
+				# on spark has only one rc
+				break
 
 	def rcIsDefault(self):
 		# Default RC can only happen with DMM type remote controls...
 		return self.model.startswith('dm')
 
 	def getRcFile(self, ext):
+		# on spark has only one rc
+		return resolveFilename(SCOPE_SKIN, 'rc_models/spark.' + ext)
+
 		# check for rc/type every time so rctype changes will be noticed
 		if os.path.exists('/proc/stb/ir/rc/type'):
 			rc = open('/proc/stb/ir/rc/type').read().strip()
