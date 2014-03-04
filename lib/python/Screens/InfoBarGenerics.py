@@ -3026,6 +3026,22 @@ class InfoBarPowersaver:
 		elif not Screens.Standby.inStandby:
 			print "[InfoBarPowersaver] goto standby"
 			self.session.open(Screens.Standby.Standby)
+class InfoBarHDMI:
+	def __init__(self):
+		self.preHDMIRef = None
+		self["HDMIActions"] = HelpableActionMap(self, "InfobarHDMIActions",
+			{
+				"HDMIin":(self.HDMIIn, _("Switch to HDMI in mode")),
+			}, prio=2)
+
+	def HDMIIn(self):
+		curref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+		if curref and curref.toString().split(":")[0] != '8192':
+			self.preHDMIRef = curref
+			self.session.nav.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
+		elif self.preHDMIRef:
+			self.session.nav.playService(self.preHDMIRef)
+			self.preHDMIRef = None
 
 class InfoBarAspectSelection:
 	def __init__(self):
