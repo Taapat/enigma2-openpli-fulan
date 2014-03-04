@@ -23,7 +23,7 @@ from Screens.InfoBarGenerics import InfoBarShowHide, \
 	InfoBarServiceNotifications, InfoBarPVRState, InfoBarCueSheetSupport, \
 	InfoBarSummarySupport, InfoBarMoviePlayerSummarySupport, InfoBarTimeshiftState, InfoBarTeletextPlugin, InfoBarExtensions, \
 	InfoBarSubtitleSupport, InfoBarPiP, InfoBarPlugins, InfoBarServiceErrorPopupSupport, InfoBarJobman, InfoBarPowersaver, \
-	InfoBarAspectSelection, InfoBarSleepTimer,
+	InfoBarAspectSelection, InfoBarSleepTimer, \
 	InfoBarHDMI, setResumePoint, delResumePoint
 
 profile("LOAD:InitBar_Components")
@@ -68,7 +68,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 				InfoBarAdditionalInfo, InfoBarNotifications, InfoBarDish, InfoBarSubserviceSelection, \
 				InfoBarTimeshift, InfoBarSeek, InfoBarCueSheetSupport, InfoBarSummarySupport, InfoBarTimeshiftState, \
 				InfoBarTeletextPlugin, InfoBarExtensions, InfoBarPiP, InfoBarSubtitleSupport, InfoBarJobman, InfoBarPowersaver, \
-				InfoBarAspectSelection, InfoBarSleepTimer, 
+				InfoBarAspectSelection, InfoBarSleepTimer, \
 				InfoBarPlugins, InfoBarServiceErrorPopupSupport, InfoBarHDMI:
 			x.__init__(self)
 
