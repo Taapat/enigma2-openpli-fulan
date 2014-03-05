@@ -1954,7 +1954,7 @@ class InfoBarPiP:
 		if slist and self.session.pipshown:
 			slist.togglePipzap()
 			if slist.dopipzap:
-				currentServicePath = self.servicelist.getCurrentServicePath()
+				currentServicePath = slist.getCurrentServicePath()
 				self.servicelist.setCurrentServicePath(self.session.pip.servicePath, doZap=False)
 				self.session.pip.servicePath = currentServicePath
 
@@ -3028,20 +3028,29 @@ class InfoBarPowersaver:
 			self.session.open(Screens.Standby.Standby)
 class InfoBarHDMI:
 	def __init__(self):
-		self.preHDMIRef = None
 		self["HDMIActions"] = HelpableActionMap(self, "InfobarHDMIActions",
 			{
 				"HDMIin":(self.HDMIIn, _("Switch to HDMI in mode")),
 			}, prio=2)
 
 	def HDMIIn(self):
-		curref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
-		if curref and curref.toString().split(":")[0] != '8192':
-			self.preHDMIRef = curref
-			self.session.nav.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
-		elif self.preHDMIRef:
-			self.session.nav.playService(self.preHDMIRef)
-			self.preHDMIRef = None
+		slist = self.servicelist
+		if slist.dopipzap:
+			curref = self.session.pip.getCurrentService()
+			if curref and curref.type != 8192:
+				self.session.pip.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
+			else:
+				self.session.pip.playService(slist.servicelist.getCurrent())
+		else:
+			curref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+			if curref and curref.type != 8192:
+				if not isStandardInfoBar(self):
+					setResumePoint(self.session)
+				self.session.nav.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
+			elif isStandardInfoBar(self):
+				self.session.nav.playService(slist.servicelist.getCurrent())
+			else:
+				self.session.nav.playService(self.cur_service)
 
 class InfoBarAspectSelection:
 	def __init__(self):
