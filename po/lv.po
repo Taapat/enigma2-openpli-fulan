@@ -4003,7 +4003,10 @@ msgid "Predefined transponder"
 msgstr "Definēts transponderis"
 
 msgid "Prefer AC3 track"
-msgstr "Ieteicamais AC3 celiņš"
+msgstr "Priekšroka AC3 skaņas celiņam"
+
+msgid "Prefer AC3+ track"
+msgstr "Priekšroka AC3+ skaņas celiņam"
 
 msgid "Prefer audio track stored by service"
 msgstr "Katram kanālam saglabāt ieteicamo audio celiņu"
@@ -6523,6 +6526,9 @@ msgstr "Ja iespējots, uztvērējs vairs nesekos iespējamām izmaiņām noskaņ
 
 msgid "When enabled, the receiver will select an AC3 track (when available)."
 msgstr "Ja iespējots, uztvērējs izvēlēsies AC3 celiņu (ja pieejams)."
+
+msgid "When enabled, the receiver will select an AC3+ track (when available)."
+msgstr "Ja iespējots, uztvērējs izvēlēsies AC3+ celiņu (ja pieejams)."
 
 msgid "When enabled, timeshift starts automatically in background after specified time."
 msgstr "Ja iespējots, pēc norādītā laika laika aizture sāksies fonā automātiski."
