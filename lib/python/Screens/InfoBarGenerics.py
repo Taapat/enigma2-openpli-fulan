@@ -5,7 +5,7 @@ from Components.ActionMap import NumberActionMap
 from Components.Harddisk import harddiskmanager
 from Components.Input import Input
 from Components.Label import Label
-from Components.MovieList import AUDIO_EXTENSIONS
+from Components.MovieList import AUDIO_EXTENSIONS, MOVIE_EXTENSIONS, DVD_EXTENSIONS
 from Components.PluginComponent import plugins
 from Components.ServiceEventTracker import ServiceEventTracker
 from Components.Sources.Boolean import Boolean
@@ -1829,7 +1829,6 @@ class InfoBarExtensions:
 				for y in x[1]():
 					self.updateExtension(y[0], y[1])
 
-
 	def showExtensionSelection(self):
 		self.updateExtensions()
 		extensionsList = self.extensionsList[:]
@@ -1911,13 +1910,13 @@ class InfoBarPiP:
 		if SystemInfo.get("NumVideoDecoders", 1) > 1:
 			self["PiPActions"] = HelpableActionMap(self, "InfobarPiPActions",
 				{
-					"activatePiP": (self.showPiP, _("Activate PiP")),
+					"activatePiP": (self.activePiP, _("Activate PiP")),
 				})
 			if (self.allowPiP):
 				self.addExtension((self.getShowHideName, self.showPiP, lambda: True), "blue")
 				self.addExtension((self.getMoveName, self.movePiP, self.pipShown), "green")
 				self.addExtension((self.getSwapName, self.swapPiP, self.pipShown), "yellow")
-				self.addExtension((self.getTogglePipzapName, self.togglePipzap, self.pipShown), "red")
+				self.addExtension((self.getTogglePipzapName, self.togglePipzap, lambda: True), "red")
 			else:
 				self.addExtension((self.getShowHideName, self.showPiP, self.pipShown), "blue")
 				self.addExtension((self.getMoveName, self.movePiP, self.pipShown), "green")
@@ -1945,7 +1944,6 @@ class InfoBarPiP:
 		if slist and slist.dopipzap:
 			return _("Zap focus to main screen")
 		return _("Zap focus to Picture in Picture")
-
 
 	def togglePipzap(self):
 		if not self.session.pipshown:
@@ -1976,6 +1974,12 @@ class InfoBarPiP:
 			else:
 				self.session.pipshown = False
 				del self.session.pip
+
+	def activePiP(self):
+		if self.session.pipshown:
+			self.togglePipzap()
+		else:
+			self.showPiP()
 
 	def swapPiP(self):
 		swapservice = self.session.nav.getCurrentlyPlayingServiceOrGroup()
@@ -3044,7 +3048,7 @@ class InfoBarHDMI:
 		else:
 			curref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 			if curref and curref.type != 8192:
-				if not isStandardInfoBar(self):
+				if curref and curref.type != -1 and os.path.splitext(curref.toString().split(":")[10])[1].lower() in AUDIO_EXTENSIONS.union(MOVIE_EXTENSIONS, DVD_EXTENSIONS):
 					setResumePoint(self.session)
 				self.session.nav.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
 			elif isStandardInfoBar(self):
