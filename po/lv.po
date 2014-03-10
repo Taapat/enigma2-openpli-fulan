@@ -5238,6 +5238,12 @@ msgstr "Sākt ar saraksta logu"
 msgid "Starting on"
 msgstr "Sākot ar"
 
+msgid "Startup the set top box in standby"
+msgstr "Ieslēdzot uztvērēju pāriet gaidstāvē"
+
+msgid "Startup to Standby"
+msgstr "Ieslēdzot pāriet gaidstāvē"
+
 msgid "Step east"
 msgstr "Soli uz austrumiem"
 

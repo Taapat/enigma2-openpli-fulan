@@ -12,7 +12,11 @@ from Components.Sources.Boolean import Boolean
 from Components.config import config, ConfigBoolean, ConfigClock
 from Components.SystemInfo import SystemInfo
 from Components.UsageConfig import preferredInstantRecordPath, defaultMoviePath, ConfigSelection
+<<<<<<< HEAD
 from Components.VolumeControl import VolumeControl
+=======
+from Components.Sources.StaticText import StaticText
+>>>>>>> openpli/master
 from EpgSelection import EPGSelection
 from Plugins.Plugin import PluginDescriptor
 
@@ -376,6 +380,8 @@ class NumberZap(Screen):
 			else:
 				self.service, self.bouquet = self.searchNumber(int(self["number"].getText()))
 			self ["servicename"].text = ServiceReference(self.service).getServiceName()
+		for x in self.onChanged:
+			x()
 
 	def keyNumberGlobal(self, number):
 		self.Timer.start(1000, True)
@@ -386,16 +392,19 @@ class NumberZap(Screen):
 
 		if len(self.field) >= 5:
 			self.keyOK()
+		for x in self.onChanged:
+			x()
 
 	def __init__(self, session, number, searchNumberFunction = None):
 		Screen.__init__(self, session)
 		self.field = str(number)
 		self.searchNumber = searchNumberFunction
 		self.startBouquet = None
+		self.onChanged = []
 
-		self["channel"] = Label(_("Channel:"))
-		self["number"] = Label(self.field)
-		self["servicename"] = Label()
+		self["channel"] = StaticText(_("Channel:"))
+		self["number"] = StaticText(self.field)
+		self["servicename"] = StaticText()
 
 		self.handleServiceName()
 
