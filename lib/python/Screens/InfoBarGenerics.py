@@ -12,11 +12,8 @@ from Components.Sources.Boolean import Boolean
 from Components.config import config, ConfigBoolean, ConfigClock
 from Components.SystemInfo import SystemInfo
 from Components.UsageConfig import preferredInstantRecordPath, defaultMoviePath, ConfigSelection
-<<<<<<< HEAD
 from Components.VolumeControl import VolumeControl
-=======
 from Components.Sources.StaticText import StaticText
->>>>>>> openpli/master
 from EpgSelection import EPGSelection
 from Plugins.Plugin import PluginDescriptor
 
