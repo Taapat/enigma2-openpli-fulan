@@ -408,7 +408,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 #endif
 	m_currentAudioStream = -1;
 	m_currentSubtitleStream = -1;
-	m_cachedSubtitleStream = 0; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
+	m_cachedSubtitleStream = -1; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_subtitle_widget = 0;
 	m_currentTrickRatio = 1.0;
 	m_buffer_size = 5 * 1024 * 1024;
@@ -2876,17 +2876,16 @@ RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &t
 		m_subtitle_pages.clear();
 		m_prev_decoder_time = -1;
 		m_decoder_time_valid_state = 0;
-#ifndef ENABLE_LIBEPLAYER3
 		m_currentSubtitleStream = track.pid;
 		m_cachedSubtitleStream = m_currentSubtitleStream;
+#ifndef ENABLE_LIBEPLAYER3
 		g_object_set (G_OBJECT (m_gst_playbin), "current-text", m_currentSubtitleStream, NULL);
 #endif
 
 		m_subtitle_widget = user;
 		
-#ifndef ENABLE_LIBEPLAYER3
 		eDebug ("eServiceMP3::switched to subtitle stream %i", m_currentSubtitleStream);
-
+#ifndef ENABLE_LIBEPLAYER3
 #ifdef GSTREAMER_SUBTITLE_SYNC_MODE_BUG
 		/*
 		 * when we're running the subsink in sync=false mode,
@@ -2907,9 +2906,9 @@ RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &t
 RESULT eServiceMP3::disableSubtitles()
 {
 	eDebug("eServiceMP3::disableSubtitles");
-#ifndef ENABLE_LIBEPLAYER3
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = m_currentSubtitleStream;
+#ifndef ENABLE_LIBEPLAYER3
 	g_object_set (G_OBJECT (m_gst_playbin), "current-text", m_currentSubtitleStream, NULL);
 #endif
 	m_subtitle_sync_timer->stop();
