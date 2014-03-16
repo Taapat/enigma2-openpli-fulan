@@ -13,40 +13,25 @@ class Progress(VariableValue, Renderer):
 	GUI_WIDGET = eSlider
 
 	def changed(self, what):
-#+++>
-		try:
-			if what[0] == self.CHANGED_CLEAR:
-				(self.range, self.value) = ((0, 1), 0)
-				return
+		if what[0] == self.CHANGED_CLEAR:
+			(self.range, self.value) = ((0, 1), 0)
+			return
 
-			range = (self.source and self.source.range) or 100
-			value = (self.source and self.source.value) or 0
-			if value is None:
-				value = 0
-			(self.range, self.value) = ((0, range), value)
-		except:
-			None
-#+++<
+		range = self.source.range or 100
+		value = self.source.value
+		if value is None:
+			value = 0
+		(self.range, self.value) = ((0, range), value)
 
 	GUI_WIDGET = eSlider
 
 	def postWidgetCreate(self, instance):
-#+++>
-		try:
-			instance.setRange(self.__start, self.__end)
-		except:
-			None
-#+++<
+		instance.setRange(self.__start, self.__end)
 
 	def setRange(self, range):
-#+++>
-		try:
-			(self.__start, self.__end) = range
-			if self.instance is not None:
-				self.instance.setRange(self.__start, self.__end)
-		except:
-			None
-#+++<
+		(self.__start, self.__end) = range
+		if self.instance is not None:
+			self.instance.setRange(self.__start, self.__end)
 
 	def getRange(self):
 		return (self.__start, self.__end)
