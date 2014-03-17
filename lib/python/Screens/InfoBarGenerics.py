@@ -2059,7 +2059,8 @@ class InfoBarInstantRecord:
 			curtime = int(time())
 			if curtime > position: # current event ending soon, therefore use next
 				nextevent = epg.lookupEventTime(info["serviceref"], event.getBeginTime(), +1)
-				curEvent = parseEvent(nextevent)
+				if nextevent is not None:
+					curEvent = parseEvent(nextevent)
 			info["name"] = curEvent[2]
 			info["description"] = curEvent[3]
 			info["eventid"] = curEvent[4]
