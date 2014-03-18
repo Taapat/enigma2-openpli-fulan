@@ -8,6 +8,7 @@ from GlobalActions import globalActionMap
 import RecordTimer
 from enigma import eDVBVolumecontrol, eTimer
 from subprocess import call
+from time import time, localtime
 
 inStandby = None
 
@@ -58,12 +59,16 @@ class Standby(Screen):
 
 		self.paused_service = None
 		self.prev_running_service = None
+
 		if self.session.current_dialog:
 			if self.session.current_dialog.ALLOW_SUSPEND == Screen.SUSPEND_STOPS:
-				#get currently playing service reference
-				self.prev_running_service = self.session.nav.getCurrentlyPlayingServiceOrGroup()
-				#stop actual played dvb-service
-				self.session.nav.stopService()
+				if localtime(time()).tm_year > 1970 and self.session.nav.getCurrentlyPlayingServiceOrGroup():
+					self.prev_running_service = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+					self.session.nav.stopService()
+				else:
+					self.standbyTimeUnknownTimer = eTimer()
+					self.standbyTimeUnknownTimer.callback.append(self.stopService)
+					self.standbyTimeUnknownTimer.startLongTimer(60)
 			elif self.session.current_dialog.ALLOW_SUSPEND == Screen.SUSPEND_PAUSES:
 				self.paused_service = self.session.current_dialog
 				self.paused_service.pauseService()
@@ -111,6 +116,10 @@ class Standby(Screen):
 	def standbyTimeout(self):
 		from RecordTimer import RecordTimerEntry
 		RecordTimerEntry.TryQuitMainloop()
+
+	def stopService(self):
+		self.prev_running_service = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+		self.session.nav.stopService()
 
 class StandbySummary(Screen):
 	skin = """
@@ -205,7 +214,7 @@ class TryQuitMainloop(MessageBox):
 			self.hide()
 			if self.retval == 1:
 				config.misc.DeepStandby.value = True
-			elif self.retval != 5:
+			elif not inStandby:
 				config.misc.RestartUI.value = True
 				config.misc.RestartUI.save()
 			self.session.nav.stopService()
