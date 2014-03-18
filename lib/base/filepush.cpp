@@ -216,7 +216,7 @@ void eFilePushThread::thread()
 				struct pollfd pfd;
                                 pfd.fd = m_fd_dest;
                                 pfd.events = POLLOUT;
-                                if (0 == poll(&pfd, 1, 500)) continue;
+                                if (0 == poll(&pfd, 1, 250)) continue;
 				int w = write(m_fd_dest, m_buffer + buf_start, buf_end - buf_start);
 
 				if (w <= 0)
