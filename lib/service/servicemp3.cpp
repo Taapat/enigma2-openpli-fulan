@@ -392,8 +392,10 @@ void eServiceMP3InfoContainer::setBuffer(GstBuffer *buffer)
 #endif
 
 // eServiceMP3
+#ifndef ENABLE_LIBEPLAYER3
 int eServiceMP3::ac3_delay = 0,
     eServiceMP3::pcm_delay = 0;
+#endif
 
 eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_nownext_timer(eTimer::create(eApp)),
@@ -401,15 +403,17 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_pump(eApp, 1)
 {
 	m_subtitle_sync_timer = eTimer::create(eApp);
-	m_streamingsrc_timeout = 0;
 #ifndef ENABLE_LIBEPLAYER3
+	m_streamingsrc_timeout = 0;
 	m_stream_tags = 0;
 #endif
 	m_currentAudioStream = -1;
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = -1; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_subtitle_widget = 0;
+#ifndef ENABLE_LIBEPLAYER3
 	m_currentTrickRatio = 1.0;
+#endif
 	m_buffer_size = 5 * 1024 * 1024;
 #ifndef ENABLE_LIBEPLAYER3
 	m_ignore_buffering_messages = 0;
@@ -417,11 +421,9 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_use_prefillbuffer = false;
 	m_extra_headers = "";
 	m_download_buffer_path = "";
-#endif
 	m_prev_decoder_time = -1;
 	m_decoder_time_valid_state = 0;
 	m_errorInfo.missing_codec = "";
-#ifndef ENABLE_LIBEPLAYER3
 	audioSink = videoSink = NULL;
 #endif
 
@@ -435,12 +437,12 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_state = stIdle;
 	eDebug("eServiceMP3::construct!");
 
+#ifndef ENABLE_LIBEPLAYER3
 	const char *filename = m_ref.path.c_str();
 	const char *ext = strrchr(filename, '.');
 	if (!ext)
 		ext = filename + strlen(filename);
 
-#ifndef ENABLE_LIBEPLAYER3
 	m_sourceinfo.is_video = FALSE;
 	m_sourceinfo.audiotype = atUnknown;
 	if ( (strcasecmp(ext, ".mpeg") && strcasecmp(ext, ".mpg") && strcasecmp(ext, ".vob") && strcasecmp(ext, ".bin") && strcasecmp(ext, ".dat") ) == 0 )
@@ -2873,8 +2875,10 @@ RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &t
 #endif
 		m_subtitle_sync_timer->stop();
 		m_subtitle_pages.clear();
+#ifndef ENABLE_LIBEPLAYER3
 		m_prev_decoder_time = -1;
 		m_decoder_time_valid_state = 0;
+#endif
 		m_currentSubtitleStream = track.pid;
 		m_cachedSubtitleStream = m_currentSubtitleStream;
 #ifndef ENABLE_LIBEPLAYER3
@@ -2912,8 +2916,10 @@ RESULT eServiceMP3::disableSubtitles()
 #endif
 	m_subtitle_sync_timer->stop();
 	m_subtitle_pages.clear();
+#ifndef ENABLE_LIBEPLAYER3
 	m_prev_decoder_time = -1;
 	m_decoder_time_valid_state = 0;
+#endif
 	if (m_subtitle_widget) m_subtitle_widget->destroy();
 	m_subtitle_widget = 0;
 #ifdef ENABLE_LIBEPLAYER3
@@ -2995,12 +3001,18 @@ int eServiceMP3::setBufferSize(int size)
 
 int eServiceMP3::getAC3Delay()
 {
+#ifndef ENABLE_LIBEPLAYER3
 	return ac3_delay;
+#endif
+	return 0;
 }
 
 int eServiceMP3::getPCMDelay()
 {
+#ifndef ENABLE_LIBEPLAYER3
 	return pcm_delay;
+#endif
+	return 0;
 }
 
 void eServiceMP3::setAC3Delay(int delay)
