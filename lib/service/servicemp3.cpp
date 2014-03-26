@@ -62,8 +62,7 @@ typedef enum
 #define GSTREAMER_SUBTITLE_SYNC_MODE_BUG
 /**/
 
-#endif
-#ifdef ENABLE_LIBEPLAYER3
+#else
 void ep3Blit(){
 	fbClass *fb = fbClass::getInstance();
 	fb->blit();
