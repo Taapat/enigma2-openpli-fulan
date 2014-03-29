@@ -12,6 +12,7 @@ from Components.ConfigList import ConfigListScreen
 from Components.ServiceEventTracker import ServiceEventTracker, InfoBarBase
 from Components.Sources.ServiceEvent import ServiceEvent
 from Components.Sources.StaticText import StaticText
+from Components.Console import Console
 import Components.Harddisk
 from Components.UsageConfig import preferredTimerPath
 
@@ -968,7 +969,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 		if current is not None:
 			path = current.getPath()
 			if current.flags & eServiceReference.mustDescent:
-				if path[-9:] == "VIDEO_TS/" or os.path.exists(os.path.join(path, 'VIDEO_TS.IFO')):
+				if path[-9:] == "VIDEO_TS/" or os.path.exists(os.path.join(path, 'VIDEO_TS.IFO')) or path[-4:] == ".iso" or path[-8:] == "bludisc/":
 					#force a DVD extention
 					Screens.InfoBar.InfoBar.instance.checkTimeshiftRunning(boundFunction(self.itemSelectedCheckTimeshiftCallback, ".iso", path))
 					return
@@ -1005,13 +1006,38 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 	def itemSelectedCheckTimeshiftCallback(self, ext, path, answer):
 		if answer:
 			if ext in DVD_EXTENSIONS:
-				if self.playAsDVD(path):
-					return
-			self.movieSelected()
+				if path[-4:] == ".iso":
+					if os.path.exists("/media/bludisc"):
+						Console().ePopen("umount -f /media/bludisc")
+					else:
+						Console().ePopen("mkdir /media/bludisc")
+					Console().ePopen("mount -r %s /media/bludisc" % path, self.CheckBlurayMount, path)
+				else:
+					self.CheckBluray(path)
+			else:
+				self.movieSelected()
+
+	def CheckBlurayMount(self, result, retval, extra_args):
+		self.CheckBluray(extra_args)
+
+	def CheckBluray(self, path):
+		current = None
+		if os.path.exists("/media/bludisc/BDMV/index.bdmv") or os.path.exists("/media/bludisc/BRD/BDMV/index.bdmv"):
+			print "[MovieSelection]",path ,"play as bluray disc"
+			current = eServiceReference(4097, 0, "bluray://media/bludisc")
+		else:
+			print "[MovieSelection]",path ,"play as dvd disc"
+			if os.path.exists("/media/bludisc"):
+				Console().ePopen("umount -f /media/bludisc")
+				Console().ePopen("rmdir /media/bludisc")
+			if self.playAsDVD(path):
+				return
+		self.movieSelected(current)
 
 	# Note: DVDBurn overrides this method, hence the itemSelected indirection.
-	def movieSelected(self):
-		current = self.getCurrent()
+	def movieSelected(self, current = None):
+		if not current:
+			current = self.getCurrent()
 		if current is not None:
 			self.saveconfig()
 			self.close(current)
@@ -1112,6 +1138,9 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 			self.callLater(self.abort)
 			return
 		self.saveconfig()
+		if os.path.exists("/media/bludisc"):
+			Console().ePopen("umount -f /media/bludisc")
+			Console().ePopen("rmdir /media/bludisc")
 		self.close(None)
 
 	def saveconfig(self):
