@@ -1023,9 +1023,13 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 
 	def CheckBluray(self, path):
 		current = None
-		if os.path.exists("/media/bludisc/BDMV/index.bdmv") or os.path.exists("/media/bludisc/BRD/BDMV/index.bdmv"):
+		if path[-8:] == "bludisc/":
+			newpath = path
+		else:
+			newpath = "/media/bludisc/"
+		if os.path.exists(newpath + "BDMV/index.bdmv") or os.path.exists(newpath + "BRD/BDMV/index.bdmv"):
 			print "[MovieSelection]",path ,"play as bluray disc"
-			current = eServiceReference(4097, 0, "bluray://media/bludisc")
+			current = eServiceReference(4097, 0, "bluray:/" + newpath)
 		else:
 			print "[MovieSelection]",path ,"play as dvd disc"
 			if os.path.exists("/media/bludisc"):
