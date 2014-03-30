@@ -970,9 +970,12 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 		if current is not None:
 			path = current.getPath()
 			if current.flags & eServiceReference.mustDescent:
-				if path[-9:] == "VIDEO_TS/" or os.path.exists(os.path.join(path, 'VIDEO_TS.IFO')) or path[-8:] == "bludisc/":
+				if path[-9:] == "VIDEO_TS/" or os.path.exists(os.path.join(path, 'VIDEO_TS.IFO')):
 					#force a DVD extention
-					Screens.InfoBar.InfoBar.instance.checkTimeshiftRunning(boundFunction(self.itemSelectedCheckTimeshiftCallback, ".iso", path))
+					Screens.InfoBar.InfoBar.instance.checkTimeshiftRunning(boundFunction(self.itemSelectedCheckTimeshiftCallback, ".img", path))
+					return
+				if self.IsBluray(path):
+					Screens.InfoBar.InfoBar.instance.checkTimeshiftRunning(boundFunction(self.itemSelectedCheckTimeshiftCallback, "bluray", path))
 					return
 				self.gotFilename(path)
 			else:
@@ -1006,29 +1009,29 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 
 	def itemSelectedCheckTimeshiftCallback(self, ext, path, answer):
 		if answer:
-			if ext in DVD_EXTENSIONS:
-				if ext == ".iso":
-					if os.path.exists("/media/bludisc"):
-						Console().ePopen("umount -f /media/bludisc")
-					else:
-						Console().ePopen("mkdir /media/bludisc")
-					Console().ePopen("mount -r %s /media/bludisc" % path, self.CheckBlurayMount, path)
+			if ext == ".iso":
+				if os.path.exists("/media/bludisc"):
+					Console().ePopen("umount -f /media/bludisc")
 				else:
-					self.CheckBluray(path)
+					Console().ePopen("mkdir /media/bludisc")
+				Console().ePopen("mount -r %s /media/bludisc" % path, self.CheckIsoMount, path)
+			elif ext == "bluray" or ext in DVD_EXTENSIONS:
+				self.setMovieType(ext, path)
 			else:
 				self.movieSelected()
 
-	def CheckBlurayMount(self, result, retval, extra_args):
-		self.CheckBluray(extra_args)
+	def CheckIsoMount(self, result, retval, extra_args):
+		path = extra_args
+		ext = self.IsBluray("/media/bludisc/")
+		self.setMovieType(ext, path)
 
-	def CheckBluray(self, path):
+	def setMovieType(self, ext, path):
 		current = None
-		newpath = ""
-		if path[-8:] == "bludisc/":
-			newpath = path
-		elif path[-4:] == ".iso":
-			newpath = "/media/bludisc/"
-		if newpath and os.path.exists(newpath + "BDMV/index.bdmv") or os.path.exists(newpath + "BRD/BDMV/index.bdmv"):
+		if "bluray" in ext:
+			if ext == "bluray":
+				newpath = path
+			else:
+				newpath = "/media/bludisc/"
 			print "[MovieSelection]",path ,"play as bluray disc"
 			current = eServiceReference(4097, 0, "bluray:/" + newpath)
 		else:
@@ -1039,6 +1042,11 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 			if self.playAsDVD(path):
 				return
 		self.movieSelected(current)
+
+	def IsBluray(self, path):
+		if path[-8:] == "bludisc/" or os.path.exists(os.path.join(path, 'BDMV/index.bdmv')) or os.path.exists(os.path.join(path, 'BRD/BDMV/index.bdmv')):
+			return "blurayiso"
+		return ""
 
 	# Note: DVDBurn overrides this method, hence the itemSelected indirection.
 	def movieSelected(self, current = None):
