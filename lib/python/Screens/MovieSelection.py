@@ -970,7 +970,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 		if current is not None:
 			path = current.getPath()
 			if current.flags & eServiceReference.mustDescent:
-				if path[-9:] == "VIDEO_TS/" or os.path.exists(os.path.join(path, 'VIDEO_TS.IFO')) or path[-4:] == ".iso" or path[-8:] == "bludisc/":
+				if path[-9:] == "VIDEO_TS/" or os.path.exists(os.path.join(path, 'VIDEO_TS.IFO')) or path[-8:] == "bludisc/":
 					#force a DVD extention
 					Screens.InfoBar.InfoBar.instance.checkTimeshiftRunning(boundFunction(self.itemSelectedCheckTimeshiftCallback, ".iso", path))
 					return
@@ -1007,7 +1007,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 	def itemSelectedCheckTimeshiftCallback(self, ext, path, answer):
 		if answer:
 			if ext in DVD_EXTENSIONS:
-				if path[-4:] == ".iso":
+				if ext == ".iso":
 					if os.path.exists("/media/bludisc"):
 						Console().ePopen("umount -f /media/bludisc")
 					else:
