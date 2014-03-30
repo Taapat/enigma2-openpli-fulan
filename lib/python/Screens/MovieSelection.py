@@ -1021,9 +1021,8 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 				self.movieSelected()
 
 	def CheckIsoMount(self, result, retval, extra_args):
-		path = extra_args
 		ext = self.IsBluray("/media/bludisc/")
-		self.setMovieType(ext, path)
+		self.setMovieType(ext, extra_args)
 
 	def setMovieType(self, ext, path):
 		current = None
@@ -1044,7 +1043,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 		self.movieSelected(current)
 
 	def IsBluray(self, path):
-		if path[-8:] == "bludisc/" or os.path.exists(os.path.join(path, 'BDMV/index.bdmv')) or os.path.exists(os.path.join(path, 'BRD/BDMV/index.bdmv')):
+		if os.path.exists(os.path.join(path, 'BDMV/index.bdmv')) or os.path.exists(os.path.join(path, 'BRD/BDMV/index.bdmv')):
 			return "blurayiso"
 		return ""
 
