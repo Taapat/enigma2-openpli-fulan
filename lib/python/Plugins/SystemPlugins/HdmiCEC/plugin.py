@@ -107,6 +107,10 @@ class HdmiCECSetupScreen(Screen, ConfigListScreen):
 def main(session, **kwargs):
 	session.open(HdmiCECSetupScreen)
 
-def Plugins(**kwargs):
-	return [PluginDescriptor(name = _("HDMI CEC setup"), description = _("Adjust HDMI CEC settings"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc = main)]
+def startSetup(menuid):
+	if menuid == "system":
+		return [(_("HDMI-CEC setup"), main, "hdmi_cec_setup", 0)]
+	return []
 
+def Plugins(**kwargs):
+	return [PluginDescriptor(where = PluginDescriptor.WHERE_MENU, fnc = startSetup)]
