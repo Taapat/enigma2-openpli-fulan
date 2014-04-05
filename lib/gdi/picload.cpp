@@ -529,7 +529,7 @@ inline void m_rend_gif_decodecolormap(unsigned char *cmb, unsigned char *rgbb, C
 static void gif_load(Cfilepara* filepara)
 {
 	unsigned char *pic_buffer = NULL;
-	int px, py, i, j;
+	int px, py, i, j, ErrorCode;
 	unsigned char *fbptr;
 	unsigned char *slb=NULL;
 	GifFileType *gft;
@@ -539,9 +539,11 @@ static void gif_load(Cfilepara* filepara)
 	int cmaps;
 	int extcode;
 
-	gft = DGifOpenFileName(filepara->file);
-	if (gft == NULL)
+	gft = DGifOpenFileName(filepara->file, &ErrorCode);
+	if (gft == NULL) {
+		eDebug("[Picload] Error open gif %i", ErrorCode);
 		return;
+	}
 	do
 	{
 		if (DGifGetRecordType(gft, &rt) == GIF_ERROR)
