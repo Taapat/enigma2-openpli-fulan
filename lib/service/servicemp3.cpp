@@ -661,31 +661,26 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	//create playback path
 	char file[1023] = {""};
 
-	if (!strncmp("http://", m_ref.path.c_str(), 7))
-		;
-	else if (!strncmp("rtsp://", m_ref.path.c_str(), 7))
-		;
-	else if (!strncmp("rtmp://", m_ref.path.c_str(), 7))
-		;
-	else if (!strncmp("rtmpe://", m_ref.path.c_str(), 8))
-		;
-	else if (!strncmp("rtmpt://", m_ref.path.c_str(), 8))
-		;
-	else if (!strncmp("rtmps://", m_ref.path.c_str(), 8))
-		;
-	else if (!strncmp("rtmpte://", m_ref.path.c_str(), 9))
-		;
-	else if (!strncmp("rtp://", m_ref.path.c_str(), 6))
-		;
-	else if (!strncmp("upnp://", m_ref.path.c_str(), 7))
-		;
-	else if (!strncmp("mms://", m_ref.path.c_str(), 6))
-		;
-	else if (!strncmp("file://", m_ref.path.c_str(), 7))
-		;
-	else if (!strncmp("udp://", m_ref.path.c_str(), 6))
-		;
-	else if (!strncmp("bluray://", m_ref.path.c_str(), 9))
+	if ((!strncmp("http://", m_ref.path.c_str(), 7))
+	|| (!strncmp("rtsp://", m_ref.path.c_str(), 7))
+	|| (!strncmp("rtmp://", m_ref.path.c_str(), 7))
+	|| (!strncmp("rtmpe://", m_ref.path.c_str(), 8))
+	|| (!strncmp("rtmpt://", m_ref.path.c_str(), 8))
+	|| (!strncmp("rtmps://", m_ref.path.c_str(), 8))
+	|| (!strncmp("rtmpte://", m_ref.path.c_str(), 9))
+	|| (!strncmp("rtp://", m_ref.path.c_str(), 6))
+	|| (!strncmp("upnp://", m_ref.path.c_str(), 7))
+	|| (!strncmp("mms://", m_ref.path.c_str(), 6))
+	|| (!strncmp("udp://", m_ref.path.c_str(), 6))
+	|| (!strncmp("ftp://", m_ref.path.c_str(), 6))
+	|| (!strncmp("hls+http://", m_ref.path.c_str(), 11))
+	|| (!strncmp("hls+file://", m_ref.path.c_str(), 11))
+	|| (!strncmp("httpproxy://", m_ref.path.c_str(), 12))
+	|| (!strncmp("mmsh://", m_ref.path.c_str(), 7))
+	|| (!strncmp("mmst://", m_ref.path.c_str(), 7)))
+		m_sourceinfo.is_streaming = true;
+	else if ((!strncmp("file://", m_ref.path.c_str(), 7))
+	|| (!strncmp("bluray://", m_ref.path.c_str(), 9)))
 		;
 	else
 		strcat(file, "file://");
