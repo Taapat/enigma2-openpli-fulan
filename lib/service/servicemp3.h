@@ -9,8 +9,15 @@
 #ifndef ENABLE_LIBEPLAYER3
 #include <gst/gst.h>
 #else
+extern "C"
+{
+#ifndef __STDC_CONSTANT_MACROS
+#  define __STDC_CONSTANT_MACROS
+#  define UINT64_C
+#endif
 #include <libeplayer3/include/common.h>
 #include <libeplayer3/include/subtitle.h>
+}
 #define gint int
 #define gint64 int64_t
 extern OutputHandler_t		OutputHandler;
