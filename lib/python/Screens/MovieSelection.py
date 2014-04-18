@@ -21,6 +21,7 @@ from Plugins.Plugin import PluginDescriptor
 from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
 from Screens.LocationBox import MovieLocationBox
+from Screens import ScreenSaver
 from Screens.HelpMenu import HelpableScreen
 import Screens.InfoBar
 
@@ -427,15 +428,19 @@ class MovieSelectionSummary(Screen):
 		else:
 			self["name"].text = ""
 
-class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
+from Screens.InfoBarGenerics import InfoBarScreenSaver
+
+class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, InfoBarScreenSaver):
 	# SUSPEND_PAUSES actually means "please call my pauseService()"
 	ALLOW_SUSPEND = Screen.SUSPEND_PAUSES
 
 	def __init__(self, session, selectedmovie = None, timeshiftEnabled = False):
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
+		InfoBarScreenSaver.__init__(self)
 		if not timeshiftEnabled:
 			InfoBarBase.__init__(self) # For ServiceEventTracker
+
 		self.initUserDefinedActions()
 		self.tags = {}
 		if selectedmovie:
@@ -577,6 +582,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 		self.onLayoutFinish.append(self.saveListsize)
 		self.list.connectSelChanged(self.updateButtons)
 		self.onClose.append(self.__onClose)
+		self.screensaver.onShow.append(self.screensaver_onShow)
 		NavigationInstance.instance.RecordTimer.on_state_change.append(self.list.updateRecordings)
 		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
 			{
@@ -586,6 +592,13 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 				#iPlayableService.evSOF: self.__evSOF,
 			})
 		self.onExecBegin.append(self.asciiOn)
+
+	def screensaver_onShow(self):
+		playInBackground = self.list.playInBackground
+		if playInBackground:
+			index = self.list.findService(playInBackground)
+			if index:
+				self["list"].moveToIndex(index)
 
 	def asciiOn(self):
 		rcinput = eRCInput.getInstance()
@@ -921,7 +934,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 			if ext in AUDIO_EXTENSIONS:
 				self.nextInBackground = next
 				self.callLater(self.preview)
-				self["list"].moveDown()
+				self["list"].moveToIndex(index+1)
 
 	def preview(self):
 		current = self.getCurrent()
@@ -982,6 +995,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 				ext = os.path.splitext(path)[1].lower()
 				if config.movielist.play_audio_internal.value and (ext in AUDIO_EXTENSIONS):
 					self.preview()
+					self.ScreenSaverTimerStart()
 					return
 				if self.list.playInBackground:
 					# Stop preview, come back later
