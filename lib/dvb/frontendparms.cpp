@@ -592,6 +592,19 @@ int eDVBTerrestrialTransponderData::getHierarchyInformation() const
 	}
 }
 
+int eDVBTerrestrialTransponderData::getPlpId() const
+{
+	if (originalValues) return transponderParameters.plpid;
+
+#if DVB_API_VERSION > 5 || DVB_API_VERSION == 5 && DVB_API_VERSION_MINOR >= 9
+	return getProperty(DTV_STREAM_ID);
+#elif DVB_API_VERSION == 5 && DVB_API_VERSION_MINOR >= 3
+	return getProperty(DTV_DVBT2_PLP_ID);
+#else
+	return -1;
+#endif
+}
+
 int eDVBTerrestrialTransponderData::getSystem() const
 {
 	if (originalValues) return transponderParameters.system;
