@@ -290,7 +290,6 @@ public:
 	int getHierarchyInformation() const;
 	int getPlpId() const;
 	int getSystem() const;
-	int getPlpId() const;
 };
 
 class eDVBATSCTransponderData : public eDVBTransponderData
