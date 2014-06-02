@@ -1,8 +1,8 @@
 installdir = $(pkglibdir)/python/Plugins/SystemPlugins
 
-SUBDIRS = AutoVolume SoftwareManager Satfinder \
+SUBDIRS = AutoVolume SoftwareManager Satfinder \ 
 	SkinSelector Videomode VideoTune DefaultServicesScanner \
-	HdmiCEC NetworkWizard VFD-Icons OnErrorRestartService
+	HdmiCEC NetworkWizard VFD-Icons
 
 if ! ENABLE_MINIMAL
 SUBDIRS += Hotplug KeymapManager PositionerSetup SatelliteEquipmentControl \
