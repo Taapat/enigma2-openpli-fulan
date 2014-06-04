@@ -1871,7 +1871,10 @@ class ChannelSelectionRadio(ChannelSelectionBase, ChannelSelectionEdit, ChannelS
 		self.servicelist.setPlayableIgnoreService(eServiceReference())
 
 	def saveRoot(self):
-		path = ';'.join([i.toString for i in self.servicePathRadio])
+		path = ''
+		for i in self.servicePathRadio:
+			path += i.toString()
+			path += ';'
 		if path and path != config.radio.lastroot.value:
 			config.radio.lastroot.value = path
 			config.radio.lastroot.save()
@@ -1880,7 +1883,8 @@ class ChannelSelectionRadio(ChannelSelectionBase, ChannelSelectionEdit, ChannelS
 		tmp = [x for x in config.radio.lastroot.value.split(';') if x != '']
 		current = [x.toString() for x in self.servicePath]
 		if tmp != current or self.rootChanged:
-			(self.servicePathRadio.append(eServiceReference(i)) for i in tmp)
+			for i in tmp:
+				self.servicePathRadio.append(eServiceReference(i))
 			if len(tmp):
 				path = self.servicePathRadio.pop()
 				self.enterPath(path)
