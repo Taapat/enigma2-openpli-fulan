@@ -6459,9 +6459,6 @@ msgstr ""
 "Šis starta vednis veiks uztvērēja pamata iestatījumus.\n"
 "Nospiediet pogu OK uz tālvadības pults, lai pārietu uz nākamo soli."
 
-msgid "Welcome..."
-msgstr "Sveicināti..."
-
 msgid "West"
 msgstr "Rietumi"
 
