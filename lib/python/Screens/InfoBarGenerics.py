@@ -332,9 +332,12 @@ class InfoBarShowHide(InfoBarScreenSaver):
 		elif self.secondInfoBarScreen and config.usage.show_second_infobar.value and not self.secondInfoBarScreen.shown:
 			self.secondInfoBarScreen.show()
 			self.startHideTimer()
-		else:
+		elif self.secondInfoBarScreen.shown:
 			self.hide()
 			self.hideTimer.stop()
+			self.openEventView()
+		else:
+			self.openEventView()
 
 	def lockShow(self):
 		self.__locked = self.__locked + 1
