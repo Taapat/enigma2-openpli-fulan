@@ -528,10 +528,10 @@ class InfoBarChannelSelection:
 
 		self["ChannelSelectActions"] = HelpableActionMap(self, "InfobarChannelSelection",
 			{
-				"switchChannelUp": (self.switchChannelUp, _("Open service list and select previous channel")),
-				"switchChannelDown": (self.switchChannelDown, _("Open service list and select next channel")),
-				"zapUp": (self.zapUp, _("Switch to previous channel")),
-				"zapDown": (self.zapDown, _("Switch next channel")),
+				"switchChannelUp": (self.switchChannelUpCheck, _("Open service list and select previous channel")),
+				"switchChannelDown": (self.switchChannelDownCheck, _("Open service list and select next channel")),
+				"zapUp": (self.zapUpCheck, _("Switch to previous channel")),
+				"zapDown": (self.zapDownCheck, _("Switch next channel")),
 				"historyBack": (self.historyBack, _("Switch to previous channel in history")),
 				"historyNext": (self.historyNext, _("Switch to next channel in history")),
 				"openServiceList": (self.openServiceList, _("Open service list")),
@@ -571,6 +571,30 @@ class InfoBarChannelSelection:
 		if answer:
 			self.servicelist.historyNext()
 
+	def switchChannelUpCheck(self):
+		if config.usage.oldstyle_zap_controls.value:
+			self.zapDown()
+		else:
+			self.switchChannelUp()
+
+	def switchChannelDownCheck(self):
+		if config.usage.oldstyle_zap_controls.value:
+			self.zapUp()
+		else:
+			self.switchChannelDown()
+
+	def zapUpCheck(self):
+		if config.usage.oldstyle_zap_controls.value:
+			self.switchChannelUp()
+		else:
+			self.zapUp()
+
+	def zapDownCheck(self):
+		if config.usage.oldstyle_zap_controls.value:
+			self.switchChannelDown()
+		else:
+			self.zapDown()
+
 	def switchChannelUp(self):
 		if "keep" not in config.usage.servicelist_cursor_behavior.value:
 			self.servicelist.moveUp()
@@ -579,9 +603,6 @@ class InfoBarChannelSelection:
 	def switchChannelDown(self):
 		if "keep" not in config.usage.servicelist_cursor_behavior.value:
 			self.servicelist.moveDown()
-		self.session.execDialog(self.servicelist)
-
-	def openServiceList(self):
 		self.session.execDialog(self.servicelist)
 
 	def zapUp(self):
@@ -627,6 +648,9 @@ class InfoBarChannelSelection:
 		else:
 			self.servicelist.moveDown()
 		self.servicelist.zap(enable_pipzap = True)
+
+	def openServiceList(self):
+		self.session.execDialog(self.servicelist)
 
 	def showFavourites(self):
 		self.session.execDialog(self.servicelist)
@@ -1018,7 +1042,7 @@ class InfoBarEPG:
 			self.defaultGuideType()
 			return
 		pluginlist = self.getEPGPluginList()
-		self.openMultiServiceEPG()		
+		self.openMultiServiceEPG()
 
 	def openEventView(self):
 		from Components.ServiceEventTracker import InfoBarCount
@@ -1929,7 +1953,7 @@ class InfoBarPiP:
 
 		self.lastPiPService = None
 
-		if SystemInfo.get("NumVideoDecoders", 1) > 1:
+		if SystemInfo["PIPAvailable"]:
 			self["PiPActions"] = HelpableActionMap(self, "InfobarPiPActions",
 				{
 					"activatePiP": (self.activePiP, _("Activate PiP")),
@@ -3002,7 +3026,7 @@ class InfoBarPowersaver:
 			self.inactivityTimeoutCallback(True)
 		else:
 			message = _("Your receiver will got to standby due to inactivity.") + "\n" + _("Do you want this?")
-			self.session.openWithCallback(self.inactivityTimeoutCallback, MessageBox, message, timeout=60, simple=True, default=False, timeout_default=True)	
+			self.session.openWithCallback(self.inactivityTimeoutCallback, MessageBox, message, timeout=60, simple=True, default=False, timeout_default=True)
 
 	def inactivityTimeoutCallback(self, answer):
 		if answer:
@@ -3027,7 +3051,7 @@ class InfoBarPowersaver:
 			list = [ (_("Yes"), True), (_("Extend sleeptimer 15 minutes"), "extend"), (_("No"), False) ]
 			message = _("Your receiver will got to stand by due to the sleeptimer.")
 			message += "\n" + _("Do you want this?")
-			self.session.openWithCallback(self.sleepTimerTimeoutCallback, MessageBox, message, timeout=60, simple=True, list=list, default=False, timeout_default=True)	
+			self.session.openWithCallback(self.sleepTimerTimeoutCallback, MessageBox, message, timeout=60, simple=True, list=list, default=False, timeout_default=True)
 
 	def sleepTimerTimeoutCallback(self, answer):
 		if answer == "extend":

@@ -24,7 +24,7 @@ gLCDDC::gLCDDC()
 {
 	lcd = new eDBoxLCD();
 	instance = this;
-	
+
 	update = 1;
 
 	surface.x = lcd->size().width();

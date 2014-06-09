@@ -43,7 +43,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 	InfoBarPiP, InfoBarPlugins, InfoBarSubtitleSupport, InfoBarServiceErrorPopupSupport, InfoBarJobman, InfoBarPowersaver,
 	InfoBarAspectSelection, InfoBarSleepTimer, 
 	InfoBarHDMI, Screen):
-	
+
 	ALLOW_SUSPEND = True
 	instance = None
 
@@ -58,9 +58,9 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 				"volumeUp": (self._volUp, _("volume up")),
 				"volumeDown": (self._volDown, _("volume down")),
 			}, prio=2)
-		
+
 		self.allowPiP = True
-		
+
 		for x in HelpableScreen, \
 				InfoBarBase, InfoBarShowHide, \
 				InfoBarNumberZap, InfoBarChannelSelection, InfoBarMenu, InfoBarEPG, InfoBarRdsDecoder, \
@@ -183,7 +183,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 
 	ENABLE_RESUME_SUPPORT = True
 	ALLOW_SUSPEND = True
-		
+
 	def __init__(self, session, service, slist=None, lastservice=None, infobar=None):
 		Screen.__init__(self, session)
 
@@ -204,7 +204,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 			}, prio = -2)
 
 		self.allowPiP = True
-		
+
 		for x in HelpableScreen, InfoBarShowHide, InfoBarMenu, \
 				InfoBarBase, InfoBarSeek, InfoBarShowMovies, InfoBarInstantRecord, \
 				InfoBarVmodeButton, InfoBarAudioSelection, InfoBarNotifications, \
@@ -263,7 +263,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 				self.hidePipOnExitCallback(True)
 		elif config.usage.leave_movieplayer_onExit.value == "popup":
 			self.session.openWithCallback(self.leavePlayerOnExitCallback, MessageBox, _("Exit movie player?"), simple=True)
-		elif config.usage.leave_movieplayer_onExit.value == "without popup":	
+		elif config.usage.leave_movieplayer_onExit.value == "without popup":
 			self.leavePlayerOnExitCallback(True)
 
 	def leavePlayerOnExitCallback(self, answer):

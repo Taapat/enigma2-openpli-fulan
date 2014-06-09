@@ -194,7 +194,7 @@ def defaultRecordingLocation(candidate=None):
 		if path[-1] != '/':
 			path += '/' # Bad habits die hard, old code relies on this
 	return path
-	
+
 
 def createDir(path, makeParents = False):
 	try:

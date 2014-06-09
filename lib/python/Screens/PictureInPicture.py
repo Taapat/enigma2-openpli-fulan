@@ -1,5 +1,5 @@
 from Screens.Screen import Screen
-from enigma import ePoint, eSize, eRect, eServiceCenter, getBestPlayableServiceReference, eServiceReference
+from enigma import ePoint, eSize, eRect, eServiceCenter, getBestPlayableServiceReference, eServiceReference, eTimer
 from Components.SystemInfo import SystemInfo
 from Components.VideoWindow import VideoWindow
 from Components.config import config, ConfigPosition, ConfigYesNo, ConfigSelection
@@ -35,29 +35,54 @@ class PictureInPicture(Screen):
 			self.choicelist.append(("external", _("External PiP")))
 
 		if not pip_config_initialized:
-			config.av.pip = ConfigPosition(default=[-1, -1, -1, -1], args = (MAX_X, MAX_Y, MAX_X, MAX_Y))
+			config.av.pip = ConfigPosition(default=[510, 28, 180, 135], args = (MAX_X, MAX_Y, MAX_X, MAX_Y))
 			config.av.pip_mode = ConfigSelection(default="standard", choices=self.choicelist)
 			pip_config_initialized = True
+
+		self.pigmodeEnabled = False
+		self.relocateTimer = eTimer()
 		self.onLayoutFinish.append(self.LayoutFinished)
 
 	def __del__(self):
+		if self.relocateTimer.isActive():
+			self.relocateTimer.callback.remove(self.timedRelocate)
+			self.relocateTimer.stop()
 		del self.pipservice
 		self.setExternalPiP(False)
 		self.setSizePosMainWindow()
 
-	def pigmode(self):
-		self.instance.resize(eSize(*(1, 1)))
-		self["video"].instance.resize(eSize(*(1, 1)))
-		self.instance.move(ePoint(0, 0))
+	def pigmode(self, value):
+		if config.av.pip_mode.value != "external":
+			if value:
+				if self.relocateTimer.isActive():
+					self.relocateTimer.callback.remove(self.timedRelocate)
+					self.relocateTimer.stop()
+				elif not self.pigmodeEnabled:
+					del self.pipservice
+					self.pigmodeEnabled = True
+			else:
+				self.relocateTimer.callback.append(self.timedRelocate)
+				self.relocateTimer.start(100)
+
+	def timedRelocate(self):
+		self.relocateTimer.callback.remove(self.timedRelocate)
+		self.relocateTimer.stop()
+		self.pipservice = eServiceCenter.getInstance().play(self.currentService)
+		if self.pipservice and not self.pipservice.setTarget(1):
+			self.pipservice.start()
+		else:
+			self.pipservice = None
+			self.currentService = None
+			self.currentServiceReference = None
+		self.pigmodeEnabled = False
 
 	def relocate(self):
 		x = config.av.pip.value[0]
 		y = config.av.pip.value[1]
 		w = config.av.pip.value[2]
 		h = config.av.pip.value[3]
-		if x != -1 and y != -1 and w != -1 and h != -1:
-			self.move(x, y)
-			self.resize(w, h)
+		self.move(x, y)
+		self.resize(w, h)
 
 	def LayoutFinished(self):
 		self.onLayoutFinish.remove(self.LayoutFinished)
@@ -78,7 +103,7 @@ class PictureInPicture(Screen):
 		elif config.av.pip_mode.value == "byside":
 			x = MAX_X / 2
 			y = MAX_Y / 4
-		elif config.av.pip_mode.value == "bigpig":
+		elif config.av.pip_mode.value in "bigpig external":
 			x = 0
 			y = 0
 		config.av.pip.save()
@@ -88,7 +113,7 @@ class PictureInPicture(Screen):
 		config.av.pip.value[2] = w
 		config.av.pip.value[3] = h
 		config.av.pip.save()
-		if config.av.pip_mode.value == "standard" or config.av.pip_mode.value == "external":
+		if config.av.pip_mode.value == "standard":
 			self.instance.resize(eSize(*(w, h)))
 			self["video"].instance.resize(eSize(*(w, h)))
 			self.setSizePosMainWindow()
@@ -104,9 +129,10 @@ class PictureInPicture(Screen):
 			self.instance.resize(eSize(*(MAX_X/2, MAX_Y/2 )))
 			self["video"].instance.resize(eSize(*(MAX_X/2, MAX_Y/2)))
 			self.setSizePosMainWindow(0, MAX_Y/4, MAX_X/2, MAX_Y/2)
-		elif config.av.pip_mode.value == "bigpig":
+		elif config.av.pip_mode.value in "bigpig external":
 			self.instance.resize(eSize(*(MAX_X, MAX_Y)))
 			self["video"].instance.resize(eSize(*(MAX_X, MAX_Y)))
+			self.setSizePosMainWindow()
 
 	def setSizePosMainWindow(self, x = 0, y = 0, w = MAX_X, h = MAX_Y):
 		if SystemInfo["VideoDestinationConfigurable"]:

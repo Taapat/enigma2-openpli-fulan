@@ -13,6 +13,7 @@ def getNumVideoDecoders():
 	#return idx
 
 SystemInfo["NumVideoDecoders"] = getNumVideoDecoders()
+SystemInfo["PIPAvailable"] = SystemInfo["NumVideoDecoders"] > 1
 SystemInfo["CanMeasureFrontendInputPower"] = eDVBResourceManager.getInstance().canMeasureFrontendInputPower()
 
 

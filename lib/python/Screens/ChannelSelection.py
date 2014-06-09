@@ -154,7 +154,7 @@ class ChannelContextMenu(Screen):
 						if not inBouquet:
 							append_when_current_valid(current, menu, (_("add service to favourites"), self.addServiceToBouquetSelected), level = 0)
 
-					if SystemInfo.get("NumVideoDecoders", 1) > 1:
+					if SystemInfo["PIPAvailable"]:
 						# only allow the service to be played directly in pip / mainwindow when the service is not under parental control
 						if not config.ParentalControl.configured.value or parentalControl.getProtectionLevel(csel.getCurrentSelection().toCompareString()) == -1:
 							if not csel.dopipzap:
@@ -208,7 +208,7 @@ class ChannelContextMenu(Screen):
 					else:
 						append_when_current_valid(current, menu, (_("end favourites edit"), self.bouquetMarkEnd), level = 0)
 						append_when_current_valid(current, menu, (_("abort favourites edit"), self.bouquetMarkAbort), level = 0)
-					if current_sel_flags & eServiceReference.isMarker:	
+					if current_sel_flags & eServiceReference.isMarker:
 						append_when_current_valid(current, menu, (_("rename entry"), self.renameEntry), level = 0)
 						append_when_current_valid(current, menu, (_("remove entry"), self.removeCurrentService), level = 0)
 				else:
@@ -276,7 +276,7 @@ class ChannelContextMenu(Screen):
 			self.close()
 		else:
 			self.session.openWithCallback(self.close, MessageBox, _("The pin code you entered is wrong."), MessageBox.TYPE_ERROR)
-			
+
 	def showServiceInPiP(self):
 		if not self.pipAvailable:
 			return
@@ -726,7 +726,7 @@ class ChannelSelectionEdit:
 			(self.mutableList.addService(eServiceReference(x)) for x in added)
 			if changed:
 				if self.bouquet_mark_edit == EDIT_ALTERNATIVES and not new_marked and self.__marked:
-					self.mutableList.addService(eServiceReference(self.__marked[0]))	
+					self.mutableList.addService(eServiceReference(self.__marked[0]))
 				self.mutableList.flushChanges()
 		self.__marked = []
 		self.clearMarks()
@@ -818,7 +818,7 @@ class ChannelSelectionEdit:
 
 	def doContext(self):
 		self.session.openWithCallback(self.exitContext, ChannelContextMenu, self)
-		
+
 	def exitContext(self, close = False):
 		if close:
 			self.cancel()
@@ -908,7 +908,7 @@ class ChannelSelectionBase(Screen):
 					if number > 0:
 						offset = number - 1
 						break
-		return offset			
+		return offset
 
 	def recallBouquetMode(self):
 		if self.mode == MODE_TV:
@@ -1129,6 +1129,8 @@ class ChannelSelectionBase(Screen):
 							op = "".join(refstr.split(':', 10)[6:7])
 							if len(op) >= 4:
 								hop = int(op[:-4],16)
+								if len(op) >= 7 and not op.endswith('0000'):
+									op = op[:-4] + '0000'
 								refstr = '1:7:0:0:0:0:%s:0:0:0:(satellitePosition == %s) && %s ORDER BY name' % (op, hop, self.service_types[self.service_types.rfind(':')+1:])
 								self.setCurrentSelectionAlternative(eServiceReference(refstr))
 
@@ -1519,8 +1521,8 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 				del self.session.pip
 			self.__evServiceStart()
 			# Move to playing service
-			lastservice = eServiceReference(self.lastservice.value)      
-			if lastservice.valid() and self.getCurrentSelection() != lastservice:                        
+			lastservice = eServiceReference(self.lastservice.value)
+			if lastservice.valid() and self.getCurrentSelection() != lastservice:
 				self.setCurrentSelection(lastservice)
 
 			title += _(" (TV)")

@@ -227,9 +227,9 @@ RESULT eDVBServiceRecord::stop()
 			::close(m_target_fd);
 			m_target_fd = -1;
 		}
-		
+
 		saveCutlist();
-		
+
 		m_state = statePrepared;
 	} else if (!m_simulate)
 		eDebug("(was not recording)");
@@ -267,7 +267,7 @@ int eDVBServiceRecord::doPrepare()
 		{
 			if (m_is_stream_client)
 			{
-				/* 
+				/*
 				* streams are considered to be descrambled by default;
 				* user can indicate a stream is scrambled, by using servicetype id + 0x100
 				*/
@@ -301,10 +301,10 @@ int eDVBServiceRecord::doRecord()
 		m_event((iRecordableService*)this, evRecordFailed);
 		return err;
 	}
-	
+
 	if (!m_tuned)
 		return 0; /* try it again when we are tuned in */
-	
+
 	if (!m_record && m_tuned && !m_streaming && !m_simulate)
 	{
 #if defined(__sh__)
@@ -374,7 +374,7 @@ int eDVBServiceRecord::doRecord()
 
 		m_target_fd = fd;
 	}
-	
+
 	if (m_streaming)
 	{
 		m_state = stateRecording;
@@ -403,18 +403,18 @@ int eDVBServiceRecord::doRecord()
 			{
 				eDebugNoNewLine(" (");
 				for (std::vector<eDVBServicePMTHandler::videoStream>::const_iterator
-					i(program.videoStreams.begin()); 
+					i(program.videoStreams.begin());
 					i != program.videoStreams.end(); ++i)
 				{
 					pids_to_record.insert(i->pid);
-					
+
 					if (timing_pid == -1)
 					{
 						timing_pid = i->pid;
 						timing_stream_type = i->type;
 						timing_pid_type = iDVBTSRecorder::video_pid;
 					}
-					
+
 					if (i != program.videoStreams.begin())
 							eDebugNoNewLine(", ");
 					eDebugNoNewLine("%04x", i->pid);
@@ -426,18 +426,18 @@ int eDVBServiceRecord::doRecord()
 			{
 				eDebugNoNewLine(" (");
 				for (std::vector<eDVBServicePMTHandler::audioStream>::const_iterator
-					i(program.audioStreams.begin()); 
+					i(program.audioStreams.begin());
 					i != program.audioStreams.end(); ++i)
 				{
 					pids_to_record.insert(i->pid);
-	
+
 					if (timing_pid == -1)
 					{
 						timing_pid = i->pid;
 						timing_stream_type = i->type;
 						timing_pid_type = iDVBTSRecorder::audio_pid;
 					}
-				
+
 					if (i != program.audioStreams.begin())
 						eDebugNoNewLine(", ");
 					eDebugNoNewLine("%04x", i->pid);
@@ -452,7 +452,7 @@ int eDVBServiceRecord::doRecord()
 					i != program.subtitleStreams.end(); ++i)
 				{
 					pids_to_record.insert(i->pid);
-	
+
 					if (i != program.subtitleStreams.begin())
 						eDebugNoNewLine(", ");
 					eDebugNoNewLine("%04x", i->pid);
@@ -468,7 +468,7 @@ int eDVBServiceRecord::doRecord()
 
 			if (m_record_ecm)
 			{
-				for (std::list<eDVBServicePMTHandler::program::capid_pair>::const_iterator i(program.caids.begin()); 
+				for (std::list<eDVBServicePMTHandler::program::capid_pair>::const_iterator i(program.caids.begin());
 							i != program.caids.end(); ++i)
 				{
 					if (i->capid >= 0) pids_to_record.insert(i->capid);
@@ -478,16 +478,16 @@ int eDVBServiceRecord::doRecord()
 				/* find out which pids are NEW and which pids are obsolete.. */
 			std::set<int> new_pids, obsolete_pids;
 
-			std::set_difference(pids_to_record.begin(), pids_to_record.end(), 
+			std::set_difference(pids_to_record.begin(), pids_to_record.end(),
 					m_pids_active.begin(), m_pids_active.end(),
 					std::inserter(new_pids, new_pids.begin()));
 
 			std::set_difference(
 					m_pids_active.begin(), m_pids_active.end(),
-					pids_to_record.begin(), pids_to_record.end(), 
+					pids_to_record.begin(), pids_to_record.end(),
 					std::inserter(obsolete_pids, obsolete_pids.begin())
 					);
-			
+
 			for (std::set<int>::iterator i(new_pids.begin()); i != new_pids.end(); ++i)
 			{
 				eDebug("ADD PID: %04x", *i);
@@ -572,7 +572,7 @@ void eDVBServiceRecord::gotNewEvent(int /*error*/)
 	int event_id = event_now->getEventId();
 
 	pts_t p;
-	
+
 	if (m_record)
 	{
 		if (m_record->getCurrentPCR(p))
@@ -586,7 +586,7 @@ void eDVBServiceRecord::gotNewEvent(int /*error*/)
 
 	if (event_id != m_last_event_id)
 		eDebug("[eDVBServiceRecord] now running: %s (%d seconds)", event_now->getEventName().c_str(), event_now->getDuration());
-	
+
 	m_last_event_id = event_id;
 
 	m_event((iRecordableService*)this, evNewEventInfo);
@@ -598,7 +598,7 @@ void eDVBServiceRecord::saveCutlist()
 	std::string filename = m_filename + ".cuts";
 
 	eDVBTSTools tstools;
-	
+
 	if (tstools.openFile(m_filename.c_str()))
 	{
 		eDebug("[eDVBServiceRecord] saving cutlist failed because tstools failed");
@@ -629,7 +629,7 @@ void eDVBServiceRecord::saveCutlist()
 		}
 		fclose(f);
 	}
-	
+
 }
 
 RESULT eDVBServiceRecord::subServices(ePtr<iSubserviceList> &ptr)
