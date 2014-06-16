@@ -47,6 +47,7 @@ void eStreamClient::notifier(int what)
 	if (!(what & eSocketNotifier::Read))
 		return;
 
+	ePtr<eStreamClient> ref = this;
 	char buf[512];
 	int len;
 	if ((len = singleRead(streamFd, buf, sizeof(buf))) <= 0)
@@ -54,7 +55,6 @@ void eStreamClient::notifier(int what)
 		rsn->stop();
 		stop();
 		parent->connectionLost(this);
-		request.clear();
 		return;
 	}
 	request.append(buf, len);
@@ -132,7 +132,6 @@ void eStreamClient::notifier(int what)
 				writeAll(streamFd, reply, strlen(reply));
 				rsn->stop();
 				parent->connectionLost(this);
-				request.clear();
 				return;
 			}
 		}
@@ -211,12 +210,14 @@ void eStreamClient::notifier(int what)
 
 void eStreamClient::streamStopped()
 {
+	ePtr<eStreamClient> ref = this;
 	rsn->stop();
 	parent->connectionLost(this);
 }
 
 void eStreamClient::tuneFailed()
 {
+	ePtr<eStreamClient> ref = this;
 	rsn->stop();
 	parent->connectionLost(this);
 }
