@@ -67,12 +67,12 @@
 	</map>
 
 	<map context="InfobarChannelSelection">
-		<key id="KEY_LEFT" mapto="zapUp" flags="mr" />
-		<key id="KEY_RIGHT" mapto="zapDown" flags="mr" />
+		<key id="KEY_LEFT" mapto="keyLeft" flags="mr" />
+		<key id="KEY_RIGHT" mapto="keyRight" flags="mr" />
 		<key id="KEY_PAGEUP" mapto="zapDown" flags="m" />
 		<key id="KEY_PAGEDOWN" mapto="zapUp" flags="m" />
-		<key id="KEY_UP" mapto="switchChannelUp" flags="mr" />
-		<key id="KEY_DOWN" mapto="switchChannelDown" flags="mr" />
+		<key id="KEY_UP" mapto="keyUp" flags="mr" />
+		<key id="KEY_DOWN" mapto="keyDown" flags="mr" />
 		<key id="KEY_REWIND" mapto="historyBack" flags="mr" />
 		<key id="KEY_FASTFORWARD" mapto="historyNext" flags="mr" />
 		<key id="KEY_OK" mapto="openServiceList" flags="m" />
