@@ -78,6 +78,8 @@
 		<key id="KEY_OK" mapto="openServiceList" flags="m" />
 		<key id="KEY_FAVORITES" mapto="showFavourites" flags="m" />
 		<key id="KEY_SAT" mapto="showSatellites" flags="m" />
+		<key id="KEY_CHANNELUP" mapto="keyChannelUp" flags="m" />
+		<key id="KEY_CHANNELDOWN" mapto="keyChannelDown" flags="m" />
 	</map>
 
 	<map context="MinuteInputActions">
