@@ -125,7 +125,7 @@
 	<map context="InfobarShowHideActions">
 		<key id="KEY_INFO" mapto="toggleShow" flags="m" />
 		<key id="KEY_HOME" mapto="hide" flags="m" />
-		<key id="KEY_OK" mapto="toggleShow" flags="m" />
+		<key id="KEY_OK" mapto="okButtonCheck" flags="m" />
 	</map>
 
 	<map context="InfobarActions">
