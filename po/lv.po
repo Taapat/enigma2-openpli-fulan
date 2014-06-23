@@ -1075,6 +1075,9 @@ msgstr "Mainīt soļa lielumu"
 msgid "Change timer"
 msgstr "Izmainīt taimeri"
 
+msgid "Change video port"
+msgstr "Nomainīt video izeju"
+
 msgid "Changelog"
 msgstr "Izmaiņas"
 
