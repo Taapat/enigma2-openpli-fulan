@@ -282,8 +282,6 @@ class InfoBarShowHide(InfoBarScreenSaver):
 				self.session.openWithCallback(self.hidePipOnExitCallback, MessageBox, _("Disable Picture in Picture"), simple=True)
 			else:
 				self.hidePipOnExitCallback(True)
-		elif config.usage.ok_is_channelselection.value and hasattr(self, "openServiceList"):
-			self.toggleShow()
 		elif self.__state == self.STATE_SHOWN:
 			self.hide()
 
