@@ -277,13 +277,13 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			x(False)
 
 	def keyHide(self):
-		if self.__state == self.STATE_SHOWN:
-			self.hide()
-		elif self.session.pipshown and "popup" in config.usage.pip_hideOnExit.value:
+		if self.__state == self.STATE_HIDDEN and self.session.pipshown and "popup" in config.usage.pip_hideOnExit.value:
 			if config.usage.pip_hideOnExit.value == "popup":
 				self.session.openWithCallback(self.hidePipOnExitCallback, MessageBox, _("Disable Picture in Picture"), simple=True)
 			else:
 				self.hidePipOnExitCallback(True)
+		elif self.__state == self.STATE_SHOWN:
+			self.hide()
 
 	def hidePipOnExitCallback(self, answer):
 		if answer == True:
@@ -1832,6 +1832,9 @@ class InfoBarTimeshift:
 		print "activateTimeshiftEndAndPause"
 		#state = self.seekstate
 		self.activateTimeshiftEnd(False)
+
+	def callServiceStarted(self):
+		self.__serviceStarted()
 
 	def __seekableStatusChanged(self):
 		self["TimeshiftActivateActions"].setEnabled(not self.isSeekable() and self.timeshiftEnabled())
