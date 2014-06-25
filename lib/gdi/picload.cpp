@@ -612,11 +612,11 @@ static void gif_load(Cfilepara* filepara)
 	}
 	while (rt != TERMINATE_RECORD_TYPE);
 
-	DGifCloseFile(gft);
+	DGifCloseFile(gft, &ErrorCode);
 	return;
 ERROR_R:
 	eDebug("[Picload] <Error gif>");
-	DGifCloseFile(gft);
+	DGifCloseFile(gft, &ErrorCode);
 }
 
 //---------------------------------------------------------------------------------------------
