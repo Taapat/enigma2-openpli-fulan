@@ -60,6 +60,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 			}, prio=2)
 
 		self.allowPiP = True
+		self.lastMoviePlayerService = None
 
 		for x in HelpableScreen, \
 				InfoBarBase, InfoBarShowHide, \
@@ -165,7 +166,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 
 	def showMovies(self, defaultRef=None):
 		self.lastservice = self.session.nav.getCurrentlyPlayingServiceOrGroup()
-		self.session.openWithCallback(self.movieSelected, Screens.MovieSelection.MovieSelection, defaultRef, timeshiftEnabled = self.timeshiftEnabled())
+		self.session.openWithCallback(self.movieSelected, Screens.MovieSelection.MovieSelection, defaultRef or self.lastMoviePlayerService, timeshiftEnabled = self.timeshiftEnabled())
 
 	def movieSelected(self, service):
 		ref = self.lastservice
@@ -174,7 +175,11 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 			if ref and not self.session.nav.getCurrentlyPlayingServiceOrGroup():
 				self.session.nav.playService(ref)
 		else:
-			self.session.open(MoviePlayer, service, slist=self.servicelist, lastservice=ref, infobar=self)
+			self.session.openWithCallback(self.MoviePlayerCallback, MoviePlayer, service, slist=self.servicelist, lastservice=ref, infobar=self)
+
+	def MoviePlayerCallback(self, reply=None):
+		if reply:
+			self.lastMoviePlayerService = reply
 
 class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBarShowMovies, InfoBarInstantRecord, InfoBarVmodeButton,
 		InfoBarAudioSelection, HelpableScreen, InfoBarNotifications, InfoBarServiceNotifications, InfoBarPVRState,
@@ -194,7 +199,9 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 				"InfoButtonPressedLong": (self.showEventInfoPlugins, _("select Info...")),
 				"EPGButtonPressedLong": (self.showEventGuidePlugins,  _("select EPG...")),
 				"leavePlayer": (self.leavePlayer, _("leave movie player...")),
-				"leavePlayerOnExit": (self.leavePlayerOnExit, _("leave movie player..."))
+				"leavePlayerOnExit": (self.leavePlayerOnExit, _("leave movie player...")),
+				"channelUp": (self.channelUp, _("when PiPzap enabled zap channel up...")),
+				"channelDown": (self.channelDown, _("when PiPzap enabled zap channel down...")),
 			})
 
 		self["DirectionActions"] = HelpableActionMap(self, "DirectionActions",
@@ -307,7 +314,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 						Screens.MovieSelection.moveServiceFiles(ref, trash)
 						# Moved to trash, okay
 						if answer == "quitanddelete":
-							self.close()
+							self.close(self.cur_service)
 						else:
 							self.movielistAgain()
 						return
@@ -337,7 +344,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 			# player driver might stop working
 			self.setSeekState(self.SEEK_STATE_PLAY)
 #+++<
-			self.close()
+			self.close(self.cur_service)
 		elif answer in ("movielist", "deleteandmovielistconfirmed"):
 			ref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 			self.returning = True
@@ -420,6 +427,18 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 				self.zapUp()
 		else:
 			InfoBarSeek.seekBack(self)
+
+	def channelUp(self):
+		if config.usage.zap_with_ch_buttons.value and self.servicelist.dopipzap:
+			self.zapDown()
+		else:
+			return 0
+
+	def channelDown(self):
+		if config.usage.zap_with_ch_buttons.value and self.servicelist.dopipzap:
+			self.zapUp()
+		else:
+			return 0
 
 	def switchChannelDown(self):
 		if "keep" not in config.usage.servicelist_cursor_behavior.value:
@@ -525,7 +544,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 			self.session.nav.playService(service)
 			self.returning = False
 		elif self.returning:
-			self.close()
+			self.close(self.cur_service)
 		else:
 			self.is_closing = False
 			ref = self.playingservice
