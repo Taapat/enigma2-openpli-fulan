@@ -789,7 +789,7 @@ class NimManager:
 					# "Mode 0" -> ["Mode", "0"]
 					split2 = split[0].split(" ")
 					modes = entries[current_slot].get("multi_type", {})
-					modes[split2[1]] = split[1]
+					modes[split2[1]] = split[1].strip()
 					entries[current_slot]["multi_type"] = modes
 			elif line[:12] == "Multistream:":
 				input = str(line[len("Multistream:") + 1:])
