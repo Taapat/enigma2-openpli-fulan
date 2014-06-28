@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-23 15:26+0300\n"
+"POT-Creation-Date: 2014-06-28 00:26+0200\n"
 "PO-Revision-Date: 2013-11-09 00:59+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1322,14 +1322,14 @@ msgstr "Uzstāda kontrasta līmeni priekšējā paneļa displejā."
 msgid "Configure the cursor behaviour in the channel selection list. When opening the channel selection list you can keep on the current service or already select up/down and you are able to revert the B+/B- buttons."
 msgstr "Uzstāda kursora darbību atverot kanālu srakstu ar augšup/lejup taustiņiem. Kad atverat kanālu srakstu jūs varat iezīmēt aktīvo kanālu, vai iezīmēt un revertēt nākošo ar B+/B- taustiņiem."
 
-msgid "Configure the duration in hours and action, which could be shut down or standby, when the receiver is not controlled."
-msgstr "Uzstāda laiku stundās un darbību- vai būs izslēgšana vai gaidstāve, ja uztvērēju nekontrolē."
-
-msgid "Configure the duration in minutes and action, which could be shut down or standby, for the sleeptimer. Select this entry and click OK or green to start/stop the sleeptimer"
-msgstr "Uzstāda laiku minūtēs un darbību miega taimerim- vai būs izslēgšana vai gaidstāve. Izvēlieties šo ierakstu un nospiediet OK vai zaļo lai palaistu/apstādinātu miega taimeri"
+msgid "Configure the duration in hours the receiver should go to standby when the receiver is not controlled."
+msgstr ""
 
 msgid "Configure the duration in minutes for the screensaver."
 msgstr "Uzstāda laiku minūtēs ekrānsaudzētājam."
+
+msgid "Configure the duration in minutes for the sleeptimer. Select this entry and click OK or green to start/stop the sleeptimer"
+msgstr ""
 
 msgid "Configure the duration when the receiver should go to shut down in case the receiver is in standby mode."
 msgstr "Uzstāda laiku pēc kura uztvērējam jāizslēdzas, ja tas atrodas gaidstāves režīmā."
@@ -1629,10 +1629,8 @@ msgid "Current event EPG"
 msgstr "Pašreizējā notikuma EPG"
 
 #, python-format
-msgid ""
-"Current mode: %s \n"
-msgstr ""
-"Pašreizējais režīms: %s \n"
+msgid "Current mode: %s \n"
+msgstr "Pašreizējais režīms: %s \n"
 
 msgid "Current settings:"
 msgstr "Pašreizējie iestatījumi:"
@@ -1649,8 +1647,8 @@ msgstr "Pašreizējā versija:"
 msgid "Currently installed image"
 msgstr "Pašreiz uzstādītais imidžs"
 
-msgid "Currently the commit log cannot be retreived - please try later again"
-msgstr "Pašreiz kommitu logs nav pieejams - lūdzu mēginiet vēlāk"
+msgid "Currently the commit log cannot be retrieved - please try later again"
+msgstr ""
 
 msgid "Custom skip time for '1'/'3' buttons"
 msgstr "Pārlēciena laiks '1'/'3' taustiņiem"
@@ -2584,8 +2582,8 @@ msgstr "Iet uz iepriekšējo dienu notikumiem"
 msgid "Goto previous page of events"
 msgstr "Iet uz iepriekšējo notikumu lapu"
 
-msgid "Goto specific data/time"
-msgstr "Iet uz noteiktu datumu/laiku"
+msgid "Goto specific date/time"
+msgstr ""
 
 msgid "GotoX calibration"
 msgstr "Iet uz X kalibrēšanu"
@@ -3679,6 +3677,9 @@ msgstr "Uz filmas beigām"
 msgid "On end of movie (as menu)"
 msgstr "Uz filmas beigām (kā izvēlnē)"
 
+msgid "On end of movie (as menu)"
+msgstr ""
+
 msgid "One"
 msgstr "Viens"
 
@@ -4094,6 +4095,9 @@ msgstr "Priekšroka AC3 celiņam"
 msgid "Prefer AC3+ track"
 msgstr "Priekšroka AC3+ celiņam"
 
+msgid "Prefer AC3+ track"
+msgstr ""
+
 msgid "Prefer audio track stored by service"
 msgstr "Katram kanālam saglabāt ieteicamo audio celiņu"
 
@@ -4149,11 +4153,17 @@ msgstr "Spiediet OK, lai meklētu"
 msgid "Press OK to select a provider."
 msgstr "Spiediet OK, lai izvēlētos operatoru."
 
+msgid "Press OK to select satellites"
+msgstr ""
+
 msgid "Press OK to select/deselect a CAId."
 msgstr "Spiediet OK, lai izvēlētos/neizvēlētos CAId."
 
 msgid "Press OK to start the scan"
 msgstr "Spiediet OK, lai uzsāktu meklēšanu."
+
+msgid "Press OK to toggle the selection"
+msgstr ""
 
 msgid "Press OK to toggle the selection."
 msgstr "Nospiediet OK, lai pārslēgtu izvēli."
@@ -4407,6 +4417,9 @@ msgstr "Atkārtojumi"
 
 msgid "Require authentication for http streams"
 msgstr "Http plūsmām nepieciešama autentifikācija"
+
+msgid "Require authentication for http streams"
+msgstr ""
 
 msgid "Required medium type:"
 msgstr "Nepieciešamais veids:"
@@ -6977,12 +6990,6 @@ msgstr "Jūsu uztvērējs pāriet gaidstāvē jo nav aktivitātes."
 msgid "Your receiver will restart after pressing OK on your remote control."
 msgstr "Jūsu uztvērējs pārstartēsies pēc tam kad nospiedīsiet OK uz tālvadības pults."
 
-msgid "Your receiver will shutdown due to inactivity."
-msgstr "Jūsu uztvērējs izslēgsies jo nav aktivitātes."
-
-msgid "Your receiver will shutdown due to the sleeptimer."
-msgstr "Jūsu uztvērējs izslēdzas dēļ miega taimera."
-
 msgid ""
 "Your wireless LAN internet connection could not be started!\n"
 "Have you attached your USB WLAN Stick?\n"
@@ -7959,6 +7966,12 @@ msgstr "ik nedēļu"
 msgid "west"
 msgstr "rietumi"
 
+msgid "when PiPzap enabled zap channel down..."
+msgstr ""
+
+msgid "when PiPzap enabled zap channel up..."
+msgstr ""
+
 msgid "white"
 msgstr "balts"
 
@@ -8001,3 +8014,90 @@ msgstr "pārslēgt un ierakstīt"
 
 msgid "zapped"
 msgstr "pārslēgts"
+
+#~ msgid "AA"
+#~ msgstr "AA"
+
+#~ msgid "AB"
+#~ msgstr "AB"
+
+#~ msgid "Activate PiP"
+#~ msgstr "Aktivizēt PiP"
+
+#~ msgid "Add/remove timer for current event"
+#~ msgstr "Pievienot/noņemt taimeri pašreizējam notikumam"
+
+#~ msgid "Adjust HDMI CEC settings"
+#~ msgstr "Pielāgot HDMI CEC iestatījumus"
+
+#~ msgid "All satellites"
+#~ msgstr "Visi pavadoņi"
+
+#~ msgid "And will shutdown your receiver over "
+#~ msgstr "Un izslēgt uztvērēju pēc "
+
+#~ msgid "BA"
+#~ msgstr "BA"
+
+#~ msgid "BB"
+#~ msgstr "BB"
+
+#~ msgid "Committed DiSEqC command"
+#~ msgstr "Aktīvā DiSEqC komanda"
+
+#~ msgid "Configure the duration in hours and action, which could be shut down or standby, when the receiver is not controlled."
+#~ msgstr "Uzstāda laiku stundās un darbību- vai būs izslēgšana vai gaidstāve, ja uztvērēju nekontrolē."
+
+#~ msgid "Configure the duration in minutes and action, which could be shut down or standby, for the sleeptimer. Select this entry and click OK or green to start/stop the sleeptimer"
+#~ msgstr "Uzstāda laiku minūtēs un darbību miega taimerim- vai būs izslēgšana vai gaidstāve. Izvēlieties šo ierakstu un nospiediet OK vai zaļo lai palaistu/apstādinātu miega taimeri"
+
+#~ msgid "Currently the commit log cannot be retreived - please try later again"
+#~ msgstr "Pašreiz kommitu logs nav pieejams - lūdzu mēginiet vēlāk"
+
+#~ msgid "DiSEqC repeats"
+#~ msgstr "DiSEqC atkārtojums"
+
+#~ msgid "Goto specific data/time"
+#~ msgstr "Iet uz noteiktu datumu/laiku"
+
+#~ msgid "Memory positions"
+#~ msgstr "Atmiņas pozīcijas"
+
+#~ msgid "Open service list and select next channel"
+#~ msgstr "Atvērt kanālu sarakstu un izvēlēties nākamo kanālu"
+
+#~ msgid "Open service list and select previous channel"
+#~ msgstr "Atvērt kanālu sarakstu un izvēlēties iepriekšējo kanālu"
+
+#~ msgid "Press '0' to toggle internal/external PiP."
+#~ msgstr "Spiediet '0', lai pārslēgtu iekšējo/ārējo PiP."
+
+#~ msgid "Remove timer"
+#~ msgstr "Dzēst taimeri"
+
+#~ msgid "Send DiSEqC"
+#~ msgstr "Sūtīt DiSEqC"
+
+#~ msgid "Shutdown after current event"
+#~ msgstr "Izslēgt pēc pašreizējā notikuma"
+
+#~ msgid "Shutdown in "
+#~ msgstr "Izslēgt "
+
+#~ msgid "Switch next channel"
+#~ msgstr "Pārslēgt uz nākamo kanālu"
+
+#~ msgid "Tuning step size"
+#~ msgstr "Noskaņošanas soļa izmērs"
+
+#~ msgid "Uncommitted DiSEqC command"
+#~ msgstr "Pasīvā DiSEqC komanda"
+
+#~ msgid "Your receiver will shutdown due to inactivity."
+#~ msgstr "Jūsu uztvērējs izslēgsies jo nav aktivitātes."
+
+#~ msgid "Your receiver will shutdown due to the sleeptimer."
+#~ msgstr "Jūsu uztvērējs izslēdzas dēļ miega taimera."
+
+#~ msgid "tuner is not supported"
+#~ msgstr "uztvērējs netiek atbalstīts"
