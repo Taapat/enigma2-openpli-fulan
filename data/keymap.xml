@@ -205,7 +205,7 @@
 		<key id="KEY_FASTFORWARD" mapto="seekFwdManual" flags="l" />
 		<key id="KEY_PREVIOUS" mapto="jumpPreviousMark" flags="m" />
 		<key id="KEY_NEXT" mapto="jumpNextMark" flags="m" />
-		<key id="KEY_OK" mapto="unPauseService" flags="m" />
+		<key id="KEY_OK" mapto="okButton" flags="m" />
 		<key id="KEY_1" mapto="seekdef:1" flags="m" />
 		<key id="KEY_3" mapto="seekdef:3" flags="m" />
 		<key id="KEY_4" mapto="seekdef:4" flags="m" />
