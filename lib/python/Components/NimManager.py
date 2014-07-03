@@ -774,13 +774,13 @@ class NimManager:
 				entries[current_slot]["name"] = str(line[6:])
 				entries[current_slot]["isempty"] = False
 			elif line[:12] == "Has_Outputs:":
-				input = str(line[len("Has_Outputs:") + 1:])
+				input = str(line[13:])
 				entries[current_slot]["has_outputs"] = (input == "yes")
 			elif line[:23] == "Internally_Connectable:":
-				input = int(line[len("Internally_Connectable:") + 1:])
+				input = int(line[24:])
 				entries[current_slot]["internally_connectable"] = input
 			elif line[:16] == "Frontend_Device:":
-				input = int(line[len("Frontend_Device:") + 1:])
+				input = int(line[17:])
 				entries[current_slot]["frontend_device"] = input
 			elif  line[:4] == "Mode":
 				# "Mode 0: DVB-T" -> ["Mode 0", "DVB-T"]
@@ -792,10 +792,10 @@ class NimManager:
 					modes[split2[1]] = split[1].strip()
 					entries[current_slot]["multi_type"] = modes
 			elif line[:12] == "Multistream:":
-				input = str(line[len("Multistream:") + 1:])
+				input = str(line[13:])
 				entries[current_slot]["multistream"] = (input == "yes")
 			elif line[:11] == "I2C_Device:":
-				input = int(line[len("I2C_Device:") + 1:])
+				input = int(line[12:])
 				entries[current_slot]["i2c"] = input
 			elif line[:5] == "empty":
 				entries[current_slot]["type"] = None
