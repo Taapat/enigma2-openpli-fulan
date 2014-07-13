@@ -24,14 +24,13 @@ class AutoDiseqc(Screen, ConfigListScreen):
 	]
 
 	sat_frequencies = [
-		## astra 192 zdf
-		( 11954, 27500, \
+		# astra 192 zdf
+		( 11953, 27500, \
 		eDVBFrontendParametersSatellite.Polarisation_Horizontal, eDVBFrontendParametersSatellite.FEC_3_4, \
 		eDVBFrontendParametersSatellite.Inversion_Off, 192, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		1079, 1, \
-		"192", "Astra 1 19.2e"),
+		-1, 0, 1, 1079, 1, "Astra 1 19.2e"),
 
 		# hotbird 130 rai
 		( 10992, 27500, \
@@ -39,26 +38,23 @@ class AutoDiseqc(Screen, ConfigListScreen):
 		eDVBFrontendParametersSatellite.Inversion_Off, 130, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		12400, 318, \
-		"130", "Hotbird 13.0e"),
+		-1, 0, 1, 12400, 318, "Hotbird 13.0e"),
 
-		# astra 49 tet
-		( 11766, 27500, \
+		# astra 49 ntv_mir
+		( 12380, 27500, \
 		eDVBFrontendParametersSatellite.Polarisation_Horizontal, eDVBFrontendParametersSatellite.FEC_3_4, \
 		eDVBFrontendParametersSatellite.Inversion_Off, 49, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		12, 85, \
-		"49", "Astra 4.9e"),
+		-1, 0, 1, 2, 85, "Astra 4A/SES 5 4.9e"),
 
 		# amos -40 otv
-		( 10806, 30000, \
+		( 10722, 27500, \
 		eDVBFrontendParametersSatellite.Polarisation_Horizontal, eDVBFrontendParametersSatellite.FEC_3_4, \
-		eDVBFrontendParametersSatellite.Inversion_Unknown, -40, \
+		eDVBFrontendParametersSatellite.Inversion_Off, -40, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		20, 4369, \
-		"-40", "Amos 2/3 4.0w"),
+		-1, 0, 1, 1, 4369, "Amos 2/3 4.0w"),
 
 		# astra 1G  vtv
 		( 12304, 27500, \
@@ -66,35 +62,31 @@ class AutoDiseqc(Screen, ConfigListScreen):
 		eDVBFrontendParametersSatellite.Inversion_Off, 315, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		5231, 5, \
-		"315", "Astra 1G 31.5e"),
+		-1, 0, 1, 5231, 5, "Astra 1G 31.5e"),
 
 		# eutelsat 360 ntv+
 		( 11900, 27500, \
 		eDVBFrontendParametersSatellite.Polarisation_CircularRight, eDVBFrontendParametersSatellite.FEC_3_4, \
-		eDVBFrontendParametersSatellite.Inversion_Unknown, 360, \
+		eDVBFrontendParametersSatellite.Inversion_Off, 360, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		16, 112, \
-		"360", "Eutelsat 36A/36B 36.0e"),
+		-1, 0, 1, 16, 112, "Eutelsat 36A/36B 36.0e"),
 
-		# abs 1 
+		# abs 1
 		( 12640, 22000, \
 		eDVBFrontendParametersSatellite.Polarisation_Vertical, eDVBFrontendParametersSatellite.FEC_3_4, \
-		eDVBFrontendParametersSatellite.Inversion_Unknown, 750, \
+		eDVBFrontendParametersSatellite.Inversion_Off, 750, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		103, 58, \
-		"750", "ABS 1 75.0e"),
+		-1, 0, 1, 103, 58, "ABS 1 75.0e"),
 
 		# yamal 900 bbc
 		( 11057, 26471, \
 		eDVBFrontendParametersSatellite.Polarisation_Vertical, eDVBFrontendParametersSatellite.FEC_3_4, \
-		eDVBFrontendParametersSatellite.Inversion_Unknown, 900, \
+		eDVBFrontendParametersSatellite.Inversion_Off, 900, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		101, 100, \
-		"900", "Yamal 201 90.0e"),
+		-1, 0, 1, 101, 100, "Yamal 201 90.0e")
 
 	]
 
