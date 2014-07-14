@@ -310,7 +310,7 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			else:
 				idx = config.usage.infobar_timeout.index
 			if idx:
-				self.hideTimer.start(idx*1000, True)
+				self.hideTimer.startLongTimer(idx)
 
 	def doShow(self):
 		self.show()
@@ -1638,6 +1638,8 @@ class InfoBarTimeshiftState(InfoBarPVRState):
 		self.onHide.append(self.timeshiftLiveScreen.hide)
 		self.secondInfoBarScreen and self.secondInfoBarScreen.onShow.append(self.timeshiftLiveScreen.hide)
 		self.timeshiftLiveScreen.hide()
+		self.__hideTimer = eTimer()
+		self.__hideTimer.callback.append(self.__hideTimeshiftState)
 
 	def _mayShow(self):
 		if self.timeshiftEnabled():
@@ -1650,9 +1652,14 @@ class InfoBarTimeshiftState(InfoBarPVRState):
 				self.pvrStateDialog.hide()
 				self.timeshiftLiveScreen.show()
 				self.showTimeshiftState = False
+			if self.seekstate == self.SEEK_STATE_PLAY and config.usage.infobar_timeout.index and (self.pvrStateDialog.shown or self.timeshiftLiveScreen.shown):
+				self.__hideTimer.startLongTimer(config.usage.infobar_timeout.index)
 		else:
-			self.pvrStateDialog.hide()
-			self.timeshiftLiveScreen.hide()
+			self.__hideTimeshiftState()
+
+	def __hideTimeshiftState(self):
+		self.pvrStateDialog.hide()
+		self.timeshiftLiveScreen.hide()
 
 class InfoBarShowMovies:
 
