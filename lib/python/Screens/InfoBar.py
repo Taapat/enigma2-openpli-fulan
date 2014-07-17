@@ -109,21 +109,20 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 		self.__serviceStarted(True)
 		self.onExecBegin.remove(self.__checkServiceStarted)
 
-	def toogleTvRadio(self): 
+	def toogleTvRadio(self):
 		service = self.session.nav.getCurrentService()
-		info = service.info()
-		AudioPID = info.getInfo(iServiceInformation.sAudioPID)
-		VideoPID = info.getInfo(iServiceInformation.sVideoPID)
-
-		print "sAudioPID", AudioPID
-		print "sVideoPID", VideoPID
-
-		if VideoPID == -1:
-			print "radio->tv"
-			self.showTv2()
+		if service:
+			info = service.info()
+			VideoPID = info.getInfo(iServiceInformation.sVideoPID)
+			if VideoPID == -1:
+				print "radio->tv"
+				self.showTv2()
+			else:
+				print "tv->radio"
+				self.showRadio2()
 		else:
-			print "tv->radio"
-			self.showRadio2()
+			print "showTv"
+			self.showTv2()
 
 	def serviceStarted(self):  #override from InfoBarShowHide
 		new = self.servicelist.newServicePlayed()
