@@ -1265,6 +1265,9 @@ msgstr "Uzstāda vai un cik ilgi atcerēsies pēdējo attēls attēlā kanālu."
 msgid "Configure if and how service type icons will be shown in the channel selection list."
 msgstr "Uzstāda vai un kā tiks rādītas kanālu tipu ikonas kanālu srakstā."
 
+msgid "Configure if and how the record indicator will be shown in the channel selection list."
+msgstr "Uzstāda vai un kā tiks attēlots ieraksta indikators kanālu srakstā."
+
 msgid "Configure if and how wide columns will be shown in the channel selection list."
 msgstr "Uzstāda vai un kādā platumā kolona tiks attēlota kanālu srakstā."
 
@@ -4327,6 +4330,9 @@ msgstr "Ierakstiem vienmēr ir prioritāte"
 msgid "Red button..."
 msgstr "Sarkanā poga..."
 
+msgid "Red colored"
+msgstr "Sarkanā krāsā"
+
 msgid "Reenter new PIN"
 msgstr "Atkārtoti ievadiet jauno PIN kodu"
 
@@ -4993,6 +4999,9 @@ msgstr "Rādīt EPG..."
 
 msgid "Show Games show"
 msgstr "Rādīt Games show"
+
+msgid "Show record indicator"
+msgstr "Rādīt ieraksta indikatoru"
 
 msgid "Show SNR percentage instead of dB value"
 msgstr "Rādīt SNR procentos dB vietā"
