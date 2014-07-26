@@ -114,7 +114,7 @@ struct eDVBFrontendParametersTerrestrial
 	};
 
 	enum {
-		System_DVB_T, System_DVB_T2
+		System_DVB_T_T2 = -1, System_DVB_T, System_DVB_T2
 	};
 
 	enum {

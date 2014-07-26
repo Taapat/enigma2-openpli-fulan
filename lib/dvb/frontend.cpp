@@ -367,6 +367,8 @@ RESULT eDVBFrontendParameters::calculateDifference(const iDVBFrontendParameters 
 				diff = 1 << 30;
 			else if (exact && oterrestrial.plp_id != terrestrial.plp_id)
 				diff = 1 << 27;
+			else if (oterrestrial.system != terrestrial.system)
+				diff = 1 << 30;
 			else
 				diff = abs(terrestrial.frequency - oterrestrial.frequency) / 1000;
 			return 0;
