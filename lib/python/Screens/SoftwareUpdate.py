@@ -93,6 +93,9 @@ class UpdatePlugin(Screen):
 			self.session.openWithCallback(self.startActualUpdate, MessageBox, message, default = default, picon = picon)
 
 	def getLatestImageTimestamp(self):
+		# TODO: Impement own sh4 timestamp
+		return ""
+		
 		currentTimeoutDefault = socket.getdefaulttimeout()
 		socket.setdefaulttimeout(3)
 		latestImageTimestamp = ""
