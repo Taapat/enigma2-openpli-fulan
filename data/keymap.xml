@@ -246,7 +246,7 @@
 	<map context="InfobarMovieListActions">
 		<key id="KEY_UP" mapto="up" flags="m" />
 		<key id="KEY_DOWN" mapto="down" flags="m" />
-		<key id="KEY_EPG" mapto="movieList" flags="m" />
+		<key id="KEY_OK" mapto="movieList" flags="m" />
 	</map>
 
 	<map context="MoviePlayerActions">
@@ -254,7 +254,6 @@
 		<key id="KEY_HOME" mapto="leavePlayer" flags="m" />
 		<key id="KEY_PAGEUP" mapto="movePrev" flags="b" />
 		<key id="KEY_PAGEDOWN" mapto="moveNext" flags="b" />
-		<key id="KEY_INFO" mapto="InfoButtonPressed" flags="b" />
 		<key id="KEY_EPG" mapto="EPGButtonPressed" flags="b" />
 		<key id="KEY_INFO" mapto="InfoButtonPressedLong" flags="l" />
 		<key id="KEY_EPG" mapto="EPGButtonPressedLong" flags="l" />

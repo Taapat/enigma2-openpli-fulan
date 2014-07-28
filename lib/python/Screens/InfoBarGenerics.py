@@ -343,8 +343,6 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			self.hide()
 			self.hideTimer.stop()
 			self.openEventView()
-		else:
-			self.openEventView()
 
 	def lockShow(self):
 		self.__locked = self.__locked + 1
