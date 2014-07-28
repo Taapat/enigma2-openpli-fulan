@@ -1,18 +1,23 @@
+import os
+from enigma import ePixmap
+
+from Components.Harddisk import harddiskmanager
 from Renderer import Renderer
 from Tools.Alternatives import GetWithAlternative
 from Tools.Directories import pathExists, SCOPE_SKIN_IMAGE, \
 	SCOPE_CURRENT_SKIN, resolveFilename
 
-from enigma import ePixmap
-import os
 
 searchPaths = []
+lastPiconPath = ['/tmp/']
 
 def initPiconPaths():
 	global searchPaths
 	searchPaths = []
 	for mp in ('/tmp/', '/media/hdd/', '/usr/share/enigma2/'):
 		onMountpointAdded(mp)
+	for part in harddiskmanager.getMountedPartitions():
+		onMountpointAdded(part.mountpoint)
 
 def onMountpointAdded(mountpoint):
 	global searchPaths
@@ -27,12 +32,42 @@ def onMountpointAdded(mountpoint):
 	except Exception, ex:
 		print "[Picon] Failed to investigate %s:" % mountpoint, ex
 
+def onMountpointRemoved(mountpoint):
+	global searchPaths
+	path = os.path.join(mountpoint, 'picon') + '/'
+	try:
+		searchPaths.remove(path)
+		print "[Picon] removed path:", path
+	except:
+		pass
+
+def onPartitionChange(why, part):
+	if why == 'add':
+		onMountpointAdded(part.mountpoint)
+	elif why == 'remove':
+		onMountpointRemoved(part.mountpoint)
+
+def ifPiconExist(piconPath):
+	if pathExists(piconPath):
+		pngname = piconPath + serviceName + ".png"
+		if pathExists(pngname):
+			return pngname
+	return ""
+
 def findPicon(serviceName):
+	global lastPiconPath
+	for piconPath in lastPiconPath:
+		pngname = ifPiconExist(piconPath)
+		if pngname:
+			return pngname
 	for piconPath in searchPaths:
-		if pathExists(piconPath):
-			pngname = piconPath + serviceName + ".png"
-			if pathExists(pngname):
-				return pngname
+		pngname = ifPiconExist(piconPath)
+		if pngname:
+			if '/tmp/' in searchPaths:
+				lastPiconPath = ['/tmp/', piconPath]
+			else:
+				lastPiconPath = [piconPath]
+			return pngname
 	return ""
 
 def getPiconName(serviceName):
@@ -102,5 +137,6 @@ class Picon(Renderer):
 					self.instance.hide()
 				self.pngname = pngname
 
+harddiskmanager.on_partition_list_change.append(onPartitionChange)
 initPiconPaths()
 
