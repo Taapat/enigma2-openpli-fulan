@@ -9,7 +9,7 @@ from Tools.Directories import pathExists, SCOPE_SKIN_IMAGE, \
 
 
 searchPaths = []
-lastPiconPath = ['/tmp/']
+lastPiconPath = ['/tmp/picon/']
 
 def initPiconPaths():
 	global searchPaths
@@ -47,7 +47,7 @@ def onPartitionChange(why, part):
 	elif why == 'remove':
 		onMountpointRemoved(part.mountpoint)
 
-def ifPiconExist(piconPath):
+def ifPiconExist(piconPath, serviceName):
 	if pathExists(piconPath):
 		pngname = piconPath + serviceName + ".png"
 		if pathExists(pngname):
@@ -57,14 +57,14 @@ def ifPiconExist(piconPath):
 def findPicon(serviceName):
 	global lastPiconPath
 	for piconPath in lastPiconPath:
-		pngname = ifPiconExist(piconPath)
+		pngname = ifPiconExist(piconPath, serviceName)
 		if pngname:
 			return pngname
 	for piconPath in searchPaths:
-		pngname = ifPiconExist(piconPath)
+		pngname = ifPiconExist(piconPath, serviceName)
 		if pngname:
-			if '/tmp/' in searchPaths:
-				lastPiconPath = ['/tmp/', piconPath]
+			if piconPath != '/tmp/picon/' and '/tmp/picon/' in searchPaths:
+				lastPiconPath = ['/tmp/picon/', piconPath]
 			else:
 				lastPiconPath = [piconPath]
 			return pngname
