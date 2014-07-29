@@ -1250,6 +1250,9 @@ msgstr "Uzstāda cik ilgi infojosla paliek redzama pēc aktivizācijas."
 msgid "Configure for how many minutes finished events should remain visible in the EPG. Useful when you need information about an event which has just finished, or has been delayed."
 msgstr "Uzstāda cik minūtes pabeigtiem notikumiem jāpaliek redzamiem EPG. Noderīgi, ja jums ir nepieciešama informācija par kādu notikumu, kas tikko ir pabeigts, vai ir atlikts."
 
+msgid "Configure how left and right buttons will be used in zap control."
+msgstr "Uzstāda kā kreisā un labā poga tiek lietota pārslēgšanai."
+
 msgid "Configure how recording filenames are constructed."
 msgstr "Uzstāda kā tiek sastādīti ierakstu failu vārdi."
 
@@ -1748,6 +1751,9 @@ msgstr "dec"
 
 msgid "December"
 msgstr "decembris"
+
+msgid "Decreases the volume"
+msgstr "Samazina skaļumu"
 
 msgid "Deep standby"
 msgstr "Dziļā gaidstāve"
@@ -2759,6 +2765,9 @@ msgstr "Nepareizs PiP kanāla tips!"
 msgid "Increased voltage"
 msgstr "Palielināt spriegumu"
 
+msgid "Increases the volume"
+msgstr "Palielina skaļumu"
+
 msgid "Index"
 msgstr "Indekss"
 
@@ -3003,6 +3012,9 @@ msgstr "Iziet no DVD atskaņotāja?"
 
 msgid "Left"
 msgstr "Kreisais"
+
+msgid "Left and right button zap controlling style"
+msgstr "Kreisās un labās pogas pārslēgšanas stils"
 
 msgid "Left from servicename"
 msgstr "Pa kreisi no kanāla nosaukuma"
