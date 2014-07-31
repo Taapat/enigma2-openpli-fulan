@@ -519,7 +519,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 
 	def openEventView(self):
 		if self.infobar:
-			self.infobar.showDefaultEPG()
+			self.infobar.openEventView()
 
 	def showEventInfoPlugins(self):
 		if self.infobar:

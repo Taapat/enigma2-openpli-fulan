@@ -332,9 +332,13 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			self.show()
 			if self.secondInfoBarScreen:
 				self.secondInfoBarScreen.hide()
-		elif isStandardInfoBar(self) and config.usage.show_second_infobar.value == "EPG":
+		elif config.usage.show_second_infobar.value == "EPG":
+				self.hide()
+				self.hideTimer.stop()
 				self.showDefaultEPG()
-		elif isStandardInfoBar(self) and config.usage.show_second_infobar.value == "Event":
+		elif config.usage.show_second_infobar.value == "Event":
+				self.hide()
+				self.hideTimer.stop()
 				self.openEventView()
 		elif self.secondInfoBarScreen and config.usage.show_second_infobar.value and not self.secondInfoBarScreen.shown:
 			self.secondInfoBarScreen.show()
@@ -343,6 +347,9 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			self.hide()
 			self.hideTimer.stop()
 			self.openEventView()
+		else:
+			self.hide()
+			self.hideTimer.stop()
 
 	def lockShow(self):
 		self.__locked = self.__locked + 1
@@ -1153,9 +1160,6 @@ class InfoBarEPG:
 			if epglist:
 				self.eventView = self.session.openWithCallback(self.closed, EventViewEPGSelect, epglist[0], ServiceReference(ref), self.eventViewCallback, self.openSingleServiceEPG, self.openMultiServiceEPG, self.openSimilarList)
 				self.dlg_stack.append(self.eventView)
-		if not epglist:
-			print "no epg for the service avail.. so we show multiepg instead of eventinfo"
-			self.openMultiServiceEPG(False)
 
 	def eventViewCallback(self, setEvent, setService, val): #used for now/next displaying
 		epglist = self.epglist
