@@ -58,7 +58,6 @@ unsigned int NationalOptionSubsets[13*14] = {
 	0, 0xee8080/*FIXME*/, 0xc7a7, 0xc4b0, 0xc59e, 0xc396, 0xc387, 0xc39c, 0xc7a6, 0xc4b1, 0xc59f, 0xc3b6, 0xc3a7, 0xc3bc  // Turkish
 };
 
-const int eDVBTeletextParser::max_id = 26;
 const char * const eDVBTeletextParser::my_country_codes[] =
 { "und", "eng", "ger", "swe", "fin", "hun", "ita", "fra",
   "por", "spa", "cze", "slk", "pol", "tur", "srp", "hrv",
