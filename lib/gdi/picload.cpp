@@ -207,7 +207,7 @@ static unsigned char *bmp_load(const char *file,  int *x, int *y)
 					read(fd, buff, skip);
 				wr_buffer -= (*x) * 6;
 			}
-			delete tbuffer;
+			delete [] tbuffer;
 			break;
 		}
 		case 8:
@@ -231,7 +231,7 @@ static unsigned char *bmp_load(const char *file,  int *x, int *y)
 					read(fd, buff, skip);
 				wr_buffer -= (*x) * 3;
 			}
-			delete tbuffer;
+			delete [] tbuffer;
 			break;
 		}
 		case 24:
