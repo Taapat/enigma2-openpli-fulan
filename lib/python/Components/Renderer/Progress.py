@@ -28,8 +28,6 @@ class Progress(VariableValue, Renderer):
 			None
 #+++<
 
-	GUI_WIDGET = eSlider
-
 	def postWidgetCreate(self, instance):
 #+++>
 		try:

@@ -1307,7 +1307,7 @@ class ChannelSelectionBase(Screen):
 		if len(self.zapNumber)>4:
 			self.clearZapNumber()
 		self.zapNumber = self.zapNumber + str(number)
-		ref, bouquet = Screens.InfoBar.InfoBar.instance.searchNumber(int(self.zapNumber))
+		ref, bouquet = Screens.InfoBar.InfoBar.instance.searchNumber(int(self.zapNumber), bouquet=self.getRoot())
 		if ref:
 			if not ref.flags & eServiceReference.isMarker:
 				self.enterUserbouquet(bouquet)
@@ -1909,13 +1909,12 @@ class ChannelSelectionRadio(ChannelSelectionBase, ChannelSelectionEdit, ChannelS
 		self["RdsActions"].setEnabled(False)
 		infobar.rds_display.onRassInteractivePossibilityChanged.append(self.RassInteractivePossibilityChanged)
 		self.onClose.append(self.__onClose)
+		self.onExecBegin.append(self.__onExecBegin)
+		self.onExecEnd.append(self.__onExecEnd)
 
 	def __onClose(self):
 		lastservice = eServiceReference(config.tv.lastservice.value)
 		self.session.nav.playService(lastservice)
-
-	def numberZapActions(self, number):
-		pass
 
 	def startRassInteractive(self):
 		self.info.hide();
@@ -1929,6 +1928,12 @@ class ChannelSelectionRadio(ChannelSelectionBase, ChannelSelectionEdit, ChannelS
 	def RassInteractivePossibilityChanged(self, state):
 		self["RdsActions"].setEnabled(state)
 ########## RDS Radiotext / Rass Support END
+
+	def __onExecBegin(self):
+		self.info.show()
+
+	def __onExecEnd(self):
+		self.info.hide()
 
 	def cancel(self):
 		self.infobar.rds_display.onRassInteractivePossibilityChanged.remove(self.RassInteractivePossibilityChanged)
@@ -2032,7 +2037,7 @@ class SimpleChannelSelection(ChannelSelectionBase):
 	def layoutFinished(self):
 		self.setModeTv()
 
-	def numberZapActions(self, number):
+	def saveRoot(self):
 		pass
 
 	def channelSelected(self): # just return selected service
