@@ -29,6 +29,12 @@ eDVBTextEncodingHandler::eDVBTextEncodingHandler()
 	if (f)
 	{
 		char *line = (char*) malloc(256);
+		if (line == NULL)
+		{
+			eDebug("[eDVBTextEncodingHandler] unable to allocate memory");
+			fclose(f);
+			return;
+		}
 		size_t bufsize=256;
 		char countrycode[256];
 		while( getline(&line, &bufsize, f) != -1 )
