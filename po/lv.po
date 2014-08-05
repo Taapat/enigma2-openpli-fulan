@@ -7375,6 +7375,9 @@ msgstr "faila nosaukums"
 msgid "film/cinema"
 msgstr "filmas/kino"
 
+msgid "find currently played service"
+msgstr "atrast servisu kuru pašreiz skataties"
+
 msgid "fine arts"
 msgstr "tēlotājmāksla"
 
