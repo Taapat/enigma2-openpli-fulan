@@ -166,7 +166,7 @@ class UpdatePlugin(Screen):
 			if self.updating:
 				self.updating = False
 				self.ipkg.startCmd(IpkgComponent.CMD_UPGRADE_LIST)
-			elif self.ipkg.currentCommand == IpkgComponent.CMD_UPGRADE_LIST:
+			elif self.ipkg.currentCommand == IpkgComponent.CMD_UPGRADE_LIST and self.error == 0:
 				self.total_packages = len(self.ipkg.getFetchedList())
 				if self.total_packages:
 					latestImageTimestamp = self.getLatestImageTimestamp()

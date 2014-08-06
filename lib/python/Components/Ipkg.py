@@ -10,10 +10,11 @@ def opkgExtraDestinations():
 	return ''.join([" --dest %s:%s" % (i,i) for i in opkgDestinations])
 
 def opkgAddDestination(mountpoint):
-	global opkgDestinations
-	if mountpoint not in opkgDestinations:
-		opkgDestinations.append(mountpoint)
-		print "[Ipkg] Added to OPKG destinations:", mountpoint
+	pass
+	#global opkgDestinations
+	#if mountpoint not in opkgDestinations:
+		#opkgDestinations.append(mountpoint)
+		#print "[Ipkg] Added to OPKG destinations:", mountpoint
 
 def onPartitionChange(why, part):
 	global opkgDestinations
@@ -155,14 +156,6 @@ class IpkgComponent:
 				# don't necessarily start at the beginning of a line
 				self.callCallbacks(self.EVENT_MODIFIED, data.split(' \'', 3)[1][:-1])
 			elif data[:17] == 'Collected errors:':
-				self.callCallbacks(self.EVENT_ERROR, None)
-			elif 'Unknown dest name' in  data:
-				mountpoint = data.split(':')[3][:-2]
-				try:
-					opkgDestinations.remove(mountpoint)
-					print "[Ipkg] Removed from OPKG destinations:", mountpoint
-				except:
-					pass
 				self.callCallbacks(self.EVENT_ERROR, None)
 		except Exception, ex:
 			print "[Ipkg] Failed to parse: '%s'" % data
