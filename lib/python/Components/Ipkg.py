@@ -154,6 +154,16 @@ class IpkgComponent:
 				# if we get multiple config file update questions, the next ones
 				# don't necessarily start at the beginning of a line
 				self.callCallbacks(self.EVENT_MODIFIED, data.split(' \'', 3)[1][:-1])
+			elif data[:17] == 'Collected errors:':
+				self.callCallbacks(self.EVENT_ERROR, None)
+			elif 'Unknown dest name' in  data:
+				mountpoint = data.split(':')[3][:-2]
+				try:
+					opkgDestinations.remove(mountpoint)
+					print "[Ipkg] Removed from OPKG destinations:", mountpoint
+				except:
+					pass
+				self.callCallbacks(self.EVENT_ERROR, None)
 		except Exception, ex:
 			print "[Ipkg] Failed to parse: '%s'" % data
 			print "[Ipkg]", ex
