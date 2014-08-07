@@ -23,11 +23,11 @@ def onPartitionChange(why, part):
 	if mountpoint and mountpoint != '/':
 		if why == 'add':
 			if opkgStatusPath == '':
-				# recent opkg versions
-				opkgStatusPath = 'var/lib/opkg/status'
+				# older opkg versions
+				opkgStatusPath = 'usr/lib/opkg/status'
 				if not os.path.exists(os.path.join('/', opkgStatusPath)):
-					# older opkg versions
-					opkgStatusPath = 'usr/lib/opkg/status'
+					# recent opkg versions
+					opkgStatusPath = 'var/lib/opkg/status'
 			if os.path.exists(os.path.join(mountpoint, opkgStatusPath)):
 				opkgAddDestination(mountpoint)
 		elif why == 'remove':
