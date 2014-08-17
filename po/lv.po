@@ -1584,7 +1584,7 @@ msgid "Convert ext3 to ext4"
 msgstr "Pārveidot ext3 uz ext4"
 
 msgid "Converting ext3 to ext4..."
-msgstr "Pārveidot ext3 uz ext4..."
+msgstr "Pārveido ext3 uz ext4..."
 
 msgid "Copy"
 msgstr "Kopēt"
@@ -5127,7 +5127,7 @@ msgid "Show status icons in movielist"
 msgstr "Statusa ikona filmu sarakstā"
 
 msgid "Show tag menu"
-msgstr "Rādīt birkas izvēlni"
+msgstr "Rādīt izvēlni birkām"
 
 msgid "Show the radio player..."
 msgstr "Klausīties radio..."
@@ -5868,7 +5868,7 @@ msgstr ""
 "Šis tests pārbauda domēna vārdu serveru (DNS) konfigurāciju.\n"
 "Ja Jūs saņemat \"neapstiprināts \" paziņojumu:\n"
 "- lūdzu pārbaudiet DHCP, kabeļus un adaptera iestījumus\n"
-"- ja uzstādījāt domēna vārdu serverus manuāli, pārbaudiet savus ierakstus \"DNS \" iestatījumi"
+"- ja uzstādījāt domēna vārdu serverus manuāli, pārbaudiet savus ierakstus \"DNS\" iestatījumos"
 
 msgid ""
 "This test checks whether a network cable is connected to your LAN adapter.\n"
