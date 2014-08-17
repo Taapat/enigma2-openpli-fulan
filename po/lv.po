@@ -4166,7 +4166,7 @@ msgstr "Spiediet OK, lai rediģētu iestatījumus."
 
 #, python-format
 msgid "Press OK to get further details for %s"
-msgstr "Spiediet OK turpmākai informācijai priekš %s"
+msgstr "Spiediet OK turpmākai informācijai %s"
 
 msgid "Press OK to scan"
 msgstr "Spiediet OK, lai meklētu"
@@ -5001,7 +5001,7 @@ msgid "Short filenames"
 msgstr "Īsie failu nosaukumi"
 
 msgid "Show EIT now/next in infobar"
-msgstr "Rādīt EIT pašreiz/nākošais infojoslā"
+msgstr "Rādīt EIT pašreiz/nākamais infojoslā"
 
 msgid "Show EPG for current channel..."
 msgstr "Rādīt EPG pašreizējam kanālam..."
@@ -5618,7 +5618,7 @@ msgid "TRANSLATOR_INFO"
 msgstr "Taapat, Madars Auns Latvija, Talsi"
 
 msgid "TS file is too large for ISO9660 level 1!"
-msgstr "TS fails ir par lielu priekš ISO9660 level 1!"
+msgstr "TS fails ir par lielu ISO9660 level 1!"
 
 msgid "TSID"
 msgstr "TSID"
@@ -6654,7 +6654,7 @@ msgid "When enabled, deleted recordings are moved to the trash can, instead of b
 msgstr "Ja ieslēgts, dzēstie ieraksti tiks pārvietoti uz miskasti nevis neatgriezeniski dzēsti."
 
 msgid "When enabled, display the EIT now/next eventdata in infobar. When disabled, display now/next eventdata from the EPG cache instead."
-msgstr "Ja ieslēgts, attēlos pašreiz/nākošais EIT notikumus infojoslā. Ja izslēgts pašreiz/nākošais notikumi netiks rādīti no EPG kešatmiņas."
+msgstr "Ja ieslēgts, attēlos pašreiz/nākamais EIT notikumus infojoslā. Ja izslēgts pašreiz/nākamais notikumi netiks rādīti no EPG kešatmiņas."
 
 msgid "When enabled, encryption info will be shown in the infobar (when supported by the skin)."
 msgstr "Ja ieslēgts, infojoslā tiks attēlota kodēšanas informācija (ja to uztur ādiņa)."
