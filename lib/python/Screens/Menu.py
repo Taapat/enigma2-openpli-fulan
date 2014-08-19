@@ -8,14 +8,17 @@ from Components.config import config
 from Components.SystemInfo import SystemInfo
 
 from Tools.BoundFunction import boundFunction
-from Tools.Directories import resolveFilename, SCOPE_SKIN
+from Tools.Directories import resolveFilename, fileExists, SCOPE_SKIN, SCOPE_CONFIG
 
 import xml.etree.cElementTree
 
 from Screens.Setup import Setup, getSetupTitle
 
 # read the menu
-mdom = xml.etree.cElementTree.parse(resolveFilename(SCOPE_SKIN, 'menu.xml'))
+menu = resolveFilename(SCOPE_CONFIG, 'menu.xml')
+if not fileExists(menu):
+	menu = resolveFilename(SCOPE_SKIN, 'menu.xml')
+mdom = xml.etree.cElementTree.parse(menu)
 
 class MenuUpdater:
 	def __init__(self):
