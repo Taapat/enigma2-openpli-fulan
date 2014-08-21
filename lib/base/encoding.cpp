@@ -32,7 +32,6 @@ eDVBTextEncodingHandler::eDVBTextEncodingHandler()
 		if (line == NULL)
 		{
 			eDebug("[eDVBTextEncodingHandler] unable to allocate memory");
-			fclose(f);
 			return;
 		}
 		size_t bufsize=256;
