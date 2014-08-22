@@ -146,7 +146,7 @@ public:
 	void thread();
 	void mmiOpened() { mmi_active = true; };
 	void mmiClosed() { mmi_active = false; };
-	void process_tpdu(unsigned char tpdu_tag, __u8* data, int asn_data_length, int con_id);
+	void process_tpdu(unsigned char tpdu_tag, uint8_t* data, int asn_data_length, int con_id);
 	bool sendCreateTC();
 	eData sendData(unsigned char* data, int len);
 	struct timeval tx_time;

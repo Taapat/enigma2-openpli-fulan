@@ -176,7 +176,7 @@ void gPixmap::fill(const gRegion &region, const gColor &color)
 		if (surface->bpp == 8)
 		{
 			for (int y=area.top(); y<area.bottom(); y++)
-		 		memset(((__u8*)surface->data)+y*surface->stride+area.left(), color.color, area.width());
+		 		memset(((uint8_t*)surface->data)+y*surface->stride+area.left(), color.color, area.width());
 		} else if (surface->bpp == 16)
 		{
 			uint32_t icol;

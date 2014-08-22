@@ -147,7 +147,7 @@ bool eDVBCISlot::sendCreateTC()
 	return true;
 }
 
-void eDVBCISlot::process_tpdu(unsigned char tpdu_tag, __u8* data, int asn_data_length, int con_id)
+void eDVBCISlot::process_tpdu(unsigned char tpdu_tag, uint8_t* data, int asn_data_length, int con_id)
 {
 	switch (tpdu_tag)
 	{
@@ -177,7 +177,7 @@ void eDVBCISlot::process_tpdu(unsigned char tpdu_tag, __u8* data, int asn_data_l
 		{
 			int new_data_length = receivedLen + asn_data_length;
 			printf("Got \"Data More\" from Module\n");
-			__u8 *new_data_buffer = (__u8*) realloc(receivedData, new_data_length);
+			uint8_t *new_data_buffer = (uint8_t*) realloc(receivedData, new_data_length);
 			receivedData = new_data_buffer;
 			memcpy(receivedData + receivedLen, data, asn_data_length);
 			receivedLen = new_data_length;
@@ -207,7 +207,7 @@ void eDVBCISlot::process_tpdu(unsigned char tpdu_tag, __u8* data, int asn_data_l
 				/* chained package */
 				int new_data_length = receivedLen + asn_data_length;
 				printf("->chained data\n");
-				__u8 *new_data_buffer = (__u8*) realloc(receivedData, new_data_length);
+				uint8_t *new_data_buffer = (uint8_t*) realloc(receivedData, new_data_length);
 				receivedData = new_data_buffer;
 				memcpy(receivedData + receivedLen, data, asn_data_length);
 				receivedLen = new_data_length;

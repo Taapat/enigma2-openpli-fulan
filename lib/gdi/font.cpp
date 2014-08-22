@@ -899,14 +899,14 @@ void eTextPara::blit(gDC &dc, const ePoint &offset, const gRGB &background, cons
 
 	register int opcode = -1;
 
-	__u32 lookup32_normal[16];
-	__u32 lookup32_invert[16];
-	__u16 *lookup16_normal = (__u16*)lookup32_normal; // shares the same memory
-	__u16 *lookup16_invert = (__u16*)lookup32_invert;
+	uint32_t lookup32_normal[16];
+	uint32_t lookup32_invert[16];
+	uint16_t *lookup16_normal = (uint16_t*)lookup32_normal; // shares the same memory
+	uint16_t *lookup16_invert = (uint16_t*)lookup32_invert;
 	gColor *lookup8_normal = 0;
 	gColor *lookup8_invert = (gColor*)lookup32_invert;
-	__u32 *lookup32;
-	__u16 *lookup16;
+	uint32_t *lookup32;
+	uint16_t *lookup16;
 	gColor *lookup8;
 
 	gRegion sarea(eRect(0, 0, surface->x, surface->y));
@@ -1021,8 +1021,8 @@ void eTextPara::blit(gDC &dc, const ePoint &offset, const gRGB &background, cons
 		}
 
 		int rxbase, rybase;
-		__u8 *dbase;
-		__u8 *sbase;
+		uint8_t *dbase;
+		uint8_t *sbase;
 		int sxbase;
 		int sybase;
 		int pitch;
@@ -1050,12 +1050,12 @@ void eTextPara::blit(gDC &dc, const ePoint &offset, const gRGB &background, cons
 			sybase=glyph_bitmap->height;
 			pitch = glyph_bitmap->pitch;
 		}
-		dbase = (__u8*)(surface->data)+buffer_stride*rybase+rxbase*surface->bypp;
+		dbase = (uint8_t*)(surface->data)+buffer_stride*rybase+rxbase*surface->bypp;
 		for (unsigned int c = 0; c < clip.rects.size(); ++c)
 		{
 			int rx = rxbase, ry = rybase;
-			__u8 *d = dbase;
-			__u8 *s = sbase;
+			uint8_t *d = dbase;
+			uint8_t *s = sbase;
 			register int sx = sxbase;
 			int sy = sybase;
 			if ((sy+ry) >= clip.rects[c].bottom())
@@ -1086,7 +1086,7 @@ void eTextPara::blit(gDC &dc, const ePoint &offset, const gRGB &background, cons
 				case 0: 		// 4bit lookup to 8bit
 					{
 					register int extra_buffer_stride = buffer_stride - sx;
-					register __u8 *td=d;
+					register uint8_t *td=d;
 					for (int ay = 0; ay < sy; ay++)
 					{
 						register int ax;
@@ -1106,7 +1106,7 @@ void eTextPara::blit(gDC &dc, const ePoint &offset, const gRGB &background, cons
 				case 1:	// 8bit direct
 					{
 					register int extra_buffer_stride = buffer_stride - sx;
-					register __u8 *td=d;
+					register uint8_t *td=d;
 					for (int ay = 0; ay < sy; ay++)
 					{
 						register int ax;
@@ -1123,7 +1123,7 @@ void eTextPara::blit(gDC &dc, const ePoint &offset, const gRGB &background, cons
 				case 2: // 16bit
                                         {
                                         int extra_buffer_stride = (buffer_stride >> 1) - sx;
-                                        register __u16 *td = (__u16*)d;
+                                        register uint16_t *td = (uint16_t*)d;
                                         for (int ay = 0; ay != sy; ay++)
                                         {
                                                 register int ax;
@@ -1142,7 +1142,7 @@ void eTextPara::blit(gDC &dc, const ePoint &offset, const gRGB &background, cons
 				case 3: // 32bit
 					{
 					register int extra_buffer_stride = (buffer_stride >> 2) - sx;
-					register __u32 *td=(__u32*)d;
+					register uint32_t *td=(uint32_t*)d;
 					for (int ay = 0; ay < sy; ay++)
 					{
 						register int ax;

@@ -1894,7 +1894,7 @@ void eEPGCache::channel_data::readData( const uint8_t *data, int source)
  * e2 and all libs into an IDE for better overview ;)
  *
  */
-	const __u8 *aligned_data = NULL;
+	const uint8_t *aligned_data = NULL;
 	bool isNotAligned = false;
 	
 	if ((unsigned int) data % 4 != 0)
@@ -1911,7 +1911,7 @@ void eEPGCache::channel_data::readData( const uint8_t *data, int source)
 		if ( EIT_SIZE >= len )
 			return;
 
-		aligned_data = (const __u8 *) malloc(len);
+		aligned_data = (const uint8_t *) malloc(len);
 
 		if ((unsigned int)aligned_data % 4 != 0)
 		{
@@ -1919,7 +1919,7 @@ void eEPGCache::channel_data::readData( const uint8_t *data, int source)
 		}
 
 		/*eDebug("%p %p\n", aligned_data, data); */
-		memcpy((void *) aligned_data, (const __u8 *) data, len);
+		memcpy((void *) aligned_data, (const uint8_t *) data, len);
 		data = aligned_data;
 	}
 #endif
@@ -3156,7 +3156,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 									eventData::descriptors.find(crc);
 								if (it != eventData::descriptors.end())
 								{
-									__u8 *descr_data = it->second.second;
+									uint8_t *descr_data = it->second.second;
 									switch(descr_data[0])
 									{
 									case 0x4D ... 0x4E:
@@ -4201,7 +4201,7 @@ void eEPGCache::channel_data::readMHWData(const uint8_t *data)
 			((summary->program_id_ml)<<8)|(summary->program_id_lo);
 		int len = ((data[1]&0xf)<<8) + data[2];
 
-		// ugly workaround to convert const __u8* to char*
+		// ugly workaround to convert const uint8_t* to char*
 		char *tmp=0;
 		memcpy(&tmp, &data, sizeof(void*));
 		tmp[len+3] = 0;	// Terminate as a string.
@@ -4474,7 +4474,7 @@ void eEPGCache::channel_data::readMHWData2(const uint8_t *data)
 //				eDebug ("summary id %04x\n", summary_id);
 //				eDebug("[%02x %02x] %02x %02x %02x %02x %02x %02x %02x %02x XX\n", data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13] );
 
-				// ugly workaround to convert const __u8* to char*
+				// ugly workaround to convert const uint8_t* to char*
 				char *tmp=0;
 				memcpy(&tmp, &data, sizeof(void*));
 

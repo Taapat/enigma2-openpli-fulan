@@ -25,14 +25,14 @@ inline int toBCD(int dec)
 	return int(dec/10)*0x10 + dec%10;
 }
 
-time_t parseDVBtime(__u8 t1, __u8 t2, __u8 t3, __u8 t4, __u8 t5, __u16 *hash=0);
+time_t parseDVBtime(uint8_t t1, uint8_t t2, uint8_t t3, uint8_t t4, uint8_t t5, uint16_t *hash=0);
 
 class TDT: public eGTable
 {
 	eDVBChannel *chan;
 	ePtr<iDVBDemux> demux;
 	ePtr<eTimer> m_interval_timer;
-	int createTable(unsigned int nr, const __u8 *data, unsigned int max);
+	int createTable(unsigned int nr, const uint8_t *data, unsigned int max);
 	void ready(int);
 	int update_count;
 public:
