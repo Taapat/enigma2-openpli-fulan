@@ -456,7 +456,11 @@ class InfoBarNumberZap:
 				"8": self.keyNumberGlobal,
 				"9": self.keyNumberGlobal,
 				"0": self.keyNumberGlobal,
+				"recall": self.keyRecall,
 			})
+
+	def keyRecall(self):
+		self.keyNumberGlobal(0);
 
 	def keyNumberGlobal(self, number):
 		if number == 0:

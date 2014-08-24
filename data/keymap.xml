@@ -190,6 +190,7 @@
 		<key id="KEY_8" mapto="8" flags="m" />
 		<key id="KEY_9" mapto="9" flags="m" />
 		<key id="KEY_0" mapto="0" flags="m" />
+		<key id="KEY_BACK" mapto="recall" flags="m" />
 	</map>
 
 	<map context="TextEntryActions">
