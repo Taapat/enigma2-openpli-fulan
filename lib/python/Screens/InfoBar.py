@@ -7,7 +7,6 @@ import Screens.MovieSelection
 
 from Screen import Screen
 from Screens.MessageBox import MessageBox
-from Components.VolumeControl import VolumeControl
 
 profile("LOAD:enigma")
 import enigma
@@ -56,8 +55,6 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 				"showRadio": (self.showRadio, _("Show the radio player...")),
 				"showTv": (self.showTv, _("Show the tv player...")),
 				"toogleTvRadio": (self.toogleTvRadio, _("toggels betwenn tv and radio...")),
-				"volumeUp": (self._volUp, _("volume up")),
-				"volumeDown": (self._volDown, _("volume down")),
 			}, prio=2)
 
 		self.allowPiP = True
@@ -84,12 +81,6 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 		self.current_begin_time=0
 		assert InfoBar.instance is None, "class InfoBar is a singleton class and just one instance of this class is allowed!"
 		InfoBar.instance = self
-
-	def _volUp(self):
-		VolumeControl.instance.volUp()
-
-	def _volDown(self):
-		VolumeControl.instance.volDown()
 
 	def __onClose(self):
 		InfoBar.instance = None

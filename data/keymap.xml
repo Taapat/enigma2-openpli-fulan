@@ -133,8 +133,6 @@
 		<key id="KEY_FIND" mapto="showMovies" flags="m" />
 		<key id="KEY_ARCHIVE" mapto="showMovies" flags="m" />
 		<key id="KEY_TV2" mapto="toogleTvRadio" flags="m" />
-		<key id="KEY_VOLUMEUP" mapto="volumeUp" flags="mr" />
-		<key id="KEY_VOLUMEDOWN" mapto="volumeDown" flags="mr" />
 	</map>
 
 	<map context="InfobarAudioSelectionActions">
