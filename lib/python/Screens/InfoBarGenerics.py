@@ -557,8 +557,6 @@ class InfoBarChannelSelection:
 				"keyChannelDown": (self.keyChannelDownCheck, self.getKeyChannelDownHelptext), 	
 				"showFavourites": (self.showFavourites, _("show favourites")),
 				"showSatellites": (self.showSatellites, _("show satellites")),
-				"volumeUp": (self.volumeUp, _("volume up")),
-				"volumeDown": (self.volumeDown, _("volume down")),
 			})
 
 	def showTvChannelList(self, zap=False):
@@ -604,17 +602,17 @@ class InfoBarChannelSelection:
 			self.switchChannelDown()
 
 	def keyLeftCheck(self):
-		if config.usage.leftright_zap_controls.value == "neutrino":
+		if "neutrino" in config.usage.leftright_zap_controls.value:
 			self.switchChannelUp()
-		elif config.usage.leftright_zap_controls.value == "volume":
+		elif "volume" in config.usage.leftright_zap_controls.value:
 			self.volumeDown()
 		else:
 			self.zapUp()
 
 	def keyRightCheck(self):
-		if config.usage.leftright_zap_controls.value == "neutrino":
+		if "neutrino" in config.usage.leftright_zap_controls.value:
 			self.switchChannelDown()
-		elif config.usage.leftright_zap_controls.value == "volume":
+		elif "volume" in config.usage.leftright_zap_controls.value:
 			self.volumeUp()
 		else:
 			self.zapDown()
@@ -654,22 +652,22 @@ class InfoBarChannelSelection:
 		return value
 
 	def getKeyLeftHelptext(self):
-		if config.usage.leftright_zap_controls.value == "neutrino":
+		if "neutrino" in config.usage.leftright_zap_controls.value:
 			value = _("Open service list")
 			if not "keep" in config.usage.servicelist_cursor_behavior.value:
 				value += " " + _("and select previous channel")
-		elif config.usage.leftright_zap_controls.value == "volume":
+		elif "volume" in config.usage.leftright_zap_controls.value:
 			value = _("Decreases the volume")
 		else:
 			value = _("Switch to previous channel")
 		return value
 
 	def getKeyRightHelptext(self):
-		if config.usage.leftright_zap_controls.value == "neutrino":
+		if "neutrino" in config.usage.leftright_zap_controls.value:
 			value = _("Open service list")
 			if not "keep" in config.usage.servicelist_cursor_behavior.value:
 				value += " " + _("and select next channel")
-		elif config.usage.leftright_zap_controls.value == "volume":
+		elif "volume" in config.usage.leftright_zap_controls.value:
 			value = _("Increases the volume")
 		else:
 			value = _("Switch to next channel")
