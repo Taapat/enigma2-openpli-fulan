@@ -450,7 +450,8 @@ class Wizard(Screen):
 				self.selection = self["list"].current[-1]
 				print "self.selection:", self.selection
 #+++>
-				evfd.getInstance().vfd_write_string("-> " + self.selection)
+				if self.selection:
+					evfd.getInstance().vfd_write_string("-> " + self.selection)
 #+++<
 				exec("self." + self.wizard[self.currStep]["onselect"] + "()")
 
