@@ -509,9 +509,6 @@ msgstr "A/V iestatījumi"
 msgid "AC3/DTS downmix"
 msgstr "AC3/DTS pārveidošana"
 
-msgid "APN"
-msgstr "APN"
-
 msgid "Abort"
 msgstr "Atcelt"
 
@@ -531,7 +528,7 @@ msgid "Action on short powerbutton press"
 msgstr "Īsi nospiežot izslēgšanas taustiņu"
 
 msgid "Activate Keymap now?"
-msgstr "Aktivizēt izkārtojumu tagad"
+msgstr "Aktivizēt izkārtojumu?"
 
 msgid "Activate Picture in Picture"
 msgstr "Aktivizēt funkciju attēls attēlā"
@@ -605,9 +602,6 @@ msgstr "Pievienot favorītiem"
 
 msgid "Add/remove change timer for current event"
 msgstr "Pievienot/izņemt mainīt taimeri tekošajam notikumam"
-
-msgid "Additional PPPD options"
-msgstr "Papildus PPPD opcijas"
 
 msgid "Adjust 3D settings"
 msgstr "Pielāgot 3D iestatījumus"
@@ -796,10 +790,10 @@ msgid "Ask user"
 msgstr "Jautāt"
 
 msgid "Aspect list..."
-msgstr "Malu saraksts..."
+msgstr "Attēla samēri..."
 
 msgid "Aspect ratio"
-msgstr "Malu attiecība"
+msgstr "Attēla samērs"
 
 msgid "At beginning"
 msgstr "Sākt no sākuma"
@@ -874,7 +868,7 @@ msgid "Auto scart switching"
 msgstr "Automātiska SCART pārslēgšana"
 
 msgid "Auto start"
-msgstr "Auto starts"
+msgstr "Autostarts"
 
 msgid "Auto(not available)"
 msgstr "Auto(nav pieejams)"
@@ -1874,9 +1868,6 @@ msgstr "DiSEqC ports: %s: %s"
 
 msgid "DiSEqC-tester settings"
 msgstr "DiSEqC-testera iestatījumi"
-
-msgid "Dial number"
-msgstr "Iezvana numurs"
 
 msgid "Digital contour removal"
 msgstr "Digitālo kontūru noņemšana"
