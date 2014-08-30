@@ -592,18 +592,25 @@ class InfoBarChannelSelection:
 	def keyUpCheck(self):
 		if config.usage.oldstyle_zap_controls.value:
 			self.zapDown()
+		elif config.usage.volume_instead_of_channelselection.value:
+			VolumeControl.instance and VolumeControl.instance.volUp()
 		else:
 			self.switchChannelUp()
 
 	def keyDownCheck(self):
 		if config.usage.oldstyle_zap_controls.value:
 			self.zapUp()
+		elif config.usage.volume_instead_of_channelselection.value:
+			VolumeControl.instance and VolumeControl.instance.volDown()
 		else:
 			self.switchChannelDown()
 
 	def keyLeftCheck(self):
 		if "neutrino" in config.usage.leftright_zap_controls.value:
-			self.switchChannelUp()
+			if config.usage.volume_instead_of_channelselection.value:
+				VolumeControl.instance and VolumeControl.instance.volDown()
+			else:
+				self.switchChannelUp()
 		elif "volume" in config.usage.leftright_zap_controls.value:
 			self.volumeDown()
 		else:
@@ -611,7 +618,10 @@ class InfoBarChannelSelection:
 
 	def keyRightCheck(self):
 		if "neutrino" in config.usage.leftright_zap_controls.value:
-			self.switchChannelDown()
+			if config.usage.volume_instead_of_channelselection.value:
+				VolumeControl.instance and VolumeControl.instance.volUp()
+			else:
+				self.switchChannelDown()
 		elif "volume" in config.usage.leftright_zap_controls.value:
 			self.volumeUp()
 		else:
@@ -637,25 +647,34 @@ class InfoBarChannelSelection:
 		if config.usage.oldstyle_zap_controls.value:
 			value = _("Switch to next channel")
 		else:
-			value = _("Open service list")
-			if not "keep" in config.usage.servicelist_cursor_behavior.value:
-				value += " " + _("and select previous channel")
+			if config.usage.volume_instead_of_channelselection.value:
+				value = _("Volume up")
+			else:
+				value = _("Open service list")
+				if not "keep" in config.usage.servicelist_cursor_behavior.value:
+					value += " " + _("and select previous channel")
 		return value
 
 	def getKeyDownHelpText(self):
 		if config.usage.oldstyle_zap_controls.value:
 			value = _("Switch to previous channel")
 		else:
-			value = _("Open service list")
-			if not "keep" in config.usage.servicelist_cursor_behavior.value:
-				value += " " + _("and select next channel")
+			if config.usage.volume_instead_of_channelselection.value:
+				value = _("Volume down")
+			else:
+				value = _("Open service list")
+				if not "keep" in config.usage.servicelist_cursor_behavior.value:
+					value += " " + _("and select next channel")
 		return value
 
 	def getKeyLeftHelptext(self):
 		if "neutrino" in config.usage.leftright_zap_controls.value:
-			value = _("Open service list")
-			if not "keep" in config.usage.servicelist_cursor_behavior.value:
-				value += " " + _("and select previous channel")
+			if config.usage.volume_instead_of_channelselection.value:
+				value = _("Volume down")
+			else:
+				value = _("Open service list")
+				if not "keep" in config.usage.servicelist_cursor_behavior.value:
+					value += " " + _("and select previous channel")
 		elif "volume" in config.usage.leftright_zap_controls.value:
 			value = _("Decreases the volume")
 		else:
@@ -664,9 +683,12 @@ class InfoBarChannelSelection:
 
 	def getKeyRightHelptext(self):
 		if "neutrino" in config.usage.leftright_zap_controls.value:
-			value = _("Open service list")
-			if not "keep" in config.usage.servicelist_cursor_behavior.value:
-				value += " " + _("and select next channel")
+			if config.usage.volume_instead_of_channelselection.value:
+				value = _("Volume up")
+			else:
+				value = _("Open service list")
+				if not "keep" in config.usage.servicelist_cursor_behavior.value:
+					value += " " + _("and select next channel")
 		elif "volume" in config.usage.leftright_zap_controls.value:
 			value = _("Increases the volume")
 		else:
