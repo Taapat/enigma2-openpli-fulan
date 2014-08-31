@@ -606,24 +606,20 @@ class InfoBarChannelSelection:
 			self.switchChannelDown()
 
 	def keyLeftCheck(self):
-		if "neutrino" in config.usage.leftright_zap_controls.value:
+		if config.usage.oldstyle_zap_controls.value:
 			if config.usage.volume_instead_of_channelselection.value:
 				VolumeControl.instance and VolumeControl.instance.volDown()
 			else:
 				self.switchChannelUp()
-		elif "volume" in config.usage.leftright_zap_controls.value:
-			self.volumeDown()
 		else:
 			self.zapUp()
 
 	def keyRightCheck(self):
-		if "neutrino" in config.usage.leftright_zap_controls.value:
+		if config.usage.oldstyle_zap_controls.value:
 			if config.usage.volume_instead_of_channelselection.value:
 				VolumeControl.instance and VolumeControl.instance.volUp()
 			else:
 				self.switchChannelDown()
-		elif "volume" in config.usage.leftright_zap_controls.value:
-			self.volumeUp()
 		else:
 			self.zapDown()
 
@@ -668,29 +664,25 @@ class InfoBarChannelSelection:
 		return value
 
 	def getKeyLeftHelptext(self):
-		if "neutrino" in config.usage.leftright_zap_controls.value:
+		if config.usage.oldstyle_zap_controls.value:
 			if config.usage.volume_instead_of_channelselection.value:
 				value = _("Volume down")
 			else:
 				value = _("Open service list")
 				if not "keep" in config.usage.servicelist_cursor_behavior.value:
 					value += " " + _("and select previous channel")
-		elif "volume" in config.usage.leftright_zap_controls.value:
-			value = _("Decreases the volume")
 		else:
 			value = _("Switch to previous channel")
 		return value
 
 	def getKeyRightHelptext(self):
-		if "neutrino" in config.usage.leftright_zap_controls.value:
+		if config.usage.oldstyle_zap_controls.value:
 			if config.usage.volume_instead_of_channelselection.value:
 				value = _("Volume up")
 			else:
 				value = _("Open service list")
 				if not "keep" in config.usage.servicelist_cursor_behavior.value:
 					value += " " + _("and select next channel")
-		elif "volume" in config.usage.leftright_zap_controls.value:
-			value = _("Increases the volume")
 		else:
 			value = _("Switch to next channel")
 		return value
@@ -766,11 +758,6 @@ class InfoBarChannelSelection:
 		self.session.execDialog(self.servicelist)
 		self.servicelist.showSatellites()
 
-	def volumeUp(self):
-		VolumeControl.instance.volUp()
-
-	def volumeDown(self):
-		VolumeControl.instance.volDown()
 
 class InfoBarMenu:
 	""" Handles a menu action, to open the (main) menu """
