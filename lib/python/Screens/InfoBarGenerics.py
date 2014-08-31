@@ -626,16 +626,12 @@ class InfoBarChannelSelection:
 	def keyChannelUpCheck(self):
 		if config.usage.zap_with_ch_buttons.value:
 			self.zapDown()
-		elif config.usage.ok_is_channelselection.value:
-			self.toggleShow()
 		else:
 			self.openServiceList()
 
 	def keyChannelDownCheck(self):
 		if config.usage.zap_with_ch_buttons.value:
 			self.zapUp()
-		elif config.usage.ok_is_channelselection.value:
-			self.toggleShow()
 		else:
 			self.openServiceList()
 
