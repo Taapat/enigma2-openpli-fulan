@@ -1267,9 +1267,6 @@ msgstr "Uzstāda cik ilgi infojosla paliek redzama pēc aktivizācijas."
 msgid "Configure for how many minutes finished events should remain visible in the EPG. Useful when you need information about an event which has just finished, or has been delayed."
 msgstr "Uzstāda cik minūtes pabeigtiem notikumiem jāpaliek redzamiem EPG. Noderīgi, ja jums ir nepieciešama informācija par kādu notikumu, kas tikko ir pabeigts, vai ir atlikts."
 
-msgid "Configure how left and right buttons will be used in zap control."
-msgstr "Uzstāda kā kreisā un labā poga tiek lietota pārslēgšanai."
-
 msgid "Configure how recording filenames are constructed."
 msgstr "Uzstāda kā tiek sastādīti ierakstu failu vārdi."
 
@@ -2178,6 +2175,9 @@ msgstr "Aktivizēt ViaSat EPG"
 msgid "Enable Virgin EPG"
 msgstr "Aktivizēt Virgin EPG"
 
+msgid "Enable volume control with arrow buttons"
+msgstr "Aktivizēt skaļuma regulēšanu ar virziena pogām"
+
 msgid "Enable Wake On LAN"
 msgstr "Aktivizēt pamošanos on LAN"
 
@@ -3041,9 +3041,6 @@ msgstr "Iziet no DVD atskaņotāja?"
 
 msgid "Left"
 msgstr "Kreisais"
-
-msgid "Left and right button zap controlling style"
-msgstr "Kreisās un labās pogas pārslēgšanas stils"
 
 msgid "Left from servicename"
 msgstr "Pa kreisi no kanāla nosaukuma"
@@ -6628,10 +6625,13 @@ msgid "When enabled the PiP can be closed by the exit button."
 msgstr "Ja ieslēgts attēls attēlā, var aizvērt ar exit taustiņu."
 
 msgid "When enabled the arrow buttons around the OK button will follow the 'neutrino' style zap controls instead of the enigma2 style."
-msgstr "Ja ieslēgts virziena pogas ap OK kananālu pārslēgšanai izmantos 'neutrino' stilu, nevis enigma2."
+msgstr "Ja ieslēgts, virziena pogas ap OK kananālu pārslēgšanai izmantos 'neutrino' stilu, nevis enigma2."
 
 msgid "When enabled the left, right, CH+/-, B+/-, P+/- buttons will follow the 'neutrino' style zap controls instead of the enigma2 style."
-msgstr "Ja ieslēgts pogas pa kreisi, pa labi, CH+/-, B+/-, P+/- pārslēgšanai izmantos 'neutrino' stilu nevis enigma2."
+msgstr "Ja ieslēgts, pogas pa kreisi, pa labi, CH+/-, B+/-, P+/- pārslēgšanai izmantos 'neutrino' stilu nevis enigma2."
+
+msgid "When enabled you can control the volume with the arrow buttons instead of getting the channel selection list"
+msgstr "Ja ieslēgts, ar virziena pogām ap OK jūs varat regulēt skaļumu, nevis atvērt kanālu sarakstu"
 
 msgid "When enabled you can specify a timeframe to ignore the shutdown timer when the receiver is in standby mode"
 msgstr "Ja ieslēgts jūs varat iestatīt laiku kādā ignorēt izslēgšanu, kamēr uztvērējs ir gaidstāves režīmā"
@@ -6640,10 +6640,10 @@ msgid "When enabled you can specify a timeframe were the inactivity sleeptimer i
 msgstr "Ja ieslēgts jūs varat iestatīt laiku kad neaktivitātes miega taimeris tiks ignorēts. Šinī laikā neaktivitātes noteikšna ir izslēgta bet arī neaktivitātes aizture ir izslēgta"
 
 msgid "When enabled you can zap channels with the CH+/-, B+/-, P+/- buttons instead of opening the channel selection list."
-msgstr "Ja ieslēgts jūs pa tiešo varat pārslēgt kanālus ar CH+/-, B+/-, P+/- pogām, nevis tikai atverot kanālu sarakstu."
+msgstr "Ja ieslēgts, jūs pa tiešo varat pārslēgt kanālus ar CH+/-, B+/-, P+/- pogām, nevis tikai atverot kanālu sarakstu."
 
 msgid "When enabled you get the channel selection list via the OK button, the infobar toggle is then transfered to exit button"
-msgstr "Ja ieslēgts jūs varat atvērt kanālu sarakstu ar OK pogu, info paneli varēs izsaukt ar exit pogu."
+msgstr "Ja ieslēgts, jūs varat atvērt kanālu sarakstu ar OK pogu, info paneli varēs izsaukt ar exit pogu."
 
 msgid "When enabled, AIT data will be included in http streams. This allows a client receiver to use HbbTV."
 msgstr "Ja ieslēgts, AIT dati tiks iekļauti http plūsmās. Tas atļaus klienta uztvērējam lietot HbbTV."
