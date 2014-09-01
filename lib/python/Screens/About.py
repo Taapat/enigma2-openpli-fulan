@@ -138,6 +138,9 @@ class CommitInfo(Screen):
 
 		self.project = 0
 		self.projects = [
+			("taapat-enigma2", "Taapat Enigma2"),
+			("taapat-amikoar-p", "Taapat amikoAR-P"),
+			("taapat-skin-dtv-hd-reloaded", "Taapat skin-dTV-HD-Reloaded"),
 			("enigma2", "Enigma2"),
 			("openpli-oe-core", "Openpli Oe Core"),
 			("enigma2-plugins", "Enigma2 Plugins"),
@@ -155,25 +158,33 @@ class CommitInfo(Screen):
 		self.Timer.start(50, True)
 
 	def readCommitLogs(self):
-		url = 'http://sourceforge.net/p/openpli/%s/feed' % self.projects[self.project][0]
-		commitlog = ""
 		from urllib2 import urlopen
-		try:
-			commitlog += 80 * '-' + '\n'
-			commitlog += url.split('/')[-2] + '\n'
-			commitlog += 80 * '-' + '\n'
-			for x in  urlopen(url, timeout=5).read().split('<title>')[2:]:
-				for y in x.split("><"):
-					if '</title' in y:
-						title = y[:-7]
-					if '</dc:creator' in y:
-						creator = y.split('>')[1].split('<')[0]
-					if '</pubDate' in y:
-						date = y.split('>')[1].split('<')[0][:-6]
-				commitlog += date + ' ' + creator + '\n' + title + 2 * '\n'
-			self.cachedProjects[self.projects[self.project][1]] = commitlog
-		except:
-			commitlog = _("Currently the commit log cannot be retrieved - please try later again")
+		feed = self.projects[self.project][0]
+		commitlog = 80 * '-' + '\n'
+		commitlog += feed + '\n'
+		commitlog += 80 * '-' + '\n'
+		if "taapat" in feed:
+			try:
+				url = open('/etc/opkg/official-feed.conf', 'r').read().split()[2]
+				url += '/' + feed + '.log'
+				commitlog += urlopen(url, timeout=5).read()
+			except:
+				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
+		else:
+			url = 'http://sourceforge.net/p/openpli/%s/feed' % feed
+			try:
+				for x in  urlopen(url, timeout=5).read().split('<title>')[2:]:
+					for y in x.split("><"):
+						if '</title' in y:
+							title = y[:-7]
+						if '</dc:creator' in y:
+							creator = y.split('>')[1].split('<')[0]
+						if '</pubDate' in y:
+							date = y.split('>')[1].split('<')[0][:-6]
+					commitlog += date + ' ' + creator + '\n' + title + 2 * '\n'
+				self.cachedProjects[self.projects[self.project][1]] = commitlog
+			except:
+				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
 		self["AboutScrollLabel"].setText(commitlog)
 
 	def updateCommitLogs(self):
