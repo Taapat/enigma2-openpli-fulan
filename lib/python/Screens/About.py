@@ -140,7 +140,8 @@ class CommitInfo(Screen):
 		self.projects = [
 			("taapat-enigma2", "Taapat Enigma2"),
 			("taapat-amikoar-p", "Taapat amikoAR-P"),
-			("taapat-skin-dtv-hd-reloaded", "Taapat skin-dTV-HD-Reloaded"),
+			("ar-p-enigma2-plugins-sh4", "AR-P Enigma2 Plugins sh4"),
+			("taapat-skin-dTV-HD-Reloaded", "Taapat skin-dTV-HD-Reloaded"),
 			("enigma2", "Enigma2"),
 			("openpli-oe-core", "Openpli Oe Core"),
 			("enigma2-plugins", "Enigma2 Plugins"),
@@ -163,7 +164,23 @@ class CommitInfo(Screen):
 		commitlog = 80 * '-' + '\n'
 		commitlog += feed + '\n'
 		commitlog += 80 * '-' + '\n'
-		if "taapat" in feed:
+		if "ar-p-" in feed or "-skin-" in feed:
+			if "ar-p-" in feed:
+				url = 'https://github.com/OpenAR-P/%s/commits/master' % feed[5:]
+			else:
+				url = 'https://github.com/Taapat/%s/commits/master' % feed[7:]
+			try:
+				for x in  urlopen(url, timeout=5).read().split('commit-title')[1:]:
+					for y in x.split('" ', 7):
+						if y[:7] == 'title="':
+							title = y.split('>', 1)[1].split('<', 1)[0]
+						if y[:4] == 'rel=':
+							author = y.split('>', 1)[1].split('<', 1)[0]
+							date = y.split('datetime="')[1][:10]
+					commitlog += date + ' ' + author + '\n' + title + 2 * '\n'
+			except:
+				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
+		elif "taapat" in feed:
 			try:
 				url = open('/etc/opkg/official-feed.conf', 'r').read().split()[2]
 				url += '/' + feed + '.log'
