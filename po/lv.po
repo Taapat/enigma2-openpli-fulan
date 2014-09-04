@@ -2166,6 +2166,9 @@ msgstr "Aktivizēt MHW EPG"
 msgid "Enable Netmed EPG"
 msgstr "Aktivizēt Netmed EPG"
 
+msgid "Enable OK as preview in channel selection"
+msgstr "Lietot OK priekšskatījumam kanālu sarakstā"
+
 msgid "Enable OK for channel selection"
 msgstr "Lietot OK kanālu saraksta atvēršanai"
 
@@ -5707,6 +5710,15 @@ msgstr ""
 msgid "The DVD standard doesn't support H.264 (HDTV) video streams. Do you want to create a special format data DVD (which will not play in stand-alone DVD players) instead?"
 msgstr "DVD standarts neatbalsta H.264 (HDTV) video. Vai jūs vēlaties izveidot īpaša formāta datu DVD (kuru nevarēs atskaņot standarta DVD atskaņotāji)?"
 
+msgid ""
+"The OpenPLi team would like to point out that upgrading to the latest nightly build comes not only with the latest features, but also with some risks. After the update, it is possible that your device no longer works as expected. We recommend you create backups with Autobackup or Backupsuite. This allows you to quickly and easily restore your device to its previous state, should you experience any problems. If you encounter a 'bug', please report the issue on www.openpli.org.\n"
+"\n"
+"Do you understand this?"
+msgstr ""
+"OpenPLi vēlas pievērst jūsu uzmanību tam, ka jaunākie atjaunojumi nodrošina ne tikai jaunākās iespējas, bet arī ir iespējami dažādi riski. Pēc atjaunošanas ir iespējams, ka jūsu ierīce vairs nestrādās tā kā sagaidāt. Mēs rekomendējam jums izveidot rezerves kopiju. Tas atļaus jums viergli un ātri atjaunot ierīces darbību, ja būs kāda problēma. Ja jūs atrodāt kādu kļūdu, tad lūdzu par to ziņojiet.\n"
+"\n"
+"Vai to saprotat?"
+
 msgid "The PIN code has been changed successfully."
 msgstr "PIN kods nomainīts veiksmīgi."
 
@@ -6630,6 +6642,9 @@ msgstr "Ja ieslēgts, virziena pogas ap OK kananālu pārslēgšanai izmantos 'n
 msgid "When enabled the left, right, CH+/-, B+/-, P+/- buttons will follow the 'neutrino' style zap controls instead of the enigma2 style."
 msgstr "Ja ieslēgts, pogas pa kreisi, pa labi, CH+/-, B+/-, P+/- pārslēgšanai izmantos 'neutrino' stilu nevis enigma2."
 
+msgid "When enabled then when you select a new channel in the channel selection the channel selection will not close. It will only close when you select the current playing service. This is a kind of preview mode"
+msgstr "Ja ieslēgts, tad ja kanālu izvēlnē izvēlēsieties jaunu kanālu, izvēlne netiks aizvērta. Tā tiks aizvērta tikai tad, ja izvēlēsieties patreiz rādīto kanālu. Tas nodrošina priekšskatījuma režīmu"
+
 msgid "When enabled you can control the volume with the arrow buttons instead of getting the channel selection list"
 msgstr "Ja ieslēgts, ar virziena pogām ap OK jūs varat regulēt skaļumu, nevis atvērt kanālu sarakstu"
 
@@ -6837,15 +6852,6 @@ msgstr "Bezvadu tīkla statuss"
 
 msgid "With popup"
 msgstr "Ar uznirstošo logu"
-
-msgid ""
-"With this disclaimer the openPLi team is informing you that we are working with nightly builds and it might be that after the upgrades your set top box is not anymore working as expected. Therefore it is recommendable to create backups with Autobackup or Backupsuite so when something went wrong you can easily and quickly restore. When you discover 'bugs' please keep them reported on www.openpli.org.\n"
-"\n"
-"Do you understand this?"
-msgstr ""
-"Ar šo atrunu jūs informējam, ka strādājam ar jaunākajiem atjauninājumiem, un pēc atjaunošanas jūsu uztvērējs var vairs nestrādāt kā gaidījāt. Tādēļ rekomendējam izveidot dublējumkopiju. Ja kaut kas noies greizi, varēsiet viegli atjaunot. Ja jūs atrodat 'kļūdas' lūdz informējiet par tām.\n"
-"\n"
-"Vai to saprotat?"
 
 msgid "Without popup"
 msgstr "Bez uznirstošā loga"
