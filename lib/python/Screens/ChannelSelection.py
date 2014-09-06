@@ -160,6 +160,9 @@ class ChannelContextMenu(Screen):
 						if not self.inBouquet or bouquetCnt > 1:
 							append_when_current_valid(current, menu, (_("add service to bouquet"), self.addServiceToBouquetSelected), level=0, key="5")
 							self.addFunction = self.addServiceToBouquetSelected
+						if not self.inBouquet:
+							append_when_current_valid(current, menu, (_("remove entry"), self.removeEntry), level = 0, key="8")
+							self.removeFunction = self.removeSatelliteService
 					else:
 						if not self.inBouquet:
 							append_when_current_valid(current, menu, (_("add service to favourites"), self.addServiceToBouquetSelected), level=0, key="5")
@@ -261,6 +264,13 @@ class ChannelContextMenu(Screen):
 			if answer == "never":
 				self.csel.confirmRemove = False
 			self.csel.removeCurrentService()
+			self.close()
+
+	def removeSatelliteService(self, answer):
+		if answer:
+			if answer == "never":
+				self.csel.confirmRemove = False
+			self.csel.removeSatelliteService()
 			self.close()
 
 	def removeBouquet(self, answer):
@@ -754,6 +764,13 @@ class ChannelSelectionEdit:
 				remove(filename)
 		except OSError:
 			print "error during remove of", filename
+
+	def removeSatelliteService(self):
+		current = self.getCurrentSelection()
+		eDVBDB.getInstance().removeService(current)
+		refreshServiceList()
+		if not self.atEnd():
+			self.servicelist.moveUp()
 
 	def removeSatelliteServices(self):
 		current = self.getCurrentSelection()
