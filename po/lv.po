@@ -7182,8 +7182,11 @@ msgstr "alternatīvi"
 msgid "always"
 msgstr "vienmēr"
 
+msgid "and never ask again this session again"
+msgstr "un vairs neprasīt kamēr darbojos"
+
 msgid "and never show this message again"
-msgstr "un nekad vairs nerādīt šo paziņojumu"
+msgstr "un vairs nerādīt šo paziņojumu"
 
 msgid "and select next channel"
 msgstr "un izvēlēties nākamo kanālu"
