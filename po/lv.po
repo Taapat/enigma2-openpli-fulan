@@ -5166,6 +5166,9 @@ msgstr "Klausīties radio..."
 msgid "Show the tv player..."
 msgstr "Skatīties TV..."
 
+msgid "Show updated packages"
+msgstr "Parādīt pakates kuras atjaunos"
+
 msgid "Show warning when timeshift is stopped"
 msgstr "Rādīt brīdinājumu kad laika aizture apturēta"
 
