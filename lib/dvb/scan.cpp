@@ -146,7 +146,7 @@ void eDVBScan::stateChange(iDVBChannel *ch)
 				m_ch_current->getDVBT(parm);
 				ePtr<iDVBFrontend> fe;
 				ePtr<eDVBFrontend> frontend;
-				if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T_T2 && !m_channel->getFrontend(fe) && frontend && frontend->supportsDeliverySystem(SYS_DVBT2, true))
+				if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T_T2 && !m_channel->getFrontend(fe) && fe && fe->supportsDeliverySystem(SYS_DVBT2, true))
 				{
 					/* we have to scan T2 as well as T */
 					parm.system = eDVBFrontendParametersTerrestrial::System_DVB_T2;
