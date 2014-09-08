@@ -285,7 +285,9 @@ class MovieList(GUIComponent):
 		self.list[index] = (x[0], x[1], x[2], None)
 
 	def invalidateCurrentItem(self):
-		self.invalidateItem(self.getCurrentIndex())
+		index = self.getCurrentIndex()
+		self.invalidateItem(index)
+		self.l.invalidateEntry(index)
 
 	def buildMovieListEntry(self, serviceref, info, begin, data):
 		width = self.l.getItemSize().width()
