@@ -333,13 +333,13 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			if self.secondInfoBarScreen:
 				self.secondInfoBarScreen.hide()
 		elif config.usage.show_second_infobar.value == "EPG":
-				self.hide()
-				self.hideTimer.stop()
-				self.showDefaultEPG()
+			self.hide()
+			self.hideTimer.stop()
+			self.showDefaultEPG()
 		elif config.usage.show_second_infobar.value == "Event":
-				self.hide()
-				self.hideTimer.stop()
-				self.openEventView()
+			self.hide()
+			self.hideTimer.stop()
+			self.openEventView()
 		elif self.secondInfoBarScreen and config.usage.show_second_infobar.value and not self.secondInfoBarScreen.shown:
 			self.secondInfoBarScreen.show()
 			self.startHideTimer()
