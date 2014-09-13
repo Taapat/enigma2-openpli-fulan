@@ -378,7 +378,7 @@ long eHdmiCEC::translateKey(unsigned char code)
 			key = 0x190;
 			break;
 		default:
-			key = 0x8b;
+			key = 0x66;
 			break;
 	}
 	return key;
