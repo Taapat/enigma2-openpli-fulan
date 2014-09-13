@@ -2239,7 +2239,7 @@ msgid "English"
 msgstr "Angļu"
 
 msgid "Enigma2 skin selector"
-msgstr "Enigma2 ādiņas izvēle"
+msgstr "Enigma2 noformējuma izvēle"
 
 msgid "Enter main menu..."
 msgstr "Atvērt galveno izvēlni..."
@@ -2277,7 +2277,7 @@ msgid "Ethernet network interface"
 msgstr "Ethernet tīkla interfeiss"
 
 msgid "Event font size (relative to skin size)"
-msgstr "Notikuma fontu izmērs (salīdzinājumā ar ādiņas izmēru)"
+msgstr "Notikuma fontu izmērs (salīdzinājumā ar noformējuma izmēru)"
 
 msgid "Event view"
 msgstr "Notikuma apskats"
@@ -2432,8 +2432,14 @@ msgstr "feb"
 msgid "February"
 msgstr "februāris"
 
+msgid "Filelist"
+msgstr "Failu saraksts"
+
 msgid "File appears to be busy.\n"
 msgstr "Fails šķiet aizņemts.\n"
+
+msgid "File Browser"
+msgstr "Failu pārlūks"
 
 msgid "Filesystem check"
 msgstr "Failsistēmas pārbaude"
@@ -3467,6 +3473,12 @@ msgstr "Tīkls:"
 msgid "Neutrino"
 msgstr "Neutrino"
 
+msgid "Next"
+msgstr "Nākamais"
+
+msgid "Next:"
+msgstr "Nāk.:"
+
 msgid "New"
 msgstr "Jauns"
 
@@ -3864,6 +3876,9 @@ msgstr "Pilot"
 msgid "Play"
 msgstr "Atskaņot"
 
+msgid "Playlist"
+msgstr "Repertuārs"
+
 msgid "Play DVD"
 msgstr "Atskaņot DVD"
 
@@ -4223,6 +4238,9 @@ msgstr "Nospiediet OK, lai pārslēgtu izvēli."
 
 msgid "Press yellow to set this interface as default interface."
 msgstr "Spiediet dzelteno, lai iestatītu šo interfeisu kā noklusējuma."
+
+msgid "Prev"
+msgstr "Iepriekšējais"
 
 msgid "Preview"
 msgstr "Priekšskatījums"
@@ -4611,7 +4629,7 @@ msgid "SSID:"
 msgstr "SSID:"
 
 msgid "Same resolution as skin"
-msgstr "Tāda pati izšķirtspēja kā ādiņai"
+msgstr "Tāda pati izšķirtspēja kā noformējumam"
 
 msgid "Sat"
 msgstr "Se"
@@ -4719,6 +4737,9 @@ msgstr "Meklēšana..."
 
 msgid "Scans default lamedbs sorted by satellite with a connected dish positioner"
 msgstr "Meklē noklusētos lamedbs, sakārtotus pēc pavadoņiem ar pievienotu pozicioniera antenu"
+
+msgid "Search"
+msgstr "Meklēt"
 
 msgid "Search east"
 msgstr "Meklēt austrumos"
@@ -5236,10 +5257,10 @@ msgid "Site longitude"
 msgstr "Vietas garums"
 
 msgid "Skin"
-msgstr "Ādiņa"
+msgstr "Noformējums"
 
 msgid "Skins"
-msgstr "Ādiņas"
+msgstr "Noformējumi"
 
 msgid "Skip empty services"
 msgstr "Izlaist tukšos kanālus"
@@ -6489,7 +6510,7 @@ msgid "View list of available recording extensions"
 msgstr "Skatīt sarakstu ar pieejamiem ieraksta paplašinājumiem"
 
 msgid "View list of available skins"
-msgstr "Skatīt sarakstu ar pieejamām ādiņām"
+msgstr "Skatīt sarakstu ar pieejamiem noformējumiem"
 
 msgid "View list of available software extensions"
 msgstr "Skatīt sarakstu ar pieejamiem programmatūras paplašinājumiem"
@@ -6706,7 +6727,7 @@ msgid "When enabled, display the EIT now/next eventdata in infobar. When disable
 msgstr "Ja ieslēgts, attēlos pašreiz/nākamais EIT notikumus infojoslā. Ja izslēgts pašreiz/nākamais notikumi netiks rādīti no EPG kešatmiņas."
 
 msgid "When enabled, encryption info will be shown in the infobar (when supported by the skin)."
-msgstr "Ja ieslēgts, infojoslā tiks attēlota kodēšanas informācija (ja to uztur ādiņa)."
+msgstr "Ja ieslēgts, infojoslā tiks attēlota kodēšanas informācija (ja to uztur noformējums)."
 
 msgid "When enabled, error messages related to the Common Interface module will not be shown."
 msgstr "Ja ieslēgts, netiks parādītas kļūdas no common interfeisa moduļa."
