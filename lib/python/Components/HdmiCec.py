@@ -362,6 +362,12 @@ class HdmiCec:
 		if keyEvent == 1:
 			if keyCode == 115 or keyCode == 114 or keyCode == 113:
 				cmd = 0x45
+			elif config.usage.volume_instead_of_channelselection.value:
+				if config.usage.oldstyle_zap_controls.value:
+					if keyCode == 105 or keyCode == 106:
+						cmd = 0x45
+				elif keyCode == 103 or keyCode == 108:
+					cmd = 0x45
 		if cmd:
 			eHdmiCEC.getInstance().sendMessage(self.volumeForwardingDestination, cmd, data, len(data))
 			return 1
