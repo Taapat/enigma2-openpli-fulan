@@ -1525,8 +1525,8 @@ msgstr "Uzstāda kādu krāsu formātu lietot SCART izejā."
 msgid "Configure which tuner for recordings will be preferred, when more than one tuner is available."
 msgstr "Uzstāda kuram uztvērējam dot priekšroku ierakstot, ja pieejams virāk kā viens uztvērējs."
 
-msgid "Configure which tuner type will be preferred, when the same service is available on different types of tuners."
-msgstr "Uzstāda kādam uztvērēja tipam dot priekšroku, ja viens un tas pats kanāls pieejams dažādos uztvērējos."
+msgid "Configure which tuner type will be preferred, when the same service is available on different types of tuners. Choose 'no priority' to try each alternative one by one independent from tuner type."
+msgstr "Uzstāda kādam uztvērēja tipam dot priekšroku, ja viens un tas pats kanāls pieejams dažādos uztvērējos. Ivēlieties 'bez prioritātes' lai neatkarīgi no uztvērēja tipa mēģinātu visus pēc kārtas."
 
 msgid "Configure which tuner will be preferred, when more than one tuner is available. If set to 'auto' the system will give priority to the tuner having the lowest number of channels/satellites."
 msgstr "Uzstāda kuram uztvērējam dot priekšroku ja pieejams vairāk kā viens uztvērējs. Ja norādīsiet 'auto', sistēma izvēlēsies uztvērēju ar mazāko kanāla/pavadoņa numuru."
@@ -2389,6 +2389,9 @@ msgstr "Neizdevās"
 
 msgid "Failed to write /tmp/positionersetup.log: "
 msgstr "Neizdevās ierakstīt /tmp/positionersetup.log:"
+
+msgid "Fallback remote receiver"
+msgstr "Papildus rezeves uztvērējs"
 
 #, python-format
 msgid "Fan %d"
@@ -6194,6 +6197,13 @@ msgstr "Veids"
 
 msgid "Type of scan"
 msgstr "Meklēšanas veids"
+
+msgid ""
+"URL of an enigma2 receiver that will be tried to tune into services that cannot be tuned into locally (e.g. tuner is occupied or service type is unavailable on the local tuner.\n"
+"Specify complete URL including http:// and port number (normally ...:8001), e.g. http://second_box:8001."
+msgstr ""
+"Enigma2 uztvērēja adrese, kuru izmatot lai mēģinātu uztvert kanālu kurš nav uztverams lokāli (piem. uztvērējs ir aizņemts, vai kanāla tips nav pieejams lokālajā uztvērējā.)\n"
+"Norādiet pilnu adresi ieskaitot http:// un porta numuru (normāli ...:8001), piem. http://second_box:8001." 
 
 msgid "USALS"
 msgstr "USALS"
