@@ -1,9 +1,9 @@
 import struct, os, time
 from config import config, ConfigSelection, ConfigYesNo, ConfigSubsection, ConfigText
 from enigma import eHdmiCEC, eActionMap
+from Components.VolumeControl import VolumeControl
 from Tools.StbHardware import getFPWasTimerWakeup
 from enigma import eTimer
-from sys import maxint
 from Screens import Standby
 from Tools import Directories, Notifications
 from time import time
@@ -54,9 +54,10 @@ class HdmiCec:
 		self.setFixedPhysicalAddress(config.hdmicec.fixed_physical_address.value)
 		self.logicaladdress = eHdmiCEC.getInstance().getLogicalAddress()
 
-		self.volumeForwardingEnabled = False
+		self.saveVolUp = None
+		self.saveVolDown = None
+		self.saveVolMute = None
 		self.volumeForwardingDestination = 0
-		eActionMap.getInstance().bindAction('', -maxint - 1, self.keyEvent)
 		config.hdmicec.volume_forwarding.addNotifier(self.configVolumeForwarding)
 		config.hdmicec.enabled.addNotifier(self.configVolumeForwarding)
 		uptime = float(open("/proc/uptime", "r").read().split()[0])
@@ -253,7 +254,7 @@ class HdmiCec:
 			if cmd == 0x00: # feature abort
 				if data[0] == '\x44':
 					print 'eHdmiCec: volume forwarding not supported by device %02x'%(message.getAddress())
-					self.volumeForwardingEnabled = False;
+					self.volumeForwardingDisable()
 			elif cmd == 0x89:
 				if data[0] == '\x01':
 					self.sendMessage(message.getAddress(), 'vendorcommand0')
@@ -274,7 +275,7 @@ class HdmiCec:
 					self.volumeForwardingDestination = 0; # off: send volume keys to tv
 				if config.hdmicec.volume_forwarding.value:
 					print 'eHdmiCec: volume forwarding to device %02x enabled'%(self.volumeForwardingDestination)
-					self.volumeForwardingEnabled = True;
+					self.volumeForwardingEnable()
 			elif cmd == 0x8f: # request power status
 				if inStandby:
 					self.sendMessage(message.getAddress(), 'powerinactive')
@@ -330,48 +331,42 @@ class HdmiCec:
 
 	def configVolumeForwarding(self, configElement):
 		if config.hdmicec.enabled.value and config.hdmicec.volume_forwarding.value:
-			self.volumeForwardingEnabled = True
+			self.volumeForwardingEnable()
 			self.sendMessage(0x05, 'givesystemaudiostatus')
 		else:
-			self.volumeForwardingEnabled = False
+			self.volumeForwardingDisable()
 
-	def keyEvent(self, keyCode, keyEvent):
-		if not self.volumeForwardingEnabled: return
-		cmd = 0
-		data = ''
-		if keyEvent == 0:
-			if keyCode == 115:
-				cmd = 0x44
-				data = str(struct.pack('B', 0x41))
-			if keyCode == 114:
-				cmd = 0x44
-				data = str(struct.pack('B', 0x42))
-			if keyCode == 113:
-				cmd = 0x44
-				data = str(struct.pack('B', 0x43))
-		if keyEvent == 2:
-			if keyCode == 115:
-				cmd = 0x44
-				data = str(struct.pack('B', 0x41))
-			if keyCode == 114:
-				cmd = 0x44
-				data = str(struct.pack('B', 0x42))
-			if keyCode == 113:
-				cmd = 0x44
-				data = str(struct.pack('B', 0x43))
-		if keyEvent == 1:
-			if keyCode == 115 or keyCode == 114 or keyCode == 113:
-				cmd = 0x45
-			elif config.usage.volume_instead_of_channelselection.value:
-				if config.usage.oldstyle_zap_controls.value:
-					if keyCode == 105 or keyCode == 106:
-						cmd = 0x45
-				elif keyCode == 103 or keyCode == 108:
-					cmd = 0x45
-		if cmd:
-			eHdmiCEC.getInstance().sendMessage(self.volumeForwardingDestination, cmd, data, len(data))
-			return 1
-		else:
-			return 0
+	def volumeForwardingEnable(self):
+		if self.saveVolMute is None:
+			self.saveVolUp = VolumeControl.volUp
+			self.saveVolDown = VolumeControl.volDown
+			self.saveVolMute = VolumeControl.volMute
+			VolumeControl.volUp = self.volUp
+			VolumeControl.volDown = self.volDown
+			VolumeControl.volMute = self.volMute
+
+	def volumeForwardingDisable(self):
+		if self.saveVolMute is not None:
+			VolumeControl.volUp = self.saveVolUp
+			VolumeControl.volDown = self.saveVolDown
+			VolumeControl.volMute = self.saveVolMute
+			self.saveVolUp = None
+			self.saveVolDown = None
+			self.saveVolMute = None
+
+	def volUp(self):
+		cmd = 0x44
+		data = str(struct.pack('B', 0x41))
+		eHdmiCEC.getInstance().sendMessage(self.volumeForwardingDestination, cmd, data, len(data))
+
+	def volDown(self):
+		cmd = 0x44
+		data = str(struct.pack('B', 0x42))
+		eHdmiCEC.getInstance().sendMessage(self.volumeForwardingDestination, cmd, data, len(data))
+
+	def volMute(self):
+		cmd = 0x44
+		data = str(struct.pack('B', 0x43))
+		eHdmiCEC.getInstance().sendMessage(self.volumeForwardingDestination, cmd, data, len(data))
 
 hdmi_cec = HdmiCec()
