@@ -357,16 +357,16 @@ class HdmiCec:
 	def volUp(self):
 		cmd = 0x44
 		data = str(struct.pack('B', 0x41))
-		eHdmiCEC.getInstance().sendMessage(self.volumeForwardingDestination, cmd, data, len(data))
+		eHdmiCEC.getInstance().sendMessage(self.logicaladdress * 0x10 + self.volumeForwardingDestination, cmd, data, len(data))
 
 	def volDown(self):
 		cmd = 0x44
 		data = str(struct.pack('B', 0x42))
-		eHdmiCEC.getInstance().sendMessage(self.volumeForwardingDestination, cmd, data, len(data))
+		eHdmiCEC.getInstance().sendMessage(self.logicaladdress * 0x10 + self.volumeForwardingDestination, cmd, data, len(data))
 
 	def volMute(self):
 		cmd = 0x44
 		data = str(struct.pack('B', 0x43))
-		eHdmiCEC.getInstance().sendMessage(self.volumeForwardingDestination, cmd, data, len(data))
+		eHdmiCEC.getInstance().sendMessage(self.logicaladdress * 0x10 + self.volumeForwardingDestination, cmd, data, len(data))
 
 hdmi_cec = HdmiCec()
