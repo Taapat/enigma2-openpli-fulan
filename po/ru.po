@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-05 10:00+0200\n"
-"PO-Revision-Date: 2014-09-06 11:39+0500\n"
+"PO-Revision-Date: 2014-09-20 19:43+0500\n"
 "Last-Translator: a.k.a Uchkun\n"
 "Language-Team: a.k.a Uchkun <madamin2007@mail.ru>\n"
 "Language: ru\n"
@@ -81,13 +81,6 @@ msgstr ""
 
 msgid ""
 "\n"
-"Backup your Dreambox settings."
-msgstr ""
-"\n"
-"Резервная копия настроек ресивера."
-
-msgid ""
-"\n"
 "Backup your STB settings."
 msgstr ""
 "\n"
@@ -116,13 +109,6 @@ msgstr ""
 
 msgid ""
 "\n"
-"Manage extensions or plugins for your Dreambox"
-msgstr ""
-"\n"
-"Управление дополнениями и плагинами ресивера"
-
-msgid ""
-"\n"
 "Manage extensions or plugins for your STB"
 msgstr ""
 "\n"
@@ -134,13 +120,6 @@ msgid ""
 msgstr ""
 "\n"
 "Управление дополнениями или плагинами для вашего ресивера"
-
-msgid ""
-"\n"
-"Online update of your Dreambox software."
-msgstr ""
-"\n"
-"Онлайн обновление ПО ресивера."
 
 msgid ""
 "\n"
@@ -162,20 +141,6 @@ msgid ""
 msgstr ""
 "\n"
 "Нажмите ОК на пульте для продолжения."
-
-msgid ""
-"\n"
-"Restore your Dreambox settings."
-msgstr ""
-"\n"
-"Восстановление настроек ресивера."
-
-msgid ""
-"\n"
-"Restore your Dreambox with a new firmware."
-msgstr ""
-"\n"
-"Восстановление ресивера новой прошивкой."
 
 msgid ""
 "\n"
@@ -1815,24 +1780,10 @@ msgstr "Использование демо-плагина для TPM"
 
 msgid ""
 "A finished record timer wants to set your\n"
-"Dreambox to standby. Do that now?"
-msgstr ""
-"Завершенная задача записи по таймеру требует\n"
-"перевести ресивер в режим ожидания. Сделать это сейчас?"
-
-msgid ""
-"A finished record timer wants to set your\n"
 "receiver to standby. Do that now?"
 msgstr ""
 "Завершенная задача записи по таймеру требует\n"
 "перевести ресивер в режим ожидания. Сделать это сейчас?"
-
-msgid ""
-"A finished record timer wants to shut down\n"
-"your Dreambox. Shutdown now?"
-msgstr ""
-"Завершенная задача записи по таймеру требует\n"
-"перезагрузки ресивера. Перезагрузить сейчас?"
 
 msgid ""
 "A finished record timer wants to shut down\n"
@@ -2113,9 +2064,6 @@ msgstr "Добавить метку"
 msgid "Add a nameserver entry"
 msgstr "Добавить DNS сервер"
 
-msgid "Add a new NFS or CIFS mount point to your Dreambox."
-msgstr "Добавить новую точку монтирования NFS или CIFS вашей сети"
-
 msgid "Add a new NFS or CIFS mount point to your STB."
 msgstr "Добавить новую NFS или CIFS точку подключения."
 
@@ -2257,11 +2205,6 @@ msgid "Additional backup -> "
 msgstr "Дополнительный резервный -> "
 
 msgid ""
-"Adds enigma2 settings and dreambox model informations like SN, rev... if "
-"enabled."
-msgstr "Добавляет настройки и информацию о ресивере, если включён."
-
-msgid ""
 "Adds enigma2 settings and receiver model informations like SN, rev... if "
 "enabled."
 msgstr ""
@@ -2343,14 +2286,6 @@ msgstr "После события"
 
 msgid "After pressing OK, please wait!"
 msgstr "После нажатия ОК, пожалуйста, ждите!"
-
-msgid ""
-"After the start wizard is completed, you need to protect single services. "
-"Refer to your dreambox's manual on how to do that."
-msgstr ""
-"После окончания работы мастера, вам нужно на свойствах каналов активировать "
-"родительский контроль. Как это сделать узнайте в руководстве по "
-"использованию ресивера."
 
 msgid ""
 "After the start wizard is completed, you need to protect single services. "
@@ -3069,9 +3004,6 @@ msgstr "Просмотрщик битрейта"
 msgid "Bitrate:"
 msgstr "Битрейт:"
 
-msgid "Bittorrent client for Dreambox "
-msgstr "Битторрент клиент для ресивера"
-
 msgid "Black screen"
 msgstr "Черный экран"
 
@@ -3407,9 +3339,6 @@ msgstr "Изменить сетевое имя"
 msgid "Change old drive with this new drive"
 msgstr "Заменить старое устройство на данное новое"
 
-msgid "Change or reset the root password of your dreambox"
-msgstr "Изменение или сброс пароля администратора вашего ресивера"
-
 msgid "Change password"
 msgstr "Смена пароля"
 
@@ -3448,9 +3377,6 @@ msgstr "Изменить настройки Пин-кода"
 
 msgid "Change step size"
 msgstr "Изменение размера шага"
-
-msgid "Change the hostname of your Dreambox."
-msgstr "Изменение сетевого имени вашего ресивера"
 
 msgid "Change the hostname of your STB."
 msgstr "Изменение сетевого имени ресивера"
@@ -4437,9 +4363,6 @@ msgstr ""
 "\n"
 "Папка расположения не существует"
 
-msgid "Could not connect to Dreambox .NFI Image Feed Server:"
-msgstr "Нет соединения с ресивером .NFI Image Feed Server:"
-
 msgid "Could not connect to receiver .NFI Image Feed Server:"
 msgstr "Нет соединения с ресивером .NFI Image Feed Server:"
 
@@ -4783,12 +4706,6 @@ msgstr "DHCP"
 msgid "DMConcinnity-Setup"
 msgstr "Настройки DMConcinnity"
 
-msgid "DMM advanced"
-msgstr "DMM расширенный"
-
-msgid "DMM normal"
-msgstr "DMM стандарт"
-
 msgid "DTS downmix"
 msgstr "DTS микширование"
 
@@ -5099,7 +5016,7 @@ msgstr ""
 "%s?"
 
 msgid "Delete orphaned movie files"
-msgstr "Удалять технич. файлы видеозаписей"
+msgstr "Удалять технич. файлы записей"
 
 msgid "Delete playlist entry"
 msgstr "Удалить запись из плейлиста"
@@ -5549,9 +5466,6 @@ msgstr "Продолжить ручное сканирование?"
 msgid "Do you want to download the image to %s ?"
 msgstr "Хотите загрузить прошивку в %s ?"
 
-msgid "Do you want to enable the parental control feature on your dreambox?"
-msgstr "Хотите включить функцию родительского контроля на вашем ресивере?"
-
 msgid "Do you want to enable the parental control feature on your receiver?"
 msgstr "Хотите включить функцию родительского контроля на вашем ресивере?"
 
@@ -5610,9 +5524,6 @@ msgstr ""
 msgid "Do you want to preview this DVD before burning?"
 msgstr "Хотите просмотреть DVD перед записью?"
 
-msgid "Do you want to reboot your Dreambox?"
-msgstr "Хотите перезагрузить ресивер?"
-
 msgid "Do you want to reboot your receiver?"
 msgstr "Хотите перезагрузить ресивер?"
 
@@ -5643,16 +5554,6 @@ msgid ""
 msgstr ""
 "Хотите отправить ваш e-mail адрес, чтобы мы могли связаться с вами при "
 "необходимости?"
-
-msgid "Do you want to update your Dreambox?"
-msgstr "Хотите обновить свой ресивер?"
-
-msgid ""
-"Do you want to update your Dreambox?\n"
-"After pressing OK, please wait!"
-msgstr ""
-"Хотите обновить свой ресивер?\n"
-"После нажатия ОК, пожалуйста, подождите!"
 
 msgid "Do you want to update your receiver to %s?"
 msgstr "Хотите обновить свой ресивер на %s?"
@@ -5823,18 +5724,6 @@ msgstr "Проводник файлов..."
 
 msgid "DreamMediathek"
 msgstr "Медиатека Dream"
-
-msgid "Dreambox Keyboard Deutsch"
-msgstr "Немецкая раскладка"
-
-msgid "Dreambox Keyboard English"
-msgstr "Английская раскладка"
-
-msgid "Dreambox Music Database"
-msgstr "База данных музыки"
-
-msgid "Dreambox: "
-msgstr "Ресивер: "
 
 msgid ""
 "Drive where you save data.\n"
@@ -6038,17 +5927,11 @@ msgstr "Изменить настройки"
 msgid "Edit tags"
 msgstr "Редактировать тэги"
 
-msgid "Edit the Nameserver configuration of your Dreambox.\n"
-msgstr "Редактирование конфигурации DNS вашего ресивера.\n"
-
 msgid "Edit the Nameserver configuration of your STB.\n"
 msgstr "Редактирование конфигурации DNS вашего ресивера.\n"
 
 msgid "Edit the nameserver configuration of your receiver.\n"
 msgstr "Редактирование конфигурации DNS вашего ресивера.\n"
-
-msgid "Edit the network configuration of your Dreambox.\n"
-msgstr "Изменить конфигурацию сети  вашего ресивера.\n"
 
 msgid "Edit the network configuration of your STB.\n"
 msgstr "Редактирование сетевой конфигурации вашего ресивера.\n"
@@ -6374,9 +6257,6 @@ msgstr "Войти в главное меню..."
 
 msgid "Enter new Password"
 msgstr "Введите новый пароль"
-
-msgid "Enter new hostname for your Dreambox"
-msgstr "Введите новое сетевое имя для вашего ресивера"
 
 msgid "Enter new password"
 msgstr "Введите новый пароль"
@@ -6790,9 +6670,6 @@ msgstr "Выйти из мастера настроек"
 msgid "Expert"
 msgstr "Эксперт"
 
-msgid "Explore your Dreambox."
-msgstr "Обозреватель файлов"
-
 msgid "Export selected as AutoTimer"
 msgstr "Выбранное перенести в Автотаймер"
 
@@ -6925,6 +6802,9 @@ msgstr "Не удалось записать /tmp/positionersetup.log: "
 
 msgid "Failed:"
 msgstr "Неудача:"
+
+msgid "Fallback remote receiver"
+msgstr "Резервный удаленный ресивер"
 
 msgid "Fallback to default skin at skin errors"
 msgstr "Выбор стандартного скина при ошибке установленного"
@@ -7228,7 +7108,7 @@ msgid "Folder: "
 msgstr "Папка: "
 
 msgid "Follow the instructions on the front-display."
-msgstr "Следуйте инструкциям на фронтальном панели спутникового тюнера."
+msgstr "Следуйте инструкциям на дисплее в передней панели ресивера."
 
 msgid "Following tasks will be done after you press OK!"
 msgstr "Данные задания будут выполнены после того, как нажмете ОК!"
@@ -7506,9 +7386,6 @@ msgstr "Жанры (%d)"
 
 msgid "Genres:"
 msgstr "Жанр:"
-
-msgid "Genuine Dreambox"
-msgstr "Проверка подлинности"
 
 msgid "Genuine STB"
 msgstr "Подлинность ресивера"
@@ -7963,14 +7840,6 @@ msgid ""
 msgstr ""
 "Если программа прерывается и разделена на отдельные события, плагин будет "
 "искать связанные события"
-
-msgid ""
-"If enabled and necessary, the plugin will wake up the Dreambox from Deep-"
-"Standby for the defined starting time to control whether the programme "
-"begins earlier."
-msgstr ""
-"Если включено, при необходимости плагин включит ресивер в назначенное время "
-"и проконтролирует программы начавшиеся ранее."
 
 msgid ""
 "If enabled and necessary, the plugin will wake up the setopbox from Deep-"
@@ -9131,9 +9000,6 @@ msgstr "Медиа Центр - Опции папки VLC"
 msgid "Media Center - VideoPlayer Settings"
 msgstr "Настройки Видеоплеера"
 
-msgid "Media Center Plugin for your Dreambox"
-msgstr "Плагин Медиа-центр для вашего ресивера"
-
 msgid "Media Center Weather Info: Import twisted.web.client failed"
 msgstr "Инфо о погоде от Медиа Центра: Импорт twisted.web.клиента не удался"
 
@@ -10209,9 +10075,6 @@ msgstr "Нет, переключится на поиск видео"
 msgid "No, do nothing."
 msgstr "Нет, ничего не делать"
 
-msgid "No, just start my dreambox"
-msgstr "Нет, включить ресивер"
-
 msgid "No, just start my receiver"
 msgstr "Нет, просто запускаем ресивер"
 
@@ -10921,9 +10784,6 @@ msgstr "Играть выбранное"
 msgid "Play video again"
 msgstr "Воспроиз. видео снова"
 
-msgid "Play videos from PC on your Dreambox"
-msgstr "Воспроизведение видео с компьютера на ресивере"
-
 msgid "Playlist (%s) -> Song List"
 msgstr "Плейлист (%s) -> Список песен"
 
@@ -11020,13 +10880,6 @@ msgstr ""
 
 msgid "Please connect your receiver to the internet"
 msgstr "Пожалуйста, подключитесь сначала к интернету"
-
-msgid ""
-"Please disconnect all USB devices from your Dreambox and (re-)attach the "
-"target USB stick (minimum size is 64 MB) now!"
-msgstr ""
-"Пожалуйста, отключите все USB устройства от ресивера и (пере-)подключите USB "
-"(минимальный размер 64Мб) сейчас!"
 
 msgid "Please do not change any values unless you know what you are doing!"
 msgstr "Пожалуйста, не меняйте параметры, если не разбираетесь в этом!"
@@ -13687,13 +13540,13 @@ msgid "Show detailed event info"
 msgstr "Показать подробное инфо события"
 
 msgid "Show directories in movie list"
-msgstr "Отображать каталоги в списке видеозаписей"
+msgstr "Отображать каталоги в списке записей"
 
 msgid "Show duration window"
 msgstr "По алфавиту и продолжительности"
 
 msgid "Show duration:"
-msgstr "Показывать длительность:"
+msgstr "Показать длительность:"
 
 msgid "Show encryption info in the infobar (when supported by the skin)."
 msgstr ""
@@ -13710,7 +13563,7 @@ msgid "Show event information:"
 msgstr "Показывать информацию о передаче:"
 
 msgid "Show event progress in % at EPG view"
-msgstr "Отображать ход события в % при просмотре EPG"
+msgstr "Ход передачи в % при просмотре EPG"
 
 msgid "Show event-progress in channel selection"
 msgstr "Тип прогресс-бара в списке каналов"
@@ -13734,7 +13587,7 @@ msgid "Show icon for new/unseen items"
 msgstr "Показ иконки для новых/невидимых элементов"
 
 msgid "Show icons in movie list"
-msgstr "Отображать иконки в списке видеозаписей"
+msgstr "Иконки в списке записей"
 
 msgid "Show in Extensions/Plugins:"
 msgstr "Показать в панели плагинов:"
@@ -13755,13 +13608,13 @@ msgid "Show info screen"
 msgstr "Показать окно информации"
 
 msgid "Show infobar on channel change"
-msgstr "Показать инфопанель при смене каналов"
+msgstr "Показать инфобар при смене каналов"
 
 msgid "Show infobar on event change"
-msgstr "Показывать инфопанель при смене информации"
+msgstr "Показать инфобар при смене передачи"
 
 msgid "Show infobar on skip forward/backward"
-msgstr "Показать инфопанель при навигации"
+msgstr "Показать инфобар при навигации"
 
 msgid "Show latest commits on sourceforge"
 msgstr "Показать инфо о последних обновлениях"
@@ -13812,7 +13665,7 @@ msgid "Show positioner movement"
 msgstr "Показать движение позиционера"
 
 msgid "Show progress in movie list"
-msgstr "Отображать течение просмотра в списке видеозаписей"
+msgstr "Отображать течение просмотра в списке записей"
 
 msgid "Show record indicator"
 msgstr "Показать индикатор записи"
@@ -13913,9 +13766,6 @@ msgstr "Перемешать плейлист"
 
 msgid "Shutdown"
 msgstr "Выключение"
-
-msgid "Shutdown Dreambox after"
-msgstr "Выключить ресивер через:  "
 
 msgid "Shutdown after current event"
 msgstr "Выключить после текущего события"
@@ -14230,13 +14080,6 @@ msgid "Sorry, no lyrics found"
 msgstr "Извините, тексты не найдены"
 
 msgid ""
-"Sorry, this feature is not available due to license reasons. To get the full "
-"version, please search the web for \"dreambox automaticcleanup.\""
-msgstr ""
-"Извините, эта функция недоступна по лицензионным причинам. Чтобы получить "
-"полную версию, произведите поиск в интернете\"dreambox automaticcleanup.\""
-
-msgid ""
 "Sorry, this type of feed is unsupported:\n"
 "%s"
 msgstr ""
@@ -14420,9 +14263,6 @@ msgstr "Спорт"
 msgid "Standard"
 msgstr "Cтандарт"
 
-msgid "Standard DMM help"
-msgstr "Помощь по ресиверу"
-
 msgid "Standardize Title and Artist names"
 msgstr "Стандартизация названий файлов и имен исполнителей"
 
@@ -14537,7 +14377,7 @@ msgid "Status : 0%"
 msgstr "Статус : 0%"
 
 msgid "Status Check Period"
-msgstr "Проверять статус каждые"
+msgstr "Проверять состояние каждые"
 
 msgid "Status: Alarm clock is off"
 msgstr "Статус: Будильник - выкл"
@@ -15000,9 +14840,6 @@ msgstr "Тип теста"
 msgid "Test mode"
 msgstr "Режим теста"
 
-msgid "Test the network configuration of your Dreambox.\n"
-msgstr "Тест сетевой конфигурации ресивера.\n"
-
 msgid "Test the network configuration of your STB.\n"
 msgstr "Тест сетевой конфигурации ресивера.\n"
 
@@ -15051,13 +14888,6 @@ msgstr ""
 
 msgid ""
 "Thank you for using the wizard. Your box is now ready to use.\n"
-"Please press OK to start using your Dreambox."
-msgstr ""
-"Спасибо за использование мастера. Ваш ресивер готов к работе.\n"
-"Пожалуйста, нажмите OK для начала работы."
-
-msgid ""
-"Thank you for using the wizard. Your box is now ready to use.\n"
 "Please press OK to start using your receiver."
 msgstr ""
 "Спасибо, что воспользовались мастером настройки. Ваш ресивер теперь готов к "
@@ -15082,15 +14912,6 @@ msgstr ""
 
 msgid "The %d unsuccessful tuning attempts failed for the following reasons:\n"
 msgstr "%d попыток потерпели неудачу по следующим причинам:\n"
-
-msgid ""
-"The DVD standard doesn't support H.264 (HDTV) video streams. Do you want to "
-"create a Dreambox format data DVD (which will not play in stand-alone DVD "
-"players) instead?"
-msgstr ""
-"DVD стандарт не поддерживает кодек H.264 (HDTV) видеопотока. Вы хотите "
-"создать собственный DVD (который не будет проигрываться в стационарных DVD "
-"проигрывателях)?"
 
 msgid ""
 "The DVD standard doesn't support H.264 (HDTV) video streams. Do you want to "
@@ -15250,13 +15071,6 @@ msgstr ""
 "VPS-плагин не может проверить, поддерживается ли канал плагином при ручном "
 "запрограммировании таймера!\n"
 " Вы действительно хотите включить VPS?"
-
-msgid ""
-"The VTI-Panel is not installed!\n"
-"Please install it."
-msgstr ""
-"VTI-Панель не установлена!\n"
-"Пожалуйста установите."
 
 msgid "The backup failed. Please choose a different backup location."
 msgstr "Сохранение не выполнено. Выберите другое место ресположения. "
@@ -15595,12 +15409,6 @@ msgstr ""
 
 msgid "This Device is already mounted as HDD."
 msgstr "Это устройство уже смонтировано как жесткий диск."
-
-msgid "This Dreambox can't decode %s streams!"
-msgstr "Данная версия ПО не может декодировать %s потоки!"
-
-msgid "This Dreambox can't decode %s video streams!"
-msgstr "Этот ресивер не может декодировать %s видео потоки!"
 
 msgid "This Month"
 msgstr "В этом месяце"
@@ -16091,21 +15899,6 @@ msgid "To subtitle selection"
 msgstr "Выбор субтитров"
 
 msgid ""
-"To update your Dreambox firmware, please follow these steps:\n"
-"1) Turn off your box with the rear power switch and plug in the bootable USB "
-"stick.\n"
-"2) Turn mains back on and hold the DOWN button on the front panel pressed "
-"for 10 seconds.\n"
-"3) Wait for bootup and follow instructions of the wizard."
-msgstr ""
-"Чтобы обновить прошивку ресивера, пожалуйста, выполните следующие действия:\n"
-"1. Выключите ресивер переключатем питания на задней панели и убедитесь, что "
-"загрузочный USB подключён!\n"
-"2. Включите переключатель и удерживайте кнопку DOWN на передней панели в "
-"течение 10 секунд.\n"
-"3. Дождитесь загрузки и следуйте инструкциям мастера."
-
-msgid ""
 "To update your receiver firmware, please follow these steps:\n"
 "1) Turn off your box with the rear power switch and make sure the bootable "
 "USB stick is plugged in.\n"
@@ -16378,6 +16171,10 @@ msgstr ""
 "Неизвестная ошибка:\n"
 "%s"
 
+msgid "URL of an enigma2 receiver that will be tried to tune into services that cannot be tuned into locally (e.g. tuner is occupied or service type is unavailable on the local tuner. Specify complete URL including http:// and port number (normally ...:8001), e.g. http://second_box:8001."
+msgstr "URL-адрес, на который ресивер на enigma2 не может настроен локально (к "
+"примеру тюнер занят или сервис недоступен на локальном тюнере). Укажите полный URL-адрес, включая http:// и номер порта (обычно ...:8001), например http://second_box:8001."
+
 msgid "USALS"
 msgstr "USALS"
 
@@ -16612,9 +16409,6 @@ msgstr ""
 
 msgid "Upgrading"
 msgstr "Обновление"
-
-msgid "Upgrading Dreambox... Please wait"
-msgstr "Обновление ресивера... Пожалуйста, подождите..."
 
 msgid "Upgrading receiver... Please wait"
 msgstr "Идет обновление ресивера...Пожалуйста, ждите"
@@ -16997,18 +16791,6 @@ msgstr "VPS-Время (дата)"
 msgid "VPS-Time (time)"
 msgstr "VPS-Время (время)"
 
-msgid "VTI DriverManager"
-msgstr "VTI Менеджер драйверов"
-
-msgid "VTI Setup"
-msgstr "Настройки VTI"
-
-msgid "VTI Software Manager"
-msgstr "Менеджер ПО VTI"
-
-msgid "VTI custom main menu"
-msgstr "Главное меню пользователя VTI"
-
 msgid "Ver."
 msgstr "Вер."
 
@@ -17238,9 +17020,6 @@ msgstr "Просмотр shell-скрипта"
 msgid "View video CD..."
 msgstr "Просмотр Video CD..."
 
-msgid "View, edit or delete mountpoints on your Dreambox."
-msgstr "Просмотр, редактирование или удаление точек подключения."
-
 msgid "View, edit or delete usernames and passwords for your network."
 msgstr ""
 "Просмотр, редактирование или удаление имен пользователей и паролей в вашей "
@@ -17430,15 +17209,6 @@ msgstr ""
 
 msgid ""
 "Welcome to the Image upgrade wizard. The wizard will assist you in upgrading "
-"the firmware of your Dreambox by providing a backup facility for your "
-"current settings and a short explanation of how to upgrade your firmware."
-msgstr ""
-"Добро пожаловать в мастер обновления прошивки. Мастер поможет Вам в "
-"обновлении программного обеспечения Вашего ресивера путем сохранения Ваших "
-"текущих настроек и коротких подсказок по процессу обновления."
-
-msgid ""
-"Welcome to the Image upgrade wizard. The wizard will assist you in upgrading "
 "the firmware of your receiver by providing a backup facility for your "
 "current settings and a short explanation of how to upgrade your firmware."
 msgstr ""
@@ -17552,21 +17322,6 @@ msgstr ""
 msgid ""
 "Welcome.\n"
 "\n"
-"If you want to connect your Dreambox to the Internet, this wizard will guide "
-"you through the basic network setup of your Dreambox.\n"
-"\n"
-"Press OK to start configuring your network"
-msgstr ""
-"Добро пожаловать.\n"
-"\n"
-"Если вы хотите подключить ресивер к сети интернет, этот мастер проведет Вас "
-"через основные настройки сети ресивера.\n"
-"\n"
-"Нажмите ОК для начала настройки сети."
-
-msgid ""
-"Welcome.\n"
-"\n"
 "If you want to connect your STB to the Internet, this wizard will guide you "
 "through the basic network setup of your STB.\n"
 "\n"
@@ -17604,17 +17359,6 @@ msgstr ""
 "\n"
 "Этот Мастер поможет вам создать новый АвтоТаймер путём предоставления "
 "описания общих настроек."
-
-msgid ""
-"Welcome.\n"
-"\n"
-"This start wizard will guide you through the basic setup of your Dreambox.\n"
-"Press the OK button on your remote control to move to the next step."
-msgstr ""
-"Добро пожаловать.\n"
-"\n"
-"Запуск Мастера проведет вас через основные настройки вашего ресивера.\n"
-"Нажмите ОК на пульте ДУ для перехода к следующему шагу."
 
 msgid ""
 "Welcome.\n"
@@ -18470,19 +18214,6 @@ msgid "You must select a valid service!"
 msgstr "Вы должны выбрать рабочий сервис!"
 
 msgid ""
-"You need a PC connected to your dreambox. If you need further instructions, "
-"please visit the website http://www.dm7025.de.\n"
-"Your dreambox will now be halted. After you have performed the update "
-"instructions from the website, your new firmware will ask you to restore "
-"your settings."
-msgstr ""
-"Вам потребуется компьютер, подсоединенный а Вашему ресиверу. Если вам "
-"необходимы дополнительные инструкции, пожалуйста, посетите сайт http://"
-"GiClub.tv.\n"
-"Ваш ресивер должен быть остановлен. После выполнения Вами инструкций по "
-"обновлению с сайта, новое ПО запросит восстановление Ваших установок. "
-
-msgid ""
 "You need a PC connected to your receiver. If you need further instructions, "
 "please visit the website http://www.dm7025.de.\n"
 "Your receiver will now be halted. After you have performed the update "
@@ -18539,33 +18270,6 @@ msgstr ""
 "Текст атрибута 'Соответствие названию' заканчивается пробелом.\n"
 "Пожалуйста, подтвердите правильность или удалите."
 
-msgid ""
-"Your Dreambox is now ready to use.\n"
-"\n"
-"Your internet connection is working now.\n"
-"\n"
-msgstr ""
-"Теперь Ваш ресивер готов к использованию.\n"
-"\n"
-"Ваше интернет соединение работает.\n"
-"\n"
-
-msgid ""
-"Your Dreambox is now ready to use.\n"
-"\n"
-"Your internet connection is working now.\n"
-"\n"
-"Please press OK to continue."
-msgstr ""
-"Ресивер готов к использованию.\n"
-"\n"
-"Интернет соединение уже работает.\n"
-"\n"
-"Нажмите ОК для продолжения."
-
-msgid "Your Dreambox will restart after pressing OK on your remote control."
-msgstr "Ресивер будет перезапущен после нажатия кнопки OK на пульте."
-
 msgid "Your MediaCenter is up to date! No update required ..."
 msgstr "Ваш МедиаЦентр в актуальном состоянии! Обновления не требутся ..."
 
@@ -18609,18 +18313,6 @@ msgstr ""
 
 msgid "Your current collection will get lost!"
 msgstr "Ваша текущая коллекция будет утеряна!"
-
-msgid "Your dreambox is shutting down. Please stand by..."
-msgstr ""
-"Ресивер будет выключен.\n"
-"Пожалуйста, ждите..."
-
-msgid ""
-"Your dreambox isn't connected to the internet properly. Please check it and "
-"try again."
-msgstr ""
-"Ваш ресивер не подключен к интернету. Пожалуйста, проверьте и попробуйте "
-"снова."
 
 msgid "Your email address:"
 msgstr "Ваш email-адрес:"
@@ -19433,21 +19125,6 @@ msgstr "вниз"
 
 msgid "downloading from http://%s%s"
 msgstr "загружаем из http://%s%s"
-
-msgid "dreambox advanced remote control (native)"
-msgstr "расширенные настройки пульта ДУ (для родного пульта)"
-
-msgid "dreambox front panel"
-msgstr "передняя панель ресивера"
-
-msgid "dreambox ir keyboard"
-msgstr "ИК-клавиатура"
-
-msgid "dreambox ir mouse"
-msgstr "ИК-мышь"
-
-msgid "dreambox remote control (native)"
-msgstr "пульт ДУ (натив)"
 
 msgid "drivers"
 msgstr "Драйверы"
@@ -20605,7 +20282,7 @@ msgid "search..."
 msgstr "поиск..."
 
 msgid "second"
-msgstr "секунда"
+msgstr "второй"
 
 msgid "second cable of motorized LNB"
 msgstr "второй кабель мотоподвеса"
@@ -20701,7 +20378,7 @@ msgid "sets the Audio Delay (LipSync)"
 msgstr "Настройки задержки звука (синхронизация губ)"
 
 msgid "settings"
-msgstr "Сеттинги"
+msgstr "настройки"
 
 msgid "setup Fancontol inStandby mode"
 msgstr "Настройки управления вентилятором в режиме стендбай"
@@ -20736,7 +20413,7 @@ msgid "short"
 msgstr "короткий"
 
 msgid "short and timestamp"
-msgstr "короткий и метку времени"
+msgstr "короткий и метка времени"
 
 msgid "show DVD main menu"
 msgstr "показать главное меню DVD"
@@ -20871,7 +20548,7 @@ msgid "sorting of playlists"
 msgstr "сортировка плей-листов"
 
 msgid "special characters"
-msgstr "особые характеры"
+msgstr "специальные знаки"
 
 msgid "special events"
 msgstr "особые события"
@@ -21222,18 +20899,11 @@ msgid "yes (keep feeds)"
 msgstr "да (оставить фиды)"
 
 msgid ""
-"your dreambox might be unusable now. Please consult the manual for further "
-"assistance before rebooting your dreambox."
-msgstr ""
-"Ваш ресивер может стать непригодным теперь. Пожалуйста, почитайте "
-"руководство по использованию прежде, чем перезагрузить Ваш ресивер"
-
-msgid ""
 "your receiver might be unusable now. Please consult the manual for further "
 "assistance before rebooting your receiver."
 msgstr ""
-"Ваш ресивер может стать непригодным теперь. Пожалуйста, перезагрузите "
-"ресивер, прежде чем продолжать его использование."
+"Ваш ресивер может стать непригодным для использования. Почитайте мануал по "
+"ресиверу, прежде чем продолжать его использование."
 
 msgid "zap"
 msgstr "переключить"
