@@ -2122,7 +2122,7 @@ msgid "Edit services list"
 msgstr "Rediģēt kanālu sarakstu"
 
 msgid "Edit settings"
-msgstr "Rediģēt iestatījumus"
+msgstr "Rediģēt"
 
 msgid "Edit the nameserver configuration of your receiver.\n"
 msgstr "Rediģēt uztvērēja DNS uzstādījumus.\n"
@@ -5122,7 +5122,7 @@ msgid "Show in extensions menu"
 msgstr "Rādīt paplašinājumu izvēlnē"
 
 msgid "Show info"
-msgstr "Rādīt informāciju"
+msgstr "Rādīt info"
 
 msgid "Show info line"
 msgstr "Rādīt infojoslu"
