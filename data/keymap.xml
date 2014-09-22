@@ -250,7 +250,7 @@
 	</map>
 
 	<map context="MoviePlayerActions">
-		<key id="KEY_TV" mapto="leavePlayer" flags="m" />
+		<key id="KEY_TV2" mapto="leavePlayer" flags="m" />
 		<key id="KEY_STOP" mapto="leavePlayer" flags="m"/>
 		<key id="KEY_EXIT" mapto="leavePlayer" flags="m"/>
 		<key id="KEY_CHANNELUP" mapto="movePrev" flags="b"/>
@@ -332,7 +332,6 @@
 
 	<map context="TvRadioActions">
 		<key id="KEY_0" mapto="keyTV" flags="m"/>
-		<key id="KEY_TV" mapto="keyTV" flags="m"/>
 		<key id="KEY_RADIO" mapto="keyRadio" flags="m"/>
 		<key id="KEY_TV2" mapto="keyTV" flags="m"/>
 	</map>
@@ -506,7 +505,7 @@
 		<key id="KEY_BLUE" mapto="blue_long" flags="l"/>
 		<key id="KEY_RECORD" mapto="pvr" flags="m"/>
 		<key id="KEY_RADIO" mapto="radio" flags="m"/>
-		<key id="KEY_TV" mapto="showTv" flags="m"/>
+		<key id="KEY_TV2" mapto="showTv" flags="m"/>
 		<key id="KEY_TEXT" mapto="text" flags="m"/>
 		<key id="KEY_HELP" mapto="displayHelp" flags="m"/>
 	        <key id="KEY_SUBTITLE" mapto="subtitle" flags="m"/>
