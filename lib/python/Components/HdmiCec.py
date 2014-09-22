@@ -117,10 +117,10 @@ class HdmiCec:
 			data = str(struct.pack('B', 0x01))
 		elif message == "givesystemaudiostatus":
 			cmd = 0x7d
-			address = self.logicaladdress * 0x10
+			address = self.logicaladdress * 0x10 + 0x05
 		elif message == "setsystemaudiomode":
 			cmd = 0x70
-			address = self.logicaladdress * 0x10
+			address = self.logicaladdress * 0x10 + 0x05
 			physicaladdress = eHdmiCEC.getInstance().getPhysicalAddress()
 			data = str(struct.pack('BB', int(physicaladdress/256), int(physicaladdress%256)))
 		elif message == "osdname":
