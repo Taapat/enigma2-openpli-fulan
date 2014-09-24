@@ -251,8 +251,8 @@
 		<key id="KEY_TV" mapto="leavePlayer" flags="m" />
 		<key id="KEY_STOP" mapto="leavePlayer" flags="m"/>
 		<key id="KEY_EXIT" mapto="leavePlayer" flags="m"/>
-		<key id="KEY_CHANNELUP" mapto="movePrev" flags="b"/>
-		<key id="KEY_CHANNELDOWN" mapto="moveNext" flags="b"/>
+		<key id="KEY_CHANNELUP" mapto="movePrev" flags="m"/>
+		<key id="KEY_CHANNELDOWN" mapto="moveNext" flags="m"/>
 		<key id="KEY_EPG" mapto="EPGButtonPressed" flags="b"/>
 		<key id="KEY_INFO" mapto="InfoButtonPressedLong" flags="l"/>
 		<key id="KEY_EPG" mapto="EPGButtonPressedLong" flags="l"/>
