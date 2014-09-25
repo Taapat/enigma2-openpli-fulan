@@ -57,7 +57,7 @@ hotkeys = [(_("Red long"), "red_long", ""),
 	(_("Fastforward"), "fastforward", ""),
 	(_("File"), "file", ""),
 	(_("Playmode"), "playmode", ""),
-	(_("USB"), "usb", "")
+	(_("USB"), "usb", ""),
 	(_("Next"), "next", ""),
 	(_("Previous"), "previous", ""),
 	(_("Portal"), "portal", ""),
