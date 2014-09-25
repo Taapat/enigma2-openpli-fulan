@@ -62,9 +62,14 @@ class UpdatePlugin(Screen):
 
 		self.activity = 0
 		self.activityTimer = eTimer()
-		self.activityTimer.callback.append(self.checkTraficLight)
+		self.activityTimer.callback.append(self.checkTraficLight1)
 		self.activityTimer.callback.append(self.doActivityTimer)
 		self.activityTimer.start(100, True)
+
+	def checkTraficLight1(self):
+		self.activityTimer.callback.remove(self.checkTraficLight1)
+		self.activityTimer.start(100, False)
+		self.showDisclaimer()
 
 	def checkTraficLight(self):
 
