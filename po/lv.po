@@ -717,6 +717,9 @@ msgstr "aprīlis"
 msgid "Arabic"
 msgstr "Arābu"
 
+msgid "are you sure to cancel all changes"
+msgstr "vai tiešām vēlaties atcelt visas izmaiņas"
+
 #, python-format
 msgid "Are you sure to remove all %d.%d° %s services?"
 msgstr "Vai tiešām vēlaties nodzēst visus %d.%d° %s kanālus?"
@@ -2724,6 +2727,12 @@ msgstr "Horizontālā"
 
 msgid "Horizontal turning speed"
 msgstr "Horizontālais noskaņošanas ātrums"
+
+msgid "HotKey"
+msgstr "Ātrie taustiņi"
+
+msgid "Hotkey Setup"
+msgstr "Ātro taustiņu iestatījumi"
 
 msgid "How many minutes do you want to record?"
 msgstr "Cik minūšu vēlaties ierakstīt?"
@@ -6090,7 +6099,10 @@ msgid "Today"
 msgstr "Šodien"
 
 msgid "Toggle a cut mark at the current position"
-msgstr "Ie/izslēgt griešanas iezīmi pašreizējā pozīcijā"
+msgstr "Iestatīt griešanas iezīmi pašreizējā pozīcijā"
+
+msgid "Toggle Extra Keys"
+msgstr "Iestatīt"
 
 msgid "Tone amplitude"
 msgstr "Toņa amplitūda"
