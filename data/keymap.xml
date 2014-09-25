@@ -50,8 +50,7 @@
 	</map>
 
 	<map context="InfobarEPGActions">
-		<key id="KEY_EPG" mapto="showEventInfo" flags="m"/>
-		<!--key id="KEY_EPG" mapto="showEventInfoPlugin" flags="m" /-->
+		<key id="KEY_EPG" mapto="showEventInfo" flags="b"/>
 	</map>
 
 	<map context="InfobarInstantRecord">
@@ -78,7 +77,7 @@
 		<key id="KEY_NEXT" mapto="historyNext" flags="mr"/>
 		<key id="KEY_REWIND" mapto="historyBack" flags="mr"/>
 		<key id="KEY_FASTFORWARD" mapto="historyNext" flags="mr"/>
-		<key id="KEY_FAVORITES" mapto="showFavourites" flags="m"/>
+		<key id="KEY_FAVORITES" mapto="showFavourites" flags="b"/>
 		<key id="KEY_SAT" mapto="showSatellites" flags="m"/>
 	</map>
 
@@ -128,7 +127,7 @@
 	</map>
 
 	<map context="InfobarShowHideActions">
-		<key id="KEY_INFO" mapto="toggleShow" flags="m"/>
+		<key id="KEY_INFO" mapto="toggleShow" flags="b"/>
 		<key id="KEY_EXIT" mapto="hide" flags="m"/>
 		<key id="KEY_OK" mapto="okButtonCheck" flags="m"/>
 	</map>
@@ -563,7 +562,8 @@
 		<key id="KEY_YOUTUBE" mapto="youtube" flags="m"/>
 		<key id="KEY_SPARK" mapto="spark" flags="m"/>
 		<key id="KEY_SAT" mapto="sat" flags="m"/>
-		<key id="KEY_FAVORITES" mapto="favorites" flags="m"/>
+		<key id="KEY_FAVORITES" mapto="favorites" flags="b"/>
+		<key id="KEY_FAVORITES" mapto="favorites_long" flags="l"/>
 		<key id="KEY_FIND" mapto="find" flags="m"/>
 		<key id="KEY_PLAYMODE" mapto="playmode" flags="m"/>
 		<key id="KEY_FILE" mapto="file" flags="m"/>
