@@ -5840,7 +5840,7 @@ msgstr ""
 
 #, python-format
 msgid "The status of the current beta image could not be checked because %s can not be reached."
-msgstr "Esošo beta imidža statusu nevar pārbaudīt, jo %s nevar tikt panākts."
+msgstr "Esošo imidža statusu nevar pārbaudīt, jo nevar pieslēgties %s."
 
 msgid "The timer file (timers.xml) is corrupt and could not be loaded."
 msgstr "Taimera fails (timers.xml) ir bojāts un to nevar ielādēt."
