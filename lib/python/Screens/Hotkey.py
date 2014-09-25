@@ -49,7 +49,7 @@ hotkeys = [(_("Red long"), "red_long", ""),
 	(_("Up"), "cross_up", ""),
 	(_("Down"), "cross_down", ""),
 	(_("Find"), "find", ""),
-	(_("Rec"), "pvr", ""),
+	(_("Record"), "pvr", ""),
 	(_("Play"), "play", ""),
 	(_("Stop"), "stop", ""),
 	(_("Pause"), "pause", ""),
@@ -57,8 +57,13 @@ hotkeys = [(_("Red long"), "red_long", ""),
 	(_("Fastforward"), "fastforward", ""),
 	(_("File"), "file", ""),
 	(_("Playmode"), "playmode", ""),
-	(_("Usb"), "usb", ""),
-	(_("Portal"), "portal", "")]
+	(_("USB"), "usb", "")
+	(_("Next"), "next", ""),
+	(_("Previous"), "previous", ""),
+	(_("Portal"), "portal", ""),
+	(_("Timeshift"), "timeshift", ""),
+	(_("Slow"), "slow", ""),
+	(_("Fast"), "fast", "")]
 
 config.misc.hotkey = ConfigSubsection()
 config.misc.hotkey.additional_keys = ConfigYesNo(default=False)
