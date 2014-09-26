@@ -156,9 +156,9 @@
 		<key id="KEY_SLEEP" mapto="timerSelection" flags="m"/>
 	</map>
 
-	<map context="InfobarVmodeButtonActions">
+	<!--map context="InfobarVmodeButtonActions">
 		<key id="KEY_VMODE" mapto="vmodeSelection" flags="m"/>
-	</map>
+	</map-->
 
 	<map context="InfobarSubserviceQuickzapActions">
 		<key id="KEY_PREVIOUS" mapto="prevSubservice" flags="m"/>
