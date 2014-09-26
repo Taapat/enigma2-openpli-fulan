@@ -69,13 +69,13 @@ config.misc.hotkey.additional_keys = ConfigYesNo(default=False)
 for x in hotkeys:
 	exec "config.misc.hotkey." + x[1] + " = ConfigText(default='" + x[2] + "')"
 
-def getHotkeyFunctionsList():
+def getHotkeyFunctions():
 	hotkeyFunctions = []
 	twinPlugins = []
 	pluginlist = plugins.getPlugins([PluginDescriptor.WHERE_PLUGINMENU ,PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_EVENTINFO])
 	pluginlist.sort(key=lambda p: p.name)
 	for plugin in pluginlist:
-		if plugin.name not in twinPlugins:
+		if plugin.name not in twinPlugins and plugin.path:
 			hotkeyFunctions.append((plugin.name, plugin.path[24:]))
 			twinPlugins.append(plugin.name)
 	hotkeyFunctions.append(("--", "--"))
@@ -129,7 +129,6 @@ def getHotkeyFunctionsList():
 	hotkeyFunctions.append((_("Channel Info"), "Module/Screens.ServiceInfo/ServiceInfo"))
 	hotkeyFunctions.append((_("Timer"), "Module/Screens.TimerEdit/TimerEditList"))
 	hotkeyFunctions.append((_("SkinSelector"), "Module/Plugins.SystemPlugins.SkinSelector.plugin/SkinSelector"))
-	hotkeyFunctions.append((_("Sleeptimer edit"), "Module/Screens.SleepTimerEdit/SleepTimerEdit"))
 	hotkeyFunctions.append((_("Standby"), "Module/Screens.Standby/Standby"))
 	hotkeyFunctions.append((_("Restart"), "Module/Screens.Standby/TryQuitMainloop/2"))
 	hotkeyFunctions.append((_("Restart enigma"), "Module/Screens.Standby/TryQuitMainloop/3"))
@@ -149,6 +148,7 @@ class HotkeySetup(Screen):
 		self["key_red"] = Button(_("Exit"))
 		self["key_green"] = Button(_("Toggle Extra Keys"))
 		self.list = []
+		self.hotkeyFunctions = getHotkeyFunctions()
 		for x in hotkeys:
 			self.list.append(ChoiceEntryComponent('',((x[0]), x[1])))
 		self["list"] = ChoiceList(list=self.list[:config.misc.hotkey.additional_keys.value and len(hotkeys) or 10], selection = 0)
@@ -200,9 +200,9 @@ class HotkeySetup(Screen):
 		if key:
 			selected = []
 			for x in eval("config.misc.hotkey." + key + ".value.split(',')"):
-				plugin = list(plugin for plugin in getHotkeyFunctionsList() if plugin[1] == x )
-				if plugin:
-					selected.append(ChoiceEntryComponent('',((plugin[0][0]), plugin[0][1])))
+				function = list(function for function in self.hotkeyFunctions if function[1] == x )
+				if function:
+					selected.append(ChoiceEntryComponent('',((function[0][0]), function[0][1])))
 			self["choosen"].setList(selected)
 
 class HotkeySetupSelect(Screen):
@@ -216,14 +216,15 @@ class HotkeySetupSelect(Screen):
 		self.mode = "list"
 		self.selected = []
 		self.list = []
+		self.hotkeyFunctions = getHotkeyFunctions()
 		self.config = eval("config.misc.hotkey." + key[0][1])
 		self.selected = []
-		for plugin in getHotkeyFunctionsList():
-			self.list.append(ChoiceEntryComponent('',((plugin[0]), plugin[1])))
+		for function in self.hotkeyFunctions:
+			self.list.append(ChoiceEntryComponent('',((function[0]), function[1])))
 		for x in self.config.value.split(','):
-			plugin = list(plugin for plugin in getHotkeyFunctionsList() if plugin[1] == x )
-			if plugin:
-				self.selected.append(ChoiceEntryComponent('',((plugin[0][0]), plugin[0][1])))
+			function = list(function for function in self.hotkeyFunctions if function[1] == x )
+			if function:
+				self.selected.append(ChoiceEntryComponent('',((function[0][0]), function[0][1])))
 		self.prevselected = self.selected[:]
 		self["choosen"] = ChoiceList(list=self.selected, selection=0)
 		self["list"] = ChoiceList(list=self.list, selection=0)
@@ -336,9 +337,9 @@ class InfoBarHotkey():
 		if selection:
 			selected = []
 			for x in selection:
-				plugin = list(plugin for plugin in getHotkeyFunctionsList() if plugin[1] == x )
-				if plugin:
-					selected.append(plugin[0])
+				function = list(function for function in getHotkeyFunctions() if function[1] == x )
+				if function:
+					selected.append(function[0])
 			if not selected:
 				return 0
 			if len(selected) == 1:
