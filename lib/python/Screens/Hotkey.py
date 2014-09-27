@@ -366,9 +366,8 @@ class InfoBarHotkey():
 					exec "self." + selected[1] + "()"
 			elif selected[0] == "Module":
 				try:
-					screen = ",".join(selected[2:])
-					exec "from " + selected[1] + " import " + screen
-					exec "self.session.open(" + screen + ")"
+					exec "from " + selected[1] + " import " + selected[2]
+					exec "self.session.open(" + ",".join(selected[2:]) + ")"
 				except:
 					print "[Hotkey] error during executing module %s, screen %s" % (selected[1], selected[2])
 			elif selected[0] == "Setup":
