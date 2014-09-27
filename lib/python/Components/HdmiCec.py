@@ -135,6 +135,10 @@ class HdmiCec:
 			address = self.logicaladdress * 0x10
 			cmd = 0x90
 			data = str(struct.pack('B', 0x01))
+		elif message == "poweron":
+			address = self.logicaladdress * 0x10
+			cmd = 0x90
+			data = str(struct.pack('B', 0x02))	
 		elif message == "reportaddress":
 			address = self.logicaladdress * 0x10 + 0x0f # use broadcast address
 			cmd = 0x84
@@ -154,7 +158,7 @@ class HdmiCec:
 		elif message == "playstatus":
 			address = self.logicaladdress * 0x10
 			cmd = 0x1B
-			data = '\x11'
+			data = '\x20'
 		elif message == "vendorcommand0":
 			address = self.logicaladdress * 0x10
 			cmd = 0x89
@@ -170,7 +174,7 @@ class HdmiCec:
 		elif message == "vendorcommand3":
 			address = self.logicaladdress * 0x10
 			cmd = 0x89
-			data = '\x05\x01' 
+			data = '\x05\x04' 
 		if cmd:
 			if config.hdmicec.minimum_send_interval.value != "0":
 				self.queue.append((address, cmd, data))
@@ -259,7 +263,10 @@ class HdmiCec:
 				if data[0] == '\x01':
 					self.sendMessage(message.getAddress(), 'vendorcommand0')
 				if data[0] == '\xA0':
-					self.sendMessage(message.getAddress(), 'vendorcommand1')
+				  if inStandby:
+					self.sendMessage(message.getAddress(), 'poweron')
+				  else:
+					self.sendMessage(message.getAddress(), 'poweractive')
 				if data[0] == '\x0B':
 					self.sendMessage(message.getAddress(), 'vendorcommand2')
 				if data[0] == '\x04':
