@@ -302,7 +302,6 @@ class VideoHardware:
 
 		is_widescreen = force_widescreen or config.av.aspect.value in ("16_9", "16_10")
 		is_auto = config.av.aspect.value == "auto"
-		policy2 = "policy" # use main policy
 
 		if is_widescreen:
 			if force_widescreen:
@@ -311,8 +310,6 @@ class VideoHardware:
 				aspect = {"16_9": "16:9", "16_10": "16:10"}[config.av.aspect.value]
 			policy_choices = {"pillarbox": "panscan", "panscan": "letterbox", "nonlinear": "nonlinear", "scale": "bestfit", "auto": "bestfit"}
 			policy = policy_choices[config.av.policy_43.value]
-			policy2_choices = {"letterbox": "letterbox", "panscan": "panscan", "scale": "bestfit", "auto": "bestfit"}
-			policy2 = policy2_choices[config.av.policy_169.value]
 		elif is_auto:
 			aspect = "any"
 			policy = "bestfit"
@@ -325,14 +322,10 @@ class VideoHardware:
 		else:
 			wss = "auto"
 
-		print "-> setting aspect, policy, policy2, wss", aspect, policy, policy2, wss
+		print "-> setting aspect, policy, wss", aspect, policy, wss
 		open("/proc/stb/video/aspect", "w").write(aspect)
 		open("/proc/stb/video/policy", "w").write(policy)
 		open("/proc/stb/denc/0/wss", "w").write(wss)
-		try:
-			open("/proc/stb/video/policy2", "w").write(policy2)
-		except IOError:
-			pass
 
 	def set3DMode(self, configElement):
 		open("/proc/stb/video/3d_mode", "w").write(configElement.value)
