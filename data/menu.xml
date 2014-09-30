@@ -109,7 +109,7 @@ self.session.openWithCallback(msgClosed, FactoryReset)
 			<item level="0" text="About" entryID="about_screen"><screen module="About" /></item>
 		</menu>
 
-		<item level="2" text="Change video port" entryID="ChangeVideoPort">
+		<item level="2" text="Change video port" entryID="ChangeVideoPort" configcondition="config.usage.show_vcr_scart" requires="ScartSwitch">
 			<code>
 from Plugins.SystemPlugins.Videomode.VideoHardware import video_hw
 def VideoPort(hw):
