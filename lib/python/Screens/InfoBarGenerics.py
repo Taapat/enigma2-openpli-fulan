@@ -2631,6 +2631,9 @@ class InfoBarVmodeButton:
 			config.av.policy_43.value = "panscan"
 		else:
 			config.av.policy_43.value = "pillarbox"
+		config.av.policy_43.save()
+		aspectratio = {"panscan": _("Pan&scan"), "pillarbox": _("Pillarbox")}
+		self.session.open(MessageBox, _("Display 4:3 content as") + "\n" + aspectratio[config.av.policy_43.value], MessageBox.TYPE_INFO, 2)
 
 class VideoMode(Screen):
 	def __init__(self,session):
