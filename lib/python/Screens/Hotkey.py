@@ -108,6 +108,7 @@ def getHotkeyFunctions():
 	hotkeyFunctions.append((_("subtitleSelection"), "Infobar/subtitleSelection"))
 	hotkeyFunctions.append((_("show/hide infoBar"), "Infobar/toggleShow"))
 	hotkeyFunctions.append((_("Letterbox zoom"), "Infobar/vmodeSelection"))
+	hotkeyFunctions.append((_("Pillarbox/Pan&Scan"), "Infobar/PillarboxPanScanSelection"))
 	if SystemInfo["PIPAvailable"]:
 		hotkeyFunctions.append((_("showPiP"), "Infobar/showPiP"))
 		hotkeyFunctions.append((_("swapPiP"), "Infobar/swapPiP"))

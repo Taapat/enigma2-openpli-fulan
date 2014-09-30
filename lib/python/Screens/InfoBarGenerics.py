@@ -2626,6 +2626,12 @@ class InfoBarVmodeButton:
 	def vmodeSelection(self):
 		self.session.open(VideoMode)
 
+	def PillarboxPanScanSelection(self):
+		if config.av.policy_43.value == "pillarbox":
+			config.av.policy_43.value = "panscan"
+		else:
+			config.av.policy_43.value = "pillarbox"
+
 class VideoMode(Screen):
 	def __init__(self,session):
 		Screen.__init__(self, session)
