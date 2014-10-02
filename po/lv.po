@@ -2728,7 +2728,7 @@ msgstr "Horizontālā"
 msgid "Horizontal turning speed"
 msgstr "Horizontālais noskaņošanas ātrums"
 
-msgid "HotKey"
+msgid "Hotkey"
 msgstr "Ātrie taustiņi"
 
 msgid "Hotkey Setup"
