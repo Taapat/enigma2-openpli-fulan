@@ -8331,7 +8331,7 @@ msgstr "Горизонтальная"
 msgid "Horizontal turning speed"
 msgstr "Скорость поворота к горизонтали"
 
-msgid "HotKey"
+msgid "Hotkey"
 msgstr "Горячие кнопки"
 
 msgid ""
