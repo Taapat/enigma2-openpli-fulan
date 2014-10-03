@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-05 10:00+0200\n"
-"PO-Revision-Date: 2014-09-25 23:14+0500\n"
+"PO-Revision-Date: 2014-10-01 12:44+0500\n"
 "Last-Translator: a.k.a Uchkun\n"
 "Language-Team: a.k.a Uchkun <madamin2007@mail.ru>\n"
 "Language: ru\n"
@@ -32,6 +32,16 @@ msgstr ""
 "\n"
 "\n"
 "бета-функция редактирования (непроверена) !!!"
+
+msgid ""
+"\n"
+"\n"
+"You do it at your own risk!"
+msgstr ""
+"\n"
+"\n"
+"Будут удалены также файлы внутри папки. Учтите, восстановить их обратно уже "
+"не сможете!"
 
 msgid ""
 "\n"
@@ -247,6 +257,13 @@ msgstr ""
 "были ИЗМЕНЕНЫ! Хотите сохранить изменения?\n"
 "\n"
 "ВНИМАНИЕ!"
+
+msgid ""
+"\n"
+"to:"
+msgstr ""
+"\n"
+"в:"
 
 msgid " "
 msgstr " "
@@ -2014,6 +2031,9 @@ msgstr "AC3 микширование"
 
 msgid "AC3/DTS downmix"
 msgstr "AC3/DTS микширование"
+
+msgid "ADDLINK"
+msgstr "Добавить ярлык"
 
 msgid "Abort"
 msgstr "Прервать"
@@ -4716,16 +4736,16 @@ msgid "Create movie folder failed"
 msgstr "Папка movie не создана"
 
 msgid "Create new directory"
-msgstr "Создайте новый каталог"
+msgstr "Создание нового каталога"
 
 msgid "Create new directory in..."
-msgstr "Создайте новый каталог в..."
+msgstr "Создание нового каталога в..."
 
 msgid "Create new file"
-msgstr "Создать новый файл"
+msgstr "Создание нового файла"
 
 msgid "Create new file in..."
-msgstr "Создайте новый файл в..."
+msgstr "Создание нового файла в..."
 
 msgid "Create preview"
 msgstr "Создать превью"
@@ -4946,6 +4966,9 @@ msgstr "Чехия"
 
 msgid "D"
 msgstr "D"
+
+msgid "DELLINK"
+msgstr "Удалить ярлык"
 
 msgid "DEVICE_LIST : "
 msgstr "Список устройств : "
@@ -5525,7 +5548,7 @@ msgid "Directory for saved playlists"
 msgstr "Папка для сохранения плейлистов"
 
 msgid "Directory name error !"
-msgstr "Ошибка имени папки!"
+msgstr "Ошибка переименования папки!"
 
 msgid "Directory:"
 msgstr "Папка:"
@@ -6059,14 +6082,17 @@ msgstr "Др. Ватсон"
 msgid "Dream-Explorer"
 msgstr "Проводник Dream"
 
+msgid "Dream-Explorer - DELETE DIRECTORY..."
+msgstr "Проводник Dream - Удаление каталога..."
+
 msgid "Dream-Explorer - DELETE file..."
-msgstr "Dream-Explorer - УДАЛИТЬ файл ..."
+msgstr "Проводник Dream - Удаление файла..."
 
 msgid "Dream-Explorer : Disassemble..."
-msgstr "Dream-Explorer : Демонтировать..."
+msgstr "Проводник Dream : Дизассемблирование..."
 
 msgid "Dream-Explorer : Install..."
-msgstr "Dream-Explorer : Установить..."
+msgstr "Проводник Dream : Установка..."
 
 msgid "Dream-Explorer..."
 msgstr "Проводник файлов..."
@@ -6260,6 +6286,9 @@ msgstr "Редактировать список фаворитов"
 
 msgid "Edit chapters of current title"
 msgstr "Изменить главы текущего заголовка"
+
+msgid "Edit line "
+msgstr "Редактировать линию "
 
 msgid "Edit new timer defaults"
 msgstr "Редакт. умолчания новых таймеров"
@@ -7103,6 +7132,9 @@ msgstr "Выйти из мастера настроек"
 msgid "Expert"
 msgstr "Эксперт"
 
+msgid "Explore your Dreambox."
+msgstr "Исследуйте ваш ресивер."
+
 msgid "Export selected as AutoTimer"
 msgstr "Выбранное перенести в Автотаймер"
 
@@ -7195,6 +7227,9 @@ msgstr "FEC"
 
 msgid "FILE NOT EXIST : /proc/stb/fp/remote_code"
 msgstr "Файл не существует : /proc/stb/fp/remote_code"
+
+msgid "FILTER"
+msgstr "Фильтр"
 
 msgid "FPGA Upgrade"
 msgstr "Обновление FPGA"
@@ -7450,7 +7485,7 @@ msgid "File appears to be busy.\n"
 msgstr "Файл занят.\n"
 
 msgid "File name error !"
-msgstr "Ошибка имени файла!"
+msgstr "Ошибка переименования файла!"
 
 msgid "File not found"
 msgstr "Файл не найден"
@@ -11311,6 +11346,9 @@ msgstr "Нужно ввести пин-код"
 msgid "PINGU_TM InfoBar"
 msgstr "PINGU_TM"
 
+msgid "PLAYDIRPICTURE"
+msgstr "КаталогКартинок"
+
 msgid "PLEASE READ THIS:"
 msgstr "ПОЖАЛУЙСТА ПРОЧТИТЕ ЭТО"
 
@@ -11346,6 +11384,9 @@ msgstr "PWM  %03d"
 
 msgid "PWM value"
 msgstr "Значение PWM"
+
+msgid "Pack my bootlogo"
+msgstr "Упаковать мой bootlogo"
 
 msgid "Package list update"
 msgstr "Обновление списка пакетов"
@@ -12554,6 +12595,9 @@ msgstr "Перевести ТВ в режим ожидания"
 msgid "Put receiver in standby"
 msgstr "Перевести ресивер в режим ожидания"
 
+msgid "Pyc-Script:\\n"
+msgstr "Pyc-Скрипт:\\n"
+
 msgid "Python frontend for /tmp/mmi.socket"
 msgstr "Python интерфейс для /tmp/mmi.socket"
 
@@ -13087,6 +13131,9 @@ msgstr "Переименовать"
 
 msgid "Rename crashlogs"
 msgstr "Переименовать крешлоги"
+
+msgid "Rename file..."
+msgstr "Переименование файла..."
 
 msgid "Rename this tag..."
 msgstr "Переименовать данный тэг..."
@@ -14510,7 +14557,7 @@ msgid "Set sispmctl when saver on:"
 msgstr "Настройка sispmctl при сохранении:"
 
 msgid "Set start directory"
-msgstr "Выбор начального каталога"
+msgstr "Выбор стартового каталога"
 
 msgid "Set the brightness level of the front panel display during standby."
 msgstr "Установите уровень яркости дисплея для режима ожидания."
@@ -18364,6 +18411,9 @@ msgstr "Видеомагнитофон"
 msgid "VFD scroll speed"
 msgstr "Скорость движения бегущей строки на дисплее"
 
+msgid "VIEW"
+msgstr "Просмотр"
+
 msgid "VIP"
 msgstr "VIP"
 
@@ -21873,7 +21923,7 @@ msgid "ok"
 msgstr "ок"
 
 msgid "old:  "
-msgstr "старая:  "
+msgstr "старое:  "
 
 msgid "older than 1 day"
 msgstr "после 1 дня"
@@ -22098,7 +22148,7 @@ msgid "readme.txt"
 msgstr "readme.txt"
 
 msgid "ready..."
-msgstr "готов..."
+msgstr "готово..."
 
 msgid "receiver software because updates are available."
 msgstr "Есть доступные обновления"
