@@ -9,12 +9,18 @@ from Tools.Directories import pathExists, SCOPE_SKIN_IMAGE, \
 
 
 searchPaths = []
-lastPiconPath = ['/tmp/picon/']
+if pathExists('/tmp/picon/'):
+	piconInTmp = True
+	lastPiconPath = '/tmp/picon/'
+	print "[Picon] use path:", lastPiconPath
+else:
+	piconInTmp = False
+	lastPiconPath = None
 
 def initPiconPaths():
 	global searchPaths
 	searchPaths = []
-	for mp in ('/tmp/', '/media/hdd/', '/usr/share/enigma2/'):
+	for mp in ('/tmp/', '/media/hdd/', '/usr/share/enigma2/', '/'):
 		onMountpointAdded(mp)
 	for part in harddiskmanager.getMountedPartitions():
 		onMountpointAdded(part.mountpoint)
@@ -47,27 +53,19 @@ def onPartitionChange(why, part):
 	elif why == 'remove':
 		onMountpointRemoved(part.mountpoint)
 
-def ifPiconExist(piconPath, serviceName):
-	if pathExists(piconPath):
-		pngname = piconPath + serviceName + ".png"
-		if pathExists(pngname):
-			return pngname
-	return ""
-
 def findPicon(serviceName):
 	global lastPiconPath
-	for piconPath in lastPiconPath:
-		pngname = ifPiconExist(piconPath, serviceName)
-		if pngname:
+	if lastPiconPath:
+		pngname = lastPiconPath + serviceName + ".png"
+		if pathExists(pngname):
 			return pngname
-	for piconPath in searchPaths:
-		pngname = ifPiconExist(piconPath, serviceName)
-		if pngname:
-			if piconPath != '/tmp/picon/' and '/tmp/picon/' in searchPaths:
-				lastPiconPath = ['/tmp/picon/', piconPath]
-			else:
-				lastPiconPath = [piconPath]
-			return pngname
+	if not piconInTmp:
+		for piconPath in searchPaths:
+			pngname = piconPath + serviceName + ".png"
+			if pngname:
+				if pathExists(pngname):
+					lastPiconPath = path
+					return pngname
 	return ""
 
 def getPiconName(serviceName):
@@ -137,6 +135,7 @@ class Picon(Renderer):
 					self.instance.hide()
 				self.pngname = pngname
 
-harddiskmanager.on_partition_list_change.append(onPartitionChange)
-initPiconPaths()
+if not piconInTmp:
+	harddiskmanager.on_partition_list_change.append(onPartitionChange)
+	initPiconPaths()
 
