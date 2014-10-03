@@ -64,7 +64,7 @@ def findPicon(serviceName):
 			pngname = piconPath + serviceName + ".png"
 			if pngname:
 				if pathExists(pngname):
-					lastPiconPath = path
+					lastPiconPath = piconPath
 					return pngname
 	return ""
 
