@@ -117,6 +117,7 @@ def getHotkeyFunctions():
 		hotkeyFunctions.append((_("swapPiP"), "Infobar/swapPiP"))
 		hotkeyFunctions.append((_("movePiP"), "Infobar/movePiP"))
 		hotkeyFunctions.append((_("togglePipzap"), "Infobar/togglePipzap"))
+	hotkeyFunctions.append((_("Toggle HDMI In"), "Infobar/HDMIIn"))
 	hotkeyFunctions.append(("--", "--"))
 	hotkeyFunctions.append((_("HotKey Setup"), "Module/Screens.Hotkey/HotkeySetup"))
 	hotkeyFunctions.append((_("Software update"), "Module/Screens.SoftwareUpdate/UpdatePlugin"))
@@ -404,3 +405,6 @@ class InfoBarHotkey():
 			elif selected[0] == "Zap":
 				self.servicelist.servicelist.setCurrent(eServiceReference("/".join(selected[1:])))
 				self.servicelist.zap(enable_pipzap = True)
+				if hasattr(self, "lastservice"):
+					self.lastservice = eServiceReference("/".join(selected[1:]))
+					self.close()
