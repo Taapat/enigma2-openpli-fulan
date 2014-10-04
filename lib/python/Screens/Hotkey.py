@@ -294,8 +294,8 @@ class HotkeySetupSelect(Screen):
 					self.expanded.append(currentSelected[0][0])
 				self["list"].setList(self.getFunctionList())
 			else:
-				if currentSelected in self.selected:
-					self.selected.remove(currentSelected)
+				if currentSelected[:2] in self.selected:
+					self.selected.remove(currentSelected[:2])
 				else:
 					if currentSelected[0][1].startswith("Zap"):
 						self.session.openWithCallback(self.zaptoCallback, SimpleChannelSelection, _("Hotkey zap") + " " + self.key[0][0], currentBouquet=True)
