@@ -37,7 +37,7 @@ hotkeys = [(_("Red long"), "red_long", ""),
 	(_("Spark"), "spark", ""),
 	(_("Tv/Radio"), "showTv", ""),
 	(_("Recall"), "back", ""),
-	(_("Info"), "info", "Infobar/openEventView"),
+	(_("Info"), "info", ""),
 	(_("Sat"), "sat", ""),
 	(_("Channel up"), "channelup", ""),
 	(_("Channel down"), "channeldown", ""),
@@ -111,7 +111,7 @@ def getHotkeyFunctions():
 	hotkeyFunctions.append((_("Open subservice selection"), "Infobar/subserviceSelection", "InfoBar"))
 	hotkeyFunctions.append((_("Open subtitle selection"), "Infobar/subtitleSelection", "InfoBar"))
 	hotkeyFunctions.append((_("Show/hide infoBar"), "Infobar/toggleShow", "InfoBar"))
-	hotkeyFunctions.append((_("Pillarbox/Pan&Scan"), "Infobar/PillarboxPanScanSelection, "InfoBar""))
+	hotkeyFunctions.append((_("Pillarbox/Pan&Scan"), "Infobar/PillarboxPanScanSelection", "InfoBar"))
 	hotkeyFunctions.append((_("Letterbox zoom"), "Infobar/vmodeSelection", "InfoBar"))
 	if SystemInfo["PIPAvailable"]:
 		hotkeyFunctions.append((_("Show PIP"), "Infobar/showPiP", "InfoBar"))
