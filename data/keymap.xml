@@ -436,6 +436,7 @@
 	</map>
 
 	<map context="HelpActions">
+		<key id="KEY_F1" mapto="displayHelp" flags="b"/>
 	</map>
 
 	<map context="ShortcutActions">
