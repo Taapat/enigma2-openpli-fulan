@@ -30,8 +30,8 @@ private:
 public:
 	static eDVBVolumecontrol* getInstance();
 
-	void volumeUp(int left = 5, int right = 5);
-	void volumeDown(int left = 5, int right = 5);
+	void volumeUp(int left = 2, int right = 2);
+	void volumeDown(int left = 2, int right = 2);
 
 	void setVolume(int left, int right);
 
