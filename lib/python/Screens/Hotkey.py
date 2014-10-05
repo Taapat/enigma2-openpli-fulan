@@ -267,7 +267,7 @@ class HotkeySetupSelect(Screen):
 				functionslist.append(ChoiceEntryComponent('expanded',((catagorie), "Expander")))
 				for function in catagories[catagorie]:
 					functionslist.append(ChoiceEntryComponent('verticalline',((function[0]), function[1])))
-				if catagorie == "Infobar":
+				if catagorie == "InfoBar":
 					functionslist.append(ChoiceEntryComponent('verticalline',((_("Zap to")), "Zap")))
 			else:
 				functionslist.append(ChoiceEntryComponent('expandable',((catagorie), "Expander")))
@@ -313,28 +313,16 @@ class HotkeySetupSelect(Screen):
 			self.selected.append([(currentSelected[0][0], currentSelected[0][1] + "/" + args[0].toString()), currentSelected[1]])
 
 	def keyLeft(self):
-		if self.mode == "list":
-			self["list"].instance.moveSelection(self["list"].instance.pageUp)
-		else:
-			self["choosen"].instance.moveSelection(self["list"].instance.pageUp)
+		self[self.mode].instance.moveSelection(self[self.mode].instance.pageUp)
 
 	def keyRight(self):
-		if self.mode == "list":
-			self["list"].instance.moveSelection(self["list"].instance.pageDown)
-		else:
-			self["choosen"].instance.moveSelection(self["list"].instance.pageDown)
+		self[self.mode].instance.moveSelection(self[self.mode].instance.pageDown)
 
 	def keyUp(self):
-		if self.mode == "list":
-			self["list"].instance.moveSelection(self["list"].instance.moveUp)
-		else:
-			self["choosen"].instance.moveSelection(self["list"].instance.moveUp)
+		self[self.mode].instance.moveSelection(self[self.mode].instance.moveUp)
 
 	def keyDown(self):
-		if self.mode == "list":
-			self["list"].instance.moveSelection(self["list"].instance.moveDown)
-		else:
-			self["choosen"].instance.moveSelection(self["list"].instance.moveDown)
+		self[self.mode].instance.moveSelection(self[self.mode].instance.moveDown)
 
 	def save(self):
 		configValue = []
@@ -362,6 +350,12 @@ class hotkeyActionMap(ActionMap):
 			return 1
 		else:
 			return ActionMap.action(self, contexts, action)
+
+class dummyScreen(Screen): #intended to dump key release after a long key function
+	skin = """<screen position="1,1" size="1,1" title="" flags="wfNoBorder" backgroundColor="#ff000000"/>"""
+	def __init__(self, session):
+		Screen.__init__(self, session)
+		self.close()
 
 class InfoBarHotkey():
 	def __init__(self):
@@ -414,6 +408,7 @@ class InfoBarHotkey():
 				from Screens.Setup import Setup
 				exec "self.session.open(Setup, \"" + selected[1] + "\")"
 			elif selected[0] == "Zap":
+				self.session.open(dummyScreen)
 				self.servicelist.servicelist.setCurrent(eServiceReference("/".join(selected[1:])))
 				self.servicelist.zap(enable_pipzap = True)
 				if hasattr(self, "lastservice"):
