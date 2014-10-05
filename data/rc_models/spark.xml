@@ -1,10 +1,10 @@
 <rcs>
 	<rc id="2">
 		<button name="POWER" pos="57,18"/>
-		<button name="VMODE" pos="23,38"/>
-		<button name="TVSAT" pos="46,38"/>
+		<button name="VMODE" pos="21,38"/>
+		<button name="TVSAT" pos="45,38"/>
 		<button name="SLEEP" pos="69,38"/>
-		<button name="MUTE" pos="91,38"/>
+		<button name="MUTE" pos="93,38"/>
 		<button name="1" pos="24,61"/>
 		<button name="2" pos="57,61"/>
 		<button name="3" pos="90,61"/>
@@ -17,43 +17,43 @@
 		<button name="TV" pos="24,139"/>
 		<button name="0" pos="57,139" />
 		<button name="RECALL" pos="90,139"/>
-		<button name="CHANNELDOWN" pos="26,166"/>
-		<button name="CHANNELUP" pos="26,196"/>
+		<button name="CHANNELUP" pos="26,166"/>
+		<button name="CHANNELDOWN" pos="26,196"/>
 		<button name="FIND" pos="57,166"/>
 		<button name="FILE" pos="57,196"/>
 		<button name="VOLUMEUP" pos="88,166"/>
 		<button name="VOLUMEDOWN" pos="88,196"/>
 		<button name="MENU" pos="24,224"/>
 		<button name="INFO" pos="90,224"/>
-		<button name="UP" pos="57,238"/>
-		<button name="DOWN" pos="57,286"/>
-		<button name="LEFT" pos="34,262"/>
-		<button name="RIGHT" pos="82,262"/>
-		<button name="OK" pos="57,262"/>
-		<button name="EXIT" pos="24,301"/>
-		<button name="EPG" pos="90,301"/>
-		<button name="FAVORITES" pos="24,329"/>
-		<button name="SAT" pos="90,329"/>
+		<button name="UP" pos="57,237"/>
+		<button name="DOWN" pos="57,288"/>
+		<button name="LEFT" pos="32,264"/>
+		<button name="RIGHT" pos="82,264"/>
+		<button name="OK" pos="57,264"/>
+		<button name="EXIT" pos="24,302"/>
+		<button name="EPG" pos="90,302"/>
 		<button name="PORTAL" pos="57,321"/>
-		<button name="RED" pos="23,350"/>
-		<button name="GREEN" pos="46,350"/>
-		<button name="YELLOW" pos="69,350"/>
+		<button name="FAVORITES" pos="22,330"/>
+		<button name="SAT" pos="91,330"/>
+		<button name="RED" pos="22,350"/>
+		<button name="GREEN" pos="45,350"/>
+		<button name="YELLOW" pos="68,350"/>
 		<button name="BLUE" pos="91,350"/>
-		<button name="RECORD" pos="23,370"/>
-		<button name="STOP" pos="46,370"/>
-		<button name="PAUSE" pos="69,370"/>
-		<button name="PLAY" pos="91,370"/>
-		<button name="PREVIOUS" pos="23,390"/>
-		<button name="NEXT" pos="46,390"/>
-		<button name="FASTFORWARD" pos="69,390"/>
-		<button name="REWIND" pos="91,390"/>
-		<button name="SLOW" pos="23,410"/>
-		<button name="FAST" pos="46,410"/>
-		<button name="PLAYMODE" pos="69,410"/>
-		<button name="USB" pos="91,410"/>
-		<button name="TIME" pos="23,430"/>
-		<button name="F1" pos="46,430"/>
-		<button name="F2" pos="69,430"/>
-		<button name="F3" pos="91,430"/>
+		<button name="RECORD" pos="22,373"/>
+		<button name="STOP" pos="45,373"/>
+		<button name="PAUSE" pos="69,373"/>
+		<button name="PLAY" pos="92,373"/>
+		<button name="PREVIOUS" pos="22,393"/>
+		<button name="NEXT" pos="45,393"/>
+		<button name="REWIND" pos="69,393"/>
+		<button name="FASTFORWARD" pos="92,393"/>
+		<button name="SLOW" pos="22,413"/>
+		<button name="FAST" pos="45,413"/>
+		<button name="PLAYMODE" pos="69,413"/>
+		<button name="USB" pos="92,413"/>
+		<button name="TIME" pos="22,433"/>
+		<button name="F1" pos="45,433"/>
+		<button name="F2" pos="69,433"/>
+		<button name="F3" pos="92,433"/>
 	</rc>
 </rcs>
