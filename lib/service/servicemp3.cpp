@@ -1268,8 +1268,7 @@ RESULT eServiceMP3::seekRelative(int direction, pts_t to)
 #endif
 }
 
-#ifndef ENABLE_LIBEPLAYER3
-#endif
+
 RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 {
 #ifndef ENABLE_LIBEPLAYER3
