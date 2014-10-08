@@ -768,10 +768,11 @@ class HarddiskManager:
 	def getUserfriendlyDeviceName(self, dev, phys):
 		dev, part = self.splitDeviceName(dev)
 		description = _("External Storage %s") % dev
-		try:
-			description = readFile("/sys" + phys + "/model")
-		except IOError, s:
-			print "couldn't read model: ", s
+		if "virtual" not in phys:
+			try:
+				description = readFile("/sys" + phys + "/model")
+			except IOError, s:
+				print "couldn't read model: ", s
 		from Tools.HardwareInfo import HardwareInfo
 		for physdevprefix, pdescription in DEVICEDB.get(HardwareInfo().device_name,{}).items():
 			if phys[:len(physdevprefix)] == physdevprefix:
