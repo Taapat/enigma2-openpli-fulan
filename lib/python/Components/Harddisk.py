@@ -118,8 +118,8 @@ class Harddisk:
 		return ret
 
 	def diskSize(self):
-		line = readFile(self.sysfsPath('size'))
 		try:
+			line = readFile(self.sysfsPath('size'))
 			cap = int(line)
 		except:
 			return 0;
