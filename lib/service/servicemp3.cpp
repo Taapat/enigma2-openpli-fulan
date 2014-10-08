@@ -2670,11 +2670,12 @@ void eServiceMP3::pullSubtitle(GstBuffer *buffer)
 {
 	if (buffer && m_currentSubtitleStream >= 0 && m_currentSubtitleStream < (int)m_subtitleStreams.size())
 	{
-		gint64 buf_pos = GST_BUFFER_TIMESTAMP(buffer);
 		gint64 duration_ns = GST_BUFFER_DURATION(buffer);
 #if GST_VERSION_MAJOR < 1
+		gint64 buf_pos = GST_BUFFER_TIMESTAMP(buffer);
 		size_t len = GST_BUFFER_SIZE(buffer);
 #else
+		gint64 buf_pos = GST_BUFFER_PTS(buffer);
 		size_t len = gst_buffer_get_size(buffer);
 #endif
 		int subType = m_subtitleStreams[m_currentSubtitleStream].type;
@@ -2693,8 +2694,10 @@ void eServiceMP3::pullSubtitle(GstBuffer *buffer)
 #if GST_VERSION_MAJOR < 1
 				std::string line((const char*)GST_BUFFER_DATA(buffer), len);
 #else
-				std::string line(len);
-				gst_buffer_extract(buffer, 0, (char*)line.data(), len);
+				GstMapInfo map;
+				gst_buffer_map(buffer, &map, GST_MAP_READ);
+				std::string line((const char*) map.data, map.size);
+				gst_buffer_unmap(buffer, &map);
 #endif
 				eDebug("got new text subtitle @ buf_pos = %lld ns (in pts=%lld), dur=%lld: '%s' ", buf_pos, buf_pos/11111, duration_ns, line.c_str());
 
