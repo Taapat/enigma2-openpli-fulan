@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-05 10:00+0200\n"
-"PO-Revision-Date: 2014-10-05 09:10+0500\n"
+"PO-Revision-Date: 2014-10-05 23:50+0500\n"
 "Last-Translator: a.k.a Uchkun\n"
 "Language-Team: a.k.a Uchkun <madamin2007@mail.ru>\n"
 "Language: ru\n"
@@ -8419,6 +8419,9 @@ msgstr "Скорость поворота к горизонтали"
 
 msgid "Hotkey"
 msgstr "Горячие кнопки"
+
+msgid "Hotkey Setup"
+msgstr "Настройки горячих кнопок"
 
 msgid ""
 "How long should 3D mode on confirmation be displayed (seconds). 0 for none."
@@ -17641,6 +17644,9 @@ msgstr ""
 msgid "Today"
 msgstr "Сегодня"
 
+msgid "Toggle Extra Keys"
+msgstr "Все кнопки"
+
 msgid "Toggle Picture"
 msgstr "Переключить постер"
 
@@ -20668,6 +20674,9 @@ msgstr "а здесь сделаем дополнительную копию в:
 
 msgid "and will soon be unable to connect to database!"
 msgstr "и в ближайшее время не имеют доступа к базе данных!"
+
+msgid "are you sure to cancel all changes?"
+msgstr "действительно хотите отменить все изменения?"
 
 msgid ""
 "are you sure you want to restore\n"
