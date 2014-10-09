@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-28 22:11+0300\n"
+"POT-Creation-Date: 2014-10-09 20:40+0300\n"
 "PO-Revision-Date: 2013-11-09 00:59+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -352,7 +352,7 @@ msgid "30"
 msgstr "30"
 
 msgid "3D Modus"
-msgstr "3D Modus"
+msgstr "3D režīms"
 
 msgid "3d mode"
 msgstr "3d režīms"
@@ -2903,7 +2903,7 @@ msgid "Installation or removal has completed."
 msgstr "Uzstādīšana vai noņemšana pabeigta."
 
 msgid "Installing"
-msgstr "Uzstādīšana"
+msgstr "Uzstāda"
 
 msgid "Installing software..."
 msgstr "Uzstāda programmatūru..."
@@ -3811,6 +3811,9 @@ msgstr "PMT PID"
 msgid "Package list update"
 msgstr "Pakotņu saraksta atjaunināšana"
 
+msgid "Packages to update"
+msgstr "Atjaunojamās paketes"
+
 msgid "Packet management"
 msgstr "Pakotņu pārvaldība"
 
@@ -4017,7 +4020,7 @@ msgid "Please select a subservice..."
 msgstr "Lūdzu izvēlieties papildkanālu..."
 
 msgid "Please select an 3D modus..."
-msgstr "Lūdzu izvēlieties 3D modus..."
+msgstr "Lūdzu izvēlieties 3D režīmu..."
 
 msgid "Please select an NFI file and press green key to flash!"
 msgstr "Lūdzu izvēlieties NFI failu un spiediet zaļo taustiņu lai pāršūtu!"
@@ -4467,7 +4470,7 @@ msgid "Remove title"
 msgstr "Dzēst virsrakstu"
 
 msgid "Removing"
-msgstr "Dzēšana"
+msgstr "Noņem"
 
 #, python-format
 msgid "Removing directory %s failed. (Maybe not empty.)"
@@ -6102,7 +6105,7 @@ msgid "Toggle a cut mark at the current position"
 msgstr "Iestatīt griešanas iezīmi pašreizējā pozīcijā"
 
 msgid "Toggle Extra Keys"
-msgstr "Iestatīt"
+msgstr "Visi taustiņi"
 
 msgid "Tone amplitude"
 msgstr "Toņa amplitūda"
@@ -6305,7 +6308,7 @@ msgid "Updating software catalog"
 msgstr "Atjauno programmatūras katalogu"
 
 msgid "Upgrading"
-msgstr "Atjaunošana"
+msgstr "Atjauno"
 
 msgid "Use"
 msgstr "Lietot"
@@ -7097,7 +7100,7 @@ msgid "Your receiver is shutting down. Please stand by..."
 msgstr "Jūsu uztvērējs izslēdzas. Lūdzu uzgaidiet..."
 
 msgid "Your receiver might be unusable now. Please consult the manual for further assistance before rebooting your receiver."
-msgstr "Jūsu uztvērējs nav lietojams. Pirms uztvērēja pārstartēšanas, lai saņemtu palīdzību lūdzu izlasiet rokasgrāmatu."
+msgstr "Jūsu uztvērējs nav lietojams. Pirms uztvērēja pārstartēšanas, lai saņemtu palīdzību, lūdzu izlasiet rokasgrāmatu."
 
 msgid "Your receiver will got to stand by due to the sleeptimer."
 msgstr "Jūsu uztvērējs miega taimera dēļ pāriet gaidstāvē."
