@@ -364,6 +364,7 @@ private:
 	GstPad* gstCreateSubtitleSink(eServiceMP3* _this, subtype_t type);
 	void gstPoll(ePtr<GstMessageContainer> const &);
 	static void playbinNotifySource(GObject *object, GParamSpec *unused, gpointer user_data);
+	static gint match_sinktype(GstElement *element, gpointer type);
 	static void handleElementAdded(GstBin *bin, GstElement *element, gpointer user_data);
 #else
 	Context_t * player;
