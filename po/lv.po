@@ -5149,7 +5149,7 @@ msgid "Show infobar on skip forward/backward"
 msgstr "Rādīt infojoslu pārlēciena turp/atpakaļ laikā"
 
 msgid "Show latest commits on sourceforge"
-msgstr "Parādīt pēdējos kommitus no sourceforge"
+msgstr "Parādīt jaunākos kommitus"
 
 msgid "Show message when recording starts"
 msgstr "Rādīt paziņojumu kad ieraksts sākas"
