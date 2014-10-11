@@ -557,7 +557,7 @@ class InfoBarChannelSelection:
 				"historyNext": (self.historyNext, _("Switch to next channel in history")),
 				"keyChannelUp": (self.keyChannelUpCheck, self.getKeyChannelUpHelptext),
 				"keyChannelDown": (self.keyChannelDownCheck, self.getKeyChannelDownHelptext), 	
-				"showFavourites": (self.showFavourites, _("show favourites")),
+				"showFavourites": (self.openFavouritesList, _("show favourites")),
 				"showSatellites": (self.showSatellites, _("show satellites")),
 			})
 
@@ -751,10 +751,6 @@ class InfoBarChannelSelection:
 
 	def openServiceList(self):
 		self.session.execDialog(self.servicelist)
-
-	def showFavourites(self):
-		self.session.execDialog(self.servicelist)
-		self.servicelist.showFavourites()
 
 	def showSatellites(self):
 		self.session.execDialog(self.servicelist)
