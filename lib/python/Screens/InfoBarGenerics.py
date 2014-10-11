@@ -332,10 +332,15 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			self.show()
 			if self.secondInfoBarScreen:
 				self.secondInfoBarScreen.hide()
-		elif config.usage.show_second_infobar.value == "EPG":
-			self.hide()
-			self.hideTimer.stop()
-			self.showDefaultEPG()
+		else:
+			self.showSecondInfoBar()
+
+	def showSecondInfoBar(self):
+		if config.usage.show_second_infobar.value == "EPG":
+			if not(hasattr(self, "hotkeyGlobal") and self.hotkeyGlobal("info") != 0):
+				self.hide()
+				self.hideTimer.stop()
+				self.showDefaultEPG()
 		elif config.usage.show_second_infobar.value:
 			if self.secondInfoBarScreen and not self.secondInfoBarScreen.shown and config.usage.show_second_infobar.value != "Event":
 				self.secondInfoBarScreen.show()
@@ -739,6 +744,10 @@ class InfoBarChannelSelection:
 		else:
 			self.servicelist.moveDown()
 		self.servicelist.zap(enable_pipzap = True)
+
+	def openFavouritesList(self):
+		self.servicelist.showFavourites()
+		self.openServiceList()
 
 	def openServiceList(self):
 		self.session.execDialog(self.servicelist)

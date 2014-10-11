@@ -2862,7 +2862,7 @@ exit:
 
 	m_subtitle_sync_timer->start(next_timer, true);
 
-	eDebug("\n\n");
+	//eDebug("\n\n");
 #endif
 }
 
