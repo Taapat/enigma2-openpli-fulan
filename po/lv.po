@@ -721,8 +721,8 @@ msgid "are you sure to cancel all changes"
 msgstr "vai tiešām vēlaties atcelt visas izmaiņas"
 
 #, python-format
-msgid "Are you sure to remove all %d.%d° %s services?"
-msgstr "Vai tiešām vēlaties nodzēst visus %d.%d° %s kanālus?"
+msgid "Are you sure to remove all %d.%d%s%s services?"
+msgstr "Vai tiešām vēlaties nodzēst visus %d.%d%s%s kanālus?"
 
 msgid "Are you sure to remove all cable services?"
 msgstr "Vai tiešām vēlaties nodzēst visus kabeļu kanālus?"
