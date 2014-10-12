@@ -37,11 +37,11 @@ class StubInfo:
 	def isPlayable(self):
 		return True
 	def getInfo(self, serviceref, w):
-		if w == iServiceInformation.sTimeCreate:
+		if w is iServiceInformation.sTimeCreate:
 			return os.stat(serviceref.getPath()).st_ctime
-		if w == iServiceInformation.sFileSize:
+		if w is iServiceInformation.sFileSize:
 			return os.stat(serviceref.getPath()).st_size
-		if w == iServiceInformation.sDescription:
+		if w is iServiceInformation.sDescription:
 			return serviceref.getPath()
 		return 0
 	def getInfoString(self, serviceref, w):
@@ -64,7 +64,7 @@ def moviePlayState(cutsFileName, ref, length):
 			if len(data) < cutsParser.size:
 				break
 			cut, cutType = cutsParser.unpack(data)
-			if cutType == 3: # undocumented, but 3 appears to be the stop
+			if cutType is 3: # undocumented, but 3 appears to be the stop
 				cutPTS = cut
 			else:
 				lastCut = cut
@@ -115,7 +115,7 @@ def resetMoviePlayState(cutsFileName, ref=None):
 			if len(data) < cutsParser.size:
 				break
 			cut, cutType = cutsParser.unpack(data)
-			if cutType != 3:
+			if cutType is not 3:
 				cutlist.append(data)
 		f.close()
 		f = open(cutsFileName, 'wb')
@@ -208,7 +208,7 @@ class MovieList(GUIComponent):
 		for timer in NavigationInstance.instance.RecordTimer.timer_list:
 			if timer.isRunning() and not timer.justplay:
 				result[os.path.split(timer.Filename)[1]+'.ts'] = timer
-		if self.runningTimers == result:
+		if self.runningTimers is result:
 			return
 		self.runningTimers = result
 		if timer is not None:
@@ -231,7 +231,7 @@ class MovieList(GUIComponent):
 			x()
 
 	def setListType(self, type):
-		if type != self.list_type:
+		if type is not self.list_type:
 			self.list_type = type
 			self.redrawList()
 
@@ -266,11 +266,11 @@ class MovieList(GUIComponent):
 		return GUIComponent.applySkin(self, desktop, parent)
 
 	def redrawList(self):
-		if self.list_type == MovieList.LISTTYPE_ORIGINAL:
+		if self.list_type is MovieList.LISTTYPE_ORIGINAL:
 			for i in range(3):
 				self.l.setFont(i, gFont(self.fontName, self.fontSizesOriginal[i]))
 			self.itemHeight = self.itemHeights[0]
-		elif self.list_type == MovieList.LISTTYPE_COMPACT_DESCRIPTION or self.list_type == MovieList.LISTTYPE_COMPACT:
+		elif self.list_type is MovieList.LISTTYPE_COMPACT_DESCRIPTION or self.list_type is MovieList.LISTTYPE_COMPACT:
 			for i in range(2):
 				self.l.setFont(i, gFont(self.fontName, self.fontSizesCompact[i]))
 			self.itemHeight = self.itemHeights[1]
@@ -307,7 +307,7 @@ class MovieList(GUIComponent):
 					# if path ends in '/', p is blank.
 					p = os.path.split(p[0])
 				txt = p[1]
-				if txt == ".Trash":
+				if txt is ".Trash":
 					res.append(MultiContentEntryPixmapAlphaTest(pos=(0,1), size=(iconSize,24), png=self.iconTrash))
 					res.append(MultiContentEntryText(pos=(iconSize+2, 0), size=(width-166, self.itemHeight), font = 0, flags = RT_HALIGN_LEFT, text = _("Deleted items")))
 					res.append(MultiContentEntryText(pos=(width-145, 4), size=(145, self.itemHeight), font=1, flags=RT_HALIGN_RIGHT, text=_("Trash can")))
@@ -316,7 +316,7 @@ class MovieList(GUIComponent):
 			res.append(MultiContentEntryText(pos=(iconSize+2, 0), size=(width-166, self.itemHeight), font = 0, flags = RT_HALIGN_LEFT, text = txt))
 			res.append(MultiContentEntryText(pos=(width-145, 4), size=(145, self.itemHeight), font=1, flags=RT_HALIGN_RIGHT, text=_("Directory")))
 			return res
-		if (data == -1) or (data is None):
+		if (data is -1) or (data is None):
 			data = MovieListData()
 			cur_idx = self.l.getCurrentSelectionIndex()
 			x = self.list[cur_idx] # x = ref,info,begin,...
@@ -333,22 +333,22 @@ class MovieList(GUIComponent):
 			data.icon = None
 			data.part = None
 			if os.path.split(pathName)[1] in self.runningTimers:
-				if self.playInBackground and serviceref == self.playInBackground:
+				if self.playInBackground and serviceref is self.playInBackground:
 					data.icon = self.iconMoviePlayRec
 				else:
 					data.icon = self.iconMovieRec
-			elif self.playInBackground and serviceref == self.playInBackground:
+			elif self.playInBackground and serviceref is self.playInBackground:
 				data.icon = self.iconMoviePlay
 			else:
 				switch = config.usage.show_icons_in_movielist.value
 				data.part = moviePlayState(pathName + '.cuts', serviceref, data.len)
-				if switch == 'i':
+				if switch is 'i':
 					if data.part is None:
 						if config.usage.movielist_unseen.value:
 							data.icon = self.iconUnwatched
 					else:
 						data.icon = self.iconPart[data.part // 25]
-				elif switch == 'p' or switch == 's':
+				elif switch is 'p' or switch is 's':
 					if data.part is None:
 						if config.usage.movielist_unseen.value:
 							data.part = 0
@@ -376,14 +376,14 @@ class MovieList(GUIComponent):
 				pos = (0,1)
 			res.append(MultiContentEntryPixmapAlphaTest(pos=pos, size=(iconSize,20), png=data.icon))
 		switch = config.usage.show_icons_in_movielist.value
-		if switch == 'p' or switch == 's':
-			if switch == 'p':
+		if switch is 'p' or switch is 's':
+			if switch is 'p':
 				iconSize = 48
 			else:
 				iconSize = 22
 			if data.part is not None:
 				res.append(MultiContentEntryProgress(pos=(0,5), size=(iconSize-2,16), percent=data.part, borderWidth=2, foreColor=data.partcol, foreColorSelected=None, backColor=None, backColorSelected=None))
-		elif switch == 'i':
+		elif switch is 'i':
 			iconSize = 22
 		else:
 			iconSize = 0
@@ -393,7 +393,7 @@ class MovieList(GUIComponent):
 			begin_string = ', '.join(FuzzyTime(begin, inPast = True))
 
 		ih = self.itemHeight
-		if self.list_type == MovieList.LISTTYPE_ORIGINAL:
+		if self.list_type is MovieList.LISTTYPE_ORIGINAL:
 			ih1 = (ih * 2) / 5 # 75 -> 30
 			ih2 = (ih * 2) / 3 # 75 -> 50
 			res.append(MultiContentEntryText(pos=(iconSize, 0), size=(width-182, ih1), font = 0, flags = RT_HALIGN_LEFT, text=data.txt))
@@ -408,7 +408,7 @@ class MovieList(GUIComponent):
 			res.append(MultiContentEntryText(pos=(0, ih2), size=(200, ih-ih2), font=1, flags=RT_HALIGN_LEFT, text=begin_string))
 			if len:
 			     res.append(MultiContentEntryText(pos=(width-200, ih2), size=(198, ih-ih2), font=1, flags=RT_HALIGN_RIGHT, text=len))
-		elif self.list_type == MovieList.LISTTYPE_COMPACT_DESCRIPTION:
+		elif self.list_type is MovieList.LISTTYPE_COMPACT_DESCRIPTION:
 			ih1 = ((ih * 8) + 14) / 15 # 37 -> 20, round up
 			if len:
 			     lenSize = 58 * ih / 37
@@ -421,7 +421,7 @@ class MovieList(GUIComponent):
 				res.append(MultiContentEntryText(pos=(width-154-lenSize, ih1), size=(154, ih-ih1), font = 1, flags = RT_HALIGN_RIGHT, text = data.serviceName))
 			if lenSize:
 			     res.append(MultiContentEntryText(pos=(width-lenSize, ih1), size=(lenSize, ih-ih1), font=1, flags=RT_HALIGN_RIGHT, text=len))
-		elif self.list_type == MovieList.LISTTYPE_COMPACT:
+		elif self.list_type is MovieList.LISTTYPE_COMPACT:
 			ih1 = ((ih * 8) + 14) / 15 # 37 -> 20, round up
 			if len:
 			     lenSize = 2 * ih
@@ -439,7 +439,7 @@ class MovieList(GUIComponent):
 			if lenSize:
 			     res.append(MultiContentEntryText(pos=(width-lenSize, 0), size=(lenSize, ih1), font=0, flags=RT_HALIGN_RIGHT, text=len))
 		else:
-			if (self.descr_state == MovieList.SHOW_DESCRIPTION) or not len:
+			if (self.descr_state is MovieList.SHOW_DESCRIPTION) or not len:
 				dateSize = ih * 145 / 25   # 25 -> 145
 				res.append(MultiContentEntryText(pos=(iconSize, 0), size=(width-iconSize-dateSize, ih), font = 0, flags = RT_HALIGN_LEFT, text = data.txt))
 				res.append(MultiContentEntryText(pos=(width-dateSize, 4), size=(dateSize, ih), font=1, flags=RT_HALIGN_RIGHT, text=begin_string))
@@ -519,7 +519,7 @@ class MovieList(GUIComponent):
 		if service is None:
 			return None
 		for index, l in enumerate(self.list):
-			if l[0] == service:
+			if l[0] is service:
 				return index
 		return None
 
@@ -596,32 +596,32 @@ class MovieList(GUIComponent):
 
 		self.firstFileEntry = numberOfDirs
 		self.parentDirectory = 0
-		if self.sort_type == MovieList.SORT_ALPHANUMERIC:
+		if self.sort_type is MovieList.SORT_ALPHANUMERIC:
 			self.list.sort(key=self.buildAlphaNumericSortKey)
-		elif self.sort_type == MovieList.SORT_ALPHANUMERIC_FLAT:
+		elif self.sort_type is MovieList.SORT_ALPHANUMERIC_FLAT:
 			self.list.sort(key=self.buildAlphaNumericFlatSortKey)
-		elif self.sort_type == MovieList.SORT_ALPHANUMERIC_FLAT_REVERSE:
+		elif self.sort_type is MovieList.SORT_ALPHANUMERIC_FLAT_REVERSE:
 			self.list.sort(key=self.buildAlphaNumericFlatSortKey, reverse = True)
-		elif self.sort_type == MovieList.SORT_RECORDED:
+		elif self.sort_type is MovieList.SORT_RECORDED:
 			self.list.sort(key=self.buildBeginTimeSortKey)
 		else:
 			#always sort first this way to avoid shuffle and reverse-sort directories
 			self.list.sort(key=self.buildGroupwiseSortkey)
-			if self.sort_type == MovieList.SHUFFLE:
+			if self.sort_type is MovieList.SHUFFLE:
 				dirlist = self.list[:numberOfDirs]
 				shufflelist = self.list[numberOfDirs:]
 				random.shuffle(shufflelist)
 				self.list = dirlist + shufflelist
-			elif self.sort_type == MovieList.SORT_ALPHANUMERIC_REVERSE:
+			elif self.sort_type is MovieList.SORT_ALPHANUMERIC_REVERSE:
 				self.list = self.list[:numberOfDirs] + sorted(self.list[numberOfDirs:], key=self.buildAlphaNumericSortKey, reverse = True)
-			elif self.sort_type == MovieList.SORT_RECORDED_REVERSE:
+			elif self.sort_type is MovieList.SORT_RECORDED_REVERSE:
 				self.list = self.list[:numberOfDirs] + sorted(self.list[numberOfDirs:], key=self.buildBeginTimeSortKey, reverse = True)
 
 		if self.root and numberOfDirs > 0:
 			rootPath = os.path.normpath(self.root.getPath())
 			if rootPath[-1] != '/':
 				rootPath += '/'
-			if rootPath != parent:
+			if rootPath is not parent:
 				# with new sort types directories may be in between files, so scan whole
 				# list for parentDirectory index. Usually it is the first one anyway
 				for index, item in enumerate(self.list):
@@ -629,7 +629,7 @@ class MovieList(GUIComponent):
 						itempath = os.path.normpath(item[0].getPath())
 						if itempath[-1] != '/':
 							itempath += '/'
-						if itempath == rootPath:
+						if itempath is rootPath:
 							self.parentDirectory = index
 							break
 		self.root = root
@@ -754,7 +754,7 @@ class MovieList(GUIComponent):
 			for index, item in enumerate(itemsBelow):
 				ref = item[0]
 				itemName = getShortName(item[1].getName(ref).upper(), ref)
-				if len(self._char) == 1 and itemName[0] == self._char:
+				if len(self._char) == 1 and itemName[0] is self._char:
 					found = True
 					self.instance.moveSelectionTo(index + currentIndex + 1)
 					break
@@ -762,12 +762,12 @@ class MovieList(GUIComponent):
 					found = True
 					self.instance.moveSelectionTo(index + currentIndex + 1)
 					break
-		if found == False and currentIndex > 0:
+		if found is False and currentIndex > 0:
 			itemsAbove = self.list[1:currentIndex] #first item (0) points parent folder - no point to include
 			for index, item in enumerate(itemsAbove):
 				ref = item[0]
 				itemName = getShortName(item[1].getName(ref).upper(), ref)
-				if len(self._char) == 1 and itemName[0] == self._char:
+				if len(self._char) == 1 and itemName[0] is self._char:
 					found = True
 					self.instance.moveSelectionTo(index + 1)
 					break
