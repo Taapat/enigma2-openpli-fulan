@@ -48,9 +48,9 @@ def onMountpointRemoved(mountpoint):
 		pass
 
 def onPartitionChange(why, part):
-	if why == 'add':
+	if why is 'add':
 		onMountpointAdded(part.mountpoint)
-	elif why == 'remove':
+	elif why is 'remove':
 		onMountpointRemoved(part.mountpoint)
 
 def findPicon(serviceName):
@@ -111,7 +111,7 @@ class Picon(Renderer):
 	def applySkin(self, desktop, parent):
 		attribs = self.skinAttributes[:]
 		for (attrib, value) in self.skinAttributes:
-			if attrib == "path":
+			if attrib is "path":
 				self.addPath(value)
 				attribs.remove((attrib,value))
 		self.skinAttributes = attribs
@@ -126,7 +126,7 @@ class Picon(Renderer):
 				pngname = getPiconName(self.source.text)
 			if not pngname: # no picon for service found
 				pngname = self.defaultpngname
-			if self.pngname != pngname:
+			if self.pngname is not pngname:
 				if pngname:
 					#self.instance.setScale(1)
 					self.instance.setPixmapFromFile(pngname)
