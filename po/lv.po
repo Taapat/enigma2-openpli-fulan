@@ -4622,6 +4622,9 @@ msgstr "Raunda sākuma laiks"
 msgid "Russian"
 msgstr "Krievu"
 
+msgid "Silently zap between bouquets"
+msgstr "Mainīt buķetes bez brīdinājuma"
+
 msgid "S-Video"
 msgstr "S-Video"
 
