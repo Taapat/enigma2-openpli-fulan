@@ -141,7 +141,7 @@ class ServiceList(HTMLComponent, GUIComponent):
 		if self.l.setCurrent(ref):
 			return None
 		from Components.ServiceEventTracker import InfoBarCount
-		if adjust and config.usage.multibouquet.value and InfoBarCount == 1 and ref and ref.type != 8192:
+		if adjust and config.usage.multibouquet.value and InfoBarCount is 1 and ref and ref.type is not 8192:
 			print "[servicelist] search for service in userbouquets"
 			if self.serviceList:
 				revert_mode = config.servicelist.lastmode.value
@@ -167,9 +167,9 @@ class ServiceList(HTMLComponent, GUIComponent):
 						return True
 				self.serviceList.enterUserbouquet(revert_radio_root)		
 				print "[servicelist] service not found in any userbouquets"
-				if revert_mode == "tv":
+				if revert_mode is "tv":
 					self.serviceList.setModeTv()
-				elif revert_mode == "radio":
+				elif revert_mode is "radio":
 					self.serviceList.setModeRadio()
 				self.serviceList.enterUserbouquet(revert_root)
 		return False
@@ -196,8 +196,8 @@ class ServiceList(HTMLComponent, GUIComponent):
 		print "Next char: "
 		index = self.l.getNextBeginningWithChar(char)
 		indexup = self.l.getNextBeginningWithChar(char.upper())
-		if indexup != 0:
-			if (index > indexup or index == 0):
+		if indexup is not 0:
+			if (index > indexup or index is 0):
 				index = indexup
 
 		self.instance.moveSelectionTo(index)
@@ -289,7 +289,7 @@ class ServiceList(HTMLComponent, GUIComponent):
 		i.markedQueryStart()
 		ref = eServiceReference()
 		marked = [ ]
-		while i.markedQueryNext(ref) == 0:
+		while i.markedQueryNext(ref) is 0:
 			marked.append(ref.toString())
 			ref = eServiceReference()
 		return marked
@@ -311,7 +311,7 @@ class ServiceList(HTMLComponent, GUIComponent):
 		progressBarWidth = 52
 		rowWidth = self.instance.size().width() - 30 #scrollbar is fixed 20 + 10 Extra marge
 
-		if mode == self.MODE_NORMAL or not config.usage.show_channel_numbers_in_servicelist.value:
+		if mode is self.MODE_NORMAL or not config.usage.show_channel_numbers_in_servicelist.value:
 			channelNumberWidth = 0
 			channelNumberSpace = 0
 		else:
