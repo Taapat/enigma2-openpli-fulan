@@ -150,9 +150,9 @@ class UpdatePlugin(Screen):
 		self.setEndMessage(ngettext("Update completed, %d package was installed.", "Update completed, %d packages were installed.", self.packages) % self.packages)
 
 	def ipkgCallback(self, event, param):
-		if event == IpkgComponent.EVENT_DOWNLOAD:
+		if event is IpkgComponent.EVENT_DOWNLOAD:
 			self.status.setText(_("Downloading"))
-		elif event == IpkgComponent.EVENT_UPGRADE:
+		elif event is IpkgComponent.EVENT_UPGRADE:
 			if self.sliderPackages.has_key(param):
 				self.slider.setValue(self.sliderPackages[param])
 			self.package.setText(param)
@@ -160,22 +160,22 @@ class UpdatePlugin(Screen):
 			if not param in self.processed_packages:
 				self.processed_packages.append(param)
 				self.packages += 1
-		elif event == IpkgComponent.EVENT_INSTALL:
+		elif event is IpkgComponent.EVENT_INSTALL:
 			self.package.setText(param)
 			self.status.setText(_("Installing"))
 			if not param in self.processed_packages:
 				self.processed_packages.append(param)
 				self.packages += 1
-		elif event == IpkgComponent.EVENT_REMOVE:
+		elif event is IpkgComponent.EVENT_REMOVE:
 			self.package.setText(param)
 			self.status.setText(_("Removing"))
 			if not param in self.processed_packages:
 				self.processed_packages.append(param)
 				self.packages += 1
-		elif event == IpkgComponent.EVENT_CONFIGURING:
+		elif event is IpkgComponent.EVENT_CONFIGURING:
 			self.package.setText(param)
 			self.status.setText(_("Configuring"))
-		elif event == IpkgComponent.EVENT_MODIFIED:
+		elif event is IpkgComponent.EVENT_MODIFIED:
 			if config.plugins.softwaremanager.overwriteConfigFiles.value in ("N", "Y"):
 				self.ipkg.write(True and config.plugins.softwaremanager.overwriteConfigFiles.value)
 			else:
@@ -184,13 +184,13 @@ class UpdatePlugin(Screen):
 					MessageBox,
 					_("A configuration file (%s) has been modified since it was installed.\nDo you want to keep your modifications?") % (param)
 				)
-		elif event == IpkgComponent.EVENT_ERROR:
+		elif event is IpkgComponent.EVENT_ERROR:
 			self.error += 1
-		elif event == IpkgComponent.EVENT_DONE:
+		elif event is IpkgComponent.EVENT_DONE:
 			if self.updating:
 				self.updating = False
 				self.ipkg.startCmd(IpkgComponent.CMD_UPGRADE_LIST)
-			elif self.ipkg.currentCommand == IpkgComponent.CMD_UPGRADE_LIST and self.error == 0:
+			elif self.ipkg.currentCommand is IpkgComponent.CMD_UPGRADE_LIST and self.error == 0:
 				self.total_packages = len(self.ipkg.getFetchedList())
 				if self.total_packages:
 					latestImageTimestamp = self.getLatestImageTimestamp()
@@ -236,7 +236,7 @@ class UpdatePlugin(Screen):
 				if self.updating:
 					error = _("Update failed. Your receiver does not have a working internet connection.")
 				self.status.setText(_("Error") +  " - " + error)
-		elif event == IpkgComponent.EVENT_LISTITEM:
+		elif event is IpkgComponent.EVENT_LISTITEM:
 			if 'enigma2-plugin-settings-' in param[0] and self.channellist_only > 0:
 				self.channellist_name = param[0]
 				self.channellist_only = 2

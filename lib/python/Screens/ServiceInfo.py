@@ -23,13 +23,13 @@ def to_unsigned(x):
 def ServiceInfoListEntry(a, b, valueType=TYPE_TEXT, param=4):
 	print "b:", b
 	if not isinstance(b, str):
-		if valueType == TYPE_VALUE_HEX:
+		if valueType is TYPE_VALUE_HEX:
 			b = ("0x%0" + str(param) + "x") % to_unsigned(b)
-		elif valueType == TYPE_VALUE_DEC:
+		elif valueType is TYPE_VALUE_DEC:
 			b = str(b)
-		elif valueType == TYPE_VALUE_HEX_DEC:
+		elif valueType is TYPE_VALUE_HEX_DEC:
 			b = ("0x%0" + str(param) + "x (%dd)") % (to_unsigned(b), b)
-		elif valueType == TYPE_VALUE_ORBIT_DEC:
+		elif valueType is TYPE_VALUE_ORBIT_DEC:
 			direction = 'E'
 			if b > 1800:
 				b = 3600 - b
@@ -104,7 +104,7 @@ class ServiceInfo(Screen):
 		self.onShown.append(self.information)
 
 	def information(self):
-		if self.type == TYPE_SERVICE_INFO:
+		if self.type is TYPE_SERVICE_INFO:
 			if self.session.nav.getCurrentlyPlayingServiceOrGroup():
 				name = ServiceReference(self.session.nav.getCurrentlyPlayingServiceReference()).getServiceName()
 				refstr = self.session.nav.getCurrentlyPlayingServiceReference().toString()
@@ -165,7 +165,7 @@ class ServiceInfo(Screen):
 				self.fillList(Labels)
 
 	def pids(self):
-		if self.type == TYPE_SERVICE_INFO:
+		if self.type is TYPE_SERVICE_INFO:
 			Labels = ( (_("Video PID"), self.getServiceInfoValue(iServiceInformation.sVideoPID), TYPE_VALUE_HEX_DEC, 4),
 					   (_("Audio PID"), self.getServiceInfoValue(iServiceInformation.sAudioPID), TYPE_VALUE_HEX_DEC, 4),
 					   (_("PCR PID"), self.getServiceInfoValue(iServiceInformation.sPCRPID), TYPE_VALUE_HEX_DEC, 4),
@@ -177,17 +177,17 @@ class ServiceInfo(Screen):
 			self.fillList(Labels)
 
 	def showFrontendData(self, real):
-		if self.type == TYPE_SERVICE_INFO:
+		if self.type is TYPE_SERVICE_INFO:
 			frontendData = self.feinfo and self.feinfo.getAll(real)
 			Labels = self.getFEData(frontendData)
 			self.fillList(Labels)
 
 	def transponder(self):
-		if self.type == TYPE_SERVICE_INFO:
+		if self.type is TYPE_SERVICE_INFO:
 			self.showFrontendData(True)
 
 	def tuner(self):
-		if self.type == TYPE_SERVICE_INFO:
+		if self.type is TYPE_SERVICE_INFO:
 			self.showFrontendData(False)
 
 	def getFEData(self, frontendDataOrg):

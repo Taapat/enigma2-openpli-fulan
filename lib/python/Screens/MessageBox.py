@@ -36,14 +36,14 @@ class MessageBox(Screen):
 		self.initTimeout(timeout)
 
 		picon = picon or type
-		if picon != self.TYPE_ERROR:
+		if picon is not self.TYPE_ERROR:
 			self["ErrorPixmap"].hide()
-		if picon != self.TYPE_YESNO:
+		if picon is not self.TYPE_YESNO:
 			self["QuestionPixmap"].hide()
-		if picon != self.TYPE_INFO:
+		if picon is not self.TYPE_INFO:
 			self["InfoPixmap"].hide()
 
-		if type == self.TYPE_YESNO:
+		if type is self.TYPE_YESNO:
 			if list:
 				self.list = list
 			elif default == True:

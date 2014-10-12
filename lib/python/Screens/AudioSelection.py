@@ -197,15 +197,15 @@ class AudioSelection(Screen, ConfigListScreen):
 				except:
 					language = ""
 
-				if x[0] == 0:
+				if x[0] is 0:
 					description = "DVB"
 					number = "%x" % (x[1])
 
-				elif x[0] == 1:
+				elif x[0] is 1:
 					description = "teletext"
 					number = "%x%02x" %(x[3] and x[3] or 8, x[2])
 
-				elif x[0] == 2:
+				elif x[0] is 2:
 					types = ("unknown", "embedded", "SSA file", "ASS file",
 							"SRT file", "VOB file", "PGS file")
 					try:
@@ -273,21 +273,21 @@ class AudioSelection(Screen, ConfigListScreen):
 				self.audioTracks.selectTrack(track)
 
 	def keyLeft(self):
-		if self.focus == FOCUS_CONFIG:
+		if self.focus is FOCUS_CONFIG:
 			ConfigListScreen.keyLeft(self)
-		elif self.focus == FOCUS_STREAMS:
+		elif self.focus is FOCUS_STREAMS:
 			self["streams"].setIndex(0)
 
 	def keyRight(self, config = False):
-		if config or self.focus == FOCUS_CONFIG:
+		if config or self.focus is FOCUS_CONFIG:
 			if self["config"].getCurrentIndex() < 3:
 				ConfigListScreen.keyRight(self)
 			elif self["config"].getCurrentIndex() == 3:
-				if self.settings.menupage.getValue() == PAGE_AUDIO and hasattr(self, "plugincallfunc"):
+				if self.settings.menupage.getValue() is PAGE_AUDIO and hasattr(self, "plugincallfunc"):
 					self.plugincallfunc()
-				elif self.settings.menupage.getValue() == PAGE_SUBTITLES and self.infobar.selected_subtitle and self.infobar.selected_subtitle != (0,0,0,0):
+				elif self.settings.menupage.getValue() is PAGE_SUBTITLES and self.infobar.selected_subtitle and self.infobar.selected_subtitle != (0,0,0,0):
 					self.session.open(QuickSubtitlesConfigMenu, self.infobar)
-		if self.focus == FOCUS_STREAMS and self["streams"].count() and config == False:
+		if self.focus is FOCUS_STREAMS and self["streams"].count() and config == False:
 			self["streams"].setIndex(self["streams"].count()-1)
 
 	def keyRed(self):
@@ -319,9 +319,9 @@ class AudioSelection(Screen, ConfigListScreen):
 		self.keyRight(True)
 
 	def keyUp(self):
-		if self.focus == FOCUS_CONFIG:
+		if self.focus is FOCUS_CONFIG:
 			self["config"].instance.moveSelection(self["config"].instance.moveUp)
-		elif self.focus == FOCUS_STREAMS:
+		elif self.focus is FOCUS_STREAMS:
 			if self["streams"].getIndex() == 0:
 				self["config"].instance.setSelectionEnable(True)
 				self["streams"].style = "notselected"
@@ -331,14 +331,14 @@ class AudioSelection(Screen, ConfigListScreen):
 				self["streams"].selectPrevious()
 
 	def keyDown(self):
-		if self.focus == FOCUS_CONFIG:
+		if self.focus is FOCUS_CONFIG:
 			if self["config"].getCurrentIndex() < len(self["config"].getList())-1:
 				self["config"].instance.moveSelection(self["config"].instance.moveDown)
 			else:
 				self["config"].instance.setSelectionEnable(False)
 				self["streams"].style = "default"
 				self.focus = FOCUS_STREAMS
-		elif self.focus == FOCUS_STREAMS:
+		elif self.focus is FOCUS_STREAMS:
 			self["streams"].selectNext()
 
 	def volumeUp(self):
@@ -356,12 +356,12 @@ class AudioSelection(Screen, ConfigListScreen):
 			self.keyOk()
 
 	def keyOk(self):
-		if self.focus == FOCUS_STREAMS and self["streams"].list:
+		if self.focus is FOCUS_STREAMS and self["streams"].list:
 			cur = self["streams"].getCurrent()
-			if self.settings.menupage.getValue() == PAGE_AUDIO and cur[0] is not None:
+			if self.settings.menupage.getValue() is PAGE_AUDIO and cur[0] is not None:
 				self.changeAudio(cur[0])
 				self.__updatedInfo()
-			if self.settings.menupage.getValue() == PAGE_SUBTITLES and cur[0] is not None:
+			if self.settings.menupage.getValue() is PAGE_SUBTITLES and cur[0] is not None:
 				if self.infobar.selected_subtitle and self.infobar.selected_subtitle[:4] == cur[0][:4]:
 					self.enableSubtitle(None)
 					selectedidx = self["streams"].getIndex()
@@ -371,7 +371,7 @@ class AudioSelection(Screen, ConfigListScreen):
 					self.enableSubtitle(cur[0][:5])
 					self.__updatedInfo()
 			self.close(0)
-		elif self.focus == FOCUS_CONFIG:
+		elif self.focus is FOCUS_CONFIG:
 			self.keyRight()
 
 	def openAutoLanguageSetup(self):

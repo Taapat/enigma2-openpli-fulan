@@ -149,7 +149,7 @@ class InfoBarUnhandledKey:
 			if self.flags & (1<<1):
 				self.flags = self.uflags = 0
 			self.flags |= (1<<flag)
-			if flag == 1: # break
+			if flag is 1: # break
 				self.checkUnusedTimer.start(0, True)
 		return 0
 
@@ -159,7 +159,7 @@ class InfoBarUnhandledKey:
 			self.uflags |= (1<<flag)
 
 	def checkUnused(self):
-		if self.flags == self.uflags:
+		if self.flags is self.uflags:
 			self.unhandledKeyDialog.show()
 			self.hideUnhandledKeySymbolTimer.start(2000, True)
 
@@ -277,12 +277,12 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			x(False)
 
 	def keyHide(self):
-		if self.__state == self.STATE_HIDDEN and self.session.pipshown and "popup" in config.usage.pip_hideOnExit.value:
+		if self.__state is self.STATE_HIDDEN and self.session.pipshown and "popup" in config.usage.pip_hideOnExit.value:
 			if config.usage.pip_hideOnExit.value == "popup":
 				self.session.openWithCallback(self.hidePipOnExitCallback, MessageBox, _("Disable Picture in Picture"), simple=True)
 			else:
 				self.hidePipOnExitCallback(True)
-		elif self.__state == self.STATE_SHOWN:
+		elif self.__state is self.STATE_SHOWN:
 			self.hide()
 
 	def hidePipOnExitCallback(self, answer):
@@ -303,7 +303,7 @@ class InfoBarShowHide(InfoBarScreenSaver):
 				self.doShow()
 
 	def startHideTimer(self):
-		if self.__state == self.STATE_SHOWN and not self.__locked:
+		if self.__state is self.STATE_SHOWN and not self.__locked:
 			self.hideTimer.stop()
 			if self.secondInfoBarScreen and self.secondInfoBarScreen.shown:
 				idx = config.usage.show_second_infobar.index - 1
@@ -318,7 +318,7 @@ class InfoBarShowHide(InfoBarScreenSaver):
 
 	def doTimerHide(self):
 		self.hideTimer.stop()
-		if self.__state == self.STATE_SHOWN:
+		if self.__state is self.STATE_SHOWN:
 			self.hide()
 
 	def okButtonCheck(self):
@@ -328,7 +328,7 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			self.toggleShow()
 
 	def toggleShow(self):
-		if self.__state == self.STATE_HIDDEN:
+		if self.__state is self.STATE_HIDDEN:
 			self.show()
 			if self.secondInfoBarScreen:
 				self.secondInfoBarScreen.hide()
@@ -1351,21 +1351,21 @@ class InfoBarSeek:
 		return True
 
 	def playpauseService(self):
-		if self.seekstate != self.SEEK_STATE_PLAY:
+		if self.seekstate is not self.SEEK_STATE_PLAY:
 			self.unPauseService()
 		else:
 			self.pauseService()
 
 	def okButton(self):
-		if self.seekstate == self.SEEK_STATE_PLAY:
+		if self.seekstate is self.SEEK_STATE_PLAY:
 			return 0
-		elif self.seekstate == self.SEEK_STATE_PAUSE:
+		elif self.seekstate is self.SEEK_STATE_PAUSE:
 			self.pauseService()
 		else:
 			self.unPauseService()
 
 	def pauseService(self):
-		if self.seekstate == self.SEEK_STATE_PAUSE:
+		if self.seekstate is self.SEEK_STATE_PAUSE:
 			if config.seek.on_pause.value == "play":
 				self.unPauseService()
 			elif config.seek.on_pause.value == "step":
@@ -1374,13 +1374,13 @@ class InfoBarSeek:
 				self.setSeekState(self.lastseekstate)
 				self.lastseekstate = self.SEEK_STATE_PLAY
 		else:
-			if self.seekstate != self.SEEK_STATE_EOF:
+			if self.seekstate is not self.SEEK_STATE_EOF:
 				self.lastseekstate = self.seekstate
 			self.setSeekState(self.SEEK_STATE_PAUSE)
 
 	def unPauseService(self):
 		print "unpause"
-		if self.seekstate == self.SEEK_STATE_PLAY:
+		if self.seekstate is self.SEEK_STATE_PLAY:
 			return 0
 		self.setSeekState(self.SEEK_STATE_PLAY)
 
@@ -1396,8 +1396,8 @@ class InfoBarSeek:
 			return
 		prevstate = self.seekstate
 
-		if self.seekstate == self.SEEK_STATE_EOF:
-			if prevstate == self.SEEK_STATE_PAUSE:
+		if self.seekstate is self.SEEK_STATE_EOF:
+			if prevstate is self.SEEK_STATE_PAUSE:
 				self.setSeekState(self.SEEK_STATE_PAUSE)
 			else:
 				self.setSeekState(self.SEEK_STATE_PLAY)
@@ -1413,14 +1413,14 @@ class InfoBarSeek:
 				self.fast_winding_hint_message_showed = True
 				return
 			return 0 # trade as unhandled action
-		if self.seekstate == self.SEEK_STATE_PLAY:
+		if self.seekstate is self.SEEK_STATE_PLAY:
 			self.setSeekState(self.makeStateForward(int(config.seek.enter_forward.value)))
-		elif self.seekstate == self.SEEK_STATE_PAUSE:
+		elif self.seekstate is self.SEEK_STATE_PAUSE:
 			if len(config.seek.speeds_slowmotion.value):
 				self.setSeekState(self.makeStateSlowMotion(config.seek.speeds_slowmotion.value[-1]))
 			else:
 				self.setSeekState(self.makeStateForward(int(config.seek.enter_forward.value)))
-		elif self.seekstate == self.SEEK_STATE_EOF:
+		elif self.seekstate is self.SEEK_STATE_EOF:
 			pass
 		elif self.isStateForward(self.seekstate):
 			speed = self.seekstate[1]
@@ -1450,12 +1450,12 @@ class InfoBarSeek:
 				return
 			return 0 # trade as unhandled action
 		seekstate = self.seekstate
-		if seekstate == self.SEEK_STATE_PLAY:
+		if seekstate is self.SEEK_STATE_PLAY:
 			self.setSeekState(self.makeStateBackward(int(config.seek.enter_backward.value)))
-		elif seekstate == self.SEEK_STATE_EOF:
+		elif seekstate is self.SEEK_STATE_EOF:
 			self.setSeekState(self.makeStateBackward(int(config.seek.enter_backward.value)))
 			self.doSeekRelative(-6)
-		elif seekstate == self.SEEK_STATE_PAUSE:
+		elif seekstate is self.SEEK_STATE_PAUSE:
 			self.doSeekRelative(-1)
 		elif self.isStateForward(seekstate):
 			speed = seekstate[1]
@@ -1494,7 +1494,7 @@ class InfoBarSeek:
 		self.doSeekRelative(-minutes * 60 * 90000)
 
 	def checkSkipShowHideLock(self):
-		wantlock = self.seekstate != self.SEEK_STATE_PLAY
+		wantlock = self.seekstate is not self.SEEK_STATE_PLAY
 
 		if config.usage.show_infobar_on_skip.value:
 			if self.lockedBecauseOfSkipping and not wantlock:
@@ -1526,19 +1526,19 @@ class InfoBarSeek:
 		return False
 
 	def __evEOF(self):
-		if self.seekstate == self.SEEK_STATE_EOF:
+		if self.seekstate is self.SEEK_STATE_EOF:
 			return
 
 		# if we are seeking forward, we try to end up ~1s before the end, and pause there.
 		seekstate = self.seekstate
-		if self.seekstate != self.SEEK_STATE_PAUSE:
+		if self.seekstate is not self.SEEK_STATE_PAUSE:
 			self.setSeekState(self.SEEK_STATE_EOF)
 
 		if seekstate not in (self.SEEK_STATE_PLAY, self.SEEK_STATE_PAUSE): # if we are seeking
 			seekable = self.getSeek()
 			if seekable is not None:
 				seekable.seekTo(-1)
-		if seekstate == self.SEEK_STATE_PLAY: # regular EOF
+		if seekstate is self.SEEK_STATE_PLAY: # regular EOF
 			self.doEofInternal(True)
 		else:
 			self.doEofInternal(False)
@@ -1570,7 +1570,7 @@ class InfoBarPVRState:
 		self.force_show = force_show
 
 	def _mayShow(self):
-		if self.shown and self.seekstate != self.SEEK_STATE_PLAY:
+		if self.shown and self.seekstate is not self.SEEK_STATE_PLAY:
 			self.pvrStateDialog.show()
 
 	def __playStateChanged(self, state):
@@ -1578,7 +1578,7 @@ class InfoBarPVRState:
 		self.pvrStateDialog["state"].setText(playstateString)
 
 		# if we return into "PLAY" state, ensure that the dialog gets hidden if there will be no infobar displayed
-		if not config.usage.show_infobar_on_skip.value and self.seekstate == self.SEEK_STATE_PLAY and not self.force_show:
+		if not config.usage.show_infobar_on_skip.value and self.seekstate is self.SEEK_STATE_PLAY and not self.force_show:
 			self.pvrStateDialog.hide()
 		else:
 			self._mayShow()
@@ -1609,7 +1609,7 @@ class InfoBarTimeshiftState(InfoBarPVRState):
 				self.pvrStateDialog.hide()
 				self.timeshiftLiveScreen.show()
 				self.showTimeshiftState = False
-			if self.seekstate == self.SEEK_STATE_PLAY and config.usage.infobar_timeout.index and (self.pvrStateDialog.shown or self.timeshiftLiveScreen.shown):
+			if self.seekstate is self.SEEK_STATE_PLAY and config.usage.infobar_timeout.index and (self.pvrStateDialog.shown or self.timeshiftLiveScreen.shown):
 				self.__hideTimer.startLongTimer(config.usage.infobar_timeout.index)
 		else:
 			self.__hideTimeshiftState()
@@ -2732,7 +2732,7 @@ class InfoBarCueSheetSupport:
 
 		if self.ENABLE_RESUME_SUPPORT:
 			for (pts, what) in self.cut_list:
-				if what == self.CUT_TYPE_LAST:
+				if what is self.CUT_TYPE_LAST:
 					last = pts
 					break
 			else:
@@ -2789,11 +2789,11 @@ class InfoBarCueSheetSupport:
 		ret = False
 		isin = True
 		for cp in self.cut_list:
-			if cp[1] == self.CUT_TYPE_OUT:
+			if cp[1] is self.CUT_TYPE_OUT:
 				if isin:
 					isin = False
 					ret = cp[0]
-			elif cp[1] == self.CUT_TYPE_IN:
+			elif cp[1] is self.CUT_TYPE_IN:
 				isin = True
 		return ret
 
@@ -2832,7 +2832,7 @@ class InfoBarCueSheetSupport:
 		for cp in self.cut_list:
 			if beforecut and cp[1] in (self.CUT_TYPE_IN, self.CUT_TYPE_OUT):
 				beforecut = False
-				if cp[1] == self.CUT_TYPE_IN:  # Start is here, disregard previous marks
+				if cp[1] is self.CUT_TYPE_IN:  # Start is here, disregard previous marks
 					diff = cmp(cp[0] - pts)
 					if start and diff >= 0:
 						nearest = cp
@@ -2840,9 +2840,9 @@ class InfoBarCueSheetSupport:
 					else:
 						nearest = None
 						bestdiff = -1
-			if cp[1] == self.CUT_TYPE_IN:
+			if cp[1] is self.CUT_TYPE_IN:
 				instate = True
-			elif cp[1] == self.CUT_TYPE_OUT:
+			elif cp[1] is self.CUT_TYPE_OUT:
 				instate = False
 			elif cp[1] in (self.CUT_TYPE_MARK, self.CUT_TYPE_LAST):
 				diff = cmp(cp[0] - pts)
@@ -3066,7 +3066,7 @@ class InfoBarServiceErrorPopupSupport:
 			info = service and service.info()
 			error = info and info.getInfo(iServiceInformation.sDVBState)
 
-			if error == self.last_error:
+			if error is self.last_error:
 				error = None
 			else:
 				self.last_error = error

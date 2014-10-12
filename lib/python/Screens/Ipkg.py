@@ -79,9 +79,9 @@ class Ipkg(Screen):
 		self.activityTimer.stop()
 
 	def ipkgCallback(self, event, param):
-		if event == IpkgComponent.EVENT_DOWNLOAD:
+		if event is IpkgComponent.EVENT_DOWNLOAD:
 			self.status.setText(_("Downloading"))
-		elif event == IpkgComponent.EVENT_UPGRADE:
+		elif event is IpkgComponent.EVENT_UPGRADE:
 			if self.sliderPackages.has_key(param):
 				self.slider.setValue(self.sliderPackages[param])
 			self.package.setText(param)
@@ -89,26 +89,26 @@ class Ipkg(Screen):
 			if not param in self.processed_packages:
 				self.processed_packages.append(param)
 				self.packages += 1
-		elif event == IpkgComponent.EVENT_INSTALL:
+		elif event is IpkgComponent.EVENT_INSTALL:
 			self.package.setText(param)
 			self.status.setText(_("Installing"))
 			if not param in self.processed_packages:
 				self.processed_packages.append(param)
 				self.packages += 1
-		elif event == IpkgComponent.EVENT_REMOVE:
+		elif event is IpkgComponent.EVENT_REMOVE:
 			self.package.setText(param)
 			self.status.setText(_("Removing"))
 			if not param in self.processed_packages:
 				self.processed_packages.append(param)
 				self.packages += 1
-		elif event == IpkgComponent.EVENT_CONFIGURING:
+		elif event is IpkgComponent.EVENT_CONFIGURING:
 			self.package.setText(param)
 			self.status.setText(_("Configuring"))
-		elif event == IpkgComponent.EVENT_ERROR:
+		elif event is IpkgComponent.EVENT_ERROR:
 			self.error += 1
-		elif event == IpkgComponent.EVENT_DONE:
+		elif event is IpkgComponent.EVENT_DONE:
 			self.runNextCmd()
-		elif event == IpkgComponent.EVENT_MODIFIED:
+		elif event is IpkgComponent.EVENT_MODIFIED:
 			self.session.openWithCallback(
 				self.modificationCallback,
 				MessageBox,

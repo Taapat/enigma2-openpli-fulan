@@ -26,7 +26,7 @@ class InstallWizard(Screen, ConfigListScreen):
 		self.list = []
 		ConfigListScreen.__init__(self, self.list)
 
-		if self.index == self.STATE_UPDATE:
+		if self.index is self.STATE_UPDATE:
 			config.misc.installwizard.hasnetwork.value = False
 			config.misc.installwizard.ipkgloaded.value = False
 			modes = {0: " "}
@@ -44,12 +44,12 @@ class InstallWizard(Screen, ConfigListScreen):
 					break
 			if is_found is False:
 				self.createMenu()
-		elif self.index == self.STATE_CHOISE_CHANNELLIST:
+		elif self.index is self.STATE_CHOISE_CHANNELLIST:
 			self.enabled = ConfigYesNo(default = True)
 			modes = {"19e": "Astra 1", "23e": "Astra 3", "19e-23e": "Astra 1 Astra 3", "19e-23e-28e": "Astra 1 Astra 2 Astra 3", "13e-19e-23e-28e": "Astra 1 Astra 2 Astra 3 Hotbird"}
 			self.channellist_type = ConfigSelection(choices = modes, default = "19e")
 			self.createMenu()
-		elif self.index == self.STATE_CHOISE_SOFTCAM:
+		elif self.index is self.STATE_CHOISE_SOFTCAM:
 			self.enabled = ConfigYesNo(default = True)
 			modes = {"cccam": _("default") + " (CCcam)", "scam": "scam"}
 			self.softcam_type = ConfigSelection(choices = modes, default = "cccam")
@@ -72,16 +72,16 @@ class InstallWizard(Screen, ConfigListScreen):
 		except:
 			return
 		self.list = []
-		if self.index == self.STATE_UPDATE:
+		if self.index is self.STATE_UPDATE:
 			if config.misc.installwizard.hasnetwork.value:
 				self.list.append(getConfigListEntry(_("Your internet connection is working (ip: %s)") % (self.ipConfigEntry.getText()), self.enabled))
 			else:
 				self.list.append(getConfigListEntry(_("Your receiver does not have an internet connection"), self.enabled))
-		elif self.index == self.STATE_CHOISE_CHANNELLIST:
+		elif self.index is self.STATE_CHOISE_CHANNELLIST:
 			self.list.append(getConfigListEntry(_("Install channel list"), self.enabled))
 			if self.enabled.value:
 				self.list.append(getConfigListEntry(_("Channel list type"), self.channellist_type))
-		elif self.index == self.STATE_CHOISE_SOFTCAM:
+		elif self.index is self.STATE_CHOISE_SOFTCAM:
 			self.list.append(getConfigListEntry(_("Install softcam"), self.enabled))
 			if self.enabled.value:
 				self.list.append(getConfigListEntry(_("Softcam type"), self.softcam_type))
@@ -101,12 +101,12 @@ class InstallWizard(Screen, ConfigListScreen):
 		self.createMenu()
 
 	def run(self):
-		if self.index == self.STATE_UPDATE:
+		if self.index is self.STATE_UPDATE:
 			if config.misc.installwizard.hasnetwork.value:
 				self.session.open(InstallWizardIpkgUpdater, self.index, _('Please wait (updating packages)'), IpkgComponent.CMD_UPDATE)
-		elif self.index == self.STATE_CHOISE_CHANNELLIST and self.enabled.value:
+		elif self.index is self.STATE_CHOISE_CHANNELLIST and self.enabled.value:
 			self.session.open(InstallWizardIpkgUpdater, self.index, _('Please wait (downloading channel list)'), IpkgComponent.CMD_REMOVE, {'package': 'enigma2-plugin-settings-henksat-' + self.channellist_type.value})
-		elif self.index == self.STATE_CHOISE_SOFTCAM and self.enabled.value:
+		elif self.index is self.STATE_CHOISE_SOFTCAM and self.enabled.value:
 			self.session.open(InstallWizardIpkgUpdater, self.index, _('Please wait (downloading softcam)'), IpkgComponent.CMD_INSTALL, {'package': 'enigma2-plugin-softcams-' + self.softcam_type.value})
 		return
 
@@ -130,16 +130,16 @@ class InstallWizardIpkgUpdater(Screen):
 		self.ipkg = IpkgComponent()
 		self.ipkg.addCallback(self.ipkgCallback)
 
-		if self.index == InstallWizard.STATE_CHOISE_CHANNELLIST:
+		if self.index is InstallWizard.STATE_CHOISE_CHANNELLIST:
 			self.ipkg.startCmd(cmd, {'package': 'enigma2-plugin-settings-*'})
 		else:
 			self.ipkg.startCmd(cmd, pkg)
 
 	def ipkgCallback(self, event, param):
-		if event == IpkgComponent.EVENT_DONE:
-			if self.index == InstallWizard.STATE_UPDATE:
+		if event is IpkgComponent.EVENT_DONE:
+			if self.index is InstallWizard.STATE_UPDATE:
 				config.misc.installwizard.ipkgloaded.value = True
-			elif self.index == InstallWizard.STATE_CHOISE_CHANNELLIST:
+			elif self.index is InstallWizard.STATE_CHOISE_CHANNELLIST:
 				if self.state == 0:
 					self.ipkg.startCmd(IpkgComponent.CMD_INSTALL, self.pkg)
 					self.state = 1
