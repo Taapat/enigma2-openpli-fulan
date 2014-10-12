@@ -26,13 +26,13 @@ class ServiceTime(Converter, object):
 		if not info or not service:
 			return None
 
-		if self.type == self.STARTTIME:
+		if self.type is self.STARTTIME:
 			return info.getInfo(service, iServiceInformation.sTimeCreate)
-		elif self.type == self.ENDTIME:
+		elif self.type is self.ENDTIME:
 			begin = info.getInfo(service, iServiceInformation.sTimeCreate)
 			len = info.getLength(service)
 			return begin + len
-		elif self.type == self.DURATION:
+		elif self.type is self.DURATION:
 			return info.getLength(service)
 
 	time = property(getTime)

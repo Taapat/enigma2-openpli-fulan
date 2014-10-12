@@ -78,10 +78,10 @@ class ServiceInfo(Converter, object):
 		if not info:
 			return False
 
-		if self.type == self.HAS_TELETEXT:
+		if self.type is self.HAS_TELETEXT:
 			tpid = info.getInfo(iServiceInformation.sTXTPID)
 			return tpid != -1
-		elif self.type == self.IS_MULTICHANNEL:
+		elif self.type is self.IS_MULTICHANNEL:
 			# FIXME. but currently iAudioTrackInfo doesn't provide more information.
 			audio = service.audioTracks()
 			if audio:
@@ -94,35 +94,35 @@ class ServiceInfo(Converter, object):
 						return True
 					idx += 1
 			return False
-		elif self.type == self.IS_CRYPTED:
+		elif self.type is self.IS_CRYPTED:
 			return info.getInfo(iServiceInformation.sIsCrypted) == 1
-		elif self.type == self.IS_WIDESCREEN:
+		elif self.type is self.IS_WIDESCREEN:
 			return info.getInfo(iServiceInformation.sAspect) in WIDESCREEN
-		elif self.type == self.SUBSERVICES_AVAILABLE:
+		elif self.type is self.SUBSERVICES_AVAILABLE:
 			subservices = service.subServices()
 			return subservices and subservices.getNumberOfSubservices() > 0
-		elif self.type == self.HAS_HBBTV:
+		elif self.type is self.HAS_HBBTV:
 			return info.getInfoString(iServiceInformation.sHBBTVUrl) != ""
-		elif self.type == self.AUDIOTRACKS_AVAILABLE:
+		elif self.type is self.AUDIOTRACKS_AVAILABLE:
 			audio = service.audioTracks()
 			return audio and audio.getNumberOfTracks() > 1
-		elif self.type == self.SUBTITLES_AVAILABLE:
+		elif self.type is self.SUBTITLES_AVAILABLE:
 			subtitle = service and service.subtitle()
 			subtitlelist = subtitle and subtitle.getSubtitleList()
 			if subtitlelist:
 				return len(subtitlelist) > 0
 			return False
-		elif self.type == self.EDITMODE:
+		elif self.type is self.EDITMODE:
 			return hasattr(self.source, "editmode") and not not self.source.editmode
-		elif self.type == self.IS_STREAM:
+		elif self.type is self.IS_STREAM:
 			return service.streamed() is not None
-		elif self.type == self.IS_SD:
+		elif self.type is self.IS_SD:
 			return info.getInfo(iServiceInformation.sVideoHeight) < 720
-		elif self.type == self.IS_HD:
+		elif self.type is self.IS_HD:
 			return info.getInfo(iServiceInformation.sVideoHeight) >= 720
-		elif self.type == self.IS_SD_AND_WIDESCREEN:
+		elif self.type is self.IS_SD_AND_WIDESCREEN:
 			return info.getInfo(iServiceInformation.sVideoHeight) < 720 and info.getInfo(iServiceInformation.sAspect) in WIDESCREEN
-		elif self.type == self.IS_SD_AND_NOT_WIDESCREEN:
+		elif self.type is self.IS_SD_AND_NOT_WIDESCREEN:
 			return info.getInfo(iServiceInformation.sVideoHeight) < 720 and info.getInfo(iServiceInformation.sAspect) not in WIDESCREEN
 		return False
 
@@ -135,31 +135,31 @@ class ServiceInfo(Converter, object):
 		if not info:
 			return ""
 
-		if self.type == self.XRES:
+		if self.type is self.XRES:
 			return self.getServiceInfoString(info, iServiceInformation.sVideoWidth)
-		elif self.type == self.YRES:
+		elif self.type is self.YRES:
 			return self.getServiceInfoString(info, iServiceInformation.sVideoHeight)
-		elif self.type == self.APID:
+		elif self.type is self.APID:
 			return self.getServiceInfoString(info, iServiceInformation.sAudioPID)
-		elif self.type == self.VPID:
+		elif self.type is self.VPID:
 			return self.getServiceInfoString(info, iServiceInformation.sVideoPID)
-		elif self.type == self.PCRPID:
+		elif self.type is self.PCRPID:
 			return self.getServiceInfoString(info, iServiceInformation.sPCRPID)
-		elif self.type == self.PMTPID:
+		elif self.type is self.PMTPID:
 			return self.getServiceInfoString(info, iServiceInformation.sPMTPID)
-		elif self.type == self.TXTPID:
+		elif self.type is self.TXTPID:
 			return self.getServiceInfoString(info, iServiceInformation.sTXTPID)
-		elif self.type == self.TSID:
+		elif self.type is self.TSID:
 			return self.getServiceInfoString(info, iServiceInformation.sTSID)
-		elif self.type == self.ONID:
+		elif self.type is self.ONID:
 			return self.getServiceInfoString(info, iServiceInformation.sONID)
-		elif self.type == self.SID:
+		elif self.type is self.SID:
 			return self.getServiceInfoString(info, iServiceInformation.sSID)
-		elif self.type == self.FRAMERATE:
+		elif self.type is self.FRAMERATE:
 			return self.getServiceInfoString(info, iServiceInformation.sFrameRate, lambda x: "%d fps" % ((x+500)/1000))
-		elif self.type == self.TRANSFERBPS:
+		elif self.type is self.TRANSFERBPS:
 			return self.getServiceInfoString(info, iServiceInformation.sTransferBPS, lambda x: "%d kB/s" % (x/1024))
-		elif self.type == self.HAS_HBBTV:
+		elif self.type is self.HAS_HBBTV:
 			return info.getInfoString(iServiceInformation.sHBBTVUrl)
 		return ""
 
@@ -172,11 +172,11 @@ class ServiceInfo(Converter, object):
 		if not info:
 			return -1
 
-		if self.type == self.XRES:
+		if self.type is self.XRES:
 			return info.getInfo(iServiceInformation.sVideoWidth)
-		if self.type == self.YRES:
+		if self.type is self.YRES:
 			return info.getInfo(iServiceInformation.sVideoHeight)
-		if self.type == self.FRAMERATE:
+		if self.type is self.FRAMERATE:
 			return info.getInfo(iServiceInformation.sFrameRate)
 
 		return -1

@@ -37,24 +37,24 @@ class FrontendInfo(Converter, object):
 		assert self.type not in (self.LOCK, self.SLOT_NUMBER), "the text output of FrontendInfo cannot be used for lock info"
 		percent = None
 		swapsnr = config.usage.swap_snr_on_osd.value
-		if self.type == self.BER: # as count
+		if self.type is self.BER: # as count
 			count = self.source.ber
 			if count is not None:
 				return str(count)
 			else:
 				return "N/A"
-		elif self.type == self.AGC:
+		elif self.type is self.AGC:
 			percent = self.source.agc
-		elif (self.type == self.SNR and not swapsnr) or (self.type == self.SNRdB and swapsnr):
+		elif (self.type is self.SNR and not swapsnr) or (self.type is self.SNRdB and swapsnr):
 			percent = self.source.snr
-		elif self.type  == self.SNR or self.type == self.SNRdB:
+		elif self.type  is self.SNR or self.type is self.SNRdB:
 			if self.source.snr_db is not None:
 				return "%3.01f dB" % (self.source.snr_db / 100.0)
 			elif self.source.snr is not None: #fallback to normal SNR...
 				percent = self.source.snr
-		elif self.type == self.TUNER_TYPE:
+		elif self.type is self.TUNER_TYPE:
 			return self.source.frontend_type and self.frontend_type or "Unknown"
-		elif self.type == self.STRING:
+		elif self.type is self.STRING:
 			string = ""
 			for n in nimmanager.nim_slots:
 				if n.type:
@@ -73,7 +73,7 @@ class FrontendInfo(Converter, object):
 	@cached
 	def getBool(self):
 		assert self.type in (self.LOCK, self.BER), "the boolean output of FrontendInfo can only be used for lock or BER info"
-		if self.type == self.LOCK:
+		if self.type is self.LOCK:
 			lock = self.source.lock
 			if lock is None:
 				lock = False
@@ -90,28 +90,28 @@ class FrontendInfo(Converter, object):
 
 	@cached
 	def getValue(self):
-		assert self.type != self.LOCK, "the value/range output of FrontendInfo can not be used for lock info"
-		if self.type == self.AGC:
+		assert self.type is not self.LOCK, "the value/range output of FrontendInfo can not be used for lock info"
+		if self.type is self.AGC:
 			return self.source.agc or 0
-		elif self.type == self.SNR:
+		elif self.type is self.SNR:
 			return self.source.snr or 0
-		elif self.type == self.BER:
+		elif self.type is self.BER:
 			if self.BER < self.range:
 				return self.BER or 0
 			else:
 				return self.range
-		elif self.type == self.TUNER_TYPE:
+		elif self.type is self.TUNER_TYPE:
 			type = self.source.frontend_type
-			if type == 'DVB-S':
+			if type is 'DVB-S':
 				return 0
-			elif type == 'DVB-C':
+			elif type is 'DVB-C':
 				return 1
-			elif type == 'DVB-T':
+			elif type is 'DVB-T':
 				return 2
-			elif type == 'ATSC':
+			elif type is 'ATSC':
 				return 3
 			return -1
-		elif self.type == self.SLOT_NUMBER:
+		elif self.type is self.SLOT_NUMBER:
 			num = self.source.slot_number
 			return num is None and -1 or num
 

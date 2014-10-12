@@ -32,28 +32,28 @@ class EventTime(Poll, Converter, object):
 
 	@cached
 	def getTime(self):
-		assert self.type != self.PROGRESS
+		assert self.type is not self.PROGRESS
 
 		event = self.source.event
 		if event is None:
 			return None
 
 		st = event.getBeginTime()
-		if self.type == self.STARTTIME:
+		if self.type is self.STARTTIME:
 			return st
 
 		duration = event.getDuration()
-		if self.type == self.DURATION:
+		if self.type is self.DURATION:
 			return duration
 		st += duration
-		if self.type == self.ENDTIME:
+		if self.type is self.ENDTIME:
 			return st
-		if self.type == self.REMAINING:
+		if self.type is self.REMAINING:
 			return (duration, st - int(time()))
 
 	@cached
 	def getValue(self):
-		assert self.type == self.PROGRESS
+		assert self.type is self.PROGRESS
 
 		event = self.source.event
 		if event is None:
@@ -74,7 +74,7 @@ class EventTime(Poll, Converter, object):
 
 	def changed(self, what):
 		Converter.changed(self, what)
-		if self.type == self.PROGRESS and len(self.downstream_elements):
+		if self.type is self.PROGRESS and len(self.downstream_elements):
 			if not self.source.event and self.downstream_elements[0].visible:
 				self.downstream_elements[0].visible = False
 			elif self.source.event and not self.downstream_elements[0].visible:
