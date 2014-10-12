@@ -48,31 +48,31 @@ class TunerInfo(GUIComponent):
 		return val*100/65535
 
 	def update(self):
-		if self.type == self.SNR_DB:
+		if self.type is self.SNR_DB:
 			value = self.getValue(self.SNR_DB)
-		elif self.type == self.SNR_PERCENTAGE or self.type == self.SNR_BAR:
+		elif self.type is self.SNR_PERCENTAGE or self.type is self.SNR_BAR:
 			value = self.getValue(self.SNR) * 100 / 65536
-		elif self.type == self.AGC_PERCENTAGE or self.type == self.AGC_BAR:
+		elif self.type is self.AGC_PERCENTAGE or self.type is self.AGC_BAR:
 			value = self.getValue(self.AGC) * 100 / 65536
-		elif self.type == self.BER_VALUE or self.type == self.BER_BAR:
+		elif self.type is self.BER_VALUE or self.type is self.BER_BAR:
 			value = self.getValue(self.BER)
-		elif self.type == self.LOCK_STATE:
+		elif self.type is self.LOCK_STATE:
 			value = self.getValue(self.LOCK)
 
-		if self.type == self.SNR_DB:
+		if self.type is self.SNR_DB:
 			if value is not None and value != 0x12345678:
 				self.setText("%3.02f dB" % (value / 100.0))
 			else:
 				self.setText("")
-		elif self.type == self.SNR_PERCENTAGE or self.type == self.AGC_PERCENTAGE:
+		elif self.type is self.SNR_PERCENTAGE or self.type is self.AGC_PERCENTAGE:
 			self.setText("%d%%" % (value))
-		elif self.type == self.BER_VALUE:
+		elif self.type is self.BER_VALUE:
 			self.setText("%d" % (value))
-		elif self.type == self.SNR_BAR or self.type == self.AGC_BAR:
+		elif self.type is self.SNR_BAR or self.type is self.AGC_BAR:
 			self.setValue(value)
-		elif self.type == self.BER_BAR:
+		elif self.type is self.BER_BAR:
 			self.setValue(self.calc(value))
-		elif self.type == self.LOCK_STATE:
+		elif self.type is self.LOCK_STATE:
 			if value == 1:
 				self.setText(_("locked"))
 			else:
@@ -80,48 +80,48 @@ class TunerInfo(GUIComponent):
 
 	def getValue(self, what):
 		if self.statusDict:
-			if what == self.SNR_DB:
+			if what is self.SNR_DB:
 				return self.statusDict.get("tuner_signal_quality_db", 0x12345678)
-			elif what == self.SNR:
+			elif what is self.SNR:
 				return self.statusDict.get("tuner_signal_quality", 0)
-			elif what == self.AGC:
+			elif what is self.AGC:
 				return self.statusDict.get("tuner_signal_power", 0)
-			elif what == self.BER:
+			elif what is self.BER:
 				return self.statusDict.get("tuner_bit_error_rate", 0)
-			elif what == self.LOCK:
+			elif what is self.LOCK:
 				return self.statusDict.get("tuner_locked", 0)
 		elif self.servicefkt:
 			service = self.servicefkt()
 			if service is not None:
 				feinfo = service.frontendInfo()
 				if feinfo is not None:
-					if what == self.SNR_DB:
+					if what is self.SNR_DB:
 						return feinfo.getFrontendInfo(iFrontendInformation.signalQualitydB)
-					elif what == self.SNR:
+					elif what is self.SNR:
 						return feinfo.getFrontendInfo(iFrontendInformation.signalQuality)
-					elif what == self.AGC:
+					elif what is self.AGC:
 						return feinfo.getFrontendInfo(iFrontendInformation.signalPower)
-					elif what == self.BER:
+					elif what is self.BER:
 						return feinfo.getFrontendInfo(iFrontendInformation.bitErrorRate)
-					elif what == self.LOCK:
+					elif what is self.LOCK:
 						return feinfo.getFrontendInfo(iFrontendInformation.lockState)
 		elif self.frontendfkt:
 			frontend = self.frontendfkt()
 			if frontend:
-				if what == self.SNR_DB:
+				if what is self.SNR_DB:
 					return frontend.readFrontendData(iFrontendInformation.signalQualitydB)
-				elif what == self.SNR:
+				elif what is self.SNR:
 					return frontend.readFrontendData(iFrontendInformation.signalQuality)
-				elif what == self.AGC:
+				elif what is self.AGC:
 					return frontend.readFrontendData(iFrontendInformation.signalPower)
-				elif what == self.BER:
+				elif what is self.BER:
 					return frontend.readFrontendData(iFrontendInformation.bitErrorRate)
-				elif what == self.LOCK:
+				elif what is self.LOCK:
 					return frontend.readFrontendData(iFrontendInformation.lockState)
 		return 0
 
 	def createWidget(self, parent):
-		if self.SNR_PERCENTAGE <= self.type <= self.BER_VALUE or self.type == self.LOCK_STATE:
+		if self.SNR_PERCENTAGE <= self.type <= self.BER_VALUE or self.type is self.LOCK_STATE:
 			return eLabel(parent)
 		elif self.SNR_BAR <= self.type <= self.BER_BAR:
 			self.g = eSlider(parent)

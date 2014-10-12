@@ -21,8 +21,8 @@ def onPartitionChange(why, part):
 	global opkgStatusPath
 	mountpoint = os.path.normpath(part.mountpoint)
 	if mountpoint and mountpoint != '/':
-		if why == 'add':
-			if opkgStatusPath == '':
+		if why is 'add':
+			if opkgStatusPath is '':
 				# older opkg versions
 				opkgStatusPath = 'usr/lib/opkg/status'
 				if not os.path.exists(os.path.join('/', opkgStatusPath)):
@@ -30,7 +30,7 @@ def onPartitionChange(why, part):
 					opkgStatusPath = 'var/lib/opkg/status'
 			if os.path.exists(os.path.join(mountpoint, opkgStatusPath)):
 				opkgAddDestination(mountpoint)
-		elif why == 'remove':
+		elif why is 'remove':
 			try:
 				opkgDestinations.remove(mountpoint)
 				print "[Ipkg] Removed from OPKG destinations:", mountpoint
@@ -81,24 +81,24 @@ class IpkgComponent:
 			self.cmdFinished(-1)
 
 	def startCmd(self, cmd, args = None):
-		if cmd == self.CMD_UPDATE:
+		if cmd is self.CMD_UPDATE:
 			self.runCmdEx("update")
-		elif cmd == self.CMD_UPGRADE:
+		elif cmd is self.CMD_UPGRADE:
 			append = ""
 			if args["test_only"]:
 				append = " -test"
 			self.runCmdEx("upgrade" + append)
-		elif cmd == self.CMD_LIST:
+		elif cmd is self.CMD_LIST:
 			self.fetchedList = []
 			if args['installed_only']:
 				self.runCmdEx("list_installed")
 			else:
 				self.runCmd("list")
-		elif cmd == self.CMD_INSTALL:
+		elif cmd is self.CMD_INSTALL:
 			self.runCmd("install " + args['package'])
-		elif cmd == self.CMD_REMOVE:
+		elif cmd is self.CMD_REMOVE:
 			self.runCmd("remove " + args['package'])
-		elif cmd == self.CMD_UPGRADE_LIST:
+		elif cmd is self.CMD_UPGRADE_LIST:
 			self.fetchedList = []
 			self.runCmdEx("list_upgradable")
 		self.setCurrentCommand(cmd)

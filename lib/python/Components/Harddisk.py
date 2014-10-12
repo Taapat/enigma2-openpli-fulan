@@ -67,12 +67,12 @@ class Harddisk:
 		self.mount_device = None
 		self.phys_path = os.path.realpath(self.sysfsPath('device'))
 
-		if self.type == DEVTYPE_UDEV:
+		if self.type is DEVTYPE_UDEV:
 			self.dev_path = '/dev/' + self.device
 			self.disk_path = self.dev_path
 
 #+++>
-		elif self.type == DEVTYPE_DEVFS:
+		elif self.type is DEVTYPE_DEVFS:
 			self.dev_path = '/dev/' + self.device
 			self.disk_path = self.dev_path
 #+++<
@@ -85,9 +85,9 @@ class Harddisk:
 		return self.device < ob.device
 
 	def partitionPath(self, n):
-		if self.type == DEVTYPE_UDEV:
+		if self.type is DEVTYPE_UDEV:
 			return self.dev_path + n
-		elif self.type == DEVTYPE_DEVFS:
+		elif self.type is DEVTYPE_DEVFS:
 			return self.dev_path + '/part' + n
 
 	def sysfsPath(self, filename):
@@ -101,11 +101,11 @@ class Harddisk:
 	def bus(self):
 		ret = _("External")
 		# SD/MMC(F1 specific)
-		if self.type == DEVTYPE_UDEV:
+		if self.type is DEVTYPE_UDEV:
 			card = "sdhci" in self.phys_path
 			type_name = " (SD/MMC)"
 		# CF(7025 specific)
-		elif self.type == DEVTYPE_DEVFS:
+		elif self.type is DEVTYPE_DEVFS:
 			card = self.device[:2] == "hd" and "host0" not in self.dev_path
 			type_name = " (CF)"
 
@@ -158,7 +158,7 @@ class Harddisk:
 
 	def numPartitions(self):
 		numPart = -1
-		if self.type == DEVTYPE_UDEV:
+		if self.type is DEVTYPE_UDEV:
 			try:
 				devdir = os.listdir('/dev')
 			except OSError:
@@ -167,7 +167,7 @@ class Harddisk:
 				if filename[:len(self.device)] == self.device:
 					numPart += 1
 
-		elif self.type == DEVTYPE_DEVFS:
+		elif self.type is DEVTYPE_DEVFS:
 			try:
 				idedir = os.listdir(self.dev_path)
 			except OSError:
@@ -238,7 +238,7 @@ class Harddisk:
 				return (res >> 8)
 		# device is not in fstab
 		res = -1
-		if self.type == DEVTYPE_UDEV:
+		if self.type is DEVTYPE_UDEV:
 			# we can let udev do the job, re-read the partition table
 			res = os.system('sfdisk -R ' + self.disk_path)
 			# give udev some time to make the mount, which it will do asynchronously
@@ -543,7 +543,7 @@ class Partition:
 			if mounts is None:
 				mounts = getProcMounts()
 			for parts in mounts:
-				if parts[1] == self.mountpoint:
+				if parts[1] is self.mountpoint:
 					return True
 		return False
 
@@ -552,7 +552,7 @@ class Partition:
 			if mounts is None:
 				mounts = getProcMounts()
 			for fields in mounts:
-				if fields[1] == self.mountpoint:
+				if fields[1] is self.mountpoint:
 					return fields[2]
 		return ''
 
@@ -719,7 +719,7 @@ class HarddiskManager:
 		l = len(device)
 		if l and not device[l-1].isdigit():
 			for hdd in self.hdd:
-				if hdd.device == device:
+				if hdd.device is device:
 					hdd.stop()
 					self.hdd.remove(hdd)
 					break
@@ -733,7 +733,7 @@ class HarddiskManager:
 		for hd in self.hdd:
 			hdd = hd.model() + " - " + hd.bus()
 			cap = hd.capacity()
-			if cap != "":
+			if cap is not "":
 				hdd += " (" + cap + ")"
 			list.append((hdd, hd))
 		return list
@@ -778,7 +778,7 @@ class HarddiskManager:
 			if phys[:len(physdevprefix)] == physdevprefix:
 				description = pdescription
 		# not wholedisk and not partition 1
-		if part and part != 1:
+		if part and part is not 1:
 			description += _(" (Partition %d)") % part
 		return description
 
@@ -862,7 +862,7 @@ class MountTask(Task.LoggingTask):
 				self.postconditions.append(Task.ReturncodePostcondition())
 				return
 		# device is not in fstab
-		if self.hdd.type == DEVTYPE_UDEV:
+		if self.hdd.type is DEVTYPE_UDEV:
 			# we can let udev do the job, re-read the partition table
 			# Sorry for the sleep 2 hack...
 			self.setCmdline('sleep 2; sfdisk -R ' + self.hdd.disk_path)

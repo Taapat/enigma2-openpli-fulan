@@ -49,12 +49,12 @@ class EPGList(HTMLComponent, GUIComponent):
 		self.l.setFont(0, gFont("Regular", 22))
 		self.l.setFont(1, gFont("Regular", 16))
 		self.dy = 0
-		if type == EPG_TYPE_SINGLE:
+		if type is EPG_TYPE_SINGLE:
 			self.l.setBuildFunc(self.buildSingleEntry)
-		elif type == EPG_TYPE_MULTI:
+		elif type is EPG_TYPE_MULTI:
 			self.l.setBuildFunc(self.buildMultiEntry)
 		else:
-			assert(type == EPG_TYPE_SIMILAR)
+			assert(type is EPG_TYPE_SIMILAR)
 			self.l.setBuildFunc(self.buildSimilarEntry)
 		self.epgcache = eEPGCache.getInstance()
 		self.clocks = [ LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_SKIN, 'skin_default/icons/epgclock_add.png')),
@@ -80,13 +80,13 @@ class EPGList(HTMLComponent, GUIComponent):
 		return event
 
 	def getCurrentChangeCount(self):
-		if self.type == EPG_TYPE_MULTI and self.l.getCurrentSelection() is not None:
+		if self.type is EPG_TYPE_MULTI and self.l.getCurrentSelection() is not None:
 			return self.l.getCurrentSelection()[0]
 		return 0
 
 	def getCurrent(self):
 		idx=0
-		if self.type == EPG_TYPE_MULTI:
+		if self.type is EPG_TYPE_MULTI:
 			idx += 1
 		tmp = self.l.getCurrentSelection()
 		if tmp is None:
@@ -136,11 +136,11 @@ class EPGList(HTMLComponent, GUIComponent):
 		height = esize.height()
 		self.dy = (height - 21)/2
 
-		if self.type == EPG_TYPE_SINGLE:
+		if self.type is EPG_TYPE_SINGLE:
 			self.weekday_rect = Rect(0, 0, width/20*2-10, height)
 			self.datetime_rect = Rect(width/20*2, 0, width/20*5-15, height)
 			self.descr_rect = Rect(width/20*7, 0, width/20*13, height)
-		elif self.type == EPG_TYPE_MULTI:
+		elif self.type is EPG_TYPE_MULTI:
 			xpos = 0;
 			w = width/10*3;
 			self.service_rect = Rect(xpos, 0, w-10, height)
@@ -290,10 +290,10 @@ class EPGList(HTMLComponent, GUIComponent):
 		list = self.list
 		if list:
 			event_id = self.getSelectedEventId()
-			if type == 1:
+			if type is 1:
 				list.sort(key=lambda x: (x[4] and x[4].lower(), x[2]))
 			else:
-				assert(type == 0)
+				assert(type is 0)
 				list.sort(key=lambda x: x[2])
 			self.l.invalidate()
 			self.moveToEventId(event_id)
