@@ -16,6 +16,7 @@ from Tools.Directories import *
 from os import popen, path, makedirs, listdir, access, stat, rename, remove, W_OK, R_OK
 from time import gmtime, strftime, localtime
 from datetime import date
+from re import sub
 
 config.plugins.configurationbackup = ConfigSubsection()
 config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
@@ -69,7 +70,7 @@ class BackupScreen(Screen, ConfigListScreen):
 		try:
 			if (path.exists(self.backuppath) == False):
 				makedirs(self.backuppath)
-			self.backupdirs = ' '.join( config.plugins.configurationbackup.backupdirs.value )
+			self.backupdirs = ' '.join([sub("^/+", "", d) for d in config.plugins.configurationbackup.backupdirs.value])
 			if path.exists(self.fullbackupfilename):
 				dt = str(date.fromtimestamp(stat(self.fullbackupfilename).st_ctime))
 				self.newfilename = self.backuppath + "/" + dt + '-' + self.backupfile
@@ -77,9 +78,9 @@ class BackupScreen(Screen, ConfigListScreen):
 					remove(self.newfilename)
 				rename(self.fullbackupfilename,self.newfilename)
 			if self.finished_cb:
-				self.session.openWithCallback(self.finished_cb, Console, title = _("Backup is running..."), cmdlist = ["tar -czvf " + self.fullbackupfilename + " " + self.backupdirs],finishedCallback = self.backupFinishedCB,closeOnSuccess = True)
+				self.session.openWithCallback(self.finished_cb, Console, title = _("Backup is running..."), cmdlist = ["tar -C / -czvf " + self.fullbackupfilename + " " + self.backupdirs], finishedCallback = self.backupFinishedCB,closeOnSuccess = True)
 			else:
-				self.session.open(Console, title = _("Backup is running..."), cmdlist = ["tar -czvf " + self.fullbackupfilename + " " + self.backupdirs],finishedCallback = self.backupFinishedCB, closeOnSuccess = True)
+				self.session.open(Console, title = _("Backup is running..."), cmdlist = ["tar -C / -czvf " + self.fullbackupfilename + " " + self.backupdirs], finishedCallback = self.backupFinishedCB, closeOnSuccess = True)
 		except OSError:
 			if self.finished_cb:
 				self.session.openWithCallback(self.finished_cb, MessageBox, _("Sorry, your backup destination is not writeable.\nPlease select a different one."), MessageBox.TYPE_INFO, timeout = 10 )
