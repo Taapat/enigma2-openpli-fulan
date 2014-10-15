@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-05 10:00+0200\n"
-"PO-Revision-Date: 2014-10-10 13:07+0500\n"
+"PO-Revision-Date: 2014-10-13 18:15+0500\n"
 "Last-Translator: a.k.a Uchkun\n"
 "Language-Team: a.k.a Uchkun <madamin2007@mail.ru>\n"
 "Language: ru\n"
@@ -2523,6 +2523,9 @@ msgstr "Всегда спрашивать"
 msgid "Always ask before sending"
 msgstr "Всегда спрашивать перед отправкой"
 
+msgid "Always hide infobar"
+msgstr "Всегда скрывать инфобар"
+
 msgid "Always zap before record"
 msgstr "Всегда переключать на записываемый канал"
 
@@ -2574,6 +2577,9 @@ msgstr "Апреля"
 
 msgid "Arabic"
 msgstr "Арабский"
+
+msgid "Are you sure to remove all %d.%d%s%s services?"
+msgstr "Уверены, что хотите удалить все %d.%d%s%s сервисы?"
 
 msgid "Are you sure to remove this entry?"
 msgstr "Пожалуйста подтвердите удаление"
@@ -3236,10 +3242,10 @@ msgid "Bouquet:"
 msgstr "Фаворит:"
 
 msgid "BouquetEditor"
-msgstr "Редактор букетов"
+msgstr "Редактор фаворитов"
 
 msgid "Bouquets"
-msgstr "Букеты"
+msgstr "фавориты"
 
 msgid "Bouquets Protection"
 msgstr "Защита фаворитов"
@@ -3363,7 +3369,7 @@ msgid "Cache thumbnails"
 msgstr "Кешировать эскизы"
 
 msgid "Calculate"
-msgstr "Расчет"
+msgstr "Рассчитать"
 
 msgid "Calculate all positions"
 msgstr "Рассчитать все позиции"
@@ -3728,7 +3734,7 @@ msgid "Choose backup files"
 msgstr "Выбрать файлы бекапа"
 
 msgid "Choose backup location"
-msgstr "Расположение"
+msgstr "Расположение бекапа"
 
 msgid "Choose bouquet"
 msgstr "Выберите фаворит"
@@ -4239,7 +4245,7 @@ msgid "Configure the first audio language (highest priority)."
 msgstr "Настройка первого языка аудио (высокий приоритет)"
 
 msgid "Configure the first subtitle language (highest priority)."
-msgstr "Настройка первого языка субтитров(наивысший приоритет)"
+msgstr "Настройка первого языка субтитров(высокий приоритет)"
 
 msgid "Configure the font size of the subtitles."
 msgstr "Настройка размера шрифта субтитров."
@@ -4260,7 +4266,7 @@ msgid "Configure the function of the '0' button do when PIP is active."
 msgstr "Настройте функцию кнопки '0' когда окно PIP активно"
 
 msgid "Configure the gateway."
-msgstr "Вы можете настроить шлюз."
+msgstr "Настройка шлюза."
 
 msgid "Configure the general audio delay of Dolby Digital sound tracks."
 msgstr "Настройка общей задержки звуковых дорожек со звуком Dolby Digital."
@@ -4583,16 +4589,16 @@ msgid "Contrast"
 msgstr "Контрастность"
 
 msgid "Control disabled"
-msgstr "Контрол отключен"
+msgstr "Контроль отключен"
 
 msgid "Convert ext3 filesystem to ext4"
-msgstr "Преобразовать ext3 в ext4"
+msgstr "Преобразование ext3 в ext4"
 
 msgid "Convert ext3 to ext4"
-msgstr "Преобразовываем ext3 в ext4"
+msgstr "Преобразование ext3 в ext4"
 
 msgid "Convert ext3 to ext4..."
-msgstr "Преобразуем ext3 в ext4..."
+msgstr "Преобразование ext3 в ext4..."
 
 msgid "Convert filesystem ext3 to ext4"
 msgstr "Преобразовать ext3 в ext4"
@@ -4859,7 +4865,7 @@ msgid "Current CEC address"
 msgstr "Текущий СЕС адрес"
 
 msgid "Current Event:"
-msgstr "Текущее событие:"
+msgstr "Текущая передача:"
 
 msgid "Current Transponder"
 msgstr "Текущий транспондер"
@@ -4947,7 +4953,7 @@ msgid "Customize to GP2 Infobar settings"
 msgstr "Выбрать GP2 в настройках инфобара"
 
 msgid "Cut"
-msgstr "Редактировать"
+msgstr "Нарезка"
 
 msgid "Cut source:"
 msgstr "Источник вырезов:"
@@ -5430,7 +5436,7 @@ msgid "Description:"
 msgstr "Описание: "
 
 msgid "Deselect"
-msgstr "Отменить"
+msgstr "Снять выбор"
 
 msgid "Destination directory"
 msgstr "Каталог назначения"
@@ -5530,7 +5536,7 @@ msgid "Dialing:"
 msgstr "Набор номера:"
 
 msgid "Digital contour removal"
-msgstr "Цифровое удаление контура"
+msgstr "Удалить цифровые контуры"
 
 msgid "Dir:"
 msgstr "Каталог: "
@@ -5741,7 +5747,7 @@ msgid ""
 "Do you really want to convert the filesystem?\n"
 "You cannot go back!"
 msgstr ""
-"Вы действительно хотите преобразовать файловую систему?\n"
+"Действительно хотите преобразовать файловую систему?\n"
 "Вы не сможете вернуться назад!"
 
 msgid "Do you really want to delete %s?"
@@ -5771,7 +5777,7 @@ msgstr ""
 "(Имейте ввиду, это необратимо!)"
 
 msgid "Do you really want to delete this entry?"
-msgstr "Вы действительно хотите удалить эту запись?"
+msgstr "Действительно хотите удалить эту запись?"
 
 msgid "Do you really want to delete this file?"
 msgstr "Действительно хотите удалить файл?"
@@ -5826,7 +5832,7 @@ msgid "Do you really want to stop the recording?"
 msgstr "Действительно хотите остановить запись?"
 
 msgid "Do you realy want to DELETE:\n"
-msgstr "Вы действительно хотите удалить:\n"
+msgstr "Действительно хотите удалить:\n"
 
 msgid ""
 "Do you want to backup now?\n"
@@ -6192,7 +6198,7 @@ msgid "EPG"
 msgstr "Телегид"
 
 msgid "EPG Cache Filename"
-msgstr "Имя файла кэша телегида"
+msgstr "Название файла телегида"
 
 msgid "EPG Cache Path"
 msgstr "Путь кэша телегида"
@@ -6691,10 +6697,10 @@ msgid "Enter new Password"
 msgstr "Введите новый пароль"
 
 msgid "Enter new hostname for your Dreambox"
-msgstr "Введите новое имя хоста ресивера"
+msgstr "Введите новое сетевое имя для ресивера"
 
 msgid "Enter new hostname for your STB"
-msgstr "Введите новое имя хоста ресивера"
+msgstr "Введите новое сетевое имя для ресивера"
 
 msgid "Enter new password"
 msgstr "Введите новый пароль"
@@ -8340,7 +8346,7 @@ msgid "Hidden network SSID"
 msgstr "Скрытые SSID сети"
 
 msgid "Hide CI messages"
-msgstr "Спрятать сообщения CI"
+msgstr "Не показывать сообщения CI"
 
 msgid "Hide Infobar if Second-InfoBar shown"
 msgstr "Скрыть Инфобар при открытии второго инфобара"
@@ -8349,7 +8355,7 @@ msgid "Hide all sub-genres"
 msgstr "Скрыть все поджанры"
 
 msgid "Hide any zap error messages."
-msgstr "Не показывать любые сообщения об ошибках при переключении каналов."
+msgstr "Не показывать сообщения об ошибках при переключении каналов."
 
 msgid "Hide channel list in radio mode"
 msgstr "Спрятать список каналов в режиме радио"
@@ -12080,7 +12086,7 @@ msgid "Please select an option below."
 msgstr "Пожалуйста, выберите один из следующих вариантов"
 
 msgid "Please select medium to be scanned"
-msgstr "Пожалуйста выберите носитель для сканирования"
+msgstr "Пожалуйста, выберите носитель для сканирования"
 
 msgid "Please select medium to use as backup location"
 msgstr "Пожалуйста, выберите носитель для резерного копирования"
@@ -14989,6 +14995,9 @@ msgstr "Показать подробное инфо события"
 msgid "Show directories in movie list"
 msgstr "Отображать каталоги в списке записей"
 
+msgid "Show disclaimer"
+msgstr "Показать предупреждение"
+
 msgid "Show duration window"
 msgstr "По алфавиту и продолжительности"
 
@@ -15438,7 +15447,7 @@ msgid "Slow Motion speeds"
 msgstr "Скорость замедленного воспроизведения"
 
 msgid "Slow motion speeds"
-msgstr "Низкая скорость"
+msgstr "Скорость замедленного воспроизведения"
 
 msgid "Small 0.7 MB"
 msgstr "Маленький 0.7 МБ"
@@ -15679,7 +15688,7 @@ msgid "Sort by name (descending)"
 msgstr "Сортировка по имени (по убыванию)"
 
 msgid "Sort by..."
-msgstr "Сортировать..."
+msgstr "Сортировать по..."
 
 msgid "Sort list:"
 msgstr "Тип сортировки:"
@@ -15850,7 +15859,7 @@ msgid "Start from the beginning"
 msgstr "Начать с самого начала"
 
 msgid "Start offline decode"
-msgstr "Старт оффлайн декодирования"
+msgstr "Запуск оффлайн декодирования"
 
 msgid "Start on Sessionstart"
 msgstr "Запускать при старте системы"
@@ -16763,7 +16772,7 @@ msgid ""
 msgstr ""
 "VPS-плагин не может проверить, поддерживается ли канал плагином при ручном "
 "запрограммировании таймера!\n"
-" Вы действительно хотите включить VPS?"
+" Действительно хотите включить VPS?"
 
 msgid "The backup failed. Please choose a different backup location."
 msgstr "Сохранение не выполнено. Выберите другое место ресположения. "
@@ -16935,7 +16944,7 @@ msgid ""
 msgstr ""
 "Выбранный канал не поддерживается VPS для ручной запрограммирования "
 "таймеров!\n"
-" Вы действительно хотите включить VPS?"
+" Действительно хотите включить VPS?"
 
 msgid "The sleep timer has been activated."
 msgstr "Таймер сна включен."
@@ -18610,7 +18619,7 @@ msgid ""
 " Do you really want to enable VPS?"
 msgstr ""
 "VPS-плагин не может проверить, поддерживается ли канал плагином.\n"
-" Вы действительно хотите включить VPS?"
+" Действительно хотите включить VPS?"
 
 msgid "VPS-Time (date)"
 msgstr "VPS-Время (дата)"
@@ -19394,7 +19403,7 @@ msgstr "Если включено, требуется аутентификаци
 
 msgid "When enabled, channel numbering will start at '1' for each bouquet."
 msgstr ""
-"Если включено, нумерация каналов в каждом фаворитном списке будет начинатся "
+"Если включено, нумерация каналов в каждом фаворитном списке будет начинаться "
 "с '1'"
 
 msgid ""
@@ -19415,7 +19424,7 @@ msgid ""
 "When enabled, deleted recordings are moved to the trash can, instead of "
 "being deleted immediately."
 msgstr ""
-"Когда эта функция включена, удаленные записи будут перемещены в корзину, "
+"Когда эта функция включена, удаляемые записи будут перемещены в корзину, "
 "вместо того, чтобы быть удаленными."
 
 msgid ""
@@ -19522,7 +19531,7 @@ msgstr ""
 
 msgid "When enabled, teletext pages will be cached, allowing faster access."
 msgstr ""
-"Когда функция включена, страницы телетекста будет храниться в кэше для "
+"Когда функция включена, страницы телетекста будут храниться в кэше для "
 "быстрого доступа."
 
 msgid ""
@@ -20703,7 +20712,7 @@ msgid ""
 "are you sure you want to restore\n"
 "following backup:\n"
 msgstr ""
-"Вы действительно хотите восстановить\n"
+"Действительно хотите восстановить\n"
 "следующий бекап:\n"
 
 msgid "arts/culture (without music, general)"
