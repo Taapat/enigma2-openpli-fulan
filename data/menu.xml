@@ -114,18 +114,17 @@ self.session.openWithCallback(msgClosed, FactoryReset)
 from Plugins.SystemPlugins.Videomode.VideoHardware import video_hw
 def VideoPort(hw):
 	if config.av.videoport.value == "HDMI":
-		config.av.videoport.value = "Scart"
-	elif config.av.videoport.value == "Scart":
-		config.av.videoport.value = "HDMI"
-	if config.av.videoport.value == "HDMI" or config.av.videoport.value == "Scart":
-		print "[Change video port] change port to ", config.av.videoport.value
-		port = config.av.videoport.value
-		mode = config.av.videomode[port].value
-		rate = config.av.videorate[mode].value
-		hw.setMode(port, mode, rate)
-		config.av.videoport.save()
+		port = "Scart"
+	else:
+		port = "HDMI"
+	print "Change video port to", port
+	config.av.videoport.value = port
+	mode = config.av.videomode[port].value
+	rate = config.av.videorate[mode].value
+	hw.setMode(port, mode, rate)
+	config.av.videoport.save()
 VideoOutput = VideoPort(video_hw)
-</code>
+			</code>
 		</item>
 
 		<!--<item text="Unser Setup">self.openSetup("Blaselfasel")</item>-->
