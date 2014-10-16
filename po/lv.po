@@ -3697,11 +3697,20 @@ msgstr "nov"
 msgid "November"
 msgstr "novembris"
 
+msgid "Now"
+msgstr "Pašreiz"
+
 msgid "Now playing"
 msgstr "Atskaņo"
 
 msgid "Now, use the contrast setting to turn up the brightness of the background as much as possible, but make sure that you can still see the difference between the two brightest levels of shades.If you have done that, press OK."
 msgstr "Tagad lietojiet kontrasta iestatīšanu lai palielinātu fona spilgtumu cik vien iespējams, bet pārliecinieties, ka divi spilgtāko toņu līmeņi joprojām ir izšķirami. Ja esat to izdarījuši, spiediet OK."
+
+msgid "no description available"
+msgstr "Apraksts nav pieejams."
+
+msgid "no description available."
+msgstr "Apraksts nav pieejams."
 
 msgid "OK"
 msgstr "OK"
