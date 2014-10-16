@@ -102,13 +102,13 @@ class FrontendInfo(Converter, object):
 				return self.range
 		elif self.type is self.TUNER_TYPE:
 			type = self.source.frontend_type
-			if type is 'DVB-S':
+			if type == 'DVB-S':
 				return 0
-			elif type is 'DVB-C':
+			elif type == 'DVB-C':
 				return 1
-			elif type is 'DVB-T':
+			elif type == 'DVB-T':
 				return 2
-			elif type is 'ATSC':
+			elif type == 'ATSC':
 				return 3
 			return -1
 		elif self.type is self.SLOT_NUMBER:
