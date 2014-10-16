@@ -3488,13 +3488,6 @@ msgstr "Neutrino"
 msgid "Next"
 msgstr "Nākamais"
 
-msgid "Next:"
-msgstr "Nāk.:"
-
-
-msgid "Next: "
-msgstr "Nāk.: "
-
 msgid "New"
 msgstr "Jauns"
 
