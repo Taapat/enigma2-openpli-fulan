@@ -1827,13 +1827,13 @@ msgid "Deselect"
 msgstr "Atcelt izvēli"
 
 msgid "Details for plugin: "
-msgstr "Spraudņu papildinformācija:"
+msgstr "Spraudņu papildinformācija: "
 
 msgid "Detected HDD:"
 msgstr "Atrasts HDD:"
 
 msgid "Detected NIMs:"
-msgstr "Atrasts NIMs:"
+msgstr "Atrasts tjūneris:"
 
 msgid "Devicename:"
 msgstr "Iekārtas nosaukums:"
@@ -2391,7 +2391,7 @@ msgid "Failed"
 msgstr "Neizdevās"
 
 msgid "Failed to write /tmp/positionersetup.log: "
-msgstr "Neizdevās ierakstīt /tmp/positionersetup.log:"
+msgstr "Neizdevās ierakstīt /tmp/positionersetup.log: "
 
 msgid "Fallback remote receiver"
 msgstr "Papildus rezeves uztvērējs"
@@ -2675,7 +2675,7 @@ msgid "Harddisk"
 msgstr "Cietais disks"
 
 msgid "Hardware: "
-msgstr "Aparatūra:"
+msgstr "Aparatūra: "
 
 msgid "Hebrew"
 msgstr "Ebreju"
@@ -2774,7 +2774,7 @@ msgstr ""
 "Ja esat apmierināts ar rezultātu, spiediet OK."
 
 msgid "Image: "
-msgstr "Imidžs:"
+msgstr "Imidžs: "
 
 msgid "Immediate shutdown"
 msgstr "Tūlītēja izslēgšana"
@@ -3007,7 +3007,7 @@ msgid "Keep service"
 msgstr "Paturēt kanālu"
 
 msgid "Kernel version: "
-msgstr "Kerneļa versija:"
+msgstr "Kerneļa versija: "
 
 msgid "Keyboard"
 msgstr "Tastatūra"
@@ -3046,7 +3046,7 @@ msgid "Last speed"
 msgstr "Pēdējais ātrums"
 
 msgid "Last upgrade: "
-msgstr "Pēdējā atjaunošana:"
+msgstr "Pēdējā atjaunošana: "
 
 msgid "Latest Commits"
 msgstr "Jaunākie kommiti"
@@ -3252,7 +3252,7 @@ msgid "Max memory positions"
 msgstr "Maksimālā pozīcija atmiņā"
 
 msgid "Max. bitrate: "
-msgstr "Max. bitreits:"
+msgstr "Max. bitreits: "
 
 msgid "May"
 msgstr "maijs"
@@ -3474,7 +3474,7 @@ msgid "Network test..."
 msgstr "Tīkla pārbaude..."
 
 msgid "Network test: "
-msgstr "Tīkla pārbaude:"
+msgstr "Tīkla pārbaude: "
 
 msgid "Network wizard"
 msgstr "Tīkla vednis"
@@ -3490,6 +3490,10 @@ msgstr "Nākamais"
 
 msgid "Next:"
 msgstr "Nāk.:"
+
+
+msgid "Next: "
+msgstr "Nāk.: "
 
 msgid "New"
 msgstr "Jauns"
