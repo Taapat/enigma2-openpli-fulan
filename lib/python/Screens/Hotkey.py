@@ -67,6 +67,7 @@ hotkeys = [(_("Red long"), "red_long", ""),
 	(_("Timeshift"), "timeshift", ""),
 	(_("Slow"), "slow", ""),
 	(_("Fast"), "fast", ""),
+	(_("Recall"), "refresh", ""),
 	(_("Power"), "power", ""),
 	(_("Power long"), "power_long", "")]
 
