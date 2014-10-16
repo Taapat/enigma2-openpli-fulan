@@ -80,9 +80,9 @@ class EventName(Converter, object):
 			else:
 				return getGenreStringSub(genre.getLevel1(), genre.getLevel2())
 		elif self.type is self.NAME_NOW:
-			return pgettext("now/next: 'now' event label", "Now") + ": " + event.getEventName()
+			return pgettext("now/next: 'now' event label", _("Now")) + ": " + event.getEventName()
 		elif self.type is self.NAME_NEXT:
-			return pgettext("now/next: 'next' event label", "Next") + ": " + event.getEventName()
+			return pgettext("now/next: 'next' event label", _("Next")) + ": " + event.getEventName()
 		elif self.type is self.SHORT_DESCRIPTION:
 			return event.getShortDescription()
 		elif self.type is self.EXTENDED_DESCRIPTION:
@@ -92,7 +92,7 @@ class EventName(Converter, object):
 			extended = event.getExtendedDescription()
 			if description and extended:
 				description += '\n'
-			return description + extended
+			return _(description + extended)
 		elif self.type is self.ID:
 			return str(event.getEventId())
 
