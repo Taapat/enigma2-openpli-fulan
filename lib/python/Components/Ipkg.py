@@ -21,8 +21,8 @@ def onPartitionChange(why, part):
 	global opkgStatusPath
 	mountpoint = os.path.normpath(part.mountpoint)
 	if mountpoint and mountpoint != '/':
-		if why is 'add':
-			if opkgStatusPath is '':
+		if why == 'add':
+			if opkgStatusPath == '':
 				# older opkg versions
 				opkgStatusPath = 'usr/lib/opkg/status'
 				if not os.path.exists(os.path.join('/', opkgStatusPath)):
@@ -30,7 +30,7 @@ def onPartitionChange(why, part):
 					opkgStatusPath = 'var/lib/opkg/status'
 			if os.path.exists(os.path.join(mountpoint, opkgStatusPath)):
 				opkgAddDestination(mountpoint)
-		elif why is 'remove':
+		elif why == 'remove':
 			try:
 				opkgDestinations.remove(mountpoint)
 				print "[Ipkg] Removed from OPKG destinations:", mountpoint

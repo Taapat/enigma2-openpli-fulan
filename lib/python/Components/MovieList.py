@@ -208,7 +208,7 @@ class MovieList(GUIComponent):
 		for timer in NavigationInstance.instance.RecordTimer.timer_list:
 			if timer.isRunning() and not timer.justplay:
 				result[os.path.split(timer.Filename)[1]+'.ts'] = timer
-		if self.runningTimers is result:
+		if self.runningTimers == result:
 			return
 		self.runningTimers = result
 		if timer is not None:
@@ -307,7 +307,7 @@ class MovieList(GUIComponent):
 					# if path ends in '/', p is blank.
 					p = os.path.split(p[0])
 				txt = p[1]
-				if txt is ".Trash":
+				if txt == ".Trash":
 					res.append(MultiContentEntryPixmapAlphaTest(pos=(0,1), size=(iconSize,24), png=self.iconTrash))
 					res.append(MultiContentEntryText(pos=(iconSize+2, 0), size=(width-166, self.itemHeight), font = 0, flags = RT_HALIGN_LEFT, text = _("Deleted items")))
 					res.append(MultiContentEntryText(pos=(width-145, 4), size=(145, self.itemHeight), font=1, flags=RT_HALIGN_RIGHT, text=_("Trash can")))
@@ -333,11 +333,11 @@ class MovieList(GUIComponent):
 			data.icon = None
 			data.part = None
 			if os.path.split(pathName)[1] in self.runningTimers:
-				if self.playInBackground and serviceref is self.playInBackground:
+				if self.playInBackground and serviceref == self.playInBackground:
 					data.icon = self.iconMoviePlayRec
 				else:
 					data.icon = self.iconMovieRec
-			elif self.playInBackground and serviceref is self.playInBackground:
+			elif self.playInBackground and serviceref == self.playInBackground:
 				data.icon = self.iconMoviePlay
 			else:
 				switch = config.usage.show_icons_in_movielist.value
@@ -519,7 +519,7 @@ class MovieList(GUIComponent):
 		if service is None:
 			return None
 		for index, l in enumerate(self.list):
-			if l[0] is service:
+			if l[0] == service:
 				return index
 		return None
 
@@ -621,7 +621,7 @@ class MovieList(GUIComponent):
 			rootPath = os.path.normpath(self.root.getPath())
 			if rootPath[-1] != '/':
 				rootPath += '/'
-			if rootPath is not parent:
+			if rootPath != parent:
 				# with new sort types directories may be in between files, so scan whole
 				# list for parentDirectory index. Usually it is the first one anyway
 				for index, item in enumerate(self.list):
@@ -629,7 +629,7 @@ class MovieList(GUIComponent):
 						itempath = os.path.normpath(item[0].getPath())
 						if itempath[-1] != '/':
 							itempath += '/'
-						if itempath is rootPath:
+						if itempath == rootPath:
 							self.parentDirectory = index
 							break
 		self.root = root
@@ -754,7 +754,7 @@ class MovieList(GUIComponent):
 			for index, item in enumerate(itemsBelow):
 				ref = item[0]
 				itemName = getShortName(item[1].getName(ref).upper(), ref)
-				if len(self._char) == 1 and itemName[0] is self._char:
+				if len(self._char) == 1 and itemName[0] == self._char:
 					found = True
 					self.instance.moveSelectionTo(index + currentIndex + 1)
 					break
@@ -767,7 +767,7 @@ class MovieList(GUIComponent):
 			for index, item in enumerate(itemsAbove):
 				ref = item[0]
 				itemName = getShortName(item[1].getName(ref).upper(), ref)
-				if len(self._char) == 1 and itemName[0] is self._char:
+				if len(self._char) == 1 and itemName[0] == self._char:
 					found = True
 					self.instance.moveSelectionTo(index + 1)
 					break

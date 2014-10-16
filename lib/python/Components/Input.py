@@ -16,7 +16,7 @@ class Input(VariableText, HTMLComponent, GUIComponent, NumericalTextInput):
 		GUIComponent.__init__(self)
 		VariableText.__init__(self)
 		self.type = type
-		self.allmarked = allMarked and (text is not "") and (type is not self.PIN)
+		self.allmarked = allMarked and (text != "") and (type is not self.PIN)
 		self.maxSize = maxSize
 		self.currPos = currPos
 		self.visible_width = visible_width

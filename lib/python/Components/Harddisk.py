@@ -543,7 +543,7 @@ class Partition:
 			if mounts is None:
 				mounts = getProcMounts()
 			for parts in mounts:
-				if parts[1] is self.mountpoint:
+				if parts[1] == self.mountpoint:
 					return True
 		return False
 
@@ -552,7 +552,7 @@ class Partition:
 			if mounts is None:
 				mounts = getProcMounts()
 			for fields in mounts:
-				if fields[1] is self.mountpoint:
+				if fields[1] == self.mountpoint:
 					return fields[2]
 		return ''
 
@@ -719,7 +719,7 @@ class HarddiskManager:
 		l = len(device)
 		if l and not device[l-1].isdigit():
 			for hdd in self.hdd:
-				if hdd.device is device:
+				if hdd.device == device:
 					hdd.stop()
 					self.hdd.remove(hdd)
 					break
@@ -733,7 +733,7 @@ class HarddiskManager:
 		for hd in self.hdd:
 			hdd = hd.model() + " - " + hd.bus()
 			cap = hd.capacity()
-			if cap is not "":
+			if cap != "":
 				hdd += " (" + cap + ")"
 			list.append((hdd, hd))
 		return list
