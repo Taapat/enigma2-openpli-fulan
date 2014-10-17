@@ -19,4 +19,7 @@ class NextEpgInfo(Renderer, VariableText):
 		nextEvent = self.epgcache.lookupEvent(['IBDCTSERNX', (reference.toString(), 1, -1)])
 		if nextEvent:
 			if nextEvent[0][4]:
-				self.text = pgettext("now/next: 'next' event label", _("Next")) + ": " + nextEvent[0][4]
+				if "NO INFORMATION" in nextEvent[0][4]:
+					self.text = _("Next") + ": " + _("no description available")
+				else:
+					self.text = pgettext("now/next: 'next' event label", _("Next")) + ": " + nextEvent[0][4]
