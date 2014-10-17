@@ -90,9 +90,12 @@ class EventName(Converter, object):
 		elif self.type is self.FULL_DESCRIPTION:
 			description = event.getShortDescription()
 			extended = event.getExtendedDescription()
-			if description and extended:
-				description += '\n'
-			return _(description + extended)
+			if description:
+				if extended:
+					description += '\n'
+				elif "no description" in description:
+					return _("no description available")
+			return description + extended
 		elif self.type is self.ID:
 			return str(event.getEventId())
 
