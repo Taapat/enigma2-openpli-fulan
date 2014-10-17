@@ -506,20 +506,22 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 		pass
 
 	def showDefaultEPG(self):
-		if self.infobar:
-			self.infobar.showDefaultEPG()
+		self.infobar and self.infobar.showDefaultEPG()
 
 	def openEventView(self):
-		if self.infobar:
-			self.infobar.openEventView()
+		self.infobar and self.infobar.openEventView()
 
 	def showEventInfoPlugins(self):
-		if self.infobar:
-			self.infobar.showEventInfoPlugins()
+		self.infobar and self.infobar.showEventInfoPlugins()
 
 	def showEventGuidePlugins(self):
-		if self.infobar:
-			self.infobar.showEventGuidePlugins()
+		self.infobar and self.infobar.showEventGuidePlugins()
+
+	def openSingleServiceEPG(self):
+		self.infobar and self.infobar.openSingleServiceEPG()
+
+	def openMultiServiceEPG(self):
+		self.infobar and self.infobar.openMultiServiceEPG()
 
 	def showMovies(self):
 		ref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
