@@ -198,8 +198,9 @@ class Session:
 
 		# when this is an execbegin after a execend of a "higher" dialog,
 		# popSummary already did the right thing.
-		if first:
-			self.instantiateSummaryDialog(c)
+# 		Disable instantiateSummaryDialog, if do not use the LCD displays with such skins
+#		if first:
+#			self.instantiateSummaryDialog(c)
 
 		c.saveKeyboardMode()
 		c.execBegin()
@@ -216,9 +217,10 @@ class Session:
 		self.current_dialog.restoreKeyboardMode()
 		self.current_dialog.hide()
 
-		if last:
-			self.current_dialog.removeSummary(self.summary)
-			self.popSummary()
+# 		Do not use if disable instantiateSummaryDialog
+#		if last:
+#			self.current_dialog.removeSummary(self.summary)
+#			self.popSummary()
 
 	def create(self, screen, arguments, **kwargs):
 		# creates an instance of 'screen' (which is a class)
