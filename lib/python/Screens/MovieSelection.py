@@ -762,7 +762,6 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 			pass
 
 	def createSummary(self):
-		return None
 		return MovieSelectionSummary
 
 	def updateDescription(self):
