@@ -329,9 +329,7 @@ class InfoBarShowHide(InfoBarScreenSaver):
 
 	def toggleShow(self):
 		if self.__state is self.STATE_HIDDEN:
-			self.show()
-			if self.secondInfoBarScreen:
-				self.secondInfoBarScreen.hide()
+			self.showFirstInfoBar()
 		else:
 			self.showSecondInfoBar()
 
@@ -345,6 +343,14 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			if self.secondInfoBarScreen and not self.secondInfoBarScreen.shown and config.usage.show_second_infobar.value != "Event":
 				self.secondInfoBarScreen.show()
 				self.startHideTimer()
+		else:
+			self.hide()
+			self.hideTimer.stop()
+
+	def showFirstInfoBar(self):
+		if self.__state == self.STATE_HIDDEN or self.secondInfoBarScreen and self.secondInfoBarScreen.shown:
+			self.secondInfoBarScreen and self.secondInfoBarScreen.hide()
+			self.show()
 			else:
 				self.hide()
 				self.hideTimer.stop()
