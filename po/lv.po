@@ -8087,7 +8087,7 @@ msgid "unconfirmed"
 msgstr "neapstiprināts"
 
 msgid "undefined"
-msgstr "nedefināts"
+msgstr "nedefinēts"
 
 msgid "unknown"
 msgstr "nezināms"
