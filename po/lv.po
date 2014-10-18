@@ -1249,7 +1249,7 @@ msgid "Config resolution of pictures"
 msgstr "Konfigurēt attēlu izšķirtspēju"
 
 msgid "Configuration mode"
-msgstr "Konfigurēšanas režīms"
+msgstr "Konfigurēt"
 
 #, python-format
 msgid "Configuration mode: %s"
@@ -4695,7 +4695,7 @@ msgid "Satellites"
 msgstr "Pavadoņi"
 
 msgid "Satfinder"
-msgstr "Sat-meklētājs"
+msgstr "Pavadoņu meklētājs"
 
 msgid "Sats"
 msgstr "Pavad"
