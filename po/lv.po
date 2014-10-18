@@ -3297,6 +3297,14 @@ msgstr "Minimālais sūtīšanas intervāls"
 msgid "Missing "
 msgstr "Trūkst"
 
+msgctxt "Satellite configuration mode"
+msgid "Mode"
+msgstr "Režīms"
+
+msgctxt "Video output mode"
+msgid "Mode"
+msgstr "Režīms"
+
 msgid "Model: "
 msgstr "Modelis: "
 
@@ -3491,6 +3499,11 @@ msgstr "Tīkls:"
 msgid "Neutrino"
 msgstr "Neutrino"
 
+msgctxt "button label, 'next screen'"
+msgid "Next"
+msgstr "Nākamais"
+
+msgctxt "now/next: 'next' event label"
 msgid "Next"
 msgstr "Nākamais"
 
@@ -3703,6 +3716,7 @@ msgstr "nov"
 msgid "November"
 msgstr "novembris"
 
+msgctxt "now/next: 'now' event label"
 msgid "Now"
 msgstr "Pašreiz"
 
@@ -4263,6 +4277,7 @@ msgstr "Nospiediet OK, lai pārslēgtu izvēli."
 msgid "Press yellow to set this interface as default interface."
 msgstr "Spiediet dzelteno, lai iestatītu šo interfeisu kā noklusējuma."
 
+msgctxt "button label, 'previous screen'"
 msgid "Prev"
 msgstr "Iepriekšējais"
 
