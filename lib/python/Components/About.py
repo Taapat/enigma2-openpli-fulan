@@ -43,20 +43,13 @@ def getImageTypeString():
 
 def getCPUInfoString():
 	try:
-		cpu_count = 0
 		for line in open("/proc/cpuinfo").readlines():
 			line = [x.strip() for x in line.strip().split(":")]
-			if line[0] == "system type":
-				processor = line[1].split()[0]
-			elif line[0] == "cpu MHz":
-				cpu_speed = "%1.0f" % float(line[1])
-				cpu_count += 1
-			elif line[0] == "cpu type":
+			if line[0] == "cpu type":
 				processor = line[1].split()[0]
 			elif line[0] == "bogomips":
 				cpu_speed = "%1.0f" % float(line[1])
-				cpu_count += 1
-		return "%s %s MHz (%d %s)" % (processor, cpu_speed, cpu_count, cpu_count > 1 and "cores" or "core")
+		return "%s %s MHz (1 core)" % (processor, cpu_speed)
 	except:
 		return _("undefined")
 
