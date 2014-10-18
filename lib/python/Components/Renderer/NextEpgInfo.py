@@ -22,4 +22,4 @@ class NextEpgInfo(Renderer, VariableText):
 				if "NO INFORMATION" in nextEvent[0][4]:
 					self.text = _("Next") + ": " + _("no description available")
 				else:
-					self.text = pgettext("now/next: 'next' event label", _("Next")) + ": " + nextEvent[0][4]
+					self.text = pgettext("now/next: 'next' event label", "Next") + ": " + nextEvent[0][4]
