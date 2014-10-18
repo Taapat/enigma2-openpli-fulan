@@ -1009,6 +1009,9 @@ msgstr "C-josla"
 msgid "CH"
 msgstr "CH"
 
+msgid "CPU: "
+msgstr "Procesors: "
+
 msgid "CVBS"
 msgstr "CVBS"
 
@@ -1830,10 +1833,10 @@ msgid "Details for plugin: "
 msgstr "Spraudņu papildinformācija: "
 
 msgid "Detected HDD:"
-msgstr "Atrasts HDD:"
+msgstr "Atmiņas iekārtas:"
 
 msgid "Detected NIMs:"
-msgstr "Atrasts tjūneris:"
+msgstr "Uztvērēji:"
 
 msgid "Devicename:"
 msgstr "Iekārtas nosaukums:"
