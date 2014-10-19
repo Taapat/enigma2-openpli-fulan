@@ -75,8 +75,6 @@
 		<key id="KEY_DOWN" mapto="keyDown" flags="mr"/>
 		<key id="KEY_PREVIOUS" mapto="historyBack" flags="mr"/>
 		<key id="KEY_NEXT" mapto="historyNext" flags="mr"/>
-		<key id="KEY_REWIND" mapto="historyBack" flags="mr"/>
-		<key id="KEY_FASTFORWARD" mapto="historyNext" flags="mr"/>
 		<key id="KEY_FAVORITES" mapto="showFavourites" flags="b"/>
 		<key id="KEY_SAT" mapto="showSatellites" flags="m"/>
 	</map>
