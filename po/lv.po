@@ -2533,7 +2533,7 @@ msgid "Fulview resulution"
 msgstr "Pilnekrāna izšķirtspēja"
 
 msgid "Function of OK button"
-msgstr "OK pogas funkcija"
+msgstr "Taustiņa Labi funkcija"
 
 msgid "Further Options"
 msgstr "Papildus iestatījumi"
@@ -3730,10 +3730,10 @@ msgid "no description available"
 msgstr "Apraksts nav pieejams."
 
 msgid "OK"
-msgstr "OK"
+msgstr "Labi"
 
 msgid "OK, guide me through the upgrade process"
-msgstr "OK, pavadi mani atjaunināšanas procesā"
+msgstr "Labi, pavadi mani atjaunināšanas procesā"
 
 msgid "ONID"
 msgstr "ONID"
@@ -3760,7 +3760,7 @@ msgid "Offline decode delay (ms)"
 msgstr "Bezsaistes dekodēšanas aizture (ms)"
 
 msgid "Ok"
-msgstr "Ok"
+msgstr "Labi"
 
 msgid "On"
 msgstr "Ieslēgts"
