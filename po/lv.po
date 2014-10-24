@@ -1773,7 +1773,7 @@ msgid "Deep standby"
 msgstr "Dziļā gaidstāve"
 
 msgid "Default"
-msgstr "Noklusējuma"
+msgstr "Noklusētais"
 
 msgid "Default movie location"
 msgstr "Filmu atrašanās vieta pēc noklusējuma"
@@ -7383,7 +7383,7 @@ msgid "day"
 msgstr "diena"
 
 msgid "default"
-msgstr "noklusējuma"
+msgstr "noklusētais"
 
 msgid "delete cut"
 msgstr "dzēst griezumu"
