@@ -729,18 +729,15 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 			(eDVBFrontendParametersTerrestrial.FEC_2_3, "2/3"),
 			(eDVBFrontendParametersTerrestrial.FEC_3_4, "3/4"),
 			(eDVBFrontendParametersTerrestrial.FEC_5_6, "5/6"),
-			(eDVBFrontendParametersTerrestrial.FEC_6_7, "6/7"),
 			(eDVBFrontendParametersTerrestrial.FEC_7_8, "7/8"),
-			(eDVBFrontendParametersTerrestrial.FEC_8_9, "8/9"),
 			(eDVBFrontendParametersTerrestrial.FEC_Auto, _("Auto"))])
 		self.scan_ter.feclow = ConfigSelection(default = defaultTer["feclow"], choices = [
 			(eDVBFrontendParametersTerrestrial.FEC_1_2, "1/2"),
 			(eDVBFrontendParametersTerrestrial.FEC_2_3, "2/3"),
 			(eDVBFrontendParametersTerrestrial.FEC_3_4, "3/4"),
 			(eDVBFrontendParametersTerrestrial.FEC_5_6, "5/6"),
-			(eDVBFrontendParametersTerrestrial.FEC_6_7, "6/7"),
 			(eDVBFrontendParametersTerrestrial.FEC_7_8, "7/8"),
-			(eDVBFrontendParametersTerrestrial.FEC_8_9, "8/9"),
+			(eDVBFrontendParametersTerrestrial.FEC_Auto, _("Auto"))])
 		self.scan_ter.fec_t2 = ConfigSelection(default = defaultTer["fechigh"], choices = [
 			(eDVBFrontendParametersTerrestrial.FEC_1_2, "1/2"),
 			(eDVBFrontendParametersTerrestrial.FEC_3_5, "3/5"),
