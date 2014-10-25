@@ -4506,6 +4506,9 @@ msgstr "Dzēst partīciju tabulu"
 msgid "Rename"
 msgstr "Pārsaukt"
 
+msgid "Rename name and description for new events"
+msgstr "Jauniem notikumiem pārsaukt nosaukumu un aprakstu"
+
 msgid "Repeat"
 msgstr "Atkārtot"
 
