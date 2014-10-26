@@ -53,7 +53,7 @@ def getCPUInfoString():
 				processor = line[1].split()[0]
 			elif line[0] == "bogomips":
 				cpu_speed = "%1.0f" % float(line[1])
-		return "%s %s MHz (1 core)" % (processor, cpu_speed)
+		return "%s %s MHz" % (processor, cpu_speed)
 	except:
 		return _("undefined")
 
