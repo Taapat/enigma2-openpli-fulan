@@ -343,7 +343,11 @@ const char *getBoxType()
 
 const char *getGStreamerVersionString()
 {
+#ifndef ENABLE_LIBEPLAYER3
 	return gst_version_string();
+#else
+	return "";
+#endif
 }
 
 #include <malloc.h>
