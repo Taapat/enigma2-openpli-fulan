@@ -27,7 +27,7 @@ class About(Screen):
 		#GStreamerVersion = "GStreamer: " + about.getGStreamerVersionString()
 		#self["GStreamerVersion"] = StaticText(GStreamerVersion)
 		#AboutText += GStreamerVersion + "\n"
-		self["GStreamerVersion"] = ""
+		self["GStreamerVersion"] = StaticText("")
 
 		ImageVersion = _("Last upgrade: ") + about.getImageVersionString()
 		self["ImageVersion"] = StaticText(ImageVersion)
