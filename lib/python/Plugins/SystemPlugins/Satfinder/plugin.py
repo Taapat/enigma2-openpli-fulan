@@ -341,7 +341,10 @@ class Satfinder(ScanSetup, ServiceScan):
 				self.scan_sat.system.value,
 				self.scan_sat.modulation.value,
 				self.scan_sat.rolloff.value,
-				self.scan_sat.pilot.value)
+				self.scan_sat.pilot.value,
+				self.scan_sat.is_id.value,
+				self.scan_sat.pls_mode.value,
+				self.scan_sat.pls_code.value)
 			if self.initcomplete:
 				self.tuner.tune(transponder)
 			self.transponder = transponder
@@ -350,7 +353,7 @@ class Satfinder(ScanSetup, ServiceScan):
 			if len(tps) > self.preDefTransponders.index:
 				tp = tps[self.preDefTransponders.index]
 				transponder = (tp[1] / 1000, tp[2] / 1000,
-					tp[3], tp[4], 2, satpos, tp[5], tp[6], tp[8], tp[9])
+					tp[3], tp[4], 2, satpos, tp[5], tp[6], tp[8], tp[9], tp[10], tp[11], tp[12])
 				if self.initcomplete:
 					self.tuner.tune(transponder)
 				self.transponder = transponder
