@@ -17,9 +17,9 @@ class TextCase(Converter):
 	@cached
 	def getText(self):
 		originaltext = self.source.getText()
-		if self.type == self.UPPER:
+		if self.type is self.UPPER:
 			return originaltext.upper()
-		elif self.type == self.LOWER:
+		elif self.type is self.LOWER:
 			return originaltext.lower()
 		else:
 			return originaltext

@@ -20,9 +20,9 @@ class RdsInfo(Converter, object):
 		decoder = self.source.decoder
 		text = ""
 		if decoder:
-			if self.type == self.RADIO_TEXT_CHANGED:
+			if self.type is self.RADIO_TEXT_CHANGED:
 				text = decoder.getText(iRdsDecoder.RadioText)
-			elif self.type == self.RTP_TEXT_CHANGED:
+			elif self.type is self.RTP_TEXT_CHANGED:
 				text = decoder.getText(iRdsDecoder.RtpText)
 			else:
 				print "unknown RdsInfo Converter type", self.type
@@ -33,12 +33,12 @@ class RdsInfo(Converter, object):
 	@cached
 	def getBoolean(self):
 		decoder = self.source.decoder
-		if self.type == self.RASS_INTERACTIVE_AVAILABLE:
+		if self.type is self.RASS_INTERACTIVE_AVAILABLE:
 			mask = decoder and decoder.getRassInteractiveMask()
 			return (mask and mask[0] & 1 and True) or False
-		elif self.type == self.RADIO_TEXT_CHANGED:
+		elif self.type is self.RADIO_TEXT_CHANGED:
 			return (len(decoder.getText(iRdsDecoder.RadioText)) and True) or False
-		elif self.type == self.RTP_TEXT_CHANGED:
+		elif self.type is self.RTP_TEXT_CHANGED:
 			return (len(decoder.getText(iRdsDecoder.RtpText)) and True) or False
 	boolean = property(getBoolean)
 

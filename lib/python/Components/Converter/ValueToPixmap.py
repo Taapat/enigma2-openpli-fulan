@@ -23,11 +23,11 @@ class ValueToPixmap(Converter, object):
 			val = self.source.text
 			if val in (None, ""):
 				return None
-		if self.type == self.PATH:
+		if self.type is self.PATH:
 			return LoadPixmap(val)
-		if self.type == self.LANGUAGE_CODE:
+		if self.type is self.LANGUAGE_CODE:
 			png = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_SKIN, "countries/" + val[3:].lower() + ".png"))
-			if png == None:
+			if png is None:
 				png = LoadPixmap(cached=True, path=resolveFilename(SCOPE_SKIN_IMAGE, "countries/missing.png"))
 			return png
 		return None
