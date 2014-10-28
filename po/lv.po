@@ -2403,7 +2403,7 @@ msgid "Failed to write /tmp/positionersetup.log: "
 msgstr "Neizdevās ierakstīt /tmp/positionersetup.log: "
 
 msgid "Fallback remote receiver URL"
-msgstr "Papildus rezeves uztvērēja adrese"
+msgstr "Rezerves uztvērēja adrese"
 
 #, python-format
 msgid "Fan %d"
