@@ -2199,6 +2199,9 @@ msgstr "Aktivizēt buķešu izvēli multi-EPG"
 msgid "Enable debug"
 msgstr "Aktivizēt atkļūdošanu"
 
+msgid "Enable fallback remote receiver"
+msgstr "Aktivizēt papildus rezeves uztvērēju"
+
 msgid "Enable freesat EPG"
 msgstr "Aktivizēt freesat EPG"
 
@@ -2207,6 +2210,9 @@ msgstr "Aktivizēt vairāk-buķešu režīmu"
 
 msgid "Enable parental control"
 msgstr "Aktivizēt vecāku kontroli"
+
+msgid "Enable remote enigma2 receiver to be tried to tune into services that cannot be tuned into locally (e.g. tuner is occupied or service type is unavailable on the local tuner. Specify complete URL including http:// and port number (normally ...:8001), e.g. http://second_box:8001."
+msgstr "Aktivizēt Enigma2 uztvērēju, kuru izmatot lai mēģinātu uztvert kanālu kurš nav uztverams lokāli (piem. uztvērējs ir aizņemts vai kanāla tips nav pieejams lokālajā uztvērējā). Norādiet pilnu adresi ieskaitot http:// un porta numuru (pēc nolkusējuma ...:8001), piem. http://second_box:8001."
 
 msgid "Enable teletext caching"
 msgstr "Aktivizēt teleteksta kešošanu"
@@ -2396,8 +2402,8 @@ msgstr "Neizdevās"
 msgid "Failed to write /tmp/positionersetup.log: "
 msgstr "Neizdevās ierakstīt /tmp/positionersetup.log: "
 
-msgid "Fallback remote receiver"
-msgstr "Papildus rezeves uztvērējs"
+msgid "Fallback remote receiver URL"
+msgstr "Papildus rezeves uztvērēja adrese"
 
 #, python-format
 msgid "Fan %d"
@@ -6243,8 +6249,8 @@ msgstr "Veids"
 msgid "Type of scan"
 msgstr "Meklēšanas veids"
 
-msgid "URL of an enigma2 receiver that will be tried to tune into services that cannot be tuned into locally (e.g. tuner is occupied or service type is unavailable on the local tuner. Specify complete URL including http:// and port number (normally ...:8001), e.g. http://second_box:8001."
-msgstr "Enigma2 uztvērēja adrese, kuru izmatot lai mēģinātu uztvert kanālu kurš nav uztverams lokāli (piem. uztvērējs ir aizņemts vai kanāla tips nav pieejams lokālajā uztvērējā). Norādiet pilnu adresi ieskaitot http:// un porta numuru (pēc nolkusējuma ...:8001), piem. http://second_box:8001." 
+msgid "URL of fallback remote receiver"
+msgstr "Rezerves uztvērēja adrese (URL)" 
 
 msgid "USALS"
 msgstr "USALS"
