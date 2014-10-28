@@ -9,6 +9,7 @@ from Components.ActionMap import ActionMap, NumberActionMap
 from Components.Ipkg import IpkgComponent
 from Components.Sources.StaticText import StaticText
 from Components.Slider import Slider
+from Components.Console import Console
 from Tools.BoundFunction import boundFunction
 from enigma import eTimer, getBoxType, eDVBDB
 from urllib import urlopen
@@ -53,6 +54,7 @@ class UpdatePlugin(Screen):
 		self.ipkg = IpkgComponent()
 		self.ipkg.addCallback(self.ipkgCallback)
 		self.onClose.append(self.__close)
+		self.Console = Console()
 
 		self["actions"] = ActionMap(["WizardActions"],
 		{
@@ -254,6 +256,9 @@ class UpdatePlugin(Screen):
 		if not answer or not answer[1]:
 			self.close()
 			return
+		if os.path.exists("/usr/lib/opkg/status") and (answer[1] == "cold" or answer[1] == "hot"):
+			self.Console.ePopen("cp /usr/lib/opkg/status /usr/lib/opkg/status.backup")
+			self.Console.ePopen(" ")
 		if answer[1] == "cold":
 			self.session.open(TryQuitMainloop,retvalue=42)
 			self.close()
