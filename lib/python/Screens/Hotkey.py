@@ -283,8 +283,14 @@ class HotkeySetupSelect(Screen):
 			"down": self.keyDown,
 			"left": self.keyLeft,
 			"right": self.keyRight,
+			"upRepeated": self.keyUp,
+			"downRepeated": self.keyDown,
+			"leftRepeated": self.keyLeft,
+			"rightRepeated": self.keyRight,
 			"pageUp": self.toggleMode,
-			"pageDown": self.toggleMode
+			"pageDown": self.toggleMode,
+			"moveUp": self.moveUp,
+			"moveDown": self.moveDown
 		}, -1)
 		self.onLayoutFinish.append(self.__layoutFinished)
 
@@ -360,6 +366,22 @@ class HotkeySetupSelect(Screen):
 	def keyDown(self):
 		self[self.mode].instance.moveSelection(self[self.mode].instance.moveDown)
 
+	def moveUp(self):
+		self.moveChoosen(self.keyUp)
+
+	def moveDown(self):
+		self.moveChoosen(self.keyDown)
+
+	def moveChoosen(self, direction):
+		if self.mode == "choosen":
+			currentIndex = self["choosen"].getSelectionIndex()
+			swapIndex = (currentIndex + (direction == self.keyDown and 1 or -1)) % len(self["choosen"].list)
+			self["choosen"].list[currentIndex], self["choosen"].list[swapIndex] = self["choosen"].list[swapIndex], self["choosen"].list[currentIndex]
+			self["choosen"].setList(self["choosen"].list)
+			direction()
+		else:
+			return 0
+
 	def save(self):
 		configValue = []
 		for x in self.selected:
@@ -427,16 +449,16 @@ class InfoBarHotkey():
 	def hotkeyGlobal(self, key):
 		if self.longkeyPressed:
 			self.longkeyPressed = False
-		selected = self.getKeyFunctions(key)
-		if not selected:
-			return 0
-		if len(selected) == 1:
-			if key.endswith("_long"):
-				self.longkeyPressed = True
-			return self.execHotkey(selected[0])
 		else:
-			key = tuple(x[0] for x in hotkeys if x[1] == key)[0]
-			self.session.openWithCallback(self.execHotkey, ChoiceBox, _("Hotkey") + " " + key, selected)
+			selected = self.getKeyFunctions(key)
+			if not selected:
+				return 0
+			elif len(selected) == 1:
+				self.longkeyPressed = key.endswith("_long") and (selected[0][1].startswith("Infobar") or selected[0][1].startswith("Zap"))
+				return self.execHotkey(selected[0])
+			else:
+				key = tuple(x[0] for x in hotkeys if x[1] == key)[0]
+				self.session.openWithCallback(self.execHotkey, ChoiceBox, _("Hotkey") + " " + key, selected)
 
 	def execHotkey(self, selected):
 		if selected:
