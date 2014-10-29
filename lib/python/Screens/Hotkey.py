@@ -206,7 +206,7 @@ class HotkeySetup(Screen):
 			for x in self.list[:config.misc.hotkey.additional_keys.value and len(hotkeys) or 10]:
 				if key == x[0][1]:
 					self["list"].moveToIndex(index)
-					if key.endswith("_long"):
+					if key[-5:] == "_long":
 						self.longkeyPressed = True
 					break
 				index += 1
@@ -241,7 +241,7 @@ class HotkeySetup(Screen):
 		if key:
 			selected = []
 			for x in eval("config.misc.hotkey." + key + ".value.split(',')"):
-				if x.startswith("Zap"):
+				if x[:3] == "Zap":
 					selected.append(ChoiceEntryComponent('',((_("Zap to") + " " + ServiceReference(eServiceReference(x.split("/", 1)[1]).toString()).getServiceName()), x)))
 				else:
 					function = list(function for function in self.hotkeyFunctions if function[1] == x )
@@ -264,7 +264,7 @@ class HotkeySetupSelect(Screen):
 		self.expanded = []
 		self.selected = []
 		for x in self.config.value.split(','):
-			if x.startswith("Zap"):
+			if x[:3] == "Zap":
 				self.selected.append(ChoiceEntryComponent('',((_("Zap to") + " " + ServiceReference(eServiceReference(x.split("/", 1)[1]).toString()).getServiceName()), x)))
 			else:
 				function = list(function for function in self.hotkeyFunctions if function[1] == x )
@@ -338,7 +338,7 @@ class HotkeySetupSelect(Screen):
 				if currentSelected[:2] in self.selected:
 					self.selected.remove(currentSelected[:2])
 				else:
-					if currentSelected[0][1].startswith("Zap"):
+					if currentSelected[0][1][:3] == "Zap":
 						self.session.openWithCallback(self.zaptoCallback, SimpleChannelSelection, _("Hotkey zap") + " " + self.key[0][0], currentBouquet=True)
 					else:
 						self.selected.append(currentSelected[:2])
@@ -429,7 +429,7 @@ class InfoBarHotkey():
 		selection = eval("config.misc.hotkey." + key + ".value.split(',')")
 		selected = []
 		for x in selection:
-			if x.startswith("Zap"):
+			if x[:3] == "Zap":
 				selected.append(((_("Zap to") + " " + ServiceReference(eServiceReference(x.split("/", 1)[1]).toString()).getServiceName()), x))
 			else:
 				function = list(function for function in getHotkeyFunctions() if function[1] == x )
@@ -454,7 +454,7 @@ class InfoBarHotkey():
 			if not selected:
 				return 0
 			elif len(selected) == 1:
-				self.longkeyPressed = key.endswith("_long") and (selected[0][1].startswith("Infobar") or selected[0][1].startswith("Zap"))
+				self.longkeyPressed = key[-5:] == "_long" and (selected[0][1][:7] == "Infobar" or selected[0][1][:3] == "Zap")
 				return self.execHotkey(selected[0])
 			else:
 				key = tuple(x[0] for x in hotkeys if x[1] == key)[0]
