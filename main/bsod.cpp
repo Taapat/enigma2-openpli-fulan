@@ -214,12 +214,12 @@ void bsodFatal(const char *component)
 		if(access("/proc/stb/info/boxtype", F_OK) != -1) {
 			xml.stringFromFile("stbmodel", "/proc/stb/info/boxtype");
 		}
-		else if (access("/proc/stb/info/vumodel", F_OK) != -1) {
+		/*else if (access("/proc/stb/info/vumodel", F_OK) != -1) {
 			xml.stringFromFile("stbmodel", "/proc/stb/info/vumodel");
 		}
 		else if (access("/proc/stb/info/model", F_OK) != -1) {
 			xml.stringFromFile("stbmodel", "/proc/stb/info/model");
-		}
+		}*/
 		xml.cDataFromCmd("kernelversion", "uname -a");
 		xml.stringFromFile("kernelcmdline", "/proc/cmdline");
 		xml.stringFromFile("nimsockets", "/proc/bus/nim_sockets");
@@ -242,7 +242,7 @@ void bsodFatal(const char *component)
 		{
 			xml.open("software");
 			xml.cDataFromCmd("enigma2software", "opkg list-installed 'enigma2*'");
-			if(access("/proc/stb/info/boxtype", F_OK) != -1) {
+			/*if(access("/proc/stb/info/boxtype", F_OK) != -1) {
 				xml.cDataFromCmd("xtrendsoftware", "opkg list-installed 'et-*'");
 			}
 			else if (access("/proc/stb/info/vumodel", F_OK) != -1) {
@@ -251,7 +251,7 @@ void bsodFatal(const char *component)
 			else if (access("/proc/stb/info/model", F_OK) != -1) {
 				xml.cDataFromCmd("dreamboxsoftware", "opkg list-installed 'dream*'");
 			}
-			xml.cDataFromCmd("gstreamersoftware", "opkg list-installed 'gst*'");
+			xml.cDataFromCmd("gstreamersoftware", "opkg list-installed 'gst*'");*/
 			xml.close();
 		}
 
