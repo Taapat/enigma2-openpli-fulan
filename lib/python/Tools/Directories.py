@@ -123,9 +123,12 @@ def resolveFilename(scope, base = "", path_prefix = None):
 				print "resolveFilename: Couldn't create %s" % path
 				return None
 
+	if fileExists(path + base):
+		return path + base
+
 	fallbackPath = fallbackPaths.get(scope)
 
-	if fallbackPath and not fileExists(path + base):
+	if fallbackPath:
 		for x in fallbackPath:
 			try:
 				if x[1] == FILE_COPY:
