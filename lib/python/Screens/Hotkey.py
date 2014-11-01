@@ -240,9 +240,9 @@ class HotkeySetup(Screen):
 		if key:
 			selected = []
 			for x in eval("config.misc.hotkey." + key + ".value.split(',')"):
-				if x.startswith("ZapPanic"):
+				if x[:8] == "ZapPanic":
 					selected.append(ChoiceEntryComponent('',((_("Panic to") + " " + ServiceReference(eServiceReference(x.split("/", 1)[1]).toString()).getServiceName()), x)))
-				elif x.startswith("Zap"):
+				elif x[:3] == "Zap":
 					selected.append(ChoiceEntryComponent('',((_("Zap to") + " " + ServiceReference(eServiceReference(x.split("/", 1)[1]).toString()).getServiceName()), x)))
 				else:
 					function = list(function for function in self.hotkeyFunctions if function[1] == x )
@@ -265,9 +265,9 @@ class HotkeySetupSelect(Screen):
 		self.expanded = []
 		self.selected = []
 		for x in self.config.value.split(','):
-			if x.startswith("ZapPanic"):
+			if x[:8] == "ZapPanic":
 				self.selected.append(ChoiceEntryComponent('',((_("Panic to") + " " + ServiceReference(eServiceReference(x.split("/", 1)[1]).toString()).getServiceName()), x)))
-			elif x.startswith("Zap"):
+			elif x[:3] == "Zap":
 				self.selected.append(ChoiceEntryComponent('',((_("Zap to") + " " + ServiceReference(eServiceReference(x.split("/", 1)[1]).toString()).getServiceName()), x)))
 			else:
 				function = list(function for function in self.hotkeyFunctions if function[1] == x )
@@ -342,9 +342,9 @@ class HotkeySetupSelect(Screen):
 				if currentSelected[:2] in self.selected:
 					self.selected.remove(currentSelected[:2])
 				else:
-					if currentSelected[0][1].startswith("ZapPanic"):
+					if currentSelected[0][1][:8] == "ZapPanic":
 						self.session.openWithCallback(self.zaptoCallback, SimpleChannelSelection, _("Hotkey Panic") + " " + self.key[0][0], currentBouquet=True)
-					elif currentSelected[0][1].startswith("Zap"):
+					elif currentSelected[0][1][:3] == "Zap":
 						self.session.openWithCallback(self.zaptoCallback, SimpleChannelSelection, _("Hotkey zap") + " " + self.key[0][0], currentBouquet=True)
 					else:
 						self.selected.append(currentSelected[:2])
@@ -438,9 +438,9 @@ class InfoBarHotkey():
 		selection = eval("config.misc.hotkey." + key + ".value.split(',')")
 		selected = []
 		for x in selection:
-			if x.startswith("ZapPanic"):
+			if x[:8] == "ZapPanic":
 				selected.append(((_("Panic to") + " " + ServiceReference(eServiceReference(x.split("/", 1)[1]).toString()).getServiceName()), x))
-			elif x.startswith("Zap"):
+			elif x[:3] == "Zap":
 				selected.append(((_("Zap to") + " " + ServiceReference(eServiceReference(x.split("/", 1)[1]).toString()).getServiceName()), x))
 			else:
 				function = list(function for function in getHotkeyFunctions() if function[1] == x )
@@ -465,7 +465,7 @@ class InfoBarHotkey():
 			if not selected:
 				return 0
 			elif len(selected) == 1:
-				self.longkeyPressed = key.endswith("_long")
+				self.longkeyPressed = key[-5:] == "_long"
 				return self.execHotkey(selected[0])
 			else:
 				key = tuple(x[0] for x in hotkeys if x[1] == key)[0]
@@ -508,7 +508,7 @@ class InfoBarHotkey():
 			elif selected[0] == "Setup":
 				from Screens.Setup import Setup
 				exec "self.session.open(Setup, \"" + selected[1] + "\")"
-			elif selected[0].startswith("Zap"):
+			elif selected[0][:3] == "Zap":
 				if selected[0] == "ZapPanic":
 					self.servicelist.history = []
 				self.servicelist.servicelist.setCurrent(eServiceReference("/".join(selected[1:])))
