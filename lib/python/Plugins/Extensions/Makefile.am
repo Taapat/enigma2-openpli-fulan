@@ -1,9 +1,9 @@
 installdir = $(pkglibdir)/python/Plugins/Extensions
 
-SUBDIRS = CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG
+SUBDIRS = CutListEditor PicturePlayer MediaPlayer GraphMultiEPG
 
 if ! ENABLE_MINIMAL
-SUBDIRS += ModemSettings
+SUBDIRS += MediaScanner ModemSettings
 endif
 
 install_PYTHON =	\
