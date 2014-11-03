@@ -1167,9 +1167,9 @@ RESULT eServiceMP3::getLength(pts_t &pts)
 	return 0;
 }
 
+#ifndef ENABLE_LIBEPLAYER3
 RESULT eServiceMP3::seekToImpl(pts_t to)
 {
-#ifndef ENABLE_LIBEPLAYER3
 		/* convert pts to nanoseconds */
 	gint64 time_nanoseconds = to * 11111LL;
 	if (!gst_element_seek (m_gst_playbin, m_currentTrickRatio, GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT),
@@ -1179,7 +1179,6 @@ RESULT eServiceMP3::seekToImpl(pts_t to)
 		eDebug("eServiceMP3::seekTo failed");
 		return -1;
 	}
-#endif
 
 	if (m_paused)
 	{
@@ -1189,6 +1188,7 @@ RESULT eServiceMP3::seekToImpl(pts_t to)
 
 	return 0;
 }
+#endif
 
 RESULT eServiceMP3::seekTo(pts_t to)
 {

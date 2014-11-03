@@ -418,9 +418,9 @@ private:
 	sourceStream m_sourceinfo;
 #ifndef ENABLE_LIBEPLAYER3
 	gulong m_subs_to_pull_handler_id;
-#endif
 
 	RESULT seekToImpl(pts_t to);
+#endif
 
 	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
 	std::string m_useragent;
