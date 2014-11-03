@@ -440,10 +440,6 @@
 	</map>
 
 	<map context="ShortcutActions">
-		<key id="KEY_F1" mapto="red" flags="mr"/>
-		<key id="KEY_F2" mapto="yellow" flags="mr"/>
-		<key id="KEY_F3" mapto="green" flags="mr"/>
-		<key id="KEY_F4" mapto="blue" flags="mr"/>
 		<key id="KEY_RED" mapto="red" flags="mr"/>
 		<key id="KEY_YELLOW" mapto="yellow" flags="mr"/>
 		<key id="KEY_GREEN" mapto="green" flags="mr"/>
