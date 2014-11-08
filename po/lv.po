@@ -4397,7 +4397,7 @@ msgid "Reception settings"
 msgstr "Uztveršanas iestatījumi"
 
 msgid "Record"
-msgstr "Ieraksta iestatījumi"
+msgstr "Ierakstu iestatījumi"
 
 #, python-format
 msgid "Record time limited due to conflicting timer %s"
