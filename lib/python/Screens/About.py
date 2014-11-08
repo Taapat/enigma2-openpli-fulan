@@ -147,7 +147,7 @@ class CommitInfo(Screen):
 			("taapat-enigma2", "Taapat Enigma2"),
 			("taapat-amikoar-p", "Taapat amikoAR-P"),
 			("ar-p-enigma2-plugins-sh4", "AR-P Enigma2 Plugins sh4"),
-			("taapat-skin-dTV-HD-Reloaded", "Taapat skin-dTV-HD-Reloaded"),
+			("taapat-skin-MetropolisHD", "Taapat skin-MetropolisHD"),
 			("enigma2", "Enigma2"),
 			("openpli-oe-core", "Openpli Oe Core"),
 			("enigma2-plugins", "Enigma2 Plugins"),
