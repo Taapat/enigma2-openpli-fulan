@@ -1,8 +1,9 @@
-import os
+import os, re, unicodedata
 from enigma import ePixmap
 
 from Components.Harddisk import harddiskmanager
 from Renderer import Renderer
+from ServiceReference import ServiceReference
 from Tools.Alternatives import GetWithAlternative
 from Tools.Directories import pathExists, SCOPE_SKIN_IMAGE, \
 	SCOPE_CURRENT_SKIN, resolveFilename
@@ -83,6 +84,12 @@ def getPiconName(serviceName):
 				#fallback to 1 for tv services with nonstandard servicetypes
 				fields[2] = '1'
 				pngname = findPicon('_'.join(fields))
+	if not pngname: # picon by channel name
+		name = ServiceReference(serviceName).getServiceName()
+		name = unicodedata.normalize('NFKD', unicode(name, 'utf_8')).encode('ASCII', 'ignore')
+		name = re.sub('[/\'"`? ():<>|.\n]', '', name).replace('&', 'and').replace('+', 'plus').replace('*', 'star').lower()
+		if name:
+			pngname = findPicon(name)
 	return pngname
 
 class Picon(Renderer):
