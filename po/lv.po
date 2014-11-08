@@ -452,7 +452,7 @@ msgid ""
 "What do you want to do?"
 msgstr ""
 "Pašreiz notiek ieraksts.\n"
-"Ko Jūs vēlaties darīt?"
+"Ko vēlaties darīt?"
 
 msgid "A recording is currently running. Please stop the recording before trying to configure the positioner."
 msgstr "Pašreiz notiek ieraksts. Pirms konfigurējat pozicionieri lūdzu apturiet ierakstu."
@@ -803,6 +803,18 @@ msgstr "Sākt no sākuma"
 
 msgid "At end"
 msgstr "Uz beigām"
+
+msgid ""
+"Attention, this is repeated timer!\n"
+msgstr ""
+"Uzmanību, šis taimeris atkārtojas!\n"
+
+msgid ""
+"Attention, this is repeated timer!\n"
+"What do you want to do?"
+msgstr ""
+"Uzmanību, šis taimeris atkārtojas!\n"
+"Ko vēlaties darīt?"
 
 msgid "Audio"
 msgstr "Skaņa"
@@ -1901,6 +1913,9 @@ msgstr "Izslēgt Atēls Atēlā"
 msgid "Disable background scanning"
 msgstr "Atslēgt skenēšanu fonā"
 
+msgid "Disable current event but not coming events"
+msgstr "Izslēgt patreizējo notikumu bet ne nākošos"
+
 msgid "Disable timer"
 msgstr "Izslēgt taimeri"
 
@@ -2044,7 +2059,7 @@ msgid "Do you want to upgrade the package:\n"
 msgstr "Vai vēlaties atjaunināt pakotni:\n"
 
 msgid "Don't stop current event but disable coming events"
-msgstr "Neapturēt pašreizējo notikumu bet izslēgt nākamos notikumus"
+msgstr "Neapturēt pašreizējo notikumu bet izslēgt nākamos"
 
 #, python-format
 msgid "Done - Installed, upgraded or removed %d package (%s)"
@@ -3792,6 +3807,9 @@ msgstr "Atvērt kanālu sarakstu"
 msgid "Open the movie list"
 msgstr "Atvērt filmu sarakstu"
 
+msgid "Options disable timer"
+msgstr "Iespēja izslēgt taimeri"
+
 msgid "Orbital position"
 msgstr "Orbitālajā pozīcija"
 
@@ -4522,7 +4540,14 @@ msgid "Repeat type"
 msgstr "Atkārtošanas veids"
 
 msgid "Repeating event currently recording... What do you want to do?"
-msgstr "Atkārtotais notikums pašreiz ierakstās... Ko vēlaties darīt?"
+msgstr "Notikums pašreiz ierakstās... Ko vēlaties darīt?"
+
+msgid ""
+"Repeating event currently recording.\n"
+"What do you want to do?"
+msgstr ""
+"Notikums pašreiz tiek ierakstīts.\n"
+"Ko vēlaties darīt?"
 
 msgid "Repeats"
 msgstr "Atkārtojumi"
@@ -4865,8 +4890,8 @@ msgid "Select action"
 msgstr "Izvēlieties darbību"
 
 #, python-format
-msgid "Select action for timer %s:"
-msgstr "Izvēlieties darbību taimerim %s:"
+msgid "Select action for timer '%s'."
+msgstr "Izvēlieties darbību taimerim '%s'."
 
 msgid "Select all"
 msgstr "Izvēlēties visu"
@@ -5543,10 +5568,10 @@ msgid "Stop PiP"
 msgstr "Apturēt PiP"
 
 msgid "Stop current event and disable coming events"
-msgstr "Apturēt pašreizējo notikumu un izslēgt nākamos notikumus"
+msgstr "Apturēt pašreizējo notikumu un izslēgt nākamos"
 
 msgid "Stop current event but not coming events"
-msgstr "Apturēt pašreizējo notikumu, bet ne nākamos notikumus"
+msgstr "Apturēt pašreizējo notikumu, bet ne nākamos"
 
 msgid "Stop entry"
 msgstr "Apturēt ievadi"
