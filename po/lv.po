@@ -1727,6 +1727,9 @@ msgstr "DMM normāls"
 msgid "DUAL LAYER DVD"
 msgstr "Dubultslāņu DVD"
 
+msgid "DVB drivers: "
+msgstr "Draiveri: "
+
 msgid "DVB subtitle black transparency"
 msgstr "DVB subtitru melnā caurspīdīgums"
 
