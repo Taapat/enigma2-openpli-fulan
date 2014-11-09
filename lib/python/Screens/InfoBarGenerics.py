@@ -3331,7 +3331,8 @@ class InfoBarAspectSelection:
 
 class InfoBarSleepTimer:
 	def __init__(self):
-		self.addExtension((self.getSleepTimerName, self.showSleepTimerSetup, lambda: True), "blue")
+		if config.usage.sleep_timer_extension_menu.value:
+			self.addExtension((self.getSleepTimerName, self.showSleepTimerSetup, lambda: True), "blue")
 
 	def getSleepTimerName(self):
 		return _("Sleep Timer")

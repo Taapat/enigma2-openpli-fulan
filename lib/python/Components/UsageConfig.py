@@ -146,6 +146,7 @@ def InitUsageConfig():
 		m = ngettext("%d minute", "%d minutes", m) % m
 		choicelist.append(("%d" % i, _("Standby in ") + m))
 	config.usage.sleep_timer = ConfigSelection(default = "0", choices = choicelist)
+	config.usage.sleep_timer_extension_menu = ConfigYesNo(default = True)
 
 	choicelist = [("0", _("Disabled"))]
 	for i in [60, 300, 600] + range(900, 7201, 900):

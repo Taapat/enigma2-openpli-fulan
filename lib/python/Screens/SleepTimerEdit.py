@@ -38,6 +38,9 @@ class SleepTimerEdit(ConfigListScreen, Screen):
 
 	def createSetup(self):
 		self.list = []
+		self.list.append(getConfigListEntry(_("Show in extensions menu"),
+			config.usage.sleep_timer_extension_menu,
+			_("Show in extensions menu")))
 		if InfoBar.instance and InfoBar.instance.sleepTimer.isActive():
 			statusSleeptimerText = _("(activated +%d min)") % InfoBar.instance.sleepTimerState()
 		else:
