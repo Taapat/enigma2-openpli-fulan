@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-05 10:00+0200\n"
-"PO-Revision-Date: 2014-10-13 18:15+0500\n"
-"Last-Translator: a.k.a Uchkun\n"
+"PO-Revision-Date: 2014-11-08 15:37+0400\n"
+"Last-Translator: ser6 <ser6@bk.ru>\n"
 "Language-Team: a.k.a Uchkun <madamin2007@mail.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SourceCharset: iso-8859-5\n"
 
 msgid ""
@@ -336,6 +336,9 @@ msgstr " мс"
 
 msgid " not restored."
 msgstr " не восстанавлено."
+
+msgid " on "
+msgstr " в "
 
 msgid " packages selected."
 msgstr " пакетов выбрано."
@@ -919,6 +922,9 @@ msgstr "0"
 
 msgid "0 (disabled)"
 msgstr "0 (отключен)"
+
+msgid "0 pixels wide"
+msgstr "ширина 0 пикселей"
 
 msgid "0.5 sec"
 msgstr "0.5 сек"
@@ -2777,6 +2783,9 @@ msgstr "Выбор языка аудио 4"
 
 msgid "Audio options..."
 msgstr "Настройки аудио..."
+
+msgid "Audio source"
+msgstr "Источник звука"
 
 msgid "Audio track (%s) format"
 msgstr "Формат звуковой дорожки - (%s)"
@@ -5274,6 +5283,15 @@ msgstr "Задержка между коммутатором и командам
 msgid "Delay for external subtitles"
 msgstr "Задержка для внешних субтитров"
 
+msgid "Delay in miliseconds after finish scrolling text on display."
+msgstr "Задержка текста в миллисекундах после окончания прокрутки на дисплее"
+
+msgid "Delay in miliseconds before start of scrolling text on display."
+msgstr "Задержка текста в миллисекундах перед началом прокрутки на дисплее"
+
+msgid "Delay in miliseconds between scrolling characters on display."
+msgstr "Задержка прокрутки в миллисекундах между символами на дисплее"
+
 msgid "Delay x seconds after service started"
 msgstr "Задержка х секунд после запуска сервиса"
 
@@ -6145,6 +6163,9 @@ msgstr ""
 msgid "Driver Manager"
 msgstr "Управление драйверами"
 
+msgid "DuckBA multiboot"
+msgstr "DuckBA"
+
 msgid "Duration"
 msgstr "Длительность"
 
@@ -6525,6 +6546,9 @@ msgstr "Включить csv импорт"
 msgid "Enable display options"
 msgstr "Включить шрифты дисплея"
 
+msgid "Enable fallback remote receiver"
+msgstr "Включить резервный удаленный ресивер"
+
 msgid "Enable freesat EPG"
 msgstr "Включить телегид freesat"
 
@@ -6533,6 +6557,17 @@ msgstr "Включить мультипакеты"
 
 msgid "Enable parental control"
 msgstr "Включить родительский контроль"
+
+msgid ""
+"Enable remote enigma2 receiver to be tried to tune into services that cannot "
+"be tuned into locally (e.g. tuner is occupied or service type is unavailable "
+"on the local tuner. Specify complete URL including http:// and port number "
+"(normally ...:8001), e.g. http://second_box:8001."
+msgstr ""
+"Включить удаленный ресивер enigma2 для попытки настроиться на услуги, "
+"которые не могут быть настроены локально (например занят тюнер или тип "
+"службы недоступен на локальном тюнере. Укажите полный URL-адрес, включая "
+"http:// и номер порта (обычно...8001), например http://second_box:8001."
 
 msgid "Enable service number in display"
 msgstr "Включить номер канала на дисплее"
@@ -7343,8 +7378,8 @@ msgstr "Не удалось записать /tmp/positionersetup.log: "
 msgid "Failed:"
 msgstr "Неудача:"
 
-msgid "Fallback remote receiver"
-msgstr "Резервный удаленный ресивер"
+msgid "Fallback remote receiver URL"
+msgstr "URL-адрес резервного удаленного ресивера"
 
 msgid "Fallback to default skin at skin errors"
 msgstr "Выбор стандартного скина при ошибке установленного"
@@ -7645,6 +7680,9 @@ msgstr "Итоговая позиция в"
 
 msgid "Final position at index"
 msgstr "Номер итоговой позиции"
+
+msgid "Final scroll delay"
+msgstr "Финальная задержка прокрутки"
 
 msgid "Fine movement"
 msgstr "Тонкое перемещение"
@@ -8805,6 +8843,9 @@ msgstr "Начальное соотношение захвата"
 msgid "Initial rewind speed"
 msgstr "Первоначальная скорость перемотки назад"
 
+msgid "Initial scroll delay"
+msgstr "Начальная задержка прокрутки"
+
 msgid "Initial signal quality"
 msgstr "Начальное качество сигнала"
 
@@ -9656,6 +9697,12 @@ msgstr "Главное меню"
 msgid "Maintain old EPG data for"
 msgstr "Сохранять прошедшие данные EPG (в мин.)"
 
+msgid "Make a softlink"
+msgstr "Сделать ссылку"
+
+msgid "Make a softlink..."
+msgstr "Создание ссылки"
+
 msgid "Make subdir for record"
 msgstr "Создать подпапку для записи"
 
@@ -9970,9 +10017,6 @@ msgstr "Мобистар Франция"
 
 msgid "Mobistar NL"
 msgstr "Мобистар Нидерланды"
-
-msgid "Mode"
-msgstr "Режим"
 
 msgid "Mode "
 msgstr "Режим"
@@ -11137,6 +11181,9 @@ msgstr "Количество попыток подключения"
 msgid "Number of lines:"
 msgstr "Количество строк:"
 
+msgid "Number of repeating text on display."
+msgstr "Количество повторяющегося текста на дисплее"
+
 msgid "Number of scheduled recordings left."
 msgstr "Количество оставшихся запланированных записей."
 
@@ -11477,6 +11524,9 @@ msgstr "Пакет успешно удален.\n"
 
 msgid "Packages"
 msgstr "Пакета(ов)"
+
+msgid "Packages to update"
+msgstr "Обновляемые пакеты"
 
 msgid "Packet management"
 msgstr "Управление пакетами"
@@ -12885,6 +12935,12 @@ msgstr "Перегрузить после ручной загрузки"
 msgid "Reboot after a scheduled download"
 msgstr "Перезагрузить после плановой загрузки"
 
+msgid "Reboot to E2/N from NAND"
+msgstr "Перезагрузка в E2/N (NAND)"
+
+msgid "Reboot to Spark"
+msgstr "Перезагрузка в Спарк"
+
 msgid "Rec"
 msgstr "Запись"
 
@@ -13996,6 +14052,12 @@ msgstr "скриптовые провайдеры"
 msgid "Scroll Time [msec]"
 msgstr "Время прокрутки (миллисек.)"
 
+msgid "Scroll delay"
+msgstr "Время задержки"
+
+msgid "Scroll repeats"
+msgstr "Время повтора"
+
 msgid "Scroll-Speed:"
 msgstr "Скорость прокрутки:"
 
@@ -14273,6 +14335,9 @@ msgstr "Выберите тюнер"
 
 msgid "Select a wireless network"
 msgstr "Выберите беспроводную сеть"
+
+msgid "Select action"
+msgstr "Выберите действие"
 
 msgid "Select action for timer %s:"
 msgstr "Выберите действие для таймера - %s:"
@@ -14627,6 +14692,9 @@ msgstr "Набор ограничений"
 
 msgid "Set maximum duration"
 msgstr "Установить максимальную продолжительность"
+
+msgid "Set name"
+msgstr "Набор имени"
 
 msgid "Set search term"
 msgstr "Критерий поиска"
@@ -15288,6 +15356,9 @@ msgstr "Уровень сигнала:"
 
 msgid "Signal: "
 msgstr "Сигнал: "
+
+msgid "Silently zap between bouquets"
+msgstr "Смена букетов без меню выбора"
 
 msgid "Similar"
 msgstr "Похожие"
@@ -17842,6 +17913,9 @@ msgstr "Путешествия и события"
 msgid "Tries left:"
 msgstr "Осталось попыток:"
 
+msgid "Try reboot to "
+msgstr "Попробуйте перезагрузиться"
+
 msgid "Try to find used Transponders in cable network.. please wait..."
 msgstr ""
 "Пытаемся найти транспондеры, используемые в кабельной сети .. Пожалуйста "
@@ -17970,16 +18044,8 @@ msgstr ""
 "Неизвестная ошибка:\n"
 "%s"
 
-msgid ""
-"URL of an enigma2 receiver that will be tried to tune into services that "
-"cannot be tuned into locally (e.g. tuner is occupied or service type is "
-"unavailable on the local tuner. Specify complete URL including http:// and "
-"port number (normally ...:8001), e.g. http://second_box:8001."
-msgstr ""
-"URL-адрес ресивера на enigma2, на который ресивер подключается если не может "
-"настроится на сервис локально (к примеру тюнер занят или сервис недоступен "
-"на локальном тюнере). Укажите полный URL-адрес, включая http:// и номер "
-"порта (обычно ...:8001), например http://second_box:8001."
+msgid "URL of fallback remote receiver"
+msgstr "URL-адрес удаленного резервного ресивера"
 
 msgid "URL unreachable"
 msgstr "URL недоступен"
@@ -18001,6 +18067,9 @@ msgstr "USB прошивка создана в: "
 
 msgid "USB Stick"
 msgstr "USB флеш"
+
+msgid "USB multiboot"
+msgstr "Мультизагрузка с USB"
 
 msgid "USB stick"
 msgstr "USB флеш"
@@ -18339,6 +18408,12 @@ msgstr "Прерывистая перемотка на скоростях выш
 
 msgid "Use official channel numbering"
 msgstr "Использовать обычную нумерацию каналов"
+
+msgid "Use openPLI with eplayer3"
+msgstr "Использовать OpenPLI с eplayer3"
+
+msgid "Use openPLI with gstreamer"
+msgstr "Использовать openPLI с gstreamer"
 
 msgid "Use original DVB subtitle position"
 msgstr "Использовать оригинальное положение субтитров DVB"
@@ -18912,6 +18987,9 @@ msgstr "Режим напряжения"
 msgid "Volume"
 msgstr "Громкость"
 
+msgid "Volume down"
+msgstr "Уменьшить громкость"
+
 msgid "Volume on exit:"
 msgstr "Звук при выходе:"
 
@@ -18924,6 +19002,9 @@ msgstr ""
 
 msgid "Volume on start:"
 msgstr "Звук при старте:"
+
+msgid "Volume up"
+msgstr "Увеличить громкость"
 
 msgid "W"
 msgstr "W"
@@ -19012,6 +19093,9 @@ msgstr "Поднять ресивер из режима ожидания"
 
 msgid "Wakeup signal from TV"
 msgstr "Сигнал просыпания от телевизора"
+
+msgid "Wakeup type"
+msgstr "Тип пробуждения"
 
 msgid "Warn if free space drops below (kB):"
 msgstr "Предупреждение, если свободное пространство меньше (кБ):"
@@ -20853,11 +20937,11 @@ msgstr "телерадиовещание/пресса"
 msgid "burn audio track (%s)"
 msgstr "записать аудио дорожку (%s)"
 
-msgctxt "button label, 'next screen'"
+msgctxt "button label, 'next screen Next"
 msgid "Next"
 msgstr "Далее"
 
-msgctxt "button label, 'previous screen'"
+msgctxt "button label, 'previous screen' Prev"
 msgid "Prev"
 msgstr "Предыд."
 
@@ -22031,11 +22115,11 @@ msgstr "ничего не подключено"
 msgid "now edit?"
 msgstr "править сейчас?"
 
-msgctxt "now/next: 'next' event label"
+msgctxt "now/next: 'next' event label Next"
 msgid "Next"
 msgstr "Далее"
 
-msgctxt "now/next: 'now' event label"
+msgctxt "now/next: 'now' event label Now"
 msgid "Now"
 msgstr "Сейчас"
 
