@@ -76,7 +76,7 @@
 		<key id="KEY_PREVIOUS" mapto="historyBack" flags="mr"/>
 		<key id="KEY_NEXT" mapto="historyNext" flags="mr"/>
 		<key id="KEY_FAVORITES" mapto="showFavourites" flags="b"/>
-		<key id="KEY_SAT" mapto="showSatellites" flags="m"/>
+		<key id="KEY_SAT" mapto="showSatellites" flags="b"/>
 	</map>
 
 	<map context="MinuteInputActions">
@@ -559,13 +559,15 @@
 		<key id="KEY_SHOUTCAST" mapto="shoutcast" flags="m"/>
 		<key id="KEY_YOUTUBE" mapto="youtube" flags="m"/>
 		<key id="KEY_SPARK" mapto="spark" flags="m"/>
-		<key id="KEY_SAT" mapto="sat" flags="m"/>
+		<key id="KEY_SAT" mapto="sat" flags="b"/>
+		<key id="KEY_SAT" mapto="sat_long" flags="l"/>
 		<key id="KEY_FAVORITES" mapto="favorites" flags="b"/>
 		<key id="KEY_FAVORITES" mapto="favorites_long" flags="l"/>
 		<key id="KEY_FIND" mapto="find" flags="m"/>
 		<key id="KEY_PLAYMODE" mapto="playmode" flags="m"/>
 		<key id="KEY_FILE" mapto="file" flags="m"/>
 		<key id="KEY_USB" mapto="usb" flags="m"/>
-		<key id="KEY_PORTAL" mapto="portal" flags="m"/>
+		<key id="KEY_PORTAL" mapto="portal" flags="b"/>
+		<key id="KEY_PORTAL" mapto="portal_long" flags="l"/>
 	</map>
 </keymap>
