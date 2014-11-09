@@ -60,8 +60,8 @@ def getCPUInfoString():
 
 def getDriverInstalledDate():
 	try:
-		driver = os.popen("opkg list-installed | grep dvb-modules").read().strip()
-		driver = driver.split("+")[1].split("-")[0]
+		driver = os.popen("opkg list-installed | grep driver").read().strip()
+		driver = driver.split("- ")[1].split("_")[0]
 		return driver[:4] + "-" + driver[4:6] + "-" + driver[6:]
 	except:
 		return _("unknown")
