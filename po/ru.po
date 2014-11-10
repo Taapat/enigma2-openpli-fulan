@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-05 10:00+0200\n"
-"PO-Revision-Date: 2014-11-08 15:37+0400\n"
+"PO-Revision-Date: 2014-11-10 15:21+0400\n"
 "Last-Translator: ser6 <ser6@bk.ru>\n"
 "Language-Team: a.k.a Uchkun <madamin2007@mail.ru>\n"
 "Language: ru\n"
@@ -11906,6 +11906,9 @@ msgstr "Воспроиз. видео снова"
 
 msgid "Played-Stream Info"
 msgstr "Информация о текущей станции"
+
+msgid "Playlist"
+msgstr "Плейлист"
 
 msgid "Playlist (%s) -> Song List"
 msgstr "Плейлист (%s) -> Список песен"
