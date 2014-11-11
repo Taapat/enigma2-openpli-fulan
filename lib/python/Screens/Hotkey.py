@@ -41,11 +41,11 @@ def getHotkeys():
 		( "Tv/Radio", "showTv", ""),
 		( "Recall", "back", ""),
 		( "Info", "info", ""),
-		( "Sat", "sat", ""),
+		( "Sat", "sat", "Infobar/showSatellites"),
 		( "Sat " + _("long"), "sat_long", ""),
 		( "Channel up", "channelup", ""),
 		( "Channel down", "channeldown", ""),
-		( "Favorites", "favorites", ""),
+		( "Favorites", "favorites", "Infobar/openFavouritesList"),
 		( "Favorites " + _("long"), "favorites_long", ""),
 		( "Epg", "epg", "Plugins/Extensions/GraphMultiEPG/1"),
 		( "Epg " + _("long"), "epg_long", "Infobar/showEventInfoPlugins"),
@@ -111,6 +111,7 @@ def getHotkeyFunctions():
 	hotkeyFunctions.append((_("Switch channel up"), "Infobar/switchChannelUp", "InfoBar"))
 	hotkeyFunctions.append((_("Switch channel down"), "Infobar/switchChannelDown", "InfoBar"))
 	hotkeyFunctions.append((_("Show service list"), "Infobar/openServiceList", "InfoBar"))
+	hotkeyFunctions.append((_("Show sattelites list"), "Infobar/showSatellites", "InfoBar"))
 	hotkeyFunctions.append((_("Show favourites list"), "Infobar/openFavouritesList", "InfoBar"))
 	hotkeyFunctions.append((_("History back"), "Infobar/historyBack", "InfoBar"))
 	hotkeyFunctions.append((_("History next"), "Infobar/historyNext", "InfoBar"))
