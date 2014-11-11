@@ -3,8 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-18 02:04+0300\n"
-"PO-Revision-Date: 2013-11-09 00:59+0200\n"
+"PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
 "Language: lv_LV\n"
@@ -981,6 +980,9 @@ msgstr "Melns ekrāns līdz noenkurojies"
 msgid "Block noise reduction"
 msgstr "Bloķēt trokšņu slāpēšanu"
 
+msgid "Blue"
+msgstr "Zilā"
+
 msgid "Blue boost"
 msgstr "Zilā piesātinājums"
 
@@ -1585,6 +1587,9 @@ msgstr "Pieslēgts"
 msgid "Constellation"
 msgstr "Modulācijas veids"
 
+msgid "Console"
+msgstr "Konsole"
+
 msgid "Content does not fit on DVD!"
 msgstr "Saturs neietilpst DVD!"
 
@@ -2070,6 +2075,9 @@ msgid_plural "Done - Installed, upgraded or removed %d packages (%s)"
 msgstr[0] "Pabeigts - instalēta, atjaunināta vai dzēsta %d pakotne (%s)"
 msgstr[1] "Pabeigts - instalētas, atjauninātas vai dzēstas %d pakotnes (%s)"
 msgstr[2] "Pabeigts - instalētas, atjauninātas vai dzēstas %d pakotnes (%s)"
+
+msgid "Down"
+msgstr "Lejup"
 
 msgid "Download"
 msgstr "Lejuplādēt"
@@ -2670,6 +2678,9 @@ msgstr "Grafiskais daudzkanālu EPG"
 
 msgid "Greek"
 msgstr "Grieķu"
+
+msgid "Green"
+msgstr "Zaļā"
 
 msgid "Green boost"
 msgstr "Zaļā piesātinājums"
@@ -4451,6 +4462,9 @@ msgstr "Ieraksti"
 msgid "Recordings always have priority"
 msgstr "Ierakstiem vienmēr ir prioritāte"
 
+msgid "Red"
+msgstr "Sarkanā"
+
 msgid "Red button..."
 msgstr "Sarkanā poga..."
 
@@ -5790,8 +5804,14 @@ msgstr "Pārbaudīt DiSEqC iestatījumus"
 msgid "Test the network configuration of your receiver.\n"
 msgstr "Pārbaudīt uztvērēja tīkla iestatījumus.\n"
 
-msgid "Test type"
-msgstr "Pārbaudes veids"
+msgid "Testscreens"
+msgstr "Testa attēls"
+
+msgid "Testscreens that are helpfull to fine-tune your display"
+msgstr "Testa attēls lai palīdzētu noregulēt attēlošanu"
+
+msgid "Text color"
+msgstr "Teksta krāsa"
 
 msgid "Text color"
 msgstr "Teksta krāsa"
@@ -6340,6 +6360,9 @@ msgstr "Atmontēt"
 msgid "Unsupported"
 msgstr "Neatbalstāms"
 
+msgid "Up"
+msgstr "Augšup"
+
 msgid "Update"
 msgstr "Atjaunināt"
 
@@ -6516,9 +6539,6 @@ msgstr "Video uzlabošanas iestatījumi"
 
 msgid "Video enhancement setup"
 msgstr "Video uzlabošanas iestatīšana"
-
-msgid "Video fine tuning"
-msgstr "Precīzā video regulēšana"
 
 msgid ""
 "Video input selection\n"
@@ -6985,6 +7005,9 @@ msgstr "YUV"
 
 msgid "Year"
 msgstr "Gads"
+
+msgid "Yellow"
+msgstr "Dzeltenā"
 
 msgid "Yellow DVB subtitles"
 msgstr "Dzelteni DVB subtitri"
@@ -7551,9 +7574,6 @@ msgstr "atrast servisu kuru pašreiz skataties"
 msgid "fine arts"
 msgstr "tēlotājmāksla"
 
-msgid "fine-tune your display"
-msgstr "displeja precīzā pieregulēšana"
-
 msgid "fitness & health"
 msgstr "fitness un veselība"
 
@@ -7684,6 +7704,9 @@ msgstr "dzīvais raidījums"
 
 msgid "locked"
 msgstr "noenkurojies"
+
+msgid "long"
+msgstr "ilgi"
 
 msgid "loopthrough to"
 msgstr "loopthrough to"
