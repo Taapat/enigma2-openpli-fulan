@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys
-import os
-import time
+import sys, os, time
 from Tools.HardwareInfo import HardwareInfo
 
 def getVersionString():
@@ -62,7 +60,7 @@ def getDriverInstalledDate():
 	try:
 		driver = os.popen("opkg list-installed | grep driver").read().strip()
 		driver = driver.split("- ")[1].split("_")[0]
-		return driver[:4] + "-" + driver[4:6] + "-" + driver[6:]
+		return  "%s-%s-%s" % (driver[:4], driver[4:6], driver[6:])
 	except:
 		return _("unknown")
 # For modules that do "from About import about"

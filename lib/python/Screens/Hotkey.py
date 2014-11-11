@@ -14,22 +14,23 @@ from ServiceReference import ServiceReference
 from enigma import eServiceReference
 import os
 
-hotkeys = [(_("Red long"), "red_long", ""),
-	(_("Green long"), "green_long", ""),
-	(_("Yellow long"), "yellow_long", ""),
-	(_("Blue long"), "blue_long", ""),
-	(_("F1"), "f1", ""),
-	(_("F1 long"), "f1_long", ""),
-	(_("F2"), "f2", ""),
-	(_("F2 long"), "f2_long", ""),
-	(_("F3"), "f3", ""),
-	(_("F3 long"), "f3_long", ""),
-	(_("F4"), "f4", ""),
-	(_("F4 long"), "f4_long", ""),
-	(_("Red"), "red", ""),
-	(_("Green"), "green", ""),
-	(_("Yellow"), "yellow", ""),
-	(_("Blue"), "blue", ""),
+def getHotkeys():
+	return [(_("Red") + " " + _("long"), "red_long", ""),
+		(_("Green") + " " + _("long"), "green_long", ""),
+		(_("Yellow") + " " + _("long"), "yellow_long", ""),
+		(_("Blue") + " " + _("long"), "blue_long", ""),
+		("F1", "f1", ""),
+		("F1" + " " + _("long"), "f1_long", ""),
+		("F2", "f2", ""),
+		("F2" + " " + _("long"), "f2_long", ""),
+		("F3", "f3", ""),
+		("F3" + " " + _("long"), "f3_long", ""),
+		("F4", "f4", ""),
+		("F4" + " " + _("long"), "f4_long", ""),
+		(_("Red"), "red", ""),
+		(_("Green"), "green", ""),
+		(_("Yellow"), "yellow", ""),
+		(_("Blue"), "blue", ""),
 	(_("TV/Sat"), "tvsat", ""),
 	(_("Vformat"), "vformat", ""),
 	(_("Sleep"), "sleep", ""),
@@ -75,7 +76,7 @@ hotkeys = [(_("Red long"), "red_long", ""),
 
 config.misc.hotkey = ConfigSubsection()
 config.misc.hotkey.additional_keys = ConfigYesNo(default=False)
-for x in hotkeys:
+for x in getHotkeys():
 	exec "config.misc.hotkey." + x[1] + " = ConfigText(default='" + x[2] + "')"
 
 def getHotkeyFunctions():
@@ -185,10 +186,11 @@ class HotkeySetup(Screen):
 		self["key_red"] = Button(_("Exit"))
 		self["key_green"] = Button(_("Toggle Extra Keys"))
 		self.list = []
+		self.hotkeys = getHotkeys()
 		self.hotkeyFunctions = getHotkeyFunctions()
-		for x in hotkeys:
-			self.list.append(ChoiceEntryComponent('',((x[0]), x[1])))
-		self["list"] = ChoiceList(list=self.list[:config.misc.hotkey.additional_keys.value and len(hotkeys) or 10], selection = 0)
+		for x in self.hotkeys:
+			self.list.append(ChoiceEntryComponent('',(_(x[0]), x[1])))
+		self["list"] = ChoiceList(list=self.list[:config.misc.hotkey.additional_keys.value and len(self.hotkeys) or 10], selection = 0)
 		self["choosen"] = ChoiceList(list=[])
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions"],
 		{
@@ -201,7 +203,7 @@ class HotkeySetup(Screen):
 			"left": self.keyLeft,
 			"right": self.keyRight,
 		}, -1)
-		self["HotkeyButtonActions"] = hotkeyActionMap(["HotkeyActions"], dict((x[1], self.hotkeyGlobal) for x in hotkeys))
+		self["HotkeyButtonActions"] = hotkeyActionMap(["HotkeyActions"], dict((x[1], self.hotkeyGlobal) for x in self.hotkeys))
 		self.longkeyPressed = False
 		self.onLayoutFinish.append(self.__layoutFinished)
 		self.onExecBegin.append(self.getFunctions)
@@ -214,7 +216,7 @@ class HotkeySetup(Screen):
 			self.longkeyPressed = False
 		else:
 			index = 0
-			for x in self.list[:config.misc.hotkey.additional_keys.value and len(hotkeys) or 10]:
+			for x in self.list[:config.misc.hotkey.additional_keys.value and len(self.hotkeys) or 10]:
 				if key == x[0][1]:
 					self["list"].moveToIndex(index)
 					if key[-5:] == "_long":
@@ -245,7 +247,7 @@ class HotkeySetup(Screen):
 	def toggleAdditionalKeys(self):
 		config.misc.hotkey.additional_keys.value = not config.misc.hotkey.additional_keys.value
 		config.misc.hotkey.additional_keys.save()
-		self["list"].setList(self.list[:config.misc.hotkey.additional_keys.value and len(hotkeys) or 10])
+		self["list"].setList(self.list[:config.misc.hotkey.additional_keys.value and len(self.hotkeys) or 10])
 
 	def getFunctions(self):
 		key = self["list"].l.getCurrentSelection()[0][1]
@@ -419,7 +421,7 @@ class HotkeySetupSelect(Screen):
 
 class hotkeyActionMap(ActionMap):
 	def action(self, contexts, action):
-		if (action in tuple(x[1] for x in hotkeys) and self.actions.has_key(action)):
+		if (action in tuple(x[1] for x in getHotkeys()) and self.actions.has_key(action)):
 			res = self.actions[action](action)
 			if res is not None:
 				return res
@@ -429,7 +431,7 @@ class hotkeyActionMap(ActionMap):
 
 class helpableHotkeyActionMap(HelpableActionMap):
 	def action(self, contexts, action):
-		if (action in tuple(x[1] for x in hotkeys) and self.actions.has_key(action)):
+		if (action in tuple(x[1] for x in getHotkeys()) and self.actions.has_key(action)):
 			res = self.actions[action](action)
 			if res is not None:
 				return res
@@ -439,8 +441,9 @@ class helpableHotkeyActionMap(HelpableActionMap):
 
 class InfoBarHotkey():
 	def __init__(self):
+		self.hotkeys = getHotkeys()
 		self["HotkeyButtonActions"] = helpableHotkeyActionMap(self, "HotkeyActions",
-			dict((x[1],(self.hotkeyGlobal, boundFunction(self.getHelpText, x[1]))) for x in hotkeys), -10)
+			dict((x[1],(self.hotkeyGlobal, boundFunction(self.getHelpText, x[1]))) for x in self.hotkeys), -10)
 		self.onExecBegin.append(self.clearLongkeyPressed)
 
 	def clearLongkeyPressed(self):
@@ -467,7 +470,7 @@ class InfoBarHotkey():
 		if len(selected) == 1:
 			return selected[0][0]
 		else:
-			return _("Hotkey") + " " + tuple(x[0] for x in hotkeys if x[1] == key)[0]
+			return _("Hotkey") + " " + tuple(x[0] for x in self.hotkeys if x[1] == key)[0]
 
 	def hotkeyGlobal(self, key):
 		if self.longkeyPressed:
@@ -480,7 +483,7 @@ class InfoBarHotkey():
 				self.longkeyPressed = key[-5:] == "_long"
 				return self.execHotkey(selected[0])
 			else:
-				key = tuple(x[0] for x in hotkeys if x[1] == key)[0]
+				key = tuple(x[0] for x in self.hotkeys if x[1] == key)[0]
 				self.session.openWithCallback(self.execHotkey, ChoiceBox, _("Hotkey") + " " + key, selected)
 
 	def execHotkey(self, selected):
