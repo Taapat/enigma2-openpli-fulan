@@ -2329,6 +2329,9 @@ msgstr "Jebkur"
 msgid "Exceeds dual layer medium!"
 msgstr "Pārsniedz divslāņu datu nesēja ietilpību!"
 
+msgid "Execute %s"
+msgstr "Izpilda %s"
+
 msgid "Execution finished!!"
 msgstr "Izpilde pabeigta!!"
 
