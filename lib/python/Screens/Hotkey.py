@@ -57,7 +57,6 @@ def getHotkeys():
 		( "Find", "find", ""),
 		( "Record", "rec", ""),
 		( "Play", "play", ""),
-		("Playpause", "playpause", ""),
 		( "Stop", "stop", ""),
 		( "Pause", "pause", ""),
 		( "Rewind", "rewind", ""),
