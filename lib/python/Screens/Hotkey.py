@@ -57,6 +57,7 @@ def getHotkeys():
 		( "Find", "find", ""),
 		( "Record", "rec", ""),
 		( "Play", "play", ""),
+		("Playpause", "playpause", ""),
 		( "Stop", "stop", ""),
 		( "Pause", "pause", ""),
 		( "Rewind", "rewind", ""),
@@ -169,6 +170,7 @@ def getHotkeyFunctions():
 	hotkeyFunctions.append((_("Recording Setup"), "Setup/recording", "Setup"))
 	hotkeyFunctions.append((_("Harddisk Setup"), "Setup/harddisk", "Setup"))
 	hotkeyFunctions.append((_("Subtitles Settings"), "Setup/subtitlesetup", "Setup"))
+	hotkeyFunctions.append((_("Language"), "Module/Screens.LanguageSelection/LanguageSelection", "Setup"))
 	if os.path.isdir("/etc/ppanels"):
 		for x in [x for x in os.listdir("/etc/ppanels") if x[-4:] == ".xml"]:
 			x = x[:-4]
