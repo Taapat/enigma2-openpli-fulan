@@ -989,6 +989,9 @@ msgstr "Zilā piesātinājums"
 msgid "Bookmarks"
 msgstr "Grāmatzīmes"
 
+msgid "Bookmark was created."
+msgstr "Grāmatzīme ir izveidota."
+
 msgid "Brightness"
 msgstr "Spilgtums"
 
