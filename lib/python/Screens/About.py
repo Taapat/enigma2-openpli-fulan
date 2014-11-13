@@ -36,7 +36,7 @@ class About(Screen):
 		AboutText += _("DVB drivers: ") + about.getDriverInstalledDate() + "\n"
 
 		fp_version = getFPVersion()
-		if fp_version is None:
+		if fp_version is None or fp_version == 0:
 			fp_version = ""
 		else:
 			fp_version = _("Frontprocessor version: %d") % fp_version
