@@ -43,6 +43,7 @@ def getHotkeys():
 		( "Info", "info", ""),
 		( "Sat", "sat", "Infobar/showSatellites"),
 		( "Sat " + _("long"), "sat_long", ""),
+		("Ok", "ok", ""),
 		( "Channel up", "channelup", ""),
 		( "Channel down", "channeldown", ""),
 		( "Favorites", "favorites", "Infobar/openFavouritesList"),
