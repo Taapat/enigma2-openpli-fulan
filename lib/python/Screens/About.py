@@ -147,7 +147,7 @@ class CommitInfo(Screen):
 		self.project = 0
 		self.projects = [
 			("taapat-enigma2", "Taapat Enigma2"),
-			("taapat-amikoar-p", "Taapat amikoAR-P"),
+			("tdt-arp-taapat", "Taapat tdt-arp"),
 			("ar-p-enigma2-plugins-sh4", "AR-P Enigma2 Plugins sh4"),
 			("taapat-skin-MetropolisHD", "Taapat skin-MetropolisHD"),
 			("enigma2", "Enigma2"),
