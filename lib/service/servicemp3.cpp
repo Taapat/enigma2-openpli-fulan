@@ -992,9 +992,10 @@ RESULT eServiceMP3::stop()
 #endif
 	m_state = stStopped;
 	m_nownext_timer->stop();
+#ifndef ENABLE_LIBEPLAYER3
 	if (m_streamingsrc_timeout)
 		m_streamingsrc_timeout->stop();
-
+#endif
 	return 0;
 }
 
