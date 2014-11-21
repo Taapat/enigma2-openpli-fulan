@@ -53,16 +53,19 @@ typedef enum
 } GstPlayFlags;
 
 // eServiceFactoryMP3
+#endif
 
 /*
  * gstreamer suffers from a bug causing sparse streams to loose sync, after pause/resume / skip
  * see: https://bugzilla.gnome.org/show_bug.cgi?id=619434
  * As a workaround, we run the subsink in sync=false mode
+ *
+ * In libeplayer3 this is necessary to enable subtitles immediately after it is switched on
  */
 #define GSTREAMER_SUBTITLE_SYNC_MODE_BUG
 /**/
 
-#else
+#ifdef ENABLE_LIBEPLAYER3
 void ep3Blit(){
 	fbClass *fb = fbClass::getInstance();
 	fb->blit();
@@ -2942,7 +2945,12 @@ RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &t
 		m_subtitle_widget = user;
 		
 		eDebug ("eServiceMP3::switched to subtitle stream %i", m_currentSubtitleStream);
-#ifndef ENABLE_LIBEPLAYER3
+
+#ifdef ENABLE_LIBEPLAYER3
+		if (player && player->playback)
+			player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&track.pid);
+#endif
+
 #ifdef GSTREAMER_SUBTITLE_SYNC_MODE_BUG
 		/*
 		 * when we're running the subsink in sync=false mode,
@@ -2950,12 +2958,7 @@ RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &t
 		 */
 		seekRelative(-1, 90000);
 #endif
-#endif
 	}
-#ifdef ENABLE_LIBEPLAYER3
-	if (player && player->playback)
-		player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&track.pid);
-#endif
 
 	return 0;
 }
