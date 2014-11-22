@@ -10,7 +10,6 @@ service_libenigma_service_a_SOURCES = \
 	service/servicedvb.cpp \
 	service/servicedvbrecord.cpp \
 	service/servicefs.cpp \
-	service/servicemp3.cpp \
 	service/servicem2ts.cpp \
 	service/servicedvbstream.cpp \
 	service/servicehdmi.cpp
@@ -24,10 +23,21 @@ serviceinclude_HEADERS = \
 	service/servicedvb.h \
 	service/servicedvbrecord.h \
 	service/servicefs.h \
-	service/servicemp3.h \
 	service/servicem2ts.h \
 	service/servicedvbstream.h \
 	service/servicehdmi.h
+
+if ENABLE_LIBEPLAYER3
+service_libenigma_service_a_SOURCES += \
+	service/servicelibpl.cpp
+serviceinclude_HEADERS += \
+	service/servicelibpl.h
+else
+service_libenigma_service_a_SOURCES += \
+	service/servicemp3.cpp
+serviceinclude_HEADERS += \
+	service/servicemp3.h
+endif
 
 if HAVE_LIBXINE
 service_libenigma_service_a_SOURCES += \
