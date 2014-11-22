@@ -291,7 +291,6 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_ref(ref),
 	m_pump(eApp, 1)
 {
-	m_subtitle_sync_timer = eTimer::create(eApp);
 	m_currentAudioStream = -1;
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = -1; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
@@ -1062,7 +1061,6 @@ RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &t
 {
 	if (m_currentSubtitleStream != track.pid)
 	{
-		m_subtitle_sync_timer->stop();
 		m_subtitle_pages.clear();
 		m_currentSubtitleStream = track.pid;
 		m_cachedSubtitleStream = m_currentSubtitleStream;
@@ -1085,7 +1083,6 @@ RESULT eServiceMP3::disableSubtitles()
 	eDebug("eServiceMP3::disableSubtitles");
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = m_currentSubtitleStream;
-	m_subtitle_sync_timer->stop();
 	m_subtitle_pages.clear();
 
 	if (m_subtitle_widget) m_subtitle_widget->destroy();
