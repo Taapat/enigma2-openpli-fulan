@@ -508,7 +508,8 @@ void eServiceMP3::updateEpgCacheNowNext()
 	{
 		next = m_event_next;
 	}
-	else
+
+	if (next)
 	{
 		time_t now = eDVBLocalTimeHandler::getInstance()->nowTime();
 		refreshtime = (int)(next->getBeginTime() - now) + 3;
