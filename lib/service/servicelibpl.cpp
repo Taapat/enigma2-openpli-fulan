@@ -734,14 +734,12 @@ RESULT eServiceMP3::getLength(pts_t &pts)
 
 RESULT eServiceMP3::seekTo(pts_t to)
 {
-	RESULT ret = -1;
 	float pos = (to/90000.0)-10;
 
 	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
 
-	ret =0;
-	return ret;
+	return 0;
 }
 
 RESULT eServiceMP3::seekRelative(int direction, pts_t to)
@@ -776,7 +774,7 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 		return -1;
 
 	/* len is in nanoseconds. we have 90 000 pts per second. */
-	pts = vpts>0?vpts:pts;;
+	pts = vpts;
 	return 0;
 }
 
