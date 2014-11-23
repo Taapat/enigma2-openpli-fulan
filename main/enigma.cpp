@@ -227,10 +227,7 @@ int main(int argc, char **argv)
 				if (!i)
 				{
 					if (def)
-					{
 						eDebug("failed to load %s! (%m)", rfilename.c_str());
-						break;
-					}
 					else
 					{
 						def = 1;
@@ -239,10 +236,9 @@ int main(int argc, char **argv)
 					}
 				}
 				else
-				{
 					eDebug("found %d spinner!", i);
-					break;
-				}
+
+				break;
 			}
 			i++;
 		}
