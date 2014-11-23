@@ -207,25 +207,44 @@ int main(int argc, char **argv)
 	eDebug("Loading spinners...");
 
 	{
-		int i;
+		int i = 0;
+		int def = 0;
+		const char *path = "${sysconfdir}/enigma2";
+
 #define MAX_SPINNER 64
 		ePtr<gPixmap> wait[MAX_SPINNER];
-		for (i=0; i<MAX_SPINNER; ++i)
+
+		while( i < MAX_SPINNER )
 		{
 			char filename[64];
 			std::string rfilename;
-			snprintf(filename, sizeof(filename), "${datadir}/enigma2/skin_default/spinner/wait%d.png", i + 1);
+			snprintf(filename, sizeof(filename), "%s/spinner/wait%d.png", path, i + 1);
 			rfilename = eEnv::resolve(filename);
 			loadPNG(wait[i], rfilename.c_str());
 
 			if (!wait[i])
 			{
 				if (!i)
-					eDebug("failed to load %s! (%m)", rfilename.c_str());
+				{
+					if (def)
+					{
+						eDebug("failed to load %s! (%m)", rfilename.c_str());
+						break;
+					}
+					else
+					{
+						def = 1;
+						path = "${datadir}/enigma2/skin_default";
+						continue;
+					}
+				}
 				else
-					eDebug("found %d spinner!\n", i);
-				break;
+				{
+					eDebug("found %d spinner!", i);
+					break;
+				}
 			}
+			i++;
 		}
 		if (i)
 			my_dc->setSpinner(eRect(ePoint(100, 100), wait[0]->size()), wait, i);
