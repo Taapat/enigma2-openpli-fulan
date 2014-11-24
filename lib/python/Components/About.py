@@ -21,8 +21,8 @@ def getImageVersionString():
 def getEnigmaVersionString():
 	import enigma
 	enigma_version = enigma.getEnigmaVersionString()
-	if '-(no branch)' in enigma_version:
-		enigma_version = enigma_version [:-12]
+	if 'detached' in enigma_version:
+		enigma_version = enigma_version[:12] + enigma_version.split('/')[1]
 	return enigma_version
 
 def getGStreamerVersionString():
