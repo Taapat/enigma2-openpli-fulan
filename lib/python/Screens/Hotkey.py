@@ -499,7 +499,19 @@ class InfoBarHotkey():
 			if selected[0] == "Plugins":
 				twinPlugins = []
 				twinPaths = {}
-				pluginlist = plugins.getPlugins([PluginDescriptor.WHERE_PLUGINMENU ,PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_EVENTINFO])
+				pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_EVENTINFO)
+				pluginlist.sort(key=lambda p: p.name)
+				for plugin in pluginlist:
+					if plugin.name not in twinPlugins and plugin.path and 'selectedevent' not in plugin.__call__.func_code.co_varnames:	
+						if twinPaths.has_key(plugin.path[24:]):
+							twinPaths[plugin.path[24:]] += 1
+						else:
+							twinPaths[plugin.path[24:]] = 1
+						if plugin.path[24:] + "/" + str(twinPaths[plugin.path[24:]])== "/".join(selected):
+							self.runPlugin(plugin)
+							return
+						twinPlugins.append(plugin.name)
+				pluginlist = plugins.getPlugins([PluginDescriptor.WHERE_PLUGINMENU, PluginDescriptor.WHERE_EXTENSIONSMENU])
 				pluginlist.sort(key=lambda p: p.name)
 				for plugin in pluginlist:
 					if plugin.name not in twinPlugins and plugin.path:
@@ -509,13 +521,13 @@ class InfoBarHotkey():
 							twinPaths[plugin.path[24:]] = 1
 						if plugin.path[24:] + "/" + str(twinPaths[plugin.path[24:]])== "/".join(selected):
 							self.runPlugin(plugin)
-							break
+							return
 						twinPlugins.append(plugin.name)
 			elif selected[0] == "MenuPlugin":
 				for plugin in plugins.getPluginsForMenu(selected[1]):
 					if plugin[2] == selected[2]:
 						self.runPlugin(plugin[1])
-						break
+						return
 			elif selected[0] == "Infobar":
 				if hasattr(self, selected[1]):
 					exec "self." + ".".join(selected[1:]) + "()"
