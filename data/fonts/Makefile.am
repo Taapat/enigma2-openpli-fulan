@@ -6,4 +6,8 @@ dist_install_DATA = \
 	lcd.ttf \
 	md_khmurabi_10.ttf \
 	nmsbd.ttf \
-	tuxtxt.ttf
+	tuxtxt.ttf \
+	verdana.ttf \
+	verdanab.ttf \
+	verdanai.ttf \
+	verdanaz.ttf
