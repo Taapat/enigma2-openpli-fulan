@@ -324,6 +324,7 @@
 		<key id="KEY_YELLOW" mapto="showProviders" flags="m"/>
 		<key id="KEY_BLUE" mapto="showFavourites" flags="m"/>
 		<key id="KEY_FAVORITES" mapto="showFavourites" flags="m"/>
+		<key id="KEY_SAT" mapto="showSatellites" flags="m"/>
 		<key id="KEY_REWIND" mapto="prevBouquet" flags="m"/>
 		<key id="KEY_FASTFORWARD" mapto="nextBouquet" flags="m"/>
 		<key id="KEY_PREVIOUS" mapto="prevMarker" flags="m"/>
