@@ -85,11 +85,14 @@ def getPiconName(serviceName):
 				fields[2] = '1'
 				pngname = findPicon('_'.join(fields))
 	if not pngname: # picon by channel name
-		name = ServiceReference(serviceName).getServiceName()
-		name = unicodedata.normalize('NFKD', unicode(name, 'utf_8')).encode('ASCII', 'ignore')
-		name = re.sub('[^a-z0-9]', '', name.replace('&', 'and').replace('+', 'plus').replace('*', 'star').lower())
-		if name:
-			pngname = findPicon(name)
+		sname = ServiceReference(serviceName).getServiceName()
+		try:
+			sname = unicodedata.normalize('NFKD', unicode(sname, 'utf_8')).encode('ASCII', 'ignore')
+			sname = re.sub('[^a-z0-9]', '', sname.replace('&', 'and').replace('+', 'plus').replace('*', 'star').lower())
+		except:
+			sname = ""
+		if sname:
+			pngname = findPicon(sname)
 	return pngname
 
 class Picon(Renderer):
