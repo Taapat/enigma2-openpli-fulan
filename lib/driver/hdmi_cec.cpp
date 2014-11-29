@@ -249,15 +249,15 @@ void eHdmiCEC::hdmiEvent(int what)
 					case 0x45: /* key released */
 					{
 						long code = translateKey(pressedkey);
-					if (code)
-					{
-						if (keypressed) code |= 0x80000000;
-						for (std::list<eRCDevice*>::iterator i(listeners.begin()); i != listeners.end(); ++i)
+						if (code)
 						{
-							(*i)->handleCode(code);
+							if (keypressed) code |= 0x80000000;
+							for (std::list<eRCDevice*>::iterator i(listeners.begin()); i != listeners.end(); ++i)
+							{
+								(*i)->handleCode(code);
+							}
+							break;
 						}
-					}
-						break;
 					}
 				}
 			}
