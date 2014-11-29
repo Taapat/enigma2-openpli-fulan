@@ -7,6 +7,7 @@
 #include <lib/base/init_num.h>
 #include <lib/base/eerror.h>
 #include <lib/base/ebase.h>
+#include <lib/base/nconfig.h>
 #include <lib/driver/input_fake.h>
 #include <lib/driver/hdmi_cec.h>
 #include <lib/driver/avswitch.h>
@@ -225,7 +226,8 @@ void eHdmiCEC::hdmiEvent(int what)
 			}
 		}
 #endif
-		if (hasdata)
+		bool hdmicec_enabled = eConfigManager::getConfigBoolValue("config.hdmicec.enabled", false);
+		if (hasdata && hdmicec_enabled)
 		{
 			bool keypressed = false;
 			static unsigned char pressedkey = 0;
@@ -236,14 +238,17 @@ void eHdmiCEC::hdmiEvent(int what)
 				eDebugNoNewLine(" %02X", rxmessage.data[i]);
 			}
 			eDebug(" -> %02X ", rxmessage.address);
-			switch (rxmessage.data[0])
+			bool hdmicec_report_active_menu = eConfigManager::getConfigBoolValue("config.hdmicec.report_active_menu", false);
+			if (hdmicec_report_active_menu)
 			{
-				case 0x44: /* key pressed */
-					keypressed = true;
-					pressedkey = rxmessage.data[1];
-				case 0x45: /* key released */
+				switch (rxmessage.data[0])
 				{
-					long code = translateKey(pressedkey);
+					case 0x44: /* key pressed */
+						keypressed = true;
+						pressedkey = rxmessage.data[1];
+					case 0x45: /* key released */
+					{
+						long code = translateKey(pressedkey);
 					if (code)
 					{
 						if (keypressed) code |= 0x80000000;
@@ -252,7 +257,8 @@ void eHdmiCEC::hdmiEvent(int what)
 							(*i)->handleCode(code);
 						}
 					}
-					break;
+						break;
+					}
 				}
 			}
 			ePtr<iCECMessage> msg = new eCECMessage(rxmessage.address, rxmessage.data[0], (char*)&rxmessage.data[1], rxmessage.length);
