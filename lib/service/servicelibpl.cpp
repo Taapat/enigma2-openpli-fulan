@@ -545,17 +545,22 @@ RESULT eServiceMP3::start()
 		return -1;
 	}
 
-	m_state = stRunning;
-
 	if (player && player->output && player->playback)
 	{
+		m_state = stRunning;
+
 		player->output->Command(player, OUTPUT_OPEN, NULL);
 		player->playback->Command(player, PLAYBACK_PLAY, NULL);
 		updateEpgCacheNowNext();
+		m_event(this, evStart);
+		m_event(this, evGstreamerPlayStarted);
+		eDebug("eServiceMP3::start %s", m_ref.path.c_str());
+
+		return 0;
 	}
 
-	m_event(this, evStart);
-	return 0;
+	eDebug("eServiceMP3::ERROR in start %s", m_ref.path.c_str());
+	return -1;
 }
 
 void eServiceMP3::sourceTimeout()
