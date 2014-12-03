@@ -314,6 +314,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	//create playback path
 	char file[1023] = {""};
 	if ((!strncmp("http://", m_ref.path.c_str(), 7))
+	|| (!strncmp("https://", m_ref.path.c_str(), 7))
 	|| (!strncmp("rtsp://", m_ref.path.c_str(), 7))
 	|| (!strncmp("rtmp://", m_ref.path.c_str(), 7))
 	|| (!strncmp("rtmpe://", m_ref.path.c_str(), 8))
@@ -332,7 +333,8 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	|| (!strncmp("mmst://", m_ref.path.c_str(), 7)))
 		m_sourceinfo.is_streaming = true;
 	else if ((!strncmp("file://", m_ref.path.c_str(), 7))
-	|| (!strncmp("bluray://", m_ref.path.c_str(), 9)))
+	|| (!strncmp("bluray://", m_ref.path.c_str(), 9))
+	|| (!strncmp("myts://", m_ref.path.c_str(), 7)))
 		;
 	else
 		strcat(file, "file://");
