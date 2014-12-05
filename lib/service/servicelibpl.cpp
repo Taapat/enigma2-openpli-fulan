@@ -314,7 +314,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	//create playback path
 	char file[1023] = {""};
 	if ((!strncmp("http://", m_ref.path.c_str(), 7))
-	|| (!strncmp("https://", m_ref.path.c_str(), 8))
+	|| (!strncmp("https://", m_ref.path.c_str(), 7))
 	|| (!strncmp("rtsp://", m_ref.path.c_str(), 7))
 	|| (!strncmp("rtmp://", m_ref.path.c_str(), 7))
 	|| (!strncmp("rtmpe://", m_ref.path.c_str(), 8))
@@ -457,7 +457,8 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		{
 			player->output->Command(player,OUTPUT_DEL, (void*)"audio");
 			player->output->Command(player,OUTPUT_DEL, (void*)"video");
-			player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
+			if (!m_sourceinfo.is_streaming)
+				player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
 		}
 
 		if (player && player->playback)
@@ -595,7 +596,8 @@ RESULT eServiceMP3::stop()
 	{
 		player->output->Command(player,OUTPUT_DEL, (void*)"audio");
 		player->output->Command(player,OUTPUT_DEL, (void*)"video");
-		player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
+		if (!m_sourceinfo.is_streaming)
+			player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
 	}
 
 	if (player && player->playback)
