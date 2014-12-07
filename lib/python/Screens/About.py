@@ -150,6 +150,7 @@ class CommitInfo(Screen):
 			("tdt-arp-taapat", "Taapat tdt-arp"),
 			("ar-p-enigma2-plugins-sh4", "AR-P Enigma2 Plugins sh4"),
 			("taapat-skin-MetropolisHD", "Taapat skin-MetropolisHD"),
+			("ar-p-e2openplugin-OpenWebif", "AR-P plugin-OpenWebif"),
 			("enigma2", "Enigma2"),
 			("openpli-oe-core", "Openpli Oe Core"),
 			("enigma2-plugins", "Enigma2 Plugins"),
@@ -174,7 +175,7 @@ class CommitInfo(Screen):
 		commitlog += 80 * '-' + '\n'
 		if "ar-p-" in feed or "-skin-" in feed:
 			if "ar-p-" in feed:
-				url = 'https://github.com/OpenAR-P/%s/commits/master' % feed[5:]
+				url = 'https://github.com/OpenAR-P/%s/commits/taapat' % feed[5:]
 			else:
 				url = 'https://github.com/Taapat/%s/commits/master' % feed[7:]
 			try:
