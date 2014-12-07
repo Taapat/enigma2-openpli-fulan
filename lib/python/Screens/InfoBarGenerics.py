@@ -372,12 +372,12 @@ class BufferIndicator(Screen):
 		Screen.__init__(self, session)
 		self["status"] = Label()
 		self.mayShow = False
-		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
-			{
-				iPlayableService.evBuffering: self.bufferChanged,
-				iPlayableService.evStart: self.__evStart,
-				iPlayableService.evGstreamerPlayStarted: self.__evGstreamerPlayStarted,
-			})
+#		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
+#			{
+#				iPlayableService.evBuffering: self.bufferChanged,
+#				iPlayableService.evStart: self.__evStart,
+#				iPlayableService.evGstreamerPlayStarted: self.__evGstreamerPlayStarted,
+#			})
 
 	def bufferChanged(self):
 		if self.mayShow:
