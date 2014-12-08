@@ -539,6 +539,7 @@ int eDVBFrontend::openFrontend()
 			}
 			strncpy(m_description, fe_info.name, sizeof(m_description));
 
+#ifdef DTV_ENUM_DELSYS
 			struct dtv_property p[1];
 			p[0].cmd = DTV_ENUM_DELSYS;
 			struct dtv_properties cmdseq;
@@ -553,46 +554,41 @@ int eDVBFrontend::openFrontend()
 					m_delsys[delsys] = true;
 				}
 			}
-			else if (errno == EINVAL)
-			{
-				/* old DVB API, fill delsys map with some defaults */
-				switch (fe_info.type)
-				{
-					case FE_QPSK:
-					{
-						m_delsys[SYS_DVBS] = true;
-#if DVB_API_VERSION >= 5
-						if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBS2] = true;
-#endif
-						break;
-					}
-					case FE_QAM:
-					{
-#if DVB_API_VERSION > 5 || DVB_API_VERSION == 5 && DVB_API_VERSION_MINOR >= 6
-						m_delsys[SYS_DVBC_ANNEX_A] = true;
 #else
-						m_delsys[SYS_DVBC_ANNEX_AC] = true;
+			/* old DVB API, fill delsys map with some defaults */
+			switch (fe_info.type)
+			{
+				case FE_QPSK:
+				{
+					m_delsys[SYS_DVBS] = true;
+#if DVB_API_VERSION >= 5
+					if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBS2] = true;
 #endif
-						break;
-					}
-					case FE_OFDM:
-					{
-						m_delsys[SYS_DVBT] = true;
+					break;
+				}
+				case FE_QAM:
+				{
+#if DVB_API_VERSION > 5 || DVB_API_VERSION == 5 && DVB_API_VERSION_MINOR >= 6
+					m_delsys[SYS_DVBC_ANNEX_A] = true;
+#else
+					m_delsys[SYS_DVBC_ANNEX_AC] = true;
+#endif
+					break;
+				}
+				case FE_OFDM:
+				{
+					m_delsys[SYS_DVBT] = true;
 #if DVB_API_VERSION > 5 || DVB_API_VERSION == 5 && DVB_API_VERSION_MINOR >= 3
-						if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBT2] = true;
+					if (fe_info.caps & FE_CAN_2G_MODULATION) m_delsys[SYS_DVBT2] = true;
 #endif
-						break;
-					}
-					case FE_ATSC:	// placeholder to prevent warning
-					{
-						break;
-					}
+					break;
+				}
+				case FE_ATSC:	// placeholder to prevent warning
+				{
+					break;
 				}
 			}
-			else
-			{
-				eDebug("FE_GET_PROPERTY DTV_ENUM_DELSYS failed (%m)");
-			}
+#endif
 		}
 
 		if (m_simulate_fe)
