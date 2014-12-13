@@ -2107,7 +2107,8 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 			self.new_service_played = True
 			self.session.nav.playService(self.startServiceRef)
 			self.saveChannel(self.startServiceRef)
-		self.setStartRoot(self.startRoot)	
+		else:
+			self.restoreMode()
 		self.startServiceRef = None
 		self.startRoot = None
 		if self.dopipzap:
@@ -2124,6 +2125,13 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 				self.setModeRadio()
 			self.revertMode = None
 			self.enterUserbouquet(root)
+
+	def restoreMode(self):
+		if self.revertMode == MODE_TV:
+			self.setModeTv()
+		elif self.revertMode == MODE_RADIO:
+			self.setModeRadio()
+		self.revertMode = None
 
 	def correctChannelNumber(self):
 		current_ref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
