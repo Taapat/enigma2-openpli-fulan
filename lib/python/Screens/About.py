@@ -7,6 +7,9 @@ from Components.About import about
 from Components.ScrollLabel import ScrollLabel
 from Components.Button import Button
 
+from Components.Label import Label
+from Components.ProgressBar import ProgressBar
+
 from Tools.StbHardware import getFPVersion
 from enigma import eTimer
 
@@ -76,6 +79,7 @@ class About(Screen):
 		self["AboutScrollLabel"] = ScrollLabel(AboutText)
 		self["key_green"] = Button(_("Translations"))
 		self["key_red"] = Button(_("Latest Commits"))
+		self["key_blue"] = Button(_("Memory Info"))
 
 		self["actions"] = ActionMap(["ColorActions", "SetupActions", "DirectionActions"],
 			{
@@ -83,6 +87,7 @@ class About(Screen):
 				"ok": self.close,
 				"red": self.showCommits,
 				"green": self.showTranslationInfo,
+				"blue": self.showMemoryInfo,
 				"up": self["AboutScrollLabel"].pageUp,
 				"down": self["AboutScrollLabel"].pageDown
 			})
@@ -92,6 +97,9 @@ class About(Screen):
 
 	def showCommits(self):
 		self.session.open(CommitInfo)
+
+	def showMemoryInfo(self):
+		self.session.open(MemoryInfo)
 
 class TranslationInfo(Screen):
 	def __init__(self, session):
@@ -227,3 +235,73 @@ class CommitInfo(Screen):
 	def right(self):
 		self.project = self.project != len(self.projects) - 1 and self.project + 1 or 0
 		self.updateCommitLogs()
+
+
+class MemoryInfo(Screen):
+	def __init__(self, session):
+		Screen.__init__(self, session)
+
+		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
+			{
+				"cancel": self.close,
+				"ok": self.getMemoryInfo,
+				"green": self.getMemoryInfo,
+				"blue": self.clearMemory,
+			})
+
+		self["key_red"] = Label(_("Cancel"))
+		self["key_green"] = Label(_("Refresh"))
+		self["key_blue"] = Label(_("Clear"))
+
+		self['lmemtext'] = Label()
+		self['lmemvalue'] = Label()
+		self['rmemtext'] = Label()
+		self['rmemvalue'] = Label()
+
+		self['pfree'] = Label()
+		self['pused'] = Label()
+		self["slide"] = ProgressBar()
+		self["slide"].setValue(100)
+
+		self['info'] = Label(_("This info is for developers only.\nFor a normal users it is not important.\nDon't panic, please, when here will be displayed any suspicious informations!"))
+
+		self.setTitle(_("Memory Info"))
+		self.onLayoutFinish.append(self.getMemoryInfo)
+
+	def getMemoryInfo(self):
+		try:
+			ltext = rtext = ""
+			lvalue = rvalue = ""
+			mem = 0
+			free = 0
+			i = 0
+			for line in open('/proc/meminfo','r'):
+				( name, size, units ) = line.strip().split()
+				if name.find("MemTotal") != -1:
+					mem = int(size)
+				if name.find("MemFree") != -1:
+					free = int(size)
+				if i < 28:
+					ltext += "".join((name,"\n"))
+					lvalue += "".join((size," ",units,"\n"))
+				else:
+					rtext += "".join((name,"\n"))
+					rvalue += "".join((size," ",units,"\n"))
+				i += 1
+			self['lmemtext'].setText(ltext)
+			self['lmemvalue'].setText(lvalue)
+			self['rmemtext'].setText(rtext)
+			self['rmemvalue'].setText(rvalue)
+
+			self["slide"].setValue(int(100.0*(mem-free)/mem+0.25))
+			self['pfree'].setText("%.1f %s" % (100.*free/mem,'%'))
+			self['pused'].setText("%.1f %s" % (100.*(mem-free)/mem,'%'))
+
+		except Exception, e:
+			print "[About] getMemoryInfo FAIL:", e
+
+	def clearMemory(self):
+		from os import system
+		system("sync")
+		system("echo 3 > /proc/sys/vm/drop_caches")
+		self.getMemoryInfo()
