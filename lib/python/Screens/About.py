@@ -281,7 +281,7 @@ class MemoryInfo(Screen):
 					mem = int(size)
 				if "MemFree" in name:
 					free = int(size)
-				if i < 28:
+				if i < 23:
 					ltext += "".join((name,"\n"))
 					lvalue += "".join((size," ",units,"\n"))
 				else:
