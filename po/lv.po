@@ -1790,7 +1790,7 @@ msgid "Decreases the volume"
 msgstr "Samazina skaļumu"
 
 msgid "Deep standby"
-msgstr "Dziļā gaidstāve"
+msgstr "Izslēgt"
 
 msgid "Default"
 msgstr "Noklusētais"
@@ -3316,6 +3316,9 @@ msgstr "Atmiņa"
 msgid "Memory index"
 msgstr "Atmiņas indekss"
 
+msgid "Memory Info"
+msgstr "Atmiņa"
+
 msgid "Menu"
 msgstr "Izvēlne"
 
@@ -4476,6 +4479,9 @@ msgstr "Sarkanā krāsā"
 
 msgid "Reenter new PIN"
 msgstr "Atkārtoti ievadiet jauno PIN kodu"
+
+msgid "Refresh"
+msgstr "Atjaunināt"
 
 msgid "Refresh rate"
 msgstr "Atjaunināšanas biežums"
@@ -5997,6 +6003,15 @@ msgstr ""
 
 msgid "This DVD RW medium is already formatted - reformatting will erase all content on the disc."
 msgstr "Šis DVD RW disks jau ir formatēts - atkārtota formatēšana dzēsīs visu diska saturu."
+
+msgid ""
+"This info is for developers only.\n"
+"For a normal users it is not important.\n"
+"Don't panic, please, when here will be displayed any suspicious informations!"
+msgstr ""
+"Šī informācija ir domāta tikai izstrādātājiem.\n"
+"Vienkāršam lietotājam tā nav svarīga.\n"
+"Lūdzu neuztraucieties, ja šeit tiek attēlots kaut kas aizdomīgs!"
 
 msgid ""
 "This plugin creates a USB stick which can be used to update the firmware of your receiver without the need for a network or WLAN connection.\n"
