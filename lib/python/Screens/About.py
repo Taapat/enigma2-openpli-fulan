@@ -277,11 +277,11 @@ class MemoryInfo(Screen):
 			i = 0
 			for line in open('/proc/meminfo','r'):
 				( name, size, units ) = line.strip().split()
-				if "MemTotal" in name:
-					mem = int(size)
-				if "MemFree" in name:
-					free = int(size)
 				if i < 23:
+					if "MemTotal" in name:
+						mem = int(size)
+					elif "MemFree" in name:
+						free = int(size)
 					ltext += "".join((name,"\n"))
 					lvalue += "".join((size," ",units,"\n"))
 				else:
