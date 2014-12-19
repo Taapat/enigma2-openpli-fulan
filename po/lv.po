@@ -1185,7 +1185,7 @@ msgid "Cleanup"
 msgstr "Tīrīšana"
 
 msgid "Clear"
-msgstr "Notīrīt"
+msgstr "Iztīrīt"
 
 msgid "Clear before scan"
 msgstr "Notīrīt pirms meklēšanas"
