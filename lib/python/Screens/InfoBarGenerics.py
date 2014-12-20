@@ -3323,17 +3323,9 @@ class InfoBarAspectSelection:
 		tlist.append((_("Auto(not available)"), "auto"))
 		tlist.append(("Video: " + str(xres) + "x" + str(yres) + "@" + str(fpsFloat) + "hz", ""))
 		tlist.append(("--", ""))
-		tlist.append(("576i", "576i50"))
-		tlist.append(("576p", "576p50"))
-		tlist.append(("720p@50hz", "720p50"))
-		tlist.append(("720p@60hz", "720p60"))
-		tlist.append(("1080i@50hz", "1080i50"))
-		tlist.append(("1080i@60hz", "1080i60"))
-		tlist.append(("1080p@23.976hz", "1080p23"))
-		tlist.append(("1080p@24hz", "1080p24"))
-		tlist.append(("1080p@25hz", "1080p25"))
-		tlist.append(("1080p@29hz", "1080p29"))
-		tlist.append(("1080p@30hz", "1080p30"))
+		for modes in reversed(open("/proc/stb/video/videomode_choices", "r").read()[:-1].split(' ')):
+			if not "pal" in modes and "p" in modes or "i" in modes:
+				tlist.append((modes.replace("p", "p@").replace("i", "i@"), modes))
 
 		keys = ["green", "yellow", "blue", "", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
 
