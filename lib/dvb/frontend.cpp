@@ -1819,9 +1819,7 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			{
 				default:
 				case eDVBFrontendParametersTerrestrial::System_DVB_T: system = SYS_DVBT; break;
-#if not defined(__sh__)
 				case eDVBFrontendParametersTerrestrial::System_DVB_T2: system = SYS_DVBT2; break;
-#endif
 			}
 
 			p[cmdseq.num].cmd = DTV_DELIVERY_SYSTEM, p[cmdseq.num].u.data = system, cmdseq.num++;
@@ -1925,7 +1923,6 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 			cmdseq.num++;
 
 			p[cmdseq.num].cmd = DTV_BANDWIDTH_HZ, p[cmdseq.num].u.data = parm.bandwidth, cmdseq.num++;
-#if not defined(__sh__)
 			if (system == SYS_DVBT2)
 			{
 				if (m_dvbversion >= DVB_VERSION(5, 3))
@@ -1937,7 +1934,6 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 #endif
 				}
 			}
-#endif
 		}
 		else if (type == iDVBFrontend::feATSC)
 		{
@@ -2387,14 +2383,9 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 	else if (type == eDVBFrontend::feTerrestrial)
 	{
 		eDVBFrontendParametersTerrestrial parm;
-#if not defined(__sh__)
 		bool can_handle_dvbt, can_handle_dvbt2;
 		can_handle_dvbt = supportsDeliverySystem(SYS_DVBT, true);
 		can_handle_dvbt2 = supportsDeliverySystem(SYS_DVBT2, true);
-#else
-		bool can_handle_dvbt;
-		can_handle_dvbt = supportsDeliverySystem(SYS_DVBT, true);
-#endif
 		if (feparm->getDVBT(parm) < 0)
 		{
 			return 0;
@@ -2403,7 +2394,6 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 		{
 			return 0;
 		}
-#if not defined(__sh__)
 		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T2 && !can_handle_dvbt2)
 		{
 			return 0;
@@ -2412,15 +2402,12 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 		{
 			return 0;
 		}
-#endif
 		score = 2;
-#if not defined(__sh__)
 		if (parm.system == eDVBFrontendParametersTerrestrial::System_DVB_T && can_handle_dvbt2)
 		{
 			/* prefer to use a T tuner, try to keep T2 free for T2 transponders */
 			score--;
 		}
-#endif
 	}
 	else if (type == eDVBFrontend::feATSC)
 	{

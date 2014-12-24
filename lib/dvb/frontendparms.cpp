@@ -615,9 +615,7 @@ int eDVBTerrestrialTransponderData::getSystem() const
 	{
 	default:
 	case SYS_DVBT: return eDVBFrontendParametersTerrestrial::System_DVB_T;
-#if not defined(__sh__)
 	case SYS_DVBT2: return eDVBFrontendParametersTerrestrial::System_DVB_T2;
-#endif
 	}
 }
 
@@ -713,11 +711,7 @@ std::string eDVBFrontendData::getTypeDescription() const
 		{
 			result = "DVB-C";
 		}
-#if not defined(__sh__)
 		else if (frontend->supportsDeliverySystem(SYS_DVBT, true) || frontend->supportsDeliverySystem(SYS_DVBT2, true))
-#else
-		else if (frontend->supportsDeliverySystem(SYS_DVBT, true))
-#endif
 		{
 			result = "DVB-T";
 		}

@@ -622,11 +622,7 @@ void eDVBResourceManager::addAdapter(iDVBAdapter *adapter, bool front)
 			m_frontend.push_back(new_fe);
 			frontend->setSEC(m_sec);
 			// we must link all dvb-t frontends ( for active antenna voltage )
-#if not defined(__sh__)
 			if (frontend->supportsDeliverySystem(SYS_DVBT, false) || frontend->supportsDeliverySystem(SYS_DVBT2, false))
-#else
-			if (frontend->supportsDeliverySystem(SYS_DVBT, false))
-#endif
 			{
 				if (prev_dvbt_frontend)
 				{
@@ -649,11 +645,7 @@ void eDVBResourceManager::addAdapter(iDVBAdapter *adapter, bool front)
 			m_simulate_frontend.push_back(new_fe);
 			frontend->setSEC(m_sec);
 			// we must link all dvb-t frontends ( for active antenna voltage )
-#if not defined(__sh__)
 			if (frontend->supportsDeliverySystem(SYS_DVBT, false) || frontend->supportsDeliverySystem(SYS_DVBT2, false))
-#else
-			if (frontend->supportsDeliverySystem(SYS_DVBT, false))
-#endif
 			{
 				if (prev_dvbt_frontend)
 				{
@@ -737,12 +729,10 @@ bool eDVBResourceManager::frontendIsCompatible(int index, const char *type)
 			{
 				return i->m_frontend->supportsDeliverySystem(SYS_DVBS, false);
 			}
-#if not defined(__sh__)
 			else if (!strcmp(type, "DVB-T2"))
 			{
 				return i->m_frontend->supportsDeliverySystem(SYS_DVBT2, false);
 			}
-#endif
 			else if (!strcmp(type, "DVB-T"))
 			{
 				return i->m_frontend->supportsDeliverySystem(SYS_DVBT, false);
@@ -777,18 +767,11 @@ void eDVBResourceManager::setFrontendType(int index, const char *type)
 				whitelist.push_back(SYS_DVBS);
 				whitelist.push_back(SYS_DVBS2);
 			}
-#if not defined(__sh__)
 			else if (!strcmp(type, "DVB-T2") || !strcmp(type, "DVB-T"))
 			{
 				whitelist.push_back(SYS_DVBT);
 				whitelist.push_back(SYS_DVBT2);
 			}
-#else
-			else if (!strcmp(type, "DVB-T"))
-			{
-				whitelist.push_back(SYS_DVBT);
-			}
-#endif
 			else if (!strcmp(type, "DVB-C"))
 			{
 #if defined SYS_DVBC_ANNEX_A
