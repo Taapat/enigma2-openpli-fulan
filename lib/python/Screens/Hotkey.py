@@ -18,14 +18,14 @@ def getHotkeys():
 		(_("Green") + " " + _("long"), "green_long", ""),
 		(_("Yellow") + " " + _("long"), "yellow_long", ""),
 		(_("Blue") + " " + _("long"), "blue_long", ""),
-		("F1", "f1", ""),
-		("F1 " + _("long"), "f1_long", ""),
-		("F2", "f2", ""),
-		("F2 " + _("long"), "f2_long", ""),
-		("F3", "f3", ""),
-		("F3 " + _("long"), "f3_long", ""),
-		("F4", "f4", ""),
-		("F4 " + _("long"), "f4_long", ""),
+		( "F1", "f1", ""),
+		( "F1 " + _("long"), "f1_long", ""),
+		( "F2", "f2", ""),
+		( "F2 " + _("long"), "f2_long", ""),
+		( "F3", "f3", ""),
+		( "F3 " + _("long"), "f3_long", ""),
+		( "F4", "f4", ""),
+		( "F4 " + _("long"), "f4_long", ""),
 		(_("Red"), "red", ""),
 		(_("Green"), "green", ""),
 		(_("Yellow"), "yellow", ""),
@@ -42,7 +42,7 @@ def getHotkeys():
 		( "Info", "info", ""),
 		( "Sat", "sat", "Infobar/showSatellites"),
 		( "Sat " + _("long"), "sat_long", ""),
-		("Ok", "ok", ""),
+		( "Ok", "ok", ""),
 		( "Channel up", "channelup", ""),
 		( "Channel down", "channeldown", ""),
 		( "Favorites", "favorites", "Infobar/openFavouritesList"),
@@ -327,15 +327,16 @@ class HotkeySetupSelect(Screen):
 				catagories[function[2]] = []
 			catagories[function[2]].append(function)
 		for catagorie in sorted(list(catagories)):
-			if catagorie in self.expanded:
-				functionslist.append(ChoiceEntryComponent('expanded',((catagorie), "Expander")))
+			localcatagorie = _(catagorie)
+			if localcatagorie in self.expanded:
+				functionslist.append(ChoiceEntryComponent('expanded',((localcatagorie), "Expander")))
 				for function in catagories[catagorie]:
 					functionslist.append(ChoiceEntryComponent('verticalline',((function[0]), function[1])))
 				if catagorie == "InfoBar":
 					functionslist.append(ChoiceEntryComponent('verticalline',((_("Zap to")), "Zap")))
 					functionslist.append(ChoiceEntryComponent('verticalline',((_("Panic to")), "ZapPanic")))
 			else:
-				functionslist.append(ChoiceEntryComponent('expandable',((catagorie), "Expander")))
+				functionslist.append(ChoiceEntryComponent('expandable',((localcatagorie), "Expander")))
 		return functionslist
 
 	def toggleMode(self):
