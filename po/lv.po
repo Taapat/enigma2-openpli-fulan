@@ -3032,6 +3032,9 @@ msgstr "Infojosla"
 msgid "Info bar timeout"
 msgstr "Infojoslas noildze"
 
+msgid "InfoBar"
+msgstr "Infojosla"
+
 msgid "Infobar frontend data source"
 msgstr "Infojoslas frontend datu avots"
 
@@ -4448,6 +4451,9 @@ msgstr "Pozicioniera iestatījumi"
 msgid "Positioner setup"
 msgstr "Pozicioniera iestatījumi"
 
+msgid "Power"
+msgstr "Barošana"
+
 msgid "Power threshold in mA"
 msgstr "Barošanas robežvērtība mA"
 
@@ -5029,6 +5035,9 @@ msgstr "Meklēt bezvadu tīklus"
 
 msgid "Scan your network for wireless access points and connect to them using your selected wireless device.\n"
 msgstr "Meklē jūsu bezvadu pieejas punktus un pieslēdzas tiem lietojot jūsu izvēlēto bezvadu ierīci.\n"
+
+msgid "Scanning"
+msgstr "Kanālu meklēšana"
 
 #, python-format
 msgid "Scanning %s..."
