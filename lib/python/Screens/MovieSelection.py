@@ -682,7 +682,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 			buildMovieLocationList(locations)
 			prefix = _("Goto") + ": "
 			for d,p in locations:
-				if p and p.startswith('/'):
+				if p and p[:1] == '/':
 					userDefinedActions[p] = prefix + d
 			config.movielist.btn_red = ConfigSelection(default='delete', choices=userDefinedActions)
 			config.movielist.btn_green = ConfigSelection(default='move', choices=userDefinedActions)
@@ -718,7 +718,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 				for p in plugins.getPlugins(PluginDescriptor.WHERE_MOVIELIST):
 					if name == p.name:
 						p(self.session, item[0])
-		elif name.startswith('/'):
+		elif name[:1] == '/':
 			self.gotFilename(name)
 		else:
 			try:
@@ -894,7 +894,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 			action = userDefinedButtons[name].value
 			if action[0] == '@':
 				check = self.can_default
-			elif action.startswith('/'):
+			elif action[:1] == '/':
 				check = self.can_gohome
 			else:
 				try:
