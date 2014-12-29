@@ -67,10 +67,12 @@ class PluginBrowser(Screen):
 			"red": self.delete,
 			"green": self.download
 		})
-		self["DirectionActions"] = ActionMap(["DirectionActions"],
+		self["DirectionActions"] = ActionMap(["SetupActions", "DirectionActions"],
 		{
 			"moveUp": self.moveUp,
-			"moveDown": self.moveDown
+			"moveDown": self.moveDown,
+			"deleteBackward": self.moveUp,
+			"deleteForward": self.moveDown
 		})
 
 		self.onFirstExecBegin.append(self.checkWarnings)
