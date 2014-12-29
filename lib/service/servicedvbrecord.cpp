@@ -308,14 +308,14 @@ int eDVBServiceRecord::doRecord()
 	if (!m_record && m_tuned && !m_streaming && !m_simulate)
 	{
 #if defined(__sh__)
-		int flags = O_WRONLY|O_CREAT|O_LARGEFILE;
+		int flags = O_WRONLY | O_CREAT | O_LARGEFILE | O_CLOEXEC;
 		struct statfs sbuf;
 #endif
 		eDebug("Recording to %s...", m_filename.c_str());
 		::remove(m_filename.c_str());
 #if defined(__sh__)
 		//we must creat a file for statfs
-		int fd = ::open(m_filename.c_str(), O_WRONLY|O_CREAT|O_LARGEFILE, 0666);
+		int fd = ::open(m_filename.c_str(), O_WRONLY | O_CREAT | O_LARGEFILE | O_CLOEXEC, 0666);
 		::close(fd);
 		if (statfs(m_filename.c_str(), &sbuf) < 0)
 		{
@@ -342,7 +342,7 @@ int eDVBServiceRecord::doRecord()
 		}
 		fd = ::open(m_filename.c_str(), flags, 0644);
 #else
-		int fd = ::open(m_filename.c_str(), O_WRONLY|O_CREAT|O_LARGEFILE, 0644);
+		int fd = ::open(m_filename.c_str(), O_WRONLY | O_CREAT | O_LARGEFILE | O_CLOEXEC, 0666);
 #endif
 		if (fd == -1)
 		{
