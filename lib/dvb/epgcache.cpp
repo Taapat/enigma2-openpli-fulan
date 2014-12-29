@@ -3339,7 +3339,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 				uint8_t *p = (uint8_t*)(data+10);
 #endif
 				// check if any of our descriptor used by this event
-				int cnt = 0;
+				unsigned int cnt = 0;
 				while(tmp>3)
 				{
 #ifndef __sh__
