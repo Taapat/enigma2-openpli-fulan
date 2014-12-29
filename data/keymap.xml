@@ -257,7 +257,6 @@
 	</map>
 
 	<map context="MoviePlayerActions">
-		<key id="KEY_TV" mapto="leavePlayer" flags="m"/>
 		<key id="KEY_STOP" mapto="leavePlayer" flags="m"/>
 		<key id="KEY_EXIT" mapto="leavePlayerOnExit" flags="m"/>
 		<key id="KEY_CHANNELUP" mapto="movePrev" flags="m"/>
