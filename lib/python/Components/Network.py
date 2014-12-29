@@ -626,6 +626,9 @@ class Network:
 
 	def getWlanModuleDir(self, iface = None):
 		devicedir = self.sysfsPath(iface) + '/device'
+		if not os.path.isdir(devicedir):
+			return None
+
 		moduledir = devicedir + '/driver/module'
 		if os.path.isdir(moduledir):
 			return moduledir
@@ -647,8 +650,6 @@ class Network:
 	def detectWlanModule(self, iface = None):
 		if not self.isWirelessInterface(iface):
 			return None
-
-		devicedir = self.sysfsPath(iface) + '/device'
 
 		moduledir = self.getWlanModuleDir(iface)
 		if moduledir:
