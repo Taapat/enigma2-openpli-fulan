@@ -456,8 +456,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		{
 			player->output->Command(player,OUTPUT_DEL, (void*)"audio");
 			player->output->Command(player,OUTPUT_DEL, (void*)"video");
-			if (!m_sourceinfo.is_streaming)
-				player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
+			player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
 		}
 
 		if (player && player->playback)
@@ -595,8 +594,7 @@ RESULT eServiceMP3::stop()
 	{
 		player->output->Command(player,OUTPUT_DEL, (void*)"audio");
 		player->output->Command(player,OUTPUT_DEL, (void*)"video");
-		if (!m_sourceinfo.is_streaming)
-			player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
+		player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
 	}
 
 	if (player && player->playback)
