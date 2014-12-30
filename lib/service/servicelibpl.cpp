@@ -311,6 +311,28 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		printf("%s\n", player->output->Name);
 	}
 
+	//Registration of output devices
+	if (player && player->output)
+	{
+		player->output->Command(player,OUTPUT_ADD, (void*)"audio");
+		player->output->Command(player,OUTPUT_ADD, (void*)"video");
+		player->output->Command(player,OUTPUT_ADD, (void*)"subtitle");
+	}
+
+	if (player && player->output && player->output->subtitle)
+	{
+		fbClass *fb = fbClass::getInstance();
+		SubtitleOutputDef_t out;
+		out.screen_width = fb->getScreenResX();
+		out.screen_height = fb->getScreenResY();
+		out.shareFramebuffer = 1;
+		out.framebufferFD = fb->getFD();
+		out.destination = fb->getLFB_Direct();
+		out.destStride = fb->Stride();
+		out.framebufferBlit = ep3Blit;
+		player->output->subtitle->Command(player, (OutputCmd_t)OUTPUT_SET_SUBTITLE_OUTPUT, (void*) &out);
+	}
+
 	//create playback path
 	char file[1023] = {""};
 	if ((!strncmp("http://", m_ref.path.c_str(), 7))
@@ -340,29 +362,6 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		strcat(file, "file://");
 
 	strcat(file, m_ref.path.c_str());
-
-	//Registration of output devices
-	if (player && player->output)
-	{
-		player->output->Command(player,OUTPUT_ADD, (void*)"audio");
-		player->output->Command(player,OUTPUT_ADD, (void*)"video");
-		if (!m_sourceinfo.is_streaming)
-			player->output->Command(player,OUTPUT_ADD, (void*)"subtitle");
-	}
-
-	if (player && player->output && player->output->subtitle)
-	{
-		fbClass *fb = fbClass::getInstance();
-		SubtitleOutputDef_t out;
-		out.screen_width = fb->getScreenResX();
-		out.screen_height = fb->getScreenResY();
-		out.shareFramebuffer = 1;
-		out.framebufferFD = fb->getFD();
-		out.destination = fb->getLFB_Direct();
-		out.destStride = fb->Stride();
-		out.framebufferBlit = ep3Blit;
-		player->output->subtitle->Command(player, (OutputCmd_t)OUTPUT_SET_SUBTITLE_OUTPUT, (void*) &out);
-	}
 
 	//try to open file
 	if (player && player->playback && player->playback->Command(player, PLAYBACK_OPEN, file) >= 0)
