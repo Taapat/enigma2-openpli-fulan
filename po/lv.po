@@ -5619,7 +5619,7 @@ msgid "Single satellite"
 msgstr "Viens pavadonis"
 
 msgid "Single step (GOP)"
-msgstr "Viensolis (GOP)"
+msgstr "Soli uz priekšu"
 
 msgid "Site latitude"
 msgstr "Vietas platums"
