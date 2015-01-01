@@ -353,7 +353,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	|| (!strncmp("librtmpte://", m_ref.path.c_str(), 12))
 	|| (!strncmp("md5://", m_ref.path.c_str(), 6))
 	|| (!strncmp("mmsh://", m_ref.path.c_str(), 7))
-	|| (!strncmp("mmst://", m_ref.path.c_str(), 7)))
+	|| (!strncmp("mmst://", m_ref.path.c_str(), 7))
 	|| (!strncmp("rtmp://", m_ref.path.c_str(), 7))
 	|| (!strncmp("rtmpe://", m_ref.path.c_str(), 8))
 	|| (!strncmp("rtmpt://", m_ref.path.c_str(), 8))
@@ -366,7 +366,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	|| (!strncmp("tcp://", m_ref.path.c_str(), 6))
 	|| (!strncmp("tls://", m_ref.path.c_str(), 6))
 	|| (!strncmp("udp://", m_ref.path.c_str(), 6))
-	|| (!strncmp("udplite://", m_ref.path.c_str(), 10))
+	|| (!strncmp("udplite://", m_ref.path.c_str(), 10)))
 		m_sourceinfo.is_streaming = true;
 	else if ((!strncmp("file://", m_ref.path.c_str(), 7))
 	|| (!strncmp("bluray://", m_ref.path.c_str(), 9))
