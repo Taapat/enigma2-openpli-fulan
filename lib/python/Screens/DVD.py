@@ -363,6 +363,9 @@ class DVDPlayer(Screen, InfoBarBase, InfoBarNotifications, InfoBarSeek, InfoBarP
 			self.toggleShow()
 			print "toggleInfo"
 
+	def openEventView(self):
+		pass
+
 	def __timeUpdated(self):
 		print "timeUpdated"
 
