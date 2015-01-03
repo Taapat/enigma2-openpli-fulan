@@ -343,7 +343,6 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	|| (!strncmp("gopher://", m_ref.path.c_str(), 9))
 	|| (!strncmp("hls://", m_ref.path.c_str(), 6))
 	|| (!strncmp("hls+http://", m_ref.path.c_str(), 11))
-	|| (!strncmp("hls+file://", m_ref.path.c_str(), 11))
 	|| (!strncmp("httpproxy://", m_ref.path.c_str(), 12))
 	|| (!strncmp("mmsh://", m_ref.path.c_str(), 7))
 	|| (!strncmp("mmst://", m_ref.path.c_str(), 7))
@@ -363,6 +362,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		m_sourceinfo.is_streaming = true;
 	else if ((!strncmp("file://", m_ref.path.c_str(), 7))
 	|| (!strncmp("bluray://", m_ref.path.c_str(), 9))
+	|| (!strncmp("hls+file://", m_ref.path.c_str(), 11))
 	|| (!strncmp("myts://", m_ref.path.c_str(), 7)))
 		;
 	else
