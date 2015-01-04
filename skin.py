@@ -204,10 +204,14 @@ def collectAttributes(skinAttributes, node, context, skin_path_prefix=None, igno
 	size = None
 	pos = None
 	font = None
+	if skin_path_prefix == None:
+		scope = SCOPE_CURRENT_SKIN
+	else:
+		scope = SCOPE_SKIN_IMAGE
 	for attrib, value in node.items():
 		if attrib not in ignore:
 			if attrib in filenames:
-				value = resolveFilename(SCOPE_SKIN_IMAGE, value, path_prefix=skin_path_prefix)
+				value = resolveFilename(scope, value, path_prefix=skin_path_prefix)
 			# Bit of a hack this, really. When a window has a flag (e.g. wfNoBorder)
 			# it needs to be set at least before the size is set, in order for the
 			# window dimensions to be calculated correctly in all situations.
