@@ -676,12 +676,6 @@ class HarddiskManager:
 		for item in getProcMounts():
 			if item[0] == dev:
 				return item[1]
-#+++>
-		#Check if has autofs mountpoint
-		mount = self.getAutofsMountpoint(device)
-		if mount:
-			return mount
-#+++<
 		return None
 
 	def addHotplugPartition(self, device, physdev = None):
