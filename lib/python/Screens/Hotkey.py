@@ -548,7 +548,6 @@ class InfoBarHotkey():
 			elif selected[0][:3] == "Zap":
 				if selected[0] == "ZapPanic":
 					self.servicelist.history = []
-					self.pipShown() and self.showPiP()
 				self.servicelist.servicelist.setCurrent(eServiceReference("/".join(selected[1:])))
 				self.servicelist.zap(enable_pipzap = True)
 				if hasattr(self, "lastservice"):
