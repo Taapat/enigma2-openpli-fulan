@@ -94,7 +94,7 @@ def getPiconName(serviceName):
 		if sname:
 			pngname = findPicon(sname)
 			if not pngname and len(sname) > 2 and sname[-2:] == 'hd':
-				findPicon(sname[:-2])
+				pngname = findPicon(sname[:-2])
 	return pngname
 
 class Picon(Renderer):

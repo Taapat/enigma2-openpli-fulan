@@ -510,7 +510,7 @@ class InfoBarHotkey():
 							twinPaths[plugin.path[24:]] += 1
 						else:
 							twinPaths[plugin.path[24:]] = 1
-						if plugin.path[24:] + "/" + str(twinPaths[plugin.path[24:]])== "/".join(selected):
+						if plugin.path[24:] + "/" + str(twinPaths[plugin.path[24:]]) == "/".join(selected):
 							self.runPlugin(plugin)
 							return
 						twinPlugins.append(plugin.name)
@@ -522,7 +522,7 @@ class InfoBarHotkey():
 							twinPaths[plugin.path[24:]] += 1
 						else:
 							twinPaths[plugin.path[24:]] = 1
-						if plugin.path[24:] + "/" + str(twinPaths[plugin.path[24:]])== "/".join(selected):
+						if plugin.path[24:] + "/" + str(twinPaths[plugin.path[24:]]) == "/".join(selected):
 							self.runPlugin(plugin)
 							return
 						twinPlugins.append(plugin.name)
@@ -548,6 +548,7 @@ class InfoBarHotkey():
 			elif selected[0][:3] == "Zap":
 				if selected[0] == "ZapPanic":
 					self.servicelist.history = []
+					self.pipShown() and self.showPiP()
 				self.servicelist.servicelist.setCurrent(eServiceReference("/".join(selected[1:])))
 				self.servicelist.zap(enable_pipzap = True)
 				if hasattr(self, "lastservice"):
