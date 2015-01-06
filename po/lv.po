@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-27 19:11+0200\n"
+"POT-Creation-Date: 2015-01-06 18:58+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -67,7 +67,7 @@ msgstr ""
 msgid ""
 "\n"
 "Recording in progress."
-msgstr  ""
+msgstr ""
 "\n"
 "Notiek ierakstīšana."
 
@@ -115,15 +115,21 @@ msgstr ""
 "\n"
 "Skatīt, instalēt un dzēst pieejamās vai instalētās pakotnes."
 
+#. TRANSLATORS: short date representation short dayname daynum short monthname in strftime() format! See 'man strftime'
+#, python-format
 msgid " %d/%d"
 msgstr " %d-%d"
 
+#. TRANSLATORS: long date representation short dayname daynum short monthname hour:minute in strftime() format! See 'man strftime'
+#, python-format
 msgid " %d/%d  %2d:%02d"
 msgstr " %d-%d  %2d:%02d"
 
+#, python-format
 msgid " (Channel %s)"
 msgstr " (Kanāls %s)"
 
+#, python-format
 msgid " (Partition %d)"
 msgstr " (Partīcija %d)"
 
@@ -160,11 +166,15 @@ msgstr "izvēlētas pakotnes."
 msgid " updates available."
 msgstr "atjaunojumi pieejami."
 
-msgid "#777"
-msgstr "#777"
-
+#. TRANSLATORS: short time representation hour:minute
+#, python-format
 msgid "%2d:%02d"
 msgstr "%2d:%02d"
+
+#. TRANSLATORS: VFD hour:minute daynum short monthname in strftime() format! See 'man strftime'
+#, python-format
+msgid "%2d:%02d %d/%d"
+msgstr "%2d:%02d %d/%d"
 
 #. TRANSLATORS: full time representation hour:minute:seconds
 #, python-format
@@ -305,15 +315,6 @@ msgstr "(rādīt papildu DVD skaņas izvēlni)"
 msgid "* Only available if more than one interface is active."
 msgstr "* Pieejams ja ir aktīvs vairāk nekā viens interfeiss."
 
-msgid "*99#"
-msgstr "*99#"
-
-msgid "*99***1#"
-msgstr "*99***1#"
-
-msgid "*99**1*1#"
-msgstr "*99**1*1#"
-
 msgid "/s"
 msgstr "/s"
 
@@ -332,41 +333,11 @@ msgstr "1.1"
 msgid "1.2"
 msgstr "1.2"
 
-msgid "1000"
-msgstr "1000"
-
-msgid "1100"
-msgstr "1100"
-
-msgid "115200"
-msgstr "115200"
-
-msgid "1200"
-msgstr "1200"
-
 msgid "12V output"
 msgstr "12V izeja"
 
 msgid "13 V"
 msgstr "13 V"
-
-msgid "1300"
-msgstr "1300"
-
-msgid "1400"
-msgstr "1400"
-
-msgid "1440"
-msgstr "1440"
-
-msgid "1460"
-msgstr "1460"
-
-msgid "1492"
-msgstr "1492"
-
-msgid "1500"
-msgstr "1500"
 
 msgid "16:10"
 msgstr "16:10"
@@ -395,9 +366,6 @@ msgstr "2"
 msgid "23.976"
 msgstr "23.976"
 
-msgid "230400"
-msgstr "230400"
-
 msgid "24"
 msgstr "24"
 
@@ -425,9 +393,6 @@ msgstr "4"
 msgid "422"
 msgstr "422"
 
-msgid "460800"
-msgstr "460800"
-
 msgid "4:3"
 msgstr "4:3"
 
@@ -440,9 +405,6 @@ msgstr "4:3 PanScan"
 msgid "5"
 msgstr "5"
 
-msgid "57600"
-msgstr "57600"
-
 msgid "6"
 msgstr "6"
 
@@ -454,9 +416,6 @@ msgstr "8"
 
 msgid "9"
 msgstr "9"
-
-msgid "921600"
-msgstr "921600"
 
 #, python-format
 msgid ": %s"
@@ -622,6 +581,7 @@ msgstr "Apturēt laika aizturi"
 msgid "Activate timeshift end and pause"
 msgstr "Apturēt laika aizturi un nopauzēt"
 
+#, python-format
 msgid "Active Keymap: %s"
 msgstr "Aktivizēt izkārtojumu: %s"
 
@@ -2550,6 +2510,7 @@ msgstr "Ārējais"
 msgid "External PiP"
 msgstr "Ārējais PiP"
 
+#, python-format
 msgid "External Storage %s"
 msgstr "Ārējais disks %s"
 
@@ -7746,9 +7707,6 @@ msgstr "pēc datuma"
 msgid "cartoon/puppets"
 msgstr "multfilmas/leļļu"
 
-msgid "cdma"
-msgstr "cdma"
-
 msgid "center"
 msgstr "centrs"
 
@@ -7995,9 +7953,6 @@ msgstr "iet uz dziļo gaidstāvi"
 
 msgid "go to standby"
 msgstr "iet uz gaidstāvi"
-
-msgid "gprs"
-msgstr "gprs"
 
 msgid "grab this frame as bitmap"
 msgstr "tvert kadru bitmap formātā"
@@ -8540,39 +8495,6 @@ msgstr "tūrisma/ceļošana"
 
 msgid "true"
 msgstr "patiesība"
-
-msgid "ttyACM0"
-msgstr "ttyACM0"
-
-msgid "ttyUSB0"
-msgstr "ttyUSB0"
-
-msgid "ttyUSB1"
-msgstr "ttyUSB1"
-
-msgid "ttyUSB2"
-msgstr "ttyUSB2"
-
-msgid "ttyUSB3"
-msgstr "ttyUSB3"
-
-msgid "ttyUSB4"
-msgstr "ttyUSB4"
-
-msgid "ttyUSB5"
-msgstr "ttyUSB5"
-
-msgid "ttyUSB6"
-msgstr "ttyUSB6"
-
-msgid "ttyUSB7"
-msgstr "ttyUSB7"
-
-msgid "ttyUSB8"
-msgstr "ttyUSB8"
-
-msgid "ttyUSB9"
-msgstr "ttyUSB9"
 
 msgid "unavailable"
 msgstr "nepieejams"
