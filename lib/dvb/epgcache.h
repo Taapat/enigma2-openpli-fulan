@@ -327,7 +327,6 @@ private:
 #endif
 	void sectionRead(const uint8_t *data, int source, channel_data *channel);
 	void gotMessage(const Message &message);
-	void flushEPG(const uniqueEPGKey & s=uniqueEPGKey());
 	void cleanLoop();
 
 // called from main thread
@@ -347,6 +346,7 @@ public:
 	void save();
 	void load();
 	void timeUpdated();
+	void flushEPG(const uniqueEPGKey & s=uniqueEPGKey());
 #ifndef SWIG
 	eEPGCache();
 	~eEPGCache();
