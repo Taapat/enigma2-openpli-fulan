@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-06 18:58+0200\n"
+"POT-Creation-Date: 2015-01-10 19:21+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2517,6 +2517,9 @@ msgstr "Ārējais disks %s"
 msgid "External subtitle color"
 msgstr "Ārējo subtitru krāsa"
 
+msgid "External subtitle dialog colorisation"
+msgstr "Krāsaini dialogi ārējos subtitros"
+
 msgid "Extra motor options"
 msgstr "Papildus motora iestatījumi"
 
@@ -4766,6 +4769,9 @@ msgstr "Notikums pašreiz ierakstās... Ko vēlaties darīt?"
 msgid "Repeats"
 msgstr "Atkārtojumi"
 
+msgid "Replace '-' in dialogs with colored text per speaker (like teletext subtitles for the hearing impaired)"
+msgstr "Aizvieto '-' dialogos ar krāsainu tekstu atbilstoši runātājam (kā nedzirdīgo teleteksta subtitros)"
+
 msgid "Require authentication for http streams"
 msgstr "Http plūsmām nepieciešama autentifikācija"
 
@@ -4861,8 +4867,8 @@ msgstr "Reversēt sarakstu"
 msgid "Rewind speeds"
 msgstr "Attīšanas ātrumi"
 
-msgid "Rewrap teletext subtitles"
-msgstr "Pārpakot teleteksta subtitrus"
+msgid "Rewrap subtitles"
+msgstr "Pārdalīt subtitrus"
 
 msgid "Right"
 msgstr "Labais"
@@ -7181,6 +7187,9 @@ msgstr "Ja ieslēgts, tiks mērīta patērētā jauda lai noskaidrotu kad pozici
 msgid "When enabled, number markers will be hiden."
 msgstr "Ja ieslēgts, numuri tiks paslēpti."
 
+msgid "When enabled, reformat subtitles to match the width of the screen."
+msgstr "Ja ieslēgts, subtitri tiks pārdalīti tā, lai izmantotu visu ekrāna platumu."
+
 msgid "When enabled, services may be grouped in multiple bouquets."
 msgstr "Ja ieslēgts, kanāli tiks sagrupēti dažādās buķetēs."
 
@@ -7216,9 +7225,6 @@ msgstr "Ja ieslēgts, pārtinot uz priekšu vai atpakaļ mediju failus tiks par�
 
 msgid "When enabled, the lenght of each recording will be shown in the movielist (this might cause some additional loading time)."
 msgstr "Ja ieslēgts, filmu sarakstā tiks parādīts katra ieraksta garums (tas prasa zināmu ielādes laiku)."
-
-msgid "When enabled, the original line breaks will be removed from the teletext subtitles."
-msgstr "Ja ieslēgts, teletekstu subtitos netiks ņemti vērā oriģinālie rindu dalījumi."
 
 msgid "When enabled, the receiver will automatically use the audio track which you selected before."
 msgstr "Ja ieslēgts, uztvērējs automātiski lietos audio celiņu, kuru iepriekš norādījāt."
