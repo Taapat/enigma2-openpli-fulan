@@ -85,16 +85,13 @@ def getPiconName(serviceName):
 				fields[2] = '1'
 				pngname = findPicon('_'.join(fields))
 	if not pngname: # picon by channel name
-		sname = ServiceReference(serviceName).getServiceName()
-		try:
-			sname = unicodedata.normalize('NFKD', unicode(sname, 'utf_8')).encode('ASCII', 'ignore')
-			sname = re.sub('[^a-z0-9]', '', sname.replace('&', 'and').replace('+', 'plus').replace('*', 'star').lower())
-		except:
-			sname = ""
-		if sname:
-			pngname = findPicon(sname)
-			if not pngname and len(sname) > 2 and sname[-2:] == 'hd':
-				pngname = findPicon(sname[:-2])
+		name = ServiceReference(serviceName).getServiceName()
+		name = unicodedata.normalize('NFKD', unicode(name, 'utf_8', errors='ignore')).encode('ASCII', 'ignore')
+		name = re.sub('[^a-z0-9]', '', name.replace('&', 'and').replace('+', 'plus').replace('*', 'star').lower())
+		if name:
+			pngname = findPicon(name)
+			if not pngname and len(name) > 2 and name.endswith('hd'):
+				pngname = findPicon(name[:-2])
 	return pngname
 
 class Picon(Renderer):
