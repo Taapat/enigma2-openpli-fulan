@@ -3776,6 +3776,9 @@ msgstr "Nav atrasti jauni sparudņi"
 msgid "No positioner capable frontend found."
 msgstr "Nav atrasts pozicionierim piemērots pavadonis."
 
+msgid "No priority"
+msgstr "Bez prioritātes"
+
 msgid "No satellite, terrestrial or cable tuner is configured. Please check your tuner setup."
 msgstr "Nav nokonfigurētu pavadoņu, televīzijas vai kabeļu pieslēgumu. Lūdzu pārbaudiet uztvērēja uzstādījumus."
 
