@@ -205,7 +205,7 @@ class CommitInfo(Screen):
 				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
 		elif "taapat" in feed:
 			try:
-				url = open('/etc/opkg/official-feed.conf', 'r').read().split()[2]
+				url = open('/etc/opkg/system-feed.conf', 'r').read().split()[2]
 				url += '/' + feed + '.log'
 				commitlog += urlopen(url, timeout=5).read()
 			except:
