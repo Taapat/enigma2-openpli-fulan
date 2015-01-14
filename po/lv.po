@@ -6205,7 +6205,7 @@ msgid "The status of the current beta image could not be checked because %s can 
 msgstr "Esošo imidža statusu nevar pārbaudīt, jo nevar pieslēgties %s."
 
 msgid "The timer file (timers.xml) is corrupt and could not be loaded."
-msgstr "Taimera fails (timers.xml) ir bojāts un to nevar ielādēt."
+msgstr "Taimeru fails (timers.xml) ir bojāts un to nevar ielādēt."
 
 msgid "The user interface of your receiver is restarting"
 msgstr "Uztvērēja lietotāja interfeiss tiek pārstartēts"
@@ -6383,7 +6383,7 @@ msgid "Time scale"
 msgstr "Laika skala"
 
 msgid "Timer"
-msgstr "Taimeris"
+msgstr "Taimeri"
 
 msgid "Timer Overview"
 msgstr "Taimeru pārskats"
@@ -6392,13 +6392,13 @@ msgid "Timer edit"
 msgstr "Rediģēt taimeri"
 
 msgid "Timer editor"
-msgstr "Taimera redaktors"
+msgstr "Taimeru redaktors"
 
 msgid "Timer entry"
 msgstr "Taimera ieraksts"
 
 msgid "Timer log"
-msgstr "Taimera žurnāls"
+msgstr "Taimeru žurnāls"
 
 msgid ""
 "Timer overlap in timers.xml detected!\n"
@@ -6408,10 +6408,10 @@ msgstr ""
 "Lūdzu pārbaudiet vēlreiz!"
 
 msgid "Timer overview"
-msgstr "Taimera pārskats"
+msgstr "Taimeru pārskats"
 
 msgid "Timer recording location"
-msgstr "Taimera ieraksta vieta"
+msgstr "Taimeru ieraksta vieta"
 
 msgid "Timer sanity error"
 msgstr "Taimera kļūda"
