@@ -1,4 +1,3 @@
-import os
 from Tools.Directories import SCOPE_SKIN, resolveFilename
 
 hw_info = None
@@ -13,54 +12,45 @@ class HardwareInfo:
 	def __init__(self):
                 global hw_info
 		if hw_info is not None:
-#			print "using cached result"
 			return
 		hw_info = self
 
-		print "Scanning hardware info"
+		print "[HardwareInfo] Scanning hardware info"
 		# Version
 		# Disable on spark because there is only a /proc/stb/info/model
-		#if os.path.exists("/proc/stb/info/version"):
+		#try:
 			#self.device_version = open("/proc/stb/info/version").read().strip()
+		#except:
+			#pass
 
 		# Revision
 		# Disable on spark because there is only a /proc/stb/info/model
-		#if os.path.exists("/proc/stb/info/board_revision"):
+		#try:
 			#self.device_revision = open("/proc/stb/info/board_revision").read().strip()
+		#except:
+			#pass
 
 		# Name ... bit odd, but history prevails
-		if os.path.exists("/proc/stb/info/model"):
+		try:
 			self.device_name = open("/proc/stb/info/model").read().strip()
-		else:
-			print "----------------"
-			print "you should upgrade to new drivers for the hardware detection to work properly"
-			print "----------------"
-			print "fallback to detect hardware via /proc/cpuinfo!!"
-			try:
-				rd = open("/proc/cpuinfo", "r").read()
-				if "Brcm4380 V4.2" in rd:
-					self.device_name = "dm8000"
-				elif "Brcm7401 V0.0" in rd:
-					self.device_name = "dm800"
-				elif "MIPS 4KEc V4.8" in rd:
-					self.device_name = "dm7025"
-				rd.close();
-			except:
-				pass
+		except:
+			pass
 
 		# Model
 		# Disable on spark because there is only a /proc/stb/info/model
 		#for line in open((resolveFilename(SCOPE_SKIN, 'hw_info/hw_info.cfg')), 'r'):
 			#if not line.startswith('#') and not line.isspace():
 				#l = line.strip().replace('\t', ' ')
-				#if l.find(' ') != -1:
+				#if ' ' in l:
 					#infoFname, prefix = l.split()
 				#else:
 					#infoFname = l
 					#prefix = ""
-				#if os.path.exists("/proc/stb/info/" + infoFname):
+				#try:
 					#self.device_model = prefix + open("/proc/stb/info/" + infoFname).read().strip()
 					#break
+				#except:
+					#pass
 
 		if self.device_model is None:
 			self.device_model = self.device_name
