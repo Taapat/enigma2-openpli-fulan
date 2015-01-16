@@ -1584,8 +1584,7 @@ def InitNimManager(nimmgr):
 	def tunerTypeChanged(nimmgr, configElement):
 		fe_id = configElement.fe_id
 		eDVBResourceManager.getInstance().setFrontendType(nimmgr.nim_slots[fe_id].frontend_id, nimmgr.nim_slots[fe_id].getType())
-		import os
-		if os.path.exists("/proc/stb/frontend/%d/mode" % fe_id):
+		try:
 			cur_type = int(open("/proc/stb/frontend/%d/mode" % (fe_id), "r").read())
 			if cur_type != int(configElement.value):
 				print "tunerTypeChanged feid %d from %d to mode %d" % (fe_id, cur_type, int(configElement.value))
@@ -1607,6 +1606,8 @@ def InitNimManager(nimmgr):
 				nimmgr.enumerateNIMs()
 			else:
 				print "tuner type is already already %d" %cur_type
+		except:
+			pass
 
 	empty_slots = 0
 	for slot in nimmgr.nim_slots:
