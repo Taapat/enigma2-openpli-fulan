@@ -628,7 +628,7 @@ msgid "Add recording (indefinitely)"
 msgstr "Sākt ierakstu (nenoteikti)"
 
 msgid "Add recording (stop after current event)"
-msgstr "Sākt ierakstu (apturēt pēc pašreizējā notikuma)"
+msgstr "Sākt ierakstu (apturēt pēc pašreizējās pārraides)"
 
 msgid "Add timer"
 msgstr "Pievienot taimeri"
@@ -643,7 +643,7 @@ msgid "Add to favourites"
 msgstr "Pievienot favorītiem"
 
 msgid "Add/remove change timer for current event"
-msgstr "Pievienot/izņemt mainīt taimeri tekošajam notikumam"
+msgstr "Pievienot/noņemt mainīt taimeri tekošajai pārraidei"
 
 msgid "Additional PPPD options"
 msgstr "Papildus PPPD opcijas"
@@ -1726,7 +1726,7 @@ msgid "Current device: "
 msgstr "Pašreizējā iekārta: "
 
 msgid "Current event EPG"
-msgstr "Pašreizējā notikuma EPG"
+msgstr "Pašreizējās pārraides EPG"
 
 #, python-format
 msgid "Current mode: %s \n"
@@ -3762,7 +3762,7 @@ msgid "No displayable files on this medium found!"
 msgstr "Šinī datu nesējā nav atrasti attēlojami faili!"
 
 msgid "No event info found, recording indefinitely."
-msgstr "Nav atrasta informācija par notikumiem, ieraksts uz nenoteiktu laiku."
+msgstr "Nav atrasta informācija par pārraidi, ierakstīs nepārtrukti."
 
 msgid "No fast winding possible yet.. but you can use the number buttons to skip forward/backward!"
 msgstr "Pārtīšana pašreiz nav iespējama.. bet varat lietot ciparu taustiņus lai pārlektu uz priekšu/atpakaļ!"
@@ -4772,11 +4772,11 @@ msgid ""
 "Repeating event currently recording.\n"
 "What do you want to do?"
 msgstr ""
-"Notikums pašreiz tiek ierakstīts.\n"
+"Pārraide pašreiz tiek ierakstīta.\n"
 "Ko vēlaties darīt?"
 
 msgid "Repeating event currently recording... What do you want to do?"
-msgstr "Notikums pašreiz ierakstās... Ko vēlaties darīt?"
+msgstr "Pārraide pašreiz ierakstās... Ko vēlaties darīt?"
 
 msgid "Repeats"
 msgstr "Atkārtojumi"
@@ -5421,7 +5421,7 @@ msgid "Show disclaimer"
 msgstr "Rādīt atrunu"
 
 msgid "Show event details"
-msgstr "Rādīt notikuma papildus informāciju"
+msgstr "Rādīt pārraides papildus informāciju"
 
 msgid "Show event-progress in channel selection"
 msgstr "Rādīt notikuma norisi kanālu izvēlnē"
@@ -5460,7 +5460,7 @@ msgid "Show infobar on channel change"
 msgstr "Rādīt infojoslu mainot kanālus"
 
 msgid "Show infobar on event change"
-msgstr "Rādīt infojoslu mainoties notikumiem"
+msgstr "Rādīt infojoslu mainoties pārraidei"
 
 msgid "Show infobar on skip forward/backward"
 msgstr "Rādīt infojoslu pārlēciena turp/atpakaļ laikā"
@@ -5774,7 +5774,7 @@ msgid "Standby / restart"
 msgstr "Gaidstāve / pārstartēt"
 
 msgid "Standby after current event"
-msgstr "Gaidstāve pēc pašreizējā notikuma"
+msgstr "Gaidstāve pēc pašreizējās pārraides"
 
 #, python-format
 msgid "Standby fan %d PWM"
@@ -7227,7 +7227,7 @@ msgid "When enabled, the channel selection list will be hidden while listening t
 msgstr "Ja ieslēgts, klausoties radio kanālu pārslēgšanas saraksts netiks rādīts."
 
 msgid "When enabled, the infobar will be displayed when a new event starts."
-msgstr "Ja ieslēgts, sākoties jaunam notikumam tiks parādīta infojosla."
+msgstr "Ja ieslēgts, sākoties jaunai pārraide tiks parādīta infojosla."
 
 msgid "When enabled, the infobar will be displayed when changing channels."
 msgstr "Ja ieslēgts, pārslēdzot kanālus tiks parādīta infojosla."
@@ -7572,7 +7572,7 @@ msgid "Zap to selected channel"
 msgstr "Pārslēgties uz izvēlēto kanālu"
 
 msgid "Zap to selected channel, or show detailed event info (depends on configuration)"
-msgstr "Pārslēgties uz izvēlēto kanālu, vai parādīt detalizētu notikuma informāciju (atkarībā no iestatījumiem)"
+msgstr "Pārslēgties uz izvēlēto kanālu, vai parādīt detalizētu pārraides informāciju (atkarībā no iestatījumiem)"
 
 msgid "Zap up"
 msgstr "Pārslēgt uz augšu"
