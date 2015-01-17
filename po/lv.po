@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-17 02:11+0200\n"
+"POT-Creation-Date: 2015-01-17 16:57+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1371,6 +1371,9 @@ msgstr "Uzstāda vai un kādā platumā kolona tiks attēlota kanālu srakstā."
 msgid "Configure if service picons will be shown in the channel selection list."
 msgstr "Uzstāda vai kanālu pikonas tiks rādītas kanālu sarakstā."
 
+msgid "Configure if the subtitle should switch between normal, italic, bold and bolditalic"
+msgstr "Uzstāda vai subtitri tiks pārslēgti starp slīpiem, trekniem vai slīpi trekniem"
+
 msgid "Configure interface"
 msgstr "Konfigurēt interfeisu"
 
@@ -1414,7 +1417,7 @@ msgid "Configure the brightness level of the front panel display."
 msgstr "Uzstāda spilgtuma līmeni priekšējā paneļa displejā."
 
 msgid "Configure the color of the external subtitles, alternative (normal in white, italic in yellow, bold in cyan, underscore in green), white or yellow."
-msgstr "Uzstāda ārējo subtitru krāsu, altrenatīvi (normāli balti, slīpi dzelteni, trekni gaiši zili, pasvītroti zaļi), balti vai dzelteni."
+msgstr "Uzstāda ārējo subtitru krāsu, altrenatīvie (normāli balti, slīpi dzelteni, trekni gaiši zili, pasvītroti zaļi), balti vai dzelteni."
 
 msgid "Configure the color of the teletext subtitles."
 msgstr "Uzstāda teleteksta subtitru krāsa."
@@ -2525,6 +2528,9 @@ msgstr "Ārējo subtitru krāsa"
 
 msgid "External subtitle dialog colorisation"
 msgstr "Krāsaini dialogi ārējos subtitros"
+
+msgid "External subtitle switch fonts"
+msgstr "Mainīt arējo subtitru fontus"
 
 msgid "Extra motor options"
 msgstr "Papildus motora iestatījumi"
@@ -7651,6 +7657,9 @@ msgstr "pēc alfabēta"
 
 msgid "alphabetic reverse"
 msgstr "alfabētiski reversā"
+
+msgid "alternative"
+msgstr "alternatīvie"
 
 msgid "always"
 msgstr "vienmēr"
