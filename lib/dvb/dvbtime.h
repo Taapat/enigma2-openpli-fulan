@@ -25,7 +25,9 @@ inline int toBCD(int dec)
 	return int(dec/10)*0x10 + dec%10;
 }
 
-time_t parseDVBtime(uint8_t t1, uint8_t t2, uint8_t t3, uint8_t t4, uint8_t t5, uint16_t *hash=0);
+time_t parseDVBtime(uint16_t mjd, uint32_t stime_bcd);
+time_t parseDVBtime(const uint8_t* data);
+time_t parseDVBtime(const uint8_t* data, uint16_t *hash);
 
 class TDT: public eGTable
 {
