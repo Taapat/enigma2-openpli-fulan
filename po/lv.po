@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-10 21:35+0200\n"
+"POT-Creation-Date: 2015-01-17 02:11+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -536,8 +536,11 @@ msgstr ""
 msgid "A/V settings"
 msgstr "A/V iestatījumi"
 
-msgid "AC3/DTS downmix"
-msgstr "AC3/DTS pārveidošana"
+msgid "AAC downmix"
+msgstr "AAC dekodēšana"
+
+msgid "AC3 downmix"
+msgstr "AC3 dekodēšana"
 
 msgid "APN"
 msgstr "APN"
@@ -1782,6 +1785,9 @@ msgstr "DMM paplašināts"
 
 msgid "DMM normal"
 msgstr "DMM normāls"
+
+msgid "DTS downmix"
+msgstr "DTS dekodēšana"
 
 msgid "DUAL LAYER DVD"
 msgstr "Dubultslāņu DVD"
@@ -3584,6 +3590,9 @@ msgstr "Griezt uz rietumiem..."
 
 msgid "Multi EPG"
 msgstr "Daudzkanālu EPG"
+
+msgid "Multi channel downmix"
+msgstr "Dudzkanālu skaņas dekodēšana"
 
 msgid "Multi-EPG bouquet selection"
 msgstr "Daudzkanālu EPG buķetes izvēle"
