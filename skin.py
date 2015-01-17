@@ -206,10 +206,6 @@ def collectAttributes(skinAttributes, node, context, skin_path_prefix=None, igno
 	size = None
 	pos = None
 	font = None
-	if skin_path_prefix == None:
-		scope = SCOPE_CURRENT_SKIN
-	else:
-		scope = SCOPE_SKIN_IMAGE
 	for attrib, value in node.items():
 		if attrib not in ignore:
 			if attrib in filenames:
