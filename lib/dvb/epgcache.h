@@ -11,13 +11,7 @@
 
 #include <vector>
 #include <list>
-// unordered_map unordered_set aren't there yet?
 #include <tr1/unordered_map>
-#include <tr1/unordered_set>
-#if 0
-#include <ext/hash_map>
-#include <ext/hash_set>
-#endif
 
 #include <errno.h>
 
@@ -102,19 +96,11 @@ struct hash_uniqueEPGKey
 };
 
 #define tidMap std::set<uint32_t>
-	typedef std::tr1::unordered_map<uniqueEPGKey, std::pair<eventMap, timeMap>, hash_uniqueEPGKey, uniqueEPGKey::equal> eventCache;
-	#ifdef ENABLE_PRIVATE_EPG
-		typedef std::tr1::unordered_map<time_t, std::pair<time_t, uint16_t> > contentTimeMap;
-		typedef std::tr1::unordered_map<int, contentTimeMap > contentMap;
-		typedef std::tr1::unordered_map<uniqueEPGKey, contentMap, hash_uniqueEPGKey, uniqueEPGKey::equal > contentMaps;
-	#endif
-#if 0
-	typedef __gnu_cxx::hash_map<uniqueEPGKey, std::pair<eventMap, timeMap>, hash_uniqueEPGKey, uniqueEPGKey::equal> eventCache;
-	#ifdef ENABLE_PRIVATE_EPG
-		typedef __gnu_cxx::hash_map<time_t, std::pair<time_t, uint16_t> > contentTimeMap;
-		typedef __gnu_cxx::hash_map<int, contentTimeMap > contentMap;
-		typedef __gnu_cxx::hash_map<uniqueEPGKey, contentMap, hash_uniqueEPGKey, uniqueEPGKey::equal > contentMaps;
-	#endif
+typedef std::tr1::unordered_map<uniqueEPGKey, std::pair<eventMap, timeMap>, hash_uniqueEPGKey, uniqueEPGKey::equal> eventCache;
+#ifdef ENABLE_PRIVATE_EPG
+	typedef std::tr1::unordered_map<time_t, std::pair<time_t, uint16_t> > contentTimeMap;
+	typedef std::tr1::unordered_map<int, contentTimeMap > contentMap;
+	typedef std::tr1::unordered_map<uniqueEPGKey, contentMap, hash_uniqueEPGKey, uniqueEPGKey::equal > contentMaps;
 #endif
 
 #endif
@@ -268,7 +254,7 @@ private:
 	std::vector<int> onid_blacklist;
 	eventCache eventDB;
 	updateMap channelLastUpdated;
-	static pthread_mutex_t cache_lock, channel_map_lock;
+	static pthread_mutex_t cache_lock;
 	std::string m_filename;
 	bool m_running;
 
@@ -329,14 +315,13 @@ private:
 	// For internal use only. Acquire the cache lock before calling.
 	RESULT lookupEventId(const eServiceReference &service, int event_id, const eventData *&);
 	RESULT lookupEventTime(const eServiceReference &service, time_t, const eventData *&, int direction=0);
-	RESULT getNextTimeEntry(const eventData *&);
 
 public:
+	/* Only used by servicedvbrecord.cpp to write the EIT file */
 	// eit_event_struct's are plain dvb eit_events .. it's not safe to use them after cache unlock
 	// its not allowed to delete this pointers via delete or free..
 	RESULT lookupEventId(const eServiceReference &service, int event_id, const eit_event_struct *&);
 	RESULT lookupEventTime(const eServiceReference &service, time_t , const eit_event_struct *&, int direction=0);
-	RESULT getNextTimeEntry(const eit_event_struct *&);
 
 public:
 	// Event's are parsed epg events.. it's safe to use them after cache unlock
