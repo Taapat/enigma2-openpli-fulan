@@ -71,10 +71,10 @@ def findPicon(serviceName):
 
 def getPiconName(serviceName):
 	#remove the path and name fields, and replace ':' by '_'
-	sname = '_'.join(GetWithAlternative(serviceName).split(':', 10)[:10])
-	pngname = findPicon(sname)
+	name = '_'.join(GetWithAlternative(serviceName).split(':', 10)[:10])
+	pngname = findPicon(name)
 	if not pngname:
-		fields = sname.split('_', 3)
+		fields = name.split('_', 3)
 		if len(fields) > 2:
 			if fields[0] == '4097':
 				#fallback to 1 for iptv gstreeamer services
