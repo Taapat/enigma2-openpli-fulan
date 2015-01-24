@@ -1432,9 +1432,9 @@ class ChannelSelectionBase(Screen):
 											else:
 												h = _("E")
 											service_name = ("%d.%d" + h) % (orbpos / 10, orbpos % 10)
-										if self.showSatDetails and not '(type == 1)' in srvtypes and '(type == 17)' in srvtypes:
-											service_type = "HD-%s"%(service_type)
 										if self.showSatDetails:
+											if not '(type == 1)' in srvtypes and '(type == 17)' in srvtypes:
+												service_type = "HD-%s"%(service_type)
 											service_type += " (%d)"%(self.getServicesCount(service))
 										service.setName("%s - %s" % (service_name, service_type))
 										self.servicelist.addService(service)
