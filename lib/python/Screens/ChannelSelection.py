@@ -1369,10 +1369,6 @@ class ChannelSelectionBase(Screen):
 	def showSatellites(self, changeMode=False):
 		if not self.pathChangeDisabled:
 			refstr = '%s FROM SATELLITES ORDER BY satellitePosition'%(self.service_types)
-			if self.mode is 0: # TV mode
-				typeslist = [self.service_types, '1:7:11:0:0:0:0:0:0:0:(type == 17) || (type == 25) || (type == 134) || (type == 195)']
-			else:
-				typeslist = [self.service_types]
 			if not self.preEnterPath(refstr):
 				ref = eServiceReference(refstr)
 				justSet=False
@@ -1397,6 +1393,10 @@ class ChannelSelectionBase(Screen):
 					servicelist = None
 					addCableAndTerrestrialLater = []
 					serviceHandler = eServiceCenter.getInstance()
+					if self.showSatDetails and self.mode is 0: # TV mode
+						typeslist = [self.service_types, '1:7:11:0:0:0:0:0:0:0:(type == 17) || (type == 25) || (type == 134) || (type == 195)']
+					else:
+						typeslist = [self.service_types]
 					for srvtypes in typeslist:
 						ref = eServiceReference('%s FROM SATELLITES ORDER BY satellitePosition'%(srvtypes))
 						servicelist = serviceHandler.list(ref)
