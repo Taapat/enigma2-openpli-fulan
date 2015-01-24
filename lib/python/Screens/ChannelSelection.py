@@ -1369,6 +1369,10 @@ class ChannelSelectionBase(Screen):
 	def showSatellites(self, changeMode=False):
 		if not self.pathChangeDisabled:
 			refstr = '%s FROM SATELLITES ORDER BY satellitePosition'%(self.service_types)
+			if self.mode is 0: # TV mode
+				typeslist = [self.service_types, '1:7:11:0:0:0:0:0:0:0:(type == 17) || (type == 25) || (type == 134) || (type == 195)']
+			else:
+				typeslist = [self.service_types]
 			if not self.preEnterPath(refstr):
 				ref = eServiceReference(refstr)
 				justSet=False
@@ -1390,43 +1394,51 @@ class ChannelSelectionBase(Screen):
 						self.clearPath()
 						self.enterPath(ref, True)
 				if justSet:
+					servicelist = None
 					addCableAndTerrestrialLater = []
 					serviceHandler = eServiceCenter.getInstance()
-					servicelist = serviceHandler.list(ref)
-					if not servicelist is None:
-						while True:
-							service = servicelist.getNext()
-							if not service.valid(): #check if end of list
-								break
-							unsigned_orbpos = service.getUnsignedData(4) >> 16
-							orbpos = service.getData(4) >> 16
-							if orbpos < 0:
-								orbpos += 3600
-							if "FROM PROVIDER" in service.getPath():
-								service_type = self.showSatDetails and _("Providers")
-							elif ("flags == %d" %(FLAG_SERVICE_NEW_FOUND)) in service.getPath():
-								service_type = self.showSatDetails and _("New")
-							else:
-								service_type = _("Services")
-							if service_type:
-								if unsigned_orbpos == 0xFFFF: #Cable
-									service_name = _("Cable")
-									addCableAndTerrestrialLater.append(("%s - %s" % (service_name, service_type), service.toString()))			
-								elif unsigned_orbpos == 0xEEEE: #Terrestrial
-									service_name = _("Terrestrial")
-									addCableAndTerrestrialLater.append(("%s - %s" % (service_name, service_type), service.toString()))			
+					for srvtypes in typeslist:
+						ref = eServiceReference('%s FROM SATELLITES ORDER BY satellitePosition'%(srvtypes))
+						servicelist = serviceHandler.list(ref)
+						if not servicelist is None:
+							while True:
+								service = servicelist.getNext()
+								if not service.valid(): #check if end of list
+									break
+								unsigned_orbpos = service.getUnsignedData(4) >> 16
+								orbpos = service.getData(4) >> 16
+								if orbpos < 0:
+									orbpos += 3600
+								if "FROM PROVIDER" in service.getPath():
+									service_type = self.showSatDetails and _("Providers")
+								elif ("flags == %d" %(FLAG_SERVICE_NEW_FOUND)) in service.getPath():
+									service_type = self.showSatDetails and _("New")
 								else:
-									try:
-										service_name = str(nimmanager.getSatDescription(orbpos))
-									except:
-										if orbpos > 1800: # west
-											orbpos = 3600 - orbpos
-											h = _("W")
-										else:
-											h = _("E")
-										service_name = ("%d.%d" + h) % (orbpos / 10, orbpos % 10)
-									service.setName("%s - %s" % (service_name, service_type))
-									self.servicelist.addService(service)
+									service_type = _("Services")
+								if service_type:
+									if unsigned_orbpos == 0xFFFF: #Cable
+										service_name = _("Cable")
+										addCableAndTerrestrialLater.append(("%s - %s" % (service_name, service_type), service.toString()))			
+									elif unsigned_orbpos == 0xEEEE: #Terrestrial
+										service_name = _("Terrestrial")
+										addCableAndTerrestrialLater.append(("%s - %s" % (service_name, service_type), service.toString()))			
+									else:
+										try:
+											service_name = str(nimmanager.getSatDescription(orbpos))
+										except:
+											if orbpos > 1800: # west
+												orbpos = 3600 - orbpos
+												h = _("W")
+											else:
+												h = _("E")
+											service_name = ("%d.%d" + h) % (orbpos / 10, orbpos % 10)
+										if self.showSatDetails and not '(type == 1)' in srvtypes and '(type == 17)' in srvtypes:
+											service_type = "HD-%s"%(service_type)
+										if self.showSatDetails:
+											service_type += " (%d)"%(self.getServicesCount(service))
+										service.setName("%s - %s" % (service_name, service_type))
+										self.servicelist.addService(service)
+					if not servicelist is None:
 						cur_ref = self.session.nav.getCurrentlyPlayingServiceReference()
 						self.servicelist.l.sort()
 						if cur_ref:
@@ -1437,7 +1449,10 @@ class ChannelSelectionBase(Screen):
 								cur_ref.getUnsignedData(3), # ONID
 								self.service_types[pos+1:])
 							ref = eServiceReference(refstr)
-							ref.setName(_("Current transponder"))
+							if self.showSatDetails:
+								ref.setName(_("Current transponder") + " (%d)"%(self.getServicesCount(ref)))
+							else:
+								ref.setName(_("Current transponder"))
 							self.servicelist.addService(ref, beforeCurrent=True)
 						for (service_name, service_ref) in addCableAndTerrestrialLater:
 							ref = eServiceReference(service_ref)
@@ -1455,6 +1470,17 @@ class ChannelSelectionBase(Screen):
 									op = op[:-4] + '0000'
 								refstr = '1:7:0:0:0:0:%s:0:0:0:(satellitePosition == %s) && %s ORDER BY name' % (op, hop, self.service_types[self.service_types.rfind(':')+1:])
 								self.setCurrentSelectionAlternative(eServiceReference(refstr))
+
+	def getServicesCount(self, ref):
+		count = 0
+		serviceHandler = eServiceCenter.getInstance()
+		reflist = serviceHandler.list(ref)
+		if reflist is not None:
+			while True:
+				s = reflist.getNext()
+				if not s.valid(): break
+				count += 1
+		return count
 
 	def showProviders(self):
 		if not self.pathChangeDisabled:
