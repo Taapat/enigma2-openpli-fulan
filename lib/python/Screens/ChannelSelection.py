@@ -108,7 +108,7 @@ def append_when_current_valid(current, menu, args, level=0, key=""):
 
 def removed_userbouquets_available():
 	for file in os.listdir("/etc/enigma2/"):
-		if file.startswith("userbouquet") and file.endswith(".del"):
+		if file[:11] == "userbouquet" and file[-4:] == ".del":
 			return True
 	return False
 
@@ -303,7 +303,7 @@ class ChannelContextMenu(Screen):
 	def purgeDeletedBouquetsCallback(self, answer):
 		if answer:
 			for file in os.listdir("/etc/enigma2/"):
-				if file.startswith("userbouquet") and file.endswith(".del"):
+				if file[:11] == "userbouquet" and file[-4:] == ".del":
 					file = "/etc/enigma2/" + file
 					print "permantly remove file ", file
 					os.remove(file)
@@ -311,7 +311,7 @@ class ChannelContextMenu(Screen):
 
 	def restoreDeletedBouquets(self):
 		for file in os.listdir("/etc/enigma2/"):
-			if file.startswith("userbouquet") and file.endswith(".del"):
+			if file[:11] == "userbouquet" and file[-4:] == ".del":
 				file = "/etc/enigma2/" + file
 				print "restore file ", file[:-4]
 				os.rename(file, file[:-4])
