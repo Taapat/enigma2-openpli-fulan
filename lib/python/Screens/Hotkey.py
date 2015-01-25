@@ -179,8 +179,8 @@ def getHotkeyFunctions():
 	if os.path.isdir("/usr/script"):
 		for x in [x for x in os.listdir("/usr/script") if x[-3:] == ".sh"]:
 			x = x[:-3]
-			hotkeyFunctions.append((_("Shellscript") + " " + x, "Shellscript/" + x, "Shellscripts"))
-			hotkeyFunctions.append((_("Background script") + " " + x, "Backgroundscript/" + x, "Shellscripts"))
+			hotkeyFunctions.append((_("Shellscript") + " " + x, "Shellscript/" + x, "Shellscript"))
+			hotkeyFunctions.append((_("Background script") + " " + x, "Backgroundscript/" + x, "Shellscript"))
 	return hotkeyFunctions
 
 class HotkeySetup(Screen):
