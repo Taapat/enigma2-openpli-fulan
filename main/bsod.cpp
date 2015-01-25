@@ -18,7 +18,7 @@
 
 /************************************************/
 #if defined(__sh__) // dont send mails to dm
-#define CRASH_EMAILADDR "https://code.google.com/p/tdt-amiko/issues/list"
+#define CRASH_EMAILADDR "http://gisclub.tv/enigma2-306/testovaja-ar-p-ot-taapat-ii-versija/"
 #else
 #define CRASH_EMAILADDR "forum at www.openpli.org"
 #endif
@@ -200,7 +200,7 @@ void bsodFatal(const char *component)
 		xml.open("enigma2");
 		xml.string("crashdate", tm_str);
 		xml.string("compiledate", __DATE__);
-		xml.string("contactemail", crash_emailaddr);
+		xml.string("contactaddress", crash_emailaddr);
 		xml.comment("Please report this crashlog to above address");
 
 		xml.string("skin", getConfigString("config.skin.primary_skin", "Default Skin"));
