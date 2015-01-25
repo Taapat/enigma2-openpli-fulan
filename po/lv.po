@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-17 16:57+0200\n"
+"POT-Creation-Date: 2015-01-25 17:00+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -761,6 +761,9 @@ msgstr "aprīlis"
 
 msgid "Arabic"
 msgstr "Arābu"
+
+msgid "Are you sure to purge all deleted userbouquets?"
+msgstr "Vai tiešām vēlaties iztīrīt visas dzēstās buķetes?"
 
 #, python-format
 msgid "Are you sure to remove all %d.%d%s%s services?"
@@ -3344,6 +3347,9 @@ msgstr "Ielādēt filmu sarakstā filmu garumus"
 
 msgid "Load playlist"
 msgstr "Ielādēt repertuāru"
+
+msgid "Load unlinked userbouqeuts"
+msgstr "Ielādēt neiekļautās buķetes"
 
 msgid "Local network"
 msgstr "Lokālais tīkls"
@@ -7097,6 +7103,9 @@ msgstr "Iestatīt rietumu limitu"
 msgid "What do you want to scan?"
 msgstr "Ko Jūs vēlaties meklēt?"
 
+msgid "When enabled enigma2 will load unlinked userbouquets. This means that userbouquets that are availbalbe, but not included in the bouquets.tv or bouquets.radio files, will still be loaded. This allows you for example to keep your own user bouquet while installed settings are upgraded"
+msgstr "Ja ieslēgts, enigma2 ielādēs neiekļutās buķetes. Tas nozīmē ka buķetes tiek izmantotas, bet nav iekļutas bouquets.tv vai bouquets.radio failos. Tas atļuj, piemēram, saglabāt jūsu individuālās buķetes, ja tiek atjaunoti uzstādījumi."
+
 msgid "When enabled the PiP can be closed by the exit button."
 msgstr "Ja ieslēgts attēls attēlā, var aizvērt ar exit taustiņu."
 
@@ -7900,8 +7909,11 @@ msgstr "et5000/6000"
 msgid "et8000/et10000"
 msgstr "et8000/et10000"
 
-msgid "et9x00/6500"
-msgstr "et9x00/6500"
+msgid "et9000/et9100"
+msgstr "et9000/et9100"
+
+msgid "et9200/9500/6500"
+msgstr "et9200/9500/6500"
 
 msgid "exit "
 msgstr "iziet "
@@ -8247,6 +8259,9 @@ msgstr "tautas kultūra/tradicionālā māksla"
 msgid "pre-school children's program"
 msgstr "pirmskolas bērnu programma"
 
+msgid "purge deleted userbouquets"
+msgstr "iztīrīt dzēstās buķetes"
+
 msgid "receiver software because updates are available."
 msgstr "uztvērēja programmatūru jo atjaunojumi pieejami."
 
@@ -8315,6 +8330,9 @@ msgstr "atkārtot repertuāru"
 
 msgid "repeated"
 msgstr "atkārtots"
+
+msgid "restore deleted userbouquets"
+msgstr "atjaunot dzēstās buķetes"
 
 msgid "reverse by date"
 msgstr "otrādi pēc datuma"
