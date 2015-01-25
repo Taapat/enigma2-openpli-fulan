@@ -43,7 +43,7 @@ from Plugins.Plugin import PluginDescriptor
 from Components.PluginComponent import plugins
 from Screens.ChoiceBox import ChoiceBox
 from Screens.EventView import EventViewEPGSelect
-from os import remove
+import os
 import re
 profile("ChannelSelection.py after imports")
 
@@ -105,6 +105,12 @@ EDIT_ALTERNATIVES = 2
 def append_when_current_valid(current, menu, args, level=0, key=""):
 	if current and current.valid() and level <= config.usage.setup_level.index:
 		menu.append(ChoiceEntryComponent(key, args))
+
+def removed_userbouquets_available():
+	for file in os.listdir("/etc/enigma2/"):
+		if file.startswith("userbouquet") and file.endswith(".del"):
+			return True
+	return False
 
 class ChannelContextMenu(Screen):
 	def __init__(self, session, csel):
@@ -213,6 +219,9 @@ class ChannelContextMenu(Screen):
 					append_when_current_valid(current, menu, (_("rename entry"), self.renameEntry), level=0, key="2")
 					append_when_current_valid(current, menu, (_("remove entry"), self.removeEntry), level=0, key="8")
 					self.removeFunction = self.removeBouquet
+					if removed_userbouquets_available():
+						append_when_current_valid(current, menu, (_("purge deleted userbouquets"), self.purgeDeletedBouquets), level=0)
+						append_when_current_valid(current, menu, (_("restore deleted userbouquets"), self.restoreDeletedBouquets), level=0)
 		if self.inBouquet: # current list is editable?
 			if csel.bouquet_mark_edit == OFF:
 				if csel.movemode:
@@ -287,6 +296,29 @@ class ChannelContextMenu(Screen):
 			self.csel.removeBouquet()
 			eDVBDB.getInstance().reloadBouquets()
 			self.close()
+
+	def purgeDeletedBouquets(self):
+		self.session.openWithCallback(self.purgeDeletedBouquetsCallback, MessageBox, _("Are you sure to purge all deleted userbouquets?"))
+
+	def purgeDeletedBouquetsCallback(self, answer):
+		if answer:
+			for file in os.listdir("/etc/enigma2/"):
+				if file.startswith("userbouquet") and file.endswith(".del"):
+					file = "/etc/enigma2/" + file
+					print "permantly remove file ", file
+					os.remove(file)
+			self.close()
+
+	def restoreDeletedBouquets(self):
+		for file in os.listdir("/etc/enigma2/"):
+			if file.startswith("userbouquet") and file.endswith(".del"):
+				file = "/etc/enigma2/" + file
+				print "restore file ", file[:-4]
+				os.rename(file, file[:-4])
+		eDVBDB.getInstance().reloadBouquets()
+		refreshServiceList()
+		self.csel.showFavourites()
+		self.close()
 
 	def playMain(self):
 		sel = self.csel.getCurrentSelection()
@@ -893,17 +925,7 @@ class ChannelSelectionEdit:
 		print "removeBouquet", refstr
 		pos = refstr.find('FROM BOUQUET "')
 		filename = None
-		if pos != -1:
-			refstr = refstr[pos+14:]
-			pos = refstr.find('"')
-			if pos != -1:
-				filename = eEnv.resolve('${sysconfdir}/enigma2/') + refstr[:pos]
 		self.removeCurrentService(bouquet=True)
-		try:
-			if filename is not None:
-				remove(filename)
-		except OSError:
-			print "error during remove of", filename
 
 	def removeSatelliteService(self):
 		current = self.getCurrentSelection()

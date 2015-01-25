@@ -750,7 +750,7 @@ void eDVBDB::loadBouquet(const char *path)
 		extension = ".tv";
 	if (!strcmp(path, "bouquets.radio"))
 		extension = ".radio";
-	if (extension.length())
+	if (m_load_unlinked_userbouquets && extension.length())
 	{
 		std::string p = eEnv::resolve("${sysconfdir}/enigma2/");
 		DIR *dir = opendir(p.c_str());
@@ -1028,7 +1028,7 @@ eDVBDB *eDVBDB::instance;
 using namespace xmlcc;
 
 eDVBDB::eDVBDB()
-	: m_numbering_mode(false)
+	: m_numbering_mode(false), m_load_unlinked_userbouquets(true)
 {
 	instance = this;
 	reloadServicelist();
