@@ -235,7 +235,7 @@ void bsodFatal(const char *component)
 		if (getConfigBool("config.plugins.crashlogautosubmit.addWlan", false))
 			xml.cDataFromFile("wpasupplicant", "/etc/wpa_supplicant.conf");
 		xml.cDataFromFile("imageversion", "/etc/image-version");
-		xml.cDataFromFile("imageissue", "/etc/issue.net");
+		//xml.cDataFromFile("imageissue", "/etc/issue.net");
 		xml.close();
 
 		if (detailedCrash)
