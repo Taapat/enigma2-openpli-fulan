@@ -1,5 +1,6 @@
 #include <lib/gdi/glcddc.h>
 #include <lib/gdi/lcd.h>
+#include <lib/gdi/fblcd.h>
 #include <lib/base/init.h>
 #include <lib/base/init_num.h>
 
@@ -22,7 +23,12 @@ static inline int time_after(struct timespec oldtime, uint32_t delta_ms)
 
 gLCDDC::gLCDDC()
 {
-	lcd = new eDBoxLCD();
+	lcd = new eFbLCD();
+	if (!lcd->detected())
+	{
+		delete lcd;
+		lcd = new eDBoxLCD();
+	}
 	instance = this;
 
 	update = 1;
@@ -33,8 +39,18 @@ gLCDDC::gLCDDC()
 	surface.bypp = surface.stride / surface.x;
 	surface.bpp = surface.bypp*8;
 	surface.data = lcd->buffer();
-	surface.clut.colors = 0;
-	surface.clut.data = 0;
+	surface.data_phys = 0;
+	if (lcd->getLcdType() == 4)
+	{
+		surface.clut.colors = 256;
+		surface.clut.data = new gRGB[surface.clut.colors];
+		memset(surface.clut.data, 0, sizeof(*surface.clut.data)*surface.clut.colors);
+	}
+	else
+	{
+		surface.clut.colors = 0;
+		surface.clut.data = 0;
+	}
 	eDebug("LCD resolution: %d x %d x %d (stride: %d)", surface.x, surface.y, surface.bpp, surface.stride);
 
 	m_pixmap = new gPixmap(&surface);
@@ -50,6 +66,8 @@ gLCDDC::~gLCDDC()
 //e2 crashes. this is also true if the destructor does not contain any code !!!
 	delete lcd;
 #endif
+	if (surface.clut.data)
+		delete[] surface.clut.data;
 	instance = 0;
 }
 
@@ -57,6 +75,12 @@ void gLCDDC::exec(const gOpcode *o)
 {
 	switch (o->opcode)
 	{
+	case gOpcode::setPalette:
+	{
+		gDC::exec(o);
+		lcd->setPalette(surface);
+		break;
+	}
 #ifdef HAVE_TEXTLCD
 	case gOpcode::renderText:
 		if (o->parm.renderText->text)
@@ -75,8 +99,7 @@ void gLCDDC::exec(const gOpcode *o)
 			clock_gettime(CLOCK_MONOTONIC, &last_update);
 		}
 #else
-//		if (update)
-			lcd->update();
+		lcd->update();
 #endif
 	default:
 		gDC::exec(o);
