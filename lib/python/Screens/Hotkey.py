@@ -66,6 +66,7 @@ def getHotkeys():
 		( "USB", "usb", ""),
 		( "Next", "next", ""),
 		( "Previous", "previous", ""),
+		( "Subtitle", "subtitle", "Infobar/subtitleSelection"),
 		( "Portal", "portal", ""),
 		( "Portal " + _("long"), "portal_long", ""),
 		( "Timeshift", "timeshift", ""),
