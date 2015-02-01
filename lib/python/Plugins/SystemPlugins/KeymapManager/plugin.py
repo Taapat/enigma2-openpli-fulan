@@ -78,7 +78,7 @@ class KeymapSelector(Screen):
 			return fname[7:-4]
 
 	def info(self):
-		aboutbox = self.session.open(MessageBox,_("Merlin Enigma2 Keymapselector v%s\n\nIf you experience any problems please contact\nwww.dreambox-tools.info\n\n\xA9 2009-2012 DarkVolli")%VER, MessageBox.TYPE_INFO)
+		aboutbox = self.session.open(MessageBox,_("Merlin Enigma2 Keymapselector v%s\n\nIf you experience any problems please contact\nwww.dreambox-tools.info\n\n2009-2012 DarkVolli")%VER, MessageBox.TYPE_INFO)
 		aboutbox.setTitle(_("About..."))
 
 	# ask user for install the selected keymap...
