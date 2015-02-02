@@ -41,7 +41,7 @@ def InitParentalControl():
 	config.ParentalControl.retries.servicepin.tries = ConfigInteger(default = 3)
 	config.ParentalControl.retries.servicepin.time = ConfigInteger(default = 3)
 	config.ParentalControl.servicepin = ConfigSubList()
-	config.ParentalControl.age = ConfigSelection(default = "18", choices = [(0, _("No age block"))] + list((str(x), "%d+" % x) for x in range(3,19)))
+	config.ParentalControl.age = ConfigSelection(default = "18", choices = [("0", _("No age block"))] + list((str(x), "%d+" % x) for x in range(3,19)))
 
 	for i in (0, 1, 2):
 		config.ParentalControl.servicepin.append(ConfigPIN(default = -1))
@@ -95,10 +95,11 @@ class ParentalControl:
 		if service.startswith("1:") and service.rsplit(":", 1)[1].startswith("/"):
 			refstr = info and info.getInfoString(ref, iServiceInformation.sServiceref)
 			service = refstr and eServiceReference(refstr).toCompareString()
-		else:
+		elif int(config.ParentalControl.age.value):
 			event = info and info.getEvent(ref)
 			rating = event and event.getParentalData()
-			age = rating and rating.getRating() + 3 or 0
+			age = rating and rating.getRating()
+			age = age and age <= 15 and age + 3 or 0
 		if (age and age >= int(config.ParentalControl.age.value)) or service and ((config.ParentalControl.type.value == LIST_WHITELIST and not self.whitelist.has_key(service)) or (config.ParentalControl.type.value == LIST_BLACKLIST and self.blacklist.has_key(service))):
 			#Check if the session pin is cached
 			if self.sessionPinCached == True:
