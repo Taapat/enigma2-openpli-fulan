@@ -70,7 +70,7 @@ void eLCD::renderText(ePoint start, const char *text)
 #ifndef HAVE_GRAPHLCD
 eDBoxLCD::eDBoxLCD()
 {
-	int xres=132, yres=64, bpp=8;
+	int xres=32, yres=32, bpp=8;
 	flipped = false;
 	inverted = 0;
 	lcd_type = 0;
@@ -212,6 +212,7 @@ eDBoxLCD::~eDBoxLCD()
 
 void eDBoxLCD::update()
 {
+#ifndef NO_LCD
 #ifndef HAVE_TEXTLCD
 	if (lcdfd >= 0)
 	{
@@ -302,6 +303,7 @@ void eDBoxLCD::update()
 			write(lcdfd, raw, 64*64);
 		}
 	}
+#endif
 #endif
 }
 
