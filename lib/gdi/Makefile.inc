@@ -50,11 +50,3 @@ gdi_libenigma_gdi_a_SOURCES += \
 	gdi/gfbdc.cpp \
 	gdi/gfbdc.h
 endif
-
-if ! NO_LCD
-gdi_libenigma_gdi_a_SOURCES += \
-	gdi/fblcd.cpp
-
-gdiinclude_HEADERS += \
-	gdi/fblcd.h
-endif
