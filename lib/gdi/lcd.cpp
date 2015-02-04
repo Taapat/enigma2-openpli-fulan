@@ -70,7 +70,7 @@ void eLCD::renderText(ePoint start, const char *text)
 #else
 void eLCD::renderText(const char *text)
 {
-	eDebug("[LCD] text: %s", text);
+	//eDebug("[LCD] text: %s", text);
 	vfd->vfd_write_string(text, true);
 }
 #endif
