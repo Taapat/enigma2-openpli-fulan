@@ -131,8 +131,8 @@ class ClockToText(Converter, object):
 			# TRANSLATORS: long date representations dayname daynum monthname in strftime() format! See 'man strftime'
 			d = dayOfWeek[t[6]] + " " + str(t[2]) + " " + MONTHS[t[1]-1]
 		elif self.type is self.VFD:
-			# TRANSLATORS: VFD hour:minute daynum short monthname in strftime() format! See 'man strftime'
-			d = _("%2d:%02d %d/%d") % (t.tm_hour, t.tm_min, t[2], t[1])
+			# TRANSLATORS: VFD hour:minute in strftime() format! See 'man strftime'
+			d = _("%02d%02d") % (t.tm_hour, t.tm_min)
 		elif self.type is self.FORMAT:
 			spos = self.fmt_string.find('%')
 			self.fmt_string = self.fmt_string.replace('%A',_(DAYWEEK[t.tm_wday]))
