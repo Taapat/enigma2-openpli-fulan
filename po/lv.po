@@ -4588,6 +4588,9 @@ msgstr "Iestatīt uztvērēju gaidstāvē"
 msgid "Python frontend for /tmp/mmi.socket"
 msgstr "Python frontend /tmp/mmi.socket"
 
+msgid "Python version: "
+msgstr "Python versija: "
+
 msgid "Quick"
 msgstr "Ātrais"
 
