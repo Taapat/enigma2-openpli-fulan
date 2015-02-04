@@ -20,7 +20,10 @@ import skin
 class About(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		hddsplit = skin.parameters.get("AboutHddSplit",(0))[0]
+		try:
+			hddsplit = skin.parameters.get("AboutHddSplit",(0))[0]
+		except:
+			hddsplit = None
 
 		AboutText = _("Hardware: ") + about.getHardwareTypeString() + "\n"
 		AboutText += _("CPU: ") + about.getCPUInfoString() + "\n"
