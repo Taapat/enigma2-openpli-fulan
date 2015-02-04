@@ -69,5 +69,13 @@ def getDriverInstalledDate():
 		return  "%s-%s-%s" % (driver[:4], driver[4:6], driver[6:])
 	except:
 		return _("unknown")
+def getPythonVersionString():
+	try:
+		import commands
+		status, output = commands.getstatusoutput("python -V")
+		return output.split(' ')[1]
+	except:
+		return _("unknown")
+
 # For modules that do "from About import about"
 about = sys.modules[__name__]
