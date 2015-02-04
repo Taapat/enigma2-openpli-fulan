@@ -55,6 +55,7 @@ void eLCD::unlock()
 	locked=0;
 }
 
+#ifndef NO_LCD
 #ifdef HAVE_TEXTLCD
 void eLCD::renderText(ePoint start, const char *text)
 {
@@ -64,6 +65,13 @@ void eLCD::renderText(ePoint start, const char *text)
 		message = replace_all(message, "\n", " ");
 		::write(lcdfd, message.c_str(), message.size());
 	}
+}
+#endif
+#else
+void eLCD::renderText(const char *text)
+{
+	eDebug("[LCD] text: %s", text);
+	vfd->vfd_write_string(text, true);
 }
 #endif
 
@@ -130,6 +138,9 @@ eDBoxLCD::eDBoxLCD()
 	instance=this;
 
 	setSize(xres, yres, bpp);
+#ifdef NO_LCD
+	vfd = new evfd;
+#endif
 }
 
 void eDBoxLCD::setInverted(unsigned char inv)
@@ -203,11 +214,15 @@ int eDBoxLCD::setLCDBrightness(int brightness)
 
 eDBoxLCD::~eDBoxLCD()
 {
+#ifndef NO_LCD
 	if (lcdfd>=0)
 	{
 		close(lcdfd);
 		lcdfd=-1;
 	}
+#else
+	delete vfd;
+#endif
 }
 
 void eDBoxLCD::update()

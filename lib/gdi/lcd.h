@@ -17,6 +17,10 @@
 #include <byteswap.h>
 #endif
 
+#ifdef NO_LCD
+#include <lib/driver/vfd.h>
+#endif
+
 #define LCD_CONTRAST_MIN 0
 #define LCD_CONTRAST_MAX 63
 #define LCD_BRIGHTNESS_MIN 0
@@ -37,6 +41,9 @@ protected:
 	int locked;
 	static eLCD *instance;
 	void setSize(int xres, int yres, int bpp);
+#ifdef NO_LCD
+	evfd *vfd;
+#endif
 #endif
 public:
 	static eLCD *getInstance();
@@ -59,8 +66,12 @@ public:
 	int stride() { return _stride; };
 	virtual eSize size() { return res; };
 	virtual void update()=0;
+#ifndef NO_LCD
 #ifdef HAVE_TEXTLCD
 	virtual void renderText(ePoint start, const char *text);
+#endif
+#else
+	virtual void renderText(const char *text);
 #endif
 #endif
 };

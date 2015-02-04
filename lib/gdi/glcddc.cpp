@@ -81,6 +81,7 @@ void gLCDDC::exec(const gOpcode *o)
 {
 	switch (o->opcode)
 	{
+#ifndef NO_LCD
 	case gOpcode::setPalette:
 	{
 		gDC::exec(o);
@@ -92,6 +93,16 @@ void gLCDDC::exec(const gOpcode *o)
 		if (o->parm.renderText->text)
 		{
 			lcd->renderText(gDC::m_current_offset, o->parm.renderText->text);
+			free(o->parm.renderText->text);
+		}
+		delete o->parm.renderText;
+		break;
+#endif
+#else
+	case gOpcode::renderText:
+		if (o->parm.renderText->text)
+		{
+			lcd->renderText(o->parm.renderText->text);
 			free(o->parm.renderText->text);
 		}
 		delete o->parm.renderText;
