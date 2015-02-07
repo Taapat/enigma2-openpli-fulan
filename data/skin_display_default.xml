@@ -28,13 +28,17 @@
 		</widget>
 	</screen>
 	<screen name="InfoBarSummary" position="fill">
-		<widget source="session.CurrentService" render="ChannelNumber" position="fill"/>
-		<!--widget source="session.CurrentService" render="Label" position="fill">
-			<convert type="ServiceName">Name</convert>
-		</widget-->
+		<widget source="session.CurrentService" render="Label" position="fill">
+			<convert type="VfdNumberClock"/>
+			<!--convert type="VfdDisplay">Number;Name;Time;5</convert-->
+			<!--convert type="ServiceName">Name</convert-->
+		</widget>
 	</screen>
 	<screen name="InfoBarMoviePlayerSummary" position="fill" >
-		<eLabel text="PLAY" position="fill"/>
+		<widget source="session.CurrentService" render="Label" position="fill">
+			<convert type="VfdNumberClock">PLAY</convert>
+		</widget>
+		<!--eLabel text="SETUP" position="fill"/-->
 	</screen>
 	<screen name="SetupSummary" position="fill">
 	   <eLabel text="SETUP" position="fill"/>
