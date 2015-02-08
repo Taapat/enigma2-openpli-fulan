@@ -28,6 +28,8 @@ class VfdDisplay(Poll, Converter, object):
 	def __init__(self, type):
 		Converter.__init__(self, type)
 		Poll.__init__(self)
+		self.num = None
+		self.name = None
 		self.index = -1
 		self.type = []
 		for x in type.split(';'):
@@ -42,28 +44,16 @@ class VfdDisplay(Poll, Converter, object):
 		self.poll_enabled = True
 
 	def translify(self, tr_string):
-
 		TRANSTABLE = (
-			# three-symbols replacements
 			("Щ", "Shс"),
-			# two-symbol replacements
 			("Ё", "Yo"),
-			("Ё", "YO"),
 			("Ж", "Zh"),
-			("Ж", "ZH"),
 			("Ц", "Ts"),
-			("Ц", "TS"),
 			("Ч", "Ch"),
-			("Ч", "CH"),
 			("Ш", "Sh"),
-			("Ш", "SH"),
 			("Ы", "Y"),
-			("Ы", "Y"),
-			("Ю", "U"),
 			("Ю", "U"),
 			("Я", "Ya"),
-			("Я", "YA"),
-			# one-symbol replacements
 			("А", "A"),
 			("Б", "B"),
 			("В", "V"),
@@ -86,12 +76,9 @@ class VfdDisplay(Poll, Converter, object):
 			("Ф", "F"),
 			("Х", "H"),
 			("Э", "E"),
-			("Ъ", "`b"),
-			("Ь", "b"),
-			## lower
-			# three-symbols replacements
+			("Ъ", ""),
+			("Ь", ""),
 			("щ", "shc"),
-			# two-symbols replacements
 			("ё", "yo"),
 			("ж", "zh"),
 			("ц", "ts"),
@@ -100,7 +87,6 @@ class VfdDisplay(Poll, Converter, object):
 			("ы", "y"),
 			("ю", "u"),
 			("я", "ya"),
-			# one-symbol replacements
 			("а", "a"),
 			("б", "b"),
 			("в", "v"),
@@ -123,10 +109,8 @@ class VfdDisplay(Poll, Converter, object):
 			("ф", "f"),
 			("х", "h"),
 			("э", "e"),
-			("ъ", "`b"),
-			("ь", "b"),
-			)  #: Translation table
-
+			("ъ", ""),
+			("ь", ""))
 		for symb_in, symb_out in TRANSTABLE:
 			tr_string = tr_string.replace(symb_in, symb_out)
 		return tr_string
@@ -138,43 +122,50 @@ class VfdDisplay(Poll, Converter, object):
 		else:
 			self.index = 0
 		if self.type[self.index] == "Number":
-			try:
-				service = self.source.serviceref
-				if service:
-					num = service.getChannelNum()
-				else:
-					num = None
-				if num:
-					return str(num)
-				return "----"
-			except:
-				return "----"
+			if self.num:
+				return self.num
+			else:
+				try:
+					service = self.source.serviceref
+					if service:
+						self.num = str(service.getChannelNum())
+					else:
+						self.num = None
+				except:
+					pass
+				if self.num:
+					return self.num
 		elif self.type[self.index] == "Time" or self.type[self.index] == "Clock":
 			return datetime.today().strftime("%H%M")
-		service = self.source.service
-		if isinstance(service, iPlayableServicePtr):
-			info = service and service.info()
-			ref = None
-		else: # reference
-			info = service and self.source.info
-			ref = service
-		if info is None:
-			return "----"
-		if self.type[self.index] == "Name":
-			if ref:
-				name = info.getName(ref) or "----"
+		elif self.type[self.index] == "Name":
+			if self.name:
+				return self.name
 			else:
-				name = info.getName() or "----"
-			name = name.replace("\xc2\x86", "").replace("\xc2\x87", "")
-			return self.translify(name)
-		return str(self.type[self.index])
+				service = self.source.service
+				if isinstance(service, iPlayableServicePtr):
+					info = service and service.info()
+					ref = None
+				else: # reference
+					info = service and self.source.info
+					ref = service
+				if info:
+					if ref:
+						self.name = info.getName(ref) or ""
+					else:
+						self.name = info.getName() or ""
+					self.name = self.translify(self.name.replace("\xc2\x86", "").replace("\xc2\x87", ""))
+				if self.name:
+					return self.name
+		else:
+			return str(self.type[self.index])
 
 	text = property(getText)
 
 	def changed(self, what):
 		if what[0] is self.CHANGED_SPECIFIC:
-			if self.index:
-				self.index = -1
+			self.num = None
+			self.name = None
+			self.index = -1
 			Converter.changed(self, what)
 		elif what[0] is self.CHANGED_POLL:
 			self.downstream_elements.changed(what)
