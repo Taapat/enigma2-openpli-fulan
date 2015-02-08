@@ -70,7 +70,7 @@ class Standby(Screen):
 		self.prev_running_service = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		service = self.prev_running_service and self.prev_running_service.toString()
 		if service:
-			if service.startswith("1:") and service.rsplit(":", 1)[1].startswith("/"):
+			if service[:2] == "1:" and service.rsplit(":", 1)[1][:1] == "/":
 				self.paused_service = self.session.current_dialog
 				self.paused_service.pauseService()
 			else:
