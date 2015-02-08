@@ -3,7 +3,6 @@
 # By Taapat 2015, thx 2boom
 #
 
-
 from datetime import datetime
 from Poll import Poll
 from Components.Converter.Converter import Converter
@@ -15,37 +14,40 @@ class VfdNumberClock(Poll, Converter, object):
 		Converter.__init__(self, type)
 		Poll.__init__(self)
 		self.type = type and str(type)
-		self.index = -1
+		self.index = False
+		self.num = None
 		self.poll_interval = 10000
 		self.poll_enabled = True
 
 	@cached
 	def getText(self):
-		if self.index < 1:
-			self.index += 1
+		if self.index:
+			self.index = False
+			return datetime.today().strftime('%H%M')
 		else:
-			self.index = 0
-		if not self.index:
+			self.index = True
 			if self.type:
 				return self.type
-			try:
-				service = self.source.serviceref
-				if service:
-					num = service.getChannelNum()
-				else:
-					num = None
-				if num:
-					return str(num)
-			except:
-				pass
-		return datetime.today().strftime('%H%M')
+			elif self.num:
+				return self.num
+			else:
+				try:
+					service = self.source.serviceref
+					if service:
+						self.num = str(service.getChannelNum())
+					else:
+						self.num = None
+				except:
+					pass
+				if self.num:
+					return self.num
 
 	text = property(getText)
 
 	def changed(self, what):
 		if what[0] is self.CHANGED_SPECIFIC:
-			if self.index:
-				self.index = -1
+			self.index = False
+			self.num = None
 			Converter.changed(self, what)
 		elif what[0] is self.CHANGED_POLL:
 			self.downstream_elements.changed(what)
