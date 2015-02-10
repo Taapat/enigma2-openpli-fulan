@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-31 21:26+0200\n"
+"POT-Creation-Date: 2015-02-10 22:52+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -166,15 +166,15 @@ msgstr "izvēlētas pakotnes."
 msgid " updates available."
 msgstr "atjaunojumi pieejami."
 
+#. TRANSLATORS: VFD hour:minute in strftime() format! See 'man strftime'
+#, python-format
+msgid "%02d%02d"
+msgstr "%02d%02d"
+
 #. TRANSLATORS: short time representation hour:minute
 #, python-format
 msgid "%2d:%02d"
 msgstr "%2d:%02d"
-
-#. TRANSLATORS: VFD hour:minute daynum short monthname in strftime() format! See 'man strftime'
-#, python-format
-msgid "%2d:%02d %d/%d"
-msgstr "%2d:%02d %d/%d"
 
 #. TRANSLATORS: full time representation hour:minute:seconds
 #, python-format
@@ -186,6 +186,9 @@ msgstr "%A %d %B"
 
 msgid "%H:%M"
 msgstr "%H:%M"
+
+msgid "%Y-%m-%d %H:%M"
+msgstr "%Y-%m-%d %H:%M"
 
 #. TRANSLATORS: Intermediate scanning result, '%d' channel(s) have been found so far
 #, python-format
@@ -722,6 +725,9 @@ msgstr "Atļaut subtitrus dzirdes traucējumiem"
 
 msgid "Alpha"
 msgstr "Alfa"
+
+msgid "Also on standby"
+msgstr "Arī pēc gaidstāves"
 
 msgid "Alternative"
 msgstr "Alternatīvas"
@@ -1824,6 +1830,9 @@ msgstr "DVB-T"
 
 msgid "DVB-T2"
 msgstr "DVB-T2"
+
+msgid "DVD"
+msgstr "DVD"
 
 msgid "DVD data format"
 msgstr "DVD datu formāts"
@@ -3351,7 +3360,7 @@ msgstr "Ielādēt filmu sarakstā filmu garumus"
 msgid "Load playlist"
 msgstr "Ielādēt repertuāru"
 
-msgid "Load unlinked userbouqeuts"
+msgid "Load unlinked userbouquets"
 msgstr "Ielādēt neiekļautās buķetes"
 
 msgid "Local network"
@@ -3386,6 +3395,9 @@ msgstr "Loop caur"
 
 msgid "Luxembourgish"
 msgstr "Luksemburgiešu"
+
+msgid "MENU"
+msgstr "IZVĒLNE"
 
 msgid "MMC card"
 msgstr "MMC karte"
@@ -3485,6 +3497,16 @@ msgstr "Atmiņas indekss"
 
 msgid "Menu"
 msgstr "Izvēlne"
+
+#, python-format
+msgid ""
+"Merlin Enigma2 Keymapselector v%s\n"
+"\n"
+"If you experience any problems please contact\n"
+"www.dreambox-tools.info\n"
+"\n"
+"2009-2012 DarkVolli"
+msgstr ""
 
 msgid "Message"
 msgstr "Paziņojums"
@@ -4009,6 +4031,9 @@ msgstr "Tikai paplašinājumi."
 msgid "Only free scan"
 msgstr "Tikai nekodētos"
 
+msgid "Only on startup"
+msgstr "Tikai startējot"
+
 msgid "Open service list"
 msgstr "Atvērt kanālu sarakstu"
 
@@ -4051,6 +4076,9 @@ msgstr "PIDi"
 msgid "PIN code needed"
 msgstr "Vajadzīgs PIN kods"
 
+msgid "PLAY"
+msgstr "ATSKAŅOT"
+
 msgid "PLP ID"
 msgstr "PLP ID"
 
@@ -4059,6 +4087,9 @@ msgstr "PLS kods"
 
 msgid "PLS Mode"
 msgstr "PLS režīms"
+
+msgid "PLUGINS"
+msgstr "SPRAUDŅI"
 
 msgid "PMT PID"
 msgstr "PMT PID"
@@ -4939,6 +4970,12 @@ msgstr "Krievu"
 msgid "S-Video"
 msgstr "S-Video"
 
+msgid "SCAN"
+msgstr "SKANĒŠANA"
+
+msgid "SETUP"
+msgstr "UZSTĀDĪJUMI"
+
 msgid "SID"
 msgstr "SID"
 
@@ -5328,6 +5365,9 @@ msgstr "Iestatīt interfeisu kā noklusēto"
 
 msgid "Set limits"
 msgstr "Iestatīt limitus"
+
+msgid "Set startup service"
+msgstr "Iestatīt kā starta kanālu"
 
 msgid "Set the type of the progress indication in the channel selection screen."
 msgstr "Iestatīt norises indikatora tipu kanālu pārslēgšanas logā."
@@ -6030,6 +6070,9 @@ msgstr "Pārslēgt uz TV režīmu"
 msgid "Switch to filelist"
 msgstr "Iet uz failu sarakstu"
 
+msgid "Switch to next bouquet"
+msgstr "Pārslēgt uz nākamo buķeti"
+
 msgid "Switch to next channel"
 msgstr "Pārslēgt uz nākamo kanālu"
 
@@ -6041,6 +6084,9 @@ msgstr "Pārslēgt uz nākamo papildkanālu"
 
 msgid "Switch to playlist"
 msgstr "Pārslēgt uz repertuāru"
+
+msgid "Switch to previous bouquet"
+msgstr "Pārslēgt iepriekšējo buķeti"
 
 msgid "Switch to previous channel"
 msgstr "Pārslēgt iepriekšējo kanālu"
@@ -7115,7 +7161,7 @@ msgstr "Iestatīt rietumu limitu"
 msgid "What do you want to scan?"
 msgstr "Ko Jūs vēlaties meklēt?"
 
-msgid "When enabled enigma2 will load unlinked userbouquets. This means that userbouquets that are availbalbe, but not included in the bouquets.tv or bouquets.radio files, will still be loaded. This allows you for example to keep your own user bouquet while installed settings are upgraded"
+msgid "When enabled enigma2 will load unlinked userbouquets. This means that userbouquets that are available, but not included in the bouquets.tv or bouquets.radio files, will still be loaded. This allows you for example to keep your own user bouquet while installed settings are upgraded"
 msgstr "Ja ieslēgts, enigma2 ielādēs neiekļutās buķetes. Tas nozīmē ka buķetes tiek izmantotas, bet nav iekļutas bouquets.tv vai bouquets.radio failos. Tas atļuj, piemēram, saglabāt jūsu individuālās buķetes, ja tiek atjaunoti uzstādījumi."
 
 msgid "When enabled the PiP can be closed by the exit button."
