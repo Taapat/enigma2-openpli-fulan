@@ -1,56 +1,56 @@
 <skin>
-	<screen name="SimpleSummary" position="fill">
-		<eLabel position="fill"/>
+	<screen name="SimpleSummary" position="0,0" size="1,1">
+		<eLabel position="0,0" size="1,1"/>
 	</screen>
-	<screen name="WizardSummary" position="fill">
-		<widget source="parent.list" render="Label" position="fill">
+	<screen name="WizardSummary" position="0,0" size="1,1">
+		<widget source="parent.list" render="Label" position="0,0" size="1,1">
 			<convert type="StringListSelection"/>
 		</widget>
 	</screen>
-	<screen name="PluginBrowserSummary" position="fill">
-		<eLabel text="PLUGINS" position="fill"/>
+	<screen name="PluginBrowserSummary" position="0,0" size="1,1">
+		<eLabel text="PLUGINS" position="0,0" size="1,1"/>
 	</screen>
-	<screen name="MovieContextMenuSummary" position="fill">
-	   <eLabel text="PLAY" position="fill"/>
+	<screen name="MovieContextMenuSummary" position="0,0" size="1,1">
+	   <eLabel text="PLAY" position="0,0" size="1,1"/>
 	</screen>
-	<screen name="MovieSelectionSummary" position="fill">
-	   <eLabel text="PLAY" position="fill"/>
+	<screen name="MovieSelectionSummary" position="0,0" size="1,1">
+	   <eLabel text="PLAY" position="0,0" size="1,1"/>
 	</screen>
-	<screen name="MenuSummary" position="fill">
-		<eLabel text="MENU" position="fill"/>
-		<!--widget source="parent.menu" render="Label" position="fill">
+	<screen name="MenuSummary" position="0,0" size="1,1">
+		<eLabel text="MENU" position="0,0" size="1,1"/>
+		<!--widget source="parent.menu" render="Label" position="0,0" size="1,1">
 			<convert type="StringListSelection"/>
 		</widget-->
 	</screen>
-	<screen name="StandbySummary" position="fill">
-		<widget source="global.CurrentTime" render="Label" position="fill">
+	<screen name="StandbySummary" position="0,0" size="1,1">
+		<widget source="global.CurrentTime" render="Label" position="0,0" size="1,1">
 			<convert type="ClockToText">VFD</convert>
 		</widget>
 	</screen>
-	<screen name="InfoBarSummary" position="fill">
-		<widget source="session.CurrentService" render="Label" position="fill">
+	<screen name="InfoBarSummary" position="0,0" size="1,1">
+		<widget source="session.CurrentService" render="Label" position="0,0" size="1,1">
 			<convert type="VfdNumberClock"/>
 			<!--convert type="VfdDisplay">Number;Name;Time;5</convert-->
 			<!--convert type="ServiceName">Name</convert-->
 		</widget>
 	</screen>
-	<screen name="InfoBarMoviePlayerSummary" position="fill" >
-		<widget source="session.CurrentService" render="Label" position="fill">
+	<screen name="InfoBarMoviePlayerSummary" position="0,0" size="1,1" >
+		<widget source="session.CurrentService" render="Label" position="0,0" size="1,1">
 			<convert type="VfdNumberClock">PLAY</convert>
 		</widget>
-		<!--eLabel text="SETUP" position="fill"/-->
+		<!--eLabel text="SETUP" position="0,0" size="1,1"/-->
 	</screen>
-	<screen name="SetupSummary" position="fill">
-	   <eLabel text="SETUP" position="fill"/>
-	   <!--widget source="SetupEntry" render="Label" position="fill"/-->
+	<screen name="SetupSummary" position="0,0" size="1,1">
+	   <eLabel text="SETUP" position="0,0" size="1,1"/>
+	   <!--widget source="SetupEntry" render="Label" position="0,0" size="1,1"/-->
 	</screen>
-	<screen name="DVDSummary" position="fill">
-		<eLabel text="DVD" position="fill"/>
+	<screen name="DVDSummary" position="0,0" size="1,1">
+		<eLabel text="DVD" position="0,0" size="1,1"/>
 	</screen>
-	<screen name="ServiceScanSummary" position="fill">
-		<eLabel text="SCAN" position="fill"/>
+	<screen name="ServiceScanSummary" position="0,0" size="1,1">
+		<eLabel text="SCAN" position="0,0" size="1,1"/>
 	</screen>
-	<screen name="RdsInfoDisplaySummary" position="fill">
-		<widget source="message" render="Label" noWrap="1" position="fill"/>
+	<screen name="RdsInfoDisplaySummary" position="0,0" size="1,1">
+		<widget source="message" render="Label" noWrap="1" position="0,0" size="1,1"/>
 	</screen>
 </skin>
