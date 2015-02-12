@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-10 22:52+0200\n"
+"POT-Creation-Date: 2015-02-12 23:06+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1161,12 +1161,6 @@ msgstr "Mainīt atkārtošanas un aiztures iestatījumus?"
 msgid "Change service PIN"
 msgstr "Mainīt kanāla PIN"
 
-msgid "Change service PINs"
-msgstr "Mainīt kanālu PINus"
-
-msgid "Change setup PIN"
-msgstr "Mainīt iestatījumu PIN"
-
 msgid "Change step size"
 msgstr "Mainīt soļa lielumu"
 
@@ -2270,14 +2264,8 @@ msgstr "Rediģēt"
 msgid "Edit DNS"
 msgstr "Rediģēt DNS"
 
-msgid "Edit bouquets list"
-msgstr "Rediģēt buķešu sarakstu"
-
 msgid "Edit chapters of current title"
 msgstr "Rediģēt pašreizējā nosaukuma nodaļas"
-
-msgid "Edit services list"
-msgstr "Rediģēt kanālu sarakstu"
 
 msgid "Edit settings"
 msgstr "Rediģēt"
@@ -2356,9 +2344,6 @@ msgstr "Aktivizēt freesat EPG"
 
 msgid "Enable multiple bouquets"
 msgstr "Aktivizēt vairāk-buķešu režīmu"
-
-msgid "Enable parental control"
-msgstr "Aktivizēt vecāku kontroli"
 
 msgid "Enable remote enigma2 receiver to be tried to tune into services that cannot be tuned into locally (e.g. tuner is occupied or service type is unavailable on the local tuner. Specify complete URL including http:// and port number (normally ...:8001), e.g. http://second_box:8001."
 msgstr "Aktivizēt Enigma2 uztvērēju, kuru izmatot lai mēģinātu uztvert kanālu kurš nav uztverams lokāli (piem. uztvērējs ir aizņemts vai kanāla tips nav pieejams lokālajā uztvērējā). Norādiet pilnu adresi ieskaitot http:// un porta numuru (pēc nolkusējuma ...:8001), piem. http://second_box:8001."
@@ -3877,15 +3862,6 @@ msgstr ""
 "Vai vēlaties tulīt mainīt kanāla PIN?\n"
 "Ja teiksiet 'NĒ', kanāla aizsardzība paliks neaktīva!"
 
-msgid ""
-"No valid setup PIN found!\n"
-"Do you like to change the setup PIN now?\n"
-"When you say 'No' here the setup protection stay disabled!"
-msgstr ""
-"Derīgi PIN iestatījumi netika atrasti!\n"
-"Vai vēlaties tulīt mainīt PIN iestatījumus?\n"
-"Ja teiksiet 'NĒ', aizsardzības iestatījumi paliks neaktīvi!"
-
 msgid "No wireless networks found! Searching..."
 msgstr "Bezvadu tīkli nav atrasti! Meklē..."
 
@@ -4127,9 +4103,6 @@ msgstr "Vecāku kontroles kanālu redaktors"
 
 msgid "Parental control setup"
 msgstr "Vecāku kontroles iestatījumi"
-
-msgid "Parental control type"
-msgstr "Vecāku kontroles veids"
 
 msgid "Password"
 msgstr "Parole"
@@ -4597,9 +4570,6 @@ msgstr "Aizsargāt pēc epg norādītā vecuma"
 
 msgid "Protect services"
 msgstr "Aizsargāt kanālus"
-
-msgid "Protect setup"
-msgstr "Aizsargāt iestatījumus"
 
 msgid "Provider"
 msgstr "Operators"
@@ -7786,9 +7756,6 @@ msgstr "melns"
 msgid "black & white"
 msgstr "melns un balts"
 
-msgid "blacklist"
-msgstr "melnais saraksts"
-
 msgid "blue"
 msgstr "zilā"
 
@@ -7824,9 +7791,6 @@ msgstr "cirkulārā labā"
 
 msgid "comedy"
 msgstr "komēdija"
-
-msgid "complex"
-msgstr "komplicēts"
 
 msgid "config menu"
 msgstr "konfigurācijas izvēlne"
@@ -8455,9 +8419,6 @@ msgstr "kanāla PIN"
 msgid "set as startup service"
 msgstr "iestatīt kā starta kanālu"
 
-msgid "setup PIN"
-msgstr "iestatījumu PIN"
-
 msgid "show DVD main menu"
 msgstr "rādīt DVD galveno izvēlni"
 
@@ -8655,9 +8616,6 @@ msgstr "kad PiPzap ieslēgts pārslēgt kanālu augšup..."
 
 msgid "white"
 msgstr "balts"
-
-msgid "whitelist"
-msgstr "baltais saraksts"
 
 msgid "width"
 msgstr "platums"
