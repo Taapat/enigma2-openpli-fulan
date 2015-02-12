@@ -524,19 +524,19 @@
 		<key id="KEY_YELLOW" mapto="yellow_long" flags="l"/>
 		<key id="KEY_BLUE" mapto="blue" flags="b"/>
 		<key id="KEY_BLUE" mapto="blue_long" flags="l"/>
-		<key id="KEY_RECORD" mapto="rec" flags="m"/>
-		<key id="KEY_TV" mapto="showTv" flags="m"/>
+		<key id="KEY_RECORD" mapto="record" flags="m"/>
+		<key id="KEY_TV" mapto="tv" flags="m"/>
 		<key id="KEY_SUBTITLE" mapto="subtitle" flags="m"/>
-		<key id="KEY_MENU" mapto="mainMenu" flags="m"/>
+		<key id="KEY_MENU" mapto="menu" flags="m"/>
 		<key id="KEY_INFO" mapto="info" flags="m"/>
-		<key id="KEY_VMODE" mapto="vformat" flags="m"/>
-		<key id="KEY_RECALL" mapto="back" flags="m"/>
+		<key id="KEY_VMODE" mapto="vmode" flags="m"/>
+		<key id="KEY_RECALL" mapto="recall" flags="m"/>
 		<key id="KEY_EPG" mapto="epg" flags="b"/>
 		<key id="KEY_EPG" mapto="epg_long" flags="l"/>
-		<key id="KEY_LEFT" mapto="cross_left" flags="m"/>
-		<key id="KEY_RIGHT" mapto="cross_right" flags="m"/>
-		<key id="KEY_UP" mapto="cross_up" flags="m"/>
-		<key id="KEY_DOWN" mapto="cross_down" flags="m"/>
+		<key id="KEY_LEFT" mapto="left" flags="m"/>
+		<key id="KEY_RIGHT" mapto="right" flags="m"/>
+		<key id="KEY_UP" mapto="up" flags="m"/>
+		<key id="KEY_DOWN" mapto="down" flags="m"/>
 		<key id="KEY_OK" mapto="ok" flags="m"/>
 		<key id="KEY_CHANNELUP" mapto="channelup" flags="m"/>
 		<key id="KEY_CHANNELDOWN" mapto="channeldown" flags="m"/>
@@ -549,7 +549,7 @@
 		<key id="KEY_FASTFORWARD" mapto="fastforward" flags="m"/>
 		<key id="KEY_SLOW" mapto="slow" flags="m"/>
 		<key id="KEY_FAST" mapto="fast" flags="m"/>
-		<key id="KEY_TIME" mapto="timeshift" flags="m"/>
+		<key id="KEY_TIME" mapto="time" flags="m"/>
 		<key id="KEY_SLEEP" mapto="sleep" flags="m"/>
 		<key id="KEY_POWER" mapto="power" flags="b"/>
 		<key id="KEY_POWER" mapto="power_long" flags="l"/>

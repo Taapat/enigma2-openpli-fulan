@@ -14,7 +14,7 @@ from enigma import eServiceReference
 import os
 
 def getHotkeys():
-	return [(_("Red") + " " + _("long"), "red_long", ""),
+	keys = [(_("Red") + " " + _("long"), "red_long", ""),
 		(_("Green") + " " + _("long"), "green_long", ""),
 		(_("Yellow") + " " + _("long"), "yellow_long", ""),
 		(_("Blue") + " " + _("long"), "blue_long", ""),
@@ -31,14 +31,14 @@ def getHotkeys():
 		(_("Yellow"), "yellow", ""),
 		(_("Blue"), "blue", ""),
 		( "TV/Sat", "tvsat", ""),
-		( "Vformat", "vformat", ""),
+		( "Vformat", "vmode", ""),
 		( "Sleep", "sleep", ""),
 		( "Picasa", "picasa", ""),
 		( "Shoutcast", "shoutcast", ""),
 		( "Youtube", "youtube", ""),
 		( "Spark", "spark", ""),
-		( "Tv/Radio", "showTv", ""),
-		( "Recall", "back", ""),
+		( "Tv/Radio", "tv", ""),
+		( "Recall", "recall", ""),
 		( "Info", "info", ""),
 		( "Sat", "sat", "Infobar/showSatellites"),
 		( "Sat " + _("long"), "sat_long", ""),
@@ -49,13 +49,13 @@ def getHotkeys():
 		( "Favorites " + _("long"), "favorites_long", ""),
 		( "Epg", "epg", "Plugins/Extensions/GraphMultiEPG/1"),
 		( "Epg " + _("long"), "epg_long", "Infobar/showEventInfoPlugins"),
-		( "Menu", "mainMenu", ""),
-		(_("Left"), "cross_left", ""),
-		(_("Right"), "cross_right", ""),
-		(_("Up"), "cross_up", ""),
-		(_("Down"), "cross_down", ""),
+		( "Menu", "menu", ""),
+		(_("Left"), "left", ""),
+		(_("Right"), "right", ""),
+		(_("Up"), "up", ""),
+		(_("Down"), "down", ""),
 		( "Find", "find", ""),
-		( "Record", "rec", ""),
+		( "Record", "record", ""),
 		( "Play", "play", ""),
 		( "Stop", "stop", ""),
 		( "Pause", "pause", ""),
@@ -69,11 +69,23 @@ def getHotkeys():
 		( "Subtitle", "subtitle", "Infobar/subtitleSelection"),
 		( "Portal", "portal", ""),
 		( "Portal " + _("long"), "portal_long", ""),
-		( "Timeshift", "timeshift", ""),
+		( "Timeshift", "time", ""),
 		( "Slow", "slow", ""),
 		( "Fast", "fast", ""),
 		( "Power", "power", ""),
 		( "Power " + _("long"), "power_long", "")]
+
+	usedkeys = []
+	lircfile = "/etc/lircd.conf"
+	stbid = open("/proc/cmdline", "r").read().split("STB_ID=", 1)[1].rsplit(":", 4)[0].replace(":", "_")
+	if os.path.exists(lircfile + "." + stbid):
+		lircfile += "." + stbid
+	for line in open(lircfile, "r").readlines():
+		if "KEY_" in line:
+			key = line.replace(" ", "").replace("\t", "").split("KEY_", 1)[1].split("0x", 1)[0].lower()
+			usedkeys.append(key)
+	keys = [key for key in keys if key[1].split("_")[0] in usedkeys]
+	return keys
 
 config.misc.hotkey = ConfigSubsection()
 config.misc.hotkey.additional_keys = ConfigYesNo(default=False)
@@ -253,7 +265,7 @@ class HotkeySetup(Screen):
 	def toggleAdditionalKeys(self):
 		config.misc.hotkey.additional_keys.value = not config.misc.hotkey.additional_keys.value
 		config.misc.hotkey.additional_keys.save()
-		self["list"].setList(self.list[:config.misc.hotkey.additional_keys.value and len(self.hotkeys) or 10])
+		self["list"].setList(self.list[:config.misc.hotkey.additional_keys.value and len(self.hotkeys) or 4])
 
 	def getFunctions(self):
 		key = self["list"].l.getCurrentSelection()[0][1]
