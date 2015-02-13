@@ -77,9 +77,14 @@ def getHotkeys():
 
 	usedkeys = []
 	lircfile = "/etc/lircd.conf"
-	stbid = open("/proc/cmdline", "r").read().split("STB_ID=", 1)[1].rsplit(":", 4)[0].replace(":", "_")
-	if os.path.exists(lircfile + "." + stbid):
-		lircfile += "." + stbid
+	stbid = open("/proc/cmdline", "r").read()
+	if "STB_ID=" in stbid:
+		try:
+			stbid = stbid.split("STB_ID=", 1)[1].rsplit(":", 4)[0].replace(":", "_")
+		except:
+			stbid = ""
+		if os.path.exists(lircfile + "." + stbid):
+			lircfile += "." + stbid
 	for line in open(lircfile, "r").readlines():
 		if "KEY_" in line:
 			key = line.replace(" ", "").replace("\t", "").split("KEY_", 1)[1].split("0x", 1)[0].lower()
