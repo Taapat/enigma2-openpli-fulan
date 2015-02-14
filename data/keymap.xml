@@ -334,6 +334,8 @@
 		<key id="KEY_INFO" mapto="info_long" flags="l"/>
 		<key id="KEY_EPG" mapto="epg" flags="b"/>
 		<key id="KEY_EPG" mapto="epg_long" flags="l"/>
+		<key id="KEY_INFO" mapto="showEPGList" flags="b"/>
+		<key id="KEY_EPG" mapto="showEPGList" flags="b"/>
 	</map>
 
 	<map context="ChannelSelectEditActions">

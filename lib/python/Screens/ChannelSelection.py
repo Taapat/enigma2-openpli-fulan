@@ -562,7 +562,6 @@ class SelectionEventInfo:
 class ChannelSelectionEPG(InfoBarHotkey):
 	def __init__(self):
 		self.hotkeys = [("Info (EPG)", "info", "Infobar/openEventView"),
-			("Info (EPG)" + " " + _("long"), "info_long", "Infobar/showEventInfoPlugins"),
 			("Epg/Guide", "epg", "Plugins/Extensions/GraphMultiEPG/1"),
 			("Epg/Guide" + " " + _("long"), "epg_long", "Infobar/showEventInfoPlugins")]
 		self["ChannelSelectEPGActions"] = hotkeyActionMap(["ChannelSelectEPGActions"], dict((x[1], self.hotkeyGlobal) for x in self.hotkeys))
