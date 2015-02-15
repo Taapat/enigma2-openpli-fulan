@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-12 23:06+0200\n"
+"POT-Creation-Date: 2015-02-15 19:25+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -166,12 +166,6 @@ msgstr "izvēlētas pakotnes."
 msgid " updates available."
 msgstr "atjaunojumi pieejami."
 
-#. TRANSLATORS: VFD hour:minute in strftime() format! See 'man strftime'
-#, python-format
-msgid "%02d%02d"
-msgstr "%02d%02d"
-
-#. TRANSLATORS: short time representation hour:minute
 #, python-format
 msgid "%2d:%02d"
 msgstr "%2d:%02d"
@@ -4723,8 +4717,8 @@ msgstr "Relatīvs"
 msgid "Reload"
 msgstr "Pārlādēt"
 
-msgid "Reload black-/white lists"
-msgstr "Pārlādēt melno-/balto sarakstu"
+msgid "Reload blacklists"
+msgstr "Pārlādēt melno sarakstu"
 
 msgid "Reloading bouquets and services..."
 msgstr "Pārlādē buķetes un kanālus..."
@@ -5543,9 +5537,6 @@ msgstr "Rādīt kanālu tipu ikonas"
 
 msgid "Show servicelist or movies"
 msgstr "Atvērt kanālu saraksu vai ierakstus"
-
-msgid "Show services beginning with"
-msgstr "Rādīt kanālus, kas sākas ar"
 
 msgid "Show shutdown menu"
 msgstr "Rādīt izslēgšanas izvēlni"
@@ -8242,9 +8233,6 @@ msgstr "tikai no dziļās gaidstāves"
 msgid "only from standby"
 msgstr "tikai no gaidstāves"
 
-msgid "open EPG..."
-msgstr "atvērt EPG..."
-
 msgid "open Info..."
 msgstr "atvērt info..."
 
@@ -8398,9 +8386,6 @@ msgstr "izvēlēties"
 msgid "select "
 msgstr "izvēlēties "
 
-msgid "select EPG..."
-msgstr "izvēlieties EPG..."
-
 msgid "select Info..."
 msgstr "izvēlieties info..."
 
@@ -8472,9 +8457,6 @@ msgstr "sociālie/garīgā zinātne"
 
 msgid "sorting of playlists"
 msgstr "kārtot atskaņošanas sarakstu"
-
-msgid "special characters"
-msgstr "speciālās rakstzīmes"
 
 msgid "special events"
 msgstr "speciālie notikumi"
