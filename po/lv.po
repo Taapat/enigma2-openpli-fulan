@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-15 19:25+0200\n"
+"POT-Creation-Date: 2015-02-15 21:50+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -114,16 +114,6 @@ msgid ""
 msgstr ""
 "\n"
 "Skatīt, instalēt un dzēst pieejamās vai instalētās pakotnes."
-
-#. TRANSLATORS: short date representation short dayname daynum short monthname in strftime() format! See 'man strftime'
-#, python-format
-msgid " %d/%d"
-msgstr " %d-%d"
-
-#. TRANSLATORS: long date representation short dayname daynum short monthname hour:minute in strftime() format! See 'man strftime'
-#, python-format
-msgid " %d/%d  %2d:%02d"
-msgstr " %d-%d  %2d:%02d"
 
 #, python-format
 msgid " (Channel %s)"
@@ -7913,6 +7903,12 @@ msgstr "vienāds ar"
 msgid "equestrian"
 msgstr "jātnieka"
 
+msgid "error starting scanning"
+msgstr "kļūda uzsākot skanēšanu"
+
+msgid "error while scanning"
+msgstr "kļūda skanējot"
+
 msgid "et4000"
 msgstr "et4000"
 
@@ -8176,11 +8172,17 @@ msgstr "jaunumi/laika ziņas"
 msgid "no"
 msgstr "nē"
 
+msgid "no channel list"
+msgstr "nav kanālu sraksta"
+
 msgid "no description available"
 msgstr "Apraksts nav pieejams."
 
 msgid "no module found"
 msgstr "modulis nav atrasts"
+
+msgid "no resource manager"
+msgstr "nav resursu pārvaldnieka"
 
 msgid "no storage devices found"
 msgstr "atmiņas ierīce nav atrasta"
