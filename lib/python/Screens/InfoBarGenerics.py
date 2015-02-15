@@ -333,10 +333,9 @@ class InfoBarShowHide(InfoBarScreenSaver):
 
 	def showSecondInfoBar(self):
 		if config.usage.show_second_infobar.value == "EPG":
-			if not(hasattr(self, "hotkeyGlobal") and self.hotkeyGlobal("info") != 0):
-				self.hide()
-				self.hideTimer.stop()
-				self.showDefaultEPG()
+			self.hide()
+			self.hideTimer.stop()
+			self.showSingleEPG()
 		elif config.usage.show_second_infobar.value:
 			if self.secondInfoBarScreen and not self.secondInfoBarScreen.shown and config.usage.show_second_infobar.value != "Event":
 				self.secondInfoBarScreen.show()
@@ -344,7 +343,10 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			else:
 				self.hide()
 				self.hideTimer.stop()
-				self.openEventView()
+				self.openCurEventView()
+
+	def openEventView(self):
+		self.toggleShow()
 
 	def showFirstInfoBar(self):
 		if self.__state == self.STATE_HIDDEN or self.secondInfoBarScreen and self.secondInfoBarScreen.shown:
@@ -1096,6 +1098,9 @@ class InfoBarEPG:
 		self.openMultiServiceEPG()
 
 	def openEventView(self):
+		self.openCurEventView()
+
+	def openCurEventView(self):
 		from Components.ServiceEventTracker import InfoBarCount
 		if InfoBarCount > 1:
 			epglist = [ ]

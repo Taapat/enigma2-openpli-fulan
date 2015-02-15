@@ -39,7 +39,7 @@ def getHotkeys():
 		( "Spark", "spark", ""),
 		( "Tv/Radio", "tv", ""),
 		( "Recall", "recall", ""),
-		( "Info", "info", ""),
+		( "Info", "info", "Infobar/openEventView"),
 		( "Sat", "sat", "Infobar/showSatellites"),
 		( "Sat " + _("long"), "sat_long", ""),
 		( "Ok", "ok", ""),
