@@ -1,5 +1,5 @@
-from Converter import Converter
 from time import localtime, strftime
+from Converter import Converter
 from Components.Element import cached
 
 class ClockToText(Converter, object):
@@ -39,29 +39,27 @@ class ClockToText(Converter, object):
 			# TRANSLATORS: full time representation hour:minute:seconds
 			return _("%2d:%02d:%02d") % (t.tm_hour, t.tm_min, t.tm_sec)
 		elif self.type == "Date":
-			# full date representation dayname daynum monthname year in strftime() format! See 'man strftime'
-			d = _(strftime("%A", t)) + " %e " + _(strftime("%B", t)) + " %Y" 
+			# TRANSLATORS: full date representation dayname daynum monthname year in strftime() format! See 'man strftime'
+			d = _("%A %e %B %Y")
 		elif self.type == "Full":
-			# long date representation short dayname daynum short monthname hour:minute in strftime() format! See 'man strftime'
-			d = _(strftime("%a", t)) + " %e/%m  %-H:%M"
+			# TRANSLATORS: long date representation short dayname daynum short monthname hour:minute in strftime() format! See 'man strftime'
+			d = _("%a %e/%m  %-H:%M")
 		elif self.type == "ShortDate":
-			# short date representation short dayname daynum short monthname in strftime() format! See 'man strftime'
-			d = _(strftime("%a", t)) + " %e/%m"
+			# TRANSLATORS: short date representation short dayname daynum short monthname in strftime() format! See 'man strftime'
+			d = _("%a %e/%m")
 		elif self.type == "LongDate":
-			# long date representations dayname daynum monthname in strftime() format! See 'man strftime'
-			d = _(strftime("%A", t)) + " %e " + _(strftime("%B", t))
+			# TRANSLATORS: long date representations dayname daynum monthname in strftime() format! See 'man strftime'
+			d = _("%A %e %B")
 		elif self.type == "VFD":
-			# VFD hour:minute in strftime() format! See 'man strftime'
+			# VFD hour minute in strftime() format! See 'man strftime'
 			d = "%02d%02d" % (t.tm_hour, t.tm_min)
 		elif "Format" in self.type:
-			self.fmt_string = self.fmt_string.replace('%A',_(strftime("%A", t)))
-			self.fmt_string = self.fmt_string.replace('%B',_(strftime("%B", t)))
-			self.fmt_string = self.fmt_string.replace('%a',_(strftime("%a", t)))
-			self.fmt_string = self.fmt_string.replace('%b',_(strftime("%b", t)))
 			d = self.fmt_string
 		else:
 			# default
 			return _("%2d:%02d") % (t.tm_hour, t.tm_min)
+		d = d.replace('%A',_(strftime("%A", t))).replace('%B',_(strftime("%B", t))).replace('%a',_(strftime("%a", t))).replace('%b',_(strftime("%b", t)))
 		return strftime(d, t)
 
 	text = property(getText)
+
