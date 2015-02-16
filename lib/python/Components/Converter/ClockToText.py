@@ -58,7 +58,14 @@ class ClockToText(Converter, object):
 		else:
 			# default
 			return _("%2d:%02d") % (t.tm_hour, t.tm_min)
-		d = d.replace('%A',_(strftime("%A", t))).replace('%B',_(strftime("%B", t))).replace('%a',_(strftime("%a", t))).replace('%b',_(strftime("%b", t)))
+		if "%A" in d:
+			d = d.replace("%A",_(strftime("%A", t)))
+		if "%B" in d:
+			d = d.replace("%B",_(strftime("%B", t)))
+		if "%a" in d:
+			d = d.replace("%a",_(strftime("%a", t)))
+		if "%b" in d:
+			d = d.replace("%b",_(strftime("%b", t)))
 		return strftime(d, t)
 
 	text = property(getText)
