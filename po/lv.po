@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-15 21:50+0200\n"
+"POT-Creation-Date: 2015-02-16 20:20+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -168,11 +168,27 @@ msgstr "%2d:%02d:%02d"
 msgid "%A %d %B"
 msgstr "%A %d %B"
 
+#. TRANSLATORS: long date representations dayname daynum monthname in strftime() format! See 'man strftime'
+msgid "%A %e %B"
+msgstr "%A %e %B"
+
+#. TRANSLATORS: full date representation dayname daynum monthname year in strftime() format! See 'man strftime'
+msgid "%A %e %B %Y"
+msgstr "%A %e %B %Y"
+
 msgid "%H:%M"
 msgstr "%H:%M"
 
 msgid "%Y-%m-%d %H:%M"
 msgstr "%Y-%m-%d %H:%M"
+
+#. TRANSLATORS: short date representation short dayname daynum short monthname in strftime() format! See 'man strftime'
+msgid "%a %e/%m"
+msgstr "%a %e/%m"
+
+#. TRANSLATORS: long date representation short dayname daynum short monthname hour:minute in strftime() format! See 'man strftime'
+msgid "%a %e/%m  %-H:%M"
+msgstr "%a %e/%m  %-H:%M"
 
 #. TRANSLATORS: Intermediate scanning result, '%d' channel(s) have been found so far
 #, python-format
@@ -601,9 +617,6 @@ msgstr "Pievienot failu repertuāram"
 
 msgid "Add files to playlist"
 msgstr "Pievienot failus repertuāram"
-
-msgid "Add more details to the crash log"
-msgstr "Pievienot vairāk informācijas avārijas logam"
 
 msgid "Add recording (enter recording duration)"
 msgstr "Sākt ierakstu (ievadīt ieraksta ilgumu)"
@@ -1695,9 +1708,6 @@ msgstr "Nevar ierakstīt dēļ kļūdaina kanāla %s"
 
 msgid "Create DVD-ISO"
 msgstr "Izveidot DVD-ISO"
-
-msgid "Create more detailed crash log"
-msgstr "Izveidot detalizētāku avārijas logu"
 
 #, python-format
 msgid "Creating directory %s failed."
