@@ -35,7 +35,9 @@ class ClockToText(Converter, object):
 
 		t = localtime(time)
 
-		if self.type == "WithSeconds":
+		if "Format" in self.type:
+			d = self.fmt_string
+		elif self.type == "WithSeconds":
 			# TRANSLATORS: full time representation hour:minute:seconds
 			return _("%2d:%02d:%02d") % (t.tm_hour, t.tm_min, t.tm_sec)
 		elif self.type == "Date":
@@ -53,8 +55,6 @@ class ClockToText(Converter, object):
 		elif self.type == "VFD":
 			# VFD hour minute in strftime() format! See 'man strftime'
 			d = "%02d%02d" % (t.tm_hour, t.tm_min)
-		elif "Format" in self.type:
-			d = self.fmt_string
 		else:
 			# default
 			return _("%2d:%02d") % (t.tm_hour, t.tm_min)
