@@ -53,10 +53,10 @@ class ClockToText(Converter, object):
 			# TRANSLATORS: long date representations dayname daynum monthname in strftime() format! See 'man strftime'
 			d = _("%A %e %B")
 		elif self.type == "VFD":
-			# VFD hour minute in strftime() format! See 'man strftime'
+			# VFD hour minute
 			return "%02d%02d" % (t.tm_hour, t.tm_min)
 		else:
-			# default
+			# TRANSLATORS: default time format hour:minute
 			return _("%2d:%02d") % (t.tm_hour, t.tm_min)
 		if "%A" in d:
 			d = d.replace("%A",_(strftime("%A", t)))
