@@ -54,7 +54,7 @@ class ClockToText(Converter, object):
 			d = _("%A %e %B")
 		elif self.type == "VFD":
 			# VFD hour minute in strftime() format! See 'man strftime'
-			d = "%02d%02d" % (t.tm_hour, t.tm_min)
+			return "%02d%02d" % (t.tm_hour, t.tm_min)
 		else:
 			# default
 			return _("%2d:%02d") % (t.tm_hour, t.tm_min)
