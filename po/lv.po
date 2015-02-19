@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-16 20:20+0200\n"
+"POT-Creation-Date: 2015-02-19 20:19+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -156,6 +156,7 @@ msgstr "izvēlētas pakotnes."
 msgid " updates available."
 msgstr "atjaunojumi pieejami."
 
+#. TRANSLATORS: default time format hour:minute
 #, python-format
 msgid "%2d:%02d"
 msgstr "%2d:%02d"
@@ -7746,6 +7747,9 @@ msgstr "melns"
 
 msgid "black & white"
 msgstr "melns un balts"
+
+msgid "blacklist"
+msgstr "melnais saraksts"
 
 msgid "blue"
 msgstr "zilā"
