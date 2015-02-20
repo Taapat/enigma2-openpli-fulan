@@ -459,6 +459,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	{
 		//Creation failed, no playback support for insert file, so delete playback context
 		//FIXME: How to tell e2 that we failed?
+		eDebug("eServiceMP3::ERROR Creation failed!");
 		if (player && player->output)
 		{
 			player->output->Command(player,OUTPUT_DEL, (void*)"audio");
@@ -472,9 +473,10 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		if (player)
 			free(player);
 		player = NULL;
+		m_state = stStopped;
 	}
 	//m_state = stRunning;
-	eDebug("eServiceMP3-<\n");
+	eDebug("eServiceMP3-<");
 }
 
 eServiceMP3::~eServiceMP3()
