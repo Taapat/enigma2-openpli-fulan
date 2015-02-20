@@ -1731,7 +1731,12 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 		current = item[0]
 		info = item[1]
 		cur_path = os.path.realpath(current.getPath())
-		st = os.stat(cur_path)
+		try:
+			st = os.stat(cur_path)
+		except e:
+			print "[MovieSelection] Error in deleting", e
+			self.session.open(MessageBox, _("Delete failed!") + "\n" + _("Probably unsupported encodingd."), MessageBox.TYPE_ERROR)
+			return
 		name = info and info.getName(current) or _("this recording")
 		are_you_sure = _("Do you really want to delete %s?") % (name)
 		if current.flags & eServiceReference.mustDescent:
