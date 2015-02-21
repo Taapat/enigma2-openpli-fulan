@@ -412,9 +412,12 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 
 					m_audioStreams.push_back(audio);
 					free(TrackList[i]);
+					TrackList[i] = NULL;
 					free(TrackList[i+1]);
+					TrackList[i+1] = NULL;
 				}
 				free(TrackList);
+				TrackList = NULL;
 			}
 		}
 
@@ -448,9 +451,12 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 
 					m_subtitleStreams.push_back(sub);
 					free(TrackList[i]);
+					TrackList[i] = NULL;
 					free(TrackList[i+1]);
+					TrackList[i+1] = NULL;
 				}
 				free(TrackList);
+				TrackList = NULL;
 			}
 		}
 		m_event(this, evStart);
