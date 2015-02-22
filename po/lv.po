@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-20 20:59+0200\n"
+"POT-Creation-Date: 2015-02-22 17:26+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2868,6 +2868,9 @@ msgstr "Slēpt zināmos paplašinājumus"
 msgid "Hide number markers"
 msgstr "Slēpt numurus"
 
+msgid "Hide parentel locked services"
+msgstr "Slēpt servisus ar vecāku aizsardzību"
+
 msgid "Hide player"
 msgstr "Slēpt atskaņotāju"
 
@@ -3268,7 +3271,7 @@ msgid "Letterbox"
 msgstr "Platekrāns"
 
 msgid "Letterbox zoom"
-msgstr "Platekrāna tuvinājums"
+msgstr "Platekrāna attēlošana"
 
 msgid "Limit character set for recording filenames"
 msgstr "Limitēt rakstzīmju lietošanu ierakstāmajiem failu vārdiem"
@@ -5359,7 +5362,7 @@ msgid "Set time window to 6 hours"
 msgstr "Iestatīt laika logu uz 6 stundām"
 
 msgid "Set voltage and 22KHz"
-msgstr "Iestatīt spriegumu un 22 KHZ"
+msgstr "Iestatīt spriegumu un 22kHz"
 
 msgid "Settings"
 msgstr "Iestatījumi"
@@ -6678,6 +6681,9 @@ msgstr "Nešifrēts"
 
 msgid "UnhandledKey"
 msgstr "Neapstrādāta poga"
+
+msgid "Unhide parental control services"
+msgstr "Parādīt servisus ar vecāku aizsardzību"
 
 msgid "Unicable"
 msgstr "Vienkabeļa"
@@ -8065,6 +8071,9 @@ msgstr "pārlēkt uz iepriekšējo nosaukumu"
 
 msgid "jump forward to the next title"
 msgstr "pārlēkt uz nākamo nosaukumu"
+
+msgid "kHz"
+msgstr "kHz"
 
 msgid "languages"
 msgstr "valodas"
