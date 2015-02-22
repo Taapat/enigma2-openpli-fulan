@@ -3271,7 +3271,7 @@ msgid "Letterbox"
 msgstr "Platekrāns"
 
 msgid "Letterbox zoom"
-msgstr "Platekrāna attēlošana"
+msgstr "Attēla mērogošana"
 
 msgid "Limit character set for recording filenames"
 msgstr "Limitēt rakstzīmju lietošanu ierakstāmajiem failu vārdiem"
