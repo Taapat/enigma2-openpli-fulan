@@ -58,7 +58,7 @@ class ServiceName(Converter, object):
 			if nref:
 				ref = nref
 			return ref.toString()
-		elif self.type == self.TRANSPONDER:
+		elif self.type is self.TRANSPONDER:
 			if ref:
 				nref = resolveAlternate(ref)
 				if nref:
