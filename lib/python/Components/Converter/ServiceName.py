@@ -77,7 +77,7 @@ class ServiceName(Converter, object):
 					return	self.dvb_t()
 				elif "DVB-C" in self.system():
 					return self.dvb_c()
-				return 	self.dvb_s()
+				return 	self.dvb_s(str(transponder_info["orbital_position"]))
 			if ref:
 				result = ref.toString()
 			else:
@@ -92,8 +92,8 @@ class ServiceName(Converter, object):
 		if what[0] != self.CHANGED_SPECIFIC or what[1] in (iPlayableService.evStart,):
 			Converter.changed(self, what)
 
-	def dvb_s(self):
-		return "%s %d %s %d %s %s" % (self.system(), self.freq()/1000, self.polar(), self.s_rate()/1000, self.fec(), self.orb_pos())
+	def dvb_s(self, tr_info):
+		return "%s %d %s %d %s %s°%s" % (self.system(), self.freq()/1000, self.polar(), self.s_rate()/1000, self.fec(), tr_info[:-1], tr_info[-1:])
 	def dvb_t(self):
 		return "%s %s %d/%s" % (self.system(), self.ch_number(), self.freq()/1000000 + 0.5 , self.bandwidth())
 	def dvb_c(self):
@@ -111,13 +111,6 @@ class ServiceName(Converter, object):
 		if ' ' in po:
 			return po.split(' ')[1][0].upper()
 		return po[0]
-	def orb_pos(self):
-		op = self.t_info["orbital_position"]
-		if '(' in op:
-			op = op.split('(')[1]
-			return "%s°%s" % (op[:-2],op[-2:-1])
-		op = op.split(' ')[0]
-		return "%s°%s" % (op[:-1],op[-1:])
 	def fec(self):
 		return self.t_info["fec_inner"]
 	def ch_number(self):
