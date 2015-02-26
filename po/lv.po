@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-22 17:26+0200\n"
+"POT-Creation-Date: 2015-02-26 23:10+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1141,6 +1141,9 @@ msgstr "Centrēt DVB subtitrus"
 msgid "Center time-labels and remove date"
 msgstr "Centrēt laika iezīmes un nomest datumu"
 
+msgid "Change PIN"
+msgstr "Mainīt PIN"
+
 msgid "Change bouquets in quickzap"
 msgstr "Mainīt buķetes ātrās slēgšanas režīmā"
 
@@ -1155,9 +1158,6 @@ msgstr "Mainīt ierakstu (beigu laiku)"
 
 msgid "Change repeat and delay settings?"
 msgstr "Mainīt atkārtošanas un aiztures iestatījumus?"
-
-msgid "Change service PIN"
-msgstr "Mainīt kanāla PIN"
 
 msgid "Change step size"
 msgstr "Mainīt soļa lielumu"
@@ -3198,7 +3198,7 @@ msgstr "jūnijs"
 
 #. TRANSLATORS: (aspect ratio policy: display as fullscreen, even if this breaks the aspect)
 msgid "Just scale"
-msgstr "Vienkārši mērogot"
+msgstr "Mērogot"
 
 msgid "Keep service"
 msgstr "Paturēt kanālu"
@@ -3851,15 +3851,6 @@ msgstr "Atjaunojumi nav pieejami"
 msgid "No updates available. Please try again later."
 msgstr "Atjaunojumi nav pieejami. Lūdzu mēģiniet vēlāk."
 
-msgid ""
-"No valid service PIN found!\n"
-"Do you like to change the service PIN now?\n"
-"When you say 'No' here the service protection stay disabled!"
-msgstr ""
-"Derīgs kanāla PIN netika atrasts!\n"
-"Vai vēlaties tulīt mainīt kanāla PIN?\n"
-"Ja teiksiet 'NĒ', kanāla aizsardzība paliks neaktīva!"
-
 msgid "No wireless networks found! Searching..."
 msgstr "Bezvadu tīkli nav atrasti! Meklē..."
 
@@ -4085,7 +4076,7 @@ msgstr "Pakotņu pārvaldnieks"
 
 #. TRANSLATORS: (aspect ratio policy: cropped content on left/right) in doubt, keep english term
 msgid "Pan&scan"
-msgstr "Pan&Scan"
+msgstr "Panorāma"
 
 msgid "Panic to"
 msgstr "Panikā pārslēgt uz"
@@ -4146,10 +4137,13 @@ msgstr "Attēlu rādītājs"
 
 #. TRANSLATORS: (aspect ratio policy: black bars on left/right) in doubt, keep english term.
 msgid "Pillarbox"
-msgstr "Pillarbox"
+msgstr "Melnas joslas malās"
+
+msgid "Pillarbox/Just scale"
+msgstr "Joslas malās/Mērogot"
 
 msgid "Pillarbox/Pan&Scan"
-msgstr "Pillarbox/Pan&Scan"
+msgstr "Joslas malās/Panorāma"
 
 msgid "Pilot"
 msgstr "Pilot"
@@ -4566,11 +4560,32 @@ msgstr "Progresa josla pa labi"
 msgid "Properties of current title"
 msgstr "Aktīvā nosaukuma parametri"
 
+msgid "Protect Screens"
+msgstr "Aizsargāt logus"
+
+msgid "Protect configuration"
+msgstr "Aizsargāt uzstādījumus"
+
+msgid "Protect main menu"
+msgstr "Aizsargāt galveno izvēlni"
+
+msgid "Protect movie list"
+msgstr "Aizsargāt filmu sarakstu"
+
 msgid "Protect on epg age"
 msgstr "Aizsargāt pēc epg norādītā vecuma"
 
+msgid "Protect plugin browser"
+msgstr "Aizsargāt ppraudņu pārlūku"
+
 msgid "Protect services"
 msgstr "Aizsargāt kanālus"
+
+msgid "Protect standby menu"
+msgstr "Aizsargāt gaidstāves izvēlni"
+
+msgid "Protect timer menu"
+msgstr "Aizsargāt taimeru izvēlni"
 
 msgid "Provider"
 msgstr "Operators"
