@@ -569,9 +569,11 @@
 		<key id="KEY_FAVORITES" mapto="favorites" flags="b"/>
 		<key id="KEY_FAVORITES" mapto="favorites_long" flags="l"/>
 		<key id="KEY_FIND" mapto="find" flags="m"/>
-		<key id="KEY_PLAYMODE" mapto="playmode" flags="m"/>
+		<key id="KEY_PLAYMODE" mapto="playmode" flags="b"/>
+		<key id="KEY_PLAYMODE" mapto="playmode_long" flags="l"/>
 		<key id="KEY_FILE" mapto="file" flags="m"/>
-		<key id="KEY_USB" mapto="usb" flags="m"/>
+		<key id="KEY_USB" mapto="usb" flags="b"/>
+		<key id="KEY_USB" mapto="usb_long" flags="l"/>
 		<key id="KEY_PORTAL" mapto="portal" flags="b"/>
 		<key id="KEY_PORTAL" mapto="portal_long" flags="l"/>
 	</map>
