@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-26 23:10+0200\n"
+"POT-Creation-Date: 2015-02-27 21:28+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1732,6 +1732,13 @@ msgstr "Pašreizējā iekārta: "
 msgid "Current event EPG"
 msgstr "Pašreizējās pārraides EPG"
 
+msgid ""
+"Current event is over.\n"
+"Select an option to save the timeshift file."
+msgstr ""
+"Pārraide beigusies.\n"
+"Ko darīt ar laika aiztures failu?"
+
 #, python-format
 msgid "Current mode: %s \n"
 msgstr "Pašreizējais režīms: %s \n"
@@ -2180,6 +2187,9 @@ msgstr "Vai vēlaties atjaunot uztvērēju?"
 
 msgid "Do you want to upgrade the package:\n"
 msgstr "Vai vēlaties atjaunināt pakotni:\n"
+
+msgid "Don't save and stop timeshift"
+msgstr "Nesaglabāt un apturēt laika aizturi"
 
 msgid "Don't stop current event but disable coming events"
 msgstr "Neapturēt pašreizējo notikumu bet izslēgt nākamos"
@@ -5019,6 +5029,12 @@ msgstr "Sestdiena"
 msgid "Save"
 msgstr "Saglabāt"
 
+msgid "Save and restart timeshift"
+msgstr "Saglabāt un restartēt laika aizturi"
+
+msgid "Save and stop timeshift"
+msgstr "Saglabāt un apturēt laika aizturi"
+
 msgid "Save playlist"
 msgstr "Saglabāt repertuāru"
 
@@ -5027,6 +5043,9 @@ msgstr "Saglabāt laika aiztures failu"
 
 msgid "Save timeshift file in movie directory"
 msgstr "Saglabāt laika aiztures failu filmu mapē"
+
+msgid "Save timeshift only for current event"
+msgstr "Saglabāt laika aizturi tikai pašreizējai pārraidei"
 
 msgid "Scaler sharpness"
 msgstr "Asuma skala"
@@ -6166,6 +6185,10 @@ msgid ""
 msgstr ""
 "Paldies ka izmantojāt vedni. Jūsu uztvērējs ir gatavs lietošanai.\n"
 "Nospiediet OK, lai sāktu lietot savu uztvērēju."
+
+#, python-format
+msgid "The %d min remaining before the end of the event."
+msgstr "Līdz pārraides beigām atlikušas %d minūtes."
 
 msgid "The DVD standard doesn't support H.264 (HDTV) video streams. Do you want to create a special format data DVD (which will not play in stand-alone DVD players) instead?"
 msgstr "DVD standarts neatbalsta H.264 (HDTV) video. Vai jūs vēlaties izveidot īpaša formāta datu DVD (kuru nevarēs atskaņot standarta DVD atskaņotāji)?"
