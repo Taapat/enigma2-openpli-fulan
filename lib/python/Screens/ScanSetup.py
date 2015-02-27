@@ -1078,7 +1078,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 			fec_list = ['Auto','1/2','2/3','3/4','5/6','7/8','8/9','3/5','4/5','9/10','None']
 			std_list = ['','S2,']
 			mod_list = ['','QPSK','8PSK','16APSK','32APSK']
-			return str(tp[1] / 1000) + " " + pol_list[tp[3]] + " " + str(tp[2] / 1000) + " " + fec_list[tp[4] + " " + std_list[tp[5]] + mod_list[tp[6]]
+			return str(tp[1] / 1000) + " " + pol_list[tp[3]] + " " + str(tp[2] / 1000) + " " + fec_list[tp[4]] + " " + std_list[tp[5]] + mod_list[tp[6]]
 
 		return _("Invalid transponder data")
 
