@@ -403,9 +403,10 @@ static ePtr<eDVBFrontendParameters> parseFrontendData(const char* line, int vers
 				pilot=eDVBFrontendParametersSatellite::Pilot_Unknown,
 				is_id = -1, pls_code = 1, pls_mode = 0;
 			if (version == 3)
-				sscanf(line+2, "%d:%d:%d:%d:%d:%d:%d:%d:%d:%d",
+				sscanf(line+2, "%d:%d:%d:%d:%d:%d:%d:%d:%d:%d:%d:%d:%d",
 					&frequency, &symbol_rate, &polarisation, &fec, &orbital_position,
-					&inversion, &system, &modulation, &rolloff, &pilot);
+					&inversion, &system, &modulation, &rolloff, &pilot,
+					&is_id, &pls_code, &pls_mode);
 			else
 				sscanf(line+2, "%d:%d:%d:%d:%d:%d:%d:%d:%d:%d:%d:%d:%d:%d",
 					&frequency, &symbol_rate, &polarisation, &fec, &orbital_position,
@@ -1184,7 +1185,7 @@ PyObject *eDVBDB::readSatellites(ePyObject sat_list, ePyObject sat_dict, ePyObje
 				}
 				if (freq && sr && pol != -1)
 				{
-					tuple = PyTuple_New(13);
+					tuple = PyTuple_New(15);
 					PyTuple_SET_ITEM(tuple, 0, PyInt_FromLong(0));
 					PyTuple_SET_ITEM(tuple, 1, PyInt_FromLong(freq));
 					PyTuple_SET_ITEM(tuple, 2, PyInt_FromLong(sr));
@@ -1198,8 +1199,8 @@ PyObject *eDVBDB::readSatellites(ePyObject sat_list, ePyObject sat_dict, ePyObje
 					PyTuple_SET_ITEM(tuple, 10, PyInt_FromLong(is_id));
 					PyTuple_SET_ITEM(tuple, 11, PyInt_FromLong(pls_mode & 3));
 					PyTuple_SET_ITEM(tuple, 12, PyInt_FromLong(pls_code & 0x3FFFF));
-					PyTuple_SET_ITEM(tuple, 11, PyInt_FromLong(tsid));
-					PyTuple_SET_ITEM(tuple, 12, PyInt_FromLong(onid));
+					PyTuple_SET_ITEM(tuple, 13, PyInt_FromLong(tsid));
+					PyTuple_SET_ITEM(tuple, 14, PyInt_FromLong(onid));
 					PyList_Append(tplist, tuple);
 					Py_DECREF(tuple);
 				}

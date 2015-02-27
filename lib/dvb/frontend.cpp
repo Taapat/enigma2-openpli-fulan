@@ -98,7 +98,7 @@ void eDVBFrontendParametersSatellite::set(const SatelliteDeliverySystemDescripto
 		orbital_position = 3600 - orbital_position;
 	system = descriptor.getModulationSystem();
 	modulation = descriptor.getModulation();
-	if (system == System_DVB_S && modulation == Modulation_QPSK)
+	if (system == System_DVB_S && modulation != Modulation_QPSK)
 	{
 		eDebug("satellite_delivery_descriptor invalid modulation type.. force QPSK");
 		modulation = Modulation_QPSK;
@@ -182,7 +182,7 @@ void eDVBFrontendParametersTerrestrial::set(const TerrestrialDeliverySystemDescr
 		default: transmission_mode = TransmissionMode_Auto; break;
 	}
 	guard_interval = descriptor.getGuardInterval();
-	if (guard_interval > GuardInterval_1_4)
+	if (guard_interval > GuardInterval_Auto)
 		guard_interval = GuardInterval_Auto;
 	hierarchy = descriptor.getHierarchyInformation();
 	if (hierarchy > Hierarchy_Auto)
@@ -193,9 +193,9 @@ void eDVBFrontendParametersTerrestrial::set(const TerrestrialDeliverySystemDescr
 	inversion = Inversion_Unknown;
 	system = System_DVB_T;
 	plp_id = 0;
-	eDebug("Terr freq %d, bw %d, cr_hp %d, cr_lp %d, tm_mode %d, guard %d, hierarchy %d, const %d",
+	eDebug("Terr freq %d, bw %d, cr_hp %d, cr_lp %d, tm_mode %d, guard %d, hierarchy %d, const %d, system %d, plp_id %d",
 		frequency, bandwidth, code_rate_HP, code_rate_LP, transmission_mode,
-		guard_interval, hierarchy, modulation);
+		guard_interval, hierarchy, modulation, system, plp_id);
 }
 
 eDVBFrontendParameters::eDVBFrontendParameters()
@@ -1144,6 +1144,7 @@ void eDVBFrontend::getTransponderData(ePtr<iDVBTransponderData> &dest, bool orig
 			p[cmdseq.num++].cmd = DTV_INNER_FEC;
 			p[cmdseq.num++].cmd = DTV_ROLLOFF;
 			p[cmdseq.num++].cmd = DTV_PILOT;
+			p[cmdseq.num++].cmd = DTV_STREAM_ID;
 		}
 		else if (type == feCable)
 		{
@@ -1158,6 +1159,7 @@ void eDVBFrontend::getTransponderData(ePtr<iDVBTransponderData> &dest, bool orig
 			p[cmdseq.num++].cmd = DTV_TRANSMISSION_MODE;
 			p[cmdseq.num++].cmd = DTV_GUARD_INTERVAL;
 			p[cmdseq.num++].cmd = DTV_HIERARCHY;
+			p[cmdseq.num++].cmd = DTV_STREAM_ID;
 		}
 		else if (type == feATSC)
 		{
@@ -1660,7 +1662,7 @@ void eDVBFrontend::setFrontend(bool recvEvents)
 		if (recvEvents)
 			m_sn->start();
 		feEvent(-1); // flush events
-		struct dtv_property p[16];
+		struct dtv_property p[17];
 		struct dtv_properties cmdseq;
 		cmdseq.props = p;
 		cmdseq.num = 0;

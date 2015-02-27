@@ -643,6 +643,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 			(eDVBFrontendParametersSatellite.FEC_7_8, "7/8"),
 			(eDVBFrontendParametersSatellite.FEC_None, _("None"))])
 		self.scan_sat.fec_s2 = ConfigSelection(default = defaultSat["fec_s2"], choices = [
+			(eDVBFrontendParametersSatellite.FEC_Auto, _("Auto")),
 			(eDVBFrontendParametersSatellite.FEC_1_2, "1/2"),
 			(eDVBFrontendParametersSatellite.FEC_2_3, "2/3"),
 			(eDVBFrontendParametersSatellite.FEC_3_4, "3/4"),
@@ -1075,7 +1076,10 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport):
 		if tp[3] in range (4) and tp[4] in range (11):
 			pol_list = ['H','V','L','R']
 			fec_list = ['Auto','1/2','2/3','3/4','5/6','7/8','8/9','3/5','4/5','9/10','None']
-			return str(tp[1] / 1000) + " " + pol_list[tp[3]] + " " + str(tp[2] / 1000) + " " + fec_list[tp[4]]
+			std_list = ['','S2,']
+			mod_list = ['','QPSK','8PSK','16APSK','32APSK']
+			return str(tp[1] / 1000) + " " + pol_list[tp[3]] + " " + str(tp[2] / 1000) + " " + fec_list[tp[4] + " " + std_list[tp[5]] + mod_list[tp[6]]
+
 		return _("Invalid transponder data")
 
 	def compareTransponders(self, tp, compare):
