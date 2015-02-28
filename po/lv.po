@@ -538,7 +538,7 @@ msgstr ""
 "Izslēgt TV un mēģināt vēlreiz?\n"
 
 msgid "A/V settings"
-msgstr "A/V iestatījumi"
+msgstr "Audio un video iestatījumi"
 
 msgid "AAC downmix"
 msgstr "AAC dekodēšana"
@@ -2707,8 +2707,8 @@ msgid ""
 "GUI needs a restart to apply a new skin\n"
 "Do you want to restart the GUI now?"
 msgstr ""
-"Lai lietotu jauno noformējumu nepieciešams pārstartēt GUI,\n"
-"vai vēlaties pārstartēt GUI tagad?"
+"Lai lietotu jauno noformējumu nepieciešams pārstartēt enigmu.\n"
+"Vai vēlaties pārstartēt?"
 
 msgid "Gateway"
 msgstr "Vārteja"
@@ -2765,7 +2765,7 @@ msgid "Go up the list"
 msgstr "Iet uz saraksta augšu"
 
 msgid "Gold"
-msgstr "Zelta"
+msgstr "Gold"
 
 msgid "Goto"
 msgstr "Iet uz"
@@ -4869,7 +4869,7 @@ msgid "Restart"
 msgstr "Pārstartēt"
 
 msgid "Restart GUI now?"
-msgstr "Pārstartēt GUI tagad?"
+msgstr "Pārstartēt enigmu?"
 
 msgid "Restart enigma"
 msgstr "Pārstartēt enigmu"
@@ -5840,7 +5840,7 @@ msgid "Standby"
 msgstr "Gaidstāve"
 
 msgid "Standby / restart"
-msgstr "Gaidstāve / pārstartēt"
+msgstr "Izslēgšana"
 
 msgid "Standby after current event"
 msgstr "Gaidstāve pēc pašreizējās pārraides"
