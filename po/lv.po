@@ -350,7 +350,7 @@ msgid "16:10 Letterbox"
 msgstr "16:10 platekrāns"
 
 msgid "16:10 PanScan"
-msgstr "16:10 PanScan"
+msgstr "16:10 panorāma"
 
 msgid "16:9"
 msgstr "16:9"
@@ -404,7 +404,7 @@ msgid "4:3 Letterbox"
 msgstr "4:3 platekrāns"
 
 msgid "4:3 PanScan"
-msgstr "4:3 PanScan"
+msgstr "4:3 panorāma"
 
 msgid "5"
 msgstr "5"
@@ -5625,10 +5625,10 @@ msgid "Shutdown when in Standby"
 msgstr "Izslēgt kad ir gaidstāvē"
 
 msgid "Side by Side"
-msgstr "Pēc sāniem"
+msgstr "Horizontāli"
 
 msgid "Side by side"
-msgstr "Pēc sāniem"
+msgstr "Horizontāli"
 
 msgid "Signal OK, proceeding"
 msgstr "Signāls kārtībā, turpinu"
