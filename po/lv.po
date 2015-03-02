@@ -1873,43 +1873,43 @@ msgid "Default settings"
 msgstr "Noklusējuma iestatījumi"
 
 msgid "Delay after change voltage before switch command"
-msgstr ""
+msgstr "Aizture pēc sprieguma izamiņas līdz komutatora komandai"
 
 msgid "Delay after continuous tone disable before diseqc"
-msgstr ""
+msgstr "Aizture pēc nepārtraukta signāla atslēgšanas pirms DiSEqC"
 
 msgid "Delay after diseqc peripherial poweron command"
-msgstr ""
+msgstr "Aizture pēc DiSEqC perifērijas barošanas izslēg. komandas"
 
 msgid "Delay after diseqc reset command"
-msgstr ""
+msgstr "Aizture pēc DiSEqC reset komandas"
 
 msgid "Delay after enable voltage before motor command"
-msgstr ""
+msgstr "Komandas aizture pēc paaugstināta motora sprieguma iesl."
 
 msgid "Delay after enable voltage before switch command"
-msgstr ""
+msgstr "Aizture pēc sprieguma ieslēgšanas līdz komutatora komandai"
 
 msgid "Delay after final continuous tone change"
-msgstr ""
+msgstr "Aizture pēc pēdējā nepārtrauktā toņa signāla"
 
 msgid "Delay after last diseqc command"
-msgstr ""
+msgstr "Aizture pēc pēdējās DiSEqC komandas"
 
 msgid "Delay after last voltage change"
-msgstr ""
+msgstr "Aizture pēc pēdējās sprieguma izmaiņas"
 
 msgid "Delay after motor stop command"
-msgstr ""
+msgstr "Aizture pēc motora stop komandas"
 
 msgid "Delay after set voltage before measure motor power"
-msgstr ""
+msgstr "Aizture pēc sprieguma uzstādīšanas līdz jaudas mērīšanai"
 
 msgid "Delay after toneburst"
-msgstr ""
+msgstr "Aizture pēc toņsignāla"
 
 msgid "Delay after voltage change before motor command"
-msgstr ""
+msgstr "Aizture pēc motora sprieguma izmaiņas"
 
 msgid "Delay before key repeat starts:"
 msgstr "Aizture pirms taustiņu atkārtošanas:"
@@ -1918,10 +1918,10 @@ msgid "Delay before sequence repeat"
 msgstr "Aizture pirms secības atkārtojuma"
 
 msgid "Delay between diseqc commands"
-msgstr ""
+msgstr "Aizture starp DiSEqC komandām"
 
 msgid "Delay between switch and motor command"
-msgstr ""
+msgstr "Aizture starp komutatora un motora komandām"
 
 msgid "Delay for external subtitles"
 msgstr "Aizture ārējiem subtitriem"
@@ -3553,7 +3553,7 @@ msgid "Mosquito noise reduction"
 msgstr "Mosquito trokšņu slāpēšana"
 
 msgid "Motor command retries"
-msgstr ""
+msgstr "Motora komandu atkārtojumu skaits"
 
 msgid "Motor running timeout"
 msgstr "Pozicioniera darbības taimauts"
