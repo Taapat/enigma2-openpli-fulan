@@ -156,6 +156,10 @@
 		<key id="KEY_VMODE" mapto="vmodeSelection" flags="m"/>
 	</map-->
 
+	<map context="InfobarPiPActions">
+		<key id="KEY_TVSAT" mapto="activatePiP" flags="b"/>
+	</map>
+
 	<map context="InfobarSubserviceQuickzapActions">
 		<key id="KEY_PREVIOUS" mapto="prevSubservice" flags="m"/>
 		<key id="KEY_NEXT" mapto="nextSubservice" flags="m"/>

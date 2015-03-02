@@ -6,11 +6,10 @@ SystemInfo = { }
 
 #FIXMEE...
 def getNumVideoDecoders():
-	return 0 #To disable PiP
-	#idx = 0
-	#while fileExists("/dev/dvb/adapter0/video%d"%(idx), 'f'):
-		#idx += 1
-	#return idx
+	idx = 0
+	while fileExists("/dev/dvb/adapter0/video%d"%(idx), 'f'):
+		idx += 1
+	return idx
 
 SystemInfo["NumVideoDecoders"] = getNumVideoDecoders()
 SystemInfo["PIPAvailable"] = SystemInfo["NumVideoDecoders"] > 1

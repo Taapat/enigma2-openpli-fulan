@@ -151,6 +151,22 @@ eDVBResourceManager::eDVBResourceManager()
 		ioctl(dmx, DMX_STOP);
 		close(dmx);
 	}
+	dmx = open("/dev/dvb/adapter0/demux1", O_RDWR | O_CLOEXEC);
+	if (dmx < 0)
+	{
+		eDebug("ERROR in open /dev/dvb/adapter0/demux1");
+	}
+	else
+	{
+		memset(&filter, 0, sizeof(filter));
+		filter.output = DMX_OUT_DECODER;
+		filter.input  = DMX_IN_FRONTEND;
+		filter.flags  = DMX_IMMEDIATE_START;
+		filter.pes_type = DMX_PES_VIDEO;
+		ioctl(dmx, DMX_SET_PES_FILTER, &filter);
+		ioctl(dmx, DMX_STOP);
+		close(dmx);
+	}
 
 #endif
 
