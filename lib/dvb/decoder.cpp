@@ -32,12 +32,14 @@ eDVBAudio::eDVBAudio(eDVBDemux *demux, int dev)
 	m_fd = ::open(filename, O_RDWR | O_CLOEXEC);
 	if (m_fd < 0)
 		eWarning("%s: %m", filename);
+	eDebug("Audio Device: %s", filename);
 	if (demux)
 	{
 		sprintf(filename, "/dev/dvb/adapter%d/demux%d", demux->adapter, demux->demux);
 		m_fd_demux = ::open(filename, O_RDWR | O_CLOEXEC);
 		if (m_fd_demux < 0)
 			eWarning("%s: %m", filename);
+		eDebug("demux device: %s", filename);
 	}
 	else
 	{
@@ -233,7 +235,7 @@ int eDVBAudio::getPTS(pts_t &now)
 
 eDVBAudio::~eDVBAudio()
 {
-	unfreeze();  // why unfreeze here... but not unfreeze video in ~eDVBVideo ?!?
+	//unfreeze();  // why unfreeze here... but not unfreeze video in ~eDVBVideo ?!?
 	if (m_fd >= 0)
 		::close(m_fd);
 	if (m_fd_demux >= 0)
@@ -850,7 +852,7 @@ int eTSMPEGDecoder::setState()
 	}
 	if (m_changed & changeAudio)
 	{
-		if ((m_apid >= 0) && (m_apid < 0x1FFF) && !noaudio)
+		if ((m_apid >= 0) && (m_apid < 0x1FFF) && !noaudio && (m_decoder == 0))
 		{
 			m_audio = new eDVBAudio(m_demux, m_decoder);
 			if (m_audio->startPid(m_apid, m_atype))
