@@ -6568,7 +6568,7 @@ msgid "Toggle HDMI In"
 msgstr "HDMI In"
 
 msgid "Toggle PIPzap"
-msgstr "PIP pārslēģšanas"
+msgstr "Pārslēgties uz PIP"
 
 msgid "Toggle a cut mark at the current position"
 msgstr "Iestatīt griešanas iezīmi pašreizējā pozīcijā"
