@@ -2151,6 +2151,17 @@ class InfoBarPiP:
 				self.session.pip.servicePath = currentServicePath
 
 	def showPiP(self):
+		if self.session.pipshown:
+			self.EnableShowPiP()
+		else:
+			service = self.session.nav.getCurrentService()
+			info = service and service.info()
+			if info.getInfo(iServiceInformation.sVideoHeight) >= 720:
+				self.session.open(MessageBox, _("Sorry!\nPicture in Picture is not available in HD channels!"), MessageBox.TYPE_INFO, timeout=5)
+			else:
+				self.EnableShowPiP()
+
+	def EnableShowPiP(self):
 		self.lastPiPServiceTimeoutTimer.stop()
 		if self.session.pipshown:
 			slist = self.servicelist
