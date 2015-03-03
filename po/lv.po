@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 21:28+0200\n"
+"POT-Creation-Date: 2015-03-03 20:50+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -5753,6 +5753,13 @@ msgstr "Programmatūras pārvaldnieka informācija"
 
 msgid "Some plugins are not available:\n"
 msgstr "Daži spraudņi nav pieejami:\n"
+
+msgid ""
+"Sorry!\n"
+"Picture in Picture is not available in HD channels!"
+msgstr ""
+"Atvainojiet!\n"
+"HD kanāliem nav pieejams attēls attēlā!"
 
 #, python-format
 msgid "Sorry, %s has not been installed!"
