@@ -2185,11 +2185,13 @@ class InfoBarPiP:
 			if self.session.pip.playService(newservice):
 				self.session.pipshown = True
 				self.session.pip.servicePath = self.servicelist.getCurrentServicePath()
+				self.session.pip.fixPiPSize()
 			else:
 				newservice = self.session.nav.getCurrentlyPlayingServiceReference() or self.servicelist.servicelist.getCurrent()
 				if self.session.pip.playService(newservice):
 					self.session.pipshown = True
 					self.session.pip.servicePath = self.servicelist.getCurrentServicePath()
+					self.session.pip.fixPiPSize()
 				else:
 					self.session.pipshown = False
 					del self.session.pip
@@ -2226,6 +2228,7 @@ class InfoBarPiP:
 				self.session.nav.playService(pipref, checkParentalControl=False, adjust=False)
 				self.session.pip.servicePath = currentServicePath
 				self.session.pip.servicePath[1] = currentBouquet
+				self.session.pip.fixPiPSize()
 				if self.servicelist.dopipzap:
 					# This unfortunately won't work with subservices
 					self.servicelist.setCurrentSelection(self.session.pip.getCurrentService())

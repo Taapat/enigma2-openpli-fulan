@@ -87,6 +87,19 @@ class PictureInPicture(Screen):
 		self.move(x, y)
 		self.resize(w, h)
 
+	def fixPiPSize(self):
+		# Hack to fix PiP size and position on spark
+		x = config.av.pip.value[0]
+		y = config.av.pip.value[1]
+		w = config.av.pip.value[2]
+		h = config.av.pip.value[3]
+		if x > 0:
+			x -= 1
+		else:
+			x += 1
+		self.resize(w, h)
+		self.move(x, y)
+
 	def LayoutFinished(self):
 		self.onLayoutFinish.remove(self.LayoutFinished)
 		self.relocate()
