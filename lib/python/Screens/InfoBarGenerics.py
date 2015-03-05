@@ -2206,6 +2206,7 @@ class InfoBarPiP:
 	def activePiP(self):
 		if self.servicelist and self.servicelist.dopipzap or not self.session.pipshown:
 			self.showPiP()
+			self.session.execDialog(self.servicelist)
 		else:
 			self.togglePipzap()
 
