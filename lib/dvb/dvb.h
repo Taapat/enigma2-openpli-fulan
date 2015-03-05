@@ -197,6 +197,7 @@ class eDVBResourceManager: public iObject, public Object
 	Connection m_cached_channel_state_changed_conn;
 	ePtr<eTimer> m_releaseCachedChannelTimer;
 	void DVBChannelStateChanged(iDVBChannel*);
+	void initDemux(int num_demux);
 	void feStateChanged();
 #ifndef SWIG
 public:

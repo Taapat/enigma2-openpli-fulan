@@ -134,43 +134,35 @@ eDVBResourceManager::eDVBResourceManager()
 
 	/* this is a strange hack: the drivers seem to only work correctly after
 	* demux0 has been used once. After that, we can use demux1,2,... */
-	struct dmx_pes_filter_params filter;
-	int dmx = open("/dev/dvb/adapter0/demux0", O_RDWR | O_CLOEXEC);
-	if (dmx < 0)
-	{
-		eDebug("ERROR in open /dev/dvb/adapter0/demux0");
-	}
-	else
-	{
-		memset(&filter, 0, sizeof(filter));
-		filter.output = DMX_OUT_DECODER;
-		filter.input  = DMX_IN_FRONTEND;
-		filter.flags  = DMX_IMMEDIATE_START;
-		filter.pes_type = DMX_PES_VIDEO;
-		ioctl(dmx, DMX_SET_PES_FILTER, &filter);
-		ioctl(dmx, DMX_STOP);
-		close(dmx);
-	}
-	dmx = open("/dev/dvb/adapter0/demux1", O_RDWR | O_CLOEXEC);
-	if (dmx < 0)
-	{
-		eDebug("ERROR in open /dev/dvb/adapter0/demux1");
-	}
-	else
-	{
-		memset(&filter, 0, sizeof(filter));
-		filter.output = DMX_OUT_DECODER;
-		filter.input  = DMX_IN_FRONTEND;
-		filter.flags  = DMX_IMMEDIATE_START;
-		filter.pes_type = DMX_PES_VIDEO;
-		ioctl(dmx, DMX_SET_PES_FILTER, &filter);
-		ioctl(dmx, DMX_STOP);
-		close(dmx);
-	}
-
+	eDVBResourceManager::initDemux(0);
+	/* for pip nedd to demux1 also be used once */
+	eDVBResourceManager::initDemux(1);
 #endif
 
 	CONNECT(m_releaseCachedChannelTimer->timeout, eDVBResourceManager::releaseCachedChannel);
+}
+
+void eDVBResourceManager::initDemux(int num_demux)
+{
+	char filename[32];
+	sprintf(filename, "/dev/dvb/adapter0/demux%d", num_demux);
+	int dmx = open(filename, O_RDWR | O_CLOEXEC);
+	if (dmx < 0)
+	{
+		eDebug("can't open %s (%m)", filename);
+	}
+	else
+	{
+		struct dmx_pes_filter_params filter;
+		memset(&filter, 0, sizeof(filter));
+		filter.output = DMX_OUT_DECODER;
+		filter.input  = DMX_IN_FRONTEND;
+		filter.flags  = DMX_IMMEDIATE_START;
+		filter.pes_type = DMX_PES_VIDEO;
+		ioctl(dmx, DMX_SET_PES_FILTER, &filter);
+		ioctl(dmx, DMX_STOP);
+		close(dmx);
+	}
 }
 
 void eDVBResourceManager::feStateChanged()
