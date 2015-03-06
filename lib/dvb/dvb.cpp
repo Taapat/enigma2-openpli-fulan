@@ -134,9 +134,9 @@ eDVBResourceManager::eDVBResourceManager()
 
 	/* this is a strange hack: the drivers seem to only work correctly after
 	* demux0 has been used once. After that, we can use demux1,2,... */
-	eDVBResourceManager::initDemux(0);
+	initDemux(0);
 	/* for pip nedd to demux1 also be used once */
-	eDVBResourceManager::initDemux(1);
+	initDemux(1);
 #endif
 
 	CONNECT(m_releaseCachedChannelTimer->timeout, eDVBResourceManager::releaseCachedChannel);
