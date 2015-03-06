@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-03 20:50+0200\n"
+"POT-Creation-Date: 2015-03-06 21:46+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -3392,6 +3392,9 @@ msgstr "Luksemburgiešu"
 msgid "MENU"
 msgstr "IZVĒLNE"
 
+msgid "MHz"
+msgstr "MHz"
+
 msgid "MMC card"
 msgstr "MMC karte"
 
@@ -4575,6 +4578,9 @@ msgstr "Aizsargāt logus"
 
 msgid "Protect configuration"
 msgstr "Aizsargāt uzstādījumus"
+
+msgid "Protect context menus"
+msgstr "Aizsargāt papildus izvēlnes"
 
 msgid "Protect main menu"
 msgstr "Aizsargāt galveno izvēlni"
@@ -8116,9 +8122,6 @@ msgstr "pārlēkt uz iepriekšējo nosaukumu"
 
 msgid "jump forward to the next title"
 msgstr "pārlēkt uz nākamo nosaukumu"
-
-msgid "kHz"
-msgstr "kHz"
 
 msgid "languages"
 msgstr "valodas"
