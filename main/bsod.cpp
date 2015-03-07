@@ -18,7 +18,7 @@
 
 /************************************************/
 #if defined(__sh__) // dont send mails to dm
-#define CRASH_EMAILADDR "http://gisclub.tv/enigma2-306/testovaja-ar-p-ot-taapat-ii-versija/"
+#define CRASH_EMAILADDR "http://taapat.blogspot.com"
 #else
 #define CRASH_EMAILADDR "forum at www.openpli.org"
 #endif
