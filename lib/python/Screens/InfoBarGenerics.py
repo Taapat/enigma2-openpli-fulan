@@ -1705,14 +1705,15 @@ class InfoBarTimeshift:
 		self.ts_rewind_timer.callback.append(self.rewindService)
 		self.ts_start_delay_timer = eTimer()
 		self.ts_start_delay_timer.callback.append(self.startTimeshiftWithoutPause)
-		self.ts_playpause_timer = eTimer()
-		self.ts_playpause_timer.callback.append(self.playpause_Service)
+		self.ts_init_delay_timer = eTimer()
+		self.ts_init_delay_timer.callback.append(self.timeshiftInitDelay)
 		self.ts_current_event_timer = eTimer()
 		self.ts_current_event_timer.callback.append(self.saveTimeshiftFileForEvent)
 		self.save_timeshift_file = False
 		self.timeshift_was_activated = False
 		self.showTimeshiftState = False
 		self.save_timeshift_only_current_event = False
+		self.back = True
 
 		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
 			{
@@ -1794,6 +1795,7 @@ class InfoBarTimeshift:
 
 	# activates timeshift, and seeks to (almost) the end
 	def activateTimeshiftEnd(self, back = True):
+		self.back = back
 		self.showTimeshiftState = True
 		ts = self.getTimeshift()
 		print "activateTimeshiftEnd"
@@ -1808,19 +1810,18 @@ class InfoBarTimeshift:
 			print "play, ..."
 			self.session.open(MessageBox, _("Timeshift"), MessageBox.TYPE_INFO, timeout = 3)
 			ts.activateTimeshift() # activate timeshift will automatically pause
-			self.setSeekState(self.SEEK_STATE_PAUSE)
-			seekable = self.getSeek()
-			if seekable is not None:
-				seekable.seekTo(-90000) # seek approx. 1 sec before end
-			self.timeshift_was_activated = True
-			self.ts_playpause_timer.start(2000, True) # hack for sh4
-		if back:
-			self.ts_rewind_timer.start(200, 1)
+			self.ts_init_delay_timer.start(2000, True) # hack for spark
 
-	def playpause_Service(self):
-		self.ts_playpause_timer.stop()
-		self.setSeekState(self.SEEK_STATE_PLAY)
+	#spark needs some time to initialize
+	def timeshiftInitDelay(self):
+		self.ts_init_delay_timer.stop()
 		self.setSeekState(self.SEEK_STATE_PAUSE)
+		seekable = self.getSeek()
+		if seekable is not None:
+			seekable.seekTo(-90000) # seek approx. 1 sec before end
+		self.timeshift_was_activated = True
+		if self.back:
+			self.ts_rewind_timer.start(200, 1)
 
 	def rewindService(self):
 		self.setSeekState(self.makeStateBackward(int(config.seek.enter_backward.value)))
