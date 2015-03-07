@@ -197,7 +197,6 @@ class eDVBResourceManager: public iObject, public Object
 	Connection m_cached_channel_state_changed_conn;
 	ePtr<eTimer> m_releaseCachedChannelTimer;
 	void DVBChannelStateChanged(iDVBChannel*);
-	void initDemux(int num_demux);
 	void feStateChanged();
 #ifndef SWIG
 public:
@@ -249,6 +248,8 @@ public:
 	PyObject *setFrontendSlotInformations(SWIG_PYOBJECT(ePyObject) list);
 	bool frontendIsCompatible(int index, const char *type);
 	void setFrontendType(int index, const char *type);
+protected:
+	void initDemux(int num_demux);
 };
 SWIG_TEMPLATE_TYPEDEF(ePtr<eDVBResourceManager>, eDVBResourceManager);
 SWIG_EXTEND(ePtr<eDVBResourceManager>,
