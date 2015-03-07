@@ -244,7 +244,6 @@
 	</map>
 
 	<map context="InfobarTimeshiftActivateActions">
-		<key id="KEY_STOP" mapto="timeshiftActivateEnd" flags="m"/>
 		<key id="KEY_PAUSE" mapto="timeshiftActivateEndAndPause" flags="m"/>
 		<key id="KEY_REWIND" mapto="timeshiftActivateEnd" flags="m"/>
 	</map>
