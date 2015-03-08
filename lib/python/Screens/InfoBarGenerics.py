@@ -2163,6 +2163,8 @@ class InfoBarPiP:
 					self.session.open(MessageBox, _("Sorry!\nPicture in Picture is not available in HD channels!"), MessageBox.TYPE_INFO, timeout=5)
 				else:
 					self.startShowPiP()
+					if self.session.pipshown:
+						self.session.execDialog(self.servicelist)
 
 	def startShowPiP(self):
 		self.lastPiPServiceTimeoutTimer.stop()
@@ -2207,8 +2209,6 @@ class InfoBarPiP:
 	def activePiP(self):
 		if self.servicelist and self.servicelist.dopipzap or not self.session.pipshown:
 			self.showPiP()
-			if self.session.pipshown:
-				self.session.execDialog(self.servicelist)
 		else:
 			self.togglePipzap()
 
