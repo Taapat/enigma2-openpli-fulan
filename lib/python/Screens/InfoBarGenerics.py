@@ -2164,7 +2164,16 @@ class InfoBarPiP:
 				else:
 					self.startShowPiP()
 					if self.session.pipshown:
-						self.session.execDialog(self.servicelist)
+						cur_ref = self.session.nav.getCurrentlyPlayingServiceReference()
+						if cur_ref:
+							ref = eServiceReference('1:7:1:0:0:0:0:0:0:0: (channelID == %08x%04x%04x) && (type == 1) || (type == 17) || (type == 22) || (type == 25) || (type == 134) || (type == 195) ORDER BY name:%s'%
+								(cur_ref.getUnsignedData(4), # NAMESPACE
+								cur_ref.getUnsignedData(2), # TSID
+								cur_ref.getUnsignedData(3), # ONID
+								_("Current transponder")))
+							self.session.execDialog(self.servicelist)
+							self.servicelist.enterPath(ref)
+							self.servicelist.gotoCurrentServiceOrProvider(ref)
 
 	def startShowPiP(self):
 		self.lastPiPServiceTimeoutTimer.stop()
