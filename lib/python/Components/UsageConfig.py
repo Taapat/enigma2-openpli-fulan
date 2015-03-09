@@ -88,6 +88,9 @@ def InitUsageConfig():
 		m = i/60
 		choicelist.append(("%d" % i, ngettext("%d minute", "%d minutes", m) % m))
 	config.usage.pip_last_service_timeout = ConfigSelection(default = "0", choices = choicelist)
+	config.usage.pip_onStart = ConfigSelection(default = "nothing", choices = [
+		("nothing", _("Do nothing")), ("move", _("Move main picture to PiP")),
+		("transponder", _("Open current transponder")), ("channellist", _("Open channel list")) ])
 
 	config.usage.default_path = ConfigText(default = resolveFilename(SCOPE_HDD))
 	config.usage.timer_path = ConfigText(default = "<default>")
