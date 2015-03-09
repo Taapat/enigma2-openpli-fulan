@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-07 21:29+0200\n"
+"POT-Creation-Date: 2015-03-10 01:20+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1591,6 +1591,9 @@ msgstr "Uzstāda video izejas režīmu (vai izšķirtspēju)."
 msgid "Configure the way in which the receiver changes channels."
 msgstr "Uzstāda veidu kā uztvērējs pārslēdz kanālus."
 
+msgid "Configure what to do after activated PiP."
+msgstr "Uzstāda ko darīt pēc tam, kad aktivizēts attēls attēlā."
+
 msgid "Configure where completed timers show up in the timer list."
 msgstr "Uzstāda kur pabeigtie taimeri tiek parādīti taimeru sarakstā."
 
@@ -2041,7 +2044,7 @@ msgid "Disable"
 msgstr "Izslēgt"
 
 msgid "Disable Picture in Picture"
-msgstr "Izslēgt Atēls Atēlā"
+msgstr "Izslēgt attēls attēlā"
 
 msgid "Disable background scanning"
 msgstr "Atslēgt skenēšanu fonā"
@@ -3579,6 +3582,9 @@ msgstr "Pārvietot attēlu attēlā"
 msgid "Move east"
 msgstr "Griezt uz austrumiem"
 
+msgid "Move main picture to PiP"
+msgstr "Pārvietot galveno attēlu uz PiP"
+
 msgid "Move to position X"
 msgstr "Griezt uz pozīciju X"
 
@@ -4011,6 +4017,12 @@ msgstr "Tikai nekodētos"
 
 msgid "Only on startup"
 msgstr "Tikai startējot"
+
+msgid "Open channel list"
+msgstr "Atvērt kanālu srakstu"
+
+msgid "Open current transponder"
+msgstr "Atvērt pašreizējā transpondera kanālus"
 
 msgid "Open service list"
 msgstr "Atvērt kanālu sarakstu"
@@ -7186,6 +7198,9 @@ msgstr "Iestatīt rietumu limitu"
 msgid "What do you want to scan?"
 msgstr "Ko Jūs vēlaties meklēt?"
 
+msgid "When activate PiP"
+msgstr "Kad aktivizē PiP"
+
 msgid "When enabled enigma2 will load unlinked userbouquets. This means that userbouquets that are available, but not included in the bouquets.tv or bouquets.radio files, will still be loaded. This allows you for example to keep your own user bouquet while installed settings are upgraded"
 msgstr "Ja ieslēgts, enigma2 ielādēs neiekļutās buķetes. Tas nozīmē ka buķetes tiek izmantotas, bet nav iekļutas bouquets.tv vai bouquets.radio failos. Tas atļuj, piemēram, saglabāt jūsu individuālās buķetes, ja tiek atjaunoti uzstādījumi."
 
@@ -7655,7 +7670,7 @@ msgid "Zap down"
 msgstr "Pārslēgt uz leju"
 
 msgid "Zap focus to Picture in Picture"
-msgstr "Pārslēgties uz Attēlu Attēlā"
+msgstr "Pārslēgties uz attēlu attēlā"
 
 msgid "Zap focus to main screen"
 msgstr "Pārslēgties uz pamata ekrānu"
