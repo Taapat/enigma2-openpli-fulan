@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-11 21:21+0200\n"
+"POT-Creation-Date: 2015-03-12 22:46+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -5811,6 +5811,9 @@ msgstr "Kārtot A-Z"
 
 msgid "Sort by"
 msgstr "Kārtot pēc"
+
+msgid "Sort list to default and exit?"
+msgstr "Sakārtot sarakstu noklusētā kārtībā un aizvērt?"
 
 msgid "Sort list:"
 msgstr "Kārt. saraksts:"
