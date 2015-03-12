@@ -406,6 +406,8 @@
 		<key id="KEY_DOWN" mapto="downUp" flags="b"/>
 		<key id="KEY_PREVIOUS" mapto="moveUp" flags="m"/>
 		<key id="KEY_NEXT" mapto="moveDown" flags="m"/>
+		<key id="KEY_REWIND" mapto="moveUp" flags="mr"/>
+		<key id="KEY_FASTFORWARD" mapto="moveDown" flags="mr"/>
 	</map>
 
 	<map context="AudioSelectionActions">

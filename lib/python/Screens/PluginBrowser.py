@@ -70,10 +70,10 @@ class PluginBrowser(Screen, ProtectedScreen):
 			"red": self.delete,
 			"green": self.download
 		})
-		self["DirectionActions"] = ActionMap(["SetupActions"],
+		self["DirectionActions"] = ActionMap(["DirectionActions"],
 		{
-			"deleteBackward": self.moveUp,
-			"deleteForward": self.moveDown
+			"moveUp": self.moveUp,
+			"moveDown": self.moveDown
 		})
 		self["NumberActions"] = NumberActionMap(["NumberActions"],
 		{
