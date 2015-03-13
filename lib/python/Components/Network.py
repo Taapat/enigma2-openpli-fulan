@@ -404,8 +404,8 @@ class Network:
 
 	def checkNetworkState(self,statecallback):
 		self.NetworkState = 0
-		cmd1 = "ping -c 1 www.openpli.org"
-		cmd2 = "ping -c 1 www.google.nl"
+		cmd1 = "ping -c 1 taapat.ho.ua"
+		cmd2 = "ping -c 1 www.openpli.org"
 		cmd3 = "ping -c 1 www.google.com"
 		self.PingConsole = Console()
 		self.PingConsole.ePopen(cmd1, self.checkNetworkStateFinished,statecallback)
