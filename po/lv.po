@@ -154,7 +154,7 @@ msgid " packages selected."
 msgstr "izvēlētas pakotnes."
 
 msgid " updates available."
-msgstr "atjaunojumi pieejami."
+msgstr " atjaunojumi pieejami."
 
 #. TRANSLATORS: default time format hour:minute
 #, python-format
@@ -6361,11 +6361,11 @@ msgid "The wizard is finished now."
 msgstr "Vednis ir pabeidzis darbu."
 
 msgid "There are at least "
-msgstr "Pastāv vismaz "
+msgstr "Vismaz "
 
 #, python-format
 msgid "There are at least %s updates available."
-msgstr "Pastāv vismaz %s atjaunojumi."
+msgstr "Vismaz %s atjaunojumi pieejami."
 
 msgid "There are currently no outstanding actions."
 msgstr "Pašlaik nav aktuālu darbību."
