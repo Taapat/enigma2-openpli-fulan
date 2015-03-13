@@ -151,7 +151,7 @@ msgid " ms"
 msgstr " ms"
 
 msgid " packages selected."
-msgstr "izvēlētas pakotnes."
+msgstr " pakotnes izvēlētas."
 
 msgid " updates available."
 msgstr " atjaunojumi pieejami."
