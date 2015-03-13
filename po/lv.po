@@ -145,7 +145,7 @@ msgid " (lower than any auto)"
 msgstr " (mazāks kā jebkurš auto)"
 
 msgid " extensions."
-msgstr "paplašinājumi."
+msgstr " paplašinājumiem."
 
 msgid " ms"
 msgstr " ms"
