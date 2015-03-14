@@ -7031,7 +7031,7 @@ msgid "View Rass interactive..."
 msgstr "Skatīt Rass interaktīvi..."
 
 msgid "View details"
-msgstr "Skatīt papildus informāciju"
+msgstr "Papildus info"
 
 msgid "View list of available "
 msgstr "Skatīt sarakstu ar pieejamiem "
