@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-13 20:38+0200\n"
+"POT-Creation-Date: 2015-03-15 20:28+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1146,9 +1146,6 @@ msgstr "Mainīt PIN"
 
 msgid "Change bouquets in quickzap"
 msgstr "Mainīt buķetes ātrās slēgšanas režīmā"
-
-msgid "Change pin code"
-msgstr "Mainīt PIN kodu"
 
 msgid "Change recording (duration)"
 msgstr "Mainīt ierakstu (ilgumu)"
@@ -3747,9 +3744,6 @@ msgstr "Tīkls:"
 msgid "New"
 msgstr "Jauns"
 
-msgid "New PIN"
-msgstr "Jauns PIN"
-
 msgid "New version:"
 msgstr "Jauna versija:"
 
@@ -4275,6 +4269,9 @@ msgstr "Lūdzu ievadiet jauno nosaukumu:"
 msgid "Please enter the correct pin code"
 msgstr "Lūdzu ievadiet pareizu PIN kodu"
 
+msgid "Please enter the new PIN code"
+msgstr "Lūdzu ievadiet jauno PIN kodu"
+
 msgid "Please enter the old PIN code"
 msgstr "Lūdzu ievadiet iepriekšējo PIN kodu"
 
@@ -4286,6 +4283,9 @@ msgstr "Lūdzu ievērojiet, ka iepriekš izvēlētais datu nesējs nebija pieeja
 
 msgid "Please press OK to continue."
 msgstr "Lūdzu spiediet OK, lai turpinātu."
+
+msgid "Please re-enter the new PIN code"
+msgstr "Lūdzu ievadiet vēlreiz jauno PIN kodu"
 
 msgid "Please select a playlist to delete..."
 msgstr "Lūdzu izvēlieties repertuāru dzēšanai..."
@@ -4747,8 +4747,8 @@ msgstr "Sarkanā poga..."
 msgid "Red colored"
 msgstr "Sarkanā krāsā"
 
-msgid "Reenter new PIN"
-msgstr "Atkārtoti ievadiet jauno PIN kodu"
+msgid "Reflash recommended!"
+msgstr "Ieteicams pāršūt programmatūru!"
 
 msgid "Refresh"
 msgstr "Atjaunināt"
@@ -8513,9 +8513,6 @@ msgstr "nopietnā mūzika/klasiskā mūzika"
 
 msgid "serious/classical/religious/historical movie/drama"
 msgstr "nopietnā/klasiskā/reliģiskā/vēsturiskā filma/drāma"
-
-msgid "service PIN"
-msgstr "kanāla PIN"
 
 msgid "set as startup service"
 msgstr "iestatīt kā starta kanālu"
