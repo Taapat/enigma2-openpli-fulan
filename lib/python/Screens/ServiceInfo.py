@@ -5,8 +5,7 @@ from Components.ActionMap import ActionMap
 from Components.Label import Label
 from ServiceReference import ServiceReference
 from enigma import eListboxPythonMultiContent, eListbox, gFont, iServiceInformation, eServiceCenter
-from Tools.Transponder import ConvertToHumanReadable
-from Components.Converter.ChannelNumbers import channelnumbers
+from Tools.Transponder import ConvertToHumanReadable, getChannelNumber
 import skin
 
 RT_HALIGN_LEFT = 0
