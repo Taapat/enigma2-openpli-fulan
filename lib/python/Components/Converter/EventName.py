@@ -104,11 +104,11 @@ class EventName(Converter, object):
 			return description + extended
 		elif self.type is self.ID:
 			return str(event.getEventId())
-		elif self.type == self.PDC:
+		elif self.type is self.PDC:
 			if event.getPdcPil():
 				return _("PDC")
 			return ""
-		elif self.type == self.PDCTIME:
+		elif self.type is self.PDCTIME:
 			pil = event.getPdcPil()
 			if pil:
 				return _("%d.%02d. %d:%02d") % ((pil & 0xF8000) >> 15, (pil & 0x7800) >> 11, (pil & 0x7C0) >> 6, (pil & 0x3F))
