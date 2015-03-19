@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-15 20:28+0200\n"
+"POT-Creation-Date: 2015-03-20 00:30+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -268,6 +268,9 @@ msgstr "%d-%b-%Y %-H:%M"
 
 msgid "%d-%m"
 msgstr "%d-%m"
+
+msgid "%d.%02d. %d:%02d"
+msgstr "%d.%02d. %d:%02d"
 
 msgid "%d.%B %Y"
 msgstr "%d.%B %Y"
@@ -4057,6 +4060,9 @@ msgstr "PCM"
 
 msgid "PCR PID"
 msgstr "PCR PID"
+
+msgid "PDC"
+msgstr "PDC"
 
 msgid "PIDs"
 msgstr "PIDi"
