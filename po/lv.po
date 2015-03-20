@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-20 00:30+0200\n"
+"POT-Creation-Date: 2015-03-20 22:55+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -269,6 +269,7 @@ msgstr "%d-%b-%Y %-H:%M"
 msgid "%d-%m"
 msgstr "%d-%m"
 
+#, python-format
 msgid "%d.%02d. %d:%02d"
 msgstr "%d.%02d. %d:%02d"
 
@@ -1083,6 +1084,10 @@ msgstr "C-josla"
 
 msgid "CH"
 msgstr "CH"
+
+#, python-format
+msgid "CH%s"
+msgstr "Kan%s"
 
 msgid "CPU: "
 msgstr "Procesors: "
@@ -3398,9 +3403,6 @@ msgstr "Luksemburgiešu"
 
 msgid "MENU"
 msgstr "IZVĒLNE"
-
-msgid "MHz"
-msgstr "MHz"
 
 msgid "MMC card"
 msgstr "MMC karte"
