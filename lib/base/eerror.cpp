@@ -85,12 +85,10 @@ void CheckPrintkLevel()
 	FILE *f = fopen("/proc/sys/kernel/printk", "r");
 	if (f)
 	{
-		unsigned int level;
-		fscanf(f, "%u", &level);
-		if (level < 1)
+		fscanf(f, "%u", &logOutputConsole);
+		if (logOutputConsole < 1)
 		{
-			logOutputConsole = 0;
-			printf("Printk level is %u, disble Enigma log!\n", level);
+			printf("Printk level is %u, disble Enigma log!\n", logOutputConsole);
 		}
 		fclose(f);
 	}
@@ -124,12 +122,19 @@ void eFatal(const char* fmt, ...)
 void eDebug(const char* fmt, ...)
 {
 	char buf[1024];
-	struct timespec tp;
-	clock_gettime(CLOCK_MONOTONIC, &tp);
-	snprintf(buf, 1024, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
 	va_list ap;
 	va_start(ap, fmt);
-	vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
+	if (logOutputConsole > 1)
+	{
+		struct timespec tp;
+		clock_gettime(CLOCK_MONOTONIC, &tp);
+		snprintf(buf, 1024, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
+		vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
+	}
+	else
+	{
+		vsnprintf(buf, 1024, fmt, ap);
+	}
 	va_end(ap);
 	singleLock s(DebugLock);
 	logOutput(lvlDebug, std::string(buf) + "\n");
@@ -140,12 +145,19 @@ void eDebug(const char* fmt, ...)
 void eDebugNoNewLine(const char* fmt, ...)
 {
 	char buf[1024];
-	struct timespec tp;
-	clock_gettime(CLOCK_MONOTONIC, &tp);
-	snprintf(buf, 1024, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
 	va_list ap;
 	va_start(ap, fmt);
-	vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
+	if (logOutputConsole > 1)
+	{
+		struct timespec tp;
+		clock_gettime(CLOCK_MONOTONIC, &tp);
+		snprintf(buf, 1024, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
+		vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
+	}
+	else
+	{
+		vsnprintf(buf, 1024, fmt, ap);
+	}
 	va_end(ap);
 	singleLock s(DebugLock);
 	logOutput(lvlDebug, std::string(buf));
@@ -156,12 +168,19 @@ void eDebugNoNewLine(const char* fmt, ...)
 void eWarning(const char* fmt, ...)
 {
 	char buf[1024];
-	struct timespec tp;
-	clock_gettime(CLOCK_MONOTONIC, &tp);
-	snprintf(buf, 1024, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
 	va_list ap;
 	va_start(ap, fmt);
-	vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
+	if (logOutputConsole > 1)
+	{
+		struct timespec tp;
+		clock_gettime(CLOCK_MONOTONIC, &tp);
+		snprintf(buf, 1024, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
+		vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
+	}
+	else
+	{
+		vsnprintf(buf, 1024, fmt, ap);
+	}
 	va_end(ap);
 	singleLock s(DebugLock);
 	logOutput(lvlWarning, std::string(buf) + "\n");
