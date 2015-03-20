@@ -10,7 +10,7 @@ import Screens.InfoBar
 class TransponderInfo(Converter, object):
 	def __init__(self, type):
 		Converter.__init__(self, type)
-		self.type = type.split(";")
+		self.type = type
 
 	@cached
 	def getText(self):
