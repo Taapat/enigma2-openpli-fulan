@@ -2153,27 +2153,27 @@ class InfoBarPiP:
 
 	def showPiP(self):
 		self.lastPiPServiceTimeoutTimer.stop()
-		if self.session.pipshown:
-			slist = self.servicelist
-			if slist and slist.dopipzap:
-				self.togglePipzap()
-			if self.session.pipshown:
-				lastPiPServiceTimeout = int(config.usage.pip_last_service_timeout.value)
-				if lastPiPServiceTimeout >= 0:
-					self.lastPiPService = self.session.pip.getCurrentServiceReference()
-					if lastPiPServiceTimeout:
-						self.lastPiPServiceTimeoutTimer.startLongTimer(lastPiPServiceTimeout)
-				del self.session.pip
-				self.session.pipshown = False
-			if hasattr(self, "ScreenSaverTimerStart"):
-				self.ScreenSaverTimerStart()
-		else:
-			# On spark framebuffer memory allow PiP only on SD
-			service = self.session.nav.getCurrentService()
-			info = service and service.info()
-			if info:
-				if info.getInfo(iServiceInformation.sVideoHeight) >= 720:
-					self.session.open(MessageBox, _("Sorry!\nPicture in Picture is not available in HD channels!"), MessageBox.TYPE_INFO, timeout=5)
+		# On spark framebuffer memory allow PiP only on SD
+		service = self.session.nav.getCurrentService()
+		info = service and service.info()
+		if info:
+			if info.getInfo(iServiceInformation.sVideoHeight) >= 720:
+				self.session.open(MessageBox, _("Sorry!\nPicture in Picture is not available in HD channels!"), MessageBox.TYPE_INFO, timeout=5)
+			else:
+				if self.session.pipshown:
+					slist = self.servicelist
+					if slist and slist.dopipzap:
+						self.togglePipzap()
+					if self.session.pipshown:
+						lastPiPServiceTimeout = int(config.usage.pip_last_service_timeout.value)
+						if lastPiPServiceTimeout >= 0:
+							self.lastPiPService = self.session.pip.getCurrentServiceReference()
+							if lastPiPServiceTimeout:
+								self.lastPiPServiceTimeoutTimer.startLongTimer(lastPiPServiceTimeout)
+						del self.session.pip
+						self.session.pipshown = False
+					if hasattr(self, "ScreenSaverTimerStart"):
+						self.ScreenSaverTimerStart()
 				else:
 					self.session.pip = self.session.instantiateDialog(PictureInPicture)
 					self.session.pip.show()
