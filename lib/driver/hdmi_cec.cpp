@@ -232,12 +232,12 @@ void eHdmiCEC::hdmiEvent(int what)
 			bool keypressed = false;
 			static unsigned char pressedkey = 0;
 
-			eDebugNoNewLine("eHdmiCEC: received message");
+			eDebugNoNewLineStart("eHdmiCEC: received message");
 			for (int i = 0; i < rxmessage.length; i++)
 			{
 				eDebugNoNewLine(" %02X", rxmessage.data[i]);
 			}
-			eDebug(" -> %02X ", rxmessage.address);
+			eDebugNoNewLine(" -> %02X\n", rxmessage.address);
 			bool hdmicec_report_active_menu = eConfigManager::getConfigBoolValue("config.hdmicec.report_active_menu", false);
 			if (hdmicec_report_active_menu)
 			{
@@ -393,12 +393,12 @@ void eHdmiCEC::sendMessage(struct cec_message &message)
 {
 	if (hdmiFd >= 0)
 	{
-		eDebugNoNewLine("eHdmiCEC: send message");
+		eDebugNoNewLineStart("eHdmiCEC: send message");
 		for (int i = 0; i < message.length; i++)
 		{
 			eDebugNoNewLine(" %02X", message.data[i]);
 		}
-		eDebug(" -> %02X ", message.address);
+		eDebugNoNewLine(" -> %02X\n", message.address);
 #ifdef DREAMBOX
 		message.flag = 1;
 		::ioctl(hdmiFd, 3, &message);
