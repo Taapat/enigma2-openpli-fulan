@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-20 22:55+0200\n"
+"POT-Creation-Date: 2015-03-22 21:45+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2078,13 +2078,15 @@ msgstr "Attēlot 4:3 saturu"
 msgid "Display >16:9 content as"
 msgstr "Attēlot >16:9 saturu"
 
+msgid "Display CSFD for selected event"
+msgstr "Rādīt CSFD izvēlētajam notikumam"
+
 msgid "Display and userinterface"
 msgstr "Attēla un lietotāja interfeiss"
 
 msgid "Display message before playing next movie"
 msgstr "Parādīt paziņojumu pirms atskaņo nākošo filmu"
 
-# ?
 msgid "Display setup"
 msgstr "Displeja iestatījumi"
 
@@ -5639,6 +5641,9 @@ msgstr "Skatīties TV..."
 msgid "Show updated packages"
 msgstr "Parādīt pakates kuras atjaunos"
 
+msgid "Show vertical timelines"
+msgstr "Rādīt vertikālās līnijas laikam"
+
 msgid "Show warning when timeshift is stopped"
 msgstr "Rādīt brīdinājumu kad laika aizture apturēta"
 
@@ -6247,6 +6252,13 @@ msgstr ""
 #, python-format
 msgid "The %d min remaining before the end of the event."
 msgstr "Līdz pārraides beigām atlikušas %d minūtes."
+
+msgid ""
+"The CSFD plugin is not installed!\n"
+"Please install it."
+msgstr ""
+"CSFD spraudnis nav instalēts!\n"
+"Lūdzu uzstādiet to."
 
 msgid "The DVD standard doesn't support H.264 (HDTV) video streams. Do you want to create a special format data DVD (which will not play in stand-alone DVD players) instead?"
 msgstr "DVD standarts neatbalsta H.264 (HDTV) video. Vai jūs vēlaties izveidot īpaša formāta datu DVD (kuru nevarēs atskaņot standarta DVD atskaņotāji)?"
@@ -7750,6 +7762,9 @@ msgstr "gatavojas sākt"
 msgid "activate network adapter configuration"
 msgstr "aktivizēt tīkla adaptera konfigurāciju"
 
+msgid "actual time only"
+msgstr "tikai aktuālajam laikam"
+
 msgid "add alternatives"
 msgstr "pievienot alternatīvas"
 
@@ -7788,6 +7803,9 @@ msgstr "reklāma/iepirkšanās"
 
 msgid "after "
 msgstr "pēc"
+
+msgid "all"
+msgstr "visam"
 
 msgid "alphabetic"
 msgstr "pēc alfabēta"
