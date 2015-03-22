@@ -87,7 +87,7 @@ def InitUsageConfig():
 	for i in [60, 300, 600, 900, 1800, 2700, 3600]:
 		m = i/60
 		choicelist.append(("%d" % i, ngettext("%d minute", "%d minutes", m) % m))
-	config.usage.pip_last_service_timeout = ConfigSelection(default = "0", choices = choicelist)
+	config.usage.pip_last_service_timeout = ConfigSelection(default = "-1", choices = choicelist)
 	config.usage.pip_onStart = ConfigSelection(default = "nothing", choices = [
 		("nothing", _("Do nothing")), ("move", _("Move main picture to PiP")),
 		("transponder", _("Open current transponder")), ("channellist", _("Open channel list")) ])
