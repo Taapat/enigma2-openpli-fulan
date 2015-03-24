@@ -45,7 +45,7 @@ fbClass::fbClass(const char *fb)
 	fbFd=open(fb, O_RDWR);
 	if (fbFd<0)
 	{
-		perror(fb);
+		eDebug("[fb] %s %m", fb);
 		goto nolfb;
 	}
 
@@ -53,7 +53,7 @@ fbClass::fbClass(const char *fb)
 #if not defined(__sh__)
 	if (ioctl(fbFd, FBIOGET_VSCREENINFO, &screeninfo)<0)
 	{
-		perror("FBIOGET_VSCREENINFO");
+		eDebug("[fb] FBIOGET_VSCREENINFO %m");
 		goto nolfb;
 	}
 #endif
@@ -61,26 +61,25 @@ fbClass::fbClass(const char *fb)
 	fb_fix_screeninfo fix;
 	if (ioctl(fbFd, FBIOGET_FSCREENINFO, &fix)<0)
 	{
-		perror("FBIOGET_FSCREENINFO");
+		eDebug("[fb] FBIOGET_FSCREENINFO %m");
 		goto nolfb;
 	}
 
 	available=fix.smem_len;
 	m_phys_mem = fix.smem_start;
 #if defined(__sh__)
-	eDebug("%dk total video mem", available/1024);
+	eDebug("[fb] %dk video mem", available/1024);
 	// The first 1920x1080x4 bytes are reserved
 	// After that we can take 1280x720x4 bytes for our virtual framebuffer
 	available -= 1920*1080*4;
 	eDebug("%dk usable video mem", available/1024);
 	lfb=(unsigned char*)mmap(0, available, PROT_WRITE|PROT_READ, MAP_SHARED, fbFd, 1920*1080*4);
 #else
-	eDebug("%dk video mem", available/1024);
 	lfb=(unsigned char*)mmap(0, available, PROT_WRITE|PROT_READ, MAP_SHARED, fbFd, 0);
 #endif
 	if (!lfb)
 	{
-		perror("mmap");
+		eDebug("[fb] mmap %m");
 		goto nolfb;
 	}
 
@@ -94,7 +93,7 @@ nolfb:
 		::close(fbFd);
 		fbFd = -1;
 	}
-	printf("framebuffer not available.\n");
+	eDebug("[fb] framebuffer not available");
 	return;
 }
 
@@ -106,7 +105,7 @@ int fbClass::showConsole(int state)
 	{
 		if(ioctl(fd, KDSETMODE, state?KD_TEXT:KD_GRAPHICS)<0)
 		{
-			eDebug("setting /dev/tty0 status failed.");
+			eDebug("[fb] setting /dev/tty0 status failed.");
 		}
 		close(fd);
 	}
@@ -163,13 +162,12 @@ int fbClass::SetMode(int nxRes, int nyRes, int nbpp)
 
 		if (ioctl(fbFd, FBIOPUT_VSCREENINFO, &screeninfo)<0)
 		{
-			perror("FBIOPUT_VSCREENINFO");
-			printf("fb failed\n");
+			eDebug("[fb] FBIOPUT_VSCREENINFO %m");
 			return -1;
 		}
-		eDebug(" - double buffering not available.");
+		eDebug("[fb] double buffering not available.");
 	} else
-		eDebug(" - double buffering available!");
+		eDebug("[fb] double buffering available!");
 
 	
 	m_number_of_pages = screeninfo.yres_virtual / nyRes;
@@ -184,7 +182,7 @@ int fbClass::SetMode(int nxRes, int nyRes, int nbpp)
 #else
 	if ((screeninfo.xres!=nxRes) && (screeninfo.yres!=nyRes) && (screeninfo.bits_per_pixel!=nbpp))
 	{
-		eDebug("SetMode failed: wanted: %dx%dx%d, got %dx%dx%d",
+		eDebug("[fb] SetMode failed: wanted: %dx%dx%d, got %dx%dx%d",
 			nxRes, nyRes, nbpp,
 			screeninfo.xres, screeninfo.yres, screeninfo.bits_per_pixel);
 	}
@@ -194,8 +192,7 @@ int fbClass::SetMode(int nxRes, int nyRes, int nbpp)
 	fb_fix_screeninfo fix;
 	if (ioctl(fbFd, FBIOGET_FSCREENINFO, &fix)<0)
 	{
-		perror("FBIOGET_FSCREENINFO");
-		printf("fb failed\n");
+		eDebug("[fb] FBIOGET_FSCREENINFO %m");
 	}
 	stride=fix.line_length;
 	memset(lfb, 0, stride*yRes);
@@ -316,7 +313,7 @@ void fbClass::blit()
 #else
 	if (m_manual_blit == 1) {
 		if (ioctl(fbFd, FBIO_BLIT) < 0)
-			perror("FBIO_BLIT");
+			eDebug("[fb] FBIO_BLIT %m");
 	}
 #endif
 }
@@ -412,7 +409,7 @@ void fbClass::enableManualBlit()
 #if not defined(__sh__)
 	unsigned char tmp = 1;
 	if (ioctl(fbFd,FBIO_SET_MANUAL_BLIT, &tmp)<0)
-		perror("FBIO_SET_MANUAL_BLIT");
+		eDebug("[fb] FBIO_SET_MANUAL_BLIT %m");
 	else
 		m_manual_blit = 1;
 #endif
@@ -423,7 +420,7 @@ void fbClass::disableManualBlit()
 #if not defined(__sh__)
 	unsigned char tmp = 0;
 	if (ioctl(fbFd,FBIO_SET_MANUAL_BLIT, &tmp)<0)
-		perror("FBIO_SET_MANUAL_BLIT");
+		eDebug("[fb] FBIO_SET_MANUAL_BLIT %m");
 	else
 		m_manual_blit = 0;
 #endif
