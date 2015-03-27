@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-24 20:51+0200\n"
+"POT-Creation-Date: 2015-03-27 22:13+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -957,6 +957,9 @@ msgstr "Automātiski sākt laika aizturi pēc"
 
 msgid "Automatically turn on external subtitles"
 msgstr "Automātiski ieslēgt ārējos subtitrus"
+
+msgid "Autoresolution"
+msgstr "Autoizšķirtspēja"
 
 msgid "Available format variables"
 msgstr "Pieejamie mainīgo formāti"
@@ -5983,6 +5986,12 @@ msgstr "Apturēt un dzēst visus pašreizējos ierakstus"
 msgid "Stop and delete recording"
 msgstr "Apturēt un dzēst ierakstu"
 
+msgid "Stop and delete recording:"
+msgstr "Apturēt un dzēst ierakstu:"
+
+msgid "Stop and delete recordings:"
+msgstr "Apturēt un dzēst ierakstus:"
+
 msgid "Stop current event and disable coming events"
 msgstr "Apturēt pašreizējo notikumu un izslēgt nākamos"
 
@@ -6000,6 +6009,12 @@ msgstr "Apturēt ierakstu"
 
 msgid "Stop recording and delete"
 msgstr "Apturēt ierakstu un nodzēst"
+
+msgid "Stop recording:"
+msgstr "Apturēt ierakstu:"
+
+msgid "Stop recordings:"
+msgstr "Apturēt ierakstus:"
 
 msgid "Stop service on return to movie list"
 msgstr "Apturēt kanālu un atgriesties filmu sarakstā"
@@ -6024,9 +6039,6 @@ msgstr "Apturēt laika aizturi?"
 
 msgid "Stopped"
 msgstr "Apturēt"
-
-msgid "Stopped recordings:"
-msgstr "Apturētie ieraksti:"
 
 msgid "Store at index"
 msgstr "Saglabāt indeksā"
