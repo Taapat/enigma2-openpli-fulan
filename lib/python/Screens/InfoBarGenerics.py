@@ -2286,21 +2286,35 @@ class InfoBarInstantRecord:
 		moveServiceFiles(entry.Filename, trash, entry.name, allowCopy=False)
 
 	def stopCurrentRecording(self, entry = -1):
+		def confirm(answer=False):
+			if answer:
+				self.session.nav.RecordTimer.removeEntry(self.recording[entry])
+				if self.deleteRecording:
+					self.moveToTrash(self.recording[entry])
+				self.recording.remove(self.recording[entry])
 		if entry is not None and entry != -1:
-			self.session.nav.RecordTimer.removeEntry(self.recording[entry])
+			msg =  _("Stop recording:")
 			if self.deleteRecording:
-				self.moveToTrash(self.recording[entry])
-			self.recording.remove(self.recording[entry])
+				msg = _("Stop and delete recording:")
+			msg += "\n"
+			msg += " - " + self.recording[entry].name + "\n"
+			self.session.openWithCallback(confirm, MessageBox, msg, MessageBox.TYPE_YESNO)
 
 	def stopAllCurrentRecordings(self, list):
-		msg = ''
+		def confirm(answer=False):
+			if answer:
+				for entry in list:
+					self.session.nav.RecordTimer.removeEntry(entry[0])
+					self.recording.remove(entry[0])
+					if self.deleteRecording:
+						self.moveToTrash(entry[0])
+		msg =  _("Stop recordings:")
+		if self.deleteRecording:
+			msg = _("Stop and delete recordings:")
+		msg += "\n"
 		for entry in list:
-			msg += entry[0].name + "\n"
-			self.session.nav.RecordTimer.removeEntry(entry[0])
-			self.recording.remove(entry[0])
-			if self.deleteRecording:
-				self.moveToTrash(entry[0])
-		self.session.open(MessageBox, _("Stopped recordings:") + "\n" + msg, MessageBox.TYPE_INFO, timeout=5)
+			msg += " - " + entry[0].name + "\n"
+		self.session.openWithCallback(confirm, MessageBox, msg, MessageBox.TYPE_YESNO)
 
 	def getProgramInfoAndEvent(self, info, name):
 		info["serviceref"] = hasattr(self, "SelectedInstantServiceRef") and self.SelectedInstantServiceRef or self.session.nav.getCurrentlyPlayingServiceOrGroup()
