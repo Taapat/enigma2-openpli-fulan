@@ -43,4 +43,4 @@ class Pig(Renderer):
 	def onHide(self):
 		if self.instance:
 			self.preWidgetRemove(self.instance)
-			self.hidePip and PipPigMode(False)
+			#self.hidePip and PipPigMode(False)
