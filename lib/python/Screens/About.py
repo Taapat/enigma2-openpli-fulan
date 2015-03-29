@@ -295,7 +295,9 @@ class MemoryInfo(Screen):
 					if "MemTotal" in name:
 						mem = int(size)
 					elif "MemFree" in name:
-						free = int(size)
+						free += int(size)
+					elif "Inactive:" in name:
+						free += int(size)
 					ltext += "".join((name,"\n"))
 					lvalue += "".join((size," ",units,"\n"))
 				else:
