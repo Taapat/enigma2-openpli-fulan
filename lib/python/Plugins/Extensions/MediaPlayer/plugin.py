@@ -523,25 +523,31 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarA
 			else:
 				self.summaries.setText(" ",4)
 
+	def showHideInfoBar(self):
+		if self.shown:
+			self.hideAndInfoBar()
+		elif self.mediaPlayerInfoBar.shown:
+			self.mediaPlayerInfoBar.hide()
+			self.hideMediaPlayerInfoBar.stop()
+			if self.ext in AUDIO_EXTENSIONS or self.isAudioCD:
+				self.show()
+		else:
+			self.mediaPlayerInfoBar.show()		
+
 	def ok(self):
 		if self.currList == "filelist":
-			if self.filelist.canDescent():
-				self.filelist.descent()
-				self.updateCurrentInfo()
+			if self.session.nav.getCurrentlyPlayingServiceReference() is None or self.playlist.isStopped():
+				if self.filelist.canDescent():
+					self.filelist.descent()
+					self.updateCurrentInfo()
+				else:
+					self.copyFile()
 			else:
-				self.copyFile()
+				self.showHideInfoBar()
 
 		if self.currList == "playlist":
 			if self.playlist.getCurrentIndex() == self.playlist.getSelectionIndex() and not self.playlist.isStopped():
-				if self.shown:
-					self.hideAndInfoBar()
-				elif self.mediaPlayerInfoBar.shown:
-					self.mediaPlayerInfoBar.hide()
-					self.hideMediaPlayerInfoBar.stop()
-					if self.ext in AUDIO_EXTENSIONS or self.isAudioCD:
-						self.show()
-				else:
-					self.mediaPlayerInfoBar.show()
+				self.showHideInfoBar()
 			else:
 				self.changeEntry(self.playlist.getSelectionIndex())
 
