@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-27 22:13+0200\n"
+"POT-Creation-Date: 2015-03-29 13:30+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2287,7 +2287,7 @@ msgid "Edit chapters of current title"
 msgstr "Rediģēt pašreizējā nosaukuma nodaļas"
 
 msgid "Edit settings"
-msgstr "Rediģēt"
+msgstr "Iestatījumi"
 
 msgid "Edit the nameserver configuration of your receiver.\n"
 msgstr "Rediģēt uztvērēja DNS uzstādījumus.\n"
@@ -8404,6 +8404,9 @@ msgstr "skatuves māksla"
 
 msgid "play as picture in picture"
 msgstr "atskaņot kā attēlu attēlā"
+
+msgid "play file when add in empty playlist"
+msgstr "atskaņot failu pievienojot tukšam repertuāram"
 
 msgid "play in mainwindow"
 msgstr "atskaņot pamatlogā"
