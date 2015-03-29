@@ -822,7 +822,7 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarA
 		else:
 			self.playlist.addFile(self.filelist.getServiceRef())
 			self.playlist.updateList()
-			if len(self.playlist) == 1:
+			if config.mediaplayer.playIfEmptyPlaylists.getValue() == True and len(self.playlist) == 1:
 				self.changeEntry(0)
 
 	def addPlaylistParser(self, parser, extension):
