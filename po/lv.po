@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-29 13:30+0300\n"
+"POT-Creation-Date: 2015-03-30 21:21+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -156,6 +156,10 @@ msgstr " pakotnes izvēlētas."
 msgid " updates available."
 msgstr " atjaunojumi pieejami."
 
+#, python-format
+msgid "%02d:%02d"
+msgstr "%02d:%02d"
+
 #. TRANSLATORS: default time format hour:minute
 #, python-format
 msgid "%2d:%02d"
@@ -270,8 +274,8 @@ msgid "%d-%m"
 msgstr "%d-%m"
 
 #, python-format
-msgid "%d.%02d. %d:%02d"
-msgstr "%d.%02d. %d:%02d"
+msgid "%d.%02d. %02d:%02d"
+msgstr "%d.%02d. %02d:%02d"
 
 msgid "%d.%B %Y"
 msgstr "%d.%B %Y"
@@ -3475,6 +3479,9 @@ msgstr "Atstarpe pēc ieraksta (minūtēs)"
 
 msgid "Margin before recording (minutes)"
 msgstr "Atstarpe pirms ieraksta (minūtēs)"
+
+msgid "Mark service as dedicated 3D service"
+msgstr "Atzīmēt kā 3D kanālu"
 
 msgid "Max memory positions"
 msgstr "Maksimālā pozīcija atmiņā"
@@ -6819,6 +6826,9 @@ msgstr "Universālā LNB"
 
 msgid "Unknown"
 msgstr "Nezināms"
+
+msgid "Unmark service as dedicated 3D service"
+msgstr "Neatzīmēt kā 3D kanālu"
 
 msgid "Unmount"
 msgstr "Atmontēt"
