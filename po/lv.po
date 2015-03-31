@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-30 21:21+0300\n"
+"POT-Creation-Date: 2015-03-31 23:14+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -662,7 +662,7 @@ msgid "Additional PPPD options"
 msgstr "Papildus PPPD opcijas"
 
 msgid "Adjust 3D settings"
-msgstr "Pielāgot 3D iestatījumus"
+msgstr "Pielāgo 3D iestatījumus"
 
 msgid "Adjust the color settings so that all the color shades are distinguishable, but appear as saturated as possible. If you are happy with the result, press OK to close the video fine-tuning, or use the number keys to select other test screens."
 msgstr "Regulēt krāsu iestatījumus tā, lai visi krāsu toņi ir izšķirami bet, cik iespējams, piesātināti. Ja esat apmierināti ar rezultātu tad spiediet OK, lai aizvērtu video precizēšanu vai izmantojiet ciparu taustiņus, lai izvēlētos citus testēšanas attēlus."
@@ -961,9 +961,6 @@ msgstr "Automātiski sākt laika aizturi pēc"
 
 msgid "Automatically turn on external subtitles"
 msgstr "Automātiski ieslēgt ārējos subtitrus"
-
-msgid "Autoresolution"
-msgstr "Autoizšķirtspēja"
 
 msgid "Available format variables"
 msgstr "Pieejamie mainīgo formāti"
@@ -3988,6 +3985,9 @@ msgstr "Labi, pavadi mani atjaunināšanas procesā"
 
 msgid "ONID"
 msgstr "ONID"
+
+msgid "OSD 3D setup"
+msgstr "3D iestatījumi"
 
 msgid "OSD name request"
 msgstr "OSD nosaukuma pieprasījums"
