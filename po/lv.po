@@ -3481,7 +3481,7 @@ msgid "Margin before recording (minutes)"
 msgstr "Atstarpe pirms ieraksta (minūtēs)"
 
 msgid "Mark service as dedicated 3D service"
-msgstr "Atzīmēt kā 3D kanālu"
+msgstr "atzīmēt kā 3D kanālu"
 
 msgid "Max memory positions"
 msgstr "Maksimālā pozīcija atmiņā"
@@ -6828,7 +6828,7 @@ msgid "Unknown"
 msgstr "Nezināms"
 
 msgid "Unmark service as dedicated 3D service"
-msgstr "Neatzīmēt kā 3D kanālu"
+msgstr "neatzīmēt kā 3D kanālu"
 
 msgid "Unmount"
 msgstr "Atmontēt"
