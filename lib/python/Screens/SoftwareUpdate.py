@@ -204,13 +204,14 @@ class UpdatePlugin(Screen):
 					message += "(" + (ngettext("%s updated package available", "%s updated packages available", self.total_packages) % self.total_packages) + ")"
 					if self.total_packages > 150:
 						message += " " + _("Reflash recommended!")
+					choices = [(_("Update and reboot (recommended)"), "cold"),
+						(_("Update and ask to reboot"), "hot"),
+						(_("Update channel list only"), "channels"),
+						(_("Show updated packages"), "showlist")]
 				else:
 					message = _("No updates available")
-				choices = [(_("Update and reboot (recommended)"), "cold"),
-					(_("Update and ask to reboot"), "hot"),
-					(_("Update channel list only"), "channels"),
-					(_("Show latest commits on sourceforge"), "commits"),
-					(_("Show updated packages"), "showlist")]
+					choices = []
+				choices.append((_("Show latest commits on sourceforge"), "commits"))
 				if not config.usage.show_update_disclaimer.value:
 					choices.append((_("Show disclaimer"), "disclaimer"))
 				choices.append((_("Cancel"), ""))
