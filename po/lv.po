@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-31 23:14+0300\n"
+"POT-Creation-Date: 2015-04-01 23:46+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1775,7 +1775,7 @@ msgid "Currently installed image"
 msgstr "Pašreiz instalētais imidžs"
 
 msgid "Currently the commit log cannot be retrieved - please try later again"
-msgstr "Pašreiz kommitu logs nav pieejams - lūdzu mēginiet vēlāk"
+msgstr "Pašreiz izmaiņu žurnāls nav pieejams- lūdzu mēginiet vēlāk"
 
 msgid "Custom skip time for '1'/'3' buttons"
 msgstr "Pārlēciena laiks '1'/'3' taustiņiem"
@@ -3275,7 +3275,7 @@ msgid "Last upgrade: "
 msgstr "Pēdējā atjaunošana: "
 
 msgid "Latest Commits"
-msgstr "Jaunākie kommiti"
+msgstr "Jaunākās izmaiņas"
 
 msgid "Latitude"
 msgstr "Platums"
@@ -5584,7 +5584,10 @@ msgid "Show infobar on skip forward/backward"
 msgstr "Rādīt infojoslu pārlēciena turp/atpakaļ laikā"
 
 msgid "Show latest commits on sourceforge"
-msgstr "Parādīt jaunākos kommitus"
+msgstr "Parādīt jaunākās izmaiņas"
+
+msgid "Show latest upgrade log"
+msgstr "Rādīt pēdējās atjaunošanas žurnālu"
 
 msgid "Show message when recording starts"
 msgstr "Rādīt paziņojumu kad ieraksts sākas"
