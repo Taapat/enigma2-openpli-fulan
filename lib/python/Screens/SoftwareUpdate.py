@@ -212,9 +212,9 @@ class UpdatePlugin(Screen):
 				else:
 					message = _("No updates available")
 					choices = []
-				choices.append((_("Show latest commits on sourceforge"), "commits"))
 				if fileExists("/hdd/ipkgupgrade.log"):
 					choices.append((_("Show latest upgrade log"), "log"))
+				choices.append((_("Show latest commits on sourceforge"), "commits"))
 				if not config.usage.show_update_disclaimer.value:
 					choices.append((_("Show disclaimer"), "disclaimer"))
 				choices.append((_("Cancel"), ""))
