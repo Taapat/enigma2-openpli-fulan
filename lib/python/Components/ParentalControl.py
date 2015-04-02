@@ -88,11 +88,11 @@ class ParentalControl:
 		path = ref.getPath()
 		info = eServiceCenter.getInstance().info(ref)
 		age = 0
-		if path.startswith("/"):
-			if service.startswith("1:"):
+		if path[:1] == "/":
+			if service[:2] == "1:":
 				refstr = info and info.getInfoString(ref, iServiceInformation.sServiceref)
 				service = refstr and eServiceReference(refstr).toCompareString()
-			if os.path.basename(path).startswith("."):
+			if os.path.basename(path)[:1] == ".":
 				age = 18
 		elif int(config.ParentalControl.age.value):
 			event = info and info.getEvent(ref)
