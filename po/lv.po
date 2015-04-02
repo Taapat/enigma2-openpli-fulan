@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-01 23:46+0300\n"
+"POT-Creation-Date: 2015-04-02 22:35+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1617,7 +1617,10 @@ msgid "Configure whether multi channel sound tracks should be downmixed to stere
 msgstr "Uzstāda kā daudzkanālu skaņu celiņi tiks dekodēti uz stereo."
 
 msgid "Configure whether or not an icon should be shown when your motorized dish is moving."
-msgstr "Uzstāda vai tiks parādīta ikona kad antena ar motoru pārvietosies."
+msgstr "Uzstāda vai tiks attēlota ikona kad antena ar motoru pārvietosies."
+
+msgid "Configure whether or not an rotor position will be displayed on infobar"
+msgstr "Uzstāda vai infojoslā tiks attēlota pozicioniera pozīcija"
 
 msgid "Configure which access level to use for the configuration menu. Expert level gives access to all items."
 msgstr "Uzstāda kādu iestatījumu līmeni lietot iestatījumu izvēlnē. Eksperta līmenis atļauj piekļuvi visiem iestatījumiem."
@@ -5607,6 +5610,9 @@ msgstr "Rādīr pikonas kanālu srakstā"
 msgid "Show positioner movement"
 msgstr "Rādīt pozicioniera kustību"
 
+msgid "Show positioner position"
+msgstr "Rādīt pozicioniera pozīciju"
+
 msgid "Show record indicator"
 msgstr "Rādīt ieraksta indikatoru"
 
@@ -5732,6 +5738,9 @@ msgstr "Vietas garums"
 
 msgid "Skin"
 msgstr "Noformējums"
+
+msgid "Skin setup"
+msgstr "Noformējuma iestatījumi"
 
 msgid "Skins"
 msgstr "Noformējumi"
@@ -8778,6 +8787,12 @@ msgid_plural "with %d errors"
 msgstr[0] "ar %d kļūdu"
 msgstr[1] "ar %d kļūdām"
 msgstr[2] "ar %d kļūdām"
+
+msgid "with text"
+msgstr "ar tekstu"
+
+msgid "with tuner name"
+msgstr "ar uztvērēja nosaukumu"
 
 msgid "working"
 msgstr "darbojas"
