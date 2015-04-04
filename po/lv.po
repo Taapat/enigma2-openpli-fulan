@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-02 22:35+0300\n"
+"POT-Creation-Date: 2015-04-04 17:49+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1162,6 +1162,9 @@ msgstr "Mainīt PIN"
 
 msgid "Change bouquets in quickzap"
 msgstr "Mainīt buķetes ātrās slēgšanas režīmā"
+
+msgid "Change recording (add time)"
+msgstr "Mainīt ierakstu (pievienot laiku)"
 
 msgid "Change recording (duration)"
 msgstr "Mainīt ierakstu (ilgumu)"
@@ -2953,6 +2956,9 @@ msgstr "Ātro taustiņu iestatījumi"
 
 msgid "Hotkey zap"
 msgstr "Pārslēgšana uz"
+
+msgid "How many minutes do you want add to record?"
+msgstr "Cik minūšu vēlaties pievienot ierakstam?"
 
 msgid "How many minutes do you want to record?"
 msgstr "Cik minūšu vēlaties ierakstīt?"
