@@ -86,7 +86,7 @@ class Standby(Screen):
 
 		movie = config.usage.last_movie_played.value
 		movie = movie and movie.rsplit(":", 1)[1]
-		if movie.startswith("/") and [x for x in movie[1:].split("/") if x.startswith(".") and not x.startswith(".Trash")]:
+		if movie[:1] == "/" and [x for x in movie[1:].split("/") if x[:1] == "." and x[:6] != ".Trash"]:
 			from Screens.MovieSelection import defaultMoviePath
 			moviepath = defaultMoviePath()
 			if moviepath:
