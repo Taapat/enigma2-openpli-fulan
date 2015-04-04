@@ -235,7 +235,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 
 	def standbyCountChanged(self, value):
 		path = self.cur_service.getPath()
-		if path[:1] == "/" and [x for x in path[1:].split("/") if x[:1] == "."]:
+		if path.startswith("/") and [x for x in path[1:].split("/") if x.startswith(".")]:
 			self.close()
 
 	def handleLeave(self, how):
