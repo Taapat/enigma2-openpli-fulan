@@ -167,7 +167,7 @@ class CommitInfo(Screen):
 
 		self.project = 0
 		self.projects = [
-			("taapat-enigma2", "Taapat Enigma2"),
+			("enigma2-pli-arp-taapat", "Taapat Enigma2"),
 			("tdt-arp-taapat", "Taapat tdt-arp"),
 			("ar-p-enigma2-plugins-sh4", "AR-P Enigma2 Plugins sh4"),
 			("taapat-skin-MetropolisHD", "Taapat skin-MetropolisHD"),
@@ -211,10 +211,21 @@ class CommitInfo(Screen):
 			except:
 				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
 		elif "taapat" in feed:
+			url = 'https://bitbucket.org/Taapat/%s/commits/all' % feed
 			try:
-				url = open('/etc/opkg/system-feed.conf', 'r').read().split()[2]
-				url += '/' + feed + '.log'
-				commitlog += urlopen(url, timeout=5).read()
+				for x in urlopen(url, timeout=5).read().split('</tr>'):
+					title = creator = date = ''
+					for y in x.split('<!-- '):
+						if '<div title' in y:
+							title = y.split('<div title="')[1].split('">')[0].replace("&#39;", "'").replace('&#34;', '"')
+						elif '<span title' in y:
+							creator = y.split('<span title="')[1].split('"')[0]
+							if 'Author not' in creator:
+								creator = y.split('</span>')[0].rsplit('</div>', 1)[1].replace(' ', '').replace('\n', '')
+						elif '<time ' in y:
+							date = y.split('<time datetime="')[1].split('T')[0]
+					if title and creator and date:
+						commitlog += date + ' ' + creator + '\n' + title + 2 * '\n'
 			except:
 				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
 		else:
