@@ -3284,7 +3284,7 @@ msgid "Last upgrade: "
 msgstr "Pēdējā atjaunošana: "
 
 msgid "Latest Commits"
-msgstr "Jaunākās izmaiņas"
+msgstr "Izmaiņas"
 
 msgid "Latitude"
 msgstr "Platums"
