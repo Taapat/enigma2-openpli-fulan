@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-04 17:49+0300\n"
+"POT-Creation-Date: 2015-04-07 19:46+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2405,7 +2405,7 @@ msgid "End time"
 msgstr "Beigu laiks"
 
 msgid "End time to ignore inactivity sleeptimer"
-msgstr "Beigu laiks kad ignorēt neaktivitātes miega taimeri"
+msgstr "Beigu laiks neaktivitātes miega taimera ignorēšanai"
 
 msgid "End time to ignore shutdown in standby"
 msgstr "Beigu laiks kad ignorēt izslēgšanu gaidstāvē"
@@ -2562,8 +2562,14 @@ msgstr "Krāsaini dialogi ārējos subtitros"
 msgid "External subtitle switch fonts"
 msgstr "Mainīt arējo subtitru fontus"
 
+msgid "Extra end time to ignore inactivity sleeptimer"
+msgstr "Papildus beigu laiks neaktivitātes miega taimera ignorēšanai"
+
 msgid "Extra motor options"
 msgstr "Papildus motora iestatījumi"
+
+msgid "Extra start time to ignore inactivity sleeptimer"
+msgstr "Papildus sākuma laiks neaktivitātes miega taimera ignorēšanai"
 
 msgid "F1/F3"
 msgstr "F1/F3"
@@ -5883,20 +5889,29 @@ msgstr "Dienvidi"
 msgid "Spanish"
 msgstr "Spāņu"
 
+msgid "Specify extra timeframe to ignore inactivity sleeptimer"
+msgstr "Iestatīt papildus laiku neaktivitātes miega taimeria ignorēšanai"
+
 msgid "Specify the end time to ignore the shutdown timer when the receiver is in standby mode"
 msgstr "Iestatīt beigu laiku līdz kuram izslēgšanas taimeris tiks ignorēts, kamēr uztvērējs ir gaidstāvē"
 
 msgid "Specify the end time until the inactivity sleeptimer should be ignored"
 msgstr "Iestatīt beigu laiku līdz kuram neaktivitātes miega taimeris tiks ignorēts"
 
+msgid "Specify the extra end time until the inactivity sleeptimer should be ignored"
+msgstr "Iestatīt papildus beigu laiku līdz kuram neaktivitātes miega taimeris tiks ignorēts"
+
+msgid "Specify the extra start time when the inactivity sleeptimer should be ignored"
+msgstr "Iestatīt papildus sākuma laiku pēc kura neaktivitātes miega taimeris tiks ignorēts"
+
 msgid "Specify the start time to ignore the shutdown timer when the receiver is in standby mode"
-msgstr "Iestatīt sākuma laiku līdz kuram izslēgšanas taimeris tiks ignorēts, kamēr uztvērējs ir gaidstāvē"
+msgstr "Iestatīt sākuma laiku pēc kura izslēgšanas taimeris tiks ignorēts, kamēr uztvērējs ir gaidstāvē"
 
 msgid "Specify the start time when the inactivity sleeptimer should be ignored"
-msgstr "Iestatīt sākuma laiku līdz kuram neaktivitātes miega taimeris tiks ignorēts"
+msgstr "Iestatīt sākuma laiku pēc kura neaktivitātes miega taimeris tiks ignorēts"
 
 msgid "Specify timeframe to ignore inactivity sleeptimer"
-msgstr "Iestatīt laiku neaktivitātes miega taimeria ignorēšanai"
+msgstr "Iestatīt laiku neaktivitātes miega taimera ignorēšanai"
 
 msgid "Specify timeframe to ignore the shutdown in standby"
 msgstr "Iestatīt laiku izslēgšanas ignorēšanai gaidstāvē"
@@ -5964,7 +5979,7 @@ msgid "Start time"
 msgstr "Sākuma laiks"
 
 msgid "Start time to ignore inactivity sleeptimer"
-msgstr "Sākuma laiks pēc kura ignorēt neaktivitātes miega taimeri"
+msgstr "Sākuma laiks neaktivitātes miega taimera ignorēšanai"
 
 msgid "Start time to ignore shutdown in standby"
 msgstr "Sākuma laiks pēc kura ignorēt izslēgšanu gaidstāvē"
@@ -7305,7 +7320,10 @@ msgid "When enabled you can specify a timeframe to ignore the shutdown timer whe
 msgstr "Ja ieslēgts jūs varat iestatīt laiku kādā ignorēt izslēgšanu, kamēr uztvērējs ir gaidstāves režīmā"
 
 msgid "When enabled you can specify a timeframe were the inactivity sleeptimer is ignored. Not the detection is disabled during this timeframe but the inactivity timeout is disabled"
-msgstr "Ja ieslēgts jūs varat iestatīt laiku kad neaktivitātes miega taimeris tiks ignorēts. Šinī laikā neaktivitātes noteikšna ir izslēgta bet arī neaktivitātes aizture ir izslēgta"
+msgstr "Ja ieslēgts jūs varat iestatīt laiku kad neaktivitātes miega taimeris tiks ignorēts. Šinī laikā nav izslēgta neaktivitātes noteikšna, bet nestrādās izslēgšana ja nav aktivitātes"
+
+msgid "When enabled you can specify an extra timeframe were the inactivity sleeptimer is ignored. Not the detection is disabled during this timeframe but the inactivity timeout is disabled"
+msgstr "Ja ieslēgts jūs varat iestatīt papildus laiku kad neaktivitātes miega taimeris tiks ignorēts. Šinī laikā nav izslēgta neaktivitātes noteikšna, bet nestrādās izslēgšana ja nav aktivitātes"
 
 msgid "When enabled you can zap channels with the  CH+/-, B+/-, P+/- buttons instead of opening the channel selection list."
 msgstr "Ja ieslēgts, jūs pa tiešo varat pārslēgt kanālus ar CH+/-, B+/-, P+/- pogām, nevis tikai atverot kanālu sarakstu."
