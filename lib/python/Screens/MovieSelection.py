@@ -669,7 +669,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 	def standbyCountChanged(self, value):
 		path = self.getTitle().split(" /", 1)
 		if path and len(path) > 1:
-			if [x for x in path[1].split("/") if x.startswith(".") and not x.startswith(".Trash")]:
+			if [x for x in path[1].split("/") if x[:1] == "." and x[:6] != ".Trash"]:
 				moviepath = defaultMoviePath()
 				if moviepath:
 					config.movielist.last_videodir.value = defaultMoviePath()
@@ -1403,7 +1403,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 		if res != currentDir:
 			if os.path.isdir(res):
 				baseName = os.path.basename(res[:-1])
-				if config.ParentalControl.servicepinactive.value and baseName.startswith(".") and not baseName.startswith(".Trash"):
+				if config.ParentalControl.servicepinactive.value and baseName[:1] == "." and baseName[:6] != ".Trash"):
 					from Components.ParentalControl import parentalControl
 					if not parentalControl.sessionPinCached:
 						self.session.openWithCallback(boundFunction(servicePinEntered, res, selItem), PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code"))
