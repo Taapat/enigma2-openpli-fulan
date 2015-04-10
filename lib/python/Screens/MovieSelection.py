@@ -532,6 +532,10 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 		self["DescriptionBorder"] = Pixmap()
 		self["DescriptionBorder"].hide()
 
+		if config.ParentalControl.servicepinactive.value:
+			from Components.ParentalControl import parentalControl
+			if not parentalControl.sessionPinCached and config.movielist.last_videodir.value and [x for x in config.movielist.last_videodir.value[1:].split("/") if x.startswith(".") and not x.startswith(".Trash")]:
+				config.movielist.last_videodir.value = ""
 		if not os.path.isdir(config.movielist.last_videodir.value):
 			config.movielist.last_videodir.value = defaultMoviePath()
 			config.movielist.last_videodir.save()
@@ -667,13 +671,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.movie_list.value
 
 	def standbyCountChanged(self, value):
-		path = self.getTitle().split(" /", 1)
-		if path and len(path) > 1:
-			if [x for x in path[1].split("/") if x[:1] == "." and x[:6] != ".Trash"]:
-				moviepath = defaultMoviePath()
-				if moviepath:
-					config.movielist.last_videodir.value = defaultMoviePath()
-					self.close(None)
+		self.close(None)
 
 	def asciiOn(self):
 		rcinput = eRCInput.getInstance()
