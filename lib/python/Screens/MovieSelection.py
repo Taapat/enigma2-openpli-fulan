@@ -534,7 +534,7 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 
 		if config.ParentalControl.servicepinactive.value:
 			from Components.ParentalControl import parentalControl
-			if not parentalControl.sessionPinCached and config.movielist.last_videodir.value and [x for x in config.movielist.last_videodir.value[1:].split("/") if x.startswith(".") and not x.startswith(".Trash")]:
+			if not parentalControl.sessionPinCached and config.movielist.last_videodir.value and [x for x in config.movielist.last_videodir.value[1:].split("/") if x[:1] == "." and x[:6] != ".Trash"]:
 				config.movielist.last_videodir.value = ""
 		if not os.path.isdir(config.movielist.last_videodir.value):
 			config.movielist.last_videodir.value = defaultMoviePath()
