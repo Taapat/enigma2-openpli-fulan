@@ -630,7 +630,7 @@ class MovieList(GUIComponent):
 				from Components.ParentalControl import parentalControl
 				if not parentalControl.sessionPinCached:
 					baseName = baseName = os.path.basename(serviceref.getPath()[:-1])
-					if baseName.startswith(".") and not baseName.startswith(".Trash"):
+					if baseName[:1] == "." and baseName[:6] != ".Trash":
 						continue
 			info = serviceHandler.info(serviceref)
 			if info is None:
