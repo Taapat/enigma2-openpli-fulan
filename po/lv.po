@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-07 19:46+0300\n"
+"POT-Creation-Date: 2015-04-11 22:02+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -4637,6 +4637,9 @@ msgstr "Aizsargāt papildus izvēlnes"
 msgid "Protect main menu"
 msgstr "Aizsargāt galveno izvēlni"
 
+msgid "Protect manufacturer reset screen"
+msgstr "Aizsargāt iestatījumu atiestatīšanu"
+
 msgid "Protect movie list"
 msgstr "Aizsargāt filmu sarakstu"
 
@@ -4648,6 +4651,9 @@ msgstr "Aizsargāt ppraudņu pārlūku"
 
 msgid "Protect services"
 msgstr "Aizsargāt kanālus"
+
+msgid "Protect software update screen"
+msgstr "Aizsargāt programmatūras atjaunināšanu"
 
 msgid "Protect standby menu"
 msgstr "Aizsargāt gaidstāves izvēlni"
