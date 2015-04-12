@@ -93,7 +93,7 @@ class ParentalControl:
 			if service[:2] == "1:":
 				refstr = info and info.getInfoString(ref, iServiceInformation.sServiceref)
 				service = refstr and eServiceReference(refstr).toCompareString()
-			if [x for x in path[1:].split("/") if x.startswith(".") and not x == ".Trash"]:
+			if [x for x in path[1:].split("/") if x[:1] == "." and x != ".Trash"]:
 				age = 18
 		elif int(config.ParentalControl.age.value):
 			event = info and info.getEvent(ref)
