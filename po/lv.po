@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-11 22:02+0300\n"
+"POT-Creation-Date: 2015-04-13 21:53+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2215,6 +2215,15 @@ msgstr "Nesaglabāt un apturēt laika aizturi"
 msgid "Don't stop current event but disable coming events"
 msgstr "Neapturēt pašreizējo notikumu bet izslēgt nākamos"
 
+msgid "Don't zap"
+msgstr "Nepārslēgt"
+
+msgid "Don't zap and disable timer"
+msgstr "Nepārslēgt izslēgt taimeri"
+
+msgid "Don't zap and remove timer"
+msgstr "Nepārslēgt un dzēst taimeri"
+
 #, python-format
 msgid "Done - Installed, upgraded or removed %d package (%s)"
 msgid_plural "Done - Installed, upgraded or removed %d packages (%s)"
@@ -2370,6 +2379,9 @@ msgstr "Aktivizēt freesat EPG"
 
 msgid "Enable multiple bouquets"
 msgstr "Aktivizēt vairāk-buķešu režīmu"
+
+msgid "Enable parental protection"
+msgstr "Aktivizēt vecāku kontroli"
 
 msgid "Enable remote enigma2 receiver to be tried to tune into services that cannot be tuned into locally (e.g. tuner is occupied or service type is unavailable on the local tuner. Specify complete URL including http:// and port number (normally ...:8001), e.g. http://second_box:8001."
 msgstr "Aktivizēt Enigma2 uztvērēju, kuru izmatot lai mēģinātu uztvert kanālu kurš nav uztverams lokāli (piem. uztvērējs ir aizņemts vai kanāla tips nav pieejams lokālajā uztvērējā). Norādiet pilnu adresi ieskaitot http:// un porta numuru (pēc nolkusējuma ...:8001), piem. http://second_box:8001."
@@ -5105,11 +5117,17 @@ msgstr "Saglabāt un apturēt laika aizturi"
 msgid "Save playlist"
 msgstr "Saglabāt repertuāru"
 
+msgid "Save timeshift and zap"
+msgstr "Saglabāt laika aiztures failu un pārslēgt"
+
 msgid "Save timeshift file"
 msgstr "Saglabāt laika aiztures failu"
 
 msgid "Save timeshift file in movie directory"
-msgstr "Saglabāt laika aiztures failu filmu mapē"
+msgstr "Saglabāt laika aiztures failu ierakstu mapē"
+
+msgid "Save timeshift in movie dir and zap"
+msgstr "Saglabāt laika aiztures failu ierakstu mapē un pārslēgt"
 
 msgid "Save timeshift only for current event"
 msgstr "Saglabāt laika aizturi tikai pašreizējai pārraidei"
@@ -6641,6 +6659,9 @@ msgstr "Laika aizture"
 msgid "Timeshift Live"
 msgstr "Laika aizture dzīvajā"
 
+msgid "Timeshift is running. Select an action.\n"
+msgstr "Darbojas laika aizture. Izvēlieties darbību.\n"
+
 msgid "Timeshift location"
 msgstr "Laika aiztures vieta"
 
@@ -7564,7 +7585,7 @@ msgid "Yes and save"
 msgstr "Jā un saglabāt"
 
 msgid "Yes and save in movie dir"
-msgstr "Jā un saglabāt filmu mapē"
+msgstr "Jā un saglabāt ierakstu mapē"
 
 msgid "Yes to all"
 msgstr "Jā visiem"
@@ -7648,6 +7669,10 @@ msgstr "Jūs izvēlējāties atjaunot jūsu iestatījumus. Enigma2 pēc atjauno�
 #, python-format
 msgid "You have to wait %s!"
 msgstr "Jums jāuzgaida %s!"
+
+#, python-format
+msgid "You must switch to the service %s (%s - '%s')!\n"
+msgstr "Pārslēgsies uz kanālu %s (%s - '%s')!\n"
 
 msgid ""
 "You need a PC connected to your receiver. If you need further instructions, please visit the website http://www.dm7025.de.\n"
