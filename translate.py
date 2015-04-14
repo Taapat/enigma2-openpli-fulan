@@ -32,3 +32,7 @@ HOTKEY = (
 	_("Scanning"),
 	_("InfoBar"))
 
+MESSAGEBOX = (
+	_("Question"),
+	_("Warning"))
+
