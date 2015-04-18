@@ -2550,11 +2550,7 @@ class InfoBarInstantRecord:
 			common = ()
 		if self.isInstantRecordRunning():
 			title =_("A recording is currently running.\nWhat do you want to do?")
-			list = common + \
-				((_("Change recording (duration)"), "changeduration"),
-				(_("Change recording (add time)"), "addrecordingtime"),
-				(_("Change recording (endtime)"), "changeendtime"),)
-			list += ((_("Stop recording"), "stop"),)
+			list = ((_("Stop recording"), "stop"),)
 			if config.usage.movielist_trashcan.value:
 				list += ((_("Stop and delete recording"), "stopdelete"),)
 			if len(self.recording) > 1:
@@ -2563,7 +2559,11 @@ class InfoBarInstantRecord:
 					list += ((_("Stop and delete all current recordings"), "stopdeleteall"),)
 			if self.isTimerRecordRunning():
 				list += ((_("Stop timer recording"), "timer"),)
-			list += ((_("Do nothing"), "no"),)
+			list += common + \
+				((_("Change recording (duration)"), "changeduration"),
+				(_("Change recording (add time)"), "addrecordingtime"),
+				(_("Change recording (endtime)"), "changeendtime"),
+				(_("Do nothing"), "no"),)
 		else:
 			title=_("Start recording?")
 			list = common
