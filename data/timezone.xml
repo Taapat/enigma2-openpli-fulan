@@ -31,6 +31,7 @@
 	<zone name="(GMT-01:00) Cape Verde Is." zone="Atlantic/Cape_Verde" />
 	<zone name="(GMT) Casablanca, Monrovia" zone="Africa/Casablanca" />
 	<zone name="(GMT) Greenwich Mean Time : Dublin, Lisbon, London" zone="Europe/Dublin" />
+	<zone name="(GMT+01:00) Algeria" zone="Africa/Algiers" />
 	<zone name="(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Vienna" zone="CET" />
 	<zone name="(GMT+01:00) Belgrade, Bratislava, Budapest, Prague" zone="CET" />
 	<zone name="(GMT+01:00) Brussels, Copenhagen, Madrid, Paris" zone="CET" />
