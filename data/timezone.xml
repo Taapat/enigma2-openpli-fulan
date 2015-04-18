@@ -37,7 +37,6 @@
 	<zone name="(GMT+01:00) Brussels, Copenhagen, Madrid, Paris" zone="CET" />
 	<zone name="(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb" zone="CET" />
 	<zone name="(GMT+01:00) West Central Africa" zone="Africa/Kinshasa" />
-	<zone name="(GMT+01:00) Algeria" zone="Africa/Algiers" />
 	<zone name="(GMT+02:00) Athens" zone="Europe/Athens" />
 	<zone name="(GMT+02:00) Istanbul" zone="Europe/Istanbul" />
 	<zone name="(GMT+02:00) Minsk" zone="Europe/Minsk" />
