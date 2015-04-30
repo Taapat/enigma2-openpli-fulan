@@ -104,7 +104,7 @@ void eWidget::invalidate(const gRegion &region)
 		abspos += root->position();
 	}
 	res.moveBy(abspos);
-//	eDebug("region to invalidate:");
+//	eDebug("[eWidget] region to invalidate:");
 //	dumpRegion(res);
 	if (root && root->m_desktop){
 		root->m_desktop->invalidate(res, this, target_layer);
@@ -117,7 +117,7 @@ void eWidget::show()
 		return;
 
 	m_vis |= wVisShow;
-//	eDebug("show widget %p", this);
+//	eDebug("[eWidget] show widget %p", this);
 	notifyShowHide();
 
 		/* TODO: optimize here to only recalc what's required. possibly merge with hide. */
@@ -356,7 +356,7 @@ int eWidget::event(int event, void *data, void *data2)
 	case evtPaint:
 	{
 		gPainter &painter = *(gPainter*)data2;
-	//		eDebug("eWidget::evtPaint");
+	//		eDebug("[eWidget] evtPaint");
 //		dumpRegion(*(gRegion*)data);
 		if (!isTransparent())
 		{
