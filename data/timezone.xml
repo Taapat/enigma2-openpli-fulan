@@ -51,8 +51,9 @@
 	<zone name="(GMT+03:00) Nairobi" zone="Africa/Nairobi" />
 	<zone name="(GMT+03:30) Tehran" zone="Asia/Tehran" />
 	<zone name="(GMT+04:00) Abu Dhabi, Muscat" zone="Asia/Muscat" />
-	<zone name="(GMT+04:00) Baku, Tbilisi, Yerevan" zone="Asia/Baku" />
+	<zone name="(GMT+04:00) Tbilisi, Yerevan" zone="Asia/Muscat" />
 	<zone name="(GMT+04:00) Samara" zone="Europe/Samara" />
+	<zone name="(GMT+04:00) Baku" zone="Asia/Baku" />
 	<zone name="(GMT+04:30) Kabul" zone="Asia/Kabul" />
 	<zone name="(GMT+05:00) Ekaterinburg" zone="Asia/Yekaterinburg" />
 	<zone name="(GMT+05:00) Islamabad, Karachi, Tashkent" zone="Asia/Tashkent" />
