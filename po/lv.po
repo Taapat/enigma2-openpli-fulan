@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-14 19:01+0300\n"
+"POT-Creation-Date: 2015-05-03 14:45+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2840,6 +2840,9 @@ msgstr "Iet uz iepriekšējo dienu notikumiem"
 msgid "Goto previous page of events"
 msgstr "Iet uz iepriekšējo notikumu lapu"
 
+msgid "Goto primetime / now"
+msgstr "Iet uz brīvo laiku / pašreiz"
+
 msgid "Goto specific date/time"
 msgstr "Iet uz noteiktu datumu/laiku"
 
@@ -3991,6 +3994,9 @@ msgstr "nov"
 msgid "November"
 msgstr "novembris"
 
+msgid "Now"
+msgstr "Pašreiz"
+
 msgctxt "now/next: 'now' event label"
 msgid "Now"
 msgstr "Pašreiz"
@@ -4615,6 +4621,12 @@ msgstr "Izvēlētā kanāla priekšskatījums"
 
 msgid "Primary DNS"
 msgstr "Primārais DNS"
+
+msgid "Prime time"
+msgstr "Brīvais laiks lai skatītos pārraides"
+
+msgid "PrimeTime"
+msgstr "Brīvais laiks"
 
 msgid "Priority"
 msgstr "Prioritāte"
