@@ -5656,7 +5656,7 @@ msgid "Show multi channel EPG"
 msgstr "Rādīt daudzkanālu EPG"
 
 msgid "Show picons in channel list"
-msgstr "Rādīr pikonas kanālu srakstā"
+msgstr "Rādīt pikonas kanālu srakstā"
 
 msgid "Show positioner movement"
 msgstr "Rādīt pozicioniera kustību"
