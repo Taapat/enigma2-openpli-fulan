@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-05 10:00+0200\n"
-"PO-Revision-Date: 2015-01-31 02:29+0400\n"
+"PO-Revision-Date: 2015-04-29 18:01+0200\n"
 "Last-Translator: ser6 <ser6@bk.ru>\n"
 "Language-Team: a.k.a Uchkun <madamin2007@mail.ru>\n"
 "Language: ru\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.7.4\n"
 "X-Poedit-SourceCharset: iso-8859-5\n"
 
 msgid ""
@@ -906,7 +906,7 @@ msgid "/"
 msgstr "/ "
 
 msgid "/etc/hosts editor"
-msgstr "Редактор hosts"
+msgstr "Редактор подключений"
 
 msgid "/s"
 msgstr "/с"
@@ -1446,7 +1446,7 @@ msgid "2 (lower than any auto)"
 msgstr "2 (приоритет ниже чем автоматически)"
 
 msgid "2 InfoBar"
-msgstr "2 Инфо-Бар"
+msgstr "Второй ИнфоБар"
 
 msgid "2 hours"
 msgstr "2 часа"
@@ -2023,6 +2023,9 @@ msgstr "Настройки Аудио/Видео"
 msgid "AA"
 msgstr "AA"
 
+msgid "AAC downmix"
+msgstr "AAC микширование"
+
 msgid "AB"
 msgstr "AB"
 
@@ -2048,7 +2051,7 @@ msgid "ADDLINK"
 msgstr "Добавить ярлык"
 
 msgid "AUDIO:"
-msgstr "АУДИО"
+msgstr "АУДИО:"
 
 msgid "Abort"
 msgstr "Прервать"
@@ -2082,10 +2085,10 @@ msgid "Accesspoint:"
 msgstr "Точка доступа:"
 
 msgid "Account Setup"
-msgstr "Настройки аккаунта"
+msgstr "Настройки пользователя"
 
 msgid "Accounts list"
-msgstr "Список аккаунтов"
+msgstr "Список пользователей"
 
 msgid "Action"
 msgstr "Действие"
@@ -2133,10 +2136,10 @@ msgid "Activate the configured network settings."
 msgstr "Активировать выбранные настройки сети."
 
 msgid "Activate timeshift End"
-msgstr "Активировать таймшифт"
+msgstr "Активация завершения таймшифта"
 
 msgid "Activate timeshift end and pause"
-msgstr "Пауза таймшифта"
+msgstr "Активация завершения и паузы таймшифта"
 
 msgid "Active"
 msgstr "Активация"
@@ -2520,6 +2523,9 @@ msgstr "Сортировка по алфавиту от А до Я"
 msgid "Alpha sort descending (ZA)"
 msgstr "Обратная сортировка по алфавиту"
 
+msgid "Also on standby"
+msgstr "Также и из режима ожидания"
+
 msgid "Alternative"
 msgstr "Альтернативы"
 
@@ -2758,14 +2764,14 @@ msgid "Attempt to recover lost mounts (in background)"
 msgstr "Восстановить потерянные точки монтирования (в фоновом режиме) "
 
 msgid "Attention, this is repeated timer!\n"
-msgstr "Внимание, этот таймер повторяется!\n"
+msgstr "Данный таймер уже установлен ранее!\n"
 
 msgid ""
 "Attention, this is repeated timer!\n"
 "What do you want to do?"
 msgstr ""
-"Внимание, этот таймер повторяется!\n"
-"Что Вы хотите сделать?"
+"Данный таймер уже установлен ранее!\n"
+"Как прикажете поступить?"
 
 msgid "Audio"
 msgstr "Аудио"
@@ -2813,7 +2819,7 @@ msgid "Audio options..."
 msgstr "Настройки аудио..."
 
 msgid "Audio source"
-msgstr "Источник звука"
+msgstr "Источник аудио"
 
 msgid "Audio track (%s) format"
 msgstr "Формат звуковой дорожки - (%s)"
@@ -3390,6 +3396,9 @@ msgstr "Ресурсы CIFS"
 msgid "COPY"
 msgstr "Копировать"
 
+msgid "CPU"
+msgstr "Процессор"
+
 msgid "CVBS"
 msgstr "CVBS"
 
@@ -3400,7 +3409,7 @@ msgid "Cable Scan"
 msgstr "Сканирование КабельТВ"
 
 msgid "Cache Flush"
-msgstr "Очистка кеш"
+msgstr "Очистка кэша"
 
 msgid "Cache Thumbnails"
 msgstr "Кешировать эскизы"
@@ -3565,6 +3574,9 @@ msgstr "Размещать DVB субтитры в центре"
 msgid "Change Movielist Preview position"
 msgstr "Изменить позицию превью списка видео"
 
+msgid "Change PIN"
+msgstr "Сменить пин-код"
+
 msgid "Change Root Password"
 msgstr "Изменение пароля Root"
 
@@ -3650,7 +3662,7 @@ msgid "Channel"
 msgstr "Канал"
 
 msgid "Channel Info"
-msgstr "Инфо канала"
+msgstr "Инфо о канале"
 
 msgid "Channel Selection"
 msgstr "Выбор канала"
@@ -3829,7 +3841,7 @@ msgid "Choose your Skin"
 msgstr "Выбор графической оболочки"
 
 msgid "Circular LNB"
-msgstr "Круговая"
+msgstr "Круговая LNB"
 
 msgid "Circular left"
 msgstr "Круговая левая"
@@ -4032,7 +4044,7 @@ msgid "Config resolution of pictures"
 msgstr "Разрешение картинок и записей"
 
 msgid "ConfigWeatherMSN"
-msgstr "Конфигурация плагина"
+msgstr "Настройки MSN WEATHER"
 
 msgid "Configuration"
 msgstr "Конфигурация"
@@ -4146,8 +4158,8 @@ msgid ""
 "Configure if the subtitle should switch between normal, italic, bold and "
 "bolditalic"
 msgstr ""
-"Настройте, должны ли шрифты субтитров переключаться на обычный, курсив, "
-"жирный и жирный курсив"
+"Укажите, нужно ли включить возможность переключения шрифта субтитров между - "
+"обычный, курсив, жирный и жирный курсив"
 
 msgid "Configure interface"
 msgstr "Настройка интерфейса"
@@ -4530,6 +4542,9 @@ msgid ""
 "moving."
 msgstr ""
 "Выберите, нужно ли показать иконку при движении антенны с мотоподвесом."
+
+msgid "Configure whether or not an rotor position will be displayed on infobar"
+msgstr "Выберите, нужно ли показать положение антенны в инфобаре."
 
 msgid ""
 "Configure which access level to use for the configuration menu. Expert level "
@@ -4918,7 +4933,7 @@ msgid "CtronTab Manager"
 msgstr "Управление CronTab"
 
 msgid "CtronTab Manager - %s"
-msgstr "Управление Cro"
+msgstr "Управление задачами Cron - %s"
 
 msgid "Current CEC address"
 msgstr "Текущий СЕС адрес"
@@ -4936,7 +4951,7 @@ msgid "Current device: "
 msgstr "Текущее устройство: "
 
 msgid "Current event EPG"
-msgstr "Подробности текущего канала"
+msgstr "Телегид текущего канала"
 
 msgid "Current position:"
 msgstr "Текущая позиция:"
@@ -5070,6 +5085,12 @@ msgstr "DTS микширование"
 
 msgid "DUAL LAYER DVD"
 msgstr "Двухслойный ДВД"
+
+msgid "DVB Drivers"
+msgstr "Драйверы DVB"
+
+msgid "DVB drivers: "
+msgstr "Драйверы DVB: "
 
 msgid "DVB subtitle black transparency"
 msgstr "Черная прозрачность DVB субтитров"
@@ -5334,13 +5355,13 @@ msgid "Delay for external subtitles"
 msgstr "Задержка для внешних субтитров"
 
 msgid "Delay in miliseconds after finish scrolling text on display."
-msgstr "Задержка текста в миллисекундах после окончания прокрутки на дисплее"
+msgstr "Задержка в миллисекундах после окончания прокрутки текста на дисплее"
 
 msgid "Delay in miliseconds before start of scrolling text on display."
-msgstr "Задержка текста в миллисекундах перед началом прокрутки на дисплее"
+msgstr "Задержка в миллисекундах перед началом прокрутки текста на дисплее"
 
 msgid "Delay in miliseconds between scrolling characters on display."
-msgstr "Задержка прокрутки в миллисекундах между символами на дисплее"
+msgstr "Задержка в миллисекундах между прокруткой символов на дисплее"
 
 msgid "Delay x seconds after service started"
 msgstr "Задержка х секунд после запуска сервиса"
@@ -5670,7 +5691,7 @@ msgid "Disable crashlog reporting"
 msgstr "Отключить отчет о крешлогах"
 
 msgid "Disable current event but not coming events"
-msgstr "Отключить только текущий таймер"
+msgstr "Отключить только текущую передачу, но оставить следующие"
 
 msgid "Disable infobar timeout for ok button"
 msgstr "Выключить таймаут инфопанели по кнопке ОК"
@@ -6217,7 +6238,7 @@ msgid "Driver Manager"
 msgstr "Управление драйверами"
 
 msgid "DuckBA multiboot"
-msgstr "DuckBA"
+msgstr "DuckBA мультизагрузка"
 
 msgid "Duration"
 msgstr "Длительность"
@@ -6253,7 +6274,7 @@ msgid "E-Panel"
 msgstr "E-Пaнeль"
 
 msgid "E-Panel Menu/Extensionmenu config"
-msgstr "Конфигурация E-Пaнeли"
+msgstr "Настройки Меню/Меню расширений"
 
 msgid "E-Panel Universal Switcher"
 msgstr "Универсальный переключатель"
@@ -6467,10 +6488,10 @@ msgid "Electronic Program Guide Setup"
 msgstr "Настройки электронного Телегида"
 
 msgid "Email"
-msgstr "Почта на сервере"
+msgstr "Электронная почта"
 
 msgid "Email Setup"
-msgstr "Настройки почтового клиента"
+msgstr "Настройки электронной почты"
 
 msgid "Empty .ap file"
 msgstr "Пустой .ap файл"
@@ -6572,9 +6593,6 @@ msgstr "Двойное нажатие ОК в списке каналов"
 msgid "Enable OK for channel selection"
 msgstr "Кнопкой ОК вызывать список каналов"
 
-msgid "Enable Parental Control"
-msgstr "Включить родительский контроль"
-
 msgid "Enable Service Restriction"
 msgstr "Включить ограничение сервиса"
 
@@ -6635,15 +6653,18 @@ msgstr "Включить мультипакеты"
 msgid "Enable parental control"
 msgstr "Включить родительский контроль"
 
+msgid "Enable parental protection"
+msgstr "Включить родительский контроль"
+
 msgid ""
 "Enable remote enigma2 receiver to be tried to tune into services that cannot "
 "be tuned into locally (e.g. tuner is occupied or service type is unavailable "
 "on the local tuner. Specify complete URL including http:// and port number "
 "(normally ...:8001), e.g. http://second_box:8001."
 msgstr ""
-"Включить удаленный ресивер enigma2 для попытки настроиться на услуги, "
-"которые не могут быть настроены локально (например занят тюнер или тип "
-"службы недоступен на локальном тюнере. Укажите полный URL-адрес, включая "
+"Включить удаленный ресивер enigma2 для попытки настроиться на сервисы, "
+"которые не могут быть настроены локально (например ресивер занят или тип "
+"сервиса недоступен на локальном ресивере. Укажите полный URL-адрес, включая "
 "http:// и номер порта (обычно...8001), например http://second_box:8001."
 
 msgid "Enable service number in display"
@@ -6695,7 +6716,7 @@ msgid "Encrypted: "
 msgstr "Зашифрованные: "
 
 msgid "EncryptedChannelSetup settings"
-msgstr "Кодированный канал"
+msgstr "Настройки EncryptedChannelSetup"
 
 msgid "Encryption"
 msgstr "Кодировка"
@@ -6836,7 +6857,7 @@ msgid "Enter service number font size in pixel"
 msgstr "Размер номера канала в пикс."
 
 msgid "Enter share directory:"
-msgstr "Войдите в общую папку:"
+msgstr "Введите общую папку:"
 
 msgid "Enter share name:"
 msgstr "Введите имя общего ресурса:"
@@ -7368,10 +7389,10 @@ msgid "External subtitle color"
 msgstr "Цвет внешних субтитров"
 
 msgid "External subtitle dialog colorisation"
-msgstr "Задержка для внешних субтитров"
+msgstr "Цветовая гамма для внешних субтитров"
 
 msgid "External subtitle switch fonts"
-msgstr "Переключать шрифты субтитров"
+msgstr "Переключение шрифтов для внешних субтитров"
 
 msgid "Extra motor options"
 msgstr "Продвинутые настройки мотора"
@@ -7464,8 +7485,11 @@ msgstr "Не удалось записать /tmp/positionersetup.log: "
 msgid "Failed:"
 msgstr "Неудача:"
 
+msgid "Fallback remote receiver"
+msgstr "Резервный удаленный ресивер"
+
 msgid "Fallback remote receiver URL"
-msgstr "URL-адрес резервного удаленного ресивера"
+msgstr "URL резервного удаленного ресивера"
 
 msgid "Fallback to default skin at skin errors"
 msgstr "Выбор стандартного скина при ошибке установленного"
@@ -7768,7 +7792,7 @@ msgid "Final position at index"
 msgstr "Номер итоговой позиции"
 
 msgid "Final scroll delay"
-msgstr "Финальная задержка прокрутки"
+msgstr "Задержка финальной прокрутки"
 
 msgid "Fine movement"
 msgstr "Тонкое перемещение"
@@ -8425,7 +8449,7 @@ msgid "Harddisk"
 msgstr "Жесткий диск"
 
 msgid "Harddisk Setup"
-msgstr "Параметры HDD"
+msgstr "Настройки жесткого диска"
 
 msgid "Harddisk standby after"
 msgstr "Отключение HDD через"
@@ -8499,6 +8523,9 @@ msgstr "Скрыть нумерацию маркеров"
 msgid "Hide on exit"
 msgstr "Скрыть при выходе"
 
+msgid "Hide parentel locked services"
+msgstr "Скрыть чёрный список"
+
 msgid "Hide player"
 msgstr "Скрыть плеер"
 
@@ -8533,10 +8560,10 @@ msgid "History"
 msgstr "История"
 
 msgid "History back"
-msgstr "История назад"
+msgstr "Назад по истории"
 
 msgid "History next"
-msgstr "История вперёд"
+msgstr "Вперед по истории"
 
 msgid "Hold screen"
 msgstr "Сохранять экран"
@@ -8563,7 +8590,7 @@ msgid "Horizontal turning speed"
 msgstr "Скорость поворота к горизонтали"
 
 msgid "HotKey Setup"
-msgstr "Настройка кнопок"
+msgstr "Настройки кнопок"
 
 msgid "Hotkey"
 msgstr "Горячие кнопки"
@@ -8769,7 +8796,7 @@ msgid "Image"
 msgstr "Имидж"
 
 msgid "Image Manager"
-msgstr "Менеджер имиджей"
+msgstr "Управление имиджами"
 
 msgid "Image creation FAILED!"
 msgstr "Создание прошивки завершилось НЕУДАЧЕЙ!"
@@ -9034,9 +9061,6 @@ msgstr "Ошибка, цвет должен быть в формате: ffffff, 
 msgid "Insat 3A/4B (93.5E)"
 msgstr "Инсат 3A/4B (93.5E)"
 
-msgid "Insatall extensions from feed"
-msgstr "Установка расширений"
-
 msgid "Insert file to current playing songlist and play next"
 msgstr "Вставить файл в текущий список и сыграть следующим"
 
@@ -9100,8 +9124,14 @@ msgstr "Установка успешно завершена."
 msgid "Installation or removal has completed."
 msgstr "Установка или удаление успешно завершены."
 
+msgid "Installed"
+msgstr "Время установки"
+
 msgid "Installed version:"
 msgstr "Установленная версия:"
+
+msgid "Installed: "
+msgstr "Установлен: "
 
 msgid "InstallerDriverGPRS"
 msgstr "Установщик драйвера GPRS"
@@ -9331,7 +9361,7 @@ msgid "Keep service + Reverse bouquet buttons"
 msgstr "Сохранять текущий сервис + Обратить кнопки CH+/-"
 
 msgid "Kernel Drivers in Memory"
-msgstr "Драйверы ядра в памяти"
+msgstr "Загруженные драйверы ядра"
 
 msgid "Kernel Modules Manager"
 msgstr "Управление драйверами"
@@ -9410,7 +9440,7 @@ msgid "LNB"
 msgstr "LNB"
 
 msgid "LOCK"
-msgstr "Захват"
+msgstr "Подключение"
 
 msgid "LOF"
 msgstr "LOF"
@@ -9507,7 +9537,7 @@ msgid "Letterbox"
 msgstr "Режим ящика"
 
 msgid "Letterbox zoom"
-msgstr "Режим масштабирования"
+msgstr "Масштаб режима ящика"
 
 msgid "Letzeburgesch"
 msgstr "Люксембургский"
@@ -9671,8 +9701,8 @@ msgstr "Загрузка продолжительности записи"
 msgid "Load playlist"
 msgstr "Загрузить плейлист"
 
-msgid "Load unlinked userbouqeuts"
-msgstr "Загружать основные букеты пользователя"
+msgid "Load unlinked userbouquets"
+msgstr "Загружать невыбранные букеты пользователя"
 
 msgid "Loading additional videos, be patient ..."
 msgstr "Загрузка дополнительных видео, ждите..."
@@ -9820,10 +9850,10 @@ msgid "Maintain old EPG data for"
 msgstr "Сохранять прошедшие данные EPG (в мин.)"
 
 msgid "Make a softlink"
-msgstr "Сделать ссылку"
+msgstr "Создать ссылку"
 
 msgid "Make a softlink..."
-msgstr "Создание ссылки"
+msgstr "Создание ссылки..."
 
 msgid "Make subdir for record"
 msgstr "Создать подпапку для записи"
@@ -10142,6 +10172,9 @@ msgstr "Мобистар Франция"
 
 msgid "Mobistar NL"
 msgstr "Мобистар Нидерланды"
+
+msgid "Mode"
+msgstr "Режим"
 
 msgid "Mode "
 msgstr "Режим"
@@ -10529,7 +10562,7 @@ msgid "Multi Quickbutton for Keyboard and RC VU+Version"
 msgstr "Смена клавиш для клавиатуры и пульта VU+"
 
 msgid "Multi channel downmix"
-msgstr "Микширование звука"
+msgstr "Микширование мультиканала"
 
 msgid "Multi-EPG bouquet selection"
 msgstr "Выбор фаворитов в мульти-ЕПГ"
@@ -10607,7 +10640,7 @@ msgid "MyTube Player Help"
 msgstr "Помощь по плееру"
 
 msgid "MyTube Player Info"
-msgstr "Инфо-экран MyTube"
+msgstr "Инфо экран MyTube"
 
 msgid "MyTube Player Settings"
 msgstr "Настройки MyTube"
@@ -10658,7 +10691,7 @@ msgid "NEXT"
 msgstr "Далее"
 
 msgid "NEXT:"
-msgstr "ДАЛЕЕ"
+msgstr "ДАЛЕЕ:"
 
 msgid "NFI Image Flashing"
 msgstr "Установка прошивки NFI"
@@ -10679,7 +10712,7 @@ msgid "NOW"
 msgstr "СЕЙЧАС"
 
 msgid "NOW:"
-msgstr "СЕЙЧАС"
+msgstr "СЕЙЧАС:"
 
 msgid "NSS 12 (57.0E)"
 msgstr "НСС 12 (57.0E)"
@@ -10739,7 +10772,7 @@ msgid "Network"
 msgstr "Сеть"
 
 msgid "Network Adapter test"
-msgstr "Тестирование сети "
+msgstr "Тестирование сетевого устройства"
 
 msgid "Network Browser"
 msgstr "Обозреватель сети"
@@ -10927,6 +10960,9 @@ msgstr "Нет потока для записи!"
 
 msgid "No Timeshift found to save as recording!"
 msgstr "Файл таймшифта для сохранения в виде записи не найден!"
+
+msgid "No age block"
+msgstr "Без ограничений"
 
 msgid "No backup needed"
 msgstr "Резервное копирование не требуется"
@@ -11337,7 +11373,7 @@ msgid "Number of lines:"
 msgstr "Количество строк:"
 
 msgid "Number of repeating text on display."
-msgstr "Количество повторяющегося текста на дисплее"
+msgstr "Количество повторяющегося текста на дисплее."
 
 msgid "Number of scheduled recordings left."
 msgstr "Количество оставшихся запланированных записей."
@@ -11479,6 +11515,9 @@ msgstr "Только соответствующие отрезку времен�
 msgid "Only on Service: %s"
 msgstr "Только на сервисе: %s"
 
+msgid "Only on startup"
+msgstr "Только при загрузке ресивера"
+
 msgid "Only running streamings can be recorded!"
 msgstr "Только запущенные станции могут быть записаны!"
 
@@ -11540,7 +11579,7 @@ msgid "Options"
 msgstr "Параметры"
 
 msgid "Options disable timer"
-msgstr "Параметры отключения таймера"
+msgstr "Настройки отключения таймера"
 
 msgid "Options:\n"
 msgstr "Параметры:\n"
@@ -11797,6 +11836,9 @@ msgstr "Пауза в конце фильма"
 msgid "Pause playback"
 msgstr "Пауза"
 
+msgid "Pauze/Continue playback"
+msgstr "Пауза/Продолжение воспроизведения"
+
 msgid "People & Blogs"
 msgstr "Люди и Блоги"
 
@@ -11891,7 +11933,7 @@ msgid "Pillarbox"
 msgstr "Черные полосы слева и справа"
 
 msgid "Pillarbox/Pan&Scan"
-msgstr "Смена видеорежима"
+msgstr "Режим ящика/Масштабирование"
 
 msgid "Pilot"
 msgstr "Пилот"
@@ -12464,7 +12506,7 @@ msgid "Pli Multilanguage Font"
 msgstr "Шрифт Pli мультиязычный"
 
 msgid "Plugin Browser"
-msgstr "Обзор плагинов"
+msgstr "Список плагинов"
 
 msgid "Plugin Configuration"
 msgstr "Конфигурация плагина"
@@ -12674,7 +12716,7 @@ msgid "Press ( < OK > ) to change your Buttons !!!"
 msgstr "Чтобы изменить кнопки нажмите ОК !"
 
 msgid "Press -Info- to update plugin list"
-msgstr "Установка пакетов IPK"
+msgstr "Нажмите -Info- для обновления списка"
 
 msgid "Press INFO on your remote control for additional information."
 msgstr "Нажмите кнопку Инфо на пульте для дополнительной информации."
@@ -12713,7 +12755,7 @@ msgid "Press OK to edit the settings."
 msgstr "OK, чтобы изменить настройки."
 
 msgid "Press OK to expand this host"
-msgstr "Поиск ресурсов"
+msgstr "ОК, для поиска ресурсов"
 
 msgid "Press OK to get further details for %s"
 msgstr "ОК, чтобы получить подробную информацию о %s"
@@ -12878,11 +12920,35 @@ msgstr "ПрогрессБар"
 msgid "Properties of current title"
 msgstr "Свойства текущего заголовка"
 
+msgid "Protect Screens"
+msgstr "Защитить экраны"
+
+msgid "Protect configuration"
+msgstr "Защитить текущие настройки"
+
+msgid "Protect main menu"
+msgstr "Защитить главное меню"
+
+msgid "Protect movie list"
+msgstr "Защитить список записей"
+
+msgid "Protect on epg age"
+msgstr "Возростная категория"
+
+msgid "Protect plugin browser"
+msgstr "Защитить меню обзора плагинов"
+
 msgid "Protect services"
 msgstr "Защитить каналы"
 
 msgid "Protect setup"
 msgstr "Защитить установки"
+
+msgid "Protect standby menu"
+msgstr "Защитить меню режима ожидания"
+
+msgid "Protect timer menu"
+msgstr "Защитить меню таймера"
 
 msgid "Provider"
 msgstr "Провайдер"
@@ -12910,6 +12976,9 @@ msgstr "Pyc-Скрипт:\\n"
 
 msgid "Python frontend for /tmp/mmi.socket"
 msgstr "Python интерфейс для /tmp/mmi.socket"
+
+msgid "Python version"
+msgstr "Версия Python"
 
 msgid "Quality of jpg picture :"
 msgstr "Качество картинки jpg :"
@@ -13181,7 +13250,7 @@ msgid "Record-Stream-Error"
 msgstr "Запись ошибки в потоке"
 
 msgid "Recorded files..."
-msgstr "Записанные файлы..."
+msgstr "Записанные файлы"
 
 msgid "Recording"
 msgstr "Запись"
@@ -13190,7 +13259,7 @@ msgid "Recording / switching at a certain time, edit start time"
 msgstr "Запись/переключение в определенное время, изменить время начала"
 
 msgid "Recording Setup"
-msgstr "Параметры записи"
+msgstr "Настройки записи"
 
 msgid "Recording and switching timer, additional settings"
 msgstr "Таймер записи переключения, расширенные настройки"
@@ -13308,6 +13377,9 @@ msgstr "Обновить черный/белый списки"
 
 msgid "Reload black-/white lists"
 msgstr "Перезагрузить черный/белый списки"
+
+msgid "Reload blacklists"
+msgstr "Обновить чёрный список"
 
 msgid ""
 "Reload epg at every boot.\n"
@@ -13452,7 +13524,7 @@ msgid "Rename file..."
 msgstr "Переименование файла..."
 
 msgid "Rename name and description for new events"
-msgstr "Менять имя и описание для новых событий"
+msgstr "Изменять название и описание для новых передач"
 
 msgid "Rename this tag..."
 msgstr "Переименовать данный тэг..."
@@ -13476,8 +13548,12 @@ msgstr "Повторять плейлист"
 msgid "Repeat type"
 msgstr "Повторить тип"
 
-msgid "Repeating event currently recording... What do you want to do?"
-msgstr "Повторяющееся событие записывается...Что вы хотите сделать?"
+msgid ""
+"Repeating event currently recording.\n"
+"What do you want to do?"
+msgstr ""
+"Повторяющееся событие записывается.\n"
+"Что вы хотите сделать?"
 
 msgid "Repeats"
 msgstr "Повторы"
@@ -13489,8 +13565,8 @@ msgid ""
 "Replace `- ` in dialogs with colored text per speaker (like teletext "
 "subtitles for the hearing impaired)"
 msgstr ""
-"Заменять `- ` в диалогах с цветным текстом на спикер (Как субтитры "
-"телетекста для людей с нарушениями слуха)"
+"Заменить `- ` в диалогах с цветным текстом на бегущей строке (например "
+"телетекст длясубтитров для людей с нарушениями слуха)"
 
 msgid "Replace original:"
 msgstr "Заменить оригинал:"
@@ -13700,7 +13776,7 @@ msgid "Rewind speeds"
 msgstr "Скорость перемотки назад"
 
 msgid "Rewrap subtitles"
-msgstr "Перепаковать телетекст субтитров"
+msgstr "Перезапускать субтитры"
 
 msgid "Rewrap teletext subtitles"
 msgstr "Перепаковать телетекст субтитров"
@@ -14242,10 +14318,10 @@ msgid "Scroll Time [msec]"
 msgstr "Время прокрутки (миллисек.)"
 
 msgid "Scroll delay"
-msgstr "Время задержки"
+msgstr "задержка прокрутки"
 
 msgid "Scroll repeats"
-msgstr "Время повтора"
+msgstr "Повторение прокрутки"
 
 msgid "Scroll-Speed:"
 msgstr "Скорость прокрутки:"
@@ -14532,7 +14608,7 @@ msgid "Select action for timer %s:"
 msgstr "Выберите действие для таймера - %s:"
 
 msgid "Select action for timer '%s'."
-msgstr "Выберите действие для таймера '%s'"
+msgstr "Выберите действие для таймера '%s'."
 
 msgid "Select an image to be downloaded"
 msgstr "Выберите прошивку для загрузки"
@@ -14886,7 +14962,7 @@ msgid "Set maximum duration"
 msgstr "Установить максимальную продолжительность"
 
 msgid "Set name"
-msgstr "Набор имени"
+msgstr "Выбор названия"
 
 msgid "Set search term"
 msgstr "Критерий поиска"
@@ -14905,6 +14981,9 @@ msgstr "Настройка sispmctl при сохранении:"
 
 msgid "Set start directory"
 msgstr "Выбор стартового каталога"
+
+msgid "Set startup service"
+msgstr "Назначить канал как стартовый"
 
 msgid "Set the brightness level of the front panel display during standby."
 msgstr "Установите уровень яркости дисплея для режима ожидания."
@@ -15092,7 +15171,7 @@ msgid "Show EPG data in single EPG list older than"
 msgstr "Показ устаревших данных ЕПГ в одиночном телегиде"
 
 msgid "Show EPG for current channel..."
-msgstr "Телегид текущего канала"
+msgstr "Показать телегид текущего канала..."
 
 msgid "Show EPG-List/MerlinEPG"
 msgstr "Показать ЕПГ/МерлинЕПГ"
@@ -15119,7 +15198,7 @@ msgid "Show Info for Plugin, contact and Versionsinfo"
 msgstr "Показать информацию о плагине, версии и контактную информацию"
 
 msgid "Show InfoBar"
-msgstr "Показать инфопанель"
+msgstr "Показать ИнфоБар"
 
 msgid "Show MC in Extension-Menu"
 msgstr "МедиаЦентр в меню плагинов"
@@ -15291,13 +15370,13 @@ msgid "Show event-progress in channel selection"
 msgstr "Тип прогресс-бара в списке каналов"
 
 msgid "Show eventinfo plugins"
-msgstr "Обзор плагинов"
+msgstr "Показать плагины телегида"
 
 msgid "Show extended description"
 msgstr "Показать расширенное описание"
 
 msgid "Show extension selection"
-msgstr "Показать выбор дополнений"
+msgstr "Показать выбор расширений"
 
 msgid "Show extensions..."
 msgstr "Показать дополнения..."
@@ -15378,7 +15457,7 @@ msgid "Show movie lengths in movielist"
 msgstr "Показать длительность видео в списке фильмов"
 
 msgid "Show movies"
-msgstr "Показать фильмы"
+msgstr "Показать записи"
 
 msgid "Show multi channel EPG"
 msgstr "Показать мультителегид"
@@ -15410,6 +15489,9 @@ msgstr "Показать плагин в меню расширений"
 msgid "Show positioner movement"
 msgstr "Показать движение позиционера"
 
+msgid "Show positioner position"
+msgstr "Показать положение позиционера"
+
 msgid "Show progress in movie list"
 msgstr "Отображать течение просмотра в списке записей"
 
@@ -15423,7 +15505,7 @@ msgid "Show screensaver"
 msgstr "Включить заставку"
 
 msgid "Show second InfoBar"
-msgstr "Показать инфопанель записи"
+msgstr "Показать второй ИнфоБар"
 
 msgid "Show second infobar"
 msgstr "Показать второй инфобар"
@@ -15474,10 +15556,10 @@ msgid "Show subdirs:"
 msgstr "Показать подпапки:"
 
 msgid "Show subservice selection"
-msgstr "Показать подканалы"
+msgstr "Показать выбор подсервисов"
 
 msgid "Show subtitle selection"
-msgstr "Показать субтитры"
+msgstr "Показать выбор субтитров"
 
 msgid "Show tag menu"
 msgstr "Показать меню тэгов"
@@ -15710,7 +15792,7 @@ msgid "Sleeptimer"
 msgstr "Таймер сна"
 
 msgid "Sleeptimer edit"
-msgstr "Редактор таймера"
+msgstr "Редактор таймера сна"
 
 msgid "Slide Show"
 msgstr "Слайд-Шоу"
@@ -16167,7 +16249,7 @@ msgid "Start from the beginning"
 msgstr "Начать с самого начала"
 
 msgid "Start instant recording"
-msgstr "Начать запись"
+msgstr "Немедленная запись"
 
 msgid "Start offline decode"
 msgstr "Запуск оффлайн декодирования"
@@ -16636,10 +16718,10 @@ msgid "Switch between normal mode and list mode"
 msgstr "Переход от стандартного режима к списку"
 
 msgid "Switch channel down"
-msgstr "Переход на канал вниз"
+msgstr "Переключить вниз по списку"
 
 msgid "Switch channel up"
-msgstr "Переход на канал вверх"
+msgstr "Переключить вверх по списку"
 
 msgid "Switch next channel"
 msgstr "Переключить на следующий канал"
@@ -16651,7 +16733,7 @@ msgid "Switch to HDMI in mode"
 msgstr "Переход в режим HDMI"
 
 msgid "Switch to TV mode"
-msgstr "Переход в режим ТВ"
+msgstr "Переключить в режим ТВ"
 
 msgid "Switch to filelist"
 msgstr "Переключить на список файлов"
@@ -16684,7 +16766,7 @@ msgid "Switch to previous subservice"
 msgstr "Переключиться на предыдущий подсервис"
 
 msgid "Switch to radio mode"
-msgstr "Переход в режим радио"
+msgstr "Переключить в режим радио"
 
 msgid "Switchable tuner types:"
 msgstr "Переключаемые типы тюнеров:"
@@ -17474,8 +17556,10 @@ msgid ""
 "For a normal users it is not important.\n"
 "Don't panic, please, when here will be displayed any suspicious informations!"
 msgstr ""
-"Эти сведения для разработчиков! Для пользователей это не важно.\n"
-"Не паникуйте, если здесь появится малопонятная информация!"
+"Эти сведения только для разработчиков.\n"
+"Для обычных пользователей эта информация не нужна.\n"
+"Если вам непонятна приведенная здесь информация, просто не обращайте "
+"внимания!"
 
 msgid ""
 "This is a name you can give the AutoTimer. It will be shown in the Overview "
@@ -18024,7 +18108,7 @@ msgid "Toggle a cut mark at the current position"
 msgstr "Расположить метку обработки в текущей позиции"
 
 msgid "Toggle infoBar"
-msgstr "Переключить инфопанель"
+msgstr "Переключить ИнфоБар"
 
 msgid "Toggle list"
 msgstr "Закрыть список"
@@ -18322,6 +18406,17 @@ msgstr ""
 "Неизвестная ошибка:\n"
 "%s"
 
+msgid ""
+"URL of an enigma2 receiver that will be tried to tune into services that "
+"cannot be tuned into locally (e.g. tuner is occupied or service type is "
+"unavailable on the local tuner. Specify complete URL including http:// and "
+"port number (normally ...:8001), e.g. http://second_box:8001."
+msgstr ""
+"URL-адрес ресивера на enigma2, на который ресивер подключается если не может "
+"настроится на сервис локально (к примеру тюнер занят или сервис недоступен "
+"на локальном тюнере). Укажите полный URL-адрес, включая http:// и номер "
+"порта (обычно ...:8001), например http://second_box:8001."
+
 msgid "URL of fallback remote receiver"
 msgstr "URL-адрес удаленного резервного ресивера"
 
@@ -18607,7 +18702,7 @@ msgstr ""
 "соответствует. Смещения не учитывается!"
 
 msgid "Usage Setup"
-msgstr "Просмотр установок"
+msgstr "Опции"
 
 msgid "Use"
 msgstr "Использовать"
@@ -18861,7 +18956,8 @@ msgid ""
 "be used."
 msgstr ""
 "Обычно когда язык субтитров совпадает с языком аудио, субтитры не "
-"показываются. Этот выбор позволяет показывать субтитры, когда они совпадают."
+"показываются. Этот выбор позволяет показывать субтитры, даже если они "
+"совпадают."
 
 msgid "Uzbekistan"
 msgstr "Узбекистан "
@@ -18876,7 +18972,7 @@ msgid "VFD scroll speed"
 msgstr "Скорость движения бегущей строки на дисплее"
 
 msgid "VIDEO:"
-msgstr "ВИДЕО"
+msgstr "ВИДЕО:"
 
 msgid "VIEW"
 msgstr "Просмотр"
@@ -19156,7 +19252,7 @@ msgid "View Rass interactive..."
 msgstr "Интерактивный просмотр RASS"
 
 msgid "View System Settings (/etc/enigma2/settings)"
-msgstr "Просмотр установок системы (/etc/enigma2/settings)"
+msgstr "Просмотр настроек системы (/etc/enigma2/settings)"
 
 msgid "View Video CD..."
 msgstr "Смотреть Video CD..."
@@ -19662,14 +19758,14 @@ msgstr "Что сделать?"
 
 msgid ""
 "When enabled enigma2 will load unlinked userbouquets. This means that "
-"userbouquets that are availbalbe, but not included in the bouquets.tv or "
+"userbouquets that are available, but not included in the bouquets.tv or "
 "bouquets.radio files, will still be loaded. This allows you for example to "
 "keep your own user bouquet while installed settings are upgraded"
 msgstr ""
-"Если включено, то Enigma2 будет загружать букеты пользователя. При этом эти "
-"букеты будут доступны, но не включены в основные ТВ и Радио-букеты. Это "
-"позволит Вам, например сохранить свой собственный букет, в то время как "
-"будут обновлены настройки"
+"Если включено, то будут загружаться невыбранные букеты пользователя. Это "
+"означает, букеты существуют, но не были включены в файлы bouquets.tv или "
+"bouquets.radio. Это позволит Вам внедрит свой собственный букет в "
+"существующий список букетов"
 
 msgid "When enabled the PiP can be closed by the exit button."
 msgstr "Укажите действие по кнопке exit, при активированном ПиП-окне"
@@ -19900,7 +19996,8 @@ msgstr "При включении нумерация маркеров не бу�
 
 msgid "When enabled, reformat subtitles to match the width of the screen."
 msgstr ""
-"Если включено, субтитры будут форматироваться в соответствии с шириной экрана"
+"Если включено, субтитры будут форматироваться в соответствии с текущей "
+"шириной экрана"
 
 msgid "When enabled, services may be grouped in multiple bouquets."
 msgstr "Если включено, сервисы могут быть сгруппированы в несколько букетов."
@@ -20532,7 +20629,7 @@ msgid ""
 "instructions from the website, your new firmware will ask you to restore "
 "your settings."
 msgstr ""
-"Неоьходимо соединение с компьютером. Если нужны подробные инструкции, "
+"Необходимо соединение с компьютером. Если нужны подробные инструкции, "
 "пожалуйста посетите сайт http://www.dm7025.de.\n"
 "Ваш ресивер сейчас будет выключен. После того, как Вы выполните инструкции "
 "по обновлению от веб-сайта, Ваше новый имидж попросит, чтобы Вы восстановили "
@@ -20791,7 +20888,7 @@ msgid "Zap mode"
 msgstr "Режимы экрана при переключении"
 
 msgid "Zap to"
-msgstr "Переход на канал"
+msgstr "Переключить на канал"
 
 msgid "Zap to %s?"
 msgstr "Переключить на %s?"
@@ -20828,7 +20925,7 @@ msgid "[All files] "
 msgstr "[Все файлы] "
 
 msgid "[All files] /"
-msgstr "Все файлы"
+msgstr "[Все файлы] /"
 
 msgid "[AutoBackup] complete, result:"
 msgstr "[AutoBackup] завершен, результат:"
@@ -20953,6 +21050,9 @@ msgstr "добавить закладку"
 msgid "add bouquet"
 msgstr "добавить пакет пользователя "
 
+msgid "add bouquet to parental protection"
+msgstr "добавить пакет в родительский контроль"
+
 msgid "add directory to playlist"
 msgstr "добавить папку в плейлист"
 
@@ -20978,7 +21078,7 @@ msgid "add new profile..."
 msgstr "добавить новый профиль..."
 
 msgid "add record"
-msgstr "Добавить"
+msgstr "добавить запись"
 
 msgid "add recording (enter recording duration)"
 msgstr "начать запись (введите длительность записи)"
@@ -21005,7 +21105,7 @@ msgid "add services"
 msgstr "добавить сервисы"
 
 msgid "add tabs - %s"
-msgstr "Добавить Cro"
+msgstr "добавить - %s"
 
 msgid "add to bouquets protection"
 msgstr "добавить к защите фаворитов"
@@ -21090,6 +21190,9 @@ msgstr "Эффекты amBX"
 
 msgid "and"
 msgstr "и"
+
+msgid "and never ask again this session again"
+msgstr "и больше не спрашивать об этом"
 
 msgid "and never show this message again"
 msgstr "и больше не показывать это сообщение"
@@ -22666,7 +22769,7 @@ msgid "pure black"
 msgstr "черный экран"
 
 msgid "purge deleted userbouquets"
-msgstr "Очистить удалённые букеты пользователя"
+msgstr "очистить удалённые букеты пользователя"
 
 msgid "query"
 msgstr "вопрос"
@@ -22775,6 +22878,9 @@ msgstr "удалить перед этой позицией"
 msgid "remove bookmark"
 msgstr "удалить закладку"
 
+msgid "remove bouquet from parental protection"
+msgstr "убрать пакет из родительского контроля"
+
 msgid "remove directory"
 msgstr "удалить каталог"
 
@@ -22851,7 +22957,7 @@ msgid "restore all hidden services"
 msgstr "восстановить все скрытые сервисы"
 
 msgid "restore deleted userbouquets"
-msgstr "Восстановить удалённые букеты пользователя"
+msgstr "восстановить удалённые букеты пользователя"
 
 msgid "restore failed"
 msgstr "восстановить не удалось"
@@ -23461,6 +23567,9 @@ msgstr "поток невозможно записать"
 msgid "theme images"
 msgstr "картинки по тегу"
 
+msgid "this bouquet is protected by a parental control pin"
+msgstr "этот пакет защищён пин-кодом"
+
 msgid "this recording"
 msgstr "данная запись"
 
@@ -23621,7 +23730,7 @@ msgid "video bitrate"
 msgstr "видео битрейт"
 
 msgid "view Email"
-msgstr "Просмотр письма"
+msgstr "просмотр почты"
 
 msgid "view extensions..."
 msgstr "просмотр дополнений..."
