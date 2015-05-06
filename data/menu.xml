@@ -95,6 +95,7 @@ mode = config.av.videomode[port].value
 rate = config.av.videorate[mode].value
 video_hw.setMode(port, mode, rate)
 config.av.videoport.save()
+self.close(True)
 			</code>
 		</item>
 </menu>
