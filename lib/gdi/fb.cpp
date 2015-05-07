@@ -83,9 +83,11 @@ fbClass::fbClass(const char *fb)
 		goto nolfb;
 	}
 
+#if not defined(__sh__)
 	showConsole(0);
 
 	enableManualBlit();
+#endif
 	return;
 nolfb:
 	if (fbFd >= 0)
@@ -97,9 +99,9 @@ nolfb:
 	return;
 }
 
+#if not defined(__sh__)
 int fbClass::showConsole(int state)
 {
-#if not defined(__sh__) 
 	int fd=open("/dev/tty0", O_RDWR);
 	if(fd>=0)
 	{
@@ -109,9 +111,9 @@ int fbClass::showConsole(int state)
 		}
 		close(fd);
 	}
-#endif
 	return 0;
 }
+#endif
 
 int fbClass::SetMode(int nxRes, int nyRes, int nbpp)
 {
@@ -329,8 +331,10 @@ fbClass::~fbClass()
 		msync(lfb, available, MS_SYNC);
 		munmap(lfb, available);
 	}
+#if not defined(__sh__)
 	showConsole(1);
 	disableManualBlit();
+#endif
 	if (fbFd >= 0)
 	{
 		::close(fbFd);
@@ -348,12 +352,14 @@ int fbClass::lock()
 {
 	if (locked)
 		return -1;
+#if not defined(__sh__)
 	if (m_manual_blit == 1)
 	{
 		locked = 2;
 		disableManualBlit();
 	}
 	else
+#endif
 		locked = 1;
 
 #if defined(__sh__)
@@ -382,8 +388,10 @@ void fbClass::unlock()
 {
 	if (!locked)
 		return;
+#if not defined(__sh__)
 	if (locked == 2)  // re-enable manualBlit
 		enableManualBlit();
+#endif
 	locked=0;
 
 #if defined(__sh__)
@@ -409,29 +417,27 @@ void fbClass::unlock()
 	PutCMAP();
 }
 
+#if not defined(__sh__)
 void fbClass::enableManualBlit()
 {
-#if not defined(__sh__)
 	unsigned char tmp = 1;
 	if (fbFd < 0) return;
 	if (ioctl(fbFd,FBIO_SET_MANUAL_BLIT, &tmp)<0)
 		eDebug("[fb] enable FBIO_SET_MANUAL_BLIT: %m");
 	else
 		m_manual_blit = 1;
-#endif
 }
 
 void fbClass::disableManualBlit()
 {
-#if not defined(__sh__)
 	unsigned char tmp = 0;
 	if (fbFd < 0) return;
 	if (ioctl(fbFd,FBIO_SET_MANUAL_BLIT, &tmp)<0)
 		eDebug("[fb] disable FBIO_SET_MANUAL_BLIT: %m");
 	else
 		m_manual_blit = 0;
-#endif
 }
+#endif
 
 #if defined(__sh__)
 void fbClass::clearFBblit()
