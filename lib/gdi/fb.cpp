@@ -115,6 +115,7 @@ int fbClass::showConsole(int state)
 
 int fbClass::SetMode(int nxRes, int nyRes, int nbpp)
 {
+	if (fbFd < 0) return -1;
 #if defined(__sh__)
 	xRes=nxRes;
 	yRes=nyRes;
@@ -216,6 +217,7 @@ void fbClass::getMode(int &xres, int &yres, int &bpp)
 
 int fbClass::setOffset(int off)
 {
+	if (fbFd < 0) return -1;
 	screeninfo.xoffset = 0;
 	screeninfo.yoffset = off;
 	return ioctl(fbFd, FBIOPAN_DISPLAY, &screeninfo);
@@ -224,11 +226,13 @@ int fbClass::setOffset(int off)
 int fbClass::waitVSync()
 {
 	int c = 0;
+	if (fbFd < 0) return -1;
 	return ioctl(fbFd, FBIO_WAITFORVSYNC, &c);
 }
 
 void fbClass::blit()
 {
+	if (fbFd < 0) return;
 #if defined(__sh__)
 	int modefd=open("/proc/stb/video/3d_mode", O_RDWR);
 	char buf[16] = "off";
@@ -336,6 +340,7 @@ fbClass::~fbClass()
 
 int fbClass::PutCMAP()
 {
+	if (fbFd < 0) return -1;
 	return ioctl(fbFd, FBIOPUTCMAP, &cmap);
 }
 
@@ -408,6 +413,7 @@ void fbClass::enableManualBlit()
 {
 #if not defined(__sh__)
 	unsigned char tmp = 1;
+	if (fbFd < 0) return;
 	if (ioctl(fbFd,FBIO_SET_MANUAL_BLIT, &tmp)<0)
 		eDebug("[fb] enable FBIO_SET_MANUAL_BLIT: %m");
 	else
@@ -419,6 +425,7 @@ void fbClass::disableManualBlit()
 {
 #if not defined(__sh__)
 	unsigned char tmp = 0;
+	if (fbFd < 0) return;
 	if (ioctl(fbFd,FBIO_SET_MANUAL_BLIT, &tmp)<0)
 		eDebug("[fb] disable FBIO_SET_MANUAL_BLIT: %m");
 	else
