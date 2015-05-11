@@ -32,14 +32,14 @@ eDVBAudio::eDVBAudio(eDVBDemux *demux, int dev)
 	m_fd = ::open(filename, O_RDWR | O_CLOEXEC);
 	if (m_fd < 0)
 		eWarning("[eDVBAudio] %s: %m", filename);
-	eDebug("Audio Device: %s", filename);
+	eDebug("[eDVBAudio] Audio Device: %s", filename);
 	if (demux)
 	{
 		sprintf(filename, "/dev/dvb/adapter%d/demux%d", demux->adapter, demux->demux);
 		m_fd_demux = ::open(filename, O_RDWR | O_CLOEXEC);
 		if (m_fd_demux < 0)
 			eWarning("[eDVBAudio] %s: %m", filename);
-		eDebug("demux device: %s", filename);
+		eDebug("[eDVBAudio] demux device: %s", filename);
 	}
 	else
 	{
