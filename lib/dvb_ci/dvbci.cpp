@@ -1280,6 +1280,10 @@ void eDVBCISlot::data(int what)
 		eDebugCI("eSocketNotifier::Priority\n");
 		status = eDataStatusChanged;
 	}
+	else
+	{
+		status = eDataError
+	}
 
 	switch (getState())
 	{
