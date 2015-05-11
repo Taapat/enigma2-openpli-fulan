@@ -1282,7 +1282,7 @@ void eDVBCISlot::data(int what)
 	}
 	else
 	{
-		status = eDataError
+		status = eDataError;
 	}
 
 	switch (getState())
