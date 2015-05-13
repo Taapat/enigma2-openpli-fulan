@@ -56,6 +56,7 @@ dist_install_DATA = \
 	screws_mp.png \
 	screws.png \
 	sleeptimer.png \
+	testscreen.png \
 	timeline-now.png \
 	timeline.png \
 	unhandled-key.png \
