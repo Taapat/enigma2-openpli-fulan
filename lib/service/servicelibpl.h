@@ -250,6 +250,9 @@ private:
 	eFixedMessagePump<Message> m_pump;
 	static void eplayerCBsubtitleAvail(long int duration_ns, size_t len, char * buffer, void* user_data);
 
+	ePtr<eTimer> m_checkplaying_timer;
+	void checkIsPlaying();
+
 	struct subtitle_page_t
 	{
 		uint32_t start_ms;
@@ -263,7 +266,6 @@ private:
 
 	typedef std::map<uint32_t, subtitle_page_t> subtitle_pages_map_t;
 	subtitle_pages_map_t m_subtitle_pages;
-	ePtr<eTimer> m_subtitle_sync_timer;
 	void sourceTimeout();
 	sourceStream m_sourceinfo;
 	gint m_aspect, m_width, m_height, m_framerate, m_progressive;

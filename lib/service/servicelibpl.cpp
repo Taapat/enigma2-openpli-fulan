@@ -291,11 +291,13 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_ref(ref),
 	m_pump(eApp, 1)
 {
+	m_checkplaying_timer = eTimer::create(eApp);
 	m_currentAudioStream = -1;
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = -1; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_subtitle_widget = 0;
 	m_buffer_size = 5 * 1024 * 1024;
+	CONNECT(m_checkplaying_timer->timeout, eServiceMP3::checkIsPlaying);
 	CONNECT(m_nownext_timer->timeout, eServiceMP3::updateEpgCacheNowNext);
 	m_aspect = m_width = m_height = m_framerate = m_progressive = -1;
 	m_state = stIdle;
@@ -494,6 +496,19 @@ eServiceMP3::~eServiceMP3()
 		stop();
 }
 
+void eServiceMP3::checkIsPlaying()
+{
+	if (player && player->playback && !player->playback->isPlaying)
+	{
+		eDebug("eServiceMP3::%s player not playing, EOF?", __func__);
+
+		if(m_state == stRunning)
+			m_event((iPlayableService*)this, evEOF);
+	}
+
+	m_checkplaying_timer->start(5000, true);
+}
+
 void eServiceMP3::updateEpgCacheNowNext()
 {
 	bool update = false;
@@ -568,9 +583,10 @@ RESULT eServiceMP3::start()
 
 		player->output->Command(player, OUTPUT_OPEN, NULL);
 		player->playback->Command(player, PLAYBACK_PLAY, NULL);
-		updateEpgCacheNowNext();
 		m_event(this, evStart);
 		m_event(this, evGstreamerPlayStarted);
+		updateEpgCacheNowNext();
+		checkIsPlaying();
 		eDebug("eServiceMP3::start %s", m_ref.path.c_str());
 
 		return 0;
@@ -623,6 +639,7 @@ RESULT eServiceMP3::stop()
 
 	m_state = stStopped;
 	m_nownext_timer->stop();
+	m_checkplaying_timer->stop();
 	return 0;
 }
 
