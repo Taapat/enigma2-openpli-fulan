@@ -128,10 +128,10 @@ RESULT eMP3ServiceOfflineOperations::deleteFromDisk(int simulate)
 			return -1;
 		eBackgroundFileEraser *eraser = eBackgroundFileEraser::getInstance();
 		if (!eraser)
-			eDebug("FATAL !! can't get background file eraser");
+			eDebug("[eServiceMP3::%s] FATAL !! can't get background file eraser", __func__);
 		for (std::list<std::string>::iterator i(res.begin()); i != res.end(); ++i)
 		{
-			eDebug("Removing %s...", i->c_str());
+			eDebug("[eServiceMP3::%s] Removing %s...", __func__, i->c_str());
 			if (eraser)
 				eraser->erase(i->c_str());
 			else
@@ -301,7 +301,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	CONNECT(m_nownext_timer->timeout, eServiceMP3::updateEpgCacheNowNext);
 	m_aspect = m_width = m_height = m_framerate = m_progressive = -1;
 	m_state = stIdle;
-	eDebug("eServiceMP3::construct!");
+	eDebug("[eServiceMP3::%s]", __func__);
 	player = (Context_t*) malloc(sizeof(Context_t));
 
 	if (player)
@@ -467,7 +467,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	{
 		//Creation failed, no playback support for insert file, so delete playback context
 		//FIXME: How to tell e2 that we failed?
-		eDebug("eServiceMP3::ERROR Creation failed!");
+		eDebug("[eServiceMP3::%s] ERROR! Creation failed!", __func__);
 		if (player && player->output)
 		{
 			player->output->Command(player,OUTPUT_DEL, (void*)"audio");
@@ -484,7 +484,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		m_state = stStopped;
 	}
 	//m_state = stRunning;
-	eDebug("eServiceMP3-<");
+	//eDebug("[eServiceMP3::%s]-<", __func__);
 }
 
 eServiceMP3::~eServiceMP3()
@@ -500,7 +500,7 @@ void eServiceMP3::checkIsPlaying()
 {
 	if (player && player->playback && !player->playback->isPlaying)
 	{
-		eDebug("eServiceMP3::%s player not playing, EOF?", __func__);
+		eDebug("[eServiceMP3::%s] player not playing! issuing eof...", __func__);
 
 		if(m_state == stRunning)
 			m_event((iPlayableService*)this, evEOF);
@@ -573,7 +573,7 @@ RESULT eServiceMP3::start()
 {
 	if (m_state != stIdle)
 	{
-		eDebug("eServiceMP3::%s < m_state != stIdle", __func__);
+		eDebug("[eServiceMP3::%s] m_state != stIdle", __func__);
 		return -1;
 	}
 
@@ -587,18 +587,18 @@ RESULT eServiceMP3::start()
 		m_event(this, evGstreamerPlayStarted);
 		updateEpgCacheNowNext();
 		checkIsPlaying();
-		eDebug("eServiceMP3::start %s", m_ref.path.c_str());
+		eDebug("[eServiceMP3::%s] start:%s", __func__, m_ref.path.c_str());
 
 		return 0;
 	}
 
-	eDebug("eServiceMP3::ERROR in start %s", m_ref.path.c_str());
+	eDebug("[eServiceMP3::%s] ERROR in start %s", __func__, m_ref.path.c_str());
 	return -1;
 }
 
 void eServiceMP3::sourceTimeout()
 {
-	eDebug("eServiceMP3::http source timeout! issuing eof...");
+	eDebug("[eServiceMP3::%s] source timeout! issuing eof...", __func__);
 	m_event((iPlayableService*)this, evEOF);
 }
 
@@ -606,14 +606,14 @@ RESULT eServiceMP3::stop()
 {
 	if (m_state == stIdle)
 	{
-		eDebug("eServiceMP3::%s < m_state == stIdle", __func__);
+		eDebug("[eServiceMP3::%s] m_state == stIdle", __func__);
 		return -1;
 	}
 
 	if (m_state == stStopped)
 		return -1;
 
-	eDebug("eServiceMP3::stop %s", m_ref.path.c_str());
+	eDebug("[eServiceMP3::%s] stop:%s", __func__, m_ref.path.c_str());
 
 	if (player && player->playback && player->output)
 	{
@@ -795,7 +795,7 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 {
 	if (player && player->playback && !player->playback->isPlaying)
 	{
-		eDebug("eServiceMP3::%s !!!!EOF!!!!", __func__);
+		eDebug("[eServiceMP3::%s] !!!!EOF!!!!", __func__);
 
 		if(m_state == stRunning)
 			m_event((iPlayableService*)this, evEOF);
@@ -1047,7 +1047,7 @@ int eServiceMP3::getCurrentChannel()
 
 RESULT eServiceMP3::selectChannel(int i)
 {
-	eDebug("eServiceMP3::selectChannel(%i)",i);
+	eDebug("[eServiceMP3::%s] %i", __func__,i);
 	return 0;
 }
 
@@ -1079,11 +1079,11 @@ eAutoInitPtr<eServiceFactoryMP3> init_eServiceFactoryMP3(eAutoInitNumbers::servi
 
 void eServiceMP3::eplayerCBsubtitleAvail(long int duration_ms, size_t len, char * buffer, void* user_data)
 {
-	eDebug("eServiceMP3::%s >", __func__);
+	eDebug("[eServiceMP3::%s]", __func__);
 	unsigned char tmp[len+1];
 	memcpy(tmp, buffer, len);
 	tmp[len] = 0;
-	eDebug("gstCBsubtitleAvail: %s", tmp);
+	eDebug("[eServiceMP3::%s] subtitle: %s", __func__, tmp);
 	eServiceMP3 *_this = (eServiceMP3*)user_data;
 	if ( _this->m_subtitle_widget )
 	{
@@ -1094,7 +1094,7 @@ void eServiceMP3::eplayerCBsubtitleAvail(long int duration_ms, size_t len, char 
 		(_this->m_subtitle_widget)->setPage(page);
 	}
 
-	eDebug("eServiceMP3::%s <", __func__);
+	//eDebug("[eServiceMP3::%s] <", __func__);
 }
 
 RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &track)
