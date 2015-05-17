@@ -587,7 +587,7 @@ RESULT eServiceMP3::start()
 		m_event(this, evGstreamerPlayStarted);
 		updateEpgCacheNowNext();
 		checkIsPlaying();
-		eDebug("[eServiceMP3::%s] start:%s", __func__, m_ref.path.c_str());
+		eDebug("[eServiceMP3::%s] start %s", __func__, m_ref.path.c_str());
 
 		return 0;
 	}
@@ -613,7 +613,7 @@ RESULT eServiceMP3::stop()
 	if (m_state == stStopped)
 		return -1;
 
-	eDebug("[eServiceMP3::%s] stop:%s", __func__, m_ref.path.c_str());
+	eDebug("[eServiceMP3::%s] stop %s", __func__, m_ref.path.c_str());
 
 	if (player && player->playback && player->output)
 	{
