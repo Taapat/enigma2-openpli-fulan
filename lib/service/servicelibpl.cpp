@@ -1120,7 +1120,7 @@ RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &t
 
 RESULT eServiceMP3::disableSubtitles()
 {
-	eDebug("eServiceMP3::disableSubtitles");
+	eDebug("[eServiceMP3::%s]", __func__);
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = m_currentSubtitleStream;
 	m_subtitle_pages.clear();
@@ -1159,7 +1159,7 @@ RESULT eServiceMP3::getCachedSubtitle(struct SubtitleTrack &track)
 
 RESULT eServiceMP3::getSubtitleList(std::vector<struct SubtitleTrack> &subtitlelist)
 {
-	// 	eDebug("eServiceMP3::getSubtitleList");
+	// 	eDebug("[eServiceMP3::%s]", __func__);
 	int stream_idx = 0;
 
 	for (std::vector<subtitleStream>::iterator IterSubtitleStream(m_subtitleStreams.begin()); IterSubtitleStream != m_subtitleStreams.end(); ++IterSubtitleStream)
@@ -1185,7 +1185,7 @@ RESULT eServiceMP3::getSubtitleList(std::vector<struct SubtitleTrack> &subtitlel
 		stream_idx++;
 	}
 
-	eDebug("eServiceMP3::getSubtitleList finished");
+	eDebug("[eServiceMP3::%s] finished", __func__);
 	return 0;
 }
 
