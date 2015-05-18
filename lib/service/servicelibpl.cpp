@@ -13,7 +13,8 @@
 #include <lib/gdi/gpixmap.h>
 #include <string>
 
-void ep3Blit(){
+void ep3Blit()
+{
 	fbClass *fb = fbClass::getInstance();
 	fb->blit();
 }
@@ -288,8 +289,7 @@ int eStreamBufferInfo::getBufferSize() const
 
 eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_nownext_timer(eTimer::create(eApp)),
-	m_ref(ref),
-	m_pump(eApp, 1)
+	m_ref(ref)
 {
 	m_checkplaying_timer = eTimer::create(eApp);
 	m_currentAudioStream = -1;
@@ -594,12 +594,6 @@ RESULT eServiceMP3::start()
 
 	eDebug("[eServiceMP3::%s] ERROR in start %s", __func__, m_ref.path.c_str());
 	return -1;
-}
-
-void eServiceMP3::sourceTimeout()
-{
-	eDebug("[eServiceMP3::%s] source timeout! issuing eof...", __func__);
-	m_event((iPlayableService*)this, evEOF);
 }
 
 RESULT eServiceMP3::stop()
@@ -1076,26 +1070,6 @@ RESULT eServiceMP3::getTrackInfo(struct iAudioTrackInfo &info, unsigned int i)
 }
 
 eAutoInitPtr<eServiceFactoryMP3> init_eServiceFactoryMP3(eAutoInitNumbers::service+1, "eServiceFactoryMP3");
-
-void eServiceMP3::eplayerCBsubtitleAvail(long int duration_ms, size_t len, char * buffer, void* user_data)
-{
-	eDebug("[eServiceMP3::%s]", __func__);
-	unsigned char tmp[len+1];
-	memcpy(tmp, buffer, len);
-	tmp[len] = 0;
-	eDebug("[eServiceMP3::%s] subtitle: %s", __func__, tmp);
-	eServiceMP3 *_this = (eServiceMP3*)user_data;
-	if ( _this->m_subtitle_widget )
-	{
-		ePangoSubtitlePage page;
-		gRGB rgbcol(0xD0,0xD0,0xD0);
-		page.m_elements.push_back(ePangoSubtitlePageElement(rgbcol, (const char*)tmp));
-		page.m_timeout = duration_ms;
-		(_this->m_subtitle_widget)->setPage(page);
-	}
-
-	//eDebug("[eServiceMP3::%s] <", __func__);
-}
 
 RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &track)
 {

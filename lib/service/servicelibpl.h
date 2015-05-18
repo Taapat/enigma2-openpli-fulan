@@ -236,20 +236,6 @@ private:
 	int m_state;
 	Context_t * player;
 
-	struct Message
-	{
-		Message()
-			:type(-1)
-		{}
-		Message(int type)
-			:type(type)
-		{}
-		int type;
-	};
-
-	eFixedMessagePump<Message> m_pump;
-	static void eplayerCBsubtitleAvail(long int duration_ns, size_t len, char * buffer, void* user_data);
-
 	ePtr<eTimer> m_checkplaying_timer;
 	void checkIsPlaying();
 
@@ -266,7 +252,6 @@ private:
 
 	typedef std::map<uint32_t, subtitle_page_t> subtitle_pages_map_t;
 	subtitle_pages_map_t m_subtitle_pages;
-	void sourceTimeout();
 	sourceStream m_sourceinfo;
 	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
 };
