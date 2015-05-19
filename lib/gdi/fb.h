@@ -20,9 +20,6 @@ class fbClass
 	int xResSc, yResSc;
 	int topDiff, leftDiff, rightDiff, bottomDiff;
 #endif
-#ifdef ENABLE_LIBEPLAYER3
-//	unsigned char *lfb_direct;
-#endif
 	int available;
 	struct fb_var_screeninfo screeninfo;
 	fb_cmap cmap;
