@@ -295,7 +295,6 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_currentAudioStream = -1;
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = -1; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
-	m_subtitle_widget = 0;
 	m_buffer_size = 5 * 1024 * 1024;
 	CONNECT(m_checkplaying_timer->timeout, eServiceMP3::checkIsPlaying);
 	CONNECT(m_nownext_timer->timeout, eServiceMP3::updateEpgCacheNowNext);
@@ -489,9 +488,6 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 
 eServiceMP3::~eServiceMP3()
 {
-	if (m_subtitle_widget) m_subtitle_widget->destroy();
-	m_subtitle_widget = 0;
-
 	if (m_state == stRunning)
 		stop();
 }
@@ -1078,7 +1074,6 @@ RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &t
 		m_subtitle_pages.clear();
 		m_currentSubtitleStream = track.pid;
 		m_cachedSubtitleStream = m_currentSubtitleStream;
-		m_subtitle_widget = user;
 		
 		eDebug ("eServiceMP3::switched to subtitle stream %i", m_currentSubtitleStream);
 
@@ -1098,10 +1093,6 @@ RESULT eServiceMP3::disableSubtitles()
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = m_currentSubtitleStream;
 	m_subtitle_pages.clear();
-
-	if (m_subtitle_widget) m_subtitle_widget->destroy();
-
-	m_subtitle_widget = 0;
 
 	int pid = -1;
 
