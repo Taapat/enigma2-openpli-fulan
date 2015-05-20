@@ -287,20 +287,29 @@ int eStreamBufferInfo::getBufferSize() const
 	return bufferSize;
 }
 
+eServiceMP3 *eServiceMP3::instance;
+
+eServiceMP3 *eServiceMP3::getInstance()
+{
+	return instance;
+}
+
 eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_nownext_timer(eTimer::create(eApp)),
 	m_ref(ref)
 {
-	m_checkplaying_timer = eTimer::create(eApp);
+	eDebug("[eServiceMP3::%s]", __func__);
+	m_threadmsg_timer = eTimer::create(eApp);
 	m_currentAudioStream = -1;
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = -1; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_buffer_size = 5 * 1024 * 1024;
-	CONNECT(m_checkplaying_timer->timeout, eServiceMP3::checkIsPlaying);
 	CONNECT(m_nownext_timer->timeout, eServiceMP3::updateEpgCacheNowNext);
+	CONNECT(m_threadmsg_timer->timeout, eServiceMP3::setEOF);
 	m_aspect = m_width = m_height = m_framerate = m_progressive = -1;
 	m_state = stIdle;
-	eDebug("[eServiceMP3::%s]", __func__);
+	instance = this;
+
 	player = (Context_t*) malloc(sizeof(Context_t));
 
 	if (player)
@@ -492,19 +501,6 @@ eServiceMP3::~eServiceMP3()
 		stop();
 }
 
-void eServiceMP3::checkIsPlaying()
-{
-	if (player && player->playback && !player->playback->isPlaying)
-	{
-		eDebug("[eServiceMP3::%s] player not playing! issuing eof...", __func__);
-
-		if(m_state == stRunning)
-			m_event((iPlayableService*)this, evEOF);
-	}
-
-	m_checkplaying_timer->start(5000, true);
-}
-
 void eServiceMP3::updateEpgCacheNowNext()
 {
 	bool update = false;
@@ -582,7 +578,6 @@ RESULT eServiceMP3::start()
 		m_event(this, evStart);
 		m_event(this, evGstreamerPlayStarted);
 		updateEpgCacheNowNext();
-		checkIsPlaying();
 		eDebug("[eServiceMP3::%s] start %s", __func__, m_ref.path.c_str());
 
 		return 0;
@@ -629,7 +624,6 @@ RESULT eServiceMP3::stop()
 
 	m_state = stStopped;
 	m_nownext_timer->stop();
-	m_checkplaying_timer->stop();
 	return 0;
 }
 
@@ -1188,3 +1182,17 @@ void eServiceMP3::setAC3Delay(int delay)
 void eServiceMP3::setPCMDelay(int delay)
 {
 }
+
+void eServiceMP3::setEOF()
+{
+	eDebug("[eServiceMP3::%s] issuing eof...", __func__);
+	m_event((iPlayableService*)this, evEOF);
+}
+
+void libeplayerThreadStop() // call from libeplayer
+{
+	eDebug("[eServiceMP3::%s]", __func__);
+	eServiceMP3 *serv = eServiceMP3::getInstance();
+	serv->m_threadmsg_timer->start(2, true);
+}
+

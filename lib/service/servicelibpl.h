@@ -92,6 +92,8 @@ class eServiceMP3: public iPlayableService, public iPauseableService,
 
 public:
 	virtual ~eServiceMP3();
+	static eServiceMP3 *getInstance();
+	ePtr<eTimer> m_threadmsg_timer;
 
 	// iPlayableService
 	RESULT connectEvent(const Slot2<void,iPlayableService*,int> &event, ePtr<eConnection> &connection);
@@ -213,6 +215,7 @@ protected:
 	ePtr<eTimer> m_nownext_timer;
 	ePtr<eServiceEvent> m_event_now, m_event_next;
 	void updateEpgCacheNowNext();
+	static eServiceMP3 *instance;
 
 private:
 	int m_currentAudioStream;
@@ -234,9 +237,7 @@ private:
 
 	int m_state;
 	Context_t * player;
-
-	ePtr<eTimer> m_checkplaying_timer;
-	void checkIsPlaying();
+	void setEOF();
 
 	struct subtitle_page_t
 	{
