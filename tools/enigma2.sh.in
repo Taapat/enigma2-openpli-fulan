@@ -19,7 +19,7 @@ if [ -x @bindir@/enigma2_pre_start.sh ]; then
 	@bindir@/enigma2_pre_start.sh
 fi
 
-if [ -d /home/root ]; then
+if [ -d /root ]; then
 	export HOME=/root
 	cd
 fi
