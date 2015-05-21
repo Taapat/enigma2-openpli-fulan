@@ -93,7 +93,7 @@ class eServiceMP3: public iPlayableService, public iPauseableService,
 public:
 	virtual ~eServiceMP3();
 	static eServiceMP3 *getInstance();
-	ePtr<eTimer> m_threadmsg_timer;
+	eFixedMessagePump<int> (*inst_m_pump);
 
 	// iPlayableService
 	RESULT connectEvent(const Slot2<void,iPlayableService*,int> &event, ePtr<eConnection> &connection);
@@ -237,7 +237,8 @@ private:
 
 	int m_state;
 	Context_t * player;
-	void setEOF();
+	eFixedMessagePump<int> m_pump;
+	void gotThreadMessage(const int &);
 
 	struct subtitle_page_t
 	{

@@ -296,16 +296,17 @@ eServiceMP3 *eServiceMP3::getInstance()
 
 eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_nownext_timer(eTimer::create(eApp)),
-	m_ref(ref)
+	m_ref(ref),
+	m_pump(eApp, 1)
 {
 	eDebug("[eServiceMP3::%s]", __func__);
-	m_threadmsg_timer = eTimer::create(eApp);
 	m_currentAudioStream = -1;
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = -1; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_buffer_size = 5 * 1024 * 1024;
+	inst_m_pump = &m_pump;
 	CONNECT(m_nownext_timer->timeout, eServiceMP3::updateEpgCacheNowNext);
-	CONNECT(m_threadmsg_timer->timeout, eServiceMP3::setEOF);
+	CONNECT(inst_m_pump->recv_msg, eServiceMP3::gotThreadMessage);
 	m_aspect = m_width = m_height = m_framerate = m_progressive = -1;
 	m_state = stIdle;
 	instance = this;
@@ -1183,16 +1184,21 @@ void eServiceMP3::setPCMDelay(int delay)
 {
 }
 
-void eServiceMP3::setEOF()
+void eServiceMP3::gotThreadMessage(const int &msg)
 {
-	eDebug("[eServiceMP3::%s] issuing eof...", __func__);
-	m_event((iPlayableService*)this, evEOF);
+	switch(msg)
+	{
+	case 1: // thread stopped
+		eDebug("[eServiceMP3::%s] issuing eof...", __func__);
+		m_event(this, evEOF);
+		break;
+	}
 }
 
 void libeplayerThreadStop() // call from libeplayer
 {
 	eDebug("[eServiceMP3::%s]", __func__);
 	eServiceMP3 *serv = eServiceMP3::getInstance();
-	serv->m_threadmsg_timer->start(2, true);
+	serv->inst_m_pump->send(1);
 }
 
