@@ -196,7 +196,7 @@ public:
 
 	void remove(const char* filename)
 	{
-		for (int i = 0; i < items.size() ; ++i)
+		for (unsigned int i = 0; i < items.size() ; ++i)
 		{
 			if (strcmp(items[i]->filename, filename) == 0)
 			{
