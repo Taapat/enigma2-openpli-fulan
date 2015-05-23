@@ -701,7 +701,13 @@ class MovieSelection(Screen, SelectionEventInfo, InfoBarBase, ProtectedScreen, M
 		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.movie_list.value
 
 	def standbyCountChanged(self, value):
-		self.close(None)
+		path = self.getTitle().split(" /", 1)
+		if path and len(path) > 1:
+			if [x for x in path[1].split("/") if x.startswith(".") and not x.startswith(".Trash")]:
+				moviepath = defaultMoviePath()
+				if moviepath:
+					config.movielist.last_videodir.value = defaultMoviePath()
+					self.close(None)
 
 	def unhideParentalServices(self):
 		if self.protectContextMenu:
