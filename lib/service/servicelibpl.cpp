@@ -319,7 +319,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		player->output    = &OutputHandler;
 		player->container = &ContainerHandler;
 		player->manager   = &ManagerHandler;
-		printf("%s\n", player->output->Name);
+		eDebug("[eServiceMP3::%s] %s", __func__, player->output->Name);
 	}
 
 	//Registration of output devices
@@ -393,11 +393,11 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 			player->manager->audio->Command(player, MANAGER_LIST, &TrackList);
 			if (TrackList != NULL)
 			{
-				printf("AudioTrack List\n");
+				eDebug("[eServiceMP3::%s] AudioTrack List:", __func__);
 				int i = 0;
 				for (i = 0; TrackList[i] != NULL; i+=2)
 				{
-					printf("\t%s - %s\n", TrackList[i], TrackList[i+1]);
+					eDebug("\t\t%s - %s", TrackList[i], TrackList[i+1]);
 					audioStream audio;
 					audio.language_code = TrackList[i];
 
@@ -439,11 +439,11 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 			player->manager->subtitle->Command(player, MANAGER_LIST, &TrackList);
 			if (TrackList != NULL)
 			{
-				printf("SubtitleTrack List\n");
+				eDebug("[eServiceMP3::%s] SubtitleTrack List:", __func__);
 				int i = 0;
 				for (i = 0; TrackList[i] != NULL; i+=2)
 				{
-					printf("\t%s - %s\n", TrackList[i], TrackList[i+1]);
+					eDebug("\t\t%s - %s", TrackList[i], TrackList[i+1]);
 					subtitleStream sub;
 					sub.language_code = TrackList[i];
 
