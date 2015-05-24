@@ -475,26 +475,10 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	}
 	else
 	{
-		//Creation failed, no playback support for insert file, so delete playback context
-		//FIXME: How to tell e2 that we failed?
-		eDebug("[eServiceMP3::%s] ERROR! Creation failed!", __func__);
-		if (player && player->output)
-		{
-			player->output->Command(player,OUTPUT_DEL, (void*)"audio");
-			player->output->Command(player,OUTPUT_DEL, (void*)"video");
-			player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
-		}
-
-		if (player && player->playback)
-			player->playback->Command(player,PLAYBACK_CLOSE, NULL);
-
-		if (player)
-			free(player);
-		player = NULL;
-		m_state = stStopped;
+		//Creation failed, no playback support for insert file, so send e2 EOF to stop playback
+		m_state = stRunning;
+		m_event(this, evEOF);
 	}
-	//m_state = stRunning;
-	//eDebug("[eServiceMP3::%s]-<", __func__);
 }
 
 eServiceMP3::~eServiceMP3()

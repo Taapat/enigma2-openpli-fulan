@@ -387,9 +387,10 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 			self.session.nav.playService(self.cur_service)
 
 	def doEofInternal(self, playing):
-		if not self.execing:
-			return
-		if not playing :
+		# To use eof when playback failed due to invalid file
+		#if not self.execing:
+			#return
+		if not playing:
 			return
 		ref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		if ref:
