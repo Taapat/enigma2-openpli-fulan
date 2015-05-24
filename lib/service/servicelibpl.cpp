@@ -476,6 +476,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	else
 	{
 		//Creation failed, no playback support for insert file, so send e2 EOF to stop playback
+		eDebug("[eServiceMP3::%s] ERROR! Creation failed! No playback support for insert file!", __func__);
 		m_state = stRunning;
 		m_event(this, evEOF);
 	}
