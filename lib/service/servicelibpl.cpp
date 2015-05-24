@@ -398,7 +398,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 				int i = 0;
 				for (i = 0; TrackList[i] != NULL; i+=2)
 				{
-					eDebug("[eServiceMP3::%s]\t%s - %s", __func__, TrackList[i], TrackList[i+1]);
+					eDebug("\t\t%s - %s", TrackList[i], TrackList[i+1]);
 					audioStream audio;
 					audio.language_code = TrackList[i];
 
@@ -444,7 +444,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 				int i = 0;
 				for (i = 0; TrackList[i] != NULL; i+=2)
 				{
-					eDebug("[eServiceMP3::%s]\t%s - %s", __func__, TrackList[i], TrackList[i+1]);
+					eDebug("\t\t%s - %s", TrackList[i], TrackList[i+1]);
 					subtitleStream sub;
 					sub.language_code = TrackList[i];
 
