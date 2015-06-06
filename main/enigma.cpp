@@ -251,14 +251,14 @@ int main(int argc, char **argv)
 	eDebug("[MAIN] Loading spinners...");
 
 	{
-		int i = 0;
-		int def = 0;
+		unsigned int i = 0;
+		bool def = false;
 		const char *path = "${sysconfdir}/enigma2";
 
 #define MAX_SPINNER 64
 		ePtr<gPixmap> wait[MAX_SPINNER];
 
-		while( i < MAX_SPINNER )
+		while(i < MAX_SPINNER)
 		{
 			char filename[64];
 			std::string rfilename;
@@ -274,7 +274,7 @@ int main(int argc, char **argv)
 						eDebug("[MAIN] failed to load %s! (%m)", rfilename.c_str());
 					else
 					{
-						def = 1;
+						def = true;
 						path = "${datadir}/enigma2/skin_default";
 						continue;
 					}
