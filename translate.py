@@ -36,3 +36,6 @@ MESSAGEBOX = (
 	_("Question"),
 	_("Warning"))
 
+InputBox = (
+	_("Select location"))
+
