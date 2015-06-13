@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-06 19:52+0300\n"
+"POT-Creation-Date: 2015-06-13 13:59+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1335,6 +1335,9 @@ msgstr "Komunikācija"
 
 msgid "Compact flash"
 msgstr "Zibatmiņa"
+
+msgid "Compensate for overscan"
+msgstr "Iestata OSD izmērus"
 
 msgid "Complete"
 msgstr "Gatavs"
@@ -4033,6 +4036,9 @@ msgstr "3D iestatījumi"
 
 msgid "OSD name request"
 msgstr "OSD nosaukuma pieprasījums"
+
+msgid "OSD position setup"
+msgstr "OSD pozīcijas iestatījumi"
 
 msgid "OSD settings"
 msgstr "OSD iestatījumi"
