@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-13 13:59+0300\n"
+"POT-Creation-Date: 2015-06-25 20:06+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1741,6 +1741,9 @@ msgstr "Nevar ierakstīt dēļ kļūdaina kanāla %s"
 msgid "Create DVD-ISO"
 msgstr "Izveidot DVD-ISO"
 
+msgid "Create new folder and exit"
+msgstr "Izveidot jaunu mapi un iziet"
+
 #, python-format
 msgid "Creating directory %s failed."
 msgstr "Neizdevās izveidot mapi %s."
@@ -2882,8 +2885,8 @@ msgstr "Guard intervāls"
 msgid "HD list"
 msgstr "HD saraksts"
 
-msgid "HD1100/et7x00"
-msgstr "HD1100/et7x00"
+msgid "HD1100/et7x00/et8500"
+msgstr "HD1100/et7x00/et8500"
 
 msgid "HD2400"
 msgstr "HD2400"
@@ -4088,6 +4091,12 @@ msgstr "Atvērt kanālu srakstu"
 msgid "Open current transponder"
 msgstr "Atvērt pašreizējā transpondera kanālus"
 
+msgid "Open select location"
+msgstr "Atvērt izvēlēto mapi"
+
+msgid "Open select location as timer name"
+msgstr "Atvērt izvēlēto mapi ar taimera nosaukumu"
+
 msgid "Open service list"
 msgstr "Atvērt kanālu sarakstu"
 
@@ -5137,6 +5146,9 @@ msgstr "Sestdiena"
 
 msgid "Save"
 msgstr "Saglabāt"
+
+msgid "Save and exit"
+msgstr "Saglabāt un iziet"
 
 msgid "Save and restart timeshift"
 msgstr "Saglabāt un restartēt laika aizturi"
