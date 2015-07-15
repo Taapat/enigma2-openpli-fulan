@@ -86,7 +86,7 @@ typedef enum { ctNone, ctMPEGTS, ctMPEGPS, ctMKV, ctAVI, ctMP4, ctVCD, ctCDA, ct
 
 class eServiceMP3: public iPlayableService, public iPauseableService,
 	public iServiceInformation, public iSeekableService, public iAudioTrackSelection, public iAudioChannelSelection,
-	public iSubtitleOutput, public iStreamedService, public iAudioDelay, public Object
+	public iSubtitleOutput, public iStreamedService, public iAudioDelay, public Object, public iCueSheet
 {
 	DECLARE_REF(eServiceMP3);
 
@@ -108,12 +108,18 @@ public:
 	RESULT audioChannel(ePtr<iAudioChannelSelection> &ptr);
 	RESULT subtitle(ePtr<iSubtitleOutput> &ptr);
 	RESULT audioDelay(ePtr<iAudioDelay> &ptr);
+	RESULT cueSheet(ePtr<iCueSheet> &ptr);
 
 	// not implemented (yet)
 	RESULT frontendInfo(ePtr<iFrontendInformation> &ptr) { ptr = 0; return -1; }
 	RESULT subServices(ePtr<iSubserviceList> &ptr) { ptr = 0; return -1; }
 	RESULT timeshift(ePtr<iTimeshiftService> &ptr) { ptr = 0; return -1; }
-	RESULT cueSheet(ePtr<iCueSheet> &ptr) { ptr = 0; return -1; }
+
+	// iCueSheet
+	PyObject *getCutList();
+	void setCutList(SWIG_PYOBJECT(ePyObject));
+	void setCutListEnable(int enable);
+
 	RESULT rdsDecoder(ePtr<iRdsDecoder> &ptr) { ptr = 0; return -1; }
 	RESULT keys(ePtr<iServiceKeys> &ptr) { ptr = 0; return -1; }
 	RESULT stream(ePtr<iStreamableService> &ptr) { ptr = 0; return -1; }
@@ -217,6 +223,25 @@ protected:
 	void updateEpgCacheNowNext();
 	static eServiceMP3 *instance;
 
+	// cuesheet
+	struct cueEntry
+	{
+		pts_t where;
+		unsigned int what;
+
+		bool operator < (const struct cueEntry &o) const
+		{
+			return where < o.where;
+		}
+		cueEntry(const pts_t &where, unsigned int what) :
+			where(where), what(what)
+		{
+		}
+	};
+	std::multiset<cueEntry> m_cue_entries;
+	int m_cuesheet_changed, m_cutlist_enabled;
+	void loadCuesheet();
+	void saveCuesheet();
 private:
 	int m_currentAudioStream;
 	int m_currentSubtitleStream;
@@ -228,6 +253,8 @@ private:
 	friend class eServiceFactoryMP3;
 	eServiceReference m_ref;
 	int m_buffer_size;
+	// cuesheet load check
+	bool m_cuesheet_loaded;
 	bufferInfo m_bufferInfo;
 	eServiceMP3(eServiceReference ref);
 	Signal2<void, iPlayableService*, int> m_event;
