@@ -73,16 +73,16 @@ class Standby(Screen):
 			if service.rsplit(":", 1)[1][:1] == "/":
 				self.paused_service = True
 				self.infoBarInstance.pauseService()
-			else:
-				self.timeHandler =  eDVBLocalTimeHandler.getInstance()
-				if self.timeHandler.ready():
-					if self.session.nav.getCurrentlyPlayingServiceOrGroup():
-						self.stopService()
-					else:
-						self.standbyStopServiceTimer.startLongTimer(5)
-					self.timeHandler = None
+		if not self.paused_service:
+			self.timeHandler =  eDVBLocalTimeHandler.getInstance()
+			if self.timeHandler.ready():
+				if self.session.nav.getCurrentlyPlayingServiceOrGroup():
+					self.stopService()
 				else:
-					self.timeHandler.m_timeUpdated.get().append(self.stopService)
+					self.standbyStopServiceTimer.startLongTimer(5)
+				self.timeHandler = None
+			else:
+				self.timeHandler.m_timeUpdated.get().append(self.stopService)
 
 		if self.session.pipshown:
 			self.infoBarInstance and hasattr(self.infoBarInstance, "showPiP") and self.infoBarInstance.showPiP()
