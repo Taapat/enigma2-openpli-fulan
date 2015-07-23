@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-05 10:00+0200\n"
-"PO-Revision-Date: 2015-04-29 18:01+0200\n"
-"Last-Translator: ser6 <ser6@bk.ru>\n"
+"PO-Revision-Date: 2015-06-28 09:43+0500\n"
+"Last-Translator: a.k.a Uchkun\n"
 "Language-Team: a.k.a Uchkun <madamin2007@mail.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 1.6.5\n"
 "X-Poedit-SourceCharset: iso-8859-5\n"
 
 msgid ""
@@ -423,6 +423,12 @@ msgstr[2] "%d минут"
 
 msgid "%d minutes"
 msgstr "%d минут"
+
+msgid "%d pixel wide"
+msgid_plural "%d pixels wide"
+msgstr[0] "ширина %d пиксель"
+msgstr[1] "ширина %d пикселя"
+msgstr[2] "ширина %d пикселей"
 
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -4544,7 +4550,7 @@ msgstr ""
 "Выберите, нужно ли показать иконку при движении антенны с мотоподвесом."
 
 msgid "Configure whether or not an rotor position will be displayed on infobar"
-msgstr "Выберите, нужно ли показать положение антенны в инфобаре."
+msgstr "Если функция включена, позиция ротора будет показана в инфобаре"
 
 msgid ""
 "Configure which access level to use for the configuration menu. Expert level "
@@ -6593,6 +6599,9 @@ msgstr "Двойное нажатие ОК в списке каналов"
 msgid "Enable OK for channel selection"
 msgstr "Кнопкой ОК вызывать список каналов"
 
+msgid "Enable Parental Control"
+msgstr "Включить родительский контроль"
+
 msgid "Enable Service Restriction"
 msgstr "Включить ограничение сервиса"
 
@@ -6651,9 +6660,6 @@ msgid "Enable multiple bouquets"
 msgstr "Включить мультипакеты"
 
 msgid "Enable parental control"
-msgstr "Включить родительский контроль"
-
-msgid "Enable parental protection"
 msgstr "Включить родительский контроль"
 
 msgid ""
@@ -8524,7 +8530,7 @@ msgid "Hide on exit"
 msgstr "Скрыть при выходе"
 
 msgid "Hide parentel locked services"
-msgstr "Скрыть чёрный список"
+msgstr "Скрывать заблокированные каналы"
 
 msgid "Hide player"
 msgstr "Скрыть плеер"
@@ -9131,7 +9137,7 @@ msgid "Installed version:"
 msgstr "Установленная версия:"
 
 msgid "Installed: "
-msgstr "Установлен: "
+msgstr "Дата установки: "
 
 msgid "InstallerDriverGPRS"
 msgstr "Установщик драйвера GPRS"
@@ -9935,6 +9941,9 @@ msgstr "Отметить как работающий?"
 
 msgid "Mark movie as seen after X %"
 msgstr "Пометить как `просмотренный` после %"
+
+msgid "Mark service as dedicated 3D service"
+msgstr "Включить канал в список 3D сервисов"
 
 msgid "Match Timespan: %02d:%02d - %02d:%02d"
 msgstr "Совпадение отрезка времени: %02d:%02d - %02d:%02d"
@@ -10962,7 +10971,7 @@ msgid "No Timeshift found to save as recording!"
 msgstr "Файл таймшифта для сохранения в виде записи не найден!"
 
 msgid "No age block"
-msgstr "Без ограничений"
+msgstr "Без возрастных ограничений"
 
 msgid "No backup needed"
 msgstr "Резервное копирование не требуется"
@@ -12921,22 +12930,22 @@ msgid "Properties of current title"
 msgstr "Свойства текущего заголовка"
 
 msgid "Protect Screens"
-msgstr "Защитить экраны"
+msgstr "Заблокировать экраны"
 
 msgid "Protect configuration"
-msgstr "Защитить текущие настройки"
+msgstr "Заблокировать настройки"
 
 msgid "Protect main menu"
-msgstr "Защитить главное меню"
+msgstr "Заблокировать главное меню"
 
 msgid "Protect movie list"
-msgstr "Защитить список записей"
+msgstr "Заблокировать список записей"
 
 msgid "Protect on epg age"
-msgstr "Возростная категория"
+msgstr "Заблокировать по возрасту с телегида"
 
 msgid "Protect plugin browser"
-msgstr "Защитить меню обзора плагинов"
+msgstr "Заблокировать меню плагинов"
 
 msgid "Protect services"
 msgstr "Защитить каналы"
@@ -12945,10 +12954,10 @@ msgid "Protect setup"
 msgstr "Защитить установки"
 
 msgid "Protect standby menu"
-msgstr "Защитить меню режима ожидания"
+msgstr "Заблокировать меню режима ожидания"
 
 msgid "Protect timer menu"
-msgstr "Защитить меню таймера"
+msgstr "Заблокировать меню таймеров"
 
 msgid "Provider"
 msgstr "Провайдер"
@@ -12978,6 +12987,9 @@ msgid "Python frontend for /tmp/mmi.socket"
 msgstr "Python интерфейс для /tmp/mmi.socket"
 
 msgid "Python version"
+msgstr "Версия Python"
+
+msgid "Python version: "
 msgstr "Версия Python"
 
 msgid "Quality of jpg picture :"
@@ -13250,7 +13262,7 @@ msgid "Record-Stream-Error"
 msgstr "Запись ошибки в потоке"
 
 msgid "Recorded files..."
-msgstr "Записанные файлы"
+msgstr "Записанные файлы..."
 
 msgid "Recording"
 msgstr "Запись"
@@ -13379,7 +13391,7 @@ msgid "Reload black-/white lists"
 msgstr "Перезагрузить черный/белый списки"
 
 msgid "Reload blacklists"
-msgstr "Обновить чёрный список"
+msgstr "Обновить чёрные списки"
 
 msgid ""
 "Reload epg at every boot.\n"
@@ -13552,8 +13564,11 @@ msgid ""
 "Repeating event currently recording.\n"
 "What do you want to do?"
 msgstr ""
-"Повторяющееся событие записывается.\n"
+"Идет повторная запись одной передачи.\n"
 "Что вы хотите сделать?"
+
+msgid "Repeating event currently recording... What do you want to do?"
+msgstr "Повторяющееся событие записывается...Что вы хотите сделать?"
 
 msgid "Repeats"
 msgstr "Повторы"
@@ -15471,6 +15486,9 @@ msgstr "Показывать новые сообщения как"
 msgid "Show only time in display when box is in standby"
 msgstr "В режиме ожид. на дисплее только время "
 
+msgid "Show packages to be upgraded"
+msgstr "Показать обновляемые пакеты"
+
 msgid "Show picons in channel list"
 msgstr "Показать пиконы в списке каналов"
 
@@ -15490,7 +15508,7 @@ msgid "Show positioner movement"
 msgstr "Показать движение позиционера"
 
 msgid "Show positioner position"
-msgstr "Показать положение позиционера"
+msgstr "Показать позицию мотоподвеса"
 
 msgid "Show progress in movie list"
 msgstr "Отображать течение просмотра в списке записей"
@@ -18497,6 +18515,9 @@ msgstr "Декодирован"
 msgid "UnhandledKey"
 msgstr "Не обработанный ключ"
 
+msgid "Unhide parental control services"
+msgstr "Не скрывать каналы родительского контроля"
+
 msgid "Unicable"
 msgstr "Unicable"
 
@@ -18534,6 +18555,9 @@ msgid ""
 msgstr ""
 "Если эта опция включена, АвтоТаймер не будет искать соответствующие события "
 "(требуется перезагрузка Энигмы)."
+
+msgid "Unmark service as dedicated 3D service"
+msgstr "Исключить канал из списка 3D сервисов"
 
 msgid "Unmount"
 msgstr "Демонтир."
@@ -21051,7 +21075,7 @@ msgid "add bouquet"
 msgstr "добавить пакет пользователя "
 
 msgid "add bouquet to parental protection"
-msgstr "добавить пакет в родительский контроль"
+msgstr "добавить фаворит в родительский контроль"
 
 msgid "add directory to playlist"
 msgstr "добавить папку в плейлист"
@@ -21192,7 +21216,7 @@ msgid "and"
 msgstr "и"
 
 msgid "and never ask again this session again"
-msgstr "и больше не спрашивать об этом"
+msgstr "и больше не спрашивать в этой сессии"
 
 msgid "and never show this message again"
 msgstr "и больше не показывать это сообщение"
@@ -21524,7 +21548,7 @@ msgid "copy file"
 msgstr "скопировать файл"
 
 msgid "copy to bouquets"
-msgstr "копировать в пакет"
+msgstr "копировать в фаворит"
 
 msgid "copying file ..."
 msgstr "копирование файла ..."
@@ -22870,7 +22894,7 @@ msgid "remove all alternatives"
 msgstr "удалить все альтернативы"
 
 msgid "remove all new found flags"
-msgstr "удалить все флаги с новых найденных"
+msgstr "удалить все вновь найденные флаги"
 
 msgid "remove before this position"
 msgstr "удалить перед этой позицией"
@@ -22879,7 +22903,10 @@ msgid "remove bookmark"
 msgstr "удалить закладку"
 
 msgid "remove bouquet from parental protection"
-msgstr "убрать пакет из родительского контроля"
+msgstr "удалить фаворит из родительского контроля"
+
+msgid "remove cable services"
+msgstr "удалить кабельные каналы"
 
 msgid "remove directory"
 msgstr "удалить каталог"
@@ -22898,6 +22925,9 @@ msgstr "удалить найденный новый флаг"
 
 msgid "remove selected satellite"
 msgstr "удалить выбранный спутник"
+
+msgid "remove terrestrial services"
+msgstr "удалить наземные каналы"
 
 msgid "remove this mark"
 msgstr "удалить метку"
@@ -23568,7 +23598,7 @@ msgid "theme images"
 msgstr "картинки по тегу"
 
 msgid "this bouquet is protected by a parental control pin"
-msgstr "этот пакет защищён пин-кодом"
+msgstr "данный фаворит заблокирован родительским контролем"
 
 msgid "this recording"
 msgstr "данная запись"
@@ -23806,6 +23836,12 @@ msgstr "с ошибками"
 
 msgid "with short description"
 msgstr "с кратким описанием"
+
+msgid "with text"
+msgstr "с текстом"
+
+msgid "with tuner name"
+msgstr "с названием тюнера"
 
 msgid "working"
 msgstr "проверяем"
