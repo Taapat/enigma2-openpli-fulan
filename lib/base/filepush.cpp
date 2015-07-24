@@ -94,7 +94,7 @@ void eFilePushThread::thread()
 				//eDebug("VIDEO_DISCONTINUITY (fd %d, rc %d)", fd_video, rc);
 			}
 #endif
-			m_sg->getNextSourceSpan(m_current_position, bytes_read, current_span_offset, current_span_remaining);
+		m_sg->getNextSourceSpan(m_current_position, bytes_read, current_span_offset, current_span_remaining, m_blocksize);
 			ASSERT(!(current_span_remaining % m_blocksize));
 			m_current_position = current_span_offset;
 			bytes_read = 0;
