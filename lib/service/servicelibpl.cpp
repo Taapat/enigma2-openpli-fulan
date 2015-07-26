@@ -1313,24 +1313,20 @@ void eServiceMP3::saveCuesheet()
 	if (::access(filename.c_str(), R_OK) < 0)
 		return;
 
-	/* do not save to file if there are no cuts */
-	bool empty_cue = false;
-	if(m_cue_entries.begin() == m_cue_entries.end())
-		empty_cue = true;
-
 	filename.append(".cuts");
+	/* do not save to file if there are no cuts */
+	/* remove the cuts file if cue is empty */
+	if(m_cue_entries.begin() == m_cue_entries.end())
+	{
+		if (::access(filename.c_str(), F_OK) == 0)
+			remove(filename.c_str());
+		return;
+	}
 
 	FILE *f = fopen(filename.c_str(), "wb");
 
 	if (f)
 	{
-		/* remove the cuts file if cue is empty */
-		if(empty_cue)
-		{
-			fclose(f);
-			remove(filename.c_str());
-			return;
-		}
 		unsigned long long where;
 		int what;
 
