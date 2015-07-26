@@ -221,7 +221,7 @@ class UpdatePlugin(Screen, ProtectedScreen):
 					choices = []
 				if fileExists("/hdd/ipkgupgrade.log"):
 					choices.append((_("Show latest upgrade log"), "log"))
-				choices.append((_("Show latest commits on sourceforge"), "commits"))
+				choices.append((_("Show latest commits"), "commits"))
 				if not config.usage.show_update_disclaimer.value:
 					choices.append((_("Show disclaimer"), "disclaimer"))
 				choices.append((_("Cancel"), ""))

@@ -46,7 +46,6 @@ case $ret in
 		/sbin/reboot
 		;;
 	3)
-		[ -f /home/root/.gstreamer-0.10 ] && rm -fR /home/root/.gstreamer-0.10
 		cat /etc/videomode > /proc/stb/video/videomode
 		echo "0" > /proc/progress
 		@bindir@/showiframe -p /boot/bootlogo.mvi &
