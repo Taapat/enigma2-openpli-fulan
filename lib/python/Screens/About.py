@@ -189,24 +189,48 @@ class CommitInfo(Screen):
 		self.Timer.start(50, True)
 
 	def readGithubCommitLogs(self):
-		url = 'https://api.github.com/repos/openpli/%s/commits' % self.projects[self.project][0]
-		commitlog = ""
 		from datetime import datetime
 		from json import loads
 		from urllib2 import urlopen
-		try:
-			commitlog += 80 * '-' + '\n'
-			commitlog += url.split('/')[-2] + '\n'
-			commitlog += 80 * '-' + '\n'
-			for c in loads(urlopen(url, timeout=5).read()):
-				creator = c['commit']['author']['name']
-				title = c['commit']['message']
-				date = datetime.strptime(c['commit']['committer']['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%x %X')
-				commitlog += date + ' ' + creator + '\n' + title + 2 * '\n'
-			commitlog = commitlog.encode('utf-8')
-			self.cachedProjects[self.projects[self.project][1]] = commitlog
-		except:
-			commitlog += _("Currently the commit log cannot be retrieved - please try later again")
+		feed = self.projects[self.project][0]
+		commitlog = 80 * '-' + '\n'
+		commitlog += feed + '\n'
+		commitlog += 80 * '-' + '\n'
+		if "arp-taapat" in feed:
+			url = 'https://bitbucket.org/Taapat/%s/commits/all' % feed
+			try:
+				for x in urlopen(url, timeout=5).read().split('</tr>'):
+					title = creator = date = ''
+					for y in x.split('<!-- '):
+						if '<div title' in y:
+							title = y.split('<div title="')[1].split('">')[0].replace("&#39;", "'").replace('&#34;', '"')
+						elif '<span title' in y:
+							creator = y.split('<span title="')[1].split('"')[0]
+							if 'Author not' in creator:
+								creator = y.split('</span>')[0].rsplit('</div>', 1)[1].replace(' ', '').replace('\n', '')
+						elif '<time ' in y:
+							date = y.split('<time datetime="')[1].split('T')[0]
+					if title and creator and date:
+						commitlog += date + ' ' + creator + '\n' + title + 2 * '\n'
+			except:
+				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
+		else:
+			if "ar-p-" in feed:
+				url = 'https://api.github.com/repos/openar-p/%s/commits' % feed[5:]
+			elif "-skin-" in feed:
+				url = 'https://api.github.com/repos/taapat/%s/commits' % feed[7:]
+			else:
+				url = 'https://api.github.com/repos/openpli/%s/commits' % feed
+			try:
+				for c in loads(urlopen(url, timeout=5).read()):
+					creator = c['commit']['author']['name']
+					title = c['commit']['message']
+					date = datetime.strptime(c['commit']['committer']['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%x %X')
+					commitlog += date + ' ' + creator + '\n' + title + 2 * '\n'
+				commitlog = commitlog.encode('utf-8')
+				self.cachedProjects[self.projects[self.project][1]] = commitlog
+			except:
+				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
 		self["AboutScrollLabel"].setText(commitlog)
 
 	def updateCommitLogs(self):
