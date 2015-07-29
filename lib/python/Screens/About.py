@@ -197,21 +197,16 @@ class CommitInfo(Screen):
 		commitlog += feed + '\n'
 		commitlog += 80 * '-' + '\n'
 		if "arp-taapat" in feed:
-			url = 'https://bitbucket.org/Taapat/%s/commits/all' % feed
+			url = 'https://bitbucket.org/api/1.0/repositories/Taapat/%s/changesets/?limit=40' % feed
 			try:
-				for x in urlopen(url, timeout=5).read().split('</tr>'):
-					title = creator = date = ''
-					for y in x.split('<!-- '):
-						if '<div title' in y:
-							title = y.split('<div title="')[1].split('">')[0].replace("&#39;", "'").replace('&#34;', '"')
-						elif '<span title' in y:
-							creator = y.split('<span title="')[1].split('"')[0]
-							if 'Author not' in creator:
-								creator = y.split('</span>')[0].rsplit('</div>', 1)[1].replace(' ', '').replace('\n', '')
-						elif '<time ' in y:
-							date = y.split('<time datetime="')[1].split('T')[0]
-					if title and creator and date:
-						commitlog += date + ' ' + creator + '\n' + title + 2 * '\n'
+				commits = ''
+				for c in loads(urlopen(url, timeout=5).read()).get('changesets', []):
+					date = c['timestamp']
+					creator = c['author']
+					title = c['message'].split('\n', 1)[0]
+					commits = date + ' ' + creator + '\n' + title + 2 * '\n' + commits
+				commitlog += str(commits)
+				self.cachedProjects[self.projects[self.project][1]] = commitlog.encode('utf-8')
 			except:
 				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
 		else:
