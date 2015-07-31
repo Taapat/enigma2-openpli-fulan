@@ -189,7 +189,6 @@ class CommitInfo(Screen):
 		self.Timer.start(50, True)
 
 	def readGithubCommitLogs(self):
-		from datetime import datetime
 		from json import loads
 		from urllib2 import urlopen
 		feed = self.projects[self.project][0]
@@ -220,7 +219,9 @@ class CommitInfo(Screen):
 				for c in loads(urlopen(url, timeout=5).read()):
 					creator = c['commit']['author']['name']
 					title = c['commit']['message']
-					date = datetime.strptime(c['commit']['committer']['date'], '%Y-%m-%dT%H:%M:%SZ').strftime('%x %X')
+					if '\n' in title:
+						title = title.split('\n', 1)[0]
+					date = c['commit']['committer']['date'].replace('T', ' ').replace('Z', '')
 					commitlog += date + ' ' + creator + '\n' + title + 2 * '\n'
 				commitlog = commitlog.encode('utf-8')
 				self.cachedProjects[self.projects[self.project][1]] = commitlog
