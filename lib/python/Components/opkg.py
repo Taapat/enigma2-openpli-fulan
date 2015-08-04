@@ -12,10 +12,11 @@ def enumFeeds():
 				pass
 
 def enumPlugins(filter_start=''):
+	list_dir = listsDirPath()
 	for feed in enumFeeds():
 		package = None
 		try:
-			for line in open(os.path.join(listsDirPath(), feed), 'r'):
+			for line in open(os.path.join(list_dir, feed), 'r'):
 				if line[:8] == 'Package:':
 					package = line.split(":",1)[1].strip()
 					version = ''
