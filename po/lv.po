@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-26 21:13+0300\n"
+"POT-Creation-Date: 2015-08-06 21:54+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -8325,6 +8325,9 @@ msgstr "pārlēkt uz iepriekšējo nosaukumu"
 
 msgid "jump forward to the next title"
 msgstr "pārlēkt uz nākamo nosaukumu"
+
+msgid "jump to chapter by number"
+msgstr "pārlekt uz nodaļu izmantojot ciparus"
 
 msgid "languages"
 msgstr "valodas"
