@@ -169,7 +169,7 @@ class CommitInfo(Screen):
 		self.projects = [
 			("enigma2-pli-arp-taapat", "Taapat Enigma2"),
 			("tdt-arp-taapat", "Taapat tdt-arp"),
-			("ar-p-enigma2-plugins-sh4", "AR-P Enigma2 Plugins sh4"),
+			("taapat-enigma2-plugins-sh4", "Taapat Enigma2 plugins sh4"),
 			("taapat-skin-MetropolisHD", "Taapat skin-MetropolisHD"),
 			("ar-p-e2openplugin-OpenWebif", "AR-P plugin-OpenWebif"),
 			("enigma2", "Enigma2"),
@@ -209,10 +209,10 @@ class CommitInfo(Screen):
 			except:
 				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
 		else:
-			if "ar-p-" in feed:
-				url = 'https://api.github.com/repos/openar-p/%s/commits' % feed[5:]
-			elif "-skin-" in feed:
+			if "taapat-" in feed:
 				url = 'https://api.github.com/repos/taapat/%s/commits' % feed[7:]
+			elif "ar-p-" in feed:
+				url = 'https://api.github.com/repos/openar-p/%s/commits' % feed[5:]
 			else:
 				url = 'https://api.github.com/repos/openpli/%s/commits' % feed
 			try:
