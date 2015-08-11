@@ -170,18 +170,12 @@ class CommitInfo(Screen):
 			("enigma2-pli-arp-taapat", "Taapat Enigma2"),
 			("tdt-arp-taapat", "Taapat tdt-arp"),
 			("taapat-enigma2-plugins-sh4", "Taapat Enigma2 plugins sh4"),
-			("taapat-skin-MetropolisHD", "Taapat skin-MetropolisHD"),
+			("taapat-skin-MetropolisHD", "skin-MetropolisHD"),
 			("ar-p-e2openplugin-OpenWebif", "AR-P plugin-OpenWebif"),
-			("enigma2", "Enigma2"),
-			("openpli-oe-core", "Openpli Oe Core"),
-			("enigma2-plugins", "Enigma2 Plugins"),
 			("aio-grab", "Aio Grab"),
-			("gst-plugin-dvbmediasink", "Gst Plugin Dvbmediasink"),
-			("openembedded", "Openembedded"),
-			("plugin-xmltvimport", "Plugin Xmltvimport"),
-			("plugins-enigma2", "Plugins Enigma2"),
-			("skin-magic", "Skin Magic"),
-			("tuxtxt", "Tuxtxt")
+			("enigma2-plugin-skins-magic", "Skin Magic"),
+			("tuxtxt", "Tuxtxt"),
+			("enigma2", "Openpli Enigma2")
 		]
 		self.cachedProjects = {}
 		self.Timer = eTimer()
@@ -193,7 +187,7 @@ class CommitInfo(Screen):
 		from urllib2 import urlopen
 		feed = self.projects[self.project][0]
 		commitlog = 80 * '-' + '\n'
-		commitlog += feed + '\n'
+		commitlog += self.projects[self.project][1] + '\n'
 		commitlog += 80 * '-' + '\n'
 		if "arp-taapat" in feed:
 			url = 'https://bitbucket.org/api/1.0/repositories/Taapat/%s/changesets/?limit=40' % feed
