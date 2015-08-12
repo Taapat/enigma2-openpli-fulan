@@ -1763,8 +1763,9 @@ class MovieSelection(Screen, SelectionEventInfo, InfoBarBase, ProtectedScreen):
 	def stopTimer(self, timer):
 		if timer.isRunning():
 			if timer.repeated:
-				timer.enable()
-				timer.processRepeated(findRunningEvent = False)
+				if not timer.disabled:
+					timer.enable()
+				timer.processRepeated(findRunningEvent=False)
 				self.session.nav.RecordTimer.doActivate(timer)
 			else:
 				timer.afterEvent = RecordTimer.AFTEREVENT.NONE
