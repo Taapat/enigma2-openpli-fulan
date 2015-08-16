@@ -8340,6 +8340,9 @@ msgstr "pārlēkt uz nākamo nosaukumu"
 msgid "jump to chapter by number"
 msgstr "pārlekt uz nodaļu izmantojot ciparus"
 
+msgid "jump to chapter by number"
+msgstr "pārlekt uz nodaļu izmantojot ciparus"
+
 msgid "languages"
 msgstr "valodas"
 
