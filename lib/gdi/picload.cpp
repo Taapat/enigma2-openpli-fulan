@@ -1094,13 +1094,14 @@ int ePicLoad::getData(ePtr<gPixmap> &result)
 	result = new gPixmap(m_filepara->max_x, m_filepara->max_y, m_filepara->bits == 8 ? 8 : 32,
 				NULL, m_filepara->bits == 8 ? gPixmap::accelAlways : gPixmap::accelAuto);
 	gUnmanagedSurface *surface = result->surface;
-	int o_y = 0, u_y = 0, v_x = 0, h_x = 0;
+	//int o_y = 0, u_y = 0, v_x = 0, h_x = 0;
+	int o_y = 0, v_x = 0, h_x = 0;
 	unsigned char *tmp_buffer = ((unsigned char *)(surface->data));
 	unsigned char *origin = m_filepara->pic_buffer;
 	if (m_filepara->oy < m_filepara->max_y)
 	{
 		o_y = (m_filepara->max_y - m_filepara->oy) / 2;
-		u_y = m_filepara->max_y - m_filepara->oy - o_y;
+		//u_y = m_filepara->max_y - m_filepara->oy - o_y;
 	}
 	if (m_filepara->ox < m_filepara->max_x)
 	{
