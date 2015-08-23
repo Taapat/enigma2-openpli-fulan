@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-15 12:08+0300\n"
+"POT-Creation-Date: 2015-08-21 18:42+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2486,6 +2486,9 @@ msgstr ""
 
 msgid "Estonian"
 msgstr "Igauņu"
+
+msgid "EtPortal"
+msgstr "Et portāls"
 
 msgid "Ethernet network interface"
 msgstr "Ethernet tīkla interfeiss"
@@ -8937,3 +8940,6 @@ msgstr "pārslēgt un ierakstīt"
 
 msgid "zapped"
 msgstr "pārslēgts"
+
+msgid "®"
+msgstr ""
