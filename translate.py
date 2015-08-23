@@ -32,10 +32,3 @@ HOTKEY = (
 	_("Scanning"),
 	_("InfoBar"))
 
-MESSAGEBOX = (
-	_("Question"),
-	_("Warning"))
-
-InputBox = (
-	_("Select location"))
-
