@@ -82,11 +82,18 @@ def getHotkeys():
 	stbid = open("/proc/cmdline", "r").read()
 	if "STB_ID=" in stbid:
 		try:
-			stbid = stbid.split("STB_ID=", 1)[1].rsplit(":", 4)[0].replace(":", "_")
+			stbid = stbid.split("STB_ID=", 1)[1][:8].replace(":", "_")
 		except:
 			stbid = ""
-		if os.path.exists(lircfile + "." + stbid):
-			lircfile += "." + stbid
+	elif "ethaddr:" in stbid:
+		try:
+			stbid = stbid.split("ethaddr:", 1)[1][:8].replace("24", "09").replace(":", "_")
+		except:
+			stbid = ""
+	else:
+		stbid = ""
+	if stbid and os.path.exists(lircfile + "." + stbid):
+		lircfile += "." + stbid
 	for line in open(lircfile, "r").readlines():
 		if "KEY_" in line:
 			key = line.replace(" ", "").replace("\t", "").split("KEY_", 1)[1].split("0x", 1)[0].lower()
