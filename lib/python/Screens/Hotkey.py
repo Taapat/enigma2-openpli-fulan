@@ -96,7 +96,7 @@ def getHotkeys():
 		lircfile += "." + stbid
 	for line in open(lircfile, "r").readlines():
 		if "KEY_" in line:
-			key = line.split("KEY_", 1)[1].split("0x", 1)[0].replace(" ", "").replace("\t", "").lower()
+			key = line.split("KEY_", 1)[1].replace("0x", " ").split(" ", 1)[0].replace("\t", "").lower()
 			if key not in usedkeys:
 				usedkeys.append(key)
 	keys = [key for key in keys if key[1].split("_")[0] in usedkeys]
