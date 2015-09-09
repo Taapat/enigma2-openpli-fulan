@@ -1127,7 +1127,7 @@ int ePicLoad::getData(ePtr<gPixmap> &result)
 	// after aspect calc : scrx, scry
 	// center image      : xoff, yoff
 	int scrx, scry; // Aspect ratio calculation
-	int orientation = m_conf.auto_orientation ? (m_exif->m_exifinfo->Orient ? m_exif->m_exifinfo->Orient : 1) : 1;
+	int orientation = m_conf.auto_orientation ? (m_exif && m_exif->m_exifinfo->Orient ? m_exif->m_exifinfo->Orient : 1) : 1;
 	if (m_conf.aspect_ratio == 0)  // do not keep aspect ratio but just fill the destination area
 	{
 		scrx = m_filepara->max_x;
@@ -1203,8 +1203,9 @@ int ePicLoad::getData(ePtr<gPixmap> &result)
 				for (y = 1; y < yoff; ++y) // copy from first line
 					memcpy(tmp_buffer + y*surface->stride, tmp_buffer, m_filepara->max_x * surface->bypp);
 				#pragma omp parallel for
-				for (y = m_filepara->max_y - yoff -scry; y < m_filepara->max_y; ++y)
-					memcpy(tmp_buffer + y*surface->stride, tmp_buffer, m_filepara->max_x * surface->bypp);
+				for (y = yoff + scry; y < m_filepara->max_y; ++y)
+					memcpy(tmp_buffer + y * surface->stride, tmp_buffer,
+						m_filepara->max_x * surface->bypp);
 			}
 			if (xoff != 0) {
 				row_buffer = (unsigned int *) (tmp_buffer + yoff * surface->stride);
@@ -1212,14 +1213,15 @@ int ePicLoad::getData(ePtr<gPixmap> &result)
 				for (x = 0; x < xoff; ++x) // fill left side of first line
 					*row_buffer++ = background;
 				row_buffer += scrx;
-				for (x = m_filepara->max_x - xoff - scrx; x < m_filepara->max_x; ++x) // fill right side of first line
+				for (x = xoff + scrx; x < m_filepara->max_x; ++x) // fill right side of first line
 					*row_buffer++ = background;
-				row_buffer = (unsigned int *) (tmp_buffer + yoff * surface->stride);
 				#pragma omp parallel for
-				for (int y = yoff; y < scry; ++y) { // copy from first line
-					memcpy(tmp_buffer + y*surface->stride, row_buffer, xoff * surface->bypp);
+				for (int y = yoff + 1; y < scry; ++y) { // copy from first line
+					memcpy(tmp_buffer + y*surface->stride,
+						tmp_buffer + yoff * surface->stride,
+						xoff * surface->bypp);
 					memcpy(tmp_buffer + y*surface->stride + (xoff + scrx) * surface->bypp,
-						row_buffer + (xoff + scrx) * surface->bypp,
+						tmp_buffer + yoff * surface->stride + (xoff + scrx) * surface->bypp,
 						(m_filepara->max_x - scrx - xoff) * surface->bypp);
 				}
 			}
