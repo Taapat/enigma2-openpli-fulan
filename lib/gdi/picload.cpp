@@ -265,7 +265,7 @@ static unsigned char *bmp_load(const char *file,  int *x, int *y)
 
 //---------------------------------------------------------------------
 
-static void png_load(Cfilepara* filepara, int background)
+static void png_load(Cfilepara* filepara, int background, bool forceRGB = false)
 {
 	png_uint_32 width, height;
 	unsigned int i;
@@ -296,7 +296,7 @@ static void png_load(Cfilepara* filepara, int background)
 	png_read_info(png_ptr, info_ptr);
 	png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, &interlace_type, NULL, NULL);
 
-	if (color_type == PNG_COLOR_TYPE_GRAY || color_type & PNG_COLOR_MASK_PALETTE)
+	if (!forceRGB && (color_type == PNG_COLOR_TYPE_GRAY || color_type & PNG_COLOR_MASK_PALETTE))
 	{
 		if (bit_depth < 8)
 		{
@@ -350,6 +350,8 @@ static void png_load(Cfilepara* filepara, int background)
 			png_set_strip_16(png_ptr);
 		if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
 			png_set_gray_to_rgb(png_ptr);
+		if (color_type == PNG_COLOR_TYPE_PALETTE)
+			png_set_palette_to_rgb(png_ptr);
 		if ((color_type == PNG_COLOR_TYPE_RGB_ALPHA) || (color_type == PNG_COLOR_TYPE_GRAY_ALPHA))
 		{
 			png_set_strip_alpha(png_ptr);
@@ -519,7 +521,6 @@ static void gif_load(Cfilepara* filepara)
 {
 	unsigned char *pic_buffer = NULL;
 	int px, py, i, j, ErrorCode;
-	unsigned char *fbptr;
 	unsigned char *slb=NULL;
 	GifFileType *gft;
 	GifRecordType rt;
@@ -563,10 +564,9 @@ static void gif_load(Cfilepara* filepara)
 						filepara->palette[i].b = cmap->Colors[i].Blue;
 					}
 
-					fbptr = pic_buffer;
 					if (!(gft->Image.Interlace))
 					{
-						for (i = 0; i < py; i++, fbptr += px * 3)
+						for (i = 0; i < py; i++)
 						{
 							if (DGifGetLine(gft, slb, px) == GIF_ERROR)
 								goto ERROR_R;
@@ -575,14 +575,14 @@ static void gif_load(Cfilepara* filepara)
 					}
 					else
 					{
+						int IOffset[] = { 0, 4, 2, 1 }; // The way Interlaced image should.
+						int IJumps[] = { 8, 8, 4, 2 };  // be read - offsets and jumps...
 						for (j = 0; j < 4; j++)
 						{
-							slb = pic_buffer;
-							for (i = 0; i < py; i++)
+							for (i = IOffset[j]; i < py; i += IJumps[j])
 							{
-								if (DGifGetLine(gft, slb, px) == GIF_ERROR)
+								if (DGifGetLine(gft, pic_buffer + i*px, px) == GIF_ERROR)
 									goto ERROR_R;
-								slb += px;
 							}
 						}
 					}
@@ -761,7 +761,7 @@ void ePicLoad::decodeThumb()
 		if(FILE *f = fopen(m_filepara->file, "rb"))
 		{
 			int c;
-			int count = 1024*100;
+			int count = 1024*100; // get checksum data out of max 100kB
 			unsigned long crc32 = 0;
 			char crcstr[9];
 			*crcstr = 0;
@@ -838,7 +838,7 @@ void ePicLoad::decodeThumb()
 	{
 		switch(m_filepara->id)
 		{
-		case F_PNG:	png_load(m_filepara, m_conf.background);
+		case F_PNG:	png_load(m_filepara, m_conf.background, true);
 				break;
 		case F_JPEG:	m_filepara->pic_buffer = jpeg_load(m_filepara->file, &m_filepara->ox, &m_filepara->oy, m_filepara->max_x, m_filepara->max_y);
 				break;
