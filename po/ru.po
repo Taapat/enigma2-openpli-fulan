@@ -23872,8 +23872,5 @@ msgstr "переключить"
 msgid "zap and record"
 msgstr "переключить и записать"
 
-msgid "Console"
-msgstr "Консоль"
-
 msgid "Auto EXIF Orientation rotation/flipping"
 msgstr "Авто EXIF ориентация вращения/поворота"
