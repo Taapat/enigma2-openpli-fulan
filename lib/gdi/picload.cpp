@@ -636,6 +636,8 @@ void ePicLoad::thread()
 
 void ePicLoad::decodePic()
 {
+	getExif(m_filepara->file);
+
 	if (m_filepara->id == F_JPEG)
 	{
 		//eDebug("[Picload] hardware decode picture... %s",m_filepara->file);
@@ -668,15 +670,12 @@ void ePicLoad::decodePic()
 				return;
 			}
 		}
-		
 		eDebug("hardware decode error");
-		
 		fclose(fp);
 	}
 
 	//eDebug("[Picload] software decode picture... %s",m_filepara->file);
 
-	getExif(m_filepara->file);
 	switch(m_filepara->id)
 	{
 		case F_PNG:	png_load(m_filepara, m_conf.background);
