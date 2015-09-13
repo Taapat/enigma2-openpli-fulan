@@ -56,7 +56,6 @@ class ePicLoad: public eMainloop, public eThread, public Object, public iObject
 
 	void decodePic();
 	void decodeThumb();
-	void resizePic();
 
 	Cfilepara *m_filepara;
 	Cexif *m_exif;
@@ -96,6 +95,7 @@ class ePicLoad: public eMainloop, public eThread, public Object, public iObject
 	int startThread(int what, const char *file, int x, int y, bool async=true);
 	void thread_finished();
 	bool getExif(const char *filename, int Thumb=0);
+	int getFileType(const char * file);
 public:
 	void waitFinished();
 	PSignal1<void, const char*> PictureData;

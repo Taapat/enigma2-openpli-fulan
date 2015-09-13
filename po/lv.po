@@ -1699,6 +1699,9 @@ msgstr "Pieslēgts"
 msgid "Console"
 msgstr "Konsole"
 
+msgid "Console"
+msgstr "Konsole"
+
 msgid "Constellation"
 msgstr "Modulācijas veids"
 

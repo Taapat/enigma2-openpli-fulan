@@ -903,19 +903,7 @@ int ePicLoad::startThread(int what, const char *file, int x, int y, bool async)
 		m_exif = NULL;
 	}
 
-	int file_id = -1;
-	unsigned char id[10];
-	int fd = ::open(file, O_RDONLY);
-	if (fd == -1) return 1;
-	::read(fd, id, 10);
-	::close(fd);
-
-	if      (id[1] == 'P'  && id[2] == 'N'  && id[3] == 'G')			file_id = F_PNG;
-	else if (id[6] == 'J'  && id[7] == 'F'  && id[8] == 'I' && id[9] == 'F')	file_id = F_JPEG;
-	else if (id[0] == 0xff && id[1] == 0xd8 && id[2] == 0xff)			file_id = F_JPEG;
-	else if (id[0] == 'B'  && id[1] == 'M' )					file_id = F_BMP;
-	else if (id[0] == 'G'  && id[1] == 'I'  && id[2] == 'F')			file_id = F_GIF;
-
+	int file_id = getFileType(file);
 	if(file_id < 0)
 	{
 		eDebug("[ePicLoad] <format not supported>");
@@ -1096,56 +1084,41 @@ int ePicLoad::getData(ePtr<gPixmap> &result)
 
 			gRGB bg(m_conf.background);
 			background = surface->clut.findColor(bg);
-
-			if (yoff != 0) {
-				memset(tmp_buffer, background, yoff * surface->stride);
-				memset(tmp_buffer + (yoff + scry) * surface->stride, background,
-					(m_filepara->max_y - scry - yoff) * surface->stride);
-			}
-
-			if (xoff != 0) {
-				#pragma omp parallel for
-				for(int y = yoff; y < scry; ++y) {
-					memset(tmp_buffer + y * surface->stride, background, xoff);
-					memset(tmp_buffer + y * surface->stride + xoff + scrx, background,
-						(m_filepara->max_x - scrx - xoff));
-				}
-                        }
                 }
 		else {
 			background = m_conf.background;
-			unsigned int* row_buffer;
-			if (yoff != 0) {
-				row_buffer = (unsigned int *) tmp_buffer;
-				for (int x = 0; x < m_filepara->max_x; ++x) // fill first line
-					*row_buffer++ = background;
-				int y;
-				#pragma omp parallel for
-				for (y = 1; y < yoff; ++y) // copy from first line
-					memcpy(tmp_buffer + y*surface->stride, tmp_buffer,
-						m_filepara->max_x * surface->bypp);
-				#pragma omp parallel for
-				for (y = yoff + scry; y < m_filepara->max_y; ++y)
-					memcpy(tmp_buffer + y * surface->stride, tmp_buffer,
-						m_filepara->max_x * surface->bypp);
-			}
-			if (xoff != 0) {
-				row_buffer = (unsigned int *) (tmp_buffer + yoff * surface->stride);
-				int x;
-				for (x = 0; x < xoff; ++x) // fill left side of first line
-					*row_buffer++ = background;
-				row_buffer += scrx;
-				for (x = xoff + scrx; x < m_filepara->max_x; ++x) // fill right side of first line
-					*row_buffer++ = background;
-				#pragma omp parallel for
-				for (int y = yoff + 1; y < scry; ++y) { // copy from first line
-					memcpy(tmp_buffer + y*surface->stride,
-						tmp_buffer + yoff * surface->stride,
-						xoff * surface->bypp);
-					memcpy(tmp_buffer + y*surface->stride + (xoff + scrx) * surface->bypp,
-						tmp_buffer + yoff * surface->stride + (xoff + scrx) * surface->bypp,
-						(m_filepara->max_x - scrx - xoff) * surface->bypp);
-				}
+		}
+		unsigned int* row_buffer;
+		if (yoff != 0) {
+			row_buffer = (unsigned int *) tmp_buffer;
+			for (int x = 0; x < m_filepara->max_x; ++x) // fill first line
+				*row_buffer++ = background;
+			int y;
+			#pragma omp parallel for
+			for (y = 1; y < yoff; ++y) // copy from first line
+				memcpy(tmp_buffer + y*surface->stride, tmp_buffer,
+					m_filepara->max_x * surface->bypp);
+			#pragma omp parallel for
+			for (y = yoff + scry; y < m_filepara->max_y; ++y)
+				memcpy(tmp_buffer + y * surface->stride, tmp_buffer,
+					m_filepara->max_x * surface->bypp);
+		}
+		if (xoff != 0) {
+			row_buffer = (unsigned int *) (tmp_buffer + yoff * surface->stride);
+			int x;
+			for (x = 0; x < xoff; ++x) // fill left side of first line
+				*row_buffer++ = background;
+			row_buffer += scrx;
+			for (x = xoff + scrx; x < m_filepara->max_x; ++x) // fill right side of first line
+				*row_buffer++ = background;
+			#pragma omp parallel for
+			for (int y = yoff + 1; y < scry; ++y) { // copy from first line
+				memcpy(tmp_buffer + y*surface->stride,
+					tmp_buffer + yoff * surface->stride,
+					xoff * surface->bypp);
+				memcpy(tmp_buffer + y*surface->stride + (xoff + scrx) * surface->bypp,
+					tmp_buffer + yoff * surface->stride + (xoff + scrx) * surface->bypp,
+					(m_filepara->max_x - scrx - xoff) * surface->bypp);
 			}
 		}
 		tmp_buffer += yoff * surface->stride + xoff * surface->bypp;
@@ -1342,6 +1315,23 @@ RESULT ePicLoad::setPara(int width, int height, double aspectRatio, int as, bool
 //			m_conf.max_x, m_conf.max_y, m_conf.aspect_ratio,
 //			(int)m_conf.usecache, (int)m_conf.resizetype, m_conf.background, m_conf.auto_orientation);
 	return 1;
+}
+
+int ePicLoad::getFileType(const char * file)
+{
+	unsigned char id[10];
+	int fd = ::open(file, O_RDONLY);
+	if (fd == -1)
+		return -1;
+	::read(fd, id, 10);
+	::close(fd);
+
+	if      (id[1] == 'P'  && id[2] == 'N'  && id[3] == 'G')			return F_PNG;
+	else if (id[6] == 'J'  && id[7] == 'F'  && id[8] == 'I' && id[9] == 'F')	return F_JPEG;
+	else if (id[0] == 0xff && id[1] == 0xd8 && id[2] == 0xff)			return F_JPEG;
+	else if (id[0] == 'B'  && id[1] == 'M' )					return F_BMP;
+	else if (id[0] == 'G'  && id[1] == 'I'  && id[2] == 'F')			return F_GIF;
+	return -1;
 }
 
 //------------------------------------------------------------------------------------
