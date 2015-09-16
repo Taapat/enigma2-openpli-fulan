@@ -2160,7 +2160,6 @@ class InfoBarPiP:
 			if info.getInfo(iServiceInformation.sVideoHeight) >= 720:
 				self.session.open(MessageBox, _("Sorry!\nPicture in Picture is not available in HD channels!"), MessageBox.TYPE_INFO, timeout=5)
 			else:
-				if self.session.pipshown:
 				slist = self.servicelist
 				if self.session.pipshown:
 					if slist and slist.dopipzap:
@@ -2178,27 +2177,27 @@ class InfoBarPiP:
 				else:
 					self.session.pip = self.session.instantiateDialog(PictureInPicture)
 					self.session.pip.show()
-					newservice = self.lastPiPService or self.session.nav.getCurrentlyPlayingServiceReference() or self.servicelist.servicelist.getCurrent()
-					if not self.playPiPService(newservice):
-						newservice = self.session.nav.getCurrentlyPlayingServiceReference() or self.servicelist.servicelist.getCurrent()
-						if not self.playPiPService(newservice):
+					newservice = self.lastPiPService or self.session.nav.getCurrentlyPlayingServiceReference() or (slist and slist.servicelist.getCurrent())
+					if not self.playPiPService(newservice, slist):
+						newservice = self.session.nav.getCurrentlyPlayingServiceReference() or (slist and slist.servicelist.getCurrent())
+						if not self.playPiPService(newservice, slist):
 							self.session.pipshown = False
 							del self.session.pip
 					if self.session.pipshown and hasattr(self, "screenSaverTimer"):
 						self.screenSaverTimer.stop()
 					self.lastPiPService = None
 
-	def playPiPService(self, newservice):
+	def playPiPService(self, newservice, slist):
 		if self.session.pip.playService(newservice):
 			self.session.pipshown = True
-			self.session.pip.servicePath = self.servicelist.getCurrentServicePath()
+			self.session.pip.servicePath = slist and slist.getCurrentServicePath()
 			self.session.pip.fixPiPSize()
 			if config.usage.pip_onStart.value == "move":
 				self.session.nav.stopService()
 				self.session.nav.playService(newservice, checkParentalControl=False, adjust=False)
-			elif config.usage.pip_onStart.value == "channellist":
-				self.session.execDialog(self.servicelist)
-			elif config.usage.pip_onStart.value == "transponder":
+			elif slist and config.usage.pip_onStart.value == "channellist":
+				self.session.execDialog(slist)
+			elif slist and config.usage.pip_onStart.value == "transponder":
 				cur_ref = self.session.nav.getCurrentlyPlayingServiceReference()
 				if cur_ref:
 					ref = eServiceReference('1:7:1:0:0:0:0:0:0:0: (channelID == %08x%04x%04x) && (type == 1) || (type == 17) || (type == 22) || (type == 25) || (type == 134) || (type == 195) ORDER BY name:%s'%
@@ -2206,9 +2205,9 @@ class InfoBarPiP:
 						cur_ref.getUnsignedData(2), # TSID
 						cur_ref.getUnsignedData(3), # ONID
 						_("Current transponder")))
-					self.session.execDialog(self.servicelist)
-					self.servicelist.enterPath(ref)
-					self.servicelist.gotoCurrentServiceOrProvider(ref)
+					self.session.execDialog(slist)
+					slist.enterPath(ref)
+					slist.gotoCurrentServiceOrProvider(ref)
 			return True
 		return False
 
@@ -2245,9 +2244,9 @@ class InfoBarPiP:
 					self.session.pip.servicePath = currentServicePath
 					self.session.pip.servicePath[1] = currentBouquet
 					self.session.pip.fixPiPSize()
-				if slist and slist.dopipzap:
-					# This unfortunately won't work with subservices
-					slist.setCurrentSelection(self.session.pip.getCurrentService())
+					if slist.dopipzap:
+						# This unfortunately won't work with subservices
+						slist.setCurrentSelection(self.session.pip.getCurrentService())
 
 	def movePiP(self):
 		if self.pipShown():
