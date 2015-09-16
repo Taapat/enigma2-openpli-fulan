@@ -2148,7 +2148,7 @@ class InfoBarPiP:
 			slist.togglePipzap()
 			if slist.dopipzap:
 				currentServicePath = slist.getCurrentServicePath()
-				self.servicelist.setCurrentServicePath(self.session.pip.servicePath, doZap=False)
+				slist.setCurrentServicePath(self.session.pip.servicePath, doZap=False)
 				self.session.pip.servicePath = currentServicePath
 
 	def showPiP(self):
@@ -2161,7 +2161,8 @@ class InfoBarPiP:
 				self.session.open(MessageBox, _("Sorry!\nPicture in Picture is not available in HD channels!"), MessageBox.TYPE_INFO, timeout=5)
 			else:
 				if self.session.pipshown:
-					slist = self.servicelist
+				slist = self.servicelist
+				if self.session.pipshown:
 					if slist and slist.dopipzap:
 						self.togglePipzap()
 					if self.session.pipshown:
@@ -2233,17 +2234,20 @@ class InfoBarPiP:
 			swapservice = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 			pipref = self.session.pip.getCurrentService()
 			if swapservice and pipref and pipref.toString() != swapservice.toString():
-				currentServicePath = self.servicelist.getCurrentServicePath()
-				currentBouquet = self.servicelist and self.servicelist.getRoot()
-				self.servicelist.setCurrentServicePath(self.session.pip.servicePath, doZap=False)
+				slist = self.servicelist
+				if slist:
+					currentServicePath = slist.getCurrentServicePath()
+					currentBouquet = slist.getRoot()
+					slist.setCurrentServicePath(self.session.pip.servicePath, doZap=False)
 				self.session.pip.playService(swapservice)
 				self.session.nav.playService(pipref, checkParentalControl=False, adjust=False)
-				self.session.pip.servicePath = currentServicePath
-				self.session.pip.servicePath[1] = currentBouquet
-				self.session.pip.fixPiPSize()
-				if self.servicelist.dopipzap:
+				if slist:
+					self.session.pip.servicePath = currentServicePath
+					self.session.pip.servicePath[1] = currentBouquet
+					self.session.pip.fixPiPSize()
+				if slist and slist.dopipzap:
 					# This unfortunately won't work with subservices
-					self.servicelist.setCurrentSelection(self.session.pip.getCurrentService())
+					slist.setCurrentSelection(self.session.pip.getCurrentService())
 
 	def movePiP(self):
 		if self.pipShown():
