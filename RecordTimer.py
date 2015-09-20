@@ -171,7 +171,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 		self.record_ecm = record_ecm
 		self.rename_repeat = rename_repeat
 		self.setAdvancedPriorityFrontend = None
-		if SystemInfo["DVB-T_priority_tuner_available"] or SystemInfo["DVB-C_priority_tuner_available"] or SystemInfo["DVB-S_priority_tuner_available"]:
+		if SystemInfo["priority_tuner_available"] and (SystemInfo["DVB-T_priority_tuner_available"] or SystemInfo["DVB-C_priority_tuner_available"] or SystemInfo["DVB-S_priority_tuner_available"]):
 			rec_ref = self.service_ref and self.service_ref.ref
 			str_service = rec_ref and rec_ref.toString()
 			if str_service and '%3a//' not in str_service and not str_service.rsplit(":", 1)[1].startswith("/"):

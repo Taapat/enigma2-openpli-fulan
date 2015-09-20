@@ -98,7 +98,7 @@ class Navigation:
 				if InfoBarInstance and InfoBarInstance.servicelist.servicelist.setCurrent(ref, adjust):
 					self.currentlyPlayingServiceOrGroup = InfoBarInstance.servicelist.servicelist.getCurrent()
 				setPriorityFrontend = False
-				if SystemInfo["DVB-T_priority_tuner_available"] or SystemInfo["DVB-C_priority_tuner_available"] or SystemInfo["DVB-S_priority_tuner_available"]:
+				if SystemInfo["priority_tuner_available"] and (SystemInfo["DVB-T_priority_tuner_available"] or SystemInfo["DVB-C_priority_tuner_available"] or SystemInfo["DVB-S_priority_tuner_available"]):
 					str_service = playref.toString()
 					if '%3a//' not in str_service and not str_service.rsplit(":", 1)[1].startswith("/"):
 						type_service = playref.getUnsignedData(4) >> 16
