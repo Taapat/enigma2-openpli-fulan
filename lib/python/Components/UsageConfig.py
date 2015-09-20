@@ -204,6 +204,7 @@ def InitUsageConfig():
 		elif x.isCompatible("DVB-C"):
 			dvbc_nims.append((str(x.slot), x.getSlotName()))
 		nims.append((str(x.slot), x.getSlotName()))
+	SystemInfo["priority_tuner_available"] = len(nims) > 2
 	config.usage.frontend_priority = ConfigSelection(default = "-1", choices = list(nims))
 	nims.insert(0,("-2", _("Disabled")))
 	config.usage.recording_frontend_priority = ConfigSelection(default = "-2", choices = nims)
