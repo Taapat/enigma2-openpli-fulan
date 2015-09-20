@@ -32,11 +32,9 @@ class HardwareInfo:
 
 		# Name ... bit odd, but history prevails
 		try:
-			self.device_name = open("/proc/stb/info/hwmodel").read().strip()
+			self.device_name = open("/proc/stb/info/model").read().strip()
 		except:
 			pass
-		else:
-			self.device_name = open("/proc/stb/info/model").read().strip()
 
 		# Model
 		# Disable on spark because there is only a /proc/stb/info/model
