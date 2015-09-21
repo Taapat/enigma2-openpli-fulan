@@ -7591,6 +7591,12 @@ msgstr "Ja ieslēgts, šis iestatījums tiks lietots 'Ieteicamais uztvērējs ie
 msgid "When enabled, this setting has more weight than 'Preferred tuner'."
 msgstr "Ja ieslēgts, šis iestatījums tiks lietots 'Ieteicamais uztvērējs' vietā."
 
+msgid "When enabled, this setting has more weight than 'Preferred tuner for recordings'."
+msgstr "Ja ieslēgts, šis iestatījums tiks lietots 'Ieteicamais uztvērējs ierakstam' vietā."
+
+msgid "When enabled, this setting has more weight than 'Preferred tuner'."
+msgstr "Ja ieslēgts, šis iestatījums tiks lietots 'Ieteicamais uztvērējs' vietā."
+
 msgid "When enabled, timeshift starts automatically in background after specified time."
 msgstr "Ja ieslēgts, pēc norādītā laika laika aizture sāksies fonā automātiski."
 
