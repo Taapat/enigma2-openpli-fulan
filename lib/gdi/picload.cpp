@@ -649,10 +649,8 @@ void ePicLoad::decodePic()
 
 		if (get_jpeg_img_size(fp, (unsigned int *)&m_filepara->ox, (unsigned int *)&m_filepara->oy) == LIBMMEIMG_SUCCESS)
 		{
-			if (decode_jpeg(fp, m_filepara->ox, m_filepara->oy, m_filepara->max_x, m_filepara->max_y, (char **)&m_filepara->pic_buffer) == LIBMMEIMG_SUCCESS)
+			if (decode_jpeg(fp, m_filepara->ox, m_filepara->oy, m_filepara->ox, m_filepara->oy, (char **)&m_filepara->pic_buffer) == LIBMMEIMG_SUCCESS)
 			{
-				m_filepara->ox = m_filepara->max_x;
-				m_filepara->oy = m_filepara->max_y;
 				fclose(fp);
 				return;
 			}
