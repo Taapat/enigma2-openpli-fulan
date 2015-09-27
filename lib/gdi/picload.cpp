@@ -646,26 +646,13 @@ void ePicLoad::decodePic()
 
 		if (!(fp = fopen(m_filepara->file, "rb")))
 			return; // software decode won't find the file either...
-		
+
 		if (get_jpeg_img_size(fp, (unsigned int *)&m_filepara->ox, (unsigned int *)&m_filepara->oy) == LIBMMEIMG_SUCCESS)
 		{
-			int imx, imy;
-
-			if ((m_conf.aspect_ratio * m_filepara->oy * m_filepara->max_x / m_filepara->ox) <= m_filepara->max_y)
+			if (decode_jpeg(fp, m_filepara->ox, m_filepara->oy, m_filepara->max_x, m_filepara->max_y, (char **)&m_filepara->pic_buffer) == LIBMMEIMG_SUCCESS)
 			{
-				imx = m_filepara->max_x;
-				imy = (int)(m_conf.aspect_ratio * m_filepara->oy * m_filepara->max_x / m_filepara->ox);
-			}
-			else
-			{
-				imx = (int)((1.0/m_conf.aspect_ratio) * m_filepara->ox * m_filepara->max_y / m_filepara->oy);
-				imy = m_filepara->max_y;
-			}
-			
-			if (decode_jpeg(fp, m_filepara->ox, m_filepara->oy, imx, imy, (char **)&m_filepara->pic_buffer) == LIBMMEIMG_SUCCESS)
-			{
-				m_filepara->ox = imx;
-				m_filepara->oy = imy;
+				m_filepara->ox = m_filepara->max_x;
+				m_filepara->oy = m_filepara->max_y;
 				fclose(fp);
 				return;
 			}
