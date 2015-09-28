@@ -640,7 +640,7 @@ void ePicLoad::decodePic()
 
 	if (m_filepara->id == F_JPEG)
 	{
-		//eDebug("[Picload] hardware decode picture... %s",m_filepara->file);
+		//eDebug("[ePicLoad] hardware decode picture... %s", m_filepara->file);
 		m_filepara->pic_buffer = NULL;
 		FILE *fp;
 
@@ -649,17 +649,25 @@ void ePicLoad::decodePic()
 
 		if (get_jpeg_img_size(fp, (unsigned int *)&m_filepara->ox, (unsigned int *)&m_filepara->oy) == LIBMMEIMG_SUCCESS)
 		{
-			if (decode_jpeg(fp, m_filepara->ox, m_filepara->oy, m_filepara->ox, m_filepara->oy, (char **)&m_filepara->pic_buffer) == LIBMMEIMG_SUCCESS)
+			// to get the best picture quality even if it rotated later
+			float scale = (float)(m_filepara->max_x > m_filepara->max_y ? m_filepara->max_x : m_filepara->max_y) / (m_filepara->ox > m_filepara->oy ? m_filepara->ox : m_filepara->oy);
+			int imx = (int)(m_filepara->ox * scale);
+			int imy = (int)(m_filepara->oy * scale);
+
+			if (decode_jpeg(fp, m_filepara->ox, m_filepara->oy, imx, imy, (char **)&m_filepara->pic_buffer) == LIBMMEIMG_SUCCESS)
 			{
+				m_filepara->ox = imx;
+				m_filepara->oy = imy;
 				fclose(fp);
 				return;
 			}
 		}
-		eDebug("hardware decode error");
+		eDebug("[ePicLoad] hardware decode error");
 		fclose(fp);
+		m_filepara->pic_buffer = NULL;
 	}
 
-	//eDebug("[Picload] software decode picture... %s",m_filepara->file);
+	//eDebug("[ePicLoad] decode picture... %s", m_filepara->file);
 
 	switch(m_filepara->id)
 	{
