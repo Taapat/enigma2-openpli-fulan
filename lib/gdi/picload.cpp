@@ -1077,7 +1077,7 @@ int ePicLoad::getData(ePtr<gPixmap> &result)
 	if (xoff != 0 || yoff != 0) {
 		unsigned int background;
 		if (m_filepara->bits == 8) {
-			gRGB bg(m_conf.background);
+			gRGB bg(m_conf.background | 0xFF000000);
 			background = surface->clut.findColor(bg);
 		}
 		else {
