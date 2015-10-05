@@ -511,9 +511,9 @@ def runScreenTest():
 		config.misc.prev_wakeup_time.value = startTime[0]
 		config.misc.prev_wakeup_time_type.value = startTime[1]
 		config.misc.prev_wakeup_time_type.save()
-	else:
+	elif config.misc.prev_wakeup_time.value != 0:
 		config.misc.prev_wakeup_time.value = 0
-	config.misc.prev_wakeup_time.save()
+		config.misc.prev_wakeup_time.save()
 
 	profile("stopService")
 	session.nav.stopService()
