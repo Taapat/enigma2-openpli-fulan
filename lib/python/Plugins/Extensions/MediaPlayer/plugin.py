@@ -1,4 +1,4 @@
-import os, os.path
+import os
 from time import strftime
 from enigma import iPlayableService, eTimer, eServiceCenter, iServiceInformation, ePicLoad
 from ServiceReference import ServiceReference
