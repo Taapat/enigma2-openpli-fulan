@@ -1103,7 +1103,10 @@ def movielist_open(list, session, **kwargs):
 		InfoBar.instance.showMovies(eServiceReference(stype, 0, f.path))
 
 def audiocdscan(menuid, **kwargs):
-	from Plugins.SystemPlugins.Hotplug.plugin import AudiocdAdded
+	try:
+		from Plugins.SystemPlugins.Hotplug.plugin import AudiocdAdded
+	except:
+		return []
 	if menuid == "mainmenu" and (AudiocdAdded() or os.path.isfile('/media/audiocd/cdplaylist.cdpls')):
 		list = ['/media/audiocd/cdplaylist.cdpls']
 		return [(_("Play audio-CD..."), audioCD_open_mn, "play_cd", 45)]
