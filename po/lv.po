@@ -7359,9 +7359,6 @@ msgstr "Pamodināšanas tips"
 msgid "WakeupTimer Configuration"
 msgstr "Pamodināšanas taimera iestatījumi"
 
-msgid "WakeupTimer Configuration"
-msgstr "Pamodināšanas taimera iestatījumi"
-
 msgid "Warning"
 msgstr "Brīdinājums"
 
