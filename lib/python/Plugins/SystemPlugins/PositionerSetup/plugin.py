@@ -352,6 +352,7 @@ class PositionerSetup(Screen):
 
 	def createConfig(self):
 		rotorposition = 1
+		orb_pos = 0
 		self.printMsg(_("Using tuner %s") % chr(0x41 + self.feid))
 		if not self.advanced:
 			self.printMsg(_("Configuration mode: %s") % _("simple"))
@@ -445,7 +446,6 @@ class PositionerSetup(Screen):
 		self.list.append((_("Fine movement"), self.positioner_finemove, "finemove"))
 		self.list.append((_("Set limits"), self.positioner_limits, "limits"))
 		self.list.append((_("Memory index") + (self.getUsals() and " (USALS)" or ""), self.positioner_storage, "storage"))
-		self.list.append((text, self.positioner_storage, "storage"))
 		self.list.append((_("Goto"), self.orbitalposition, "goto"))
 		self.list.append((" ", self.orientation, "goto"))
 		self["list"].l.setList(self.list)
