@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-05 22:42+0300\n"
+"POT-Creation-Date: 2015-10-21 00:43+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -511,9 +511,6 @@ msgstr ""
 "Pašreiz notiek ieraksts.\n"
 "Ko vēlaties darīt?"
 
-msgid "A recording is currently running. Please stop the recording before trying to configure the positioner."
-msgstr "Pašreiz notiek ieraksts. Pirms konfigurējat pozicionieri lūdzu apturiet ierakstu."
-
 msgid "A recording is currently running. Please stop the recording before trying to scan."
 msgstr "Pašreiz notiek ieraksts. Pirms mēģināt meklēt lūdzu apturiet ierakstu."
 
@@ -565,6 +562,9 @@ msgstr "AAC dekodēšana"
 
 msgid "AC3 downmix"
 msgstr "AC3 dekodēšana"
+
+msgid "AGC:"
+msgstr "AGC:"
 
 msgid "APN"
 msgstr "APN"
@@ -780,12 +780,6 @@ msgstr "Un iestatīt uztvērēju gaidstāvē pēc "
 msgid "Any activity"
 msgstr "Jebkura aktivitāte"
 
-msgid "Apr"
-msgstr "apr"
-
-msgid "April"
-msgstr "aprīlis"
-
 msgid "Arabic"
 msgstr "Arābu"
 
@@ -917,12 +911,6 @@ msgstr "Skaņas celiņa (%s) formāts"
 #, python-format
 msgid "Audio track (%s) language"
 msgstr "Skaņas celiņa (%s) valoda"
-
-msgid "Aug"
-msgstr "aug"
-
-msgid "August"
-msgstr "augusts"
 
 msgid "Author: "
 msgstr "Autors: "
@@ -1797,6 +1785,9 @@ msgstr ""
 msgid "Current mode: %s \n"
 msgstr "Pašreizējais režīms: %s \n"
 
+msgid "Current rotor position: "
+msgstr "Pašreizējā rotora pozīcija: "
+
 msgid "Current settings:"
 msgstr "Pašreizējie iestatījumi:"
 
@@ -1907,12 +1898,6 @@ msgstr "Datums"
 
 msgid "Date/time input"
 msgstr "Datuma/laika ievade"
-
-msgid "Dec"
-msgstr "dec"
-
-msgid "December"
-msgstr "decembris"
 
 msgid "Deep standby"
 msgstr "Izslēgt"
@@ -2569,6 +2554,9 @@ msgstr "Iziet no tīkla iestatīšanas vedņa"
 msgid "Exit the wizard"
 msgstr "Iziet no vedņa"
 
+msgid "Exit/OK"
+msgstr "Iziet/OK"
+
 msgid "Expert"
 msgstr "Lietpratēja"
 
@@ -2636,6 +2624,9 @@ msgstr "FEC HP"
 msgid "FEC LP"
 msgstr "FEC LP"
 
+msgid "FEC:"
+msgstr "FEC:"
+
 msgid "FTA"
 msgstr "FTA"
 
@@ -2686,12 +2677,6 @@ msgstr "Pārtīšanas ātrumi"
 
 msgid "Favourites"
 msgstr "Favorīti"
-
-msgid "Feb"
-msgstr "feb"
-
-msgid "February"
-msgstr "februāris"
 
 msgid "File appears to be busy.\n"
 msgstr "Fails šķiet aizņemts.\n"
@@ -3263,20 +3248,8 @@ msgstr "Daudzums lapā"
 msgid "Items per page for list screen"
 msgstr "Daudzums lapā saraksta logā"
 
-msgid "Jan"
-msgstr "jan"
-
-msgid "January"
-msgstr "janvāris"
-
 msgid "Job overview"
 msgstr "Darbu skats"
-
-msgid "Jul"
-msgstr "jūl"
-
-msgid "July"
-msgstr "jūlijs"
 
 msgid "Jump to beginning of list"
 msgstr "Pārlekt uz saraksta sākumu"
@@ -3289,12 +3262,6 @@ msgstr "Pārlēkt uz nākamo atzīmēto pozīciju"
 
 msgid "Jump to previous marked position"
 msgstr "Pārlēkt uz iepriekšējo atzīmēto pozīciju"
-
-msgid "Jun"
-msgstr "jūn"
-
-msgid "June"
-msgstr "jūnijs"
 
 #. TRANSLATORS: (aspect ratio policy: display as fullscreen, even if this breaks the aspect)
 msgid "Just scale"
@@ -3536,12 +3503,6 @@ msgstr "Manuāls transponderis"
 msgid "Manufacturer"
 msgstr "Ražotājs"
 
-msgid "Mar"
-msgstr "mar"
-
-msgid "March"
-msgstr "marts"
-
 msgid "Margin after recording (minutes)"
 msgstr "Atstarpe pēc ieraksta (minūtēs)"
 
@@ -3557,8 +3518,8 @@ msgstr "Maksimālā pozīcija atmiņā"
 msgid "Max. bitrate: "
 msgstr "Max. bitreits: "
 
-msgid "May"
-msgstr "maijs"
+msgid "Maybe the reason that recording is currently running. Please stop the recording before trying to configure the positioner."
+msgstr "Varbūt pašreiz notiek ieraksts. Pirms konfigurējat pozicionieri lūdzu apturiet ierakstu."
 
 msgid "Media player"
 msgstr "Mediju atskaņotājs"
@@ -4035,12 +3996,6 @@ msgstr ""
 "Nav ko meklēt!\n"
 "Lūdzu iestatiet uztvērēju pirms sākat meklēt kanālus."
 
-msgid "Nov"
-msgstr "nov"
-
-msgid "November"
-msgstr "novembris"
-
 msgid "Now"
 msgstr "Pašreiz"
 
@@ -4080,12 +4035,6 @@ msgstr "OSD iestatījumi"
 
 msgid "OSD transparency"
 msgstr "OSD caurspīdīgums"
-
-msgid "Oct"
-msgstr "okt"
-
-msgid "October"
-msgstr "oktobris"
 
 msgid "Off"
 msgstr "Izslēgts"
@@ -4131,6 +4080,9 @@ msgstr "Atvērt izvēlēto mapi ar taimera nosaukumu"
 
 msgid "Open service list"
 msgstr "Atvērt kanālu sarakstu"
+
+msgid "Open setup tuner "
+msgstr "Atvērt iestatījumus uztvērējam "
 
 msgid "Open the movie list"
 msgstr "Atvērt filmu sarakstu"
@@ -4535,9 +4487,6 @@ msgstr "Spraudņi"
 msgid "Polarisation"
 msgstr "Polarizācija"
 
-msgid "Polarisation:"
-msgstr "Polarizācija:"
-
 msgid "Polarization"
 msgstr "Polarizācija"
 
@@ -4574,11 +4523,11 @@ msgstr "Pozicionieris"
 msgid "Positioner (selecting satellites)"
 msgstr "Pozicionieris (izvēlieties pavadoņus)"
 
-msgid "Positioner Setup"
-msgstr "Pozicioniera iestatījumi"
-
 msgid "Positioner setup"
 msgstr "Pozicioniera iestatījumi"
+
+msgid "Positioner setup log"
+msgstr "Pozicioniera iestatījumu logs"
 
 msgid "Power"
 msgstr "Barošana"
@@ -4679,6 +4628,9 @@ msgstr "Nospiediet OK, lai pārslēgtu izvēli"
 
 msgid "Press OK to toggle the selection."
 msgstr "Nospiediet OK, lai pārslēgtu izvēli."
+
+msgid "Press OK, save and exit..."
+msgstr "Spiediet OK, lai saglabātu un izietu..."
 
 msgid "Press yellow to set this interface as default interface."
 msgstr "Spiediet dzelteno, lai iestatītu šo interfeisu kā noklusējuma."
@@ -4828,6 +4780,10 @@ msgstr "Vai tiešām pārstartēt tagad?"
 
 msgid "Really shutdown now?"
 msgstr "Vai tiešām izslēgt tagad?"
+
+#, python-format
+msgid "Really store at index %2d for current position?"
+msgstr "Vai tiešām saglabāt %2d priekš pašreizējās pozīcijas?"
 
 msgid "Really upgrade the frontprocessor and reboot now?"
 msgstr "Vai tiešām atjaunot frontprocesoru un pārstartēt tagad?"
@@ -5434,6 +5390,9 @@ msgstr "Izvēlieties atsvaidzināšanas biežumu"
 msgid "Select satellites"
 msgstr "Izvēlieties pavadoni"
 
+msgid "Select slot"
+msgstr "Izvēlieties slotu"
+
 msgid "Select sort method:"
 msgstr "Izvēlieties kārtošanas metodi:"
 
@@ -5470,14 +5429,8 @@ msgstr "Sūtīt DiSEqC komandu"
 msgid "Send DiSEqC only on satellite change"
 msgstr "Sūtīt DiSEqC komandu tikai mainoties pavadonim"
 
-msgid "Sep"
-msgstr "sep"
-
 msgid "Separate titles with a main menu"
 msgstr "Atsevišķi nosaukumi ar galveno izvēlni"
-
-msgid "September"
-msgstr "septembris"
 
 msgid "Sequence repeat"
 msgstr "Secības atkārtojums"
@@ -5974,6 +5927,9 @@ msgstr "Atvainojiet, dublējumkopijas nav atrastas!"
 
 msgid "Sorry, no details available!"
 msgstr "Atvainojiet, informācija nav pieejama!"
+
+msgid "Sorry, this tuner is in use."
+msgstr "Atvainojiet, šis uztvērējs tiek lietots."
 
 msgid ""
 "Sorry, your backup destination is not writeable.\n"
@@ -7685,6 +7641,9 @@ msgstr "Rakstīšanas kļūda ieraksta laikā. Vai disks ir pilns?\n"
 msgid "Write failed!"
 msgstr "Rakstīšana neizdevās!"
 
+msgid "Write to /tmp/positionersetup.log"
+msgstr "Saglabā /tmp/positionersetup.log"
+
 msgid "YPbPr"
 msgstr "YPbPr"
 
@@ -7702,6 +7661,9 @@ msgstr "Dzelteni DVB subtitri"
 
 msgid "Yes"
 msgstr "Jā"
+
+msgid "Yes (save index in setup tuner)"
+msgstr "Jā (saglabāt indeksu uztvērēja iestatījumos)"
 
 msgid "Yes and save"
 msgstr "Jā un saglabāt"
