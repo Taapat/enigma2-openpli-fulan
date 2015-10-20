@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-24 18:39+0200\n"
-"PO-Revision-Date: 2015-10-11 07:16+0100\n"
+"POT-Creation-Date: 2015-10-17 13:25+0200\n"
+"PO-Revision-Date: 2015-10-17 15:21+0100\n"
 "Last-Translator: blzr <blzr@o2.pl>\n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -513,9 +513,6 @@ msgstr ""
 "Nagrywanie w toku...\n"
 "Co chcesz zrobić?"
 
-msgid "A recording is currently running. Please stop the recording before trying to configure the positioner."
-msgstr "Nagrywanie w toku. Zatrzymaj nagrywanie przed rozpoczęciem ustawiania pozycjonera."
-
 msgid "A recording is currently running. Please stop the recording before trying to scan."
 msgstr "Trwa nagrywanie. Zatrzymaj nagrywanie zanim rozpoczniesz skanowanie."
 
@@ -566,6 +563,9 @@ msgid "AAC downmix"
 msgstr ""
 
 msgid "AC3 downmix"
+msgstr ""
+
+msgid "AGC:"
 msgstr ""
 
 msgid "Abort"
@@ -912,6 +912,9 @@ msgstr "Tryb tworzenia"
 #. TRANSLATORS: (aspect ratio policy: always try to display as fullscreen, when there is no content (black bars) on left/right, even if this breaks the aspect.
 msgid "Auto"
 msgstr "Auto"
+
+msgid "Auto EXIF Orientation rotation/flipping"
+msgstr "Automatyczny obrót/zmiana orientacji EXIF"
 
 msgid "Auto chapter split every ? minutes (0=never)"
 msgstr "Automatyczny podział rozdziałów co ? minuty (0=nigdy)"
@@ -1369,6 +1372,9 @@ msgstr "Skonfiguruj czy i jak zaznaczać w liście wydarzenie, które jest aktua
 msgid "Configure if and how wide columns will be shown in the channel selection list."
 msgstr "Skonfiguruj czy i jakiej szerokości wyświetlać kolumny w liście wyboru kanałów. Liczba pikseli wyznacza szerokość kolumny z nazwami kanałów"
 
+msgid "Configure if behind the subtitles a background is shown."
+msgstr "Skonfiguruj czy za napisami ma byc wyświetlane tło."
+
 msgid "Configure if service picons will be shown in the channel selection list."
 msgstr "Skonfiguruj czy wyświetlać pikony w liście kanałów."
 
@@ -1654,6 +1660,9 @@ msgstr "Podłączone satelity"
 msgid "Connected to"
 msgstr "Podłączony do"
 
+msgid "Console"
+msgstr "Konsola"
+
 msgid "Constellation"
 msgstr "Konstelacja"
 
@@ -1749,6 +1758,9 @@ msgstr ""
 msgid "Current mode: %s \n"
 msgstr "Aktualny tryb: %s \n"
 
+msgid "Current rotor position: "
+msgstr "Aktualna pozycja obrotnicy:"
+
 msgid "Current settings:"
 msgstr "Aktualne ustawienia:"
 
@@ -1834,7 +1846,7 @@ msgid "DVB-T2"
 msgstr ""
 
 msgid "DVD data format"
-msgstr "Frormat danych DVD"
+msgstr "Format danych DVD"
 
 msgid "DVD file browser"
 msgstr "Przeglądarka DVD"
@@ -1870,43 +1882,43 @@ msgid "Default settings"
 msgstr "Ustawienia domyślne"
 
 msgid "Delay after change voltage before switch command"
-msgstr ""
+msgstr "Opóźnienie po zmianie napięcia przed komendą przełączenia"
 
 msgid "Delay after continuous tone disable before diseqc"
-msgstr ""
+msgstr "Opóźnienie po wyłączeniu tonu przed komendą diseqc"
 
 msgid "Delay after diseqc peripherial poweron command"
-msgstr ""
+msgstr "Opóźnienie po komendzie 'poweron' diseqc"
 
 msgid "Delay after diseqc reset command"
-msgstr ""
+msgstr "Opóźnienie po komendzie 'reset' diseqc"
 
 msgid "Delay after enable voltage before motor command"
-msgstr ""
+msgstr "Opóźnienie po komendzie 'enable voltage before motor'"
 
 msgid "Delay after enable voltage before switch command"
-msgstr ""
+msgstr "Opóźnienie po włączeniu napięcia przed komendą przełączenia"
 
 msgid "Delay after final continuous tone change"
-msgstr ""
+msgstr "Opóźnienie po finalnej zmiane tonu"
 
 msgid "Delay after last diseqc command"
-msgstr ""
+msgstr "Opóźnienie po ostatniej komendzie diseqc"
 
 msgid "Delay after last voltage change"
-msgstr ""
+msgstr "Opóźnienie po ostatniej zmianie napięcia"
 
 msgid "Delay after motor stop command"
-msgstr ""
+msgstr "Opóźnienie po komendzie zatrzymania obrotnicy"
 
 msgid "Delay after set voltage before measure motor power"
-msgstr ""
+msgstr "Opóźnienie po ustawieniu napięcia przed pomiarem siły obrotnicy"
 
 msgid "Delay after toneburst"
-msgstr ""
+msgstr "Opóźnienie po komendzie 'toneburst'"
 
 msgid "Delay after voltage change before motor command"
-msgstr ""
+msgstr "Opóźnienie po zmianie napięcia przed komendą 'motor'"
 
 msgid "Delay before key repeat starts:"
 msgstr "Opóźnienie przed rozpoczęciem powtórzenia klawisza:"
@@ -1915,10 +1927,10 @@ msgid "Delay before sequence repeat"
 msgstr "Opóźnienie przed powtórzeniem sekwencji"
 
 msgid "Delay between diseqc commands"
-msgstr ""
+msgstr "Opóźnienie pomiędzy komendami diseqc"
 
 msgid "Delay between switch and motor command"
-msgstr ""
+msgstr "Opóźnienie pomiędzy komendami 'switch' i 'motor'"
 
 msgid "Delay for external subtitles"
 msgstr "Opóźnienie dla napisów zewnętrznych"
@@ -1933,37 +1945,37 @@ msgid "Delay in miliseconds between scrolling characters on display."
 msgstr "Opóźnienie w milisekundach pomiędzy przewijanymi literami na wyświetlaczu"
 
 msgid "Delete"
-msgstr "Usuń"
+msgstr "Skasuj"
 
 msgid "Delete entry"
 msgstr "Skasuj wpis"
 
 msgid "Delete failed!"
-msgstr "Usunięcie nie powiodło się!"
+msgstr "Kasowanie nie powiodło się!"
 
 msgid "Delete file"
-msgstr "Usuń plik"
+msgstr "Skasuj plik"
 
 msgid "Delete playlist entry"
-msgstr "Usuń pozycję playlisty"
+msgstr "Skasuj pozycję playlisty"
 
 msgid "Delete saved playlist"
-msgstr "Usuń zachowaną playlistę"
+msgstr "Skasuj zachowaną playlistę"
 
 msgid "Delete timer"
-msgstr "Usuń timer"
+msgstr "Skasuj timer"
 
 msgid "Deleted"
-msgstr "Usunięto"
+msgstr "Skasowano"
 
 msgid "Deleted items"
-msgstr "Usunięte pliki"
+msgstr "Skasowane pliki"
 
 msgid "Depth"
 msgstr "Głębia"
 
 msgid "Descramble http streams"
-msgstr "Dekoduj stream http"
+msgstr "Dekoduj strumień http"
 
 msgid "Description"
 msgstr "Opis"
@@ -2211,7 +2223,7 @@ msgid "Download %s from server"
 msgstr "Pobierz %s z serwera"
 
 msgid "Download .NFI-files for USB-flasher"
-msgstr ""
+msgstr "Pobierz pliki NFI dla 'USB-flahser'"
 
 msgid "Download plugins"
 msgstr "Pobierz wtyczki"
@@ -2358,6 +2370,9 @@ msgstr "Włącz pamięć telegazety"
 msgid "Enable volume control with arrow buttons"
 msgstr "Regulacja głośności strzałkami L/P"
 
+msgid "Enable wakeup timer"
+msgstr "Włącz timer wybudzania"
+
 msgid "Enable zapping with CH+/-, B+/-, P+/-"
 msgstr "Włącz przełączanie kanałów przyciskami CH+/-, B+/-, P+/-"
 
@@ -2396,7 +2411,7 @@ msgid "Enigma (re)starts: %d\n"
 msgstr "Restarty enigmy: %d\n"
 
 msgid "Enigma2 skin selector"
-msgstr "Enigma2 wybór skina"
+msgstr "Wybór skina"
 
 msgid "Enter main menu..."
 msgstr "Wejdź do menu głównego..."
@@ -2496,6 +2511,9 @@ msgstr "Opuść konfigurację sieci"
 msgid "Exit the wizard"
 msgstr "Opuść kreatora"
 
+msgid "Exit/OK"
+msgstr "Wyjście/OK"
+
 msgid "Expert"
 msgstr "Ekspert"
 
@@ -2557,6 +2575,9 @@ msgstr ""
 msgid "FEC"
 msgstr ""
 
+msgid "FEC:"
+msgstr ""
+
 msgid "FTA"
 msgstr ""
 
@@ -2597,7 +2618,7 @@ msgid "Fast DiSEqC"
 msgstr "Szybki DiSEqC"
 
 msgid "Fast Scan"
-msgstr ""
+msgstr "Szybkie skanowanie"
 
 msgid "Fast epoch"
 msgstr "Szybkie odtwarzanie"
@@ -2728,10 +2749,10 @@ msgid "German"
 msgstr "Niemiecki"
 
 msgid "Get latest experimental image"
-msgstr ""
+msgstr "Pobierz ostatni soft eksprymentalny"
 
 msgid "Get latest release image"
-msgstr ""
+msgstr "Pobierz ostatni stabilny soft"
 
 msgid "Getting plugin information. Please wait..."
 msgstr "Pobieranie info o wtyczkach. Proszę czekać..."
@@ -2770,16 +2791,16 @@ msgid "Goto"
 msgstr "Idź do"
 
 msgid "Goto 0"
-msgstr ""
+msgstr "Idź do 0"
 
 msgid "Goto :"
-msgstr ""
+msgstr "Idź do :"
 
 msgid "Goto X"
-msgstr ""
+msgstr "Idź do X"
 
 msgid "Goto index position"
-msgstr ""
+msgstr "Idź do indeksu"
 
 msgid "Goto next day of events"
 msgstr "Idź do następnego dnia wydarzeń"
@@ -2821,7 +2842,7 @@ msgid "Green boost"
 msgstr "Zielony"
 
 msgid "Guard interval"
-msgstr ""
+msgstr "Okres ochronny"
 
 msgid "HD list"
 msgstr "Lista HD"
@@ -2857,7 +2878,7 @@ msgid "Harddisk Setup"
 msgstr "Ustawienia dysku HDD"
 
 msgid "Hardware: "
-msgstr ""
+msgstr "Sprzęt: "
 
 msgid "Hebrew"
 msgstr "Hebrajski"
@@ -2977,7 +2998,7 @@ msgstr ""
 "Jeśli jesteś zadowolony z rezultatu wciśnij OK."
 
 msgid "Image: "
-msgstr ""
+msgstr "Soft:"
 
 msgid "Immediate shutdown"
 msgstr "Natychmiastowe wyłączenie"
@@ -3424,6 +3445,9 @@ msgstr "Max. pozycji pamięci"
 msgid "Max. bitrate: "
 msgstr ""
 
+msgid "Maybe the reason that recording is currently running. Please stop the recording before trying to configure the positioner."
+msgstr "Przyczyną może być to, że aktualnie trwa nagrywanie. Zatrzymaj nagrywanie przed rozpoczęciem ustawiania pozycjonera."
+
 msgid "Media player"
 msgstr "Odtwarzacz"
 
@@ -3596,7 +3620,7 @@ msgid "NEXT"
 msgstr "Następny"
 
 msgid "NFI image flashing"
-msgstr ""
+msgstr "Wgrywanie image NFI"
 
 msgid "NFI image flashing completed. Press Yellow to Reboot!"
 msgstr ""
@@ -3829,6 +3853,9 @@ msgstr "Nie, ale odtwórz od początku"
 msgid "No, do nothing."
 msgstr "Nie, nic nie rób"
 
+msgid "No, except Wakeup timer"
+msgstr "Nie, z wyjątkiem timera wybudzania"
+
 msgid "No, just start my receiver"
 msgstr "Nie, po prostu uruchom odbiornik"
 
@@ -3863,6 +3890,9 @@ msgstr "Nieskonfigurowany"
 #, python-format
 msgid "Not enough disk space. Please free up some disk space and try again. (%d MB required, %d MB available)"
 msgstr "Nie wystarczająca ilość przestrzeni dyskowej. Zwolnij miejsce na dysku i spróbuj ponownie. (%d MB wymagane, %d MB dostępne)"
+
+msgid "Note: when enabled, and you do want standby mode after wake up, set option 'Startup to Standby' as 'No, except Wakeup timer'."
+msgstr "Uwaga: gdy właczone, a chcesz przejść do standby po wybudzeniu, ustaw opcje 'Startup to Standby' na 'Nie, z wyjątkiem timera wybudzania'"
 
 msgid "Nothing connected"
 msgstr "Nic nie podłączono"
@@ -3952,6 +3982,9 @@ msgstr "Wskaż lokalizację w folderze jak nazwa timera"
 
 msgid "Open service list"
 msgstr "Otwórz listę kanałów"
+
+msgid "Open setup tuner "
+msgstr "Otwórz konfiguracje tunera"
 
 msgid "Open the movie list"
 msgstr "Powrót do listy filmów"
@@ -4320,9 +4353,6 @@ msgstr "Wtyczki"
 msgid "Polarisation"
 msgstr "Polaryzacja"
 
-msgid "Polarisation:"
-msgstr "Polaryzacja:"
-
 msgid "Polarization"
 msgstr "Polaryzacja"
 
@@ -4356,11 +4386,11 @@ msgstr "Pozycjoner"
 msgid "Positioner (selecting satellites)"
 msgstr "Obrotnica (wybór satelitów)"
 
-msgid "Positioner Setup"
-msgstr "Ustawienia pozycjonera"
-
 msgid "Positioner setup"
 msgstr "Ustawienia pozycjonera"
+
+msgid "Positioner setup log"
+msgstr "Log ustawień pozycjonera"
 
 msgid "Power threshold in mA"
 msgstr "Próg mocy w mA"
@@ -4389,6 +4419,24 @@ msgstr "Preferuj napisy zapamiętane dla kanału"
 msgid "Preferred tuner"
 msgstr "Tuner preferowany"
 
+msgid "Preferred tuner DVB-C"
+msgstr "Preferowany tuner DVB-C"
+
+msgid "Preferred tuner DVB-C for recordings"
+msgstr "Tuner DVB-C preferowany dla nagrywania"
+
+msgid "Preferred tuner DVB-S"
+msgstr "Preferowany tuner DVB-S"
+
+msgid "Preferred tuner DVB-S for recordings"
+msgstr "Tuner DVB-S preferowany dla nagrywania"
+
+msgid "Preferred tuner DVB-T"
+msgstr "Preferowany tuner DVB-T"
+
+msgid "Preferred tuner DVB-T for recordings"
+msgstr "Tuner DVB-T preferowany dla nagrywania"
+
 msgid "Preferred tuner for recordings"
 msgstr "Tuner preferowany dla nagrywania"
 
@@ -4406,6 +4454,9 @@ msgstr "Wciśnij INFO aby uzyskać dodatkowe informacje"
 
 msgid "Press MENU on your remote control for additional options."
 msgstr "Wciśnij MENU aby mieć dostęp do dodatkowych opcji"
+
+msgid "Press OK and configure the days and times wakeup receiver from deep standby mode."
+msgstr "Wciśnij OK i skonfiguruj dni i czas wybudzania odbiornika z trybu głębokiego czuwania."
 
 msgid "Press OK on your remote control to continue."
 msgstr "Wciśnij OK, aby kontynuować."
@@ -4443,6 +4494,9 @@ msgstr "Wciśnij OK, aby wybrać lub 'odznaczyć'"
 
 msgid "Press OK to toggle the selection."
 msgstr "Wciśnij OK, aby zmienić wybór"
+
+msgid "Press OK, save and exit..."
+msgstr "Wciśnij OK, zapisz i wyjdź"
 
 msgid "Press yellow to set this interface as default interface."
 msgstr "Wciśnij 'żółty', aby ustawić ten interfejs jako domyślny"
@@ -4592,6 +4646,10 @@ msgstr "Zrestartować teraz?"
 
 msgid "Really shutdown now?"
 msgstr "Wyłączyć teraz?"
+
+#, python-format
+msgid "Really store at index %2d for current position?"
+msgstr "Przechowywać pod indeksem %2d dla aktualnej pozycji"
 
 msgid "Really upgrade the frontprocessor and reboot now?"
 msgstr "Wykonać teraz upgrade frontprocesora i zrestartować STB?"
@@ -5174,6 +5232,9 @@ msgstr "Wybierz urządzenie wejściowe."
 msgid "Select interface"
 msgstr "Wybierz interfejs"
 
+msgid "Select location"
+msgstr "Wybierz lokalizację"
+
 msgid "Select movie"
 msgstr "Wybierz film"
 
@@ -5188,6 +5249,9 @@ msgstr "Wybierz satelity"
 
 msgid "Select service to add..."
 msgstr "Wybierz kanał do dodania..."
+
+msgid "Select slot"
+msgstr "Wybierz gniazdo"
 
 msgid "Select sort method:"
 msgstr "Sposób sortowania:"
@@ -5399,6 +5463,9 @@ msgstr "Pokaż status WLAN"
 
 msgid "Show animation while busy"
 msgstr "Wyświetl 'trybiki' gdy zajęty"
+
+msgid "Show background behind subtitles"
+msgstr "Wyświetlaj tło za napisami"
 
 msgid "Show background in radio mode"
 msgstr "Tapeta w trybie radio"
@@ -5617,7 +5684,7 @@ msgid "Site longitude"
 msgstr "Długość geograficzna"
 
 msgid "Skin"
-msgstr "Skiny"
+msgstr "Skin"
 
 msgid "Skin setup"
 msgstr "Ustawienia skina"
@@ -5710,6 +5777,9 @@ msgstr "Nie znaleziono kopii zapasowych!"
 
 msgid "Sorry, no details available!"
 msgstr "Szczegółowy opis niedostępny!"
+
+msgid "Sorry, this tuner is in use."
+msgstr "Niestety, ten tuner jest w użyciu."
 
 msgid ""
 "Sorry, your backup destination is not writeable.\n"
@@ -6105,7 +6175,7 @@ msgid "TRANSLATOR_INFO"
 msgstr ""
 "Specjalnie dla OpenPLi - @blzr\n"
 "http://openpli.org/forums\n"
-"Ostatnia aktualizacja 2015.08.24"
+"Ostatnia aktualizacja 2015.10.17"
 
 msgid "TS file is too large for ISO9660 level 1!"
 msgstr "Plik TS jest za duży dla ISO9660 level 1!"
@@ -6150,7 +6220,7 @@ msgid "Test type"
 msgstr "Typ testu"
 
 msgid "Testscreens"
-msgstr ""
+msgstr "Obrazy testowe"
 
 msgid "Testscreens that are helpfull to fine-tune your display"
 msgstr "Ekrany testowe pomocne w precyzyjnym dostrojeniu obrazu"
@@ -6988,7 +7058,7 @@ msgid "View list of available recording extensions"
 msgstr "Zobacz listę dostępnych rozszerzeń nagrywania"
 
 msgid "View list of available skins"
-msgstr "Zobacz listę dostępnych skinów"
+msgstr "Zobacz listę dostępnych skkinów"
 
 msgid "View list of available software extensions"
 msgstr "Zobacz listę dostępnych rozszerzeń oprogramowania"
@@ -7068,8 +7138,17 @@ msgstr "Wybudzaj odbiornik ze stanu czuwania"
 msgid "Wakeup signal from TV"
 msgstr "Sygnał wybudzenia z TV"
 
+msgid "Wakeup time"
+msgstr "Czas wybudzania"
+
+msgid "Wakeup timer"
+msgstr "Timer wybudzania"
+
 msgid "Wakeup type"
 msgstr "Typ wybudzania"
+
+msgid "WakeupTimer Configuration"
+msgstr "Ustawienia timera wybudzania"
 
 msgid "Warning"
 msgstr "Ostrzeżenie"
@@ -7148,7 +7227,7 @@ msgid "What do you want to scan?"
 msgstr "Co chcesz skanować?"
 
 msgid "When enabled enigma2 will load unlinked userbouquets. This means that userbouquets that are available, but not included in the bouquets.tv or bouquets.radio files, will still be loaded. This allows you for example to keep your own user bouquet while installed settings are upgraded"
-msgstr "Gdy włączone, enigma2 będzie ładować także niepodlinkowane bukiety. To oznacza, że bukiety użytkownika nie uwzględnione w  plikach bouquets.tv lub bouquets.radio nadal będą dostępne. To pozwala np. zachować własne bukiety, gdy lista zainstalowana z feedu jest aktualizowana"
+msgstr "Gdy włączone, system będzie ładować także niepodlinkowane bukiety. To oznacza, że bukiety użytkownika nie uwzględnione w  plikach bouquets.tv lub bouquets.radio nadal będą dostępne. To pozwala np. zachować własne bukiety, gdy lista zainstalowana z feedu jest aktualizowana"
 
 msgid "When enabled the PiP can be closed by the exit button."
 msgstr "Gdy włączone, PiP może być wyłączony klawiszem exit"
@@ -7315,6 +7394,12 @@ msgstr "Gdy włączone, automatycznie zostanie wybrana ścieżka audio AC3 (gdy 
 msgid "When enabled, the receiver will select an AC3+ track (when available)."
 msgstr "Gdy włączone, automatycznie zostanie wybrana ścieżka audio AC3+ (gdy dostępna)."
 
+msgid "When enabled, this setting has more weight than 'Preferred tuner for recordings'."
+msgstr "Gdy włączone, to ustawienie ma pierwszeństwo przed  opcją 'Tuner preferowany dla nagrywania"
+
+msgid "When enabled, this setting has more weight than 'Preferred tuner'."
+msgstr "Gdy włączone, to ustawienie ma pierwszeństwo przed  opcją 'Tuner preferowany"
+
 msgid "When enabled, timeshift starts automatically in background after specified time."
 msgstr "Gdy włączone, timeshift zostanie uruchomiony w tle po określonym czasie"
 
@@ -7388,6 +7473,9 @@ msgstr "Błąd zapisu podczas nagrywania. Dysk jest pełny?\n"
 msgid "Write failed!"
 msgstr "Błąd zapisu!"
 
+msgid "Write to /tmp/positionersetup.log"
+msgstr "Zapisz do /tmp/positionersetup.log"
+
 msgid "YPbPr"
 msgstr "Component"
 
@@ -7402,6 +7490,9 @@ msgstr "Żółte napisy DVB"
 
 msgid "Yes"
 msgstr "Tak"
+
+msgid "Yes (save index in setup tuner)"
+msgstr "Tak (zapisz indeks w ustawienich tunera)"
 
 msgid "Yes and save"
 msgstr "Tak i zapisz"
@@ -7486,7 +7577,7 @@ msgid "You have chosen to create a new .NFI flasher bootable USB stick. This wil
 msgstr ""
 
 msgid "You have chosen to restore your settings. Enigma2 will restart after restore. Please press OK to start the restore now."
-msgstr "Wybrałeś przywrócenie własnych ustawień. Po przywróceniu enigma2 zrestartuje się. Wciśnij OK aby rozpocząć."
+msgstr "Wybrałeś przywrócenie własnych ustawień. Po przywróceniu enigma zrestartuje się. Wciśnij OK aby rozpocząć."
 
 #, python-format
 msgid "You have to wait %s!"
