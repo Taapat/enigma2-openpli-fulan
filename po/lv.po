@@ -5393,9 +5393,6 @@ msgstr "Izvēlieties pavadoni"
 msgid "Select slot"
 msgstr "Izvēlieties slotu"
 
-msgid "Select slot"
-msgstr "Izvēlieties slotu"
-
 msgid "Select sort method:"
 msgstr "Izvēlieties kārtošanas metodi:"
 
@@ -7667,9 +7664,6 @@ msgstr "Jā"
 
 msgid "Yes (save index in setup tuner)"
 msgstr "Jā (saglabāt numuru uztvērēja iestatījumos)"
-
-msgid "Yes (save index in setup tuner)"
-msgstr "Jā (saglabāt indeksu uztvērēja iestatījumos)"
 
 msgid "Yes and save"
 msgstr "Jā un saglabāt"
