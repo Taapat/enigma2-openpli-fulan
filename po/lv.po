@@ -4783,7 +4783,7 @@ msgstr "Vai tiešām izslēgt tagad?"
 
 #, python-format
 msgid "Really store at index %2d for current position?"
-msgstr "Vai tiešām saglabāt %2d priekš pašreizējās pozīcijas?"
+msgstr "Vai tiešām saglabāt numuru %2d pašreizējai pozīcijai?"
 
 msgid "Really upgrade the frontprocessor and reboot now?"
 msgstr "Vai tiešām atjaunot frontprocesoru un pārstartēt tagad?"
