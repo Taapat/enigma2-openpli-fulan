@@ -23926,9 +23926,6 @@ msgstr "Нажмите ОК для настройки дней и времени
 msgid "Note: when enabled, and you do want standby mode after wake up, set option 'Startup to Standby' as 'No, except Wakeup timer'."
 msgstr "Заметка: если активировано и вы хотите перейти в режим ожидания после включения, установите опцию 'Режим ожидания при старте' как 'Нет, исключение таймер включения'."
 
-msgid "Press OK, save and exit..."
-msgstr "Нажмите ОК, сохранить и выйти..."
-
 msgid "Exit/OK"
 msgstr "Выход/OK"
 
