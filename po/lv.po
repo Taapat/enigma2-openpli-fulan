@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-25 00:19+0300\n"
+"POT-Creation-Date: 2015-11-01 21:38+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -763,7 +763,13 @@ msgid "Always ask"
 msgstr "Vienmēr jautāt"
 
 msgid "Always hide infobar"
-msgstr "vienmēr slēpt infojoslu"
+msgstr "Vienmēr slēpt infojoslu"
+
+msgid "Always include ECM in recordings"
+msgstr "Vienmēr iekļaut ECM ierakstos"
+
+msgid "Always include ECM messages in recordings. This overrides the individual timer settings globally. It allows recordings to be always decrypted afterwards (sometimes called offline decoding), if supported by your receiver. Default: off."
+msgstr "Vienmēr iekļaut ECM informāciju ierakstos. Globāli ignorē individuālus taimeru iestatījumus. Tas nodrošina ierakstu atšifrēšanu (veikt bezsaistes dekodēšanu), ja jūsu uztvērējs to nodrošina. Pēc noklusējuma izslēgts."
 
 msgid "An empty filename is illegal."
 msgstr "Faila nosaukums nevar būt tukšs."
@@ -2008,7 +2014,7 @@ msgid "Descramble receiving http streams"
 msgstr "Dekodēt saņemtās http straumes"
 
 msgid "Descramble sending http streams"
-msgstr "Dekodēt nosūtītās http straumes"
+msgstr "Dekodēt sūtītās http straumes"
 
 msgid "Description"
 msgstr "Apraksts"
@@ -3793,6 +3799,12 @@ msgstr "Tīkla vednis"
 
 msgid "Network:"
 msgstr "Tīkls:"
+
+msgid "Never decrypt the content while recording. This overrides the individual timer settings globally. If enabled, recordings are stored in crypted presentation and must be decrypted afterwards (sometimes called offline decoding). Default: off."
+msgstr "Neveikt satura atšifrēšanu kad ieraksta. Globāli ignorē individuālus taimeru iestatījumus. Ja iespējots, tad ieraksti tiks saglabāti šifrēti un tos vajadzēs pēc tam atšifrēt (veikt bezsaistes dekodēšanu). Pēc noklusējuma izslēgts."
+
+msgid "Never decrypt while recording"
+msgstr "Neveikt atšifrēšanu kad ieraksta"
 
 msgid "New"
 msgstr "Jauns"
@@ -7461,7 +7473,7 @@ msgid "When enabled, a warning will be displayed and the user will get an option
 msgstr "Ja ieslēgts, tiks parādīts brīdinājums un lietotājs varēs izvēlēties vai apstādīnāt, vai turpināt laika aizturi."
 
 msgid "When enabled, always descramble receiving http streams. This takes up more resources (descrambling demuxers), only enable if necessary. Individual streams are always descrambled if 0x100 is added to the service type, regardless of this setting. Default off."
-msgstr "Ja ieslēgts, http straumes tiks dekodētas. Tas prasa vairāk resursus dekodēsanai un demuksēšanai tādēļ lietojiet tikai tad, ja nepieciešmas. Neatkarīgi no šī iestatījuma straumes tiks dekodētas ja 0x100 norādīts pie servisa tipa. Pēc noklusējuma izslēgts."
+msgstr "Ja ieslēgts, http straumes tiks dekodētas. Tas prasa vairāk resursus dekodēsanai un demuksēšanai tādēļ lietojiet tikai tad ja nepieciešmas. Neatkarīgi no šī iestatījuma straumes tiks dekodētas ja 0x100 norādīts pie servisa tipa. Pēc noklusējuma izslēgts."
 
 msgid "When enabled, authentication is required to watch http streams."
 msgstr "Ja ieslēgts, nepieciešama autentifikācija lai skatītos http straumējumu"
@@ -7612,7 +7624,7 @@ msgstr ""
 "Vai tiešām atjaunot rūpnīcas iestatījumus?"
 
 msgid "When you use the remote fallback tuner to do recording, the timer conflict detection can't handle remote fallback tuners. This option allows you to turn off the timer confict detection"
-msgstr "Ja jūs ierakstam lietojat citu uztvērēju, tad taimeru konflikta noteikšanu var veikt šis uztvērējs. Šis iestatījums atļauj izslēgt taimeru konflikta noteikšanu"
+msgstr "Ja jūs ierakstam lietojat citu uztvērēju, tad taimeru konflikta noteikšanu var veikt šis uztvērējs. Šis iestatījums atļauj izslēgt taimeru konflikta noteikšanu."
 
 msgid "Where do you want to backup your settings?"
 msgstr "Kur Jūs vēlaties veidot savu iestatījumu dublējumkopiju?"
