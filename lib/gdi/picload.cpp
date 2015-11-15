@@ -4,7 +4,6 @@
 
 #include <lib/base/cfile.h>
 #include <lib/gdi/picload.h>
-#include <lib/gdi/picexif.h>
 #include "libmmeimage/libmmeimage.h"
 
 extern "C" {
@@ -216,7 +215,7 @@ static unsigned char *bmp_load(const char *file,  int *x, int *y)
 
 //---------------------------------------------------------------------
 
-static void png_load(Cfilepara* filepara, int background, bool forceRGB = false)
+static void png_load(Cfilepara* filepara, int background, bool forceRGB=false)
 {
 	png_uint_32 width, height;
 	unsigned int i;
@@ -636,7 +635,7 @@ void ePicLoad::thread()
 
 void ePicLoad::decodePic()
 {
-	getExif(m_filepara->file);
+	getExif(m_filepara->file, m_filepara->id);
 
 	if (m_filepara->id == F_JPEG)
 	{
@@ -691,16 +690,19 @@ void ePicLoad::decodeThumb()
 	std::string cachefile = "";
 	std::string cachedir = "/.Thumbnails";
 
-	getExif(m_filepara->file, 1);
+	getExif(m_filepara->file, m_filepara->id, 1);
 	if (m_exif && m_exif->m_exifinfo->IsExif)
 	{
 		if (m_exif->m_exifinfo->Thumnailstate == 2)
 		{
 			free(m_filepara->file);
 			m_filepara->file = strdup(THUMBNAILTMPFILE);
+			m_filepara->id = F_JPEG; // imbedded thumbnail seem to be jpeg
 			exif_thumbnail = true;
-			//eDebug("[ePicLoad] Exif Thumbnail found");
+			//eDebug("[ePicLoad] decodeThumb: Exif Thumbnail found");
 		}
+		//else
+		//	eDebug("[ePicLoad] decodeThumb: NO Exif Thumbnail found");
 		m_filepara->addExifInfo(m_exif->m_exifinfo->CameraMake);
 		m_filepara->addExifInfo(m_exif->m_exifinfo->CameraModel);
 		m_filepara->addExifInfo(m_exif->m_exifinfo->DateTime);
@@ -708,6 +710,8 @@ void ePicLoad::decodeThumb()
 		snprintf(buf, 20, "%d x %d", m_exif->m_exifinfo->Width, m_exif->m_exifinfo->Height);
 		m_filepara->addExifInfo(buf);
 	}
+	else
+		eDebug("[ePicLoad] decodeThumb: NO Exif info");
 
 	if (!exif_thumbnail && m_conf.usecache)
 	{
@@ -738,7 +742,7 @@ void ePicLoad::decodeThumb()
 				free(m_filepara->file);
 				m_filepara->file = strdup(cachefile.c_str());
 				m_filepara->id = F_JPEG;
-				//eDebug("[ePicLoad] Cache File found");
+				//eDebug("[ePicLoad] Cache File %s found", cachefile.c_str());
 			}
 		}
 	}
@@ -798,6 +802,7 @@ void ePicLoad::decodeThumb()
 				break;
 		}
 	}
+	//eDebug("[ePicLoad] getThumb picture loaded %s", m_filepara->file);
 
 	if (exif_thumbnail)
 		::unlink(THUMBNAILTMPFILE);
@@ -826,13 +831,14 @@ void ePicLoad::decodeThumb()
 					imy = (int)( (m_conf.thumbnailsize * ((double)m_filepara->oy)) / ((double)m_filepara->ox) );
 				}
 
+			// eDebug("[ePicLoad] getThumb resize from %dx%d to %dx%d", m_filepara->ox, m_filepara->oy, imx, imy);
 				m_filepara->pic_buffer = color_resize(m_filepara->pic_buffer, m_filepara->ox, m_filepara->oy, imx, imy);
 				m_filepara->ox = imx;
 				m_filepara->oy = imy;
 			}
 
 			if (jpeg_save(cachefile.c_str(), m_filepara->ox, m_filepara->oy, m_filepara->pic_buffer))
-				eDebug("[ePicLoad] error saving cachefile");
+				eDebug("[ePicLoad] getThumb: error saving cachefile");
 		}
 	}
 }
@@ -943,7 +949,8 @@ PyObject *ePicLoad::getInfo(const char *filename)
 {
 	ePyObject list;
 
-	getExif(filename);
+	// FIXME : m_filepara destroyed by getData. Need refactor this but plugins rely in it :(
+	getExif(filename, m_filepara ? m_filepara->id : -1);
 	if(m_exif && m_exif->m_exifinfo->IsExif)
 	{
 		char tmp[256];
@@ -991,11 +998,13 @@ PyObject *ePicLoad::getInfo(const char *filename)
 	return list ? (PyObject*)list : (PyObject*)PyList_New(0);
 }
 
-bool ePicLoad::getExif(const char *filename, int Thumb)
+bool ePicLoad::getExif(const char *filename, int fileType, int Thumb)
 {
 	if (!m_exif) {
 		m_exif = new Cexif;
-		return m_exif->DecodeExif(filename, Thumb);
+		if (fileType < 0)
+			fileType = getFileType(filename);
+		return m_exif->DecodeExif(filename, Thumb, fileType);
 	}
 	return true;
 }

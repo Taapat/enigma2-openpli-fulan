@@ -162,11 +162,7 @@ class eDVBResourceManager: public iObject, public Object
 	int avail, busy;
 
 #if not defined(__sh__)
-	enum { DM7025, DM800, DM500HD, DM800SE, DM8000, DM7020HD };
-
-	int m_boxtype;
 #endif
-
 	eSmartPtrList<iDVBAdapter> m_adapter;
 	eSmartPtrList<eDVBRegisteredDemux> m_demux;
 	eSmartPtrList<eDVBRegisteredFrontend> m_frontend, m_simulate_frontend;
