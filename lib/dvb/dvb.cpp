@@ -96,17 +96,16 @@ eDVBResourceManager::eDVBResourceManager()
 		adapter->scanDevices();
 		addAdapter(adapter, true);
 	}
-#if not defined(__sh__)
-	eDebug("[eDVBResourceManager] found %zd adapter, %zd frontends(%zd sim) and %zd demux",
-		m_adapter.size(), m_frontend.size(), m_simulate_frontend.size(), m_demux.size());
-#else
 	eDebug("[eDVBResourceManager] found %zd adapter, %zd frontends(%zd sim) and %zd demux",
 		m_adapter.size(), m_frontend.size(), m_simulate_frontend.size(), m_demux.size());
 
-	/* this is a strange hack: the drivers seem to only work correctly after
-	* demux0 has been used once. After that, we can use demux1,2,... */
+#if defined(__sh__)
+		/*
+	 	 * this is a strange hack: the drivers seem to only work correctly after
+	 	 * demux0 has been used once. After that, we can use demux1,2,... 
+	 	 */
 	initDemux(0);
-	/* for pip nedd to demux1 also be used once */
+		/* for pip demux1 also be used once */
 	initDemux(1);
 #endif
 
@@ -904,52 +903,6 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 	if (i == m_demux.end())
 		return -1;
 
-#if defined(__sh__)
-	int n=0;
-	for (; i != m_demux.end(); ++i, ++n)
-	{
-		if(fe)
-		{
-			if (!i->m_inuse)
-			{
-				if (!unused)
-				{
-					// take the first unused
-					//eDebug("\nallocate demux b = %d\n",n);
-					unused = i;
-				}
-			}
-			else if (i->m_adapter == fe->m_adapter && i->m_demux->getSource() == fe->m_frontend->getDVBID())
-			{
-				// take the demux allocated to the same
-				// frontend,  just create a new reference
-				demux = new eDVBAllocatedDemux(i);
-				//eDebug("\nallocate demux b = %d\n",n);
-				return 0;
-			}
-		}
-		else if(n == ((int)m_demux.size() - 1))
-		{
-			// Always use the last demux for PVR
-			// it is assumed that the last demux is not
-			// attached to a frontend. That is, there
-			// should be one instance of dvr & demux
-			// devices more than of frontend devices.
-			// Otherwise, playback and timeshift might
-			// interfere recording.
-			if (i->m_inuse)
-			{
-				// just create a new reference
-				demux = new eDVBAllocatedDemux(i);
-				//eDebug("\nallocate demux c = %d\n",n);
-				return 0;
-			}
-			unused = i;
-			//eDebug("\nallocate demux d = %d\n", n);
-			break;
-		}
-	}
-#else
 	/*
 	 * For pvr playback, start with the last demux.
 	 * On some hardware, we have less ca devices than demuxes,
@@ -1000,7 +953,7 @@ RESULT eDVBResourceManager::allocateDemux(eDVBRegisteredFrontend *fe, ePtr<eDVBA
 			--i;
 		}
 	}
-#endif
+
 	if (unused)
 	{
 		unused->m_demux->getCAAdapterID(a);

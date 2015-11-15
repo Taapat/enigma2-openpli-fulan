@@ -161,8 +161,6 @@ class eDVBResourceManager: public iObject, public Object
 	DECLARE_REF(eDVBResourceManager);
 	int avail, busy;
 
-#if not defined(__sh__)
-#endif
 	eSmartPtrList<iDVBAdapter> m_adapter;
 	eSmartPtrList<eDVBRegisteredDemux> m_demux;
 	eSmartPtrList<eDVBRegisteredFrontend> m_frontend, m_simulate_frontend;
