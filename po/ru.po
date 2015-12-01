@@ -23964,33 +23964,14 @@ msgstr "Если это включено, то http стрим потоки де
 msgid "When you use the remote fallback tuner to do recording, the timer conflict detection can't handle remote fallback tuners. This option allows you to turn off the timer confict detection"
 msgstr "При использовании дистанционного резервного тюнера для записей, обнаружение конфликтов таймеров не может сделать исключение для резервного тюнера. Эта опция позволяет отключить обнаружение конфликта таймера. Не рекомендуется!"
 
-
 msgid "A recording is currently running. Please stop the recording before trying to start a testing DiSEqC."
 msgstr "В текущее время идет запись. Пожалуйста остановите запись перед началом тестирования DiSEqC."
-
-msgid "DiSEqC Tester"
-msgstr "Тестирование DiSEqC"
-
-msgid "DiSEqC-tester settings"
-msgstr "Настройки DiSEqC-тестер"
-
-msgid "Failed:"
-msgstr "Неудачно:"
 
 msgid "Log results to /tmp"
 msgstr "Запись результата лога в /tmp"
 
-msgid "Not tested:"
-msgstr "Без теста:"
-
-msgid "Overall progress:"
-msgstr "Общий прогресс:"
-
 msgid "Press OK to get further details for %s"
 msgstr "Нажмите ОК, чтобы получить подробную информацию для %s"
-
-msgid "Progress:"
-msgstr "Прогресс:"
 
 msgid "Stop testing plane after # failed transponders"
 msgstr "Остановка теста после # неудачного транспондера"
@@ -23998,33 +23979,11 @@ msgstr "Остановка теста после # неудачного тран
 msgid "Stop testing plane after # successful transponders"
 msgstr "Остановка теста после # успешного транспондера"
 
-msgid "Succeeded:"
-msgstr "Успешных:"
-
 msgid "Test DiSEqC settings"
 msgstr "Настройки теста DiSEqC"
 
-
 msgid "The results have been written to %s"
 msgstr "Результаты были записаны в %s"
-
-msgid "With errors:"
-msgstr "С ошибками:"
-
-msgid "failed"
-msgstr "неудачно"
-
-msgid "not tested"
-msgstr "без теста"
-
-msgid "successful"
-msgstr "успешно"
-
-msgid "with errors"
-msgstr "с ошибками"
-
-msgid "working"
-msgstr "в работе"
 
 msgid ""
 "Warning!\n"
