@@ -434,10 +434,12 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_paused = false;
 	m_seek_paused = false;
 	m_cuesheet_loaded = false; /* cuesheet CVR */
+	m_user_paused = false;
 #if GST_VERSION_MAJOR >= 1
 	m_use_chapter_entries = false; /* TOC chapter support CVR */
 	m_last_seek_pos = 0; /* CVR last seek position */
 #endif
+	m_useragent = "Enigma2 Mediaplayer";
 	m_extra_headers = "";
 	m_download_buffer_path = "";
 	m_prev_decoder_time = -1;
@@ -456,11 +458,22 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	const char *filename;
 	std::string filename_str;
 	size_t pos = m_ref.path.find('#');
-	if (pos != std::string::npos && m_ref.path.compare(0, 4, "http") == 0)
+	if (pos != std::string::npos && (m_ref.path.compare(0, 4, "http") == 0 || m_ref.path.compare(0, 4, "rtsp") == 0))
 	{
 		filename_str = m_ref.path.substr(0, pos);
 		filename = filename_str.c_str();
 		m_extra_headers = m_ref.path.substr(pos + 1);
+
+		pos = m_extra_headers.find("User-Agent=");
+		if (pos != std::string::npos)
+		{
+			size_t hpos_start = pos + 11;
+			size_t hpos_end = m_extra_headers.find('&', hpos_start);
+			if (hpos_end != std::string::npos)
+				m_useragent = m_extra_headers.substr(hpos_start, hpos_end - hpos_start);
+			else
+				m_useragent = m_extra_headers.substr(hpos_start);
+		}
 	}
 	else
 		filename = m_ref.path.c_str();
@@ -534,13 +547,6 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		m_streamingsrc_timeout = eTimer::create(eApp);;
 		CONNECT(m_streamingsrc_timeout->timeout, eServiceMP3::sourceTimeout);
 
-		std::string config_str;
-		if (eConfigManager::getConfigBoolValue("config.mediaplayer.useAlternateUserAgent"))
-		{
-			m_useragent = eConfigManager::getConfigValue("config.mediaplayer.alternateUserAgent");
-		}
-		if (m_useragent.empty())
-			m_useragent = "Enigma2 Mediaplayer";
 		if ( m_ref.getData(7) & BUFFERING_ENABLED )
 		{
 			m_use_prefillbuffer = true;
@@ -768,7 +774,7 @@ RESULT eServiceMP3::start()
 	{
 		eDebug("[eServiceMP3] starting pipeline");
 		GstStateChangeReturn ret;
-		ret = gst_element_set_state (m_gst_playbin, GST_STATE_PLAYING);
+		ret = gst_element_set_state (m_gst_playbin, GST_STATE_PAUSED);
 
 		switch(ret)
 		{
@@ -1765,6 +1771,7 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 				{
 					if ( m_sourceinfo.is_streaming && m_streamingsrc_timeout )
 						m_streamingsrc_timeout->stop();
+					m_user_paused = false;
 					m_paused = false;
 					if (m_seek_paused)
 					{
@@ -1776,6 +1783,7 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 				}	break;
 				case GST_STATE_CHANGE_PLAYING_TO_PAUSED:
 				{
+					m_user_paused = true;
 					m_paused = true;
 				}	break;
 				case GST_STATE_CHANGE_PAUSED_TO_READY:
@@ -2048,6 +2056,8 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 				if (m_errorInfo.missing_codec.find("video/") == 0 || (m_errorInfo.missing_codec.find("audio/") == 0 && m_audioStreams.empty()))
 					m_event((iPlayableService*)this, evUser+12);
 			}
+			if(!m_user_paused)
+				gst_element_set_state (m_gst_playbin, GST_STATE_PLAYING);
 			break;
 		}
 		case GST_MESSAGE_ELEMENT:
