@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-04 22:32+0200\n"
+"POT-Creation-Date: 2015-12-04 23:02+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2311,9 +2311,6 @@ msgstr "E"
 
 msgid "EPG"
 msgstr "EPG"
-
-msgid "EPG Selection"
-msgstr "EPG izvēle"
 
 msgid "EPG language selection 1"
 msgstr "EPG valodas izvēle 1"
@@ -5512,9 +5509,6 @@ msgstr "Serbu"
 
 msgid "Service"
 msgstr "Kanāls"
-
-msgid "Service Info"
-msgstr "Kanāla info"
 
 msgid "Service has been added to the favourites."
 msgstr "Kanāls tika pievienots favorītiem."
