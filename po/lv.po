@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-22 17:12+0200\n"
+"POT-Creation-Date: 2015-12-04 22:32+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1833,6 +1833,9 @@ msgstr "Kursora darbība atverot kanālu srakstu"
 msgid "Cut"
 msgstr "Griezt"
 
+msgid "Cutlist editor"
+msgstr "Griešanas redaktors"
+
 msgid "Cutlist editor..."
 msgstr "Griešanas redaktors..."
 
@@ -1884,6 +1887,9 @@ msgstr "DVB-T2"
 msgid "DVD"
 msgstr "DVD"
 
+msgid "DVD Burn"
+msgstr "DVD ieraksts"
+
 msgid "DVD data format"
 msgstr "DVD datu formāts"
 
@@ -1913,6 +1919,9 @@ msgstr "Izslēgt"
 
 msgid "Default"
 msgstr "Noklusētais"
+
+msgid "Default Services Scanner"
+msgstr "Kanālu meklētājs pēc noklusējuma"
 
 msgid "Default movie location"
 msgstr "Filmu atrašanās vieta pēc noklusējuma"
@@ -2303,6 +2312,9 @@ msgstr "E"
 msgid "EPG"
 msgstr "EPG"
 
+msgid "EPG Selection"
+msgstr "EPG izvēle"
+
 msgid "EPG language selection 1"
 msgstr "EPG valodas izvēle 1"
 
@@ -2648,6 +2660,12 @@ msgstr "FEC LP"
 msgid "FEC:"
 msgstr "FEC:"
 
+msgid "FP Upgrade"
+msgstr "FP atjaunošana"
+
+msgid "FP upgrade required"
+msgstr "Nepieciešams atjaunot FP"
+
 msgid "FTA"
 msgstr "FTA"
 
@@ -2920,8 +2938,8 @@ msgstr "Guard intervāls"
 msgid "HD list"
 msgstr "HD saraksts"
 
-msgid "HD1100/et7x00/et8500"
-msgstr "HD1100/et7x00/et8500"
+msgid "HD1100/HD1200/et7x00/et8500"
+msgstr "HD1100/HD1200/et7x00/et8500"
 
 msgid "HD2400"
 msgstr "HD2400"
@@ -3780,6 +3798,9 @@ msgstr "Tīkls"
 
 msgid "Network ID"
 msgstr "Tīkla ID"
+
+msgid "Network configuration"
+msgstr "Tīkla konfigurācija"
 
 msgid "Network configuration..."
 msgstr "Tīkla konfigurācija..."
@@ -5462,6 +5483,9 @@ msgstr "Izvēlieties video režīmu"
 msgid "Select wireless network"
 msgstr "Izvēlieties bezvadu tīklu"
 
+msgid "Select your Skin"
+msgstr "Izvēlieties noformējumu"
+
 msgid "Select your provider, and press OK to start the scan"
 msgstr "Izvēlieties jūsu operatoru un nospiediet OK lai sāktu meklēt"
 
@@ -5488,6 +5512,9 @@ msgstr "Serbu"
 
 msgid "Service"
 msgstr "Kanāls"
+
+msgid "Service Info"
+msgstr "Kanāla info"
 
 msgid "Service has been added to the favourites."
 msgstr "Kanāls tika pievienots favorītiem."
@@ -6371,6 +6398,12 @@ msgstr "Sinhronizēšana pārtraukta, atiestata uz oriģinālu!"
 msgid "System"
 msgstr "Sistēma"
 
+msgid "System Message"
+msgstr "Sistēmas paziņojums"
+
+msgid "System Message Check"
+msgstr "Pārbauda sistēmas paziņojumu"
+
 #. TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 msgid "TRANSLATOR_INFO"
 msgstr "Taapat, Madars Auns Latvija, Talsi"
@@ -7189,6 +7222,9 @@ msgstr "Vertikālās noskaņošanas ātrums"
 
 msgid "Video PID"
 msgstr "Video PID"
+
+msgid "Video clipping setup"
+msgstr "Video apgriešanas iestatījumi"
 
 msgid "Video enhancement preview"
 msgstr "Video uzlabošanas priekšskatījums"
@@ -8151,6 +8187,9 @@ msgstr "cirkulārā kreisā"
 
 msgid "circular right"
 msgstr "cirkulārā labā"
+
+msgid "clip overscan / letterbox borders"
+msgstr "apgriež attēla malas"
 
 msgid "comedy"
 msgstr "komēdija"
