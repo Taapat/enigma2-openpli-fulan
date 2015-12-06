@@ -8986,6 +8986,9 @@ msgstr "nedefinēts"
 msgid "unknown"
 msgstr "nezināms"
 
+msgid "unknown error"
+msgstr "nezināma kļūda"
+
 msgid "unknown service"
 msgstr "nezināms kanāls"
 
