@@ -5204,7 +5204,7 @@ msgid "Date/Time:"
 msgstr "Дата/Время:"
 
 msgid "Date/time input"
-msgstr "Ввод даты/времени:"
+msgstr "Ввод времени/даты"
 
 msgid "Date:"
 msgstr "Дата:"
@@ -16937,12 +16937,8 @@ msgstr "Температура C  %4.1f"
 msgid "Temperature and Fan control"
 msgstr "Контроль температуры и вентилятора"
 
-msgid "Temperature and fan control"
-msgstr "Контроль температуры и вентилятора"
-
 msgid "Temporarily no connection to the database is possible"
 msgstr "Подключение к базе данных временно недоступна"
-
 msgid "Terrestrial"
 msgstr "Наземный"
 
@@ -24002,3 +23998,57 @@ msgstr "Игнорировать конфликт"
 
 msgid "Show warning before set 'Ignore conflict'"
 msgstr "Показать предупреждение перед установкой 'Игнорировать конфликт'"
+
+msgid "Choose bouquet"
+msgstr "Выбор букета"
+
+msgid "Cutlist editor"
+msgstr "Видео редактор списка сокращений"
+
+msgid "Default Services Scanner"
+msgstr "Дефолтный сервисный сканер"
+
+msgid "FP upgrade required"
+msgstr "FP требуется обновление"
+
+msgid "System Message"
+msgstr "Системное сообщение"
+
+msgid "FP Upgrade"
+msgstr "FP обновление"
+
+msgid "System Message Check"
+msgstr "Проверка системных сообщений"
+
+msgid "HDMI CEC setup"
+msgstr "Настройки HDMI CEC"
+
+msgid "Select your Skin"
+msgstr "Выбор Вашего скина"
+
+msgid "Restart GUI"
+msgstr "Рестарт GUI"
+
+msgid "DVD Burn"
+msgstr "Запись на DVD"
+
+msgid "Skin selector"
+msgstr "Выбор скина"
+
+msgid "Temperature and fan control"
+msgstr "Температура и управление вентилятором"
+
+msgid "Video clipping setup"
+msgstr "Настройки видео клиппинга"
+
+msgid "clip overscan / letterbox borders"
+msgstr "изменение границ видео"
+
+msgid "EPG Selection"
+msgstr "Выбор EPG"
+
+msgid "Network configuration"
+msgstr "Конфигурация сети"
+
+msgid "Service Info"
+msgstr "Информация о сервисе"
