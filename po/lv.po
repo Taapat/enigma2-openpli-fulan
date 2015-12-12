@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-04 23:02+0200\n"
+"POT-Creation-Date: 2015-12-12 16:11+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -1260,6 +1260,9 @@ msgstr "Bērni/Jaunieši"
 msgid "Choose Tuner"
 msgstr "Izvēlieties uztvērēju"
 
+msgid "Choose bouquet"
+msgstr "Izvēlieties buķeti"
+
 msgid "Choose which tuner to configure."
 msgstr "Izvēlieties kuru uztvērēju konfigurēt"
 
@@ -1279,16 +1282,16 @@ msgid "Clear"
 msgstr "Iztīrīt"
 
 msgid "Clear before scan"
-msgstr "Notīrīt pirms meklēšanas"
+msgstr "Dzēst pirms meklēšanas"
 
 msgid "Clear fixed"
-msgstr "Notīrīšana fiksēta"
+msgstr "Dzēst fiksēto"
 
 msgid "Clear log"
 msgstr "Dzēst žurnālu"
 
 msgid "Clear playlist"
-msgstr "Notīrīt repertuāru"
+msgstr "Dzēst repertuāru"
 
 msgid "Clone TV screen to LCD"
 msgstr "Kopēt TV ekrānu uz LCD"
@@ -3761,6 +3764,9 @@ msgstr "NFI imidža paršūšana pabeigta. Spiediet dzelteno pogu, lai pārstart
 
 msgid "NIM"
 msgstr "NIM"
+
+msgid "NO"
+msgstr "NĒ"
 
 msgid "NOW"
 msgstr "PAŠREIZ"
@@ -6871,8 +6877,15 @@ msgstr "Vertikāli"
 msgid "Top and bottom"
 msgstr "Vertikāli"
 
+#, python-format
+msgid "Total clients streaming: %d (%s)"
+msgstr "Straumē: %d (%s) klienti"
+
 msgid "Track"
 msgstr "Celiņš"
+
+msgid "Transcoding: "
+msgstr "Transkodē:"
 
 msgid "Translation"
 msgstr "Tulkojums"
@@ -7742,6 +7755,9 @@ msgstr "Rakstīšana neizdevās!"
 
 msgid "Write to /tmp/positionersetup.log"
 msgstr "Saglabā /tmp/positionersetup.log"
+
+msgid "YES"
+msgstr "JĀ"
 
 msgid "YPbPr"
 msgstr "YPbPr"
@@ -8985,9 +9001,6 @@ msgstr "nedefinēts"
 
 msgid "unknown"
 msgstr "nezināms"
-
-msgid "unknown error"
-msgstr "nezināma kļūda"
 
 msgid "unknown service"
 msgstr "nezināms kanāls"
