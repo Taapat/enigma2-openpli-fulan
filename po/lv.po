@@ -7759,9 +7759,6 @@ msgstr "Saglabā /tmp/positionersetup.log"
 msgid "YES"
 msgstr "JĀ"
 
-msgid "YES"
-msgstr "JĀ"
-
 msgid "YPbPr"
 msgstr "YPbPr"
 
