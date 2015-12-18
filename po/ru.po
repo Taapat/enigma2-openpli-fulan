@@ -8068,9 +8068,6 @@ msgstr "Полная прозрачность"
 msgid "FullBackup Configuration"
 msgstr "Настройки полного бекапа"
 
-msgid "Function of OK button"
-msgstr "Действие при нажатии кнопки ОК"
-
 msgid "Function on OK button"
 msgstr "Действие при нажатии кнопки ОК"
 
@@ -14528,7 +14525,7 @@ msgid "Selceted File is:"
 msgstr "Выбранный файл:"
 
 msgid "Select"
-msgstr "Выбрать"
+msgstr "Выбор"
 
 msgid ""
 "Select \"exact match\" to enforce \"Match title\" to match exactly or "
@@ -24028,3 +24025,18 @@ msgstr "Настройки видео клиппинга"
 
 msgid "Network configuration"
 msgstr "Конфигурация сети"
+
+msgid "Further options"
+msgstr "Дополнительные опции"
+
+msgid "Similar EPG"
+msgstr "Аналогичное EPG"
+
+msgid "Event view context menu"
+msgstr "Контекстное меню просмотра события"
+
+msgid "Extensions menu"
+msgstr "Меню дополнений"
+
+msgid "Events info menu"
+msgstr "Меню информации событий"

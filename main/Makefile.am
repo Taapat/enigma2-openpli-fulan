@@ -45,6 +45,7 @@ enigma2_LDADD = \
 	@PTHREAD_LIBS@ \
 	@PYTHON_LDFLAGS@ \
 	@LIBDDVD_LIBS@ \
+	@ALSA_LIBS@ \
 	-ltuxtxt -ltuxtxt32bpp -lcrypt \
 	-ldl -lpthread -lcrypt -lresolv -lrt -lmmeimage
 
