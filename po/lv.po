@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-12 16:11+0200\n"
+"POT-Creation-Date: 2015-12-24 17:54+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2526,8 +2526,14 @@ msgstr "Notikuma fontu izmērs (salīdzinājumā ar noformējuma izmēru)"
 msgid "Event view"
 msgstr "Notikuma apskats"
 
+msgid "Event view context menu"
+msgstr "Notikuma apskata izvēlne"
+
 msgid "Event view menu"
 msgstr "Notikuma apskata izvēlne"
+
+msgid "Events info menu"
+msgstr "Notikumu info izvēlne"
 
 msgid "Every known"
 msgstr "Zināms"
@@ -2616,6 +2622,9 @@ msgstr "Paplašinājumi"
 
 msgid "Extensions management"
 msgstr "Paplašinājumu pārvaldīšana"
+
+msgid "Extensions menu"
+msgstr "Paplašinājumi"
 
 msgid "External"
 msgstr "Ārējais"
@@ -2812,6 +2821,9 @@ msgid "Function of OK button"
 msgstr "Taustiņa Labi funkcija"
 
 msgid "Further Options"
+msgstr "Papildus iestatījumi"
+
+msgid "Further options"
 msgstr "Papildus iestatījumi"
 
 msgid ""
@@ -5214,7 +5226,7 @@ msgid "Satellites"
 msgstr "Pavadoņi"
 
 msgid "Satfinder"
-msgstr "Pavadoņu meklētājs"
+msgstr "Pavadoņu meklēšana"
 
 msgid "Sats"
 msgstr "Pavad"
@@ -5549,7 +5561,7 @@ msgid "Service scan"
 msgstr "Kanālu meklēšana"
 
 msgid "Service searching"
-msgstr "Kanālu meklēšana"
+msgstr "Kanālu iestatīšana"
 
 msgid "Service title mode"
 msgstr "Izvēlieties kanāla attēla režīmu"
@@ -5569,6 +5581,9 @@ msgstr "Iestatīt visu taustiņu noklusētās vērtības?"
 
 msgid "Set default"
 msgstr "Pēc noklusējuma"
+
+msgid "Set default settings?"
+msgstr "Iestatīt pēc noklusējuma?"
 
 msgid "Set end time"
 msgstr "Iestatīt beigu laiku"
@@ -5876,6 +5891,9 @@ msgstr "Mainīt buķetes bez brīdinājuma"
 
 msgid "Similar"
 msgstr "Līdzīgi"
+
+msgid "Similar EPG"
+msgstr "Līdzīgi EPG"
 
 msgid "Similar broadcasts:"
 msgstr "Līdzīgi raidījumi:"
