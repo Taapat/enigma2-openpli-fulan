@@ -71,7 +71,7 @@ msgid ""
 "Advanced options and settings."
 msgstr ""
 "\n"
-"Дополнительные параметры и настройки."
+"Дополнительные опции и настройки."
 
 msgid ""
 "\n"
@@ -150,7 +150,7 @@ msgid ""
 "Press OK on your remote control to continue."
 msgstr ""
 "\n"
-"Нажмите ОК на пульте для продолжения."
+"Нажмите ОК на Вашем пульте Д/У для продолжения."
 
 msgid ""
 "\n"
@@ -199,7 +199,7 @@ msgid ""
 "Scan for local extensions and install them."
 msgstr ""
 "\n"
-"Поиск и установка локальных дополнений"
+"Сканирование для локальных дополнений и установка их."
 
 msgid ""
 "\n"
@@ -24040,3 +24040,18 @@ msgstr "Меню дополнений"
 
 msgid "Events info menu"
 msgstr "Меню информации событий"
+
+msgid "Set default settings"
+msgstr "Установить настройки по дефолту?"
+
+msgid "Always include ECM in recordings"
+msgstr "Всегда включать ECM в записи"
+
+msgid "Never decrypt the content while recording. This overrides the individual timer settings globally. If enabled, recordings are stored in crypted presentation and must be decrypted afterwards (sometimes called offline decoding). Default: off."
+msgstr "Никогда не декодировать контент во время записи. Это отменяет индивидуальную настройку таймера на глобальном уровне. Если включено, контент не будет декодирован во время записи и Вам надо будет выполнить отложенное декодирование позже. По умолчанию: выкл."
+
+msgid "Always include ECM messages in recordings. This overrides the individual timer settings globally. It allows recordings to be always decrypted afterwards (sometimes called offline decoding), if supported by your receiver. Default: off."
+msgstr "Всегда включать сообщения ECM в записи. Это отменяет индивидуальную настройку таймера на глобальном уровне и позволяет отложенно декодировать записи в нужное Вам время позже, если эта функция поддерживается Вашим ресивером. По умолчанию: выкл."
+
+msgid "Never decrypt while recording"
+msgstr "Никогда не декодировать во время записи"
