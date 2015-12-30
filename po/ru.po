@@ -3376,7 +3376,7 @@ msgstr ""
 "xml будут утеряны, продолжить?"
 
 msgid "C"
-msgstr "С"
+msgstr "C"
 
 msgid "C-Band"
 msgstr "C-Диапазон"
