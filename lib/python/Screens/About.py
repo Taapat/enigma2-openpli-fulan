@@ -288,9 +288,9 @@ class MemoryInfo(Screen):
 					units = ""
 				else:
 					continue
-				if name.startswith("MemTotal"):
+				if "MemTotal" in name:
 					mem = int(size)
-				if name.startswith("MemFree") or name.startswith("Buffers") or name.startswith("Cached"):
+				if "MemFree" in name or "Buffers" in name or name[:6] == "Cached":
 					free += int(size)
 				if i < rows_in_column:
 					ltext += "".join((name,"\n"))
