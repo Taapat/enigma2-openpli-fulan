@@ -1820,6 +1820,15 @@ msgstr "<< сменить пароль >>"
 msgid "<< setup password (4 digits) >>"
 msgstr "<< установка пароля (4 цифры) >>"
 
+msgid "5 minutes"
+msgstr "5 минут"
+
+msgid "30 minutes"
+msgstr "30 минут"
+
+msgid "60 minutes"
+msgstr "60 минут"
+
 msgid "<Current movielist location>"
 msgstr "<Текущее расположение списка фильмов>"
 
@@ -24041,7 +24050,7 @@ msgstr "Меню дополнений"
 msgid "Events info menu"
 msgstr "Меню информации событий"
 
-msgid "Set default settings"
+msgid "Set default settings?"
 msgstr "Установить настройки по дефолту?"
 
 msgid "Always include ECM in recordings"
@@ -24055,3 +24064,6 @@ msgstr "Всегда включать сообщения ECM в записи. Э
 
 msgid "Never decrypt while recording"
 msgstr "Никогда не декодировать во время записи"
+
+msgid "All services provider"
+msgstr "Все сервисы провайдера"

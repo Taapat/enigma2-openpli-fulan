@@ -582,7 +582,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide, InfoBarMenu, InfoBarSeek, InfoBa
 		Notifications.AddPopup(text = _("%s/%s: %s") % (index, n, self.ref2HumanName(ref)), type = MessageBox.TYPE_INFO, timeout = 5)
 
 	def ref2HumanName(self, ref):
-		return enigma.eServiceCenter.getInstance().info(ref).getName(ref)		
+		return enigma.eServiceCenter.getInstance().info(ref).getName(ref)
 
 	def sleepTimer(self):
 		from Screens.SleepTimerEdit import SleepTimerEdit
