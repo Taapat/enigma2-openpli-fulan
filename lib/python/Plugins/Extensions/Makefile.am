@@ -1,6 +1,6 @@
 installdir = $(pkglibdir)/python/Plugins/Extensions
 
-SUBDIRS = CutListEditor DVDPlayer PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI
+SUBDIRS = TuxboxPlugins CutListEditor DVDPlayer PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI
 
 if ! ENABLE_MINIMAL
 SUBDIRS += ModemSettings

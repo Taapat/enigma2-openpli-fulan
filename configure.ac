@@ -294,6 +294,8 @@ lib/python/Plugins/Extensions/PicturePlayer/data/Makefile
 lib/python/Plugins/Extensions/SocketMMI/Makefile
 lib/python/Plugins/Extensions/SocketMMI/meta/Makefile
 lib/python/Plugins/Extensions/SocketMMI/src/Makefile
+lib/python/Plugins/Extensions/TuxboxPlugins/Makefile
+lib/python/Plugins/Extensions/TuxboxPlugins/meta/Makefil
 lib/python/Plugins/PLi/Makefile
 lib/python/Plugins/SystemPlugins/DefaultServicesScanner/Makefile
 lib/python/Plugins/SystemPlugins/DefaultServicesScanner/meta/Makefile
