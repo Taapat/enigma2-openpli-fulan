@@ -9,8 +9,6 @@ AM_CXXFLAGS = \
 
 bin_PROGRAMS = enigma2
 
-installdir = $(targetprefix)/usr/local/bin
-
 enigma2_SOURCES = \
 	bsod.cpp \
 	bsod.h \
