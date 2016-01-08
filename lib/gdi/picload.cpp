@@ -7,6 +7,8 @@
 #include "libmmeimage/libmmeimage.h"
 
 extern "C" {
+#define HAVE_BOOLEAN
+#define boolean int
 #include <jpeglib.h>
 #include <gif_lib.h>
 }
@@ -477,7 +479,7 @@ static void gif_load(Cfilepara* filepara, bool forceRGB = false)
 	int cmaps;
 	int extcode;
 
-	gft = DGifOpenFileName(filepara->file, &ErrorCode);
+	gft = DGifOpenFileName(filepara->file);
 	if (gft == NULL) {
 		eDebug("[Picload] Error open gif %i", ErrorCode);
 		return;
@@ -569,11 +571,11 @@ static void gif_load(Cfilepara* filepara, bool forceRGB = false)
 	}
 	while (rt != TERMINATE_RECORD_TYPE);
 
-	DGifCloseFile(gft, &ErrorCode);
+	DGifCloseFile(gft);
 	return;
 ERROR_R:
 	eDebug("[ePicLoad] <Error gif>");
-	DGifCloseFile(gft, &ErrorCode);
+	DGifCloseFile(gft);
 }
 
 //---------------------------------------------------------------------------------------------
