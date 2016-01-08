@@ -48,14 +48,14 @@ case $ret in
 	3)
 		cat /etc/videomode > /proc/stb/video/videomode
 		echo "0" > /proc/progress
-		@bindir@/showiframe -p /boot/bootlogo.mvi &
+		@bindir@/showiframe /boot/bootlogo.mvi
 		;;
 	4)
 		/sbin/reboot
 		;;
 	5)
 		if ! grep -q config.misc.RestartUI /etc/enigma2/settings; then
-			echo "config.misc.RestartUI=true" >>/etc/enigma2/settings
+			echo "config.misc.RestartUI=true" >>/etc/enigma2/settings;
 		fi
 		;;
 	42)
