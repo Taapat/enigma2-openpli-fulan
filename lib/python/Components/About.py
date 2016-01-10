@@ -64,8 +64,8 @@ def getCPUInfoString():
 
 def getDriverInstalledDate():
 	try:
-		driver = os.popen("opkg list-installed | grep kernel-module-player2").read().strip()
-		driver = driver.split("git")[1].split("-")[0]
+		from glob import glob
+		driver = [x.split("+")[1][:8] for x in open(glob("/var/lib/opkg/info/kernel-module-player2.control")[0], "r") if x.startswith("Version:")][0]
 		return  "%s-%s-%s" % (driver[:4], driver[4:6], driver[6:])
 	except:
 		return _("unknown")
