@@ -168,15 +168,12 @@ class CommitInfo(Screen):
 
 		self.project = 0
 		self.projects = [
-			("enigma2-pli-arp-taapat", "Taapat Enigma2"),
-			("tdt-arp-taapat", "Taapat tdt-arp"),
-			("taapat-enigma2-plugins-sh4", "Taapat Enigma2 plugins sh4"),
-			("taapat-skin-MetropolisHD", "skin-MetropolisHD"),
-			("ar-p-e2openplugin-OpenWebif", "AR-P plugin-OpenWebif"),
+			("enigma2-openpli-fulan", "Taapat fulan Enigma2"),
+			("vuplus-openpli-oe-core", "Taapat fulan openpli-oe-core"),
+			("skin-MetropolisHD", "Taapat skin-MetropolisHD"),
+			("enigma2-plugins", "Enigma2 Plugins"),
 			("aio-grab", "Aio Grab"),
-			("enigma2-plugin-skins-magic", "Skin Magic"),
-			("tuxtxt", "Tuxtxt"),
-			("enigma2", "Openpli Enigma2")
+			("tuxtxt", "Tuxtxt")
 		]
 		self.cachedProjects = {}
 		self.Timer = eTimer()
@@ -184,44 +181,28 @@ class CommitInfo(Screen):
 		self.Timer.start(50, True)
 
 	def readGithubCommitLogs(self):
+		if 'Taapat' in self.projects[self.project][1]:
+			url = 'https://api.github.com/repos/taapat/%s/commits' % self.projects[self.project][0]
+		else:
+			url = 'https://api.github.com/repos/openpli/%s/commits' % self.projects[self.project][0]
+		commitlog = ""
 		from json import loads
 		from urllib2 import urlopen
-		feed = self.projects[self.project][0]
-		commitlog = 80 * '-' + '\n'
-		commitlog += self.projects[self.project][1] + '\n'
-		commitlog += 80 * '-' + '\n'
-		if "arp-taapat" in feed:
-			url = 'https://bitbucket.org/api/1.0/repositories/Taapat/%s/changesets/?limit=40' % feed
-			try:
-				commits = ''
-				for c in loads(urlopen(url, timeout=5).read()).get('changesets', []):
-					date = c['timestamp']
-					creator = c['author']
-					title = c['message'].split('\n', 1)[0]
-					commits = date + ' ' + creator + '\n' + title + 2 * '\n' + commits
-				commitlog += str(commits)
-				self.cachedProjects[self.projects[self.project][1]] = commitlog.encode('utf-8')
-			except:
-				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
-		else:
-			if "taapat-" in feed:
-				url = 'https://api.github.com/repos/taapat/%s/commits' % feed[7:]
-			elif "ar-p-" in feed:
-				url = 'https://api.github.com/repos/openar-p/%s/commits' % feed[5:]
-			else:
-				url = 'https://api.github.com/repos/openpli/%s/commits' % feed
-			try:
-				for c in loads(urlopen(url, timeout=5).read()):
-					creator = c['commit']['author']['name']
-					title = c['commit']['message']
-					if '\n' in title:
-						title = title.split('\n', 1)[0]
-					date = c['commit']['committer']['date'].replace('T', ' ').replace('Z', '')
-					commitlog += date + ' ' + creator + '\n' + title + 2 * '\n'
-				commitlog = commitlog.encode('utf-8')
-				self.cachedProjects[self.projects[self.project][1]] = commitlog
-			except:
-				commitlog = _("Currently the commit log cannot be retrieved - please try later again")
+		try:
+			commitlog += 80 * '-' + '\n'
+			commitlog += url.split('/')[-2] + '\n'
+			commitlog += 80 * '-' + '\n'
+			for c in loads(urlopen(url, timeout=5).read()):
+				creator = c['commit']['author']['name']
+				title = c['commit']['message']
+				if '\n' in title:
+					title = title.split('\n', 1)[0]
+				date = c['commit']['committer']['date'].replace('T', ' ').replace('Z', '')
+				commitlog += date + ' ' + creator + '\n' + title + 2 * '\n'
+			commitlog = commitlog.encode('utf-8')
+			self.cachedProjects[self.projects[self.project][1]] = commitlog
+		except:
+			commitlog = _("Currently the commit log cannot be retrieved - please try later again")
 		self["AboutScrollLabel"].setText(commitlog)
 
 	def updateCommitLogs(self):
