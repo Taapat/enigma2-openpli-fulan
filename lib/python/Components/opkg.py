@@ -52,7 +52,7 @@ def listsDirPath():
 				return line.replace('\n','').split(' ')[2]
 	except IOError:
 		print "[opkg] cannot open %s" % path
-	return '/usr/lib/opkg/lists'
+	return '/var/lib/opkg/lists'
 
 if __name__ == '__main__':
 	for p in enumPlugins('enigma'):
