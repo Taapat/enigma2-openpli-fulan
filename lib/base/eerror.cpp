@@ -205,9 +205,9 @@ void eWarning(const char* fmt, ...)
 void ePythonOutput(const char *string)
 {
 #ifdef DEBUG
+	char buf[20];
 	if (logOutputConsole > 1)
 	{
-		char buf[20];
 		struct timespec tp;
 		clock_gettime(CLOCK_MONOTONIC, &tp);
 		snprintf(buf, 20, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
