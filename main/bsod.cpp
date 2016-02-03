@@ -207,9 +207,9 @@ void bsodFatal(const char *component)
 		}*/
 		xml.cDataFromCmd("kernelversion", "uname -a");
 		xml.stringFromFile("kernelcmdline", "/proc/cmdline");
-		//xml.stringFromFile("nimsockets", "/proc/bus/nim_sockets");
-		xml.cDataFromFile("imageversion", "/etc/image-version");
-		//xml.cDataFromFile("imageissue", "/etc/issue.net");
+		xml.stringFromFile("nimsockets", "/proc/bus/nim_sockets");
+		xml.cDataFromFile("imageversion", "/etc/issue");
+		xml.cDataFromFile("imageissue", "/etc/issue.net");
 		xml.close();
 
 		xml.open("crashlogs");
