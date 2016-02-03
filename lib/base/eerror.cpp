@@ -29,7 +29,7 @@ void DumpUnfreed()
 		return;
 	size_t len = 1024;
 	char *buffer = (char*)malloc(1024);
-	for(i = allocList->begin(); i != allocList->end(); ++i)
+	for(i = allocList->begin(); i != allocList->end(); i++)
 	{
 		unsigned int tmp;
 		fprintf(f, "%s\tLINE %d\tADDRESS %p\t%d unfreed\ttype %d (btcount %d)\n",
@@ -79,6 +79,9 @@ void DumpUnfreed()
 
 Signal2<void, int, const std::string&> logOutput;
 int logOutputConsole = 1;
+int debugLvl = 4;
+char *debugTag = "";
+
 
 void CheckPrintkLevel()
 {
@@ -99,132 +102,67 @@ static pthread_mutex_t DebugLock =
 
 extern void bsodFatal(const char *component);
 
-void eFatal(const char* fmt, ...)
+void eDebugOut(int lvl, int flags, const char* msg)
 {
-	char buf[1024];
-	struct timespec tp;
-	clock_gettime(CLOCK_MONOTONIC, &tp);
-	snprintf(buf, 1024, "<%6lu.%06lu> FATAL: ", tp.tv_sec, tp.tv_nsec/1000);
+	char buf[20] = "";
+	if (! (flags & _DBGFLG_NOTIME)) {
+		struct timespec tp;
+		clock_gettime(CLOCK_MONOTONIC, &tp);
+		snprintf(buf, 20, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
+	}
+	std::string nl = (flags & _DBGFLG_NONEWLINE) ? "" : "\n";
+
+	{
+		singleLock s(DebugLock);
+		logOutput(lvl, std::string(buf) + msg + nl);
+
+		if (logOutputConsole)
+			fprintf(stderr, "%s%s%s", buf, msg, nl.c_str());
+	}
+
+	if (flags & _DBGFLG_FATAL)
+	bsodFatal("enigma2");
+}
+
+void eDebugLow(const char* tag, int flags, const char* fmt, ...)
+{
+	// Only show message when the tag has been set
+	if (!debugTag || *debugTag == '\0' || strncmp(debugTag, tag, strlen(tag)) != 0)
+		return;
+
+	char buf[1024] = "";
 	va_list ap;
 	va_start(ap, fmt);
 	vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
 	va_end(ap);
 
-	{
-		singleLock s(DebugLock);
-		logOutput(lvlFatal, std::string(buf) + "\n");
-		fprintf(stderr, "%s\n", buf);
-	}
-	bsodFatal("enigma2");
+	eDebugOut(0, flags, buf); // do not rely on loglevels (yet) for tagged messages
 }
 
-#ifdef DEBUG
-void eDebug(const char* fmt, ...)
+void eDebugLow(int lvl, int flags, const char* fmt, ...)
 {
-	char buf[1024];
-	va_list ap;
-	va_start(ap, fmt);
-	if (logOutputConsole > 1)
-	{
-		struct timespec tp;
-		clock_gettime(CLOCK_MONOTONIC, &tp);
-		snprintf(buf, 1024, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
-		vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
-	}
-	else
-	{
-		vsnprintf(buf, 1024, fmt, ap);
-	}
-	va_end(ap);
-	singleLock s(DebugLock);
-	logOutput(lvlDebug, std::string(buf) + "\n");
-	if (logOutputConsole)
-		fprintf(stderr, "%s\n", buf);
-}
+	// Only show message when the debug level is low enough
+	if (lvl > debugLvl)
+		return;
 
-void eDebugNoNewLineStart(const char* fmt, ...)
-{
-	char buf[1024];
+	char buf[1024] = "";
 	va_list ap;
 	va_start(ap, fmt);
-	if (logOutputConsole > 1)
-	{
-		struct timespec tp;
-		clock_gettime(CLOCK_MONOTONIC, &tp);
-		snprintf(buf, 1024, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
-		vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
-	}
-	else
-	{
-		vsnprintf(buf, 1024, fmt, ap);
-	}
+	vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
 	va_end(ap);
-	singleLock s(DebugLock);
-	logOutput(lvlDebug, std::string(buf));
-	if (logOutputConsole)
-		fprintf(stderr, "%s", buf);
-}
 
-void eDebugNoNewLine(const char* fmt, ...)
-{
-	char buf[1024];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, 1024, fmt, ap);
-	va_end(ap);
-	singleLock s(DebugLock);
-	logOutput(lvlDebug, std::string(buf));
-	if (logOutputConsole)
-		fprintf(stderr, "%s", buf);
+	eDebugOut(lvl, flags, buf);
 }
-
-void eWarning(const char* fmt, ...)
-{
-	char buf[1024];
-	va_list ap;
-	va_start(ap, fmt);
-	if (logOutputConsole > 1)
-	{
-		struct timespec tp;
-		clock_gettime(CLOCK_MONOTONIC, &tp);
-		snprintf(buf, 1024, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
-		vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
-	}
-	else
-	{
-		vsnprintf(buf, 1024, fmt, ap);
-	}
-	va_end(ap);
-	singleLock s(DebugLock);
-	logOutput(lvlWarning, std::string(buf) + "\n");
-	if (logOutputConsole)
-		fprintf(stderr, "%s\n", buf);
-}
-#endif // DEBUG
 
 void ePythonOutput(const char *string)
 {
 #ifdef DEBUG
-	char buf[20];
-	if (logOutputConsole > 1)
-	{
-		struct timespec tp;
-		clock_gettime(CLOCK_MONOTONIC, &tp);
-		snprintf(buf, 20, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
-	}
+	int lvl = 4; // FIXME: get level info from python
+	// Only show message when the debug level is low enough
+	if (lvl > debugLvl)
+		return;
 
-	singleLock s(DebugLock);
-
-	if (logOutputConsole > 1)
-	{
-		logOutput(lvlWarning, std::string(buf) + string);
-		fprintf(stderr, "%s%s", buf, string);
-	}
-	else
-		logOutput(lvlWarning, string);
-
-	if (logOutputConsole == 1)
-		fprintf(stderr, "%s", string);
+	eDebugOut(lvlWarning, _DBGFLG_NONEWLINE, string);
 #endif
 }
 
