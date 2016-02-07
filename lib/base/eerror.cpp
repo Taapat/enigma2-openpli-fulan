@@ -89,7 +89,7 @@ void CheckPrintkLevel()
 		fscanf(f, "%u", &logOutputConsole);
 		if (logOutputConsole < 1)
 		{
-			printf("Printk level is %u, disble Enigma log!\n", logOutputConsole);
+			printf("Printk level is %u, disble Enigma log in console!\n", logOutputConsole);
 		}
 		fclose(f);
 	}
@@ -105,7 +105,7 @@ void eDebugImpl(int lvl, int flags, const char* fmt, ...)
 	char buf[1024];
 	int pos = 0;
 
-	if (! (flags & _DBGFLG_NOTIME)) {
+	if (! (flags & _DBGFLG_NOTIME) && (logOutputConsole > 1)) {
 		struct timespec tp;
 		clock_gettime(CLOCK_MONOTONIC, &tp);
 		pos = snprintf(buf, sizeof(buf), "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
