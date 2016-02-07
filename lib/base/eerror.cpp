@@ -77,9 +77,11 @@ void DumpUnfreed()
 };
 #endif
 
-Signal2<void, int, const std::string&> logOutput;
+Signal2<void, const char *, unsigned int> logOutput;
 int logOutputConsole = 1;
 int debugLvl = lvlDebug;
+
+static pthread_mutex_t DebugLock = PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP;
 
 void CheckPrintkLevel()
 {
@@ -95,12 +97,10 @@ void CheckPrintkLevel()
 	}
 }
 
-static pthread_mutex_t DebugLock =
-	PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP;
 
 extern void bsodFatal(const char *component);
 
-void eDebugImpl(int lvl, int flags, const char* fmt, ...)
+void eDebugImpl(int flags, const char* fmt, ...)
 {
 	char buf[1024];
 	int pos = 0;
@@ -125,7 +125,7 @@ void eDebugImpl(int lvl, int flags, const char* fmt, ...)
 
 	{
 		singleLock s(DebugLock);
-		logOutput(lvl, std::string(buf, pos));
+		logOutput(buf, pos);
 	}
 
 	if (logOutputConsole)
@@ -141,6 +141,6 @@ void ePythonOutput(const char *string)
 	int lvl = lvlWarning; // FIXME: get level info from python
 	// Only show message when the debug level is low enough
 	if (lvl <= debugLvl)
-		eDebugImpl(lvl, _DBGFLG_NONEWLINE, string);
+		eDebugImpl(_DBGFLG_NONEWLINE, string);
 #endif
 }
