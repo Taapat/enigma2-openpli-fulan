@@ -79,9 +79,7 @@ void DumpUnfreed()
 
 Signal2<void, int, const std::string&> logOutput;
 int logOutputConsole = 1;
-int debugLvl = 4;
-char *debugTag = "";
-
+int debugLvl = lvlDebug;
 
 void CheckPrintkLevel()
 {
@@ -102,71 +100,47 @@ static pthread_mutex_t DebugLock =
 
 extern void bsodFatal(const char *component);
 
-void eDebugOut(int lvl, int flags, const char* msg)
+void eDebugImpl(int lvl, int flags, const char* fmt, ...)
 {
-	char buf[20] = "";
-	if (! (flags & _DBGFLG_NOTIME) && (logOutputConsole > 1)) {
+	char buf[1024];
+	int pos = 0;
+
+	if (! (flags & _DBGFLG_NOTIME)) {
 		struct timespec tp;
 		clock_gettime(CLOCK_MONOTONIC, &tp);
-		snprintf(buf, 20, "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
+		pos = snprintf(buf, sizeof(buf), "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
 	}
-	std::string nl = (flags & _DBGFLG_NONEWLINE) ? "" : "\n";
+
+	va_list ap;
+	va_start(ap, fmt);
+	pos += vsnprintf(buf + pos, sizeof(buf) - pos, fmt, ap);
+	va_end(ap);
+
+	if (!(flags & _DBGFLG_NONEWLINE)) {
+		/* buf will still be null-terminated here, so it is always safe
+		 * to do this. The remainder of this function does not rely
+		 * on buf being null terminated. */
+		buf[pos++] = '\n';
+	}
 
 	{
 		singleLock s(DebugLock);
-		logOutput(lvl, std::string(buf) + msg + nl);
-
-		if (logOutputConsole)
-			fprintf(stderr, "%s%s%s", buf, msg, nl.c_str());
+		logOutput(lvl, std::string(buf, pos));
 	}
 
+	if (logOutputConsole)
+		::write(2, buf, pos);
+
 	if (flags & _DBGFLG_FATAL)
-	bsodFatal("enigma2");
-}
-
-void eDebugLow(const char* tag, int flags, const char* fmt, ...)
-{
-	// Only show message when the tag has been set
-	if (!debugTag || *debugTag == '\0' || strncmp(debugTag, tag, strlen(tag)) != 0)
-		return;
-
-	char buf[1024] = "";
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
-	va_end(ap);
-
-	eDebugOut(0, flags, buf); // do not rely on loglevels (yet) for tagged messages
-}
-
-void eDebugLow(int lvl, int flags, const char* fmt, ...)
-{
-	// Only show message when the debug level is low enough
-	if (lvl > debugLvl)
-		return;
-
-	char buf[1024] = "";
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf + strlen(buf), 1024-strlen(buf), fmt, ap);
-	va_end(ap);
-
-	eDebugOut(lvl, flags, buf);
+		bsodFatal("enigma2");
 }
 
 void ePythonOutput(const char *string)
 {
 #ifdef DEBUG
-	int lvl = 4; // FIXME: get level info from python
+	int lvl = lvlWarning; // FIXME: get level info from python
 	// Only show message when the debug level is low enough
-	if (lvl > debugLvl)
-		return;
-
-	eDebugOut(lvlWarning, _DBGFLG_NONEWLINE, string);
+	if (lvl <= debugLvl)
+		eDebugImpl(lvl, _DBGFLG_NONEWLINE, string);
 #endif
-}
-
-void eWriteCrashdump()
-{
-		/* implement me */
 }
