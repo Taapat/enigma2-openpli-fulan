@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-22 18:46+0200\n"
+"POT-Creation-Date: 2016-02-10 19:30+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -8129,6 +8129,9 @@ msgstr "detektīvs/trilleris"
 msgid "disable"
 msgstr "izslēgt"
 
+msgid "disable intro screen"
+msgstr "izslēgt pamācību uzsākot"
+
 msgid "disable move mode"
 msgstr "izslēgt pārvietošanas režīmu"
 
@@ -8176,6 +8179,9 @@ msgstr "aktivizēt buķešu rediģēšanu"
 
 msgid "enable favourite edit"
 msgstr "aktivizēt favorītu rediģēšanu"
+
+msgid "enable intro screen"
+msgstr "aktivizēt pamācību uzsākot"
 
 msgid "enable move mode"
 msgstr "aktivizēt pārvietošanas režīmu"
@@ -8230,6 +8236,9 @@ msgstr "et9000/et9100"
 
 msgid "et9200/9500/6500"
 msgstr "et9200/9500/6500"
+
+msgid "execute cuts (requires MovieCut plugin)"
+msgstr "izpildīt griešanu (izmanto spraudni MovieCut)"
 
 msgid "exit "
 msgstr "iziet "
