@@ -26,7 +26,10 @@ def enumPlugins(filter_start=''):
 					package = None
 				if package is None:
 					continue
-				if line[:8] == 'Version:':
+				if line[:13] == 'Architecture:' and 'mips' in line:
+					package = None
+					continue
+				elif line[:8] == 'Version:':
 					version = line.split(":",1)[1].strip()
 				elif line[:12] == 'Description:':
 					description = line.split(":",1)[1].strip()
