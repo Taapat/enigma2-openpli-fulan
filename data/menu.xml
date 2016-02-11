@@ -81,6 +81,7 @@ self.session.openWithCallback(msgClosed, FactoryReset)
 			<id val="information" />
 			<item level="1" text="Service" entryID="service_info_screen"><screen module="ServiceInfo" screen="ServiceInfo"/></item>
 			<item level="0" text="About" entryID="about_screen"><screen module="About" /></item>
+			<item level="2" text="Streaming clients info" entryID="streaming_clients_info_screen"><screen module="StreamingClientsInfo"/></item>
 		</menu>
 		<item level="2" text="Change video port" entryID="ChangeVideoPort" configcondition="config.usage.show_vcr_scart" requires="ScartSwitch">
 			<code>
