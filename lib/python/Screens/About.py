@@ -169,7 +169,7 @@ class CommitInfo(Screen):
 		self.project = 0
 		self.projects = [
 			("enigma2-openpli-fulan", "Taapat fulan Enigma2"),
-			("vuplus-openpli-oe-core", "Taapat fulan openpli-oe-core"),
+			("vuplus-fulan-openpli-oe-core", "Taapat vuplus fulan openpli-oe-core"),
 			("skin-MetropolisHD", "Taapat skin-MetropolisHD"),
 			("enigma2-plugins", "Enigma2 Plugins"),
 			("aio-grab", "Aio Grab"),
