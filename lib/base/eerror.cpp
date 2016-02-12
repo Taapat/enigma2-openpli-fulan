@@ -148,7 +148,7 @@ void eDebugImpl(int flags, const char* fmt, ...)
 	if (! (flags & _DBGFLG_NOTIME) && (logOutputConsole > 1)) {
 		struct timespec tp;
 		clock_gettime(CLOCK_MONOTONIC, &tp);
-		pos = snprintf(buf, sizeof(buf), "<%6lu.%06lu> ", tp.tv_sec, tp.tv_nsec/1000);
+		pos = snprintf(buf, sizeof(buf), "<%6lu.%03lu> ", tp.tv_sec, tp.tv_nsec/1000000);
 	}
 
 	va_list ap;
