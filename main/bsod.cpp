@@ -115,7 +115,7 @@ void bsodFatal(const char *component)
 		strftime(tm_str, sizeof(tm_str), "%a %b %_d %T %Y", &tm);
 
 		fprintf(f,
-			"OpenPLi Enigma2 crash log\n\n"
+			"Based on OpenPLi Enigma2 by Taapat crash log\n\n"
 			"crashdate=%s\n"
 			"compiledate=%s\n"
 			"skin=%s\n"
@@ -132,11 +132,11 @@ void bsodFatal(const char *component)
 			component);
 
 		stringFromFile(f, "stbmodel", "/proc/stb/info/boxtype");
-		stringFromFile(f, "stbmodel", "/proc/stb/info/vumodel");
-		stringFromFile(f, "stbmodel", "/proc/stb/info/model");
+		//stringFromFile(f, "stbmodel", "/proc/stb/info/vumodel");
+		//stringFromFile(f, "stbmodel", "/proc/stb/info/model");
 		stringFromFile(f, "kernelcmdline", "/proc/cmdline");
 		stringFromFile(f, "nimsockets", "/proc/bus/nim_sockets");
-		stringFromFile(f, "imageversion", "/etc/image-version");
+		stringFromFile(f, "imageversion", "/etc/issue");
 		stringFromFile(f, "imageissue", "/etc/issue.net");
 
 		/* dump the log ringbuffer */
@@ -169,7 +169,7 @@ void bsodFatal(const char *component)
 	os.clear();
 	os << "We are really sorry. Your STB encountered "
 		"a software problem, and needs to be restarted.\n"
-		"Please send the logfile " << crashlog_name << " to the OpenPLi forum.\n"
+		"Please send the logfile " << crashlog_name << " to http://taapat.blogspot.com.\n"
 		"Your STB restarts in 10 seconds!\n"
 		"Component: " << component;
 
