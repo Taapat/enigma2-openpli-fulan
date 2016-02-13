@@ -46,7 +46,7 @@ def getHardwareTypeString():
 
 def getImageTypeString():
 	try:
-		return open("/etc/image-version").readlines()
+		return "Based on " + open("/etc/issue").readlines()[-2].capitalize().strip()[:-6]
 	except:
 		return _("undefined")
 
