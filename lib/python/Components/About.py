@@ -46,7 +46,7 @@ def getHardwareTypeString():
 
 def getImageTypeString():
 	try:
-		return "Based on " + open("/etc/issue").readlines()[-2].capitalize().strip()[:-6]
+		return "Taapat based on " + open("/etc/issue").readlines()[-2].capitalize().strip()[:-6]
 	except:
 		return _("undefined")
 
