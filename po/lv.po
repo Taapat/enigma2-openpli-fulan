@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-11 20:30+0200\n"
+"POT-Creation-Date: 2016-02-14 23:45+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -444,6 +444,9 @@ msgstr "9"
 #, python-format
 msgid ": %s"
 msgstr ": %s"
+
+msgid ": 0000 - default (disabled)"
+msgstr ": 0000 - pēc noklusējuma (nedarbosies)"
 
 msgid "<Current movielist location>"
 msgstr "<Tekošā filmu saraksta atrašanās vieta>"
@@ -2637,6 +2640,27 @@ msgstr "F"
 msgid "F1/F3"
 msgstr "F1/F3"
 
+msgid "FBC Unicable"
+msgstr "FBC Unicable"
+
+msgid "FBC automatic loop through"
+msgstr "FBC automātiski loop cauri"
+
+msgid ""
+"FBC automatic loop through\n"
+"inactive"
+msgstr ""
+"FBC automātiski loop cauri\n"
+"neaktīvs"
+
+#, python-format
+msgid ""
+"FBC automatic loop through\n"
+"linked to %s"
+msgstr ""
+"FBC automātiski loop cauri\n"
+"saistīts ar %s"
+
 msgid "FEC"
 msgstr "FEC"
 
@@ -4446,12 +4470,6 @@ msgstr "Lūdzu iestatiet uztvērēju A"
 msgid "Please set up tuner B"
 msgstr "Lūdzu iestatiet uztvērēju B"
 
-msgid "Please set up tuner C"
-msgstr "Lūdzu iestatiet uztvērēju C"
-
-msgid "Please set up tuner D"
-msgstr "Lūdzu iestatiet uztvērēju D"
-
 msgid ""
 "Please use direction keys to move the PiP window.\n"
 "Press Bouquet +/- to resize the window.\n"
@@ -5513,6 +5531,9 @@ msgstr ""
 
 msgid "Services"
 msgstr "Kanāli"
+
+msgid "Set PIN"
+msgstr "Iestatīt PIN"
 
 msgid "Set all hotkey to default?"
 msgstr "Iestatīt visu taustiņu noklusētās vērtības?"
@@ -6923,13 +6944,13 @@ msgid "Unhide parental control services"
 msgstr "Parādīt servisus ar vecāku aizsardzību"
 
 msgid "Unicable"
-msgstr "Vienkabeļa"
+msgstr "Unicable"
 
 msgid "Unicable LNB"
-msgstr "Vienkabeļa LNB"
+msgstr "Unicable LNB"
 
 msgid "Unicable Martix"
-msgstr "Vienkabeļa Martix"
+msgstr "Unicable Martix"
 
 msgid "Uninstall"
 msgstr "Atinstalēt"
@@ -7718,6 +7739,9 @@ msgstr "Jā, atgriezties uz filmu sarakstu"
 msgid "Yesterday"
 msgstr "Vakar"
 
+msgid "You PIN code is 0000. This is the default PIN code and it disable parental control!\n"
+msgstr "Jūsu PIN kods ir 0000. Tas ir kods pēc noklusējuma un izslēdz vecāku kontroli!\n"
+
 #, python-format
 msgid ""
 "You already have a channel list installed,\n"
@@ -7902,6 +7926,9 @@ msgstr "Pārslēgties uz izvēlēto kanālu, vai parādīt detalizētu pārraide
 
 msgid "Zap up"
 msgstr "Pārslēgt uz augšu"
+
+msgid "Zgemma H.S/H.2S/H.2H"
+msgstr "Zgemma H.S/H.2S/H.2H"
 
 msgid "[REC]"
 msgstr "[IER]"
@@ -8733,6 +8760,9 @@ msgstr "nopietnā mūzika/klasiskā mūzika"
 
 msgid "serious/classical/religious/historical movie/drama"
 msgstr "nopietnā/klasiskā/reliģiskā/vēsturiskā filma/drāma"
+
+msgid "service is in bouquet parental protection"
+msgstr "kanāls ir vecāku kontroles buķetē"
 
 msgid "set as startup service"
 msgstr "iestatīt kā starta kanālu"
