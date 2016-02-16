@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-15 20:51+0200\n"
+"POT-Creation-Date: 2016-02-16 22:57+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -3947,6 +3947,9 @@ msgstr "Nav kanāla"
 
 msgid "No standby"
 msgstr "Nav gaidstāves"
+
+msgid "No stream clients"
+msgstr "Nav neviena straumēšanas klienta"
 
 msgid "No suitable sat tuner found!"
 msgstr "Nav atrasts piemērots sat uztvērējs!"
