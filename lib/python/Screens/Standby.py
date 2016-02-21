@@ -2,13 +2,13 @@ from Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.config import config
 from Components.AVSwitch import AVSwitch
+from Components.Console import Console
 from Components.Harddisk import internalHDDNotSleeping
 from Components.SystemInfo import SystemInfo
 from Tools import Notifications
 from GlobalActions import globalActionMap
 import RecordTimer, os
 from enigma import eDVBVolumecontrol, eTimer, eDVBLocalTimeHandler, eServiceReference
-from subprocess import call
 from time import time, localtime
 
 inStandby = None
@@ -16,9 +16,6 @@ inStandby = None
 class Standby(Screen):
 	def Power(self):
 		print "leave standby"
-#+++>
-		call("/bin/vdstandby -d &", shell="true")
-#+++<
 		#set input to encoder
 		self.avswitch.setInput("ENCODER")
 		#restart last played service
@@ -95,9 +92,8 @@ class Standby(Screen):
 			self.avswitch.setInput("SCART")
 		else:
 			self.avswitch.setInput("AUX")
-#+++>
-		call("/bin/vdstandby -a &", shell="true")
-#+++<
+
+		Console().ePopen("/bin/vdstandby -a &")
 
 		gotoShutdownTime = int(config.usage.standby_to_shutdown_timer.value)
 		if gotoShutdownTime:
@@ -128,6 +124,7 @@ class Standby(Screen):
 			RecordTimer.RecordTimerEntry.stopTryQuitMainloop()
 		if os.path.exists("/usr/script/standby_leave.sh"):
 			os.system("/usr/script/standby_leave.sh")
+		Console().ePopen("/bin/vdstandby -d &")
 
 	def __onFirstExecBegin(self):
 		global inStandby
