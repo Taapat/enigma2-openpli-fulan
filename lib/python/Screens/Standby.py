@@ -1,3 +1,7 @@
+import os
+from time import time, localtime
+
+import RecordTimer
 from Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.config import config
@@ -7,11 +11,11 @@ from Components.Harddisk import internalHDDNotSleeping
 from Components.SystemInfo import SystemInfo
 from Tools import Notifications
 from GlobalActions import globalActionMap
-import RecordTimer, os
 from enigma import eDVBVolumecontrol, eTimer, eDVBLocalTimeHandler, eServiceReference
-from time import time, localtime
+
 
 inStandby = None
+
 
 class Standby(Screen):
 	def Power(self):
@@ -43,7 +47,7 @@ class Standby(Screen):
 		print "enter standby"
 
 		if os.path.exists("/usr/script/standby_enter.sh"):
-			os.system("/usr/script/standby_enter.sh")
+			Console().ePopen("/usr/script/standby_enter.sh")
 
 		self["actions"] = ActionMap( [ "StandbyActions" ],
 		{
@@ -70,7 +74,7 @@ class Standby(Screen):
 		self.prev_running_service = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		service = self.prev_running_service and self.prev_running_service.toString()
 		if service:
-			if service.rsplit(":", 1)[1][:1] == "/":
+			if service.rsplit(":", 1)[1].startswith("/"):
 				self.paused_service = True
 				self.infoBarInstance.pauseService()
 		if not self.paused_service:
@@ -92,8 +96,6 @@ class Standby(Screen):
 			self.avswitch.setInput("SCART")
 		else:
 			self.avswitch.setInput("AUX")
-
-		Console().ePopen("/bin/vdstandby -a &")
 
 		gotoShutdownTime = int(config.usage.standby_to_shutdown_timer.value)
 		if gotoShutdownTime:
@@ -123,8 +125,7 @@ class Standby(Screen):
 		if RecordTimer.RecordTimerEntry.receiveRecordEvents:
 			RecordTimer.RecordTimerEntry.stopTryQuitMainloop()
 		if os.path.exists("/usr/script/standby_leave.sh"):
-			os.system("/usr/script/standby_leave.sh")
-		Console().ePopen("/bin/vdstandby -d &")
+			Console().ePopen("/usr/script/standby_leave.sh")
 
 	def __onFirstExecBegin(self):
 		global inStandby
@@ -160,6 +161,7 @@ class Standby(Screen):
 			from RecordTimer import RecordTimerEntry
 			RecordTimerEntry.TryQuitMainloop()
 
+
 class StandbySummary(Screen):
 	skin = """
 	<screen position="0,0" size="132,64">
@@ -176,6 +178,7 @@ from enigma import quitMainloop, iRecordableService
 from Screens.MessageBox import MessageBox
 from time import time
 from Components.Task import job_manager
+
 
 class QuitMainloopScreen(Screen):
 
@@ -195,6 +198,7 @@ class QuitMainloopScreen(Screen):
 		self["text"] = Label(text)
 
 inTryQuitMainloop = False
+
 
 class TryQuitMainloop(MessageBox):
 	def __init__(self, session, retvalue=1, timeout=-1, default_yes = False):
@@ -254,7 +258,7 @@ class TryQuitMainloop(MessageBox):
 			if self.retval == 1:
 				config.misc.DeepStandby.value = True
 				if os.path.exists("/usr/script/standby_enter.sh"):
-					os.system("/usr/script/standby_enter.sh")
+					Console().ePopen("/usr/script/standby_enter.sh")
 			elif not inStandby:
 				config.misc.RestartUI.value = True
 				config.misc.RestartUI.save()
