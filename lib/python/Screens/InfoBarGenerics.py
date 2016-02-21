@@ -211,10 +211,9 @@ class InfoBarScreenSaver:
 			eActionMap.getInstance().unbindAction('', self.keypressScreenSaver)
 
 class SecondInfoBar(Screen):
-
-	def __init__(self, session):
+	def __init__(self, session, skinName):
 		Screen.__init__(self, session)
-		self.skin = None
+		self.skinName = skinName
 
 class InfoBarShowHide(InfoBarScreenSaver):
 	""" InfoBar show/hide control, accepts toggleShow and hide actions, might start
@@ -230,6 +229,7 @@ class InfoBarShowHide(InfoBarScreenSaver):
 				"toggleShow": self.okButtonCheck,
 				"hide": self.keyHide,
 				"infoButton": self.toggleShow,
+				"toggleSecondInfoBar" : self.toggleSecondInfoBar,
 			}, 1) # lower prio to make it possible to override ok and cancel..
 
 		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
@@ -250,16 +250,20 @@ class InfoBarShowHide(InfoBarScreenSaver):
 
 		self.onShowHideNotifiers = []
 
-		self.secondInfoBarScreen = ""
+		self.actualSecondInfoBarScreen = None
 		if isStandardInfoBar(self):
-			self.secondInfoBarScreen = self.session.instantiateDialog(SecondInfoBar)
+			self.secondInfoBarScreen = self.session.instantiateDialog(SecondInfoBar, "SecondInfoBar")
 			self.secondInfoBarScreen.show()
+			self.secondInfoBarScreenSimple = self.session.instantiateDialog(SecondInfoBar, "SecondInfoBarSimple")
+			self.secondInfoBarScreenSimple.show()
+			self.actualSecondInfoBarScreen = config.usage.show_simple_second_infobar.value and self.secondInfoBarScreenSimple.skinAttributes and self.secondInfoBarScreenSimple or self.secondInfoBarScreen
 
 		self.onLayoutFinish.append(self.__layoutFinished)
 
 	def __layoutFinished(self):
-		if self.secondInfoBarScreen:
+		if self.actualSecondInfoBarScreen:
 			self.secondInfoBarScreen.hide()
+			self.secondInfoBarScreenSimple.hide()
 
 	def __onShow(self):
 		self.__state = self.STATE_SHOWN
@@ -269,10 +273,18 @@ class InfoBarShowHide(InfoBarScreenSaver):
 
 	def __onHide(self):
 		self.__state = self.STATE_HIDDEN
-		if self.secondInfoBarScreen:
-			self.secondInfoBarScreen.hide()
+		if self.actualSecondInfoBarScreen:
+			self.actualSecondInfoBarScreen.hide()
 		for x in self.onShowHideNotifiers:
 			x(False)
+
+	def toggleSecondInfoBar(self):
+		if self.actualSecondInfoBarScreen and self.secondInfoBarScreenSimple.skinAttributes and self.secondInfoBarScreen.skinAttributes:
+			self.actualSecondInfoBarScreen.hide()
+			config.usage.show_simple_second_infobar.value = not config.usage.show_simple_second_infobar.value
+			config.usage.show_simple_second_infobar.save()
+			self.actualSecondInfoBarScreen = config.usage.show_simple_second_infobar.value and self.secondInfoBarScreenSimple or self.secondInfoBarScreen
+			self.showSecondInfoBar()
 
 	def keyHide(self):
 		if self.__state is self.STATE_HIDDEN and self.session.pipshown and "popup" in config.usage.pip_hideOnExit.value:
@@ -303,7 +315,7 @@ class InfoBarShowHide(InfoBarScreenSaver):
 	def startHideTimer(self):
 		if self.__state is self.STATE_SHOWN and not self.__locked:
 			self.hideTimer.stop()
-			if self.secondInfoBarScreen and self.secondInfoBarScreen.shown:
+			if self.actualSecondInfoBarScreen and self.actualSecondInfoBarScreen.shown:
 				idx = config.usage.show_second_infobar.index - 1
 			else:
 				idx = config.usage.infobar_timeout.index
@@ -337,8 +349,8 @@ class InfoBarShowHide(InfoBarScreenSaver):
 			self.hideTimer.stop()
 			self.showSingleEPG()
 		elif config.usage.show_second_infobar.value:
-			if self.secondInfoBarScreen and not self.secondInfoBarScreen.shown and config.usage.show_second_infobar.value != "Event":
-				self.secondInfoBarScreen.show()
+			if self.actualSecondInfoBarScreen and not self.actualSecondInfoBarScreen.shown and config.usage.show_second_infobar.value != "Event":
+				self.actualSecondInfoBarScreen.show()
 				self.startHideTimer()
 			else:
 				self.hide()
@@ -349,8 +361,8 @@ class InfoBarShowHide(InfoBarScreenSaver):
 		self.toggleShow()
 
 	def showFirstInfoBar(self):
-		if self.__state == self.STATE_HIDDEN or self.secondInfoBarScreen and self.secondInfoBarScreen.shown:
-			self.secondInfoBarScreen and self.secondInfoBarScreen.hide()
+		if self.__state == self.STATE_HIDDEN or self.actualSecondInfoBarScreen and self.actualSecondInfoBarScreen.shown:
+			self.actualSecondInfoBarScreen and self.actualSecondInfoBarScreen.hide()
 			self.show()
 		else:
 			self.hide()
