@@ -278,6 +278,14 @@ class InfoBarShowHide(InfoBarScreenSaver):
 		for x in self.onShowHideNotifiers:
 			x(False)
 
+	def toggleShowLong(self):
+		if not config.usage.ok_is_channelselection.value:
+			self.toggleSecondInfoBar()
+
+	def hideLong(self):
+		if config.usage.ok_is_channelselection.value:
+			self.toggleSecondInfoBar()
+
 	def toggleSecondInfoBar(self):
 		if self.actualSecondInfoBarScreen and self.secondInfoBarScreenSimple.skinAttributes and self.secondInfoBarScreen.skinAttributes:
 			self.actualSecondInfoBarScreen.hide()
