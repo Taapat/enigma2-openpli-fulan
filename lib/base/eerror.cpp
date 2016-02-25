@@ -150,9 +150,11 @@ void CheckPrintkLevel()
 
 extern void bsodFatal(const char *component);
 
+#define eDEBUG_BUFLEN    1024
+
 void eDebugImpl(int flags, const char* fmt, ...)
 {
-	char buf[1024];
+	char buf[eDEBUG_BUFLEN];
 	int pos = 0;
 
 	if (! (flags & _DBGFLG_NOTIME) && (logOutputConsole > 1)) {
@@ -165,6 +167,12 @@ void eDebugImpl(int flags, const char* fmt, ...)
 	va_start(ap, fmt);
 	pos += vsnprintf(buf + pos, sizeof(buf) - pos, fmt, ap);
 	va_end(ap);
+
+	// FIXME: quick fix to avoid printing ouside buf[] boundaries as
+	//        vsnprint returns number of characters that would have been
+	//        printed despite sizeof(buf)
+	if (pos > eDEBUG_BUFLEN - 1)
+		pos = eDEBUG_BUFLEN - 1; // keep space fo newline
 
 	if (!(flags & _DBGFLG_NONEWLINE)) {
 		/* buf will still be null-terminated here, so it is always safe
