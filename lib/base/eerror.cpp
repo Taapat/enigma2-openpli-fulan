@@ -77,6 +77,7 @@ void DumpUnfreed()
 };
 #endif
 
+int logOutputConsole = 1;
 int debugLvl = lvlDebug;
 
 static pthread_mutex_t DebugLock = PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP;
@@ -195,7 +196,8 @@ void eDebugImpl(int flags, const char* fmt, ...)
 
 	logOutput(buf, pos);
 
-	::write(2, buf, pos);
+	if (logOutputConsole)
+		::write(2, buf, pos);
 
 	delete[] buf;
 	if (flags & _DBGFLG_FATAL)
