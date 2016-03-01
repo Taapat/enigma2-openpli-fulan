@@ -8668,3 +8668,6 @@ msgstr "zapped"
 
 msgid "®"
 msgstr ""
+
+msgid "Bahasa Indonesia"
+msgstr "Indonesian"
