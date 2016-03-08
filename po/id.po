@@ -18,7 +18,7 @@ msgid ""
 "Advanced options and settings."
 msgstr ""
 "\n"
-"Pilihan dan Pengaturan Tingkat Mahir"
+"Pilihan dan Pengaturan Tingkat Lanjut"
 
 msgid ""
 "\n"
@@ -266,7 +266,7 @@ msgid "3"
 msgstr "3"
 
 msgid "3d mode"
-msgstr "mode 3d"
+msgstr "Mode 3d"
 
 msgid "4"
 msgstr "4"
@@ -383,9 +383,9 @@ msgid ""
 "\n"
 "Do you want to disable the second network interface?"
 msgstr ""
-"A second configured interface has been found.\n"
+"Antarmuka terkonfigurasi kedua telah ditemukan.\n"
 "\n"
-"Do you want to disable the second network interface?"
+"Anda ingin mematikan antarmuka jaringan kedua?"
 
 msgid ""
 "A sleep timer wants to set your\n"
@@ -475,19 +475,19 @@ msgid "Add provider"
 msgstr "Add provider"
 
 msgid "Add recording (enter recording duration)"
-msgstr "Add recording (enter recording duration)"
+msgstr "Tambah rekaman (masukkan durasi rekam)"
 
 msgid "Add recording (enter recording endtime)"
-msgstr "Add recording (enter recording endtime)"
+msgstr "Tambah rekaman (masukkan batas akhir waktu rekam)"
 
 msgid "Add recording (indefinitely)"
-msgstr "Add recording (indefinitely)"
+msgstr "Tambah rekaman (tidak terbatas waktu)"
 
 msgid "Add recording (stop after current event)"
-msgstr "Add recording (stop after current event)"
+msgstr "Tambah rekaman (berhenti setelah acara saat ini)"
 
 msgid "Add service"
-msgstr "Add service"
+msgstr "Tambah layanan"
 
 msgid "Add timer"
 msgstr "Add timer"
@@ -555,7 +555,7 @@ msgid "Allow quit movieplayer with exit"
 msgstr "Allow quit movieplayer with exit"
 
 msgid "Allow subtitle language to equal audio language"
-msgstr "Allow subtitle language to equal audio language"
+msgstr "Biarkan bahasa subtitle sama dengan bahasa audio"
 
 msgid "Allow subtitles for hearing impaired"
 msgstr "Allow subtitles for hearing impaired"
@@ -564,54 +564,54 @@ msgid "Alpha"
 msgstr "Alpha"
 
 msgid "Alternative"
-msgstr "Alternative"
+msgstr "Alternatif"
 
 msgid "Alternative numbering mode"
-msgstr "Alternative numbering mode"
+msgstr "Mode penomoran alternatif"
 
 msgid "Alternative services tuner priority"
-msgstr "Alternative services tuner priority"
+msgstr "Prioritas penala layanan alternatif"
 
 msgid "Always ask"
-msgstr "Always ask"
+msgstr "Selalu tanya"
 
 msgid "An empty filename is illegal."
-msgstr "An empty filename is illegal."
+msgstr "Nama file kosong tidak diperbolehkan."
 
 msgid "An error occurred while downloading the packetlist. Please try again."
-msgstr "An error occurred while downloading the packetlist. Please try again."
+msgstr "Kesalahan terjadi saat unduh daftar paket. Silakan coba lagi"
 
 msgid "An unknown error occurred!"
-msgstr "An unknown error occurred!"
+msgstr "Kesalahan takdikenal terjadi!"
 
 msgid "Any activity"
 msgstr "Any activity"
 
 msgid "Arabic"
-msgstr "Arabic"
+msgstr "Arab"
 
 msgid ""
 "Are you sure you want to activate this network configuration?\n"
 "\n"
 msgstr ""
-"Are you sure you want to activate this network configuration?\n"
+"Anda yakin akan mengaktifkan konfigurasi jaringan ini?\n"
 "\n"
 
 msgid ""
 "Are you sure you want to delete\n"
 "the following backup:\n"
 msgstr ""
-"Are you sure you want to delete\n"
-"the following backup:\n"
+"Anda yakin ingin menghapus\n"
+"file backup berikut:\n"
 
 msgid "Are you sure you want to exit this wizard?"
-msgstr "Are you sure you want to exit this wizard?"
+msgstr "Anda yakin ingin keluar dari wizard ini?"
 
 msgid ""
 "Are you sure you want to restart your network interfaces?\n"
 "\n"
 msgstr ""
-"Are you sure you want to restart your network interfaces?\n"
+"Anda yakin ingin merestart antarmuka jaringan ini?\n"
 "\n"
 
 msgid ""
@@ -633,16 +633,16 @@ msgstr ""
 "Your receiver will restart after the backup has been restored!"
 
 msgid "Artist"
-msgstr "Artist"
+msgstr "Artis"
 
 msgid "Arts/Culture"
-msgstr "Arts/Culture"
+msgstr "Seni/Budaya"
 
 msgid "Ask user"
-msgstr "Ask user"
+msgstr "Tanya pengguna"
 
 msgid "Aspect ratio"
-msgstr "Aspect ratio"
+msgstr "Aspek rasio"
 
 msgid "Assigned CAIds:"
 msgstr "Assigned CAIds:"
@@ -651,43 +651,52 @@ msgid "Assigned services/provider:"
 msgstr "Assigned services/provider:"
 
 msgid "At beginning"
-msgstr "At beginning"
+msgstr "Di awal"
 
 msgid "At end"
-msgstr "At end"
+msgstr "Di akhir"
 
 msgid "Audio"
 msgstr "Audio"
 
 msgid "Audio PID"
-msgstr "Audio PID"
+msgstr "PID Audio"
 
 msgid "Audio language selection 1"
-msgstr "Audio language selection 1"
+msgstr "Pemilihan bahasa audio 1"
 
 msgid "Audio language selection 2"
-msgstr "Audio language selection 2"
+msgstr "Pemilihan bahasa audio 2"
 
 msgid "Audio language selection 3"
-msgstr "Audio language selection 3"
+msgstr "Pemilihan bahasa audio 3"
 
 msgid "Audio language selection 4"
-msgstr "Audio language selection 4"
+msgstr "Pemilihan bahasa audio 4"
 
 msgid "Audio options..."
-msgstr "Audio options..."
+msgstr "Pilihan Audio..."
+
+msgid "Audio source"
+msgstr "Sumber audio"
+
+msgid "AC3 downmix"
+msgstr "Turunkan Kualitas AC3"
+
+msgid "Multi channel downmix"
+msgstr "Turunkan kualitas multi kanal"
 
 msgid "Audio track (%s) format"
-msgstr "Audio track (%s) format"
+msgstr "Format jalur Audio (%s)"
 
 msgid "Audio track (%s) language"
-msgstr "Audio track (%s) language"
+msgstr "Bahasa jalur Audio (%s)"
 
 msgid "Author: "
-msgstr "Author: "
+msgstr "Penulis: "
 
 msgid "Authoring mode"
-msgstr "Authoring mode"
+msgstr "Mode penulisan"
 
 msgid "Auto"
 msgstr "Auto"
@@ -705,22 +714,22 @@ msgid "Auto focus commencing ..."
 msgstr "Auto focus commencing ..."
 
 msgid "Auto language selection"
-msgstr "Pemilihan bahasa otomatis"
+msgstr "Pemilihan Bahasa Otomatis"
 
 msgid "Auto scart switching"
-msgstr "Auto scart switching"
+msgstr "Pertukaran scart otomatis"
 
 msgid "Automatic"
-msgstr "Automatic"
+msgstr "Otomatis"
 
 msgid "Automatic scan"
-msgstr "Pencarian Otomatis"
+msgstr "Pelacakan Otomatis"
 
 msgid "Automatically start timeshift after"
-msgstr "Automatically start timeshift after"
+msgstr "Mulai timeshift otomatis setelah"
 
 msgid "Automatically turn on external subtitles"
-msgstr "Automatically turn on external subtitles"
+msgstr "Hidupkan otomatis subtitle luar"
 
 msgid "Available format variables"
 msgstr "Available format variables"
@@ -735,31 +744,31 @@ msgid "BER:"
 msgstr "BER:"
 
 msgid "Back"
-msgstr "Back"
+msgstr "Kembali"
 
 msgid "Background"
-msgstr "Background"
+msgstr "Latar"
 
 msgid "Background color"
-msgstr "Background color"
+msgstr "Warna latar"
 
 msgid "Background delete option"
-msgstr "Background delete option"
+msgstr "Pilihan hapus latar"
 
 msgid "Background delete speed"
-msgstr "Background delete speed"
+msgstr "Kecepatan hapus latar"
 
 msgid "Backup completed."
-msgstr "Backup completed."
+msgstr "Backup selesai."
 
 msgid "Backup failed."
-msgstr "Backup failed."
+msgstr "Backup gagal."
 
 msgid "Backup is running..."
-msgstr "Backup is running..."
+msgstr "Backup sedang berlangsung..."
 
 msgid "Backup system settings"
-msgstr "Backup system settings"
+msgstr "Backup pengaturan sistem"
 
 msgid "Band"
 msgstr "Band"
@@ -868,7 +877,7 @@ msgid "Can be used for different fps between external subtitles and video."
 msgstr "Can be used for different fps between external subtitles and video."
 
 msgid "Cancel"
-msgstr "Cancel"
+msgstr "Batal"
 
 msgid "Cannot determine"
 msgstr "Cannot determine"
@@ -892,7 +901,7 @@ msgid "Center DVB subtitles"
 msgstr "Center DVB subtitles"
 
 msgid "Change bouquets in quickzap"
-msgstr "Change bouquets in quickzap"
+msgstr "Ganti buket saat zap cepat"
 
 msgid "Change recording (duration)"
 msgstr "Change recording (duration)"
@@ -977,7 +986,7 @@ msgid "Clear"
 msgstr "Clear"
 
 msgid "Clear before scan"
-msgstr "Bersihkan sebelum pencarian"
+msgstr "Bersihkan sebelum pelacakan"
 
 msgid "Clear fixed"
 msgstr "Clear fixed"
@@ -1022,7 +1031,7 @@ msgid "Command execution..."
 msgstr "Command execution..."
 
 msgid "Command order"
-msgstr "Command order"
+msgstr "Urutan perintah"
 
 msgid "Common Interface"
 msgstr "Common Interface"
@@ -1099,7 +1108,7 @@ msgid "Configure the IP address."
 msgstr "Configure the IP address."
 
 msgid "Configure the aspect ratio of the screen."
-msgstr "Configure the aspect ratio of the screen."
+msgstr "Atur aspek rasio layar."
 
 msgid "Configure the behavior when movie playback is manually stopped."
 msgstr "Configure the behavior when movie playback is manually stopped."
@@ -1146,25 +1155,25 @@ msgid "Configure the duration in minutes for the screensaver."
 msgstr "Configure the duration in minutes for the screensaver."
 
 msgid "Configure the first audio language (highest priority)."
-msgstr "Configure the first audio language (highest priority)."
+msgstr "Atur bahasa audio pertama (prioritas teratas)."
 
 msgid "Configure the first subtitle language (highest priority)."
-msgstr "Configure the first subtitle language (highest priority)."
+msgstr "Atur bahasa subtitle pertama (prioritas teratas)."
 
 msgid "Configure the font size of the subtitles."
-msgstr "Configure the font size of the subtitles."
+msgstr "Atur ukuran huruf subtitle."
 
 msgid "Configure the fourth audio language."
-msgstr "Configure the fourth audio language."
+msgstr "Atur bahasa audio keempat."
 
 msgid "Configure the fourth subtitle language."
-msgstr "Configure the fourth subtitle language."
+msgstr "Atur bahasa subtitle keempat."
 
 msgid "Configure the function of a long press on the power button."
-msgstr "Configure the function of a long press on the power button."
+msgstr "Atur fungsi tekan lama pada tombol power."
 
 msgid "Configure the function of a short press on the power button."
-msgstr "Configure the function of a short press on the power button."
+msgstr "Atur fungsi tekan sebentar pada tombol power."
 
 msgid "Configure the function of the '0' button do when PIP is active."
 msgstr "Configure the function of the '0' button do when PIP is active."
@@ -1173,10 +1182,10 @@ msgid "Configure the gateway."
 msgstr "Configure the gateway."
 
 msgid "Configure the general audio delay of Dolby Digital sound tracks."
-msgstr "Configure the general audio delay of Dolby Digital sound tracks."
+msgstr "Atur penundaan audio umum pada jalur suara Dolby Digital."
 
 msgid "Configure the general audio delay of stereo sound tracks."
-msgstr "Configure the general audio delay of stereo sound tracks."
+msgstr "Atur penundaan audio umum pada jalur suara stereo."
 
 msgid ""
 "Configure the hard disk drive to go to standby after the specified idle time."
@@ -1252,22 +1261,22 @@ msgid "Configure the primary EPG language."
 msgstr "Configure the primary EPG language."
 
 msgid "Configure the refresh rate of the screen."
-msgstr "Configure the refresh rate of the screen."
+msgstr "Atur refresh rate layar."
 
 msgid "Configure the screen resolution in PC output mode."
 msgstr "Configure the screen resolution in PC output mode."
 
 msgid "Configure the second audio language."
-msgstr "Configure the second audio language."
+msgstr "Atur bahasa audio kedua."
 
 msgid "Configure the second subtitle language."
-msgstr "Configure the second subtitle language."
+msgstr "Atur bahasa subtitle kedua."
 
 msgid "Configure the secondary EPG language."
 msgstr "Configure the secondary EPG language."
 
 msgid "Configure the sharpness of the video scaling."
-msgstr "Configure the sharpness of the video scaling."
+msgstr "Atur kecerahan pada skala video."
 
 msgid "Configure the skip time interval for the '1'/'3' buttons."
 msgstr "Configure the skip time interval for the '1'/'3' buttons."
@@ -1292,13 +1301,13 @@ msgid "Configure the subtitle delay when timing information is not available."
 msgstr "Configure the subtitle delay when timing information is not available."
 
 msgid "Configure the third audio language."
-msgstr "Configure the third audio language."
+msgstr "Atur bahasa audio ketiga."
 
 msgid "Configure the third subtitle language."
-msgstr "Configure the third subtitle language."
+msgstr "Atur bahasa subtitle ketiga."
 
 msgid "Configure the transparency of the OSD."
-msgstr "Configure the transparency of the OSD."
+msgstr "Atur transparansi OSD."
 
 msgid ""
 "Configure the transparency of the black background of graphical DVB "
@@ -1308,7 +1317,7 @@ msgstr ""
 "subtitles."
 
 msgid "Configure the tuner mode."
-msgstr "Configure the tuner mode."
+msgstr "Atur mode penala"
 
 msgid "Configure the type of status indication icons shown in the movielist."
 msgstr "Configure the type of status indication icons shown in the movielist."
@@ -1321,7 +1330,7 @@ msgstr ""
 "of the screen."
 
 msgid "Configure the video output mode (or resolution)."
-msgstr "Configure the video output mode (or resolution)."
+msgstr "Atur mode keluaran video (atau resolusi)."
 
 msgid "Configure the way in which the receiver changes channels."
 msgstr "Configure the way in which the receiver changes channels."
@@ -1341,7 +1350,7 @@ msgstr ""
 msgid ""
 "Configure whether multi channel sound tracks should be downmixed to stereo."
 msgstr ""
-"Configure whether multi channel sound tracks should be downmixed to stereo."
+"Atur apakah jalur suara kanal banyak ingin diturunkan ke stereo."
 
 msgid ""
 "Configure whether or not an icon should be shown when your motorized dish is "
@@ -1354,8 +1363,8 @@ msgid ""
 "Configure which access level to use for the configuration menu. Expert level "
 "gives access to all items."
 msgstr ""
-"Configure which access level to use for the configuration menu. Expert level "
-"gives access to all items."
+"Atur level akses mana yang digunakan untuk mengatur menu. Level ahli "
+"memberikan akses ke semua item."
 
 msgid "Configure which color format should be used on the SCART output."
 msgstr "Configure which color format should be used on the SCART output."
@@ -1365,9 +1374,21 @@ msgid ""
 "available. If set to 'auto' the system will give priority to the tuner "
 "having the lowest number of channels/satellites."
 msgstr ""
-"Configure which tuner will be preferred, when more than one tuner is "
-"available. If set to 'auto' the system will give priority to the tuner "
-"having the lowest number of channels/satellites."
+"Atur penala mana yang ingin diutamakan, ketika lebih dari satu penala "
+"tersedia. Jika diatur ke 'auto' sistem akan memprioritaskan pada penala "
+"dengan jumlah kanal/satelit yang paling sedikit."
+
+msgid "No priority"
+msgstr "Tidak Diprioritaskan"
+
+msgid ""
+"Configure which tuner type will be preferred, when the same service is "
+"available on different types of tuners. Choose 'no priority' to try "
+"each alternative one by one independent from tuner type."
+msgstr ""
+"Atur tipe penala mana ingin diutamakan,  ketika layanan yang sama "
+"tersedia pada tipe penala yang berbeda. Pilih 'tidak diprioritaskan' untuk mencoba "
+"setiap alternatif satu per satu terlepas dari tipe penala."
 
 msgid "Configure your internal LAN"
 msgstr "Configure your internal LAN"
@@ -1382,7 +1403,7 @@ msgid "Configure your wireless LAN again"
 msgstr "Configure your wireless LAN again"
 
 msgid "Configures which video output connector will be used."
-msgstr "Configures which video output connector will be used."
+msgstr "Atur konektor keluaran video mana yang ingin digunakan."
 
 msgid "Configuring"
 msgstr "Configuring"
@@ -1454,43 +1475,43 @@ msgid "Could not record due to invalid service %s"
 msgstr "Could not record due to invalid service %s"
 
 msgid "Create DVD-ISO"
-msgstr "Create DVD-ISO"
+msgstr "Membuat DVD-ISO"
 
 msgid "Creating directory %s failed."
-msgstr "Creating directory %s failed."
+msgstr "Membuat direktori %s gagal."
 
 msgid "Creating filesystem"
-msgstr "Creating filesystem"
+msgstr "Membuat filesystem"
 
 msgid "Creating partition"
-msgstr "Creating partition"
+msgstr "Membuat partisi"
 
 msgid "Croatian"
-msgstr "Croatian"
+msgstr "Kroasia"
 
 msgid "Current CEC address"
-msgstr "Current CEC address"
+msgstr "Alamat CEC saat ini"
 
 msgid "Current device: "
-msgstr "Current device: "
+msgstr "Perangkat saat ini: "
 
 msgid "Current event EPG"
 msgstr "Current event EPG"
 
 msgid "Current settings:"
-msgstr "Current settings:"
+msgstr "Pengaturan saat ini:"
 
 msgid "Current transponder"
-msgstr "Current transponder"
+msgstr "Transponder saat ini"
 
 msgid "Current value: "
-msgstr "Current value: "
+msgstr "Nilai saat ini: "
 
 msgid "Current version:"
-msgstr "Current version:"
+msgstr "Versi saat ini:"
 
 msgid "Currently installed image"
-msgstr "Currently installed image"
+msgstr "Image terpasang saat ini"
 
 msgid "Custom skip time for '1'/'3' buttons"
 msgstr "Custom skip time for '1'/'3' buttons"
@@ -1502,10 +1523,10 @@ msgid "Custom skip time for '7'/'9' buttons"
 msgstr "Custom skip time for '7'/'9' buttons"
 
 msgid "Customize"
-msgstr "Penyesuaian"
+msgstr "Ubahsuai"
 
 msgid "Cut"
-msgstr "Cut"
+msgstr "Potong"
 
 msgid "Cutlist editor..."
 msgstr "Cutlist editor..."
@@ -1550,28 +1571,28 @@ msgid "DVB-T2"
 msgstr "DVB-T2"
 
 msgid "DVD data format"
-msgstr "DVD data format"
+msgstr "Format data DVD"
 
 msgid "DVD file browser"
-msgstr "DVD file browser"
+msgstr "Perambah file DVD"
 
 msgid "DVD media toolbox"
 msgstr "DVD media toolbox"
 
 msgid "DVD player"
-msgstr "DVD player"
+msgstr "Pemutar DVD"
 
 msgid "DVD titlelist"
 msgstr "DVD titlelist"
 
 msgid "Danish"
-msgstr "Danish"
+msgstr "Denmark"
 
 msgid "Date"
-msgstr "Date"
+msgstr "Tanggal"
 
 msgid "Date/time input"
-msgstr "Date/time input"
+msgstr "Tanggal/waktu input"
 
 msgid "Deep standby"
 msgstr "Deep standby"
@@ -1586,61 +1607,67 @@ msgid "Default settings"
 msgstr "Pengaturan bawaan"
 
 msgid "Delay before key repeat starts:"
-msgstr "Delay before key repeat starts:"
+msgstr "Tunda sebelum tombol ulang mulai:"
 
 msgid "Delay for external subtitles"
-msgstr "Delay for external subtitles"
+msgstr "Tunda pada subtitle luar"
 
 msgid "Delete"
-msgstr "Delete"
+msgstr "Hapus"
 
 msgid "Delete entry"
-msgstr "Delete entry"
+msgstr "Hapus entri"
 
 msgid "Delete failed!"
-msgstr "Delete failed!"
+msgstr "Gagal menghapus!"
 
 msgid "Delete file"
-msgstr "Delete file"
+msgstr "Hapus file"
 
 msgid "Delete playlist entry"
-msgstr "Delete playlist entry"
+msgstr "Hapus entri daftar putar"
 
 msgid "Delete saved playlist"
-msgstr "Delete saved playlist"
+msgstr "Hapus daftar putar tersimpan"
 
 msgid "Deleted"
-msgstr "Deleted"
+msgstr "Dihapus"
 
 msgid "Deleted items"
-msgstr "Deleted items"
+msgstr "Item dihapus"
 
 msgid "Depth"
-msgstr "Depth"
+msgstr "Kedalaman"
 
 msgid "Descramble http streams"
 msgstr "Descramble http streams"
 
 msgid "Description"
-msgstr "Description"
+msgstr "Deskripsi"
 
 msgid "Deselect"
-msgstr "Deselect"
+msgstr "Tidak dipilih"
 
 msgid "Details for plugin: "
-msgstr "Details for plugin: "
+msgstr "Rincian plugin: "
 
 msgid "Detected HDD:"
-msgstr "Detected HDD:"
+msgstr "HDD terdeteksi:"
 
 msgid "Detected NIMs:"
-msgstr "Detected NIMs:"
+msgstr "NIMs terdeteksi:"
 
 msgid "Devicename:"
-msgstr "Devicename:"
+msgstr "Nama perangkat:"
 
 msgid "DiSEqC"
 msgstr "DiSEqC"
+
+msgid "DiSEqC 1.0 command"
+msgstr "Perintah DiSEqC 1.0"
+
+msgid "DiSEqC 1.1 command"
+msgstr "Perintah DiSEqC 1.1"
 
 msgid "DiSEqC A/B"
 msgstr "DiSEqC A/B"
@@ -1649,13 +1676,13 @@ msgid "DiSEqC A/B/C/D"
 msgstr "DiSEqC A/B/C/D"
 
 msgid "DiSEqC mode"
-msgstr "DiSEqC mode"
+msgstr "Mode DiSEqC"
 
 msgid "DiSEqC port %s: %s"
-msgstr "DiSEqC port %s: %s"
+msgstr "Port DiSEqC %s: %s"
 
 msgid "DiSEqC-tester settings"
-msgstr "DiSEqC-tester settings"
+msgstr "Pengaturan Pengecek-DiSEqC"
 
 msgid "Digital contour removal"
 msgstr "Digital contour removal"
@@ -1664,25 +1691,25 @@ msgid "Direct playback of linked titles without menu"
 msgstr "Direct playback of linked titles without menu"
 
 msgid "Directory"
-msgstr "Directory"
+msgstr "Direktori"
 
 msgid "Directory %s does not exist."
-msgstr "Directory %s does not exist."
+msgstr "Direktori %s tidak ada."
 
 msgid "Directory browser"
-msgstr "Directory browser"
+msgstr "Perambah direktori"
 
 msgid "Disable"
-msgstr "Disable"
+msgstr "Matikan"
 
 msgid "Disable Picture in Picture"
 msgstr "Disable Picture in Picture"
 
 msgid "Disable background scanning"
-msgstr "Disable background scanning"
+msgstr "Matikan pelacakan di latar"
 
 msgid "Disabled"
-msgstr "Disabled"
+msgstr "Dimatikan"
 
 msgid "Disk space to reserve for recordings (in GB)"
 msgstr "Disk space to reserve for recordings (in GB)"
@@ -1709,10 +1736,10 @@ msgid "Do not change"
 msgstr "Do not change"
 
 msgid "Do not record"
-msgstr "Do not record"
+msgstr "Jangan rekam"
 
 msgid "Do nothing"
-msgstr "Do nothing"
+msgstr "Jangan lakukan"
 
 msgid ""
 "Do you really want to check the filesystem?\n"
@@ -1745,63 +1772,63 @@ msgid ""
 "Do you really want to initialize the device?\n"
 "All data on the disk will be lost!"
 msgstr ""
-"Do you really want to initialize the device?\n"
-"All data on the disk will be lost!"
+"Anda yakin ingin memformat perangkat?\n"
+"Seluruh data pada perangkat akan hilang!"
 
 msgid ""
 "Do you really want to remove\n"
 "the plugin \"%s\"?"
 msgstr ""
-"Do you really want to remove\n"
-"the plugin \"%s\"?"
+"Anda yakin ingin menghapus\n"
+"plugin \"%s\"?"
 
 msgid "Do you really want to remove directory %s from the disk?"
-msgstr "Do you really want to remove directory %s from the disk?"
+msgstr "Anda yakin ingin menghapus direktori %s dari perangkat?"
 
 msgid "Do you really want to remove your bookmark of %s?"
-msgstr "Do you really want to remove your bookmark of %s?"
+msgstr "Anda yakin ingin menghapus bookmark anda %s?"
 
 msgid "Do you want to burn this collection to DVD medium?"
 msgstr "Do you want to burn this collection to DVD medium?"
 
 msgid "Do you want to do a service scan?"
-msgstr "Do you want to do a service scan?"
+msgstr "Anda ingin melacak layanan?"
 
 msgid "Do you want to do another manual service scan?"
-msgstr "Do you want to do another manual service scan?"
+msgstr "Anda ingin melacak layanan secara manual lainnya?"
 
 msgid "Do you want to download the image to %s ?"
-msgstr "Do you want to download the image to %s ?"
+msgstr "Anda ingin mengunduh image ke %s ?"
 
 msgid "Do you want to install a channel list?"
-msgstr "Do you want to install a channel list?"
+msgstr "Anda ingin memasang daftar kanal?"
 
 msgid "Do you want to install the package:\n"
-msgstr "Do you want to install the package:\n"
+msgstr "Anda ingin memasang paket:\n"
 
 msgid "Do you want to play DVD in drive?"
-msgstr "Do you want to play DVD in drive?"
+msgstr "Anda ingin memutar DVD pada drive?"
 
 msgid "Do you want to preview this DVD before burning?"
-msgstr "Do you want to preview this DVD before burning?"
+msgstr "Anda ingin melihat sekilas sebelum DVD ini dibakar?"
 
 msgid "Do you want to reboot your receiver?"
-msgstr "Do you want to reboot your receiver?"
+msgstr "Anda ingin mereboot rx anda?"
 
 msgid "Do you want to remove the package:\n"
-msgstr "Do you want to remove the package:\n"
+msgstr "Anda ingin menghapus paket:\n"
 
 msgid "Do you want to restore your settings?"
-msgstr "Do you want to restore your settings?"
+msgstr "Anda ingin mengembalikan pengaturan anda?"
 
 msgid "Do you want to resume this playback?"
 msgstr "Do you want to resume this playback?"
 
 msgid "Do you want to update your receiver to %s?"
-msgstr "Do you want to update your receiver to %s?"
+msgstr "Anda ingin memperbarui rx anda ke %s?"
 
 msgid "Do you want to update your receiver?"
-msgstr "Do you want to update your receiver?"
+msgstr "Anda ingin memperbarui rx anda?"
 
 msgid "Do you want to upgrade the package:\n"
 msgstr "Do you want to upgrade the package:\n"
@@ -1924,128 +1951,128 @@ msgid "Enable multiple bouquets"
 msgstr "Enable multiple bouquets"
 
 msgid "Enable teletext caching"
-msgstr "Enable teletext caching"
+msgstr "Aktifkan penyembunyian teleteks"
 
 msgid "Enabled"
-msgstr "Enabled"
+msgstr "Dibolehkan"
 
 msgid "Encrypted: "
-msgstr "Encrypted: "
+msgstr "Dienkripsi: "
 
 msgid "Encryption"
-msgstr "Encryption"
+msgstr "Enkripsi"
 
 msgid "Encryption key"
-msgstr "Encryption key"
+msgstr "Kunci enkripsi"
 
 msgid "Encryption key type"
-msgstr "Encryption key type"
+msgstr "Tipe kunci enkripsi"
 
 msgid "Encryption:"
-msgstr "Encryption:"
+msgstr "Enkripsi:"
 
 msgid "End time"
 msgstr "End time"
 
 msgid "English"
-msgstr "English"
+msgstr "Inggris"
 
 msgid "Enigma2 skin selector"
-msgstr "Enigma2 skin selector"
+msgstr "Pilih tampilan Enigma2"
 
 msgid "Enter main menu..."
 msgstr "Masuk ke menu utama"
 
 msgid "Enter pin code"
-msgstr "Enter pin code"
+msgstr "Masukkan kode pin"
 
 msgid "Enter the service pin"
-msgstr "Enter the service pin"
+msgstr "Masukkan pin layanan"
 
 msgid "Error"
 msgstr "Error"
 
 msgid "Error code"
-msgstr "Error code"
+msgstr "Kode error"
 
 msgid "Error executing plugin"
-msgstr "Error executing plugin"
+msgstr "Error eksekusi plugin"
 
 msgid ""
 "Error: %s\n"
 "Retry?"
 msgstr ""
 "Error: %s\n"
-"Retry?"
+"Coba lagi?"
 
 msgid "Estonian"
-msgstr "Estonian"
+msgstr "Estonia"
 
 msgid "Ethernet network interface"
-msgstr "Ethernet network interface"
+msgstr "Antarmuka jaringan ethernet"
 
 msgid "Event font size (relative to skin size)"
-msgstr "Event font size (relative to skin size)"
+msgstr "Ukuran huruf acara (tergantung ukurang tampilan)"
 
 msgid "Event view"
-msgstr "Event view"
+msgstr "Lihat acara"
 
 msgid "Event view menu"
-msgstr "Event view menu"
+msgstr "Menu lihat acara"
 
 msgid "Everywhere"
-msgstr "Everywhere"
+msgstr "Dimana saja"
 
 msgid "Exceeds dual layer medium!"
 msgstr "Exceeds dual layer medium!"
 
 msgid "Execution finished!!"
-msgstr "Execution finished!!"
+msgstr "Eksekusi selesai!!"
 
 msgid "Execution progress:"
-msgstr "Execution progress:"
+msgstr "Progress eksekusi:"
 
 msgid "Exif"
 msgstr "Exif"
 
 msgid "Exit"
-msgstr "Exit"
+msgstr "Keluar"
 
 msgid "Exit EPG"
-msgstr "Exit EPG"
+msgstr "Keluar dari EPG"
 
 msgid "Exit editor"
-msgstr "Exit editor"
+msgstr "Keluar dari editor"
 
 msgid "Exit input device selection."
-msgstr "Exit input device selection."
+msgstr "Keluar dari pilihan perangkat input."
 
 msgid "Exit media player?"
-msgstr "Exit media player?"
+msgstr "Matikan pemutar media?"
 
 msgid "Exit mediaplayer"
-msgstr "Exit mediaplayer"
+msgstr "Matikan pemutar media"
 
 msgid "Exit movie list"
-msgstr "Exit movie list"
+msgstr "Keluar dari daftar film"
 
 msgid "Exit movie player?"
-msgstr "Exit movie player?"
+msgstr "Matikan pemutar film?"
 
 msgid "Exit nameserver configuration"
-msgstr "Exit nameserver configuration"
+msgstr "Keluar dari konfigurasi nameserver"
 
 msgid "Exit network interface list"
-msgstr "Exit network interface list"
+msgstr "Keluar dari daftar antarmuka jaringan"
 
 msgid "Exit network wizard"
-msgstr "Exit network wizard"
+msgstr "Keluar dari wizard jaringan"
 
 msgid "Exit the wizard"
-msgstr "Exit the wizard"
+msgstr "Keluar dari wizard jaringan"
 
 msgid "Expert"
-msgstr "Expert"
+msgstr "Ahli"
 
 msgid "Extended Software"
 msgstr "Extended Software"
@@ -2060,13 +2087,13 @@ msgid "Extended setup..."
 msgstr "Extended setup..."
 
 msgid "Extensions"
-msgstr "Extensions"
+msgstr "Ekstensi"
 
 msgid "Extensions management"
-msgstr "Extensions management"
+msgstr "Pengelolaan ekstensi"
 
 msgid "External subtitle color"
-msgstr "External subtitle color"
+msgstr "Warna subtitle luar"
 
 msgid "FEC"
 msgstr "FEC"
@@ -2078,7 +2105,7 @@ msgid "Factory reset"
 msgstr "Parameter Pabrik"
 
 msgid "Failed"
-msgstr "Failed"
+msgstr "Gagal"
 
 msgid "Failed to write /tmp/positionersetup.log: "
 msgstr "Failed to write /tmp/positionersetup.log: "
@@ -2093,13 +2120,13 @@ msgid "Fan %d voltage"
 msgstr "Fan %d voltage"
 
 msgid "Fast"
-msgstr "Fast"
+msgstr "Cepat"
 
 msgid "Fast DiSEqC"
-msgstr "Fast DiSEqC"
+msgstr "DiSEqC Cepat"
 
 msgid "Fast Scan"
-msgstr "Pencarian Cepat"
+msgstr "Pelacakan Cepat"
 
 msgid "Fast epoch"
 msgstr "Fast epoch"
@@ -2111,7 +2138,7 @@ msgid "Favourites"
 msgstr "Favorit"
 
 msgid "File appears to be busy.\n"
-msgstr "File appears to be busy.\n"
+msgstr "File tampaknya sedang sibuk.\n"
 
 msgid "Filesystem check"
 msgstr "Filesystem check"
@@ -2165,7 +2192,7 @@ msgid "French"
 msgstr "French"
 
 msgid "Frequency"
-msgstr "Frequency"
+msgstr "Frekuensi"
 
 msgid "Frequency bands"
 msgstr "Frequency bands"
@@ -2205,28 +2232,28 @@ msgid "Gateway"
 msgstr "Gateway"
 
 msgid "General AC3 delay"
-msgstr "General AC3 delay"
+msgstr "Tunda AC3 umum"
 
 msgid "General PCM delay"
-msgstr "General PCM delay"
+msgstr "Tunda PCM umum"
 
 msgid "Genre"
 msgstr "Genre"
 
 msgid "German"
-msgstr "German"
+msgstr "Jerman"
 
 msgid "Get latest experimental image"
-msgstr "Get latest experimental image"
+msgstr "Dapatkan image percobaan terbaru"
 
 msgid "Get latest release image"
-msgstr "Get latest release image"
+msgstr "Dapatkan image keluaran terbaru"
 
 msgid "Getting plugin information. Please wait..."
-msgstr "Getting plugin information. Please wait..."
+msgstr "Mendapatkan info plugin. Silakan tunggu..."
 
 msgid "Go down the list"
-msgstr "Go down the list"
+msgstr "Menuju bawah daftar"
 
 msgid "Go to first movie or last item"
 msgstr "Go to first movie or last item"
@@ -2328,10 +2355,10 @@ msgid "Hidden network"
 msgstr "Hidden network"
 
 msgid "Hide CI messages"
-msgstr "Hide CI messages"
+msgstr "Sembunyikan pesan CI"
 
 msgid "Hide channel list in radio mode"
-msgstr "Hide channel list in radio mode"
+msgstr "Sembunyikan daftar kanal pada mode radio"
 
 msgid "Hide number markers"
 msgstr "Hide number markers"
@@ -2340,16 +2367,16 @@ msgid "Hide player"
 msgstr "Hide player"
 
 msgid "Hide zap errors"
-msgstr "Hide zap errors"
+msgstr "Sembunyikan kesalan zap"
 
 msgid "Hierarchy info"
-msgstr "Hierarchy info"
+msgstr "Info hirarki"
 
 msgid "Hierarchy information"
-msgstr "Hierarchy information"
+msgstr "Info hirarki"
 
 msgid "High bitrate support"
-msgstr "High bitrate support"
+msgstr "Dukungan bitrate tinggi"
 
 msgid "Hold screen"
 msgstr "Hold screen"
@@ -2430,16 +2457,16 @@ msgid "In progress"
 msgstr "In progress"
 
 msgid "Include AIT in http streams"
-msgstr "Include AIT in http streams"
+msgstr "Sertakan AIT pada streaming http"
 
 msgid "Include ECM in http streams"
-msgstr "Include ECM in http streams"
+msgstr "Sertakan ECM pada streaming http"
 
 msgid "Include EIT in http streams"
-msgstr "Include EIT in http streams"
+msgstr "Sertakan EIT pada streaming http"
 
 msgid "Increased voltage"
-msgstr "Increased voltage"
+msgstr "Voltase dinaikkan"
 
 msgid "Index"
 msgstr "Index"
@@ -2454,7 +2481,7 @@ msgid "Info bar"
 msgstr "Info bar"
 
 msgid "Info bar timeout"
-msgstr "Info bar timeout"
+msgstr "Batas waktu infobar"
 
 msgid "Information"
 msgstr "Informasi"
@@ -2484,22 +2511,22 @@ msgid "Initialization"
 msgstr "Initialization"
 
 msgid "Initialize"
-msgstr "Initialize"
+msgstr "Format"
 
 msgid "Initializing storage device..."
-msgstr "Initializing storage device..."
+msgstr "Memformat media penyimpanan..."
 
 msgid "Input"
 msgstr "Input"
 
 msgid "Input device setup"
-msgstr "Input device setup"
+msgstr "Atur perangkat input"
 
 msgid "Input devices"
-msgstr "Perangkat input"
+msgstr "Perangkat Input"
 
 msgid "Install"
-msgstr "Install"
+msgstr "Pasang"
 
 msgid "Install a new image with a USB stick"
 msgstr "Install a new image with a USB stick"
@@ -2511,16 +2538,16 @@ msgid "Install channel list"
 msgstr "Install channel list"
 
 msgid "Install extensions."
-msgstr "Install extensions."
+msgstr "Pasang ekstensi."
 
 msgid "Install local extension"
-msgstr "Install local extension"
+msgstr "Pasang ekstensi lokal"
 
 msgid "Install picons on"
-msgstr "Install picons on"
+msgstr "Pasang picon pada"
 
 msgid "Install softcam"
-msgstr "Install softcam"
+msgstr "Pasang softcam"
 
 msgid "Installation has completed."
 msgstr "Installation has completed."
@@ -2544,7 +2571,7 @@ msgid "Interface: "
 msgstr "Interface: "
 
 msgid "Intermediate"
-msgstr "Intermediate"
+msgstr "Sedang"
 
 msgid "Internal flash"
 msgstr "Internal flash"
@@ -2562,7 +2589,7 @@ msgid "Invalid location"
 msgstr "Invalid location"
 
 msgid "Inversion"
-msgstr "Inversion"
+msgstr "Inversi"
 
 msgid "Invert"
 msgstr "Invert"
@@ -2571,13 +2598,13 @@ msgid "Ipkg"
 msgstr "Ipkg"
 
 msgid "Is this setting ok?"
-msgstr "Is this setting ok?"
+msgstr "Apakah pengaturan ini ok?"
 
 msgid "Is this video mode ok?"
-msgstr "Is this video mode ok?"
+msgstr "Apakah mode video ini ok?"
 
 msgid "Italian"
-msgstr "Italian"
+msgstr "Italia"
 
 msgid "Items per page "
 msgstr "Items per page "
@@ -2712,7 +2739,7 @@ msgid "List type"
 msgstr "List type"
 
 msgid "Listen to the radio..."
-msgstr "Listen to the radio..."
+msgstr "Mendengarkan radio..."
 
 msgid "Lithuanian"
 msgstr "Lithuanian"
@@ -2781,19 +2808,19 @@ msgid "Manage extensions"
 msgstr "Manage extensions"
 
 msgid "Manage your receiver's software"
-msgstr "Manage your receiver's software"
+msgstr "Kelola perangkat lunak rx anda"
 
 msgid "Manual Scan"
-msgstr "Pencarian Manual"
+msgstr "Pelacakan Manual"
 
 msgid "Manual configuration"
 msgstr "Manual configuration"
 
 msgid "Manual scan"
-msgstr "Pencarian Manual"
+msgstr "Pelacakan Manual"
 
 msgid "Manual transponder"
-msgstr "Manual transponder"
+msgstr "Transponder manual"
 
 msgid "Manufacturer"
 msgstr "Manufacturer"
@@ -2808,10 +2835,10 @@ msgid "Max. bitrate: "
 msgstr "Max. bitrate: "
 
 msgid "Media player"
-msgstr "Media player"
+msgstr "Pemutar Media"
 
 msgid "Media scanner"
-msgstr "Media scanner"
+msgstr "Pemindai Media"
 
 msgid "Medium is not a writeable DVD!"
 msgstr "Medium is not a writeable DVD!"
@@ -2844,7 +2871,7 @@ msgid "Model: "
 msgstr "Model: "
 
 msgid "Modulation"
-msgstr "Modulation"
+msgstr "Modulasi"
 
 msgid "Modulator"
 msgstr "Modulator"
@@ -2922,31 +2949,34 @@ msgid "Multi EPG"
 msgstr "Multi EPG"
 
 msgid "Multi-EPG bouquet selection"
-msgstr "Multi-EPG bouquet selection"
+msgstr "Pilihan buket Multi-EPG"
 
 msgid "Multimedia"
 msgstr "Multimedia"
 
 msgid "Multiple service support"
-msgstr "Multiple service support"
+msgstr "Dukungan layanan banyak"
 
 msgid "Multiplex"
 msgstr "Multiplex"
 
 msgid "Multisat"
-msgstr "Multisat"
+msgstr "Banyak satelit"
+
+msgid "Multisat all select"
+msgstr "Banyak satelit dipilih semua"
 
 msgid "Music/Ballet/Dance"
 msgstr "Music/Ballet/Dance"
 
 msgid "Mute"
-msgstr "Mute"
+msgstr "Bisu"
 
 msgid "N/A"
 msgstr "N/A"
 
 msgid "NEXT"
-msgstr "NEXT"
+msgstr "Selanjutnya"
 
 msgid "NFI image flashing"
 msgstr "NFI image flashing"
@@ -2958,7 +2988,7 @@ msgid "NIM"
 msgstr "NIM"
 
 msgid "NOW"
-msgstr "NOW"
+msgstr "Sekarang"
 
 msgid "NTSC"
 msgstr "NTSC"
@@ -2994,31 +3024,31 @@ msgid "Network configuration..."
 msgstr "Konfigurasi jaringan..."
 
 msgid "Network mount"
-msgstr "Network mount"
+msgstr "Mount jaringan"
 
 msgid "Network mount %s"
-msgstr "Network mount %s"
+msgstr "Mount jaringan %s"
 
 msgid "Network name (SSID)"
-msgstr "Network name (SSID)"
+msgstr "Nama jaringan (SSID)"
 
 msgid "Network scan"
 msgstr "Pindai jaringan"
 
 msgid "Network setup"
-msgstr "Pengaturan Jaringan"
+msgstr "Atur Jaringan"
 
 msgid "Network test"
-msgstr "Tes Jaringan"
+msgstr "Periksa Jaringan"
 
 msgid "Network test..."
-msgstr "Mengetes jaringan..."
+msgstr "Memeriksa jaringan..."
 
 msgid "Network test: "
-msgstr "Test jaringan: "
+msgstr "Periksa jaringan: "
 
 msgid "Network wizard"
-msgstr "Network wizard"
+msgstr "Wizard jaringan"
 
 msgid "Network:"
 msgstr "Jaringan:"
@@ -3045,10 +3075,10 @@ msgid "No HDD found or HDD not initialized!"
 msgstr "No HDD found or HDD not initialized!"
 
 msgid "No backup needed"
-msgstr "No backup needed"
+msgstr "Backup tidak diperlukan"
 
 msgid "No cable tuner found!"
-msgstr "No cable tuner found!"
+msgstr "Kabel penala tidak ditemukan!"
 
 msgid ""
 "No data on transponder!\n"
@@ -3083,7 +3113,7 @@ msgid "No free index available"
 msgstr "No free index available"
 
 msgid "No free tuner!"
-msgstr "No free tuner!"
+msgstr "Tidak ada penala lagi!"
 
 msgid "No network connection available."
 msgstr "Koneksi jaringan tidak tersedia."
@@ -3119,8 +3149,8 @@ msgid ""
 "No tuner is enabled!\n"
 "Please setup your tuner settings before you start a service scan."
 msgstr ""
-"No tuner is enabled!\n"
-"Please setup your tuner settings before you start a service scan."
+"Tidak ada penala yang diaktifkan!\n"
+"Silakan atur pengaturan penala anda sebelum mulai lacak layanan."
 
 msgid "No updates available"
 msgstr "Pembaruan tidak tersedia"
@@ -3199,8 +3229,8 @@ msgid ""
 "Nothing to scan!\n"
 "Please setup your tuner settings before you start a service scan."
 msgstr ""
-"Nothing to scan!\n"
-"Please setup your tuner settings before you start a service scan."
+"Tidak ada yg bisa dilacak!\n"
+"Atur pengaturan penala sebelum memulai lacak layanan."
 
 msgid "Now playing"
 msgstr "Sedang dimainkan"
@@ -3230,7 +3260,7 @@ msgid "OSD settings"
 msgstr "OSD settings"
 
 msgid "OSD transparency"
-msgstr "OSD transparency"
+msgstr "Transparansi OSD"
 
 msgid "Off"
 msgstr "Mati"
@@ -3353,7 +3383,7 @@ msgid "Picon and service name"
 msgstr "Picon and service name"
 
 msgid "Picture player"
-msgstr "Picture player"
+msgstr "Pembuka Gambar"
 
 msgid "Pillarbox"
 msgstr "Pillarbox"
@@ -3374,7 +3404,7 @@ msgid "Play audio-CD..."
 msgstr "Play audio-CD..."
 
 msgid "Play back media files"
-msgstr "Play back media files"
+msgstr "Mainkan file-file media"
 
 msgid "Play entry"
 msgstr "Play entry"
@@ -3621,16 +3651,19 @@ msgid "Portuguese"
 msgstr "Portuguese"
 
 msgid "Position of completed timers in timerlist"
-msgstr "Position of completed timers in timerlist"
+msgstr "Letak pewaktu selesai pada daftar pewaktu"
 
 msgid "Position stored at index"
 msgstr "Position stored at index"
 
 msgid "Positioner"
-msgstr "Positioner"
+msgstr "Posisioner"
 
 msgid "Positioner setup"
-msgstr "Positioner setup"
+msgstr "Atur Posisioner"
+
+msgid "Show positioner position"
+msgstr "Tampilkan posisi posisioner"
 
 msgid "Power threshold in mA"
 msgstr "Power threshold in mA"
@@ -3639,10 +3672,13 @@ msgid "Predefined transponder"
 msgstr "TP yang telah ditetapkan"
 
 msgid "Prefer AC3 track"
-msgstr "Prefer AC3 track"
+msgstr "Utamakan jalur AC3"
+
+msgid "Prefer AC3+ track"
+msgstr "Utamakan jalur AC3+"
 
 msgid "Prefer audio track stored by service"
-msgstr "Prefer audio track stored by service"
+msgstr "Utamakan jalur audio yang disimpan layanan"
 
 msgid "Prefer graphical DVB subtitles"
 msgstr "Prefer graphical DVB subtitles"
@@ -3654,7 +3690,7 @@ msgid "Prefer subtitles stored by service"
 msgstr "Prefer subtitles stored by service"
 
 msgid "Preferred tuner"
-msgstr "Preferred tuner"
+msgstr "Penala diutamakan"
 
 msgid "Prepare another USB stick for image flashing"
 msgstr "Prepare another USB stick for image flashing"
@@ -3828,7 +3864,7 @@ msgid "Recording in progress"
 msgstr "Recording in progress"
 
 msgid "Recording paths"
-msgstr "Alokasi rekaman"
+msgstr "Alokasi Rekaman"
 
 msgid "Recording type"
 msgstr "Recording type"
@@ -3849,7 +3885,7 @@ msgid "Refresh rate"
 msgstr "Refresh rate"
 
 msgid "Refresh rate selection."
-msgstr "Refresh rate selection."
+msgstr "Pemilihan refresh rate."
 
 msgid "Regard deep standby as standby"
 msgstr "Regard deep standby as standby"
@@ -3954,7 +3990,7 @@ msgid "Restart GUI now?"
 msgstr "Ingin Restart GUI sekarang?"
 
 msgid "Restart enigma"
-msgstr "Restart enigma"
+msgstr "Restart Enigma"
 
 msgid "Restart network"
 msgstr "Restart network"
@@ -4095,6 +4131,9 @@ msgstr "Scaling mode"
 msgid "Scan "
 msgstr "Scan "
 
+msgid "Scan"
+msgstr "Lacak"
+
 msgid "Scan %s"
 msgstr "Scan %s"
 
@@ -4231,10 +4270,7 @@ msgid "Select files/folders to backup"
 msgstr "Select files/folders to backup"
 
 msgid "Select input device"
-msgstr "Select input device"
-
-msgid "Select input device."
-msgstr "Select input device."
+msgstr "Pilih perangkat input"
 
 msgid "Select interface"
 msgstr "Select interface"
@@ -4246,7 +4282,7 @@ msgid "Select provider to add..."
 msgstr "Pilih penyedia untuk ditambahkan..."
 
 msgid "Select refresh rate"
-msgstr "Select refresh rate"
+msgstr "Pilih refresh rate"
 
 msgid "Select service to add..."
 msgstr "Select service to add..."
@@ -4405,145 +4441,148 @@ msgstr ""
 "memory?"
 
 msgid "Sharpness"
-msgstr "Sharpness"
+msgstr "Ketajaman"
 
 msgid "Short filenames"
-msgstr "Short filenames"
+msgstr "Nama file pendek"
 
 msgid "Show EIT now/next in infobar"
-msgstr "Show EIT now/next in infobar"
+msgstr "Tampilkan EIT sekarang/nanti di infobar"
 
 msgid "Show EPG for current channel..."
-msgstr "Show EPG for current channel..."
+msgstr "Tampilkan EPG pada kanal sekarang..."
 
 msgid "Show EPG..."
-msgstr "Show EPG..."
+msgstr "Tampilkan EPG..."
 
 msgid "Show Games show"
-msgstr "Show Games show"
+msgstr "Tampilkan permainan"
 
 msgid "Show SNR percentage instead of dB value"
-msgstr "Show SNR percentage instead of dB value"
+msgstr "Tampilkan persentase SNR daripada nilai dB"
 
 msgid "Show WLAN status"
-msgstr "Show WLAN status"
+msgstr "Tampilkan status WLAN"
 
 msgid "Show animation while busy"
-msgstr "Show animation while busy"
+msgstr "Tampilkan animasi saat sibuk"
 
 msgid "Show background in radio mode"
-msgstr "Show background in radio mode"
+msgstr "Tampilkan gambar latar pada mode radio"
 
 msgid "Show bouquet selection menu"
-msgstr "Show bouquet selection menu"
+msgstr "Tampilkan menu pilihan buket"
 
 msgid "Show busy indicator when the system is busy."
-msgstr "Show busy indicator when the system is busy."
+msgstr "Tampilkan indikator sibuk saat sistem sibuk."
 
 msgid "Show channel numbers in channel selection"
-msgstr "Show channel numbers in channel selection"
+msgstr "Tampilkan nomor kanal pada pemilihan kanal"
 
 msgid "Show crypto info in infobar"
-msgstr "Show crypto info in infobar"
+msgstr "Tampilkan info kripto di infobar"
 
 msgid "Show detailed event info"
-msgstr "Show detailed event info"
+msgstr "Tampilkan info acara terperinci"
 
 msgid "Show event details"
-msgstr "Show event details"
+msgstr "Tampilkan acara terperinci"
 
 msgid "Show event-progress in channel selection"
-msgstr "Show event-progress in channel selection"
+msgstr "Tampilkan progress acara pada pemilihan kanal"
 
 msgid "Show extended description"
-msgstr "Show extended description"
+msgstr "Tampilkan deskripsi lebih luas"
 
 msgid "Show extensions..."
-msgstr "Show extensions..."
+msgstr "Tampilkan ekstensi..."
 
 msgid "Show icon for new/unseen items"
-msgstr "Show icon for new/unseen items"
+msgstr "Tampilkan ikon pada item baru/belum dilihat"
 
 msgid "Show info"
-msgstr "Show info"
+msgstr "Tampilkan info"
 
 msgid "Show info line"
-msgstr "Show info line"
+msgstr "Tampilkan baris info"
 
 msgid "Show infobar on channel change"
-msgstr "Show infobar on channel change"
+msgstr "Tampilkan infobar pada pergantian kanal"
 
 msgid "Show infobar on event change"
-msgstr "Show infobar on event change"
+msgstr "Tampilkan infobar pada pergantian acara"
 
 msgid "Show infobar on skip forward/backward"
-msgstr "Show infobar on skip forward/backward"
+msgstr "Tampilkan infobar pada lewati ke depan/ke belakang "
 
 msgid "Show message when recording starts"
-msgstr "Show message when recording starts"
+msgstr "Tampilkan pesan saat merekam dimulai"
 
 msgid "Show movie lengths in movielist"
-msgstr "Show movie lengths in movielist"
+msgstr "Tampilkan panjang film pada dafar film"
 
 msgid "Show positioner movement"
-msgstr "Show positioner movement"
+msgstr "Tampilkan pergerakan posisioner"
 
 msgid "Show screensaver"
-msgstr "Show screensaver"
+msgstr "Tampilkan screensaver"
 
 msgid "Show second infobar"
-msgstr "Show second infobar"
+msgstr "Tampilkan infobar kedua"
 
 msgid "Show service type icons"
-msgstr "Show service type icons"
+msgstr "Tampilkan ikon jenis layanan"
 
 msgid "Show shutdown menu"
-msgstr "Show shutdown menu"
+msgstr "Tampilkan menu shutdown"
 
 msgid "Show status icons in movie list"
-msgstr "Show status icons in movie list"
+msgstr "Tampilkan ikon status di daftar film"
 
 msgid "Show status icons in movielist"
-msgstr "Show status icons in movielist"
+msgstr "Tampilkan ikon status di daftar film"
 
 msgid "Show the radio player..."
-msgstr "Show the radio player..."
+msgstr "Tampilkan pemutar radio..."
 
 msgid "Show the tv player..."
-msgstr "Show the tv player..."
+msgstr "Tampilkan pemutar tv..."
 
 msgid "Show warning when timeshift is stopped"
-msgstr "Show warning when timeshift is stopped"
+msgstr "Tampilkan peringatan ketika timeshift berhenti"
 
 msgid "Shows the state of your wireless LAN connection.\n"
-msgstr "Shows the state of your wireless LAN connection.\n"
+msgstr "Tampilkan keadaan koneksi nirkabel anda.\n"
 
 msgid "Shuffle playlist"
 msgstr "Shuffle playlist"
 
 msgid "Shutdown"
-msgstr "Shutdown"
+msgstr "Matikan"
 
 msgid "Side by side"
-msgstr "Side by side"
+msgstr "Berdampingan"
 
 msgid "Signal OK, proceeding"
-msgstr "Signal OK, proceeding"
+msgstr "Sinyal OK, lanjutkan"
 
 msgid "Signal quality"
-msgstr "Signal quality"
+msgstr "Kualitas sinyal"
+
+msgid "Signal strength"
+msgstr "Kekuatan sinyal"
 
 msgid "Signal strength:"
-msgstr "Signal strength:"
+msgstr "Kekuatan sinyal:"
 
 msgid "Signal: "
-msgstr "Signal: "
+msgstr "Sinyal: "
 
 msgid "Similar"
-msgstr "Similar"
+msgstr "Serupa"
 
 msgid "Similar broadcasts:"
-msgstr "Similar broadcasts:"
+msgstr "Siaran serupa:"
 
 msgid "Simple"
 msgstr "Mudah"
@@ -4576,12 +4615,12 @@ msgid "Skins"
 msgstr "Beberapa tampilan"
 
 msgid "Skip empty services"
-msgstr "Skip empty services"
+msgstr "Lewatkan layanan kosong"
 
 msgid ""
 "Skip internet connection check (disables automatic package installation)"
 msgstr ""
-"Skip internet connection check (disables automatic package installation)"
+"Lewatkan pemeriksaan koneksi internet (matikan instalasi paket otomatis)"
 
 msgid "Sleep timer"
 msgstr "Sleep timer"
@@ -4638,21 +4677,21 @@ msgid "Softwaremanager information"
 msgstr "Info pengelola perangkat lunak"
 
 msgid "Some plugins are not available:\n"
-msgstr "Some plugins are not available:\n"
+msgstr "Beberapa plugin tidak tersedia:\n"
 
 msgid "Sorry, %s has not been installed!"
-msgstr "Sorry, %s has not been installed!"
+msgstr "Maaf, %s belum dipasang!"
 
 msgid ""
 "Sorry, deleting directories can (for now) only be done through the trash can."
 msgstr ""
-"Sorry, deleting directories can (for now) only be done through the trash can."
+"Maaf, hapus direktori (saat ini) hanya bisa dilakukan melalui tong sampah."
 
 msgid "Sorry, no backups found!"
-msgstr "Maaf, file backup tidak ditemuka!"
+msgstr "Maaf, file backup tidak ditemukan!"
 
 msgid "Sorry, no details available!"
-msgstr "Sorry, no details available!"
+msgstr "Maaf, rincian tidak tersedia!"
 
 msgid ""
 "Sorry, your backup destination is not writeable.\n"
@@ -4665,34 +4704,34 @@ msgid "Sort"
 msgstr "Pilah"
 
 msgid "Sort A-Z"
-msgstr "Sort A-Z"
+msgstr "Pilah A-Z"
 
 msgid "Sort time"
-msgstr "Sort time"
+msgstr "Pilah waktu"
 
 msgid "Sound"
-msgstr "Sound"
+msgstr "Suara"
 
 msgid "Sound carrier"
-msgstr "Sound carrier"
+msgstr ""
 
 msgid "Source request"
-msgstr "Source request"
+msgstr "Permintaan sumber"
 
 msgid "South"
-msgstr "South"
+msgstr "Selatan"
 
 msgid "Spanish"
-msgstr "Spanish"
+msgstr "Spanyol"
 
 msgid "Split preview mode"
-msgstr "Split preview mode"
+msgstr "Mode preview terpisah"
 
 msgid "Sports"
-msgstr "Sports"
+msgstr "Olahraga"
 
 msgid "Standard"
-msgstr "Standard"
+msgstr "Standar"
 
 msgid "Standby"
 msgstr "Standby"
@@ -4707,16 +4746,16 @@ msgid "Standby fan %d voltage"
 msgstr "Standby fan %d voltage"
 
 msgid "Start from the beginning"
-msgstr "Start from the beginning"
+msgstr "Mulai dari awal"
 
 msgid "Start offline decode"
 msgstr "Start offline decode"
 
 msgid "Start recording?"
-msgstr "Start recording?"
+msgstr "Mulai merekam?"
 
 msgid "Start test"
-msgstr "Start test"
+msgstr "Mulai pengecekan"
 
 msgid "Start time"
 msgstr "Start time"
@@ -4761,13 +4800,13 @@ msgid "Stop playing this movie?"
 msgstr "Stop playing this movie?"
 
 msgid "Stop recording"
-msgstr "Stop recording"
+msgstr "Hentikan rekaman"
 
 msgid "Stop recording and delete"
-msgstr "Stop recording and delete"
+msgstr "Hentikan rekaman dan hapus"
 
 msgid "Stop test"
-msgstr "Stop test"
+msgstr "Hentikan pengecekan"
 
 msgid "Stop testing plane after # failed transponders"
 msgstr "Stop testing plane after # failed transponders"
@@ -4782,16 +4821,16 @@ msgid "Stop timeshift?"
 msgstr "Stop timeshift?"
 
 msgid "Stopped"
-msgstr "Stopped"
+msgstr "Terhenti"
 
 msgid "Store at index"
-msgstr "Store at index"
+msgstr "Simpan di index"
 
 msgid "Store position"
-msgstr "Store position"
+msgstr "Simpan posisi"
 
 msgid "Stored position"
-msgstr "Stored position"
+msgstr "Posisi tersimpan"
 
 msgid "Stream"
 msgstr "Stream"
@@ -4824,31 +4863,31 @@ msgid "Subtitle font size"
 msgstr "Subtitle font size"
 
 msgid "Subtitle language selection 1"
-msgstr "Subtitle language selection 1"
+msgstr "Pemilihan bahasa subtitle 1"
 
 msgid "Subtitle language selection 2"
-msgstr "Subtitle language selection 2"
+msgstr "Pemilihan bahasa subtitle 2"
 
 msgid "Subtitle language selection 3"
-msgstr "Subtitle language selection 3"
+msgstr "Pemilihan bahasa subtitle 3"
 
 msgid "Subtitle language selection 4"
-msgstr "Subtitle language selection 4"
+msgstr "Pemilihan bahasa subtitle 4"
 
 msgid "Subtitle position"
-msgstr "Subtitle position"
+msgstr "Posisi subtilte"
 
 msgid "Subtitle selection"
-msgstr "Subtitle selection"
+msgstr "Pemilihan subtitle"
 
 msgid "Subtitle selection..."
-msgstr "Subtitle selection..."
+msgstr "Pemilihan subtitle..."
 
 msgid "Subtitle settings"
-msgstr "Pengaturan subtitle"
+msgstr "Pengaturan Subtitle"
 
 msgid "Subtitles"
-msgstr "Subtitles"
+msgstr "Subtitle"
 
 msgid "Sun"
 msgstr "Mgg"
@@ -4896,7 +4935,7 @@ msgid "Switchable tuner types:"
 msgstr "Switchable tuner types:"
 
 msgid "Symbol rate"
-msgstr "Symbol rate"
+msgstr "Simbol rate"
 
 msgid "Sync failure moving back to origin !"
 msgstr "Sync failure moving back to origin !"
@@ -4926,7 +4965,7 @@ msgid "Tags"
 msgstr "Tags"
 
 msgid "Teletext subtitle color"
-msgstr "Teletext subtitle color"
+msgstr "Warna subtitle teleteks"
 
 msgid "Temperature and fan control"
 msgstr "Temperature and fan control"
@@ -4938,16 +4977,16 @@ msgid "Terrestrial provider"
 msgstr "Terrestrial provider"
 
 msgid "Test DiSEqC settings"
-msgstr "Test DiSEqC settings"
+msgstr "Pengaturan pengecekan DiSEqC"
 
 msgid "Test mode"
-msgstr "Test mode"
+msgstr "Mode pengetesan"
 
 msgid "Test the network configuration of your receiver.\n"
 msgstr "Test the network configuration of your receiver.\n"
 
 msgid "Test type"
-msgstr "Test type"
+msgstr "Jeni tes"
 
 msgid "Text color"
 msgstr "Text color"
@@ -5300,10 +5339,10 @@ msgid "Timeshift not possible!"
 msgstr "Timeshift not possible!"
 
 msgid "Timezone"
-msgstr "Zona waktu"
+msgstr "Zona Waktu"
 
 msgid "Title"
-msgstr "Title"
+msgstr "Judul"
 
 msgid "Title properties"
 msgstr "Title properties"
@@ -5315,7 +5354,16 @@ msgid "To audio selection"
 msgstr "To audio selection"
 
 msgid "To subtitle selection"
-msgstr "To subtitle selection"
+msgstr "Ke pemilihan subtitle"
+
+msgid "Audio Sync"
+msgstr "Sinkronisasi Audio"
+
+msgid "Audio Sync Setup"
+msgstr "Atur Sinkronisasi Audio"
+
+msgid "Setup for the Audio Sync Plugin"
+msgstr "Plugin untuk mengatur sinkronisasi audio"
 
 msgid ""
 "To update your receiver firmware, please follow these steps:\n"
@@ -5393,7 +5441,7 @@ msgid "Tuesday"
 msgstr "Selasa"
 
 msgid "Tune"
-msgstr "Tune"
+msgstr "Tala"
 
 msgid "Tune and focus"
 msgstr "Tune and focus"
@@ -5402,7 +5450,7 @@ msgid "Tune failed!"
 msgstr "Tune failed!"
 
 msgid "Tuner"
-msgstr "Tuner"
+msgstr "Penala"
 
 msgid "Tuner configuration"
 msgstr "Konfigurasi Penala"
@@ -5429,7 +5477,7 @@ msgid "Type"
 msgstr "Type"
 
 msgid "Type of scan"
-msgstr "Type of scan"
+msgstr "Tipe Pelacakan"
 
 msgid "USALS"
 msgstr "USALS"
@@ -5571,7 +5619,7 @@ msgid "Use original DVB subtitle position"
 msgstr "Use original DVB subtitle position"
 
 msgid "Use original teletext position"
-msgstr "Use original teletext position"
+msgstr "Gunakan posisi teleteks asli"
 
 msgid "Use power measurement"
 msgstr "Use power measurement"
@@ -5614,7 +5662,7 @@ msgid "User defined"
 msgstr "User defined"
 
 msgid "User interface"
-msgstr "Antarmuka pengguna"
+msgstr "Antarmuka Pengguna"
 
 msgid "Using LNB %d"
 msgstr "Using LNB %d"
@@ -5630,9 +5678,9 @@ msgid ""
 "subtitles will not be used. Enable this option to allow these subtitles to "
 "be used."
 msgstr ""
-"Usually when the subtitle language is the same as the audio language, the "
-"subtitles will not be used. Enable this option to allow these subtitles to "
-"be used."
+"Biasanya ketika bahasa subtitle sama dengan bahasa audio, "
+"subtitle itu tidak akan dipakai. Mengaktifkan pilihan ini untuk membiarkan subtitle ini "
+"supaya bisa digunakan."
 
 msgid "VCR scart"
 msgstr "VCR scart"
@@ -5677,14 +5725,14 @@ msgid "Video mode selection."
 msgstr "Video mode selection."
 
 msgid "Video output"
-msgstr "Video output"
+msgstr "Keluaran video"
 
 msgctxt "Video output mode"
 msgid "Mode"
 msgstr "Mode"
 
 msgid "Video setup"
-msgstr "Video setup"
+msgstr "Atur video"
 
 msgid "Video wizard"
 msgstr "Video wizard"
@@ -5747,7 +5795,7 @@ msgid "View photos..."
 msgstr "View photos..."
 
 msgid "View teletext..."
-msgstr "View teletext..."
+msgstr "Lihat teleteks..."
 
 msgid "View video CD..."
 msgstr "View video CD..."
@@ -5884,7 +5932,7 @@ msgid "West limit set"
 msgstr "West limit set"
 
 msgid "What do you want to scan?"
-msgstr "What do you want to scan?"
+msgstr "Apa yang ingin anda pindai?"
 
 msgid "When enabled the PiP can be closed by the exit button."
 msgstr "When enabled the PiP can be closed by the exit button."
@@ -5893,22 +5941,22 @@ msgid ""
 "When enabled, AIT data will be included in http streams. This allows a "
 "client receiver to use HbbTV."
 msgstr ""
-"When enabled, AIT data will be included in http streams. This allows a "
-"client receiver to use HbbTV."
+"Ketika diaktifkan, data AIT akan disertakan pada streaming http. Ini memungkinkan "
+"rx klien menggunakan HbbTV."
 
 msgid ""
 "When enabled, ECM data will be included in http streams. This allows a "
 "client receiver to do the descrambling."
 msgstr ""
-"When enabled, ECM data will be included in http streams. This allows a "
-"client receiver to do the descrambling."
+"Ketika diaktifkan, data ECM akan disertakan pada streaming http. Ini memungkinkan "
+"rx klien memproses siaran teracak."
 
 msgid ""
 "When enabled, EIT data will be included in http streams. This allows a "
 "client receiver to show EPG."
 msgstr ""
-"When enabled, EIT data will be included in http streams. This allows a "
-"client receiver to show EPG."
+"Ketika diaktifkan, data EIT akan disertakan pada streaming http. Ini memungkinkan "
+"rx klien menampilkan EPG."
 
 msgid ""
 "When enabled, a popup message will be shown when a movie has finished and "
@@ -5998,8 +6046,8 @@ msgid ""
 "When enabled, graphical DVB subtitles are preferred over teletext subtitles, "
 "when both types are available."
 msgstr ""
-"When enabled, graphical DVB subtitles are preferred over teletext subtitles, "
-"when both types are available."
+"Ketika diaktifkan, subtitle DVB grafis lebih diutamakan daripada subtitle teleteks, "
+"saat kedua tipe tersedia."
 
 msgid "When enabled, graphical DVB subtitles will be centered horizontally."
 msgstr "When enabled, graphical DVB subtitles will be centered horizontally."
@@ -6055,7 +6103,7 @@ msgstr ""
 "normal subtitles, when both types are available."
 
 msgid "When enabled, teletext pages will be cached, allowing faster access."
-msgstr "When enabled, teletext pages will be cached, allowing faster access."
+msgstr "Ketika diaktifkan, halaman teleteks akan disembunyikan, agar akses lebih cepat."
 
 msgid ""
 "When enabled, teletext subtitles will be displayed at their original "
@@ -6095,25 +6143,28 @@ msgid ""
 "When enabled, the receiver will automatically use the audio track which you "
 "selected before."
 msgstr ""
-"When enabled, the receiver will automatically use the audio track which you "
-"selected before."
+"Ketika diaktifkan, rx akan secara otomatis menggunakan jalur audio yang anda "
+"pilih sebelumnya."
 
 msgid ""
 "When enabled, the receiver will automatically use the subtitles which you "
 "selected before."
 msgstr ""
-"When enabled, the receiver will automatically use the subtitles which you "
-"selected before."
+"Ketika diaktifkan, rx akan secara otomatis menggunakan subtitle yang anda "
+"pilih sebelumnya."
 
 msgid ""
 "When enabled, the receiver will no longer monitor the tuned transponder for "
 "possible changes. Do not use this option unless you know what you are doing."
 msgstr ""
-"When enabled, the receiver will no longer monitor the tuned transponder for "
-"possible changes. Do not use this option unless you know what you are doing."
+"Ketika diaktifkan, rx tidak akan memonitor lagi tranponder yg ditala terhadap "
+"perubahan yg mungkin. Jangan gunakan pilihan ini kecuali anda tau apa yang anda lakukan."
 
 msgid "When enabled, the receiver will select an AC3 track (when available)."
-msgstr "When enabled, the receiver will select an AC3 track (when available)."
+msgstr "Ketika diaktifkan, rx akan memilih jalur AC3 (saat tersedia)."
+
+msgid "When enabled, the receiver will select an AC3+ track (when available)."
+msgstr "Ketika diaktifkan, rx akan memilih jalur AC3+ (saat tersedia)."
 
 msgid ""
 "When enabled, timeshift starts automatically in background after specified "
@@ -6232,25 +6283,25 @@ msgid "Yes, backup my settings!"
 msgstr "Yes, backup my settings!"
 
 msgid "Yes, do a manual scan now"
-msgstr "Yes, do a manual scan now"
+msgstr "Ya, lakukan pelacakan manual sekarang"
 
 msgid "Yes, do an automatic scan now"
-msgstr "Yes, do an automatic scan now"
+msgstr "Ya, lakukan pelacakan otomatis sekarang"
 
 msgid "Yes, do another manual scan now"
-msgstr "Yes, do another manual scan now"
+msgstr "Ya, lakukan pelacakan manual lainnya sekarang"
 
 msgid "Yes, perform a shutdown now."
-msgstr "Yes, perform a shutdown now."
+msgstr "Ya, matikan rx sekarang."
 
 msgid "Yes, restore the settings now"
 msgstr "Yes, restore the settings now"
 
 msgid "Yes, returning to movie list"
-msgstr "Yes, returning to movie list"
+msgstr "Ya, kembali ke daftar film"
 
 msgid "Yesterday"
-msgstr "Yesterday"
+msgstr "Kemarin"
 
 msgid ""
 "You already have a channel list installed,\n"
@@ -6262,25 +6313,25 @@ msgstr ""
 "\"%s\"?"
 
 msgid "You can cancel the installation."
-msgstr "You can cancel the installation."
+msgstr "Anda bisa membatalkan pemasangan."
 
 msgid "You can cancel the removal."
-msgstr "You can cancel the removal."
+msgstr "Anda bisa membatalkan pencabutan."
 
 msgid "You can continue watching TV etc. while this is running."
 msgstr "You can continue watching TV etc. while this is running."
 
 msgid "You can install this plugin."
-msgstr "You can install this plugin."
+msgstr "Anda bisa memasang plugin ini."
 
 msgid "You can only burn receiver recordings!"
 msgstr "You can only burn receiver recordings!"
 
 msgid "You can remove this plugin."
-msgstr "You can remove this plugin."
+msgstr "Anda bisa membuang plugin ini."
 
 msgid "You cannot delete this!"
-msgstr "You cannot delete this!"
+msgstr "Anda tidak bisa menghapus ini!"
 
 msgid "You didn't select a channel to record from."
 msgstr "You didn't select a channel to record from."
@@ -6289,8 +6340,8 @@ msgid ""
 "You have chosen to backup your settings. Please press OK to start the backup "
 "now."
 msgstr ""
-"You have chosen to backup your settings. Please press OK to start the backup "
-"now."
+"Anda telah memilih untuk membackup pengaturan. Silakan tekan OK untuk memulai backup "
+"sekarang."
 
 msgid ""
 "You have chosen to create a new .NFI flasher bootable USB stick. This will "
@@ -6303,11 +6354,11 @@ msgid ""
 "You have chosen to restore your settings. Enigma2 will restart after "
 "restore. Please press OK to start the restore now."
 msgstr ""
-"You have chosen to restore your settings. Enigma2 will restart after "
-"restore. Please press OK to start the restore now."
+"Anda telah memilih untuk merestore pengaturan. Enigma2 akan restart setelah "
+"restore. Silakan tekan OK untuk memulai restore sekarang."
 
 msgid "You have to wait %s!"
-msgstr "You have to wait %s!"
+msgstr "Anda harus menunggu %s!"
 
 msgid ""
 "You need a PC connected to your receiver. If you need further instructions, "
@@ -6323,14 +6374,14 @@ msgstr ""
 "your settings."
 
 msgid "You system does not support ext4"
-msgstr "You system does not support ext4"
+msgstr "Sistem anda tidak mendukung ext4"
 
 msgid ""
 "Your backup succeeded. We will now continue to explain the further upgrade "
 "process."
 msgstr ""
-"Your backup succeeded. We will now continue to explain the further upgrade "
-"process."
+"Backup anda sukses. Kami akan lanjut menjelaskan proses upgrade "
+"selanjutnya."
 
 msgid ""
 "Your collection exceeds the size of a single layer medium, you will need a "
@@ -6362,17 +6413,17 @@ msgid ""
 "Your internet connection is not working!\n"
 "Please choose what you want to do next."
 msgstr ""
-"Your internet connection is not working!\n"
-"Please choose what you want to do next."
+"Koneksi internet anda tidak berfungsi!\n"
+"Silakan pilih apa yang akan anda lakukan selanjutnya."
 
 msgid "Your internet connection is working (ip: %s)"
-msgstr "Your internet connection is working (ip: %s)"
+msgstr "Koneksi internet anda berfungsi (ip: %s)"
 
 msgid "Your network configuration has been activated."
-msgstr "Your network configuration has been activated."
+msgstr "Konfigurasi jaringan anda telah diaktifkan."
 
 msgid "Your receiver does not have an internet connection"
-msgstr "Your receiver does not have an internet connection"
+msgstr "Receiver anda tidak ada koneksi internet"
 
 msgid ""
 "Your receiver is now ready to be used.\n"
@@ -6380,9 +6431,9 @@ msgid ""
 "Your internet connection is working.\n"
 "\n"
 msgstr ""
-"Your receiver is now ready to be used.\n"
+"Receiver anda sudah bisa digunakan.\n"
 "\n"
-"Your internet connection is working.\n"
+"Koneksi internet anda berfungsi.\n"
 "\n"
 
 msgid ""
@@ -6399,13 +6450,13 @@ msgstr ""
 "Please press OK to continue."
 
 msgid "Your receiver is rebooting"
-msgstr "Your receiver is rebooting"
+msgstr "Receiver anda sedang reboot"
 
 msgid "Your receiver is shutting down"
-msgstr "Your receiver is shutting down"
+msgstr "Receiver anda sedang dimatikan"
 
 msgid "Your receiver is shutting down. Please stand by..."
-msgstr "Your receiver is shutting down. Please stand by..."
+msgstr "Receiver anda sedang dimatikan. Silakan tunggu..."
 
 msgid ""
 "Your receiver might be unusable now. Please consult the manual for further "
@@ -6435,10 +6486,10 @@ msgid "Zap back to previously tuned service?"
 msgstr "Zap back to previously tuned service?"
 
 msgid "Zap back to service before positioner setup?"
-msgstr "Zap back to service before positioner setup?"
+msgstr "Kembali ke layanan sebelum atur posisioner?"
 
 msgid "Zap back to service before tuner setup?"
-msgstr "Zap back to service before tuner setup?"
+msgstr "Kembali ke layanan sebelum atur penala?"
 
 msgid "Zap focus to Picture in Picture"
 msgstr "Zap focus to Picture in Picture"
@@ -6460,13 +6511,13 @@ msgstr ""
 "configuration)"
 
 msgid "[alternative edit]"
-msgstr "[alternative edit]"
+msgstr "[ubah alternatif]"
 
 msgid "[bouquet edit]"
-msgstr "[bouquet edit]"
+msgstr "[ubah buket]"
 
 msgid "[favourite edit]"
-msgstr "[favourite edit]"
+msgstr "[ubah favorit]"
 
 msgid "[move mode]"
 msgstr "[move mode]"
@@ -6478,85 +6529,85 @@ msgid "a gui to assign services/providers/caids to common interface modules"
 msgstr "a gui to assign services/providers/caids to common interface modules"
 
 msgid "abort alternatives edit"
-msgstr "abort alternatives edit"
+msgstr "batalkan ubah alternatif"
 
 msgid "abort bouquet edit"
-msgstr "abort bouquet edit"
+msgstr "batalkan ubah buket"
 
 msgid "abort favourites edit"
-msgstr "abort favourites edit"
+msgstr "batalkan ubah favorit"
 
 msgid "about to start"
-msgstr "about to start"
+msgstr "akan memulai"
 
 msgid "activate network adapter configuration"
-msgstr "activate network adapter configuration"
+msgstr "aktifkan konfigurasi adapter jaringan"
 
 msgid "add alternatives"
-msgstr "add alternatives"
+msgstr "tambahkan alternatif"
 
 msgid "add bookmark"
-msgstr "add bookmark"
+msgstr "tambahkan bookmark"
 
 msgid "add bouquet"
-msgstr "add bouquet"
+msgstr "tambahkan buket"
 
 msgid "add marker"
-msgstr "add marker"
+msgstr "tambahkan penanda"
 
 msgid "add service to bouquet"
-msgstr "add service to bouquet"
+msgstr "tambahkan layanan ke buket"
 
 msgid "add service to favourites"
-msgstr "add service to favourites"
+msgstr "tambahkan layanan ke favorit"
 
 msgid "add to parental protection"
-msgstr "add to parental protection"
+msgstr "tambahkan ke perlindungan orangtua"
 
 msgid "adult movie/drama"
-msgstr "adult movie/drama"
+msgstr "film dewasa/drama"
 
 msgid "advanced"
-msgstr "advanced"
+msgstr "mahir"
 
 msgid "adventure/western/war"
-msgstr "adventure/western/war"
+msgstr "petualangan/barat/perang"
 
 msgid "advertisement/shopping"
-msgstr "advertisement/shopping"
+msgstr "iklan/belanja"
 
 msgid "alphabetic"
-msgstr "alphabetic"
+msgstr "berdasarkan abjad"
 
 msgid "alphabetic reverse"
 msgstr "alphabetic reverse"
 
 msgid "alternative"
-msgstr "alternative"
+msgstr "alternatif"
 
 msgid "arts/culture (without music, general)"
-msgstr "arts/culture (without music, general)"
+msgstr "seni/budaya (tanpa musik, umum)"
 
 msgid "arts/culture magazine"
-msgstr "arts/culture magazine"
+msgstr "seni/budaya majalah"
 
 msgid "athletics"
-msgstr "athletics"
+msgstr "atletik"
 
 msgid "audio tracks"
-msgstr "audio tracks"
+msgstr "jalur audio"
 
 msgid "auto"
 msgstr "auto"
 
 msgid "automatic"
-msgstr "automatic"
+msgstr "otomatis"
 
 msgid "back"
-msgstr "back"
+msgstr "kembali"
 
 msgid "background image"
-msgstr "background image"
+msgstr "gambar latar"
 
 msgid "ballet"
 msgstr "ballet"
@@ -6565,45 +6616,45 @@ msgid "bc%s"
 msgstr "bc%s"
 
 msgid "better"
-msgstr "better"
+msgstr "bagus"
 
 msgid "black"
-msgstr "black"
+msgstr "hitam"
 
 msgid "black & white"
-msgstr "black & white"
+msgstr "hitam & putih"
 
 msgid "blacklist"
-msgstr "blacklist"
+msgstr "daftar hitam"
 
 msgid "blue"
-msgstr "blue"
+msgstr "biru"
 
 msgid "broadcasting/press"
 msgstr "broadcasting/press"
 
 msgctxt "button label, 'next screen'"
 msgid "Next"
-msgstr "Next"
+msgstr "Lanjut"
 
 msgctxt "button label, 'previous screen'"
 msgid "Prev"
-msgstr "Prev"
+msgstr "Sebelumnya"
 
 msgid "by date"
-msgstr "by date"
+msgstr "berdasarkan tanggal"
 
 msgid "cartoon/puppets"
-msgstr "cartoon/puppets"
+msgstr "kartun/boneka"
 
 msgid "center"
-msgstr "center"
+msgstr "tengah"
 
 msgid "chapters"
-msgstr "chapters"
+msgstr "bab"
 
 msgid "childrens's/youth program (general)"
-msgstr "childrens's/youth program (general)"
+msgstr "acara anak-anak/pemuda (umum)"
 
 msgid "circular left"
 msgstr "circular left"
@@ -6612,7 +6663,7 @@ msgid "circular right"
 msgstr "circular right"
 
 msgid "comedy"
-msgstr "comedy"
+msgstr "lawak"
 
 msgid "config menu"
 msgstr "config menu"
@@ -6621,28 +6672,28 @@ msgid "confirmed"
 msgstr "confirmed"
 
 msgid "connected"
-msgstr "connected"
+msgstr "terhubung"
 
 msgid "continue"
-msgstr "continue"
+msgstr "berlanjut"
 
 msgid "cooking"
-msgstr "cooking"
+msgstr "memasak"
 
 msgid "copy to bouquets"
-msgstr "copy to bouquets"
+msgstr "salin ke buket"
 
 msgid "create directory"
-msgstr "create directory"
+msgstr "buat direktori"
 
 msgid "currently installed image: %s"
-msgstr "currently installed image: %s"
+msgstr "image yang terinstall saat ini: %s"
 
 msgid "daily"
-msgstr "daily"
+msgstr "harian"
 
 msgid "day"
-msgstr "day"
+msgstr "hari"
 
 msgid "default"
 msgstr "bawaan"
@@ -6657,16 +6708,16 @@ msgid "detective/thriller"
 msgstr "detective/thriller"
 
 msgid "disable"
-msgstr "disable"
+msgstr "matikan"
 
 msgid "disable move mode"
-msgstr "disable move mode"
+msgstr "matikan mode pindahkan"
 
 msgid "disabled"
-msgstr "disabled"
+msgstr "dimatikan"
 
 msgid "disconnected"
-msgstr "disconnected"
+msgstr "terputus"
 
 msgid "discussion/interview/debate"
 msgstr "discussion/interview/debate"
@@ -6699,7 +6750,7 @@ msgid "empty"
 msgstr "empty"
 
 msgid "enable"
-msgstr "enable"
+msgstr "aktifkan"
 
 msgid "enable bouquet edit"
 msgstr "enable bouquet edit"
@@ -6708,31 +6759,31 @@ msgid "enable favourite edit"
 msgstr "enable favourite edit"
 
 msgid "enable move mode"
-msgstr "enable move mode"
+msgstr "aktifkan mode pindahkan"
 
 msgid "enabled"
-msgstr "enabled"
+msgstr "aktifkan"
 
 msgid "end alternatives edit"
-msgstr "end alternatives edit"
+msgstr "akhiri ubah alternatif"
 
 msgid "end bouquet edit"
-msgstr "end bouquet edit"
+msgstr "akhiri ubah buket"
 
 msgid "end cut here"
-msgstr "end cut here"
+msgstr "akhiri potong di sini"
 
 msgid "end favourites edit"
-msgstr "end favourites edit"
+msgstr "akhiri ubah favorit"
 
 msgid "entertainment (10-16 year old)"
-msgstr "entertainment (10-16 year old)"
+msgstr "hiburan (umur 10-16 tahun)"
 
 msgid "entertainment (6-14 year old)"
-msgstr "entertainment (6-14 year old)"
+msgstr "hiburan (umur 6-14 tahun)"
 
 msgid "equal to"
-msgstr "equal to"
+msgstr "setara"
 
 msgid "equestrian"
 msgstr "equestrian"
@@ -6741,34 +6792,34 @@ msgid "exit DVD player or return to file browser"
 msgstr "exit DVD player or return to file browser"
 
 msgid "exit network adapter configuration"
-msgstr "exit network adapter configuration"
+msgstr "keluar dari konfigurasi adapter jaringan"
 
 msgid "exit networkadapter setup menu"
-msgstr "exit networkadapter setup menu"
+msgstr "keluar dari menu atur adapter jaringan"
 
 msgid "experimental film/video"
-msgstr "experimental film/video"
+msgstr "percobaan film/video"
 
 msgid "false"
-msgstr "false"
+msgstr "salah"
 
 msgid "fashion"
-msgstr "fashion"
+msgstr "gaya"
 
 msgid "fileformats (BMP, PNG, JPG, GIF)"
-msgstr "fileformats (BMP, PNG, JPG, GIF)"
+msgstr "format file (BMP, PNG, JPG, GIF)"
 
 msgid "filename"
-msgstr "filename"
+msgstr "nama file"
 
 msgid "film/cinema"
-msgstr "film/cinema"
+msgstr "film/sinema"
 
 msgid "fine arts"
-msgstr "fine arts"
+msgstr "seni rupa"
 
 msgid "fitness & health"
-msgstr "fitness & health"
+msgstr "kebugaran & kesehatan"
 
 msgid "flat alphabetic"
 msgstr "flat alphabetic"
@@ -6834,10 +6885,10 @@ msgid "init modules"
 msgstr "init modules"
 
 msgid "insert mark here"
-msgstr "insert mark here"
+msgstr "masukkan tanda di sini"
 
 msgid "invalid type"
-msgstr "invalid type"
+msgstr "tipe tidak valid"
 
 msgid "jazz"
 msgstr "jazz"
@@ -6849,19 +6900,19 @@ msgid "jump forward to the next title"
 msgstr "jump forward to the next title"
 
 msgid "languages"
-msgstr "languages"
+msgstr "bahasa"
 
 msgid "leave movie player..."
 msgstr "leave movie player..."
 
 msgid "left"
-msgstr "left"
+msgstr "kiri"
 
 msgid "leisure hobbies (general)"
-msgstr "leisure hobbies (general)"
+msgstr "hobby waktu luang (umum)"
 
 msgid "length"
-msgstr "length"
+msgstr "pangjang"
 
 msgid "limit ..., aborting !"
 msgstr "limit ..., aborting !"
@@ -6897,10 +6948,10 @@ msgid "manual"
 msgstr "manual"
 
 msgid "martial sports"
-msgstr "martial sports"
+msgstr "olahraga beladiri"
 
 msgid "medicine/physiology/psychology"
-msgstr "medicine/physiology/psychology"
+msgstr "pengobatan/fisiologi/psikologi"
 
 msgid "menu"
 msgstr "menu"
@@ -6918,7 +6969,7 @@ msgid "month"
 msgstr "bulan"
 
 msgid "motor sport"
-msgstr "motor sport"
+msgstr "olahraga bermotor"
 
 msgid "motoring"
 msgstr "motoring"
@@ -6936,7 +6987,7 @@ msgid "move up to previous entry"
 msgstr "move up to previous entry"
 
 msgid "movie/drama (general)"
-msgstr "movie/drama (general)"
+msgstr "film/drama (umum)"
 
 msgid "multinorm"
 msgstr "multinorm"
@@ -6954,7 +7005,7 @@ msgid "never"
 msgstr "never"
 
 msgid "new media"
-msgstr "new media"
+msgstr "media baru"
 
 msgid "news magazine"
 msgstr "news magazine"
@@ -7301,10 +7352,10 @@ msgid "tourism/travel"
 msgstr "tourism/travel"
 
 msgid "true"
-msgstr "true"
+msgstr "benar"
 
 msgid "unavailable"
-msgstr "unavailable"
+msgstr "tidak tersedia"
 
 msgid "unconfirmed"
 msgstr "unconfirmed"
@@ -7313,10 +7364,10 @@ msgid "undefined"
 msgstr "undefined"
 
 msgid "unknown"
-msgstr "unknown"
+msgstr "tidak dikenal"
 
 msgid "unknown service"
-msgstr "unknown service"
+msgstr "layanan tak dikenal"
 
 msgid "unpublished"
 msgstr "unpublished"
@@ -7325,7 +7376,7 @@ msgid "until standby/restart"
 msgstr "until standby/restart"
 
 msgid "user defined"
-msgstr "user defined"
+msgstr "ditentukan pengguna"
 
 msgid "variety show"
 msgstr "variety show"
@@ -7340,25 +7391,25 @@ msgid "wait for mmi..."
 msgstr "wait for mmi..."
 
 msgid "waiting"
-msgstr "waiting"
+msgstr "menunggu"
 
 msgid "water sport"
-msgstr "water sport"
+msgstr "olahraga air"
 
 msgid "weekly"
-msgstr "weekly"
+msgstr "per pekan"
 
 msgid "west"
-msgstr "west"
+msgstr "barat"
 
 msgid "white"
-msgstr "white"
+msgstr "putih"
 
 msgid "width"
-msgstr "width"
+msgstr "lebar"
 
 msgid "winter sport"
-msgstr "winter sport"
+msgstr "olahraga musim dingin"
 
 msgid "wireless network interface"
 msgstr "wireless network interface"
@@ -7369,16 +7420,16 @@ msgstr[0] "with %d error"
 msgstr[1] "with %d errors"
 
 msgid "working"
-msgstr "working"
+msgstr "berfungsi"
 
 msgid "yellow"
-msgstr "yellow"
+msgstr "kuning"
 
 msgid "yes"
 msgstr "ya"
 
 msgid "yes (keep feeds)"
-msgstr "yes (keep feeds)"
+msgstr "ya (simpan feeds)"
 
 msgid "zap"
 msgstr "zap"
@@ -7407,56 +7458,202 @@ msgstr "Anda mengerti hal ini?"
 msgid "Default Skin"
 msgstr "Tampilan bawaan"
 
-msgid "<Default Skin>"
-msgstr "<Tampilan bawaan>"
+msgid "Testscreens"
+msgstr "Tes Layar"
 
 msgid "Last Scanned"
 msgstr "Hasil Pelacakan Terakhir"
 
-msgid "Oscam status"
+msgid "Bouquets/Last Scanned"
+msgstr "Hasil Pelacakan Terakhir"
+
+msgid "Oscam Status"
 msgstr "Status OSCam"
 
-msgid "The OpenPLi team"
-msgstr "Tim OpenPLi"
+msgid "whats going on?"
+msgstr "Lihat Status OSCam"
 
-msgid "would like to point out that"
-msgstr "ingin menegaskan bahwa"
+msgid "show connected clients"
+msgstr "tampilkan klien terhubung"
 
-msgid "upgrading to the latest nightly build"
-msgstr "pembaruan ke versi belum stabil"
+msgid "show all clients"
+msgstr "tampilkan semua klien"
 
-msgid "comes not only with the latest features"
-msgstr "tidak hanya mendapatkan fitur mutakhir"
+msgid "show connected readers"
+msgstr "tampilkan pembaca terhubung"
 
-msgid "but also with some risks"
-msgstr "tapi juga ada resikonya"
+msgid "show all readers"
+msgstr "tampilkan semua pembaca"
 
-msgid "After the update"
-msgstr "Setelah diupdate"
+msgid "show logfile"
+msgstr "tampilkan file log"
 
-msgid "it is possible that your device"
-msgstr "kemungkinan perangkat anda"
+msgid "server info"
+msgstr "info server"
 
-msgid "no longer works as expected"
-msgstr "tidak lagi berfungsi seperti yang diharapkan"
+msgid "server restart/shutdown"
+msgstr "restart/matikan server"
 
-msgid "We recommend you create backups"
-msgstr "Kami sarankan anda membuat file backup"
+msgid "server setup"
+msgstr "atur server"
 
-msgid "with Autobackup or Backupsuite"
-msgstr "menggunakan Autobackup atau Backupsuite"
+msgid "Manage your Picons"
+msgstr "Kelola Picon anda"
 
-msgid "This allows you to quickly and easily restore"
-msgstr "Ini memungkinkan anda dengan mudah dan cepat mengembalikan"
+msgid "Tunner signal information"
+msgstr "Info Sinyal Penala"
 
-msgid "your device to its previous state"
-msgstr "perangkat anda pada posisi semula"
+msgid "Add IPTV Channels"
+msgstr "Tambahkan Kanal IPTV"
 
-msgid "should you experience any problem"
-msgstr "jika anda mengalami masalah"
+msgid "Device Manager"
+msgstr "Pengelola Perangkat"
 
-msgid "If you encounter a"
-msgstr "Jika anda menemukan"
+msgid "Show crypto icons"
+msgstr "Tampilkan ikon kripto"
 
-msgid "please report the issue on"
-msgstr "mohon laporkan hal tersebut kepada"
+msgid "Show record indicator"
+msgstr "Tampilkan indikator rekaman"
+
+msgid "Show columns"
+msgstr "Tampilkan kolom"
+
+msgid "Show picons in channel list"
+msgstr "Tampilkan pikon di daftar kanal"
+
+msgid "Customize channel list cursor behavior"
+msgstr "Ubahsuai aturan kursor daftar channel"
+
+msgid "Enable 'neutrino' style zap controlling"
+msgstr "Aktifkan kontrol zap gaya 'neutrino'"
+
+msgid "Enable 'neutrino' style channel select controlling"
+msgstr "Aktifkan kontrol pilih kanal gaya 'neutrino'"
+
+msgid "Enable zapping with CH+/-, B+/-, P+/-"
+msgstr "Aktifkan zap menggunakan CH+/-, B+/-, P+/-"
+
+msgid "Enable OK for channel selection"
+msgstr "Aktifkan OK pada pemilihan kanal"
+
+msgid "Enable volume control with arrow buttons"
+msgstr "Aktifkan kontrol suara dengan tombol panah"
+
+msgid "Enable OK as preview in channel selection"
+msgstr "Aktifkan OK sebagai pratinjau pada pemilihan kanal"
+
+msgid "Remember last service in PiP"
+msgstr "Ingat layanan terakhir di PiP"
+
+msgid "When activate PiP"
+msgstr "Kapan mengaktifkan PiP"
+
+msgid "Show VCR scart on main menu"
+msgstr "Tampilkan scart VCR pada menu utama"
+
+msgid "No Event Found"
+msgstr "Acara Tidak Ditemukan"
+
+msgid "Start, stop, restart SoftCams, change settings."
+msgstr "Start, stop, restart SoftCam, ubah pengaturan."
+
+msgid "Emu manager"
+msgstr "Kelola Emu"
+
+msgid "Alternative SoftCam Manager"
+msgstr "Kelola SoftCam Alternatif"
+
+msgid "set of utilities for enigma2"
+msgstr "kumpulan alat untuk kegunaan enigma2"
+
+msgid "listen to shoutcast internet-radio"
+msgstr "Dengarkan radio internet dari SHOUTCast"
+
+msgid "Watch TV3 play online services"
+msgstr "Saksikan tayangan dari layanan online TV3 Play"
+
+msgid "Weather Plugin"
+msgstr "Plugin Cuaca"
+
+msgid "Show Weather Forecast"
+msgstr "Tampilkan Prakiraan Cuaca"
+
+msgid "Watch YouTube videos"
+msgstr "Nonton video-video di YouTube"
+
+msgid "Search"
+msgstr "Cari"
+
+msgid "Internet info"
+msgstr "Info Internet"
+
+msgid "Partitioner"
+msgstr "Buat Partisi"
+
+msgid "One partition"
+msgstr "Satu partisi"
+
+msgid "Two partitions (50% - 50%)"
+msgstr "Dua partisi (50% - 50%)"
+
+msgid "Two partitions (75% - 25%)"
+msgstr "Dua partisi (75% - 25%)"
+
+msgid "Three partitions (33% - 33% - 33%)"
+msgstr "Tiga partisi (33% - 33% - 33%)"
+
+msgid "Four partitions (25% - 25% - 25% - 25%)"
+msgstr "Empat partisi (25% - 25% - 25% - 25%)"
+
+msgid "Please select your preferred configuration."
+msgstr "Silakan pilih konfigurasi yang anda suka."
+
+msgid "Enable fallback remote receiver"
+msgstr "Aktifkan penggunaan rx dari jauh"
+
+msgid ""
+"Enable remote enigma2 receiver to be tried to tune into services "
+"that cannot be tuned into locally (e.g. tuner is occupied or "
+"service type is unavailable on the local tuner. Specify complete URL "
+"including http:// and port number (normally ...:8001), "
+"e.g. http://second_box:8001."
+msgstr ""
+"Aktifkan rx enigma2 dari jauh untuk mencoba menala layanan "
+"yang tidak bisa ditala secara lokal (misalnya penala sedang digunakan atau "
+"tipe layanan tidak tersedia pada penala lokal. Tentukan URL lengkap "
+"termasuk http:// dan nomor port (biasanya ...:8001), "
+"misalnya http://box_kedua:8001."
+
+msgid "Fallback remote receiver URL"
+msgstr "URL penggunaan rx dari jauh"
+
+msgid "URL of fallback remote receiver"
+msgstr "Alamat URL penggunaan rx dari jauh"
+
+msgid "Warning"
+msgstr "Peringatan"
+
+msgid "Devicelist"
+msgstr "Daftar Perangkat"
+
+msgid ""
+"The OpenPLi team would like to point out that upgrading to the latest nightly build "
+"comes not only with the latest features, but also with some risks. After the update, "
+"it is possible that your device no longer works as expected. "
+"We recommend you create backups with Autobackup or Backupsuite. "
+"This allows you to quickly and easily restore "
+"your device to its previous state, should you experience any problems. "
+"If you encounter a 'bug', please report the issue on www.openpli.org.\n"
+"\n"
+"Do you understand this?"
+
+msgstr ""
+"Tim OpenPLi ingin menegaskan bahwa pembaruan ke versi belum stabil "
+"tidak hanya mendapatkan fitur mutakhir, tapi juga ada resikonya. Setelah diupdate, "
+"kemungkinan perangkat anda tidak lagi berfungsi seperti yang diharapkan. "
+"Kami sarankan anda membuat file backup menggunakan Autobackup atau Backupsuite. "
+"Ini memungkinkan anda dengan mudah dan cepat mengembalikan "
+"perangkat anda pada posisi semula, jika anda mengalami masalah. " 
+"Jika anda menemukan 'bug', mohon laporkan hal tersebut kepada www.openpli.org.\n"
+"\n"
+"Apakah anda mengerti hal ini?"
