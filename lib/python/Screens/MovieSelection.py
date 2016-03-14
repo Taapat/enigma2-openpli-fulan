@@ -2,6 +2,7 @@ from Screen import Screen
 from Components.Button import Button
 from Components.ActionMap import HelpableActionMap, ActionMap, NumberActionMap
 from Components.ChoiceList import ChoiceList, ChoiceEntryComponent
+from Components.Console import Console
 from Components.MenuList import MenuList
 from Components.MovieList import MovieList, resetMoviePlayState, AUDIO_EXTENSIONS, DVD_EXTENSIONS, IMAGE_EXTENSIONS, moviePlayState
 from Components.DiskInfo import DiskInfo
@@ -70,6 +71,13 @@ l_listtype = [(str(MovieList.LISTTYPE_ORIGINAL), _("list style default")),
 	(str(MovieList.LISTTYPE_COMPACT_DESCRIPTION), _("list style compact with description")),
 	(str(MovieList.LISTTYPE_COMPACT), _("list style compact")),
 	(str(MovieList.LISTTYPE_MINIMAL), _("list style single line"))]
+
+try:
+	from Plugins.Extensions import BlurayPlayer
+except Exception as e:
+	print "[ML] BlurayPlayer not installed:", e
+	BlurayPlayer = None
+	
 
 def defaultMoviePath():
 	result = config.usage.default_path.value
@@ -399,7 +407,7 @@ class MovieContextMenu(Screen, ProtectedScreen):
 					if service.getPath()[-3:] == '.ts':
 						append_to_menu(menu, (_("Start offline decode"), csel.do_decode))
 				# On spark with libeplayer there alredy exist bluray auto play
-				# elif csel.isBlurayFolderAndFile(service):
+				# elif BlurayPlayer is None and csel.isBlurayFolderAndFile(service):
 					# append_to_menu(menu, (_("Auto play blu-ray file"), csel.playBlurayFile))
 				if config.ParentalControl.hideBlacklist.value and config.ParentalControl.storeservicepin.value != "never":
 					from Components.ParentalControl import parentalControl
@@ -1006,12 +1014,40 @@ class MovieSelection(Screen, SelectionEventInfo, InfoBarBase, ProtectedScreen):
 		# Returns None or (serviceref, info, begin, len)
 		return self["list"].l.getCurrentSelection()
 
+	def mountIsoCallback(self, result, retval, extra_args):
+		remount = extra_args[1]
+		if remount != 0:
+			del self.remountTimer
+		if os.path.isdir(os.path.join(extra_args[0], 'BDMV/STREAM/')):
+			self.itemSelectedCheckTimeshiftCallback('bluray', extra_args[0], True)
+		elif os.path.isdir(os.path.join(extra_args[0], 'VIDEO_TS/')):
+			Console().ePopen('umount -f %s' % extra_args[0], self.umountIsoCallback, extra_args[0])
+		elif remount < 5:
+			remount += 1
+			self.remountTimer = eTimer()
+			self.remountTimer.timeout.callback.append(boundFunction(self.mountIsoCallback, None, None, (extra_args[0], remount)))
+			self.remountTimer.start(1000, False)
+		else:
+			Console().ePopen('umount -f %s' % extra_args[0], self.umountIsoCallback, extra_args[0])
+
+	def umountIsoCallback(self, result, retval, extra_args):
+		try:
+			os.rmdir(extra_args)
+		except Exception as e:
+			print "[ML] Cannot remove", extra_args, e
+		self.itemSelectedCheckTimeshiftCallback('.img', extra_args, True)
+
+	def playAsBLURAY(self, path):
+		try:
+			from Plugins.Extensions.BlurayPlayer import BlurayUi
+			self.session.open(BlurayUi.BlurayMain, path)
+			return True
+		except Exception as e:
+			print "[ML] Cannot open BlurayPlayer:", e
+
 	def playAsDVD(self, path):
 		try:
 			from Screens import DVD
-			if path[-9:] == 'VIDEO_TS/':
-				# strip away VIDEO_TS/ part
-				path = os.path.split(path.rstrip('/'))[0]
 			self.session.open(DVD.DVDPlayer, dvd_filelist=[path])
 			return True
 		except Exception, e:
@@ -1131,7 +1167,7 @@ class MovieSelection(Screen, SelectionEventInfo, InfoBarBase, ProtectedScreen):
 		if current is not None:
 			path = current.getPath()
 			if current.flags & eServiceReference.mustDescent:
-				if path[-9:] == "VIDEO_TS/" or os.path.exists(os.path.join(path, 'VIDEO_TS.IFO')):
+				if os.path.isdir(os.path.join(path, 'VIDEO_TS/')) or os.path.exists(os.path.join(path, 'VIDEO_TS.IFO')):
 					#force a DVD extention
 					Screens.InfoBar.InfoBar.instance.checkTimeshiftRunning(boundFunction(self.itemSelectedCheckTimeshiftCallback, ".img", path))
 					return

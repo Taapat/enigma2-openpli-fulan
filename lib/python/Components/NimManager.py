@@ -627,6 +627,15 @@ class NIM(object):
 	def isSupported(self):
 		return (self.frontend_id is not None) or self.__is_empty
 
+	def isMultistream(self):
+		multistream = self.frontend_id and eDVBResourceManager.getInstance().frontendIsMultistream(self.frontend_id) or False
+		# HACK due to poor support for VTUNER_SET_FE_INFO
+		# When vtuner does not accept fe_info we have to fallback to detection using tuner name
+		# More tuner names will be added when confirmed as multistream (FE_CAN_MULTISTREAM)
+		if not multistream and "TBS" in self.description:
+			multistream = True
+		return multistream
+
 	# returns dict {<slotid>: <type>}
 	def getMultiTypeList(self):
 		return self.multi_type
@@ -1607,7 +1616,7 @@ def InitNimManager(nimmgr, update_slots = []):
 
 	nimmgr.sec = SecConfigure(nimmgr)
 
-	def tunerTypeChanged(nimmgr, configElement):
+	def tunerTypeChanged(nimmgr, configElement, initial=False):
 		fe_id = configElement.fe_id
 		eDVBResourceManager.getInstance().setFrontendType(nimmgr.nim_slots[fe_id].frontend_id, nimmgr.nim_slots[fe_id].getType())
 		try:
@@ -1630,6 +1639,9 @@ def InitNimManager(nimmgr, update_slots = []):
 				except:
 					print "[InitNimManager] no /sys/module/dvb_core/parameters/dvb_shutdown_timeout available"
 				nimmgr.enumerateNIMs()
+				if initial:
+					print "tunerTypeChanged force update setting"
+					nimmgr.sec.update()
 			else:
 				print "[InitNimManager] tuner type is already already %d" %cur_type
 		except:
@@ -1652,7 +1664,8 @@ def InitNimManager(nimmgr, update_slots = []):
 			nim.multiType = ConfigSelection(typeList, "0")
 
 			nim.multiType.fe_id = x - empty_slots
-			nim.multiType.addNotifier(boundFunction(tunerTypeChanged, nimmgr))
+			nim.multiType.addNotifier(boundFunction(tunerTypeChanged, nimmgr), initial_call=False)
+			tunerTypeChanged(nimmgr, nim.multiType, initial=True)
 
 	empty_slots = 0
 	for slot in nimmgr.nim_slots:
