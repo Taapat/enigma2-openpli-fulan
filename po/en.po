@@ -8671,6 +8671,3 @@ msgstr "Indonesian"
 
 msgid "®"
 msgstr ""
-
-msgid "Bahasa Indonesia"
-msgstr "Indonesian"
