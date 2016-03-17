@@ -133,9 +133,9 @@ class IpkgComponent:
 				return
 			if self.currentCommand in (self.CMD_LIST, self.CMD_UPGRADE_LIST):
 				item = data.split(' - ', 2)
-			if len(item) < 3:
-				self.callCallbacks(self.EVENT_ERROR, None)
-				return
+				if len(item) < 3:
+					self.callCallbacks(self.EVENT_ERROR, None)
+					return
 				self.fetchedList.append(item)
 				self.callCallbacks(self.EVENT_LISTITEM, item)
 				return
