@@ -395,6 +395,7 @@ eEPGCache::eEPGCache()
 	         onid_blacklist.insert(onid_blacklist.end(),1,tmp_onid);
 	onid_file.close();
 
+#if 0
 	std::ifstream pid_file ("/etc/enigma2/epgpids.custom");
 	if (pid_file.is_open())
 	{
@@ -419,6 +420,7 @@ eEPGCache::eEPGCache()
 		pid_file.close();
 		eDebug("[eEPGCache] Done");
 	}
+#endif
 
 	ePtr<eDVBResourceManager> res_mgr;
 	eDVBResourceManager::getInstance(res_mgr);
@@ -1598,6 +1600,7 @@ void eEPGCache::channel_data::startEPG()
 	mask.pid = 0x12;
 	mask.flags = eDVBSectionFilterMask::rfCRC;
 
+#if 0
 	eDVBChannelID chid = channel->getChannelID();
 	char optsidonid[8];
 	sprintf (optsidonid, "%x", chid.dvbnamespace.get());
@@ -1609,6 +1612,7 @@ void eEPGCache::channel_data::startEPG()
 		mask.pid = it->second;
 		eDebug("[eEPGCache] Using non standart pid %#x", mask.pid);
 	}
+#endif
 	
 	if (eEPGCache::getInstance()->getEpgSources() & eEPGCache::NOWNEXT)
 	{
