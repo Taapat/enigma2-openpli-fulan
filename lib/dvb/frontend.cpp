@@ -2605,7 +2605,11 @@ bool eDVBFrontend::setDeliverySystem(const char *type)
 	}
 	else if (!strcmp(type, "DVB-C"))
 	{
+#if DVB_API_VERSION > 5 || DVB_API_VERSION == 5 && DVB_API_VERSION_MINOR >= 6
 		p[0].u.data = SYS_DVBC_ANNEX_A;
+#else
+		p[0].u.data = SYS_DVBC_ANNEX_AC;
+#endif
 	}
 	else if (!strcmp(type, "ATSC"))
 	{
