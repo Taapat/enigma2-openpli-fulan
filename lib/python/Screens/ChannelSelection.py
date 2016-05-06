@@ -171,7 +171,7 @@ class ChannelContextMenu(Screen):
 							else:
 								append_when_current_valid(current, menu, (_("remove from parental protection"), boundFunction(self.removeParentalProtection, current)), level=0)
 						if config.ParentalControl.hideBlacklist.value and not parentalControl.sessionPinCached and config.ParentalControl.storeservicepin.value != "never":
-							append_when_current_valid(current, menu, (_("Unhide parental control services"), self.unhideParentalServices), level=0)
+							append_when_current_valid(current, menu, (_("Unhide parental control services"), self.unhideParentalServices), level=0, key="1")
 					if SystemInfo["3DMode"] and  fileExists("/usr/lib/enigma2/python/Plugins/SystemPlugins/OSD3DSetup/plugin.py"):
 						if eDVBDB.getInstance().getFlag(eServiceReference(current.toString())) & FLAG_IS_DEDICATED_3D:
 							append_when_current_valid(current, menu, (_("Unmark service as dedicated 3D service"), self.removeDedicated3DFlag), level=0)
@@ -2192,7 +2192,7 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 			refstr = ref.toString()
 		else:
 			refstr = ""
-		if refstr != self.lastservice.value:
+		if refstr != self.lastservice.value and not Components.ParentalControl.parentalControl.isProtected(ref):
 			self.lastservice.value = refstr
 			self.lastservice.save()
 
@@ -2485,9 +2485,10 @@ class ChannelSelectionRadio(ChannelSelectionBase, ChannelSelectionEdit, ChannelS
 	def zapBack(self):
 		self.channelSelected()
 
-class SimpleChannelSelection(ChannelSelectionBase):
-	def __init__(self, session, title, currentBouquet=False):
+class SimpleChannelSelection(ChannelSelectionBase, SelectionEventInfo):
+	def __init__(self, session, title, currentBouquet=False, returnBouquet=False, setService=None, setBouquet=None):
 		ChannelSelectionBase.__init__(self, session)
+		SelectionEventInfo.__init__(self)
 		self["actions"] = ActionMap(["OkCancelActions", "TvRadioActions"],
 			{
 				"cancel": self.close,
@@ -2498,15 +2499,20 @@ class SimpleChannelSelection(ChannelSelectionBase):
 		self.bouquet_mark_edit = OFF
 		self.title = title
 		self.currentBouquet = currentBouquet
+		self.returnBouquet = returnBouquet
+		self.setService = setService
+		self.setBouquet = setBouquet
 		self.onLayoutFinish.append(self.layoutFinished)
 
 	def layoutFinished(self):
 		self.setModeTv()
-		if self.currentBouquet:
-			ref = Screens.InfoBar.InfoBar.instance.servicelist.getRoot()
+		if self.currentBouquet or self.setBouquet:
+			ref = self.setBouquet or Screens.InfoBar.InfoBar.instance.servicelist.getRoot()
 			if ref:
 				self.enterPath(ref)
 				self.gotoCurrentServiceOrProvider(ref)
+		if self.setService:
+			self.setCurrentSelection(self.setService)
 
 	def saveRoot(self):
 		pass
@@ -2521,7 +2527,10 @@ class SimpleChannelSelection(ChannelSelectionBase):
 			self.gotoCurrentServiceOrProvider(ref)
 		elif not (ref.flags & eServiceReference.isMarker):
 			ref = self.getCurrentSelection()
-			self.close(ref)
+			if self.returnBouquet and len(self.servicePath):
+				self.close(ref, self.servicePath[-1])
+			else:
+				self.close(ref)
 
 	def setModeTv(self):
 		self.setTvMode()

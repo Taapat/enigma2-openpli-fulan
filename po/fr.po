@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 12:44+0100\n"
-"PO-Revision-Date: 2016-02-18 13:46+0100\n"
+"POT-Creation-Date: 2016-04-28 12:50+0200\n"
+"PO-Revision-Date: 2016-04-28 14:16+0200\n"
 "Last-Translator: Pr2 <dummy@dummy.com>\n"
 "Language-Team: french\n"
 "Language: fr\n"
@@ -33,6 +33,13 @@ msgid ""
 msgstr ""
 "\n"
 "Sauvegarder les réglages du récepteur."
+
+msgid ""
+"\n"
+"Conflict detection disabled!"
+msgstr ""
+"\n"
+"La détection des conflits est désactivée!"
 
 msgid ""
 "\n"
@@ -851,6 +858,9 @@ msgstr "Artistes"
 msgid "Arts/Culture"
 msgstr "Arts/Culture"
 
+msgid "As defined by the skin"
+msgstr "Comme défini dans le thème/skin"
+
 msgid "Ask user"
 msgstr "Demander à l'utilisateur"
 
@@ -1146,6 +1156,9 @@ msgstr "Impossible de déplacer les fichiers sur un disque ou système différen
 msgid "Cannot move to trash can"
 msgstr "Impossible de déplacer dans la corbeille"
 
+msgid "Capabilities: "
+msgstr "Capacités: "
+
 msgid "Capacity: "
 msgstr "Capacité: "
 
@@ -1232,10 +1245,10 @@ msgstr "Vérification de la connexion Internet"
 
 #, python-format
 msgid ""
-"Checking tuner %d\n"
+"Checking tuner %s\n"
 "DiSEqC port %s for %s"
 msgstr ""
-"Vérification tuner %d\n"
+"Vérification tuner %s\n"
 "DiSEqC port %s pour %s"
 
 msgid "Children/Youth"
@@ -1328,9 +1341,6 @@ msgstr "Communication"
 msgid "Compact flash"
 msgstr "Compact Flash"
 
-msgid "Compensate for overscan"
-msgstr "Compensation pour overscan"
-
 msgid "Complete"
 msgstr "Terminé"
 
@@ -1364,6 +1374,9 @@ msgstr "Configure combien de temps la barre d'informations demeure visible aprè
 
 msgid "Configure for how many minutes finished events should remain visible in the EPG. Useful when you need information about an event which has just finished, or has been delayed."
 msgstr "Configure combien de temps un événement terminé doit rester visible dans l'EPG. Utile lorsque vous avez besoin d'informations sur un événement qui vient de se terminer, ou a été retardé."
+
+msgid "Configure how many channels are shown in the selection list."
+msgstr "Configure le nombre de chaînes affichées dans la liste de sélection."
 
 msgid "Configure how recording filenames are constructed."
 msgstr "Configure la façon dont les noms de fichiers d'enregistrement sont construits."
@@ -1852,6 +1865,9 @@ msgstr "DVB-T2"
 
 msgid "DVD Burn"
 msgstr "Graver le DVD"
+
+msgid "DVD Menu"
+msgstr "DVD Menu"
 
 msgid "DVD data format"
 msgstr "Format de données DVD"
@@ -2354,9 +2370,6 @@ msgstr "Activer la sélection bouquet multi-EPG"
 msgid "Enable fallback remote receiver"
 msgstr "Activer le récepteur distant de repli"
 
-msgid "Enable fallback remote receiver for recordings"
-msgstr "Activer le récepteur distant de repli pour les enregistrements"
-
 msgid "Enable freesat EPG"
 msgstr "Activer EPG freesat"
 
@@ -2368,9 +2381,6 @@ msgstr "Activer la protection parentale"
 
 msgid "Enable remote enigma2 receiver to be tried to tune into services that cannot be tuned into locally (e.g. tuner is occupied or service type is unavailable on the local tuner. Specify complete URL including http:// and port number (normally ...:8001), e.g. http://second_box:8001."
 msgstr "Activer un récepteur enigma2 distant pour essayer de syntoniser les services qui ne peuvent pas l'être localement (p.e. tuners occupés ou le type de service n'est pas disponible sur les tuners locaux. Spécifier l'URL complète http:// et le numéro de port (normalement ...: 8001), p.e. http://second_demo:8001."
-
-msgid "Enable remote enigma2 receiver to be tried to tune into services that cannot be tuned into locally for recordings (e.g. tuner is occupied or service type is unavailable on the local tuner. Specify complete URL including http:// and port number (normally ...:8001), e.g. http://second_box:8001."
-msgstr "Activer un récepteur enigma2 distant pour essayer de syntoniser les services qui ne peuvent pas l’être localement (p.e. tuners occupés ou le type de service n’est pas disponible sur les tuners locaux. Spécifier l’URL complète http:// et le numéro de port (normalement …: 8001), p.e. http://second_demo:8001."
 
 msgid "Enable teletext caching"
 msgstr "Activer la mise en cache du télétexte"
@@ -3977,6 +3987,9 @@ msgstr "Lecture en cours"
 
 msgid "Now, use the contrast setting to turn up the brightness of the background as much as possible, but make sure that you can still see the difference between the two brightest levels of shades.If you have done that, press OK."
 msgstr "Maintenant, utilisez les paramètres de contraste pour indiquer la luminosité du fond autant que possible, mais assurez-vous que vous pouvez toujours voir la différence entre les deux niveaux les plus lumineux des nuances. Si vous avez fait cela, appuyez sur OK."
+
+msgid "Number of channels shown in channel selection list"
+msgstr "Afficher le numéro des chaînes dans la sélection des chaînes"
 
 msgid "Number of repeating text on display."
 msgstr "Nombre de texte se répétant sur l'écran."
@@ -5630,7 +5643,7 @@ msgstr "Afficher l'EPG multi chaîne"
 msgid "Show packages to be upgraded"
 msgstr "Afficher les paquets à mettre à jour"
 
-msgid "Show picons in channel list"
+msgid "Show picons in channel selection list"
 msgstr "Afficher les picons dans la liste des chaînes"
 
 msgid "Show positioner movement"
@@ -5638,6 +5651,9 @@ msgstr "Afficher le mouvement du positionneur"
 
 msgid "Show positioner position"
 msgstr "Afficher la position du positionneur"
+
+msgid "Show record clock icons"
+msgstr "Afficher un icône d’horloge pour les enregistrements"
 
 msgid "Show record indicator"
 msgstr "Afficher l'indication d'enregistrement"
@@ -5693,6 +5709,9 @@ msgstr "Voir la mise en garde avant de définir « Ignorer les conflits »"
 msgid "Show warning when timeshift is stopped"
 msgstr "Afficher un avertissement quand la PauseDirect est arrêtée"
 
+msgid "Show/hide window"
+msgstr "Afficher/masquer fenêtre"
+
 msgid "Shows live tv or informations on LCD."
 msgstr "Afficher la TV en directe ou les informations sur le LCD."
 
@@ -5722,9 +5741,6 @@ msgstr "Force du signal:"
 
 msgid "Signal: "
 msgstr "Signal: "
-
-msgid "Silently zap between bouquets"
-msgstr "Zapper de manière transparente entres les bouquets"
 
 msgid "Similar"
 msgstr "Similaire"
@@ -6471,12 +6487,12 @@ msgstr "Ce support DVD RW est déjà formaté - le reformater effacera tout le c
 
 msgid ""
 "This info is for developers only.\n"
-"For a normal users it is not important.\n"
-"Don't panic, please, when here will be displayed any suspicious informations!"
+"For a normal users it is not relevant.\n"
+"Don't panic please when you see values being displayed that you think look suspicious!"
 msgstr ""
 "Ceci est une info seulement pour les développeurs.\n"
 "Pour les utilisateurs finaux ceci n'est pas important.\n"
-"Ne paniquez pas, SVP, lorsqu'ici sera affiché certaines informations sensibles!"
+"SVP, ne paniquez pas si vous voyez des valeurs que vous pensez étranges."
 
 msgid "This plugin is installed."
 msgstr "Ce plugin est installé."
@@ -6581,9 +6597,6 @@ msgstr "Aperçu des programmations"
 
 msgid "Timer edit"
 msgstr "Édition des programmations"
-
-msgid "Timer editor"
-msgstr "Éditeur programmations"
 
 msgid "Timer entry"
 msgstr "Saisir programmation"
@@ -7779,6 +7792,9 @@ msgstr "Revenir sur le service avant le réglage positionneur?"
 msgid "Zap back to service before tuner setup?"
 msgstr "Revenir sur le service avant le réglage tuner?"
 
+msgid "Zap bouquets blindly on zap buttons"
+msgstr "Changer les bouquets directement avec les boutons de zap"
+
 msgid "Zap down"
 msgstr "Zapper vers le bas"
 
@@ -7803,8 +7819,11 @@ msgstr "Zapper sur la chaîne sélectionnée, ou afficher l'information d'évén
 msgid "Zap up"
 msgstr "Zap haut"
 
-msgid "Zgemma H.S/H.2S/H.2H"
-msgstr "Zgemma H.S/H.2S/H.2H"
+msgid "Zgemma H.S/H.2S/H.2H/H5"
+msgstr "Zgemma H.S/H.2S/H.2H/H5"
+
+msgid "Zgemma Star S/2S/H1/H2"
+msgstr "Zgemma Star S/2S/H1/H2"
 
 msgid "[REC]"
 msgstr "[REC]"

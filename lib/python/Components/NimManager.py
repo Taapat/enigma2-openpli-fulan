@@ -73,10 +73,7 @@ class SecConfigure:
 		if 0 <= diseqcmode < 3:
 			self.addSatellite(sec, orbpos)
 			if setVoltageTone:
-				if diseqc13V:
-					sec.setVoltageMode(switchParam.HV_13)
-				else:
-					sec.setVoltageMode(switchParam.HV)
+				sec.setVoltageMode(switchParam.HV_13 if diseqc13V else switchParam.HV)
 				sec.setToneMode(switchParam.HILO)
 			else:
 				sec.setVoltageMode(switchParam._14V)
@@ -104,10 +101,7 @@ class SecConfigure:
 			for x in user_satList:
 				print "[SecConfigure] Add sat " + str(x[0])
 				self.addSatellite(sec, int(x[0]))
-				if diseqc13V:
-					sec.setVoltageMode(switchParam.HV_13)
-				else:
-					sec.setVoltageMode(switchParam.HV)
+				sec.setVoltageMode(switchParam.HV_13 if diseqc13V else switchParam.HV)
 				sec.setToneMode(switchParam.HILO)
 				sec.setRotorPosNum(0) # USALS
 
@@ -655,16 +649,7 @@ class NIM(object):
 	slot_id = property(getSlotID)
 
 	def getFriendlyType(self):
-		return {
-			"DVB-S": "DVB-S",
-			"DVB-T": "DVB-T",
-			"DVB-C": "DVB-C",
-			"DVB-S2": "DVB-S2",
-			"DVB-T2": "DVB-T2",
-			"DVB-C2": "DVB-C2",
-			"ATSC": "ATSC",
-			None: _("empty")
-			}[self.getType()]
+		return self.getType() or _("empty")
 
 	friendly_type = property(getFriendlyType)
 
@@ -1529,15 +1514,11 @@ def InitNimManager(nimmgr, update_slots = []):
 		try:
 			nim.cable
 		except:
-			list = [ ]
-			n = 0
-			for x in nimmgr.cablesList:
-				list.append((str(n), x[0]))
-				n += 1
+			list = [(str(n), x[0]) for n, x in enumerate(nimmgr.cablesList)]
 			nim.cable = ConfigSubsection()
 			nim.cable.scan_networkid = ConfigInteger(default = 0, limits = (0, 99999))
 			possible_scan_types = [("bands", _("Frequency bands")), ("steps", _("Frequency steps"))]
-			if n:
+			if list:
 				possible_scan_types.append(("provider", _("Provider")))
 				nim.cable.scan_provider = ConfigSelection(default = "0", choices = list)
 			nim.cable.scan_type = ConfigSelection(default = "bands", choices = possible_scan_types)
@@ -1568,11 +1549,7 @@ def InitNimManager(nimmgr, update_slots = []):
 		try:
 			nim.terrestrial
 		except:
-			list = []
-			n = 0
-			for x in nimmgr.terrestrialsList:
-				list.append((str(n), x[0]))
-				n += 1
+			list = [(str(n), x[0]) for n, x in enumerate(nimmgr.terrestrialsList)]
 			nim.terrestrial = ConfigSelection(choices = list)
 			nim.terrestrial_5V = ConfigOnOff()
 
@@ -1623,9 +1600,14 @@ def InitNimManager(nimmgr, update_slots = []):
 		fe_id = configElement.fe_id
 		eDVBResourceManager.getInstance().setFrontendType(nimmgr.nim_slots[fe_id].frontend_id, nimmgr.nim_slots[fe_id].getType())
 		try:
+			frontend = eDVBResourceManager.getInstance().allocateRawChannel(fe_id).getFrontend()
+			if not os.path.exists("/proc/stb/frontend/%d/mode" % fe_id) and frontend.setDeliverySystem(nimmgr.nim_slots[fe_id].getType()):
+				print "[InitNimManager] tunerTypeChanged feid %d from %d to mode %d" % (fe_id, cur_type, int(configElement.value))
+				return
+
 			cur_type = int(open("/proc/stb/frontend/%d/mode" % (fe_id), "r").read())
 			if cur_type != int(configElement.value):
-				print "tunerTypeChanged feid %d from %d to mode %d" % (fe_id, cur_type, int(configElement.value))
+				print "[InitNimManager] tunerTypeChanged feid %d from %d to mode %d" % (fe_id, cur_type, int(configElement.value))
 
 				try:
 					oldvalue = open("/sys/module/dvb_core/parameters/dvb_shutdown_timeout", "r").readline()
@@ -1633,7 +1615,6 @@ def InitNimManager(nimmgr, update_slots = []):
 				except:
 					print "[InitNimManager] no /sys/module/dvb_core/parameters/dvb_shutdown_timeout available"
 
-				frontend = eDVBResourceManager.getInstance().allocateRawChannel(fe_id).getFrontend()
 				frontend.closeFrontend()
 				open("/proc/stb/frontend/%d/mode" % (fe_id), "w").write(configElement.value)
 				frontend.reopenFrontend()
@@ -1643,7 +1624,7 @@ def InitNimManager(nimmgr, update_slots = []):
 					print "[InitNimManager] no /sys/module/dvb_core/parameters/dvb_shutdown_timeout available"
 				nimmgr.enumerateNIMs()
 				if initial:
-					print "tunerTypeChanged force update setting"
+					print "[InitNimManager] tunerTypeChanged force update setting"
 					nimmgr.sec.update()
 			else:
 				print "[InitNimManager] tuner type is already already %d" %cur_type

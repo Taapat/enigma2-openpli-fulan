@@ -34,7 +34,7 @@ class EPGSelection(Screen):
 
 	ZAP = 1
 
-	def __init__(self, session, service, zapFunc=None, eventid=None, bouquetChangeCB=None, serviceChangeCB=None):
+	def __init__(self, session, service, zapFunc=None, eventid=None, bouquetChangeCB=None, serviceChangeCB=None, parent=None):
 		Screen.__init__(self, session)
 		self.bouquetChangeCB = bouquetChangeCB
 		self.serviceChangeCB = serviceChangeCB
@@ -81,6 +81,7 @@ class EPGSelection(Screen):
 			self["date"] = Label()
 			self.services = service
 			self.zapFunc = zapFunc
+		self.parent = parent
 		self["key_green"] = Button(_("Add timer"))
 		self.key_green_choice = self.ADD_TIMER
 		self.key_red_choice = self.EMPTY
@@ -106,10 +107,14 @@ class EPGSelection(Screen):
 		self.onLayoutFinish.append(self.onCreate)
 
 	def nextBouquet(self):
+		if self.type == EPG_TYPE_SINGLE:
+			self.session.openWithCallback(self.channelSelectionCallback, ChannelSelection.SimpleChannelSelection, _("Select channel"), True, True, self.currentService.ref, self.parent and self.parent.epg_bouquet)
 		if self.bouquetChangeCB:
 			self.bouquetChangeCB(1, self)
 
 	def prevBouquet(self):
+		if self.type == EPG_TYPE_SINGLE:
+			self.session.openWithCallback(self.channelSelectionCallback, ChannelSelection.SimpleChannelSelection, _("Select channel"), True, True, self.currentService.ref, self.parent and self.parent.epg_bouquet)
 		if self.bouquetChangeCB:
 			self.bouquetChangeCB(-1, self)
 
@@ -276,10 +281,14 @@ class EPGSelection(Screen):
 		if self.type is EPG_TYPE_MULTI:
 			self["list"].updateMultiEPG(1)
 		if self.type is EPG_TYPE_SINGLE:
-			self.session.openWithCallback(self.channelSelectionCallback, ChannelSelection.SimpleChannelSelection, _("Select channel"), currentBouquet=True)
+			self.session.openWithCallback(self.channelSelectionCallback, ChannelSelection.SimpleChannelSelection, _("Select channel"), True, True, self.currentService.ref, self.parent and self.parent.epg_bouquet)
 
 	def channelSelectionCallback(self, *args):
-		args and self.setService(ServiceReference(args[0]))
+		if args and len(args) == 2:
+			serviceref, bouquetref = args[:2]
+			if self.parent:
+				self.parent.selectBouquet(bouquetref, self)
+			self.setService(ServiceReference(serviceref))
 
 	def removeTimer(self, timer):
 		timer.afterEvent = AFTEREVENT.NONE
@@ -422,6 +431,9 @@ class EPGSelection(Screen):
 						elif entry.begin == conflict_end:
 							entry.begin += 30
 							change_time = True
+						elif entry.begin == conflict_begin and (entry.service_ref and entry.service_ref.ref and entry.service_ref.ref.flags & eServiceReference.isGroup):
+							entry.begin += 30
+							change_time = True
 						if change_time:
 							simulTimerList = self.session.nav.RecordTimer.record(entry)
 					if simulTimerList is not None:
@@ -557,3 +569,5 @@ class EPGSelection(Screen):
 		elif not isRecordEvent and self.key_green_choice is not self.ADD_TIMER:
 			self["key_green"].setText(_("Add timer"))
 			self.key_green_choice = self.ADD_TIMER
+		if self.parent and eventid and hasattr(self.parent, "setEvent"):
+			self.parent.setEvent(serviceref, eventid)
