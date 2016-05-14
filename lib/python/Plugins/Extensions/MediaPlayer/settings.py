@@ -15,7 +15,7 @@ config.MediaPlayer.defaultDir = ConfigDirectory()
 config.MediaPlayer.sortPlaylists = ConfigYesNo(default=False)
 config.MediaPlayer.alwaysHideInfoBar = ConfigYesNo(default=True)
 config.MediaPlayer.onMainMenu = ConfigYesNo(default=False)
-config.mediaplayer.playIfEmptyPlaylists = ConfigYesNo(default=True)
+config.MediaPlayer.playIfEmptyPlaylists = ConfigYesNo(default=True)
 
 class DirectoryBrowser(Screen, HelpableScreen):
 
@@ -100,7 +100,7 @@ class MediaPlayerSettings(Screen,ConfigListScreen):
 			self.list.append(getConfigListEntry(_("sorting of playlists"), config.MediaPlayer.sortPlaylists))
 			self.list.append(getConfigListEntry(_("Always hide infobar"), config.MediaPlayer.alwaysHideInfoBar))
 			self.list.append(getConfigListEntry(_("show mediaplayer on mainmenu"), config.MediaPlayer.onMainMenu))
-			self.list.append(getConfigListEntry(_("play file when add in empty playlist"), config.mediaplayer.playIfEmptyPlaylists))
+			self.list.append(getConfigListEntry(_("play file when add in empty playlist"), config.MediaPlayer.playIfEmptyPlaylists))
 			self["config"].setList(self.list)
 		except KeyError:
 			print "keyError"
