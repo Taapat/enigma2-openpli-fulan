@@ -122,7 +122,7 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarA
 		self.addPlaylistParser(PlaylistIOInternal, "e2pls")
 
 		# 'None' is magic to start at the list of mountpoints
-		defaultDir = config.MediaPlayer.defaultDir.getValue()
+		defaultDir = config.mediaplayer.defaultDir.getValue()
 		self.filelist = FileList(defaultDir, matchingPattern = "(?i)^.*\.(mp2|mp3|ogg|ts|mts|m2ts|wav|wave|m3u|pls|e2pls|mpg|vob|avi|divx|m4v|mkv|mp4|m4a|dat|flac|flv|mov|dts|3gp|3g2|asf|wmv|wma)", useServiceRef = True, additionalExtensions = "4098:m3u 4098:e2pls 4098:pls")
 		self["filelist"] = self.filelist
 
@@ -257,7 +257,7 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarA
 	def hideAndInfoBar(self):
 		self.hide()
 		self.mediaPlayerInfoBar.show()
-		if config.MediaPlayer.alwaysHideInfoBar.value or self.ext not in AUDIO_EXTENSIONS and not self.isAudioCD:
+		if config.mediaplayer.alwaysHideInfoBar.value or self.ext not in AUDIO_EXTENSIONS and not self.isAudioCD:
 			self.hideMediaPlayerInfoBar.start(5000, True)
 
 	def timerHideMediaPlayerInfoBar(self):
@@ -286,9 +286,9 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarA
 					self.playlistIOInternal.save(resolveFilename(SCOPE_CONFIG, "playlist.e2pls"))
 				except IOError:
 					print "couldn't save playlist.e2pls"
-			if config.MediaPlayer.saveDirOnExit.getValue():
-				config.MediaPlayer.defaultDir.setValue(self.filelist.getCurrentDirectory())
-				config.MediaPlayer.defaultDir.save()
+			if config.mediaplayer.saveDirOnExit.getValue():
+				config.mediaplayer.defaultDir.setValue(self.filelist.getCurrentDirectory())
+				config.mediaplayer.defaultDir.save()
 			try:
 				from Plugins.SystemPlugins.Hotplug.plugin import hotplugNotifier
 				hotplugNotifier.remove(self.hotplugCB)
@@ -635,8 +635,8 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarA
 			self.switchToPlayList()
 
 	def applySettings(self):
-		self.savePlaylistOnExit = config.MediaPlayer.savePlaylistOnExit.getValue()
-		if config.MediaPlayer.repeat.getValue() == True:
+		self.savePlaylistOnExit = config.mediaplayer.savePlaylistOnExit.getValue()
+		if config.mediaplayer.repeat.getValue() == True:
 			self["repeat"].setPixmapNum(1)
 		else:
 			self["repeat"].setPixmapNum(0)
@@ -696,7 +696,7 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarA
 				listpath.append((i,playlistdir + i))
 		except IOError,e:
 			print "Error while scanning subdirs ",e
-		if config.MediaPlayer.sortPlaylists.value:
+		if config.mediaplayer.sortPlaylists.value:
 			listpath.sort()
 		self.session.openWithCallback(self.PlaylistSelected, ChoiceBox, title=_("Please select a playlist..."), list = listpath)
 
@@ -720,7 +720,7 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarA
 				listpath.append((i,playlistdir + i))
 		except IOError,e:
 			print "Error while scanning subdirs ",e
-		if config.MediaPlayer.sortPlaylists.value:
+		if config.mediaplayer.sortPlaylists.value:
 			listpath.sort()
 		self.session.openWithCallback(self.DeletePlaylistSelected, ChoiceBox, title=_("Please select a playlist to delete..."), list = listpath)
 
@@ -840,7 +840,7 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarA
 		next = self.playlist.getCurrentIndex() + 1
 		if next < len(self.playlist):
 			self.changeEntry(next)
-		elif ( len(self.playlist) > 0 ) and ( config.MediaPlayer.repeat.getValue() == True ):
+		elif ( len(self.playlist) > 0 ) and ( config.mediaplayer.repeat.getValue() == True ):
 			self.stopEntry()
 			self.changeEntry(0)
 		elif ( len(self.playlist) > 0 ):
@@ -1041,7 +1041,7 @@ def main(session, **kwargs):
 	InfoBar.instance.checkTimeshiftRunning(boundFunction(mainCheckTimeshiftCallback, session))
 
 def menu(menuid, **kwargs):
-	if menuid == "mainmenu" and config.MediaPlayer.onMainMenu.getValue():
+	if menuid == "mainmenu" and config.mediaplayer.onMainMenu.getValue():
 		return [(_("Media player"), main, "media_player", 45)]
 	return []
 

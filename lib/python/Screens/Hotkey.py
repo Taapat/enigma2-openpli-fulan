@@ -74,8 +74,8 @@ def getHotkeys():
 		( "Timeshift", "time", ""),
 		( "Slow", "slow", ""),
 		( "Fast", "fast", ""),
-		( "Power", "power", ""),
-		( "Power " + _("long"), "power_long", "")]
+		( "Power", "power", "Module/Screens.Standby/Standby"),
+		( "Power" + " " + _("long"), "power_long", "Menu/shutdown"),
 
 	usedkeys = []
 	lircfile = "/etc/lircd.conf"
@@ -191,6 +191,7 @@ def getHotkeyFunctions():
 	for plugin in plugins.getPluginsForMenu("system"):
 		if plugin[2]:
 			hotkeyFunctions.append((plugin[0], "MenuPlugin/system/" + plugin[2], "Setup"))
+	hotkeyFunctions.append((_("PowerMenu"), "Menu/shutdown", "Power"))
 	hotkeyFunctions.append((_("Standby"), "Module/Screens.Standby/Standby", "Power"))
 	hotkeyFunctions.append((_("Restart"), "Module/Screens.Standby/TryQuitMainloop/2", "Power"))
 	hotkeyFunctions.append((_("Restart enigma"), "Module/Screens.Standby/TryQuitMainloop/3", "Power"))
@@ -630,7 +631,16 @@ class InfoBarHotkey():
 					else:
 						from Screens.Console import Console as sConsole
 						self.session.open(sConsole, cmdlist = [command])
-
+			elif selected[0] == "Menu":
+				from Screens.Menu import MainMenu, mdom
+				root = mdom.getroot()
+				for x in root.findall("menu"):
+					y = x.find("id")
+					if y is not None:
+						id = y.get("val")
+						if id and id == selected[1]:
+							menu_screen = self.session.open(MainMenu, x)
+							break
 
 	def showServiceListOrMovies(self):
 		if hasattr(self, "openServiceList"):
