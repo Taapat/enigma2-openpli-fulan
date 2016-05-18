@@ -75,7 +75,7 @@ def getHotkeys():
 		( "Slow", "slow", ""),
 		( "Fast", "fast", ""),
 		( "Power", "power", "Module/Screens.Standby/Standby"),
-		( "Power" + " " + _("long"), "power_long", "Menu/shutdown"),
+		( "Power " + _("long"), "power_long", "Menu/shutdown")]
 
 	usedkeys = []
 	lircfile = "/etc/lircd.conf"
