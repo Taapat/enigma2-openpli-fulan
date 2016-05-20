@@ -2,7 +2,6 @@ from Screen import Screen
 from Components.Button import Button
 from Components.ActionMap import HelpableActionMap, ActionMap, NumberActionMap
 from Components.ChoiceList import ChoiceList, ChoiceEntryComponent
-from Components.Console import Console
 from Components.MenuList import MenuList
 from Components.MovieList import MovieList, resetMoviePlayState, AUDIO_EXTENSIONS, DVD_EXTENSIONS, IMAGE_EXTENSIONS, moviePlayState
 from Components.DiskInfo import DiskInfo
@@ -1017,29 +1016,6 @@ class MovieSelection(Screen, SelectionEventInfo, InfoBarBase, ProtectedScreen):
 	def getCurrentSelection(self):
 		# Returns None or (serviceref, info, begin, len)
 		return self["list"].l.getCurrentSelection()
-
-	def mountIsoCallback(self, result, retval, extra_args):
-		remount = extra_args[1]
-		if remount != 0:
-			del self.remountTimer
-		if os.path.isdir(os.path.join(extra_args[0], 'BDMV/STREAM/')):
-			self.itemSelectedCheckTimeshiftCallback('bluray', extra_args[0], True)
-		elif os.path.isdir(os.path.join(extra_args[0], 'VIDEO_TS/')):
-			Console().ePopen('umount -f %s' % extra_args[0], self.umountIsoCallback, extra_args)
-		elif remount < 5:
-			remount += 1
-			self.remountTimer = eTimer()
-			self.remountTimer.timeout.callback.append(boundFunction(self.mountIsoCallback, None, None, (extra_args[0], remount, extra_args[2])))
-			self.remountTimer.start(1000, False)
-		else:
-			Console().ePopen('umount -f %s' % extra_args[0], self.umountIsoCallback, extra_args)
-
-	def umountIsoCallback(self, result, retval, extra_args):
-		try:
-			os.rmdir(extra_args[0])
-		except Exception as e:
-			print "[ML] Cannot remove", extra_args[0], e
-		self.itemSelectedCheckTimeshiftCallback('.img', extra_args[2], True)
 
 	def playAsBLURAY(self, path):
 		try:

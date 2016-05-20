@@ -7451,6 +7451,12 @@ msgstr "Ja ieslēgts, LNB barošana netiks izslēgta gaidstāvē"
 msgid "When enabled the LNB toneburst will be forced"
 msgstr "Ja ieslēgts, LNB toņsignāls tiks lietots piespiedu kārtā"
 
+msgid "When enabled the LNB power will not be switched off in standby"
+msgstr "Ja ieslēgts, LNB barošana netiks izslēgta gaidstāvē"
+
+msgid "When enabled the LNB toneburst will be forced"
+msgstr "Ja ieslēgts, LNB toņsignāls tiks lietots piespiedu kārtā"
+
 msgid "When enabled the PiP can be closed by the exit button."
 msgstr "Ja ieslēgts attēls attēlā, var aizvērt ar exit taustiņu."
 
