@@ -10,7 +10,7 @@ from Components.SystemInfo import SystemInfo
 from Components.Label import Label
 from Tools.BoundFunction import boundFunction
 from Plugins.Plugin import PluginDescriptor
-from Tools.Directories import resolveFilename, SCOPE_SKIN
+from Tools.Directories import resolveFilename, fileExists, SCOPE_SKIN, SCOPE_CONFIG
 
 import xml.etree.cElementTree
 
