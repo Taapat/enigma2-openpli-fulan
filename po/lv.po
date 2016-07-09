@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-18 20:41+0300\n"
+"POT-Creation-Date: 2016-07-09 23:07+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2087,6 +2087,9 @@ msgstr "DiSEqC-testera iestatījumi"
 msgid "Dial number"
 msgstr "Iezvana numurs"
 
+msgid "Did you see all eight arrow heads?"
+msgstr "Vai jūs redzat visu bultu galus?"
+
 msgid "Digital contour removal"
 msgstr "Digitālo kontūru noņemšana"
 
@@ -2210,6 +2213,9 @@ msgstr "Vai tiešām vēlaties dzēst mapi %s no diska?"
 msgid "Do you really want to remove your bookmark of %s?"
 msgstr "Vai tiešām vēlaties dzēst grāmatzīmi %s?"
 
+msgid "Do you see all the eight arrowheads?"
+msgstr "Vai jūs redzat visu bultu galus?"
+
 msgid "Do you want this?"
 msgstr "Vai to vēlaties?"
 
@@ -2231,6 +2237,9 @@ msgstr "Vai vēlaties atskaņot DVD?"
 msgid "Do you want to preview this DVD before burning?"
 msgstr "Vai vēlaties priekšskatīt šo DVD pirms rakstīšanas?"
 
+msgid "Do you want to quit the overscan wizard?"
+msgstr "Vai tiešām vēlaties iziet no šī veidņa?"
+
 msgid "Do you want to reboot your receiver?"
 msgstr "Vai vēlaties pārstartēt uztvērēju?"
 
@@ -2242,6 +2251,9 @@ msgstr "Vai vēlaties atjaunot jūsu iestatījumus?"
 
 msgid "Do you want to resume this playback?"
 msgstr "Vai vēlaties turpināt atskaņošanu?"
+
+msgid "Do you want to select a different skin?"
+msgstr "Vai vēlaties izvēlēties citu noformējumu?"
 
 #, python-format
 msgid "Do you want to update your receiver to %s?"
@@ -2399,6 +2411,10 @@ msgstr "Aktivizēt kabeļu tīkla auto skanēšanu"
 msgid "Enable auto fast scan"
 msgstr "Aktivizēt ātro auto skanēšanu"
 
+#, python-format
+msgid "Enable auto fast scan for %s"
+msgstr "Aktivizēt ātro auto skanēšanu priekš %s"
+
 msgid "Enable bouquet selection in multi-EPG"
 msgstr "Aktivizēt buķešu izvēli multi-EPG"
 
@@ -2472,11 +2488,17 @@ msgstr "Enigma (pār)startēta: %d reizes\n"
 msgid "Enigma2 skin selector"
 msgstr "Enigma2 noformējuma izvēle"
 
+msgid "Enter PIN"
+msgstr "Ievadiet PIN"
+
 msgid "Enter main menu..."
 msgstr "Atvērt galveno izvēlni..."
 
+msgid "Enter persistent PIN code"
+msgstr "Ievadiet PIN kodu"
+
 msgid "Enter pin code"
-msgstr "Ievadiet pin kodu"
+msgstr "Ievadiet PIN kodu"
 
 msgid "Enter the service pin"
 msgstr "Ievadiet kanāla PIN"
@@ -2647,8 +2669,8 @@ msgstr "Papildus sākuma laiks neaktivitātes miega taimera ignorēšanai"
 msgid "F"
 msgstr "F"
 
-msgid "F1/F3"
-msgstr "F1/F3"
+msgid "F1/F3/F4"
+msgstr "F1/F3/F4"
 
 msgid "FBC Unicable"
 msgstr "FBC Unicable"
@@ -2958,8 +2980,8 @@ msgstr "H"
 msgid "HD list"
 msgstr "HD saraksts"
 
-msgid "HD1100/HD1200/HD1265/et7x00/et8500"
-msgstr "HD1100/HD1200/HD1265/et7x00/et8500"
+msgid "HD1100/HD1200/HD1265/et7x00/et8500/et7000mini"
+msgstr "HD1100/HD1200/HD1265/et7x00/et8500/et7000mini"
 
 msgid "HD2400"
 msgstr "HD2400"
@@ -2999,9 +3021,6 @@ msgstr "Palīdzēs ietstīt jūsu antenu"
 
 msgid "Hidden network"
 msgstr "Neredzams tīkls"
-
-msgid "Hide CI messages"
-msgstr "Slēpt CI paziņojumus"
 
 msgid "Hide channel list in radio mode"
 msgstr "Slēpt kanālu sarakstu radio režīmā"
@@ -3307,6 +3326,15 @@ msgstr "Vai šie iestatījumi der?"
 msgid "Is this video mode ok?"
 msgstr "Vai šis video režīms der?"
 
+msgid ""
+"It seems you did not see all the eight arrow heads. This means your TV is has overscan enabled, and is not configured properly.\n"
+"\n"
+"Please refer to your TVs manual to find how you can disable overscan on your TV. Look for terms like 'Just fit', 'Full width', etc. If you can't find it, ask other users at http://forums.openpli.org.\n"
+"\n"
+msgstr ""
+"Liekas ka jūs neredzat visu bultu galus. Tas nozīmē ka jūsu TV nav nokonfigurēts pareizi.\n"
+"\n"
+
 msgid "Italian"
 msgstr "Itāļu"
 
@@ -3373,6 +3401,9 @@ msgstr "Valoda"
 
 msgid "Language selection"
 msgstr "Valodas izvēle"
+
+msgid "Large"
+msgstr "Liels"
 
 msgid "Last config"
 msgstr "Pēdējie iestatījumi"
@@ -3615,6 +3646,10 @@ msgstr "Atmiņas indekss"
 
 msgid "Menu"
 msgstr "Izvēlne"
+
+#, python-format
+msgid "Menusort (%s)"
+msgstr "Izvēlnes izkārtojums (%s)"
 
 #, python-format
 msgid ""
@@ -4110,9 +4145,6 @@ msgstr "3D iestatījumi"
 msgid "OSD name request"
 msgstr "OSD nosaukuma pieprasījums"
 
-msgid "OSD position setup"
-msgstr "OSD pozīcijas iestatījumi"
-
 msgid "OSD settings"
 msgstr "OSD iestatījumi"
 
@@ -4187,6 +4219,12 @@ msgstr "Izeja"
 
 msgid "Overall progress:"
 msgstr "Izpilda:"
+
+msgid "Overscan Wizard"
+msgstr "Attēla vednis"
+
+msgid "Overscan wizard"
+msgstr "Attēla vednis"
 
 msgid "Overwrite configuration files during software upgrade?"
 msgstr "Pārrakstīt konfigurācijas failus atjaunojot programmatūru?"
@@ -4767,6 +4805,9 @@ msgstr "Aizsargāt galveno izvēlni"
 msgid "Protect manufacturer reset screen"
 msgstr "Aizsargāt iestatījumu atiestatīšanu"
 
+msgid "Protect menu sort"
+msgstr "Aizsargāt izvēlnes kārtošanu"
+
 msgid "Protect movie list"
 msgstr "Aizsargāt filmu sarakstu"
 
@@ -4923,6 +4964,9 @@ msgstr "Sarkanā poga..."
 msgid "Red colored"
 msgstr "Sarkanā krāsā"
 
+msgid "Reenter PIN"
+msgstr "Atkārtojiet PIN"
+
 msgid "Reflash recommended!"
 msgstr "Ieteicams pāršūt programmatūru!"
 
@@ -5053,6 +5097,12 @@ msgstr "Atstatīt"
 
 msgid "Reset and renumerate title names"
 msgstr "Atstatīt un pārnumurēt virsrakstu nosaukumus"
+
+msgid "Reset order (All)"
+msgstr "Atiestatīt izkārtojumu (visu)"
+
+msgid "Reset persistent PIN code"
+msgstr "Atiestatiet PIN kodu"
 
 msgid "Reset playback position"
 msgstr "Atstatīt atskaņošanas pozīciju"
@@ -5238,6 +5288,9 @@ msgstr "Saglabāt un restartēt laika aizturi"
 
 msgid "Save and stop timeshift"
 msgstr "Saglabāt un apturēt laika aizturi"
+
+msgid "Save changes"
+msgstr "Saglabāt izmaiņas"
 
 msgid "Save playlist"
 msgstr "Saglabāt repertuāru"
@@ -5587,6 +5640,9 @@ msgstr "Iestatīt interfeisu kā noklusēto"
 msgid "Set limits"
 msgstr "Iestatīt limitus"
 
+msgid "Set pin code persistent"
+msgstr "Ievadiet PIN kodu"
+
 msgid "Set startup service"
 msgstr "Iestatīt kā starta kanālu"
 
@@ -5643,6 +5699,9 @@ msgstr "Īsie failu nosaukumi"
 
 msgid "Show Audioselection"
 msgstr "Rādīt audio izvēlni"
+
+msgid "Show CI messages"
+msgstr "Rādīt CI paziņojumus"
 
 msgid "Show EIT now/next in infobar"
 msgstr "Rādīt EIT pašreiz/nākamais infojoslā"
@@ -5754,6 +5813,9 @@ msgstr "Parādīt jaunākās izmaiņas"
 
 msgid "Show latest upgrade log"
 msgstr "Rādīt pēdējās atjaunošanas žurnālu"
+
+msgid "Show menu paths"
+msgstr "Rādīt iestatījumu ceļu"
 
 msgid "Show message when recording starts"
 msgstr "Rādīt paziņojumu kad ieraksts sākas"
@@ -5957,8 +6019,14 @@ msgstr "Lēni"
 msgid "Slow motion speeds"
 msgstr "Palēninātās kustības ātrumi"
 
+msgid "Small"
+msgstr "Mazs"
+
 msgid "Small progress"
 msgstr "Izpilda"
+
+msgid "Smartcard PIN"
+msgstr "Smartcard PIN"
 
 msgid "Social/Political/Economics"
 msgstr "Sociālie/Politika/Ekonomika"
@@ -6032,6 +6100,9 @@ msgstr "Sakārtot sarakstu noklusētā kārtībā un aizvērt?"
 
 msgid "Sort list:"
 msgstr "Kārt. saraksts:"
+
+msgid "Sort order for menu entries"
+msgstr "Istatījumu izkārtojums"
 
 msgid "Sort plugins list to default?"
 msgstr "Sakārtot sprudņus noklusētā kārtībā?"
@@ -6493,6 +6564,9 @@ msgstr ""
 msgid "The PIN code has been changed successfully."
 msgstr "PIN kods nomainīts veiksmīgi."
 
+msgid "The PIN code has been saved successfully."
+msgstr "PIN kods nomainīts veiksmīgi."
+
 msgid "The PIN codes you entered are different."
 msgstr "Ievadītie PIN kodi atšķiras."
 
@@ -6525,6 +6599,44 @@ msgstr ""
 "Bezvadu tīkla spraudnis nav instalēts!\n"
 "Lūdzu uzstādiet to."
 
+msgid ""
+"The overscan wizard has been completed.\n"
+"\n"
+"Note: you can always start the Overscan Wizard later,  via\n"
+"\n"
+"menu->installation->system->Overscan Wizard"
+msgstr ""
+"Attēla veidnis ir pabeigts.\n"
+"\n"
+"Jūs vienmēt varat atkārtot attēla veidni izmantojot\n"
+"\n"
+"Izvēlne->Iestatījumu->Sistēma->Attēla veidnis"
+
+msgid ""
+"The overscan wizard helps you to setup your TV in the correct way.\n"
+"\n"
+"For the majority of TV's, the factory default is to have overscan enabled. This means you are always watching a \"zoomed in\" picture instead of real HD, and parts of the user inferface (skin) may be invisible.\n"
+"\n"
+"The yellow area means a 5% border area of a full HD picture will be invisible.\n"
+"The green area means a 10% border area of a full HD picture will be invisible.\n"
+"\n"
+"In other words, if the yellow box meets all for sides of your screen, then you have at least 5% overscan on all sides.\n"
+"\n"
+"If you see the tips of all eight arrowheads, then your TV has overscan disabled.\n"
+"\n"
+"Test Pattern by TigerDave - www.tigerdave.com/ht_menu.htm"
+msgstr ""
+"Attēla veidnis atļauj iestatīt TV korekti.\n"
+"\n"
+"Lielai daļai TV pēc noklusējuma ir iespējots overscan. Tas nozīmē, ka jūs vienmēr skatāties palielinātu attēlu, nevis reālu HD, un daļa no noformējuma nav redzema.\n"
+"\n"
+"Dzeltenais apgabals nozīmē 5% robežu no pilna HD attēla.\n"
+"Zaļais apgabals nozīmē 10% robežu no pilna HD attēla.\n"
+"\n"
+"Ja jūs redzat visu bultu galus, tad jūsu TV overscan ir atspējots.\n"
+"\n"
+"Testa attēls no TigerDave - www.tigerdave.com/ht_menu.htm"
+
 #, python-format
 msgid "The path %s already exists."
 msgstr "Ceļš %s jau eksistē."
@@ -6535,6 +6647,9 @@ msgstr "Jūsu ievadītais PIN kods ir nepareizs."
 #, python-format
 msgid "The results have been written to %s"
 msgstr "Rezultāti tiks ierakstīti %s"
+
+msgid "The saved PIN was cleared."
+msgstr "Saglabātie PIN ir nodzēsti."
 
 msgid "The sleep timer has been activated."
 msgstr "Miega taimeris tika aktivizēts."
@@ -6555,6 +6670,9 @@ msgstr "Esošo imidža statusu nevar pārbaudīt, jo nevar pieslēgties %s."
 
 msgid "The timer file (timers.xml) is corrupt and could not be loaded."
 msgstr "Taimeru fails (timers.xml) ir bojāts un to nevar ielādēt."
+
+msgid "The user interface of the receiver will now restart to select the selected skin"
+msgstr "Uztvērēja lietotāja interfeiss tiks pārstartēts lai lietotu izvēlēto noformējumu"
 
 msgid "The user interface of your receiver is restarting"
 msgstr "Uztvērēja lietotāja interfeiss tiek pārstartēts"
@@ -6620,6 +6738,12 @@ msgstr ""
 "Šī informācija ir domāta tikai izstrādātājiem.\n"
 "Vienkāršam lietotājam tā nav svarīga.\n"
 "Lūdzu neuztraucieties ja jums liekas, ka šeit attēlotas aizdomīgas vērtības!"
+
+msgid "This option allows you to hide and sort menu entries. When selecting user you can change order and hide menu items via the blue button"
+msgstr "Atļauj kārtot un noslēpt iestatījumus. Ja izvēlēts lietotāja, jūs varat kārtot un slēpt iestatījumus izmantojot zilo pogu"
+
+msgid "This option allows you to show menu paths."
+msgstr "Attēlo iestatījumu ceļu noformējumā."
 
 msgid "This plugin is installed."
 msgstr "Šis spraudnis ir instalēts."
@@ -6806,6 +6930,9 @@ msgstr "Iestatīt griešanas iezīmi pašreizējā pozīcijā"
 
 msgid "Toggle infoBar"
 msgstr "Infojosla"
+
+msgid "Toggle show/hide"
+msgstr "Pārslēdz parādīt/slēpt"
 
 msgid "Tone amplitude"
 msgstr "Toņa amplitūda"
@@ -7348,9 +7475,6 @@ msgstr "Pamodināšanas signāls no TV"
 msgid "Wakeup time"
 msgstr "Pamodināšanas laiks"
 
-msgid "Wakeup timer"
-msgstr "Pamodināšanas taimeris"
-
 msgid "Wakeup type"
 msgstr "Pamodināšanas tips"
 
@@ -7532,9 +7656,6 @@ msgstr "Ja ieslēgts, attēlos pašreiz/nākamais EIT notikumus infojoslā. Ja i
 msgid "When enabled, encryption info will be shown in the infobar (when supported by the skin)."
 msgstr "Ja ieslēgts, infojoslā tiks attēlota kodēšanas informācija (ja to uztur noformējums)."
 
-msgid "When enabled, error messages related to the Common Interface module will not be shown."
-msgstr "Ja ieslēgts, netiks parādītas kļūdas no common interfeisa moduļa."
-
 msgid "When enabled, error messages related to zapping will not be shown."
 msgstr "Ja ieslēgts, netiks parādītas kļūdas pārslēdzoties kanāliem."
 
@@ -7692,8 +7813,15 @@ msgstr "Ar uznirstošo logu"
 msgid "Without popup"
 msgstr "Bez uznirstošā loga"
 
+msgid "Wizard to arrange the overscan"
+msgstr "Veidnis lai pārbaudītu overscan"
+
 msgid "Would you like to install a softcam?"
 msgstr "Vai vēlaties instalēt softcam?"
+
+#, python-format
+msgid "Would you save the entered PIN %s persistent?"
+msgstr "Vai vēlaties saglabāt ievadīto PIN %s?"
 
 msgid "Write error while recording. Disk full?\n"
 msgstr "Rakstīšanas kļūda ieraksta laikā. Vai disks ir pilns?\n"
@@ -7803,6 +7931,42 @@ msgstr "Jūs varat izdzēst šo spraudni."
 
 msgid "You cannot delete this!"
 msgstr "Jūs šo nevarat dzēst!"
+
+msgid ""
+"You did not see all eight arrow heads. This means your TV has overscan enabled and presents you with a zoomed-in picture, causing you to loose part of a full HD screen. In addition this you may also miss parts of the user interface, for example volume bars and more.\n"
+"\n"
+"Unfortunately, your model of receiver is not capable to adjust the dimensions of the user interface. If not everything is visible, you should change the installed skin to one that supports the overscan area of your TV.\n"
+"\n"
+"When you select a different skin, the user interface of your receiver will restart.\n"
+"\n"
+"Note: you can always start the Overscan Wizard later,  via\n"
+"\n"
+"menu->installation->system->Overscan Wizard"
+msgstr ""
+"Jūs neredzat visu bultu galus. Tas nozīmē, ka jūsu TV ir ieslēgts overscan un tiek attēlots palielināts attēls. Jūs varat neredzēt kādu daļu no noformējuma, piemēram skaļuma regulatoru.\n"
+"\n"
+"Diemžēl jūsu uztvērējs nevar izmainīt noformējuma attēla izmērus. Ja viss nav redzams jums vajag nomainīt noformējumu pret tādu, kurš atbalsta overscan jūsu TV.\n"
+"\n"
+"Kad izvēlēsieties citu noformējumu jūsu uztvērējs pārstartēsies.\n"
+"\n"
+"Jūs vienmēt varat atkārtot attēla veidni izmantojot\n"
+"\n"
+"Izvēlne->Iestatījumu->Sistēma->Attēla veidnis"
+
+msgid ""
+"You did not see all eight arrow heads. This means your TV has overscan enabled and presents you with a zoomed-in picture, causing you to loose part of a full HD screen. In addition this you may also miss parts of the user interface, for example volume bars and more.\n"
+"\n"
+"You can now try to resize and change the position of the user interface until you see the eight arrow heads.\n"
+"\n"
+"When done press OK.\n"
+"\n"
+msgstr ""
+"Jūs neredzat visu bultu galus. Tas nozīmē, ka jūsu TV ir ieslēgts overscan un tiek attēlots palielināts attēls. Jūs varat neredzēt kādu daļu no noformējuma, piemēram skaļuma regulatoru.\n"
+"\n"
+"Jūs varat mēģināt izmainīt noformējuma izmēru kamēr redzat visu bultu galus.\n"
+"\n"
+"Kad beidzat nospiediet OK.\n"
+"\n"
 
 msgid "You didn't select a channel to record from."
 msgstr "Jūs nenorādījāt ierakstāmo kanālu."
@@ -8048,6 +8212,9 @@ msgstr "pēc alfabēta"
 msgid "alphabetic reverse"
 msgstr "alfabētiski reversā"
 
+msgid "alphabetical"
+msgstr "pēc alfabēta"
+
 msgid "alternative"
 msgstr "alternatīvie"
 
@@ -8117,6 +8284,9 @@ msgstr "melnais saraksts"
 
 msgid "blue"
 msgstr "zilā"
+
+msgid "bottom"
+msgstr "apakšā"
 
 msgid "broadcasting/press"
 msgstr "apraide/prese"
@@ -8403,6 +8573,9 @@ msgstr "augstums"
 msgid "help..."
 msgstr "palīdzība..."
 
+msgid "hide"
+msgstr "slēpt"
+
 msgid "horizontal"
 msgstr "horizontālā"
 
@@ -8530,6 +8703,9 @@ msgstr "pārvietot augšup uz iepriekšējo ierakstu"
 
 msgid "movie/drama (general)"
 msgstr "filmas/drāma (vispārīgi)"
+
+msgid "multi"
+msgstr "multi"
 
 msgid "multinorm"
 msgstr "multinorma"
@@ -8803,6 +8979,9 @@ msgstr "kanāls ir vecāku kontroles buķetē"
 
 msgid "set as startup service"
 msgstr "iestatīt kā starta kanālu"
+
+msgid "show"
+msgstr "rādīt"
 
 msgid "show DVD main menu"
 msgstr "rādīt DVD galveno izvēlni"
