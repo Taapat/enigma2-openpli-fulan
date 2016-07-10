@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-10 00:14+0300\n"
+"POT-Creation-Date: 2016-07-10 13:20+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -2212,9 +2212,6 @@ msgstr "Vai tiešām vēlaties dzēst mapi %s no diska?"
 #, python-format
 msgid "Do you really want to remove your bookmark of %s?"
 msgstr "Vai tiešām vēlaties dzēst grāmatzīmi %s?"
-
-msgid "Do you see all the eight arrowheads?"
-msgstr "Vai jūs redzat visu bultu galus?"
 
 msgid "Do you want this?"
 msgstr "Vai to vēlaties?"
@@ -8979,9 +8976,6 @@ msgstr "kanāls ir vecāku kontroles buķetē"
 
 msgid "set as startup service"
 msgstr "iestatīt kā starta kanālu"
-
-msgid "show"
-msgstr "rādīt"
 
 msgid "show"
 msgstr "rādīt"
