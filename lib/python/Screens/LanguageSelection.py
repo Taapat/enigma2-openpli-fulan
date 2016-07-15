@@ -24,7 +24,7 @@ def LanguageEntryComponent(file, name, index):
 class LanguageSelection(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-
+		self.setTitle(_("Language selection"))
 		self.oldActiveLanguage = language.getActiveLanguage()
 
 		self.list = []
@@ -32,8 +32,6 @@ class LanguageSelection(Screen):
 
 		self.updateList()
 		self.onLayoutFinish.append(self.selectActiveLanguage)
-		from Screens.Menu import setmenu_path
-		setmenu_path(self, _("Language selection"))
 
 		self["actions"] = ActionMap(["OkCancelActions"],
 		{

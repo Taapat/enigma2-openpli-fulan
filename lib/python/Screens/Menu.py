@@ -23,26 +23,6 @@ if not fileExists(menu):
 	menu = resolveFilename(SCOPE_SKIN, 'menu.xml')
 mdom = xml.etree.cElementTree.parse(menu)
 
-class menuPath():
-	def __init__(self):
-		self.path = []
-menu = menuPath()
-
-def remove_path():
-	menu.path = menu.path and menu.path[:-1]
-
-def setmenu_path(self, title):
-	if config.usage.menu_path.value != "off":
-		if not menu.path or menu.path[-1] != title:
-			self.onClose.append(remove_path)
-			menu.path.append(title)
-		if config.usage.menu_path.value == "small":
-			self["menu_path_compressed"] = StaticText(len(menu.path) > 1 and " > ".join(menu.path[:-1]) + " >" or "")
-		else:
-			self.setTitle(menu.path and " > ".join(menu.path) or "")
-			return
-	self.setTitle(title)
-
 class MenuUpdater:
 	def __init__(self):
 		self.updatedMenuItems = {}
@@ -218,8 +198,8 @@ class Menu(Screen, ProtectedScreen):
 		title = title and _(title) or _(parent.get("text", "").encode("UTF-8"))
 		title = self.__class__.__name__ == "MenuSort" and _("Menusort (%s)") % title or title
 		self["title"] = StaticText(title)
-		self.menu_title = title
-		setmenu_path(self, title)
+		self.setScreenPathMode(True)
+		self.setTitle(title)
 
 	def createMenuList(self):
 		self.list = []

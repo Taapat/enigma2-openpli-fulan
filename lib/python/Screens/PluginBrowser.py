@@ -49,13 +49,13 @@ class PluginBrowserSummary(Screen):
 class PluginBrowser(Screen, ProtectedScreen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
+		self.setTitle(_("Plugin browser"))
 		ProtectedScreen.__init__(self)
 
 		self.firsttime = True
 
 		self["key_red"] = self["red"] = Label(_("Remove plugins"))
 		self["key_green"] = self["green"] = Label(_("Download plugins"))
-
 		self.list = []
 		self["list"] = PluginList(self.list)
 
@@ -93,8 +93,6 @@ class PluginBrowser(Screen, ProtectedScreen):
 		self.onShown.append(self.updateList)
 		self.onChangedEntry = []
 		self["list"].onSelectionChanged.append(self.selectionChanged)
-		from Screens.Menu import setmenu_path
-		setmenu_path(self, _("Plugin browser"))
 		self.onLayoutFinish.append(self.saveListsize)
 
 	def isProtected(self):
@@ -228,10 +226,7 @@ class PluginDownloadBrowser(Screen):
 		self.container.appClosed.append(self.runFinished)
 		self.container.dataAvail.append(self.dataAvail)
 		self.onLayoutFinish.append(self.startRun)
-
-		from Screens.Menu import setmenu_path
-		setmenu_path(self, self.type == self.DOWNLOAD and _("Downloadable new plugins") or _("Remove plugins"))
-
+		self.setTitle(self.type == self.DOWNLOAD and _("Downloadable new plugins") or _("Remove plugins"))
 		self.list = []
 		self["list"] = PluginList(self.list)
 		self.pluginlist = []
