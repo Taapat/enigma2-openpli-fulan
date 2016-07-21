@@ -55,7 +55,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 				"showMovies": (self.showMovies, _("Play recorded movies...")),
 				"showRadio": (self.showRadio, _("Show the radio player...")),
 				"showTv": (self.showTv, _("Show the tv player...")),
-				"toogleTvRadio": (self.toogleTvRadio, _("toggels betwenn tv and radio...")),
+				"toggleTvRadio": (self.toggleTvRadio, _("toggels betwenn tv and radio...")),
 			}, prio=2)
 
 		self.allowPiP = True
@@ -101,7 +101,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 		self.__serviceStarted(True)
 		self.onExecBegin.remove(self.__checkServiceStarted)
 
-	def toogleTvRadio(self):
+	def toggleTvRadio(self):
 		service = self.session.nav.getCurrentService()
 		if service:
 			info = service.info()

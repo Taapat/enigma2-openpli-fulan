@@ -133,7 +133,7 @@
 		<key id="KEY_PLAY" mapto="showMovies" flags="m"/>
 		<key id="KEY_FIND" mapto="showMovies" flags="m"/>
 		<key id="KEY_FILE" mapto="showMovies" flags="m"/>
-		<key id="KEY_TV" mapto="toogleTvRadio" flags="m"/>
+		<key id="KEY_TV" mapto="toggleTvRadio" flags="m"/>
 	</map>
 
 	<map context="InfobarAudioSelectionActions">
