@@ -58,6 +58,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 				"toggleTvRadio": (self.toggleTvRadio, _("toggels betwenn tv and radio...")),
 			}, prio=2)
 
+		self.radioTV = False
 		self.allowPiP = True
 
 		for x in HelpableScreen, \
@@ -102,19 +103,12 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 		self.onExecBegin.remove(self.__checkServiceStarted)
 
 	def toggleTvRadio(self):
-		service = self.session.nav.getCurrentService()
-		if service:
-			info = service.info()
-			VideoPID = info.getInfo(iServiceInformation.sVideoPID)
-			if VideoPID == -1:
-				print "radio->tv"
-				self.showTv2()
-			else:
-				print "tv->radio"
-				self.showRadio2()
+		if self.radioTV:
+			self.radioTV = False
+			self.showTv()
 		else:
-			print "showTv"
-			self.showTv2()
+			self.radioTV = True
+			self.showRadio()
 
 	def serviceStarted(self):  #override from InfoBarShowHide
 		new = self.servicelist.newServicePlayed()
@@ -130,22 +124,11 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 
 	def showTv(self):
 		self.showTvChannelList(True)
+		self.openServiceList()
 
 	def showRadio(self):
 		if config.usage.e1like_radio_mode.value:
 			self.showRadioChannelList(True)
-		else:
-			self.rds_display.hide() # in InfoBarRdsDecoder
-			from Screens.ChannelSelection import ChannelSelectionRadio
-			self.session.openWithCallback(self.ChannelSelectionRadioClosed, ChannelSelectionRadio, self)
-
-	def showTv2(self):
-		self.showTvChannelList(False)
-		self.openServiceList()
-
-	def showRadio2(self):
-		if config.usage.e1like_radio_mode.value:
-			self.showRadioChannelList(False)
 			self.openServiceList()
 		else:
 			self.rds_display.hide() # in InfoBarRdsDecoder
