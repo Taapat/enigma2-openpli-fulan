@@ -6952,6 +6952,9 @@ msgstr "Infojosla"
 msgid "Toggle show/hide"
 msgstr "Pārslēdz parādīt/slēpt"
 
+msgid "Toggle the tv and the radio player..."
+msgstr "Pārslēgt tv vai radio atskaņošanu..."
+
 msgid "Tone amplitude"
 msgstr "Toņa amplitūda"
 
