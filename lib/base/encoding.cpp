@@ -52,15 +52,21 @@ eDVBTextEncodingHandler::eDVBTextEncodingHandler()
 
 	if (f)
 	{
+		size_t bufsize = 256;
+		char *line = (char*) malloc(bufsize);
 		if (line == NULL)
 		{
 			eDebug("[eDVBTextEncodingHandler] unable to allocate memory");
 			return;
 		}
-		size_t bufsize = 256;
-		char *line = (char*) malloc(bufsize);
 		char countrycode[bufsize];
 		char *s_table = (char*) malloc(bufsize);
+		if (s_table == NULL)
+		{
+			eDebug("[eDVBTextEncodingHandler] unable to allocate memory");
+			free(line);
+			return;
+		}
 		while (getline(&line, &bufsize, f) != -1)
 		{
 			int i, j = 0;	   // remove leading whitespace and control chars, and comments
