@@ -708,7 +708,6 @@ void eDVBDB::saveServicelist(const char *file)
 			if (g)
 				fprintf(g, "s:%d:%d:%d:%d:%d:%d:%d",
 					sat.frequency, sat.symbol_rate, sat.polarisation, sat.fec,
-					sat.is_id, sat.pls_code & 0x3FFFF, sat.pls_mode & 3);
 					sat.orbital_position > 1800 ? sat.orbital_position - 3600 : sat.orbital_position,
 					sat.inversion, flags);
 
