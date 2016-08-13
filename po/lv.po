@@ -6985,9 +6985,6 @@ msgstr "Celiņš"
 msgid "Traditional Chinese"
 msgstr "Tradicionālā ķīniešu"
 
-msgid "Traditional Chinese"
-msgstr "Tradicionālā ķīniešu"
-
 msgid "Transcoding: "
 msgstr "Transkodē:"
 
