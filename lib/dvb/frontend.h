@@ -5,6 +5,10 @@
 #include <lib/dvb/idvb.h>
 #include <lib/dvb/frontendparms.h>
 
+#if DVB_API_VERSION < 5 || DVB_API_VERSION == 5 && DVB_API_VERSION_MINOR < 6
+#define SYS_DVBC_ANNEX_A SYS_DVBC_ANNEX_AC
+#endif
+
 class eDVBFrontendParameters: public iDVBFrontendParameters
 {
 	DECLARE_REF(eDVBFrontendParameters);
