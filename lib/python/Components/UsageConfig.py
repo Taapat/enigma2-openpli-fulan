@@ -504,7 +504,7 @@ def InitUsageConfig():
 		if SystemInfo["HasColorspaceSimple"]:
 			config.av.hdmicolorspace = ConfigSelection(default = "Edid(Auto)", choices={"Edid(Auto)": _("Auto"), "Hdmi_Rgb": _("RGB")})
 		else:
-			config.av.hdmicolorspace = ConfigSelection(default = "auto", choices={"auto": _("auto"), "rgb": _("rgb"), "420": _("420"), "422": _("422"), "444": _("444")})
+			config.av.hdmicolorspace = ConfigSelection(default = "hdmi_rgb", choices={"hdmi_rgb": _("rgb"), "hdmi_yuv": _("yuv"), "hdmi_422": _("422")})
 		config.av.hdmicolorspace.addNotifier(setHaveColorspace)
 
 	config.subtitles = ConfigSubsection()
