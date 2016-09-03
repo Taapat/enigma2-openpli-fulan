@@ -84,7 +84,7 @@ class OverscanWizard(Screen, ConfigListScreen):
 			self.yes_no = ConfigYesNo(default = True)
 			self.list.append(getConfigListEntry(_("Did you see all eight arrow heads?"), self.yes_no))
 			self.save_new_position = False
-			setPosition(0, 720, 0, 576)
+			setPosition(0, 0, 0, 0)
 		elif self.step == 2:
 			self.Timer.stop()
 			self["title"].setText(_("Overscan wizard"))
@@ -95,17 +95,17 @@ class OverscanWizard(Screen, ConfigListScreen):
 			self.list.append(getConfigListEntry(_("Did you see all eight arrow heads?"), self.yes_no))
 			self.yes_no.value = True
 			self.save_new_position = False
-			setPosition(0, 720, 0, 576)
+			setPosition(0, 0, 0, 0)
 		elif self.step == 3:
 			self["introduction"].setText(_("You did not see all eight arrow heads. This means your TV has overscan enabled "
 				"and presents you with a zoomed-in picture, causing you to loose part of a full HD screen. In addition this "
 				"you may also miss parts of the user interface, for example volume bars and more.\n\n"
 				"You can now try to resize and change the position of the user interface until you see the eight arrow heads.\n\n"
 				"When done press OK.\n\n"))
-			self.dst_left = ConfigSlider(default = config.plugins.OSDPositionSetup.dst_left.value, increment = 1, limits = (0, 720))
-			self.dst_right = ConfigSlider(default = config.plugins.OSDPositionSetup.dst_left.value + config.plugins.OSDPositionSetup.dst_width.value, increment = 1, limits = (0, 720))
-			self.dst_top = ConfigSlider(default = config.plugins.OSDPositionSetup.dst_top.value, increment = 1, limits = (0, 576))
-			self.dst_bottom = ConfigSlider(default = config.plugins.OSDPositionSetup.dst_top.value + config.plugins.OSDPositionSetup.dst_height.value, increment = 1, limits = (0, 576))
+			self.dst_left = ConfigSlider(default = config.plugins.OSDPositionSetup.dst_left.value, increment = 1, limits = (0, 150))
+			self.dst_right = ConfigSlider(default = config.plugins.OSDPositionSetup.dst_right.value + 150, increment = 1, limits = (0, 150))
+			self.dst_top = ConfigSlider(default = config.plugins.OSDPositionSetup.dst_top.value, increment = 1, limits = (0, 150))
+			self.dst_bottom = ConfigSlider(default = config.plugins.OSDPositionSetup.dst_bottom.value + 150, increment = 1, limits = (0, 150))
 			self.list.append(getConfigListEntry(_("left"), self.dst_left))
 			self.list.append(getConfigListEntry(_("right"), self.dst_right))
 			self.list.append(getConfigListEntry(_("top"), self.dst_top))
@@ -172,7 +172,7 @@ class OverscanWizard(Screen, ConfigListScreen):
 		if self.step == 1:
 			self.step = self.yes_no.value and 5 or 2
 		elif self.step == 2:
-			self.step = self.yes_no.value and 5 or os.path.exists("/proc/stb/fb/dst_left") and 3 or 4
+			self.step = self.yes_no.value and 5 or os.path.exists("/proc/stb/vmpeg/0/dst_left") and 3 or 4
 		elif self.step == 3:
 			self.save_new_position = True
 			self.step = 5
@@ -182,14 +182,14 @@ class OverscanWizard(Screen, ConfigListScreen):
 			if self.yes_no.value:
 				if self.save_new_position:
 					config.plugins.OSDPositionSetup.dst_left.value = self.dst_left.value
-					config.plugins.OSDPositionSetup.dst_width.value = self.dst_right.value - self.dst_left.value
+					config.plugins.OSDPositionSetup.dst_right.value = self.dst_right.value - 150
 					config.plugins.OSDPositionSetup.dst_top.value = self.dst_top.value
-					config.plugins.OSDPositionSetup.dst_height.value = self.dst_bottom.value - self.dst_top.value
+					config.plugins.OSDPositionSetup.dst_bottom.value = self.dst_bottom.value -150
 				else:
 					config.plugins.OSDPositionSetup.dst_left.value = 0
-					config.plugins.OSDPositionSetup.dst_width.value = 720
+					config.plugins.OSDPositionSetup.dst_right.value = 0
 					config.plugins.OSDPositionSetup.dst_top.value = 0
-					config.plugins.OSDPositionSetup.dst_height.value = 576
+					config.plugins.OSDPositionSetup.dst_bottom.value = 0
 				config.misc.do_overscanwizard.value = False
 				config.save()
 				setConfiguredPosition()
@@ -199,12 +199,8 @@ class OverscanWizard(Screen, ConfigListScreen):
 		self.setScreen()
 
 	def setPreviewPosition(self):
-		if self.dst_left.value > self.dst_right.value:
-			self.dst_left.value = self.dst_right.value
-		if self.dst_top.value > self.dst_bottom.value:
-			self.dst_top.value = self.dst_bottom.value
 		self["config"].l.setList(self.list)
-		setPosition(int(self.dst_left.value), int(self.dst_right.value) - int(self.dst_left.value), int(self.dst_top.value), int(self.dst_bottom.value) - int(self.dst_top.value))
+		setPosition(int(self.dst_left.value), int(self.dst_right.value)-150, int(self.dst_top.value), int(self.dst_bottom.value)-150)
 
 	def keyCancel(self):
 		self.step = self.step in (2, 5) and 1 or self.step in (3, 4) and 2

@@ -2,27 +2,30 @@ from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
 from Components.config import config, ConfigSubsection, ConfigInteger, ConfigSlider, getConfigListEntry
 
+from enigma import fbClass
+
+
 config.plugins.OSDPositionSetup = ConfigSubsection()
 config.plugins.OSDPositionSetup.dst_left = ConfigInteger(default = 0)
-config.plugins.OSDPositionSetup.dst_width = ConfigInteger(default = 720)
 config.plugins.OSDPositionSetup.dst_top = ConfigInteger(default = 0)
-config.plugins.OSDPositionSetup.dst_height = ConfigInteger(default = 576)
+config.plugins.OSDPositionSetup.dst_right = ConfigInteger(default = 0)
+config.plugins.OSDPositionSetup.dst_bottom = ConfigInteger(default = 0)
 
-def setPosition(dst_left, dst_width, dst_top, dst_height):
-	if dst_left + dst_width > 720:
-		dst_width = 720 - dst_left
-	if dst_top + dst_height > 576:
-		dst_height = 576 - dst_top
-	try:
-		open("/proc/stb/vmpeg/0/dst_left", "w").write('%X' % dst_left)
-		open("/proc/stb/vmpeg/0/dst_width", "w").write('%X' % dst_width)
-		open("/proc/stb/vmpeg/0/dst_top", "w").write('%X' % dst_top)
-		open("/proc/stb/vmpeg/0/dst_height", "w").write('%X' % dst_height)
-	except:
-		return
+
+def setPosition(dst_left, dst_right, dst_top, dst_bottom):
+	if dst_left > 150:
+		dst_left = 150
+	if dst_right < -150:
+		dst_right = -150
+	if dst_top > 150:
+		dst_top = 150
+	if dst_bottom < -150:
+		dst_bottom = -150
+	fbClass.getInstance().setFBdiff(dst_top, dst_left, dst_right, dst_bottom)
+	fbClass.getInstance().clearFBblit()
 
 def setConfiguredPosition():
-	setPosition(int(config.plugins.OSDPositionSetup.dst_left.value), int(config.plugins.OSDPositionSetup.dst_width.value), int(config.plugins.OSDPositionSetup.dst_top.value), int(config.plugins.OSDPositionSetup.dst_height.value))
+	setPosition(int(config.plugins.OSDPositionSetup.dst_left.value), int(config.plugins.OSDPositionSetup.dst_right.value), int(config.plugins.OSDPositionSetup.dst_top.value), int(config.plugins.OSDPositionSetup.dst_bottom.value))
 
 def main(session, **kwargs):
 	from overscanwizard import OverscanWizard
