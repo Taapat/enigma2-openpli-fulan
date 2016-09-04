@@ -383,7 +383,44 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	else
 		strcat(file, "file://");
 
-	strcat(file, m_ref.path.c_str());
+	// try parse HLS master playlist to use streams from it
+	size_t delim_idx = m_ref.path.rfind(".");
+	if(!strncmp("http", m_ref.path.c_str(), 4) && delim_idx != std::string::npos && !m_ref.path.compare(delim_idx, 5, ".m3u8"))
+	{
+		m_stream_vec.clear();
+		M3U8VariantsExplorer ve(m_ref.path);
+		m_stream_vec = ve.getStreams();
+		if (!m_stream_vec.size())
+		{
+			eDebug("[eServiceMP3::%s] failed to retrieve m3u8 streams", __func__);
+			strcat(file, m_ref.path.c_str());
+		}
+		else
+		{
+			// sort streams from best quality to worst (internally sorted according to bitrate)
+			sort(m_stream_vec.rbegin(), m_stream_vec.rend());
+			M3U8StreamInfo stream = *(m_stream_vec.begin());
+			int bitrate = eConfigManager::getConfigIntValue("config.streaming.connectionSpeedInKb");
+			std::vector<M3U8StreamInfo>::const_reverse_iterator it(m_stream_vec.rbegin());
+			while(it != m_stream_vec.rend())
+			{
+				if (it->bitrate > bitrate * 1000L)
+				{
+					if (it != m_stream_vec.rbegin())
+						stream = *(--it);
+					else
+						stream = *(it);
+					break;
+				}
+				it++;
+			}
+			eDebug("[eServiceMP3::%s] play stream (%lu b/s) selected according to connection speed (%lu b/s)",
+				__func__, stream.bitrate, bitrate * 1000L);
+			strcat(file, stream.url.c_str());
+		}
+	}
+	else
+		strcat(file, m_ref.path.c_str());
 
 	//try to open file
 	if (player && player->playback && player->playback->Command(player, PLAYBACK_OPEN, file) >= 0)

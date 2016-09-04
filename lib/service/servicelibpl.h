@@ -8,6 +8,8 @@
 #include <lib/dvb/teletext.h>
 #include <lib/gui/esubtitle.h>
 
+#include "m3u8.h"
+
 extern "C"
 {
 #ifndef __STDC_CONSTANT_MACROS
@@ -249,6 +251,7 @@ private:
 	int selectAudioStream(int i);
 	std::vector<audioStream> m_audioStreams;
 	std::vector<subtitleStream> m_subtitleStreams;
+	std::vector<M3U8StreamInfo> m_stream_vec;
 	iSubtitleUser *m_subtitle_widget;
 	friend class eServiceFactoryMP3;
 	eServiceReference m_ref;

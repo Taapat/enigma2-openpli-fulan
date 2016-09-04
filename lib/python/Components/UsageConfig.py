@@ -640,6 +640,7 @@ def InitUsageConfig():
 	config.streaming.stream_eit = ConfigYesNo(default = True)
 	config.streaming.stream_ait = ConfigYesNo(default = True)
 	config.streaming.authentication = ConfigYesNo(default = False)
+	config.streaming.connectionSpeedInKb = ConfigNumber(default=99999)
 
 	config.mediaplayer = ConfigSubsection()
 	config.mediaplayer.useAlternateUserAgent = ConfigYesNo(default=False)
