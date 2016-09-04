@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-21 19:05+0300\n"
+"POT-Creation-Date: 2016-09-04 20:48+0300\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -421,14 +421,8 @@ msgstr "3d režīms"
 msgid "4"
 msgstr "4"
 
-msgid "420"
-msgstr "420"
-
 msgid "422"
 msgstr "422"
-
-msgid "444"
-msgstr "444"
 
 msgid "4:3"
 msgstr "4:3"
@@ -1492,6 +1486,9 @@ msgstr "Uzstāda ārējo subtitru krāsu, altrenatīvie (normāli balti, slīpi 
 msgid "Configure the color of the teletext subtitles."
 msgstr "Uzstāda teleteksta subtitru krāsa."
 
+msgid "Configure the connection speed in kb/s which is used to select the network stream quality, if possible."
+msgstr "Interneta pieslēguma ātrums kb/s kurš tiks lietots lai izvēlētos tīkla straumes kvalitāti, ja tas iespējams."
+
 msgid "Configure the contrast level of the front panel display."
 msgstr "Uzstāda kontrasta līmeni priekšējā paneļa displejā."
 
@@ -1719,6 +1716,9 @@ msgstr "Pieslēdz pavadoņus"
 
 msgid "Connected to"
 msgstr "Pieslēgts"
+
+msgid "Connection speed in kb/s"
+msgstr "Interneta pieslēguma ātrums kb/s"
 
 msgid "Console"
 msgstr "Konsole"
@@ -9261,6 +9261,9 @@ msgstr "jā"
 
 msgid "yes (keep feeds)"
 msgstr "jā (paturēt barotnes)"
+
+msgid "yuv"
+msgstr "yuv"
 
 msgid "zap"
 msgstr "pārslēgt"
