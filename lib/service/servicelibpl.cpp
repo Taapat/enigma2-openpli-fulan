@@ -383,17 +383,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	else
 		strcat(file, "file://");
 
-	//split and use first stream if " or http" in path
-	size_t pos = m_ref.path.find(" or http");
-	if (pos != std::string::npos)
-	{
-		std::string filename_str;
-		filename_str = m_ref.path.substr(0, pos);
-		strcat(file, filename_str.c_str());
-
-	}
-	else
-		strcat(file, m_ref.path.c_str());
+	strcat(file, m_ref.path.c_str());
 
 	//try to open file
 	if (player && player->playback && player->playback->Command(player, PLAYBACK_OPEN, file) >= 0)
