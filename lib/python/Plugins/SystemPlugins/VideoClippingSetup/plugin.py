@@ -1,6 +1,9 @@
 from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
 from Components.config import config, ConfigSubsection, ConfigInteger, ConfigSlider, getConfigListEntry
+from Components.ServiceEventTracker import ServiceEventTracker
+from enigma import iPlayableService
+
 
 config.plugins.VideoClippingSetup = ConfigSubsection()
 config.plugins.VideoClippingSetup.clip_left = ConfigInteger(default = 0)
@@ -92,22 +95,38 @@ class VideoClippingCoordinates(Screen, ConfigListScreen):
 		setConfiguredPosition()
 		self.close()
 
+
+class VideoClippingSetup(Screen):
+	instance = None
+	def __init__(self, session):
+		self.session = session
+		Screen.__init__(self, session)
+		self.__event_tracker = ServiceEventTracker(screen = self, eventmap =
+			{
+				iPlayableService.evUpdatedInfo: self.setConfiguredPosition,
+				iPlayableService.evStart: self.setConfiguredPosition,
+			})
+
+	def setConfiguredPosition(self):
+		setConfiguredPosition()
+
+
 def setPosition(clip_left, clip_width, clip_top, clip_height):
 	if clip_left + clip_width > 720:
 		clip_width = 720 - clip_left
 	if clip_top + clip_height > 576:
 		clip_height = 576 - clip_top
 	try:
-		file = open("/proc/stb/vmpeg/0/clip_left", "w")
+		file = open("/proc/stb/vmpeg/0/dst_left", "w")
 		file.write('%X' % clip_left)
 		file.close()
-		file = open("/proc/stb/vmpeg/0/clip_width", "w")
+		file = open("/proc/stb/vmpeg/0/dst_width", "w")
 		file.write('%X' % clip_width)
 		file.close()
-		file = open("/proc/stb/vmpeg/0/clip_top", "w")
+		file = open("/proc/stb/vmpeg/0/dst_top", "w")
 		file.write('%X' % clip_top)
 		file.close()
-		file = open("/proc/stb/vmpeg/0/clip_height", "w")
+		file = open("/proc/stb/vmpeg/0/dst_height", "w")
 		file.write('%X' % clip_height)
 		file.close()
 	except:
@@ -119,13 +138,20 @@ def setConfiguredPosition():
 def main(session, **kwargs):
 	session.open(VideoClippingCoordinates)
 
+def menu(menuid):
+	if menuid != "system":
+		return []
+	return [(_("Video clipping setup"), main, "VideoClippingSetup", None)]
+
 def startup(reason, **kwargs):
-	setConfiguredPosition()
+	if "session" in kwargs:
+		session = kwargs["session"]
+		VideoClippingSetup(session)
 
 def Plugins(**kwargs):
 	from os import path
-	if path.exists("/proc/stb/vmpeg/0/clip_left"):
+	if path.exists("/proc/stb/vmpeg/0/dst_left"):
 		from Plugins.Plugin import PluginDescriptor
-		return [PluginDescriptor(name = _("Video clipping setup"), description = _("clip overscan / letterbox borders"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc = main),
-					PluginDescriptor(name = "Video clipping  setup", description = "", where = PluginDescriptor.WHERE_SESSIONSTART, fnc = startup)]
+		return [PluginDescriptor(name = _("Video clipping setup"), description = _("clip overscan / letterbox borders"), where = PluginDescriptor.WHERE_MENU, fnc = menu),
+				PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, fnc = startup)]
 	return []
