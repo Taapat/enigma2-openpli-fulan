@@ -159,7 +159,6 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
 
     int contentLength = 0;
     int contentSize = 0;
-    bool contentStarted = false;
     bool contentTypeParsed = false;
     bool m3u8HeaderParsed = false;
     bool m3u8StreamInfoParsing = false;
@@ -232,16 +231,6 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
             eDebug("[m3u8::%s] - redirecting to: %s", __func__, newurl.c_str());
             ret = getVariantsFromMasterUrl(newurl, ++redirect);
             break;
-        }
-
-        if (!contentStarted)
-        {
-            if (!result)
-            {
-                contentStarted = true;
-                eDebug("[m3u8::%s] - content part started", __func__);
-            }
-            continue;
         }
 
         contentSize += result + 1; // newline char
