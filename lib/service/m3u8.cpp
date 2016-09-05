@@ -247,14 +247,10 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
         contentSize += result + 1; // newline char
         if (!m3u8HeaderParsed)
         {
-            // skip empty lines
-            if (!result)
-                continue;
-
-            if (strncmp(lineBuffer, M3U8_HEADER, strlen(M3U8_HEADER)))
+            // find M3U8 header
+            if (!result || strncmp(lineBuffer, M3U8_HEADER, strlen(M3U8_HEADER)))
             {
-                eDebug("[m3u8::%s] - invalid m3u8 file, missing '%s' header", __func__, M3U8_HEADER);
-                break;
+                continue;
             }
             else
             {
