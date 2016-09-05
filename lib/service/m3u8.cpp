@@ -1,3 +1,4 @@
+#include <lib/base/eerror.h>
 #include "m3u8.h"
 #include <cstdlib>
 #include <cstring>
