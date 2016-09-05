@@ -390,7 +390,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		m_stream_vec.clear();
 		M3U8VariantsExplorer ve(m_ref.path);
 		m_stream_vec = ve.getStreams();
-		if (!m_stream_vec.size())
+		if (m_stream_vec.empty())
 		{
 			eDebug("[eServiceMP3::%s] failed to retrieve m3u8 streams", __func__);
 			strcat(file, m_ref.path.c_str());
@@ -399,24 +399,15 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		{
 			// sort streams from best quality to worst (internally sorted according to bitrate)
 			sort(m_stream_vec.rbegin(), m_stream_vec.rend());
-			M3U8StreamInfo stream = *(m_stream_vec.begin());
-			int bitrate = eConfigManager::getConfigIntValue("config.streaming.connectionSpeedInKb");
-			std::vector<M3U8StreamInfo>::const_reverse_iterator it(m_stream_vec.rbegin());
-			while(it != m_stream_vec.rend())
+			int bitrate = eConfigManager::getConfigIntValue("config.streaming.connectionSpeedInKb") * 1000L;
+			std::vector<M3U8StreamInfo>::const_iterator it(m_stream_vec.begin());
+			while(!(it == m_stream_vec.end() || it->bitrate <= bitrate))
 			{
-				if (it->bitrate > bitrate * 1000L)
-				{
-					if (it != m_stream_vec.rbegin())
-						stream = *(--it);
-					else
-						stream = *(it);
-					break;
-				}
 				it++;
 			}
 			eDebug("[eServiceMP3::%s] play stream (%lu b/s) selected according to connection speed (%lu b/s)",
-				__func__, stream.bitrate, bitrate * 1000L);
-			strcat(file, stream.url.c_str());
+				__func__, it->bitrate, bitrate);
+			strcat(file, it->url.c_str());
 		}
 	}
 	else
