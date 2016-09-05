@@ -120,17 +120,17 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
 {
     if (redirect > redirectLimit)
     {
-        fprintf(stderr, "[%s] - reached maximum number of %d - redirects", __func__, redirectLimit);
+        eDebug("[m3u8::%s] - reached maximum number of %d - redirects", __func__, redirectLimit);
         return -1;
     }
     Url purl(url);
     int sd;
     if((sd = Connect(purl.host().c_str(), purl.port(), 5)) < 0)
     {
-        fprintf(stderr, "[%s] - Error in Connect\n", __func__);
+        eDebug("[m3u8::%s] - Error in Connect", __func__);
         return -1;
     }
-    //fprintf(stderr, "[%s] - Connect desc = %d\n", __func__, sd);
+    //eDebug("[m3u8::%s] - Connect desc = %d", __func__, sd);
 
     std::string userAgent = "Enigma2 HbbTV/1.1.1 (+PVR+RTSP+DL;OpenPLi;;;)";
     std::string path = purl.path();
@@ -145,12 +145,12 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
     request.append("Connection: close\r\n");
     request.append("\r\n");
 
-    fprintf(stderr, "[%s] - Request:\n", __func__);
-    fprintf(stderr, "%s\n", request.c_str());
+    eDebug("[m3u8::%s] - Request:", __func__);
+    eDebug("%s", request.c_str());
 
     if (writeAll(sd, request.c_str(), request.length()) < (signed long) request.length())
     {
-        fprintf(stderr, "[%s] - writeAll, didn't write everything\n", __func__);
+        eDebug("[m3u8::%s] - writeAll, didn't write everything", __func__);
         ::close(sd);
         return -1;
     }
@@ -171,11 +171,11 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
     char protocol[64], statusMessage[64];
 
     int result = readLine(sd, &lineBuffer, &bufferSize);
-    fprintf(stderr, "[%s] Response[%d](size=%d): %s\n", __func__, lines++, result, lineBuffer);
+    eDebug("[m3u8::%s] Response[%d](size=%d): %s", __func__, lines++, result, lineBuffer);
     result = sscanf(lineBuffer, "%99s %d %99s", protocol, &statusCode, statusMessage);
     if (result != 3 || (statusCode != 200 && statusCode != 302))
     {
-            fprintf(stderr, "[%s] - wrong http response code: %d\n", __func__, statusCode);
+            eDebug("[m3u8::%s] - wrong http response code: %d", __func__, statusCode);
             ::close(sd);
             return -1;
     }
@@ -186,19 +186,19 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
         {
             if (!streams.size())
             {
-                fprintf(stderr, "[%s] - no streams find!", __func__);
+                eDebug("[m3u8::%s] - no streams find!", __func__);
                 break;
             }
             ret = 0;
             break;
         }
         result = readLine(sd, &lineBuffer, &bufferSize);
-        fprintf(stderr, "[%s] Response[%d](size=%d): %s\n", __func__, lines++, result, lineBuffer);
+        eDebug("[m3u8::%s] Response[%d](size=%d): %s", __func__, lines++, result, lineBuffer);
         if (result < 0)
         {
             if (!streams.size())
             {
-                fprintf(stderr, "[%s] - no streams find!\n", __func__);
+                eDebug("[m3u8::%s] - no streams find!", __func__);
                 break;
             }
             ret = 0;
@@ -220,7 +220,7 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
                 {
                     continue;
                 }
-                fprintf(stderr, "[%s] - not supported contenttype detected: %s!\n", __func__, contenttype);
+                eDebug("[m3u8::%s] - not supported contenttype detected: %s!", __func__, contenttype);
                 break;
             }
         }
@@ -228,7 +228,7 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
         if (statusCode == 302 && strncasecmp(lineBuffer, "location: ", 10) == 0)
         {
             std::string newurl = &lineBuffer[10];
-            fprintf(stderr, "[%s] - redirecting to: %s\n", __func__, newurl.c_str());
+            eDebug("[m3u8::%s] - redirecting to: %s", __func__, newurl.c_str());
             ret = getVariantsFromMasterUrl(newurl, ++redirect);
             break;
         }
@@ -238,7 +238,7 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
             if (!result)
             {
                 contentStarted = true;
-                fprintf(stderr, "[%s] - content part started\n", __func__);
+                eDebug("[m3u8::%s] - content part started", __func__);
             }
             continue;
         }
@@ -252,7 +252,7 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
 
             if (strncmp(lineBuffer, M3U8_HEADER, strlen(M3U8_HEADER)))
             {
-                fprintf(stderr, "[%s] - invalid m3u8 file, missing '%s' header\n", __func__, M3U8_HEADER);
+                eDebug("[m3u8::%s] - invalid m3u8 file, missing '%s' header", __func__, M3U8_HEADER);
                 break;
             }
             else
@@ -264,7 +264,7 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
 
         if (!strncmp(lineBuffer, M3U8_MEDIA_SEQUENCE, strlen(M3U8_MEDIA_SEQUENCE)))
         {
-            fprintf(stderr, "[%s] - we need master playlist not media sequence!\n", __func__);
+            eDebug("[m3u8::%s] - we need master playlist not media sequence!", __func__);
             break;
         }
 
@@ -277,7 +277,7 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
                 continue;
             }
 
-            fprintf(stderr, "[%s] - continue parsing m3u8 stream info\n", __func__);
+            eDebug("[m3u8::%s] - continue parsing m3u8 stream info", __func__);
             if (!strncmp(lineBuffer, "http", 4))
             {
                 m3u8StreamInfo.url = lineBuffer;
@@ -299,7 +299,7 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
             }
             else
             {
-                fprintf(stderr, "[%s] - skipping unrecognised data\n", __func__);
+                eDebug("[m3u8::%s] - skipping unrecognised data", __func__);
             }
         }
     }
