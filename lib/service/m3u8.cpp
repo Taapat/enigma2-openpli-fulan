@@ -259,7 +259,7 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
                 continue;
             }
 
-            eDebug("[m3u8::%s] - continue parsing m3u8 stream info", __func__);
+            //eDebug("[m3u8::%s] - continue parsing m3u8 stream info", __func__);
             if (!strncmp(lineBuffer, "http", 4))
             {
                 m3u8StreamInfo.url = lineBuffer;
