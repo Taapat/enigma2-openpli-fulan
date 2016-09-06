@@ -176,6 +176,7 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
     if (result != 3 || (statusCode != 200 && statusCode != 302))
     {
             eDebug("[m3u8::%s] - wrong http response code: %d", __func__, statusCode);
+            free(lineBuffer);
             ::close(sd);
             return -1;
     }
