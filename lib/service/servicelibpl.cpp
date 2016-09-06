@@ -387,9 +387,8 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	size_t delim_idx = m_ref.path.rfind(".");
 	if(!strncmp("http", m_ref.path.c_str(), 4) && delim_idx != std::string::npos && !m_ref.path.compare(delim_idx, 5, ".m3u8"))
 	{
-		m_stream_vec.clear();
 		M3U8VariantsExplorer ve(m_ref.path);
-		m_stream_vec = ve.getStreams();
+		std::vector<M3U8StreamInfo> m_stream_vec = ve.getStreams();
 		if (m_stream_vec.empty())
 		{
 			eDebug("[eServiceMP3::%s] failed to retrieve m3u8 streams", __func__);
