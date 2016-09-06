@@ -72,12 +72,16 @@ bool eServiceEvent::loadLanguage(Event *evt, const std::string &lang, int tsidon
 					 * Unfortunately we cannot recognise this, but we'll use the length of the short description
 					 * to guess whether we should concatenate both descriptions (without any spaces)
 					 */
-					if (m_extended_description.empty() && m_short_description.size() >= 180)
+					if (eed->getText().empty() && m_short_description.size() >= 180)
 					{
 						m_extended_description = m_short_description;
 						m_short_description = "";
 					}
-					m_extended_description += convertDVBUTF8(eed->getText(), table, tsidonid);
+					m_tmp_extended_description += eed->getText();
+					if (eed->getDescriptorNumber() == eed->getLastDescriptorNumber())
+					{
+						m_extended_description += convertDVBUTF8(m_tmp_extended_description, table, tsidonid);
+					}
 					retval=1;
 				}
 #if 0
