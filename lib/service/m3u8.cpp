@@ -56,7 +56,7 @@ void Url::parseUrl(std::string url)
     m_path = path;
 }
 
-int parse_attribute(char **ptr, char **key, char **value)
+int M3U8VariantsExplorer::parse_attribute(char **ptr, char **key, char **value)
 {
     if (ptr == NULL || *ptr == NULL || key == NULL || value == NULL)
         return -1;

@@ -53,6 +53,7 @@ class M3U8VariantsExplorer
     std::string url;
     std::vector<M3U8StreamInfo> streams;
     const unsigned int redirectLimit;
+    int parse_attribute(char **ptr, char **key, char **value);
     int parseStreamInfoAttributes(const char *line, M3U8StreamInfo& info);
     int getVariantsFromMasterUrl(const std::string& url, unsigned int redirect);
 public:
