@@ -234,17 +234,18 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
             break;
         }
 
-        contentSize += result + 1; // newline char
         if (!m3u8HeaderParsed)
         {
             // find M3U8 header
             if (result && !strncmp(lineBuffer, M3U8_HEADER, strlen(M3U8_HEADER)))
             {
                 m3u8HeaderParsed = true;
+                contentSize += result + 1; // newline char
             }
             continue;
         }
 
+        contentSize += result + 1; // newline char
         if (!strncmp(lineBuffer, M3U8_MEDIA_SEQUENCE, strlen(M3U8_MEDIA_SEQUENCE)))
         {
             eDebug("[m3u8::%s] - we need master playlist not media sequence!", __func__);
