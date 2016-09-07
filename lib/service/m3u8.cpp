@@ -193,8 +193,10 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
             ret = 0;
             break;
         }
+
         result = readLine(sd, &lineBuffer, &bufferSize);
         eDebug("[m3u8::%s] Response[%d](size=%d): %s", __func__, lines++, result, lineBuffer);
+
         if (result < 0)
         {
             if (!streams.size())
@@ -205,7 +207,12 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, unsig
             ret = 0;
             break;
         }
-        sscanf(lineBuffer, "Content-Length: %d", &contentLength);
+
+        if (!contentLength && !m3u8HeaderParsed)
+        {
+            sscanf(lineBuffer, "Content-Length: %d", &contentLength);
+        }
+
         if (!contentTypeParsed)
         {
             char contenttype[33];
