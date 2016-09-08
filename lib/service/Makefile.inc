@@ -38,7 +38,9 @@ service_libenigma_service_a_SOURCES += \
 serviceinclude_HEADERS += \
 	service/m3u8.h \
 	service/servicelibpl.h
-else
+endif
+
+if ENABLE_GSTREAMER
 service_libenigma_service_a_SOURCES += \
 	service/servicemp3.cpp \
 	service/servicemp3record.cpp

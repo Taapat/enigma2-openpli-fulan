@@ -36,7 +36,7 @@
 #include "bsod.h"
 #include "version_info.h"
 
-#ifndef ENABLE_LIBEPLAYER3
+#ifdef ENABLE_GSTREAMER
 #include <gst/gst.h>
 #endif
 
@@ -183,7 +183,7 @@ int main(int argc, char **argv)
 	atexit(object_dump);
 #endif
 
-#ifndef ENABLE_LIBEPLAYER3
+#ifdef ENABLE_GSTREAMER
 	gst_init(&argc, &argv);
 #endif
 
@@ -369,7 +369,7 @@ const char *getBoxType()
 
 const char *getGStreamerVersionString()
 {
-#ifndef ENABLE_LIBEPLAYER3
+#ifdef ENABLE_GSTREAMER
 	return gst_version_string();
 #else
 	return "";
