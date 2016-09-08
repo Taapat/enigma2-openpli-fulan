@@ -27,15 +27,15 @@ extern PlaybackHandler_t	PlaybackHandler;
 extern ContainerHandler_t	ContainerHandler;
 extern ManagerHandler_t	ManagerHandler;
 
-class eStaticServiceMP3Info;
+class eStaticServiceLibplInfo;
 
-class eServiceFactoryMP3: public iServiceHandler
+class eServiceFactoryLibpl: public iServiceHandler
 {
-	DECLARE_REF(eServiceFactoryMP3);
+	DECLARE_REF(eServiceFactoryLibpl);
 
 public:
-	eServiceFactoryMP3();
-	virtual ~eServiceFactoryMP3();
+	eServiceFactoryLibpl();
+	virtual ~eServiceFactoryLibpl();
 	enum { id = 0x1001 };
 
 	// iServiceHandler
@@ -46,14 +46,14 @@ public:
 	RESULT offlineOperations(const eServiceReference &, ePtr<iServiceOfflineOperations> &ptr);
 
 private:
-	ePtr<eStaticServiceMP3Info> m_service_info;
+	ePtr<eStaticServiceLibplInfo> m_service_info;
 };
 
-class eStaticServiceMP3Info: public iStaticServiceInformation
+class eStaticServiceLibplInfo: public iStaticServiceInformation
 {
-	DECLARE_REF(eStaticServiceMP3Info);
-	friend class eServiceFactoryMP3;
-	eStaticServiceMP3Info();
+	DECLARE_REF(eStaticServiceLibplInfo);
+	friend class eServiceFactoryLibpl;
+	eStaticServiceLibplInfo();
 
 public:
 	RESULT getName(const eServiceReference &ref, std::string &name);
@@ -86,15 +86,15 @@ typedef enum { atUnknown, atMPEG, atMP3, atAC3, atDTS, atAAC, atPCM, atOGG, atFL
 typedef enum { stUnknown, stPlainText, stSSA, stASS, stSRT, stVOB, stPGS } subtype_t;
 typedef enum { ctNone, ctMPEGTS, ctMPEGPS, ctMKV, ctAVI, ctMP4, ctVCD, ctCDA, ctASF, ctOGG } containertype_t;
 
-class eServiceMP3: public iPlayableService, public iPauseableService,
+class eServiceLibpl: public iPlayableService, public iPauseableService,
 	public iServiceInformation, public iSeekableService, public iAudioTrackSelection, public iAudioChannelSelection,
 	public iSubtitleOutput, public iStreamedService, public iAudioDelay, public Object, public iCueSheet
 {
-	DECLARE_REF(eServiceMP3);
+	DECLARE_REF(eServiceLibpl);
 
 public:
-	virtual ~eServiceMP3();
-	static eServiceMP3 *getInstance();
+	virtual ~eServiceLibpl();
+	static eServiceLibpl *getInstance();
 	eFixedMessagePump<int> (*inst_m_pump);
 
 	// iPlayableService
@@ -223,7 +223,7 @@ protected:
 	ePtr<eTimer> m_nownext_timer;
 	ePtr<eServiceEvent> m_event_now, m_event_next;
 	void updateEpgCacheNowNext();
-	static eServiceMP3 *instance;
+	static eServiceLibpl *instance;
 
 	// cuesheet
 	struct cueEntry
@@ -252,13 +252,13 @@ private:
 	std::vector<audioStream> m_audioStreams;
 	std::vector<subtitleStream> m_subtitleStreams;
 	iSubtitleUser *m_subtitle_widget;
-	friend class eServiceFactoryMP3;
+	friend class eServiceFactoryLibpl;
 	eServiceReference m_ref;
 	int m_buffer_size;
 	// cuesheet load check
 	bool m_cuesheet_loaded;
 	bufferInfo m_bufferInfo;
-	eServiceMP3(eServiceReference ref);
+	eServiceLibpl(eServiceReference ref);
 	Signal2<void, iPlayableService*, int> m_event;
 	enum
 	{
