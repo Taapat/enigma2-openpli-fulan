@@ -57,10 +57,6 @@ if test "$enable_libeplayer3" = "yes"; then
 fi
 AM_CONDITIONAL(ENABLE_LIBEPLAYER3, test "$enable_libeplayer3" = "yes")
 
-if test "$enable_libeplayer3" = "yes"; then
-PKG_CHECK_MODULES(BASE, [freetype2 fribidi libdvbsi++ libpng libxml-2.0 sigc++-1.2 libssl libcrypto glib-2.0])
-fi
-
 AC_ARG_ENABLE(minimal,
 	[  --enable-minimal          enable minimal config],
 	[AC_DEFINE(ENABLE_MINIMAL, 1, [enable minimal config])])
@@ -78,14 +74,13 @@ AM_CONDITIONAL(ENABLE_GSTREAMER, test "$enable_gstreamer" = "yes")
 
 if test "$enable_gstreamer" = "yes"; then
 	AC_DEFINE(ENABLE_GSTREAMER, 1, [include gstreamer as player engine support])
-
-dnl versions of gstreamer and plugins-base
-AC_ARG_WITH(gstversion,
-	AS_HELP_STRING([--with-gstversion],[use gstreamer version (major.minor)]),
-	[GST_MAJORMINOR=$withval],[GST_MAJORMINOR=0.10])
-
-PKG_CHECK_MODULES(GSTREAMER, gstreamer-$GST_MAJORMINOR gstreamer-pbutils-$GST_MAJORMINOR)
-PKG_CHECK_MODULES(BASE, [freetype2 fribidi gstreamer-$GST_MAJORMINOR gstreamer-pbutils-$GST_MAJORMINOR libdvbsi++ libpng libxml-2.0 sigc++-1.2 libssl libcrypto glib-2.0])
+	AC_ARG_WITH(gstversion,
+		AS_HELP_STRING([--with-gstversion],[use gstreamer version (major.minor)]),
+		[GST_MAJORMINOR=$withval],[GST_MAJORMINOR=0.10])
+	PKG_CHECK_MODULES(GSTREAMER, gstreamer-$GST_MAJORMINOR gstreamer-pbutils-$GST_MAJORMINOR)
+	PKG_CHECK_MODULES(BASE, [freetype2 fribidi gstreamer-$GST_MAJORMINOR gstreamer-pbutils-$GST_MAJORMINOR libdvbsi++ libpng libxml-2.0 sigc++-1.2 libssl libcrypto glib-2.0])
+else
+	PKG_CHECK_MODULES(BASE, [freetype2 fribidi libdvbsi++ libpng libxml-2.0 sigc++-1.2 libssl libcrypto glib-2.0])
 fi
 
 AM_CONDITIONAL(HAVE_LIBDDVD, test "$HAVE_LIBDDVD" = "yes")
