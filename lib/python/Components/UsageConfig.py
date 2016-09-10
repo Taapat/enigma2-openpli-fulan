@@ -645,6 +645,15 @@ def InitUsageConfig():
 	config.mediaplayer = ConfigSubsection()
 	config.mediaplayer.useAlternateUserAgent = ConfigYesNo(default=False)
 	config.mediaplayer.alternateUserAgent = ConfigText(default="")
+	config.mediaplayer.defaultPlayer = ConfigSelection(default = "libeplayer", choices = [
+		("libeplayer", _("Libeplayer")), ("gstreamer", _("Gstreamer"))])
+	def defaultPlayerChange(configElement):
+		path = eEnv.resolve("${sysconfdir}/enigma2/mp3player")
+		if configElement.value == "gstreamer":
+			open(path, "wb").close()
+		elif os.path.exists(path):
+			os.remove(path)
+	config.mediaplayer.defaultPlayer.addNotifier(defaultPlayerChange)
 
 def updateChoices(sel, choices):
 	if choices:

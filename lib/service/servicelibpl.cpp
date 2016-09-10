@@ -13,6 +13,10 @@
 #include <lib/gdi/gpixmap.h>
 #include <string>
 
+#ifdef ENABLE_GSTREAMER
+#include <lib/base/eenv.h>
+#endif
+
 void ep3Blit()
 {
 	fbClass *fb = fbClass::getInstance();
@@ -22,6 +26,11 @@ void ep3Blit()
 eServiceFactoryLibpl::eServiceFactoryLibpl()
 {
 	ePtr<eServiceCenter> sc;
+
+#ifdef ENABLE_GSTREAMER
+	defaultMP3_Player = (::access(eEnv::resolve("${sysconfdir}/enigma2/mp3player").c_str(), F_OK) >= 0);
+#endif
+
 	eServiceCenter::getPrivInstance(sc);
 	if (sc)
 	{
@@ -60,7 +69,16 @@ eServiceFactoryLibpl::eServiceFactoryLibpl()
 		extensions.push_back("ifo");
 		extensions.push_back("wmv");
 		extensions.push_back("wma");
+#ifdef ENABLE_GSTREAMER
+		if (!defaultMP3_Player)
+		{
+			sc->addServiceFactory(eServiceFactoryLibpl::id, this, extensions);
+		}
+		extensions.clear();
+		sc->addServiceFactory(eServiceFactoryLibpl::idServiceLibpl, this, extensions);
+#else
 		sc->addServiceFactory(eServiceFactoryLibpl::id, this, extensions);
+#endif
 	}
 
 	m_service_info = new eStaticServiceLibplInfo();
@@ -72,7 +90,15 @@ eServiceFactoryLibpl::~eServiceFactoryLibpl()
 	eServiceCenter::getPrivInstance(sc);
 
 	if (sc)
+#ifdef ENABLE_GSTREAMER
+		sc->removeServiceFactory(eServiceFactoryLibpl::idServiceLibpl);
+		if (!defaultMP3_Player)
+		{
+			sc->removeServiceFactory(eServiceFactoryLibpl::id);
+		}
+#else
 		sc->removeServiceFactory(eServiceFactoryLibpl::id);
+#endif
 }
 
 DEFINE_REF(eServiceFactoryLibpl)
@@ -251,9 +277,9 @@ RESULT eStaticServiceLibplInfo::getEvent(const eServiceReference &ref, ePtr<eSer
 	return -1;
 }
 
-DEFINE_REF(eStreamBufferInfo)
+DEFINE_REF(eStreamLibplBufferInfo)
 
-eStreamBufferInfo::eStreamBufferInfo(int percentage, int inputrate, int outputrate, int space, int size)
+eStreamLibplBufferInfo::eStreamLibplBufferInfo(int percentage, int inputrate, int outputrate, int space, int size)
 : bufferPercentage(percentage),
 	inputRate(inputrate),
 	outputRate(outputrate),
@@ -262,27 +288,27 @@ eStreamBufferInfo::eStreamBufferInfo(int percentage, int inputrate, int outputra
 {
 }
 
-int eStreamBufferInfo::getBufferPercentage() const
+int eStreamLibplBufferInfo::getBufferPercentage() const
 {
 	return bufferPercentage;
 }
 
-int eStreamBufferInfo::getAverageInputRate() const
+int eStreamLibplBufferInfo::getAverageInputRate() const
 {
 	return inputRate;
 }
 
-int eStreamBufferInfo::getAverageOutputRate() const
+int eStreamLibplBufferInfo::getAverageOutputRate() const
 {
 	return outputRate;
 }
 
-int eStreamBufferInfo::getBufferSpace() const
+int eStreamLibplBufferInfo::getBufferSpace() const
 {
 	return bufferSpace;
 }
 
-int eStreamBufferInfo::getBufferSize() const
+int eStreamLibplBufferInfo::getBufferSize() const
 {
 	return bufferSize;
 }
@@ -398,13 +424,13 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 		{
 			// sort streams from best quality to worst (internally sorted according to bitrate)
 			sort(m_stream_vec.rbegin(), m_stream_vec.rend());
-			int bitrate = eConfigManager::getConfigIntValue("config.streaming.connectionSpeedInKb") * 1000L;
+			unsigned int bitrate = eConfigManager::getConfigIntValue("config.streaming.connectionSpeedInKb") * 1000L;
 			std::vector<M3U8StreamInfo>::const_iterator it(m_stream_vec.begin());
 			while(!(it == m_stream_vec.end() || it->bitrate <= bitrate))
 			{
 				it++;
 			}
-			eDebug("[eServiceLibpl::%s] play stream (%lu b/s) selected according to connection speed (%lu b/s)",
+			eDebug("[eServiceLibpl::%s] play stream (%lu b/s) selected according to connection speed (%d b/s)",
 				__func__, it->bitrate, bitrate);
 			strcat(file, it->url.c_str());
 		}
@@ -1189,7 +1215,7 @@ RESULT eServiceLibpl::streamed(ePtr<iStreamedService> &ptr)
 
 ePtr<iStreamBufferInfo> eServiceLibpl::getBufferCharge()
 {
-	return new eStreamBufferInfo(m_bufferInfo.bufferPercent, m_bufferInfo.avgInRate, m_bufferInfo.avgOutRate, m_bufferInfo.bufferingLeft, m_buffer_size);
+	return new eStreamLibplBufferInfo(m_bufferInfo.bufferPercent, m_bufferInfo.avgInRate, m_bufferInfo.avgOutRate, m_bufferInfo.bufferingLeft, m_buffer_size);
 }
 
 /* cuesheet CVR */

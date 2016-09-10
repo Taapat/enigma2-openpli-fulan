@@ -18,8 +18,14 @@ class eServiceFactoryMP3: public iServiceHandler
 public:
 	eServiceFactoryMP3();
 	virtual ~eServiceFactoryMP3();
+#ifdef ENABLE_LIBEPLAYER3
+	enum {
+		id = 4097,
+		idServiceMP3 = 5001
+	};
+#else
 	enum { id = 0x1001 };
-
+#endif
 		// iServiceHandler
 	RESULT play(const eServiceReference &, ePtr<iPlayableService> &ptr);
 	RESULT record(const eServiceReference &, ePtr<iRecordableService> &ptr);
@@ -28,6 +34,9 @@ public:
 	RESULT offlineOperations(const eServiceReference &, ePtr<iServiceOfflineOperations> &ptr);
 private:
 	ePtr<eStaticServiceMP3Info> m_service_info;
+#ifdef ENABLE_LIBEPLAYER3
+	bool defaultMP3Player;
+#endif
 };
 
 class eStaticServiceMP3Info: public iStaticServiceInformation

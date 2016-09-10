@@ -14,7 +14,6 @@ extern "C"
 {
 #ifndef __STDC_CONSTANT_MACROS
 #  define __STDC_CONSTANT_MACROS
-#  define UINT64_C
 #endif
 #include <libeplayer3/include/common.h>
 #include <libeplayer3/include/subtitle.h>
@@ -36,7 +35,14 @@ class eServiceFactoryLibpl: public iServiceHandler
 public:
 	eServiceFactoryLibpl();
 	virtual ~eServiceFactoryLibpl();
+#ifdef ENABLE_GSTREAMER
+	enum {
+		id = 4097,
+		idServiceLibpl = 5003
+	};
+#else
 	enum { id = 0x1001 };
+#endif
 
 	// iServiceHandler
 	RESULT play(const eServiceReference &, ePtr<iPlayableService> &ptr);
@@ -47,6 +53,9 @@ public:
 
 private:
 	ePtr<eStaticServiceLibplInfo> m_service_info;
+#ifdef ENABLE_GSTREAMER
+	bool defaultMP3_Player;
+#endif
 };
 
 class eStaticServiceLibplInfo: public iStaticServiceInformation
@@ -64,9 +73,9 @@ public:
 	RESULT getEvent(const eServiceReference &ref, ePtr<eServiceEvent> &ptr, time_t start_time);
 };
 
-class eStreamBufferInfo: public iStreamBufferInfo
+class eStreamLibplBufferInfo: public iStreamBufferInfo
 {
-	DECLARE_REF(eStreamBufferInfo);
+	DECLARE_REF(eStreamLibplBufferInfo);
 	int bufferPercentage;
 	int inputRate;
 	int outputRate;
@@ -74,7 +83,7 @@ class eStreamBufferInfo: public iStreamBufferInfo
 	int bufferSize;
 
 public:
-	eStreamBufferInfo(int percentage, int inputrate, int outputrate, int space, int size);
+	eStreamLibplBufferInfo(int percentage, int inputrate, int outputrate, int space, int size);
 	int getBufferPercentage() const;
 	int getAverageInputRate() const;
 	int getAverageOutputRate() const;

@@ -21,6 +21,10 @@
 #include <gst/pbutils/missing-plugins.h>
 #include <sys/stat.h>
 
+#ifdef ENABLE_LIBEPLAYER3
+#include <lib/base/eenv.h>
+#endif
+
 #if defined(__sh__)
 #define HTTP_TIMEOUT 60
 #else
@@ -82,6 +86,10 @@ eServiceFactoryMP3::eServiceFactoryMP3()
 {
 	ePtr<eServiceCenter> sc;
 
+#ifdef ENABLE_LIBEPLAYER3
+	defaultMP3Player = (::access(eEnv::resolve("${sysconfdir}/enigma2/mp3player").c_str(), F_OK) >= 0);
+#endif
+
 	eServiceCenter::getPrivInstance(sc);
 	if (sc)
 	{
@@ -126,7 +134,16 @@ eServiceFactoryMP3::eServiceFactoryMP3()
 		extensions.push_back("ifo");
 		extensions.push_back("wmv");
 #endif
+#ifdef ENABLE_LIBEPLAYER3
+		if (defaultMP3Player)
+		{
+			sc->addServiceFactory(eServiceFactoryMP3::id, this, extensions);
+		}
+		extensions.clear();
+		sc->addServiceFactory(eServiceFactoryMP3::idServiceMP3, this, extensions);
+#else
 		sc->addServiceFactory(eServiceFactoryMP3::id, this, extensions);
+#endif
 	}
 
 	m_service_info = new eStaticServiceMP3Info();
@@ -138,7 +155,15 @@ eServiceFactoryMP3::~eServiceFactoryMP3()
 
 	eServiceCenter::getPrivInstance(sc);
 	if (sc)
+#ifdef ENABLE_LIBEPLAYER3
+		sc->removeServiceFactory(eServiceFactoryMP3::idServiceMP3);
+		if (defaultMP3Player)
+		{
+			sc->removeServiceFactory(eServiceFactoryMP3::id);
+		}
+#else
 		sc->removeServiceFactory(eServiceFactoryMP3::id);
+#endif
 }
 
 DEFINE_REF(eServiceFactoryMP3)
