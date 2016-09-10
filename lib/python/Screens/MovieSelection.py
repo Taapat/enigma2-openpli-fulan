@@ -406,6 +406,9 @@ class MovieContextMenu(Screen, ProtectedScreen):
 						append_to_menu(menu, (_("Reset playback position"), csel.do_reset))
 					if service.getPath()[-3:] == '.ts':
 						append_to_menu(menu, (_("Start offline decode"), csel.do_decode))
+				if service.type in [4097, 5001, 5003]:
+					append_to_menu(menu, (_("Play with libeplayer"), csel.playLibeplayer))
+					append_to_menu(menu, (_("Play with gstreamer"), csel.playGstreamer))
 				# On spark with libeplayer there alredy exist bluray auto play
 				# elif BlurayPlayer is None and csel.isBlurayFolderAndFile(service):
 					# append_to_menu(menu, (_("Auto play blu-ray file"), csel.playBlurayFile))
@@ -1569,6 +1572,17 @@ class MovieSelection(Screen, SelectionEventInfo, InfoBarBase, ProtectedScreen):
 		last_selected_dest.insert(0, where)
 		if len(last_selected_dest) > 5:
 			del last_selected_dest[-1]
+
+	def playLibeplayer(self):
+		Screens.InfoBar.InfoBar.instance.checkTimeshiftRunning(boundFunction(self.changePlayerCheckTimeshiftCallback, 5003))
+
+	def playGstreamer(self):
+		Screens.InfoBar.InfoBar.instance.checkTimeshiftRunning(boundFunction(self.changePlayerCheckTimeshiftCallback, 5001))
+
+	def changePlayerCheckTimeshiftCallback(self, ref, answer):
+		if answer:
+			path = self.getCurrent().getPath()
+			self.close(eServiceReference(ref, 0, path))
 
 	def playBlurayFile(self):
 		if self.playfile:

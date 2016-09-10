@@ -205,6 +205,9 @@ class ChannelContextMenu(Screen):
 								append_when_current_valid(current, menu, (_("play in mainwindow"), self.playMain), level=0, key="red")
 							else:
 								append_when_current_valid(current, menu, (_("play as picture in picture"), self.showServiceInPiP), level=0, key="blue")
+					if current.type in [4097, 5001, 5003]:
+						append_when_current_valid(current, menu, (_("Play with libeplayer"), self.playLibeplayer))
+						append_when_current_valid(current, menu, (_("Play with gstreamer"), self.playGstreamer))
 					append_when_current_valid(current, menu, (_("find currently played service"), self.findCurrentlyPlayed), level=0, key="3")
 				else:
 					if 'FROM SATELLITES' in current_root.getPath() and current and _("Services") in eServiceCenter.getInstance().info(current).getName(current):
@@ -398,6 +401,19 @@ class ChannelContextMenu(Screen):
 			self.close(True)
 		else:
 			return 0
+
+	def playLibeplayer(self):
+		self.changePlayer(5003)
+
+	def playGstreamer(self):
+		self.changePlayer(5001)
+
+	def changePlayer(self, reftype):
+		sel = self.csel.getCurrentSelection()
+		ref = eServiceReference(reftype, 0, sel.getPath())
+		ref.setName(sel.getName())
+		self.csel.zap(ref=ref)
+		self.close(True)
 
 	def okbuttonClick(self):
 		self["menu"].getCurrent()[0][1]()
