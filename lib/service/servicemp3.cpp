@@ -642,6 +642,10 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 			/* increase the default 2 second / 2 MB buffer limitations to 5s / 5MB */
 			g_object_set(G_OBJECT(m_gst_playbin), "buffer-duration", 5LL * GST_SECOND, NULL);
 			g_object_set(G_OBJECT(m_gst_playbin), "buffer-size", m_buffer_size, NULL);
+
+			/* set network connection speed from config */
+			int bitrate = eConfigManager::getConfigIntValue("config.streaming.connectionSpeedInKb");
+			g_object_set(G_OBJECT(m_gst_playbin), "connection-speed", (guint64)bitrate, NULL);
 		}
 		g_object_set (G_OBJECT (m_gst_playbin), "flags", flags, NULL);
 		g_object_set (G_OBJECT (m_gst_playbin), "uri", uri, NULL);
