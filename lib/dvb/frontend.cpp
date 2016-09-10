@@ -465,8 +465,8 @@ RESULT eDVBFrontendParameters::getHash(unsigned long &hash) const
 		}
 		case iDVBFrontend::feATSC:
 		{
-			hash = 0xDDDD0000;
-			hash |= (atsc.frequency/1000)&0xFFFF;
+			hash = atsc.system == eDVBFrontendParametersATSC::System_ATSC ? 0xEEEE0000 : 0xFFFF0000;
+			hash |= (atsc.frequency/1000000)&0xFFFF;
 			return 0;
 		}
 		default:
@@ -660,8 +660,9 @@ int eDVBFrontend::openFrontend()
 #endif
 						break;
 					}
-					case FE_ATSC:	// placeholder to prevent warning
+					case FE_ATSC:
 					{
+						m_delsys[SYS_ATSC] = true;
 						break;
 					}
 				}
@@ -848,6 +849,8 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 	int sat_max = 1600; // for stv0288 / bsbe2
 	int ret = 0x12345678;
 	int ter_max = 2900;
+	int atsc_max = 4200;
+
 	if (strstr(m_description, "STV090x Multistandard"))
 	{
 		ret = (int)(snr / 32.768);
@@ -1087,6 +1090,19 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 		ret = (snr * 2000) / 0xFFFF;
 		sat_max = 2000;
 	}
+	else if(!strcmp(m_description, "WinTV HVR-850") || !strcmp(m_description, "Hauppauge"))
+	{
+		eDVBFrontendParametersATSC parm;
+		oparm.getATSC(parm);
+		switch (parm.modulation)
+		{
+		case eDVBFrontendParametersATSC::Modulation_QAM256: atsc_max = 4000; break;
+		case eDVBFrontendParametersATSC::Modulation_QAM64: atsc_max = 2900; break;
+		case eDVBFrontendParametersATSC::Modulation_VSB_8: atsc_max = 2700; break;
+		default: break;
+		}
+		ret = snr * 10;
+	}
 
 	signalqualitydb = ret;
 	if (ret == 0x12345678) // no snr db calculation avail.. return untouched snr value..
@@ -1109,7 +1125,7 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 			signalquality = (ret >= ter_max ? 65536 : ret * 65536 / ter_max);
 			break;
 		case feATSC: // we assume a max of 42db here
-			signalquality = (ret >= 4200 ? 65536 : ret * 65536 / 4200);
+			signalquality = (ret >= atsc_max ? 65536 : ret * 65536 / atsc_max);
 			break;
 		}
 	}
@@ -2592,6 +2608,10 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 		can_handle_dvbc_annex_b = supportsDeliverySystem(SYS_DVBC_ANNEX_B, !m_multitype);
 		can_handle_atsc = supportsDeliverySystem(SYS_ATSC, !m_multitype);
 		if (feparm->getATSC(parm) < 0)
+		{
+			return 0;
+		}
+		if (!can_handle_atsc && !can_handle_dvbc_annex_b)
 		{
 			return 0;
 		}
