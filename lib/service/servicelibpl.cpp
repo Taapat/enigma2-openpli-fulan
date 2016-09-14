@@ -330,7 +330,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	eDebug("[eServiceLibpl::%s]", __func__);
 	m_currentAudioStream = -1;
 	m_currentSubtitleStream = -1;
-	m_cachedSubtitleStream = -1; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
+	m_cachedSubtitleStream = 0; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_subtitle_widget = 0;
 	m_buffer_size = 5 * 1024 * 1024;
 	m_cuesheet_loaded = false; /* cuesheet CVR */
