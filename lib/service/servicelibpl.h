@@ -16,7 +16,6 @@ extern "C"
 #  define __STDC_CONSTANT_MACROS
 #endif
 #include <libeplayer3/include/common.h>
-#include <libeplayer3/include/subtitle.h>
 }
 
 #define gint int
@@ -264,6 +263,7 @@ private:
 	friend class eServiceFactoryLibpl;
 	eServiceReference m_ref;
 	int m_buffer_size;
+	bool m_paused;
 	// cuesheet load check
 	bool m_cuesheet_loaded;
 	bufferInfo m_bufferInfo;
@@ -281,17 +281,22 @@ private:
 
 	struct subtitle_page_t
 	{
-		uint32_t start_ms;
-		uint32_t end_ms;
+		int64_t start_ms;
+		int64_t end_ms;
 		std::string text;
-		subtitle_page_t(uint32_t start_ms_in, uint32_t end_ms_in, const std::string& text_in)
+		subtitle_page_t(int64_t start_ms_in, int64_t end_ms_in, const std::string& text_in)
 			: start_ms(start_ms_in), end_ms(end_ms_in), text(text_in)
 		{
 		}
 	};
 
-	typedef std::map<uint32_t, subtitle_page_t> subtitle_pages_map_t;
+	typedef std::map<int64_t, subtitle_page_t> subtitle_pages_map_t;
+	typedef std::pair<int64_t, subtitle_page_t> subtitle_pages_map_pair_t;
 	subtitle_pages_map_t m_subtitle_pages;
+	ePtr<eTimer> m_subtitle_sync_timer;
+
+	void pushSubtitles();
+	void pullSubtitle();
 	sourceStream m_sourceinfo;
 	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
 };

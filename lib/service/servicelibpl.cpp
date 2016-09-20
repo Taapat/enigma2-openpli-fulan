@@ -17,12 +17,6 @@
 #include <lib/base/eenv.h>
 #endif
 
-void ep3Blit()
-{
-	fbClass *fb = fbClass::getInstance();
-	fb->blit();
-}
-
 eServiceFactoryLibpl::eServiceFactoryLibpl()
 {
 	ePtr<eServiceCenter> sc;
@@ -333,7 +327,10 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	m_cachedSubtitleStream = 0; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_subtitle_widget = 0;
 	m_buffer_size = 5 * 1024 * 1024;
+	m_paused = false;
 	m_cuesheet_loaded = false; /* cuesheet CVR */
+	m_subtitle_sync_timer = eTimer::create(eApp);
+	CONNECT(m_subtitle_sync_timer->timeout, eServiceLibpl::pushSubtitles);
 	inst_m_pump = &m_pump;
 	CONNECT(m_nownext_timer->timeout, eServiceLibpl::updateEpgCacheNowNext);
 	CONNECT(inst_m_pump->recv_msg, eServiceLibpl::gotThreadMessage);
@@ -358,20 +355,6 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 		player->output->Command(player,OUTPUT_ADD, (void*)"audio");
 		player->output->Command(player,OUTPUT_ADD, (void*)"video");
 		player->output->Command(player,OUTPUT_ADD, (void*)"subtitle");
-	}
-
-	if (player && player->output && player->output->subtitle)
-	{
-		fbClass *fb = fbClass::getInstance();
-		SubtitleOutputDef_t out;
-		out.screen_width = fb->getScreenResX();
-		out.screen_height = fb->getScreenResY();
-		out.shareFramebuffer = 1;
-		out.framebufferFD = fb->getFD();
-		out.destination = fb->getLFB_Direct();
-		out.destStride = fb->Stride();
-		out.framebufferBlit = ep3Blit;
-		player->output->subtitle->Command(player, (OutputCmd_t)OUTPUT_SET_SUBTITLE_OUTPUT, (void*) &out);
 	}
 
 	//create playback path
@@ -599,6 +582,109 @@ void eServiceLibpl::updateEpgCacheNowNext()
 	}
 }
 
+void eServiceLibpl::pullSubtitle()
+{
+	Subtitle_Out_t* subOut = NULL;
+	float convert_fps = 1.0;
+
+	int delay = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_delay");
+	int subtitle_fps = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_fps");
+
+	if (subtitle_fps > 1 && m_framerate > 0)
+	{
+		convert_fps = subtitle_fps / (double)m_framerate;
+	}
+
+	if (player && player->output && player->output->subtitle)
+	{
+		player->output->subtitle->Command(player, OUTPUT_GET_SUBTITLE_DATA, &subOut);
+	}
+
+	if (subOut == NULL)
+	{
+		eDebug("[eServiceLibpl::%s] ERROR in OUTPUT_GET_SUBTITLE_DATA!", __func__);
+	}
+	else if (subOut->data == NULL)
+	{
+		eDebug("[eServiceLibpl::%s] No subtitle text!", __func__);
+	}
+	else
+	{
+		std::string line((const char*)subOut->data);
+		int64_t start_ms = subOut->pts * convert_fps + (delay / 90);
+		int64_t end_ms = start_ms + subOut->duration;
+
+		// eDebug("[eServiceLibpl::%s] start: %d, end: %d, Text: %s", __func__, start_ms, end_ms, (const char*)subOut->data);
+		m_subtitle_pages.insert(subtitle_pages_map_pair_t(end_ms, subtitle_page_t(start_ms, end_ms, line)));
+		m_subtitle_sync_timer->start(1, true);
+	}
+
+	if (player && player->output && player->output->subtitle)
+	{
+		player->output->subtitle->Command(player, OUTPUT_DEL_SUBTITLE_DATA, NULL);
+	}
+}
+
+void eServiceLibpl::pushSubtitles()
+{
+	pts_t running_pts = 0;
+	int32_t next_timer = 0, decoder_ms, start_ms, end_ms, diff_start_ms, diff_end_ms;
+	subtitle_pages_map_t::iterator current;
+
+	if (getPlayPosition(running_pts) < 0)
+	{
+		eDebug("[eServiceLibpl::%s] getPlayPosition(running_pts) < 0", __func__);
+		next_timer = 50;
+		goto exit;
+	}
+
+	decoder_ms = running_pts / 90;
+
+	for (current = m_subtitle_pages.lower_bound(decoder_ms); current != m_subtitle_pages.end(); current++)
+	{
+		start_ms = current->second.start_ms;
+		end_ms = current->second.end_ms;
+		diff_start_ms = start_ms - decoder_ms;
+		diff_end_ms = end_ms - decoder_ms;
+
+		// eDebug("[eServiceLibpl::%s] *** next subtitle: decoder: %d, start: %d, end: %d, duration_ms: %d, diff_start: %d, diff_end: %d : %s", __func__, decoder_ms, start_ms, end_ms, end_ms - start_ms, diff_start_ms, diff_end_ms, current->second.text.c_str());
+
+		if (diff_end_ms < 0)
+		{
+			// eDebug("[eServiceLibpl::%s] *** current sub has already ended, skip: %d", __func__, diff_end_ms);
+			continue;
+		}
+		if (diff_start_ms > 50)
+		{
+			// eDebug("[eServiceLibpl::%s] *** current sub in the future, start timer, %d", __func__, diff_start_ms);
+			next_timer = diff_start_ms;
+			goto exit;
+		}
+		if (m_subtitle_widget && !m_paused)
+		{
+			// eDebug("[eServiceLibpl::%s] current sub actual, show!", __func__);
+
+			ePangoSubtitlePage pango_page;
+			gRGB rgbcol(0xD0,0xD0,0xD0);
+
+			pango_page.m_elements.push_back(ePangoSubtitlePageElement(rgbcol, current->second.text.c_str()));
+			pango_page.m_show_pts = start_ms * 90; // actually completely unused by widget!
+			pango_page.m_timeout = end_ms - decoder_ms; // take late start into account
+
+			m_subtitle_widget->setPage(pango_page);
+		}
+	}
+
+exit:
+	if (next_timer == 0)
+	{
+		// eDebug("[eServiceLibpl::%s] *** next timer = 0, set default timer!", __func__);
+		next_timer = 1000;
+	}
+
+	m_subtitle_sync_timer->start(next_timer, true);
+}
+
 DEFINE_REF(eServiceLibpl);
 
 RESULT eServiceLibpl::connectEvent(const Slot2<void,iPlayableService*,int> &event, ePtr<eConnection> &connection)
@@ -769,7 +855,10 @@ RESULT eServiceLibpl::setFastForward(int ratio)
 RESULT eServiceLibpl::pause()
 {
 	if (player && player->playback)
+	{
 		player->playback->Command(player, PLAYBACK_PAUSE, NULL);
+		m_paused = true;
+	}
 
 	return 0;
 }
@@ -777,7 +866,10 @@ RESULT eServiceLibpl::pause()
 RESULT eServiceLibpl::unpause()
 {
 	if (player && player->playback)
+	{
 		player->playback->Command(player, PLAYBACK_CONTINUE, NULL);
+		m_paused = false;
+	}
 
 	return 0;
 }
@@ -810,6 +902,7 @@ RESULT eServiceLibpl::seekTo(pts_t to)
 	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
 
+	m_subtitle_pages.clear();
 	return 0;
 }
 
@@ -820,6 +913,7 @@ RESULT eServiceLibpl::seekRelative(int direction, pts_t to)
 	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
 
+	m_subtitle_pages.clear();
 	return 0;
 }
 
@@ -841,7 +935,7 @@ RESULT eServiceLibpl::getPlayPosition(pts_t &pts)
 	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_PTS, &vpts);
 
-	if (vpts<=0)
+	if (vpts <= 0)
 		return -1;
 
 	/* len is in nanoseconds. we have 90 000 pts per second. */
@@ -1016,6 +1110,7 @@ std::string eServiceLibpl::getInfoString(int w)
 		}
 	}
 
+	free(tag);
 	return "";
 }
 
@@ -1124,13 +1219,10 @@ RESULT eServiceLibpl::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack 
 		m_cachedSubtitleStream = m_currentSubtitleStream;
 		m_subtitle_widget = user;
 		
-		eDebug ("eServiceLibpl::switched to subtitle stream %i", m_currentSubtitleStream);
+		eDebug ("[eServiceLibpl::%s]::switched to subtitle stream %i", __func__, m_currentSubtitleStream);
 
 		if (player && player->playback)
 			player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&track.pid);
-
-		// we have to force a seek, before the new subtitle stream will start
-		seekRelative(-1, 90000);
 	}
 
 	return 0;
@@ -1306,6 +1398,10 @@ void eServiceLibpl::gotThreadMessage(const int &msg)
 {
 	switch(msg)
 	{
+	case 0:
+		// eDebug("[eServiceLibpl::%s] pull subtitles", __func__);
+		pullSubtitle();
+		break;
 	case 1: // thread stopped
 		eDebug("[eServiceLibpl::%s] issuing eof...", __func__);
 		m_event(this, evEOF);
@@ -1396,10 +1492,10 @@ void eServiceLibpl::saveCuesheet()
 	m_cuesheet_changed = 0;
 }
 
-void libeplayerThreadStop() // call from libeplayer
+void libeplayerMessage(int message) // call from libeplayer
 {
-	eDebug("[eServiceLibpl::%s]", __func__);
+	// eDebug("[eServiceLibpl::%s] %d", __func__, message);
 	eServiceLibpl *serv = eServiceLibpl::getInstance();
-	serv->inst_m_pump->send(1);
+	serv->inst_m_pump->send(message);
 }
 
