@@ -7,6 +7,8 @@
 
 #include <lib/base/eerror.h>
 
+#include "absdiff.h"
+
 #define SEC_DEBUG
 
 #ifdef SEC_DEBUG
@@ -220,7 +222,7 @@ int eDVBSatelliteEquipmentControl::canTune(const eDVBFrontendParametersSatellite
 				{
 					int lof = sat.frequency > lnb_param.m_lof_threshold ?
 						lnb_param.m_lof_hi : lnb_param.m_lof_lo;
-					int tuner_freq = abs(sat.frequency - lof);
+					unsigned int tuner_freq = absdiff(sat.frequency, lof);
 					if (tuner_freq < 900000 || tuner_freq > 2200000)
 						ret = 0;
 				}
@@ -391,8 +393,7 @@ RESULT eDVBSatelliteEquipmentControl::prepare(iDVBFrontend &frontend, const eDVB
 			if(!is_unicable)
 			{
 				// calc Frequency
-				int local= abs(sat.frequency
-					- lof);
+				int local = absdiff(sat.frequency, lof);
 				frequency = ((((local * 2) / 125) + 1) / 2) * 125;
 				frontend.setData(eDVBFrontend::FREQ_OFFSET, sat.frequency - frequency);
 
@@ -416,8 +417,7 @@ RESULT eDVBSatelliteEquipmentControl::prepare(iDVBFrontend &frontend, const eDVB
 			}
 			else
 			{
-				int tmp1 = abs(sat.frequency
-						-lof)
+				int tmp1 = absdiff(sat.frequency, lof)
 						+ lnb_param.SatCRvco
 						- 1400000
 						+ lnb_param.guard_offset;
