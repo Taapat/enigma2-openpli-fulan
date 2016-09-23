@@ -298,8 +298,8 @@ private:
 	subtitle_pages_map_t m_ssa_subtitle_pages;
 	ePtr<eTimer> m_subtitle_sync_timer;
 
-	void ReadSrtSubtitle(const char *subfile, int delay, float convert_fps);
-	void ReadSsaSubtitle(const char *subfile, int isASS, int delay, float convert_fps);
+	void ReadSrtSubtitle(const char *subfile, int delay, int subtitle_fps);
+	void ReadSsaSubtitle(const char *subfile, int isASS, int delay, int subtitle_fps);
 	void ReadTextSubtitles(const char *filename);
 	void pullTextSubtitles(int type);
 	void pushSubtitles();

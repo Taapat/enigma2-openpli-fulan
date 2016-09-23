@@ -587,7 +587,7 @@ void eServiceLibpl::updateEpgCacheNowNext()
 	}
 }
 
-void eServiceLibpl::ReadSrtSubtitle(const char *subfile, int delay, float convert_fps)
+void eServiceLibpl::ReadSrtSubtitle(const char *subfile, int delay, int subtitle_fps)
 {
 	int horIni, minIni, secIni, milIni, horFim, minFim, secFim, milFim;
 	char *Text = NULL;
@@ -621,8 +621,8 @@ void eServiceLibpl::ReadSrtSubtitle(const char *subfile, int delay, float conver
 					continue; /* Data is not in correct format */
 				}
 
-				start_ms = ((horIni * 3600 + minIni * 60 + secIni) * 1000 + milIni) * convert_fps + (delay / 90);
-				end_ms = ((horFim * 3600 + minFim * 60 + secFim) * 1000  + milFim) * convert_fps + (delay / 90);
+				start_ms = ((horIni * 3600 + minIni * 60 + secIni) * 1000 + milIni) * subtitle_fps + delay);
+				end_ms = ((horFim * 3600 + minFim * 60 + secFim) * 1000  + milFim) * subtitle_fps + delay);
 				pos++;
 			}
 			else if(pos == 2)
@@ -670,7 +670,7 @@ void eServiceLibpl::ReadSrtSubtitle(const char *subfile, int delay, float conver
 	m_subtitleStreams.push_back(sub);
 }
 
-void eServiceLibpl::ReadSsaSubtitle(const char *subfile, int isASS, int delay, float convert_fps)
+void eServiceLibpl::ReadSsaSubtitle(const char *subfile, int isASS, int delay, int subtitle_fps)
 {
 	int horIni, minIni, secIni, milIni, horFim, minFim, secFim, milFim;
 	char *Text = NULL;
@@ -713,8 +713,8 @@ void eServiceLibpl::ReadSsaSubtitle(const char *subfile, int isASS, int delay, f
 				continue; /* Data is not in correct format */
 			}
 
-			int64_t start_ms = ((horIni * 3600 + minIni * 60 + secIni) * 1000 + milIni) * convert_fps + (delay / 90);
-			int64_t end_ms = ((horFim * 3600 + minFim * 60 + secFim) * 1000  + milFim) * convert_fps + (delay / 90);
+			int64_t start_ms = ((horIni * 3600 + minIni * 60 + secIni) * 1000 + milIni) * subtitle_fps + delay;
+			int64_t end_ms = ((horFim * 3600 + minFim * 60 + secFim) * 1000  + milFim) * subtitle_fps + delay;
 
 			/* standardize hard break: '\N'->'\n' http://docs.aegisub.org/3.2/ASS_Tags/ */
 			while((p_newline = strstr(ptr, "\\N")) != NULL)
@@ -758,15 +758,8 @@ void eServiceLibpl::ReadSsaSubtitle(const char *subfile, int isASS, int delay, f
 
 void eServiceLibpl::ReadTextSubtitles(const char *filename)
 {
-	int count = 0;
-	float convert_fps = 1.0;
 	int delay = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_delay");
 	int subtitle_fps = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_fps");
-
-	if (subtitle_fps > 1 && m_framerate > 0)
-	{
-		convert_fps = subtitle_fps / (double)m_framerate;
-	}
 
 	filename += 7; // remove 'file://'
 	const char *lastDot = strrchr(filename, '.');
@@ -779,8 +772,7 @@ void eServiceLibpl::ReadTextSubtitles(const char *filename)
 	if (::access(subfile, R_OK) == 0)
 	{
 		eDebug("[eServiceLibpl::%s] add %s", __func__, subfile);
-		count++;
-		ReadSrtSubtitle(subfile, delay, convert_fps);
+		ReadSrtSubtitle(subfile, delay, subtitle_fps);
 	}
 
 	strcpy(subfile, filename);
@@ -788,8 +780,7 @@ void eServiceLibpl::ReadTextSubtitles(const char *filename)
 	if (::access(subfile, R_OK) == 0)
 	{
 		eDebug("[eServiceLibpl::%s] add %s", __func__, subfile);
-		count++;
-		ReadSsaSubtitle(subfile, 0, delay, convert_fps);
+		ReadSsaSubtitle(subfile, 0, delay, subtitle_fps);
 	}
 
 	strcpy(subfile, filename);
@@ -797,8 +788,7 @@ void eServiceLibpl::ReadTextSubtitles(const char *filename)
 	if (::access(subfile, R_OK) == 0)
 	{
 		eDebug("[eServiceLibpl::%s] add %s", __func__, subfile);
-		count++;
-		ReadSsaSubtitle(subfile, 1, delay, convert_fps);
+		ReadSsaSubtitle(subfile, 1, delay, subtitle_fps);
 	}
 }
 
@@ -825,15 +815,9 @@ void eServiceLibpl::pullTextSubtitles(int type)
 void eServiceLibpl::pullSubtitle()
 {
 	Subtitle_Out_t* subOut = NULL;
-	float convert_fps = 1.0;
 
 	int delay = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_delay");
 	int subtitle_fps = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_fps");
-
-	if (subtitle_fps > 1 && m_framerate > 0)
-	{
-		convert_fps = subtitle_fps / (double)m_framerate;
-	}
 
 	if (player && player->output && player->output->subtitle)
 	{
@@ -851,7 +835,7 @@ void eServiceLibpl::pullSubtitle()
 	else
 	{
 		std::string line((const char*)subOut->data);
-		int64_t start_ms = subOut->pts * convert_fps + (delay / 90);
+		int64_t start_ms = subOut->pts * subtitle_fps + delay;
 		int64_t end_ms = start_ms + subOut->duration;
 
 		// eDebug("[eServiceLibpl::%s] start: %d, end: %d, Text: %s", __func__, start_ms, end_ms, (const char*)subOut->data);
