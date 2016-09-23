@@ -1137,25 +1137,24 @@ RESULT eServiceLibpl::getLength(pts_t &pts)
 
 RESULT eServiceLibpl::seekTo(pts_t to)
 {
-	float pos = (to/90000.0)-10;
+	float pos = (to / 90000.0) - 10;
 
 	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
 
-	if (int(m_subtitleStreams[m_currentSubtitleStream].type) < 7)
-		m_subtitle_pages.clear();
+	if (m_currentSubtitleStream >= 0)
+	{
+		if (int(m_subtitleStreams[m_currentSubtitleStream].type) < 7)
+			m_subtitle_pages.clear();
+		else
+			m_subtitle_sync_timer->start(1, true);
+	}
 	return 0;
 }
 
 RESULT eServiceLibpl::seekRelative(int direction, pts_t to)
 {
-	float pos = direction*(to/90000.0);
-
-	if (player && player->playback)
-		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
-
-	if (int(m_subtitleStreams[m_currentSubtitleStream].type) < 7)
-		m_subtitle_pages.clear();
+	seekTo(direction * to);
 	return 0;
 }
 
