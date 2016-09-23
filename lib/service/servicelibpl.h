@@ -91,7 +91,7 @@ public:
 };
 
 typedef enum { atUnknown, atMPEG, atMP3, atAC3, atDTS, atAAC, atPCM, atOGG, atFLAC, atWMA } audiotype_t;
-typedef enum { stUnknown, stPlainText, stSSA, stASS, stSRT, stVOB, stPGS } subtype_t;
+typedef enum { stUnknown, stPlainText, stSSA, stASS, stSRT, stVOB, stPGS, stTSSA, stTASS, stTSRT } subtype_t;
 typedef enum { ctNone, ctMPEGTS, ctMPEGPS, ctMKV, ctAVI, ctMP4, ctVCD, ctCDA, ctASF, ctOGG } containertype_t;
 
 class eServiceLibpl: public iPlayableService, public iPauseableService,
@@ -293,8 +293,15 @@ private:
 	typedef std::map<int64_t, subtitle_page_t> subtitle_pages_map_t;
 	typedef std::pair<int64_t, subtitle_page_t> subtitle_pages_map_pair_t;
 	subtitle_pages_map_t m_subtitle_pages;
+	subtitle_pages_map_t m_srt_subtitle_pages;
+	subtitle_pages_map_t m_ass_subtitle_pages;
+	subtitle_pages_map_t m_ssa_subtitle_pages;
 	ePtr<eTimer> m_subtitle_sync_timer;
 
+	void ReadSrtSubtitle(const char *subfile, int delay, float convert_fps);
+	void ReadSsaSubtitle(const char *subfile, int isASS, int delay, float convert_fps);
+	void ReadTextSubtitles(const char *filename);
+	void pullTextSubtitles(int type);
 	void pushSubtitles();
 	void pullSubtitle();
 	sourceStream m_sourceinfo;

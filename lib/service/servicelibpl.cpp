@@ -1,3 +1,4 @@
+#include <lib/base/cfile.h>
 #include <lib/base/ebase.h>
 #include <lib/base/eerror.h>
 #include <lib/base/init_num.h>
@@ -324,7 +325,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	eDebug("[eServiceLibpl::%s]", __func__);
 	m_currentAudioStream = -1;
 	m_currentSubtitleStream = -1;
-	m_cachedSubtitleStream = 0; /* report the first subtitle stream to be 'cached'. TODO: use an actual cache. */
+	m_cachedSubtitleStream = 100; /* set max subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_subtitle_widget = 0;
 	m_buffer_size = 5 * 1024 * 1024;
 	m_paused = false;
@@ -490,7 +491,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 					//  stPlainText, stSSA, stSRT
 					if (     !strncmp("S_TEXT/SSA",   TrackList[i+1], 10) ||
 							!strncmp("S_SSA", TrackList[i+1], 5))
-						sub.type = stSSA;
+						sub.type = stASS;
 					else if (!strncmp("S_TEXT/ASS",   TrackList[i+1], 10) ||
 							!strncmp("S_AAS", TrackList[i+1], 5))
 						sub.type = stSSA;
@@ -511,6 +512,10 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 			}
 		}
 		loadCuesheet(); /* cuesheet CVR */
+
+		if (!strncmp(file, "file://", 7)) /* text subtitles */
+			ReadTextSubtitles(file);
+
 		m_event(this, evStart);
 	}
 	else
@@ -580,6 +585,241 @@ void eServiceLibpl::updateEpgCacheNowNext()
 	{
 		m_event((iPlayableService*)this, evUpdatedEventInfo);
 	}
+}
+
+void eServiceLibpl::ReadSrtSubtitle(const char *subfile, int delay, float convert_fps)
+{
+	int horIni, minIni, secIni, milIni, horFim, minFim, secFim, milFim;
+	char *Text = NULL;
+
+	CFile f(subfile, "rt");
+	if (f)
+	{
+		int pos = 0;
+		int64_t start_ms = 0;
+		int64_t end_ms = 0;
+		size_t bufsize = 256;
+		char *line = (char*) malloc(bufsize);
+		while (getline(&line, &bufsize, f) != -1)
+		{
+			/*
+			00:02:17,440 --> 00:02:20,375
+			Senator, we're making
+			our final approach into Coruscant.
+			*/
+			if(pos == 0)
+			{
+				if(line[0] == '\n' || line[0] == '\0' || line[0] == 13 /* ^M */)
+					continue; /* Empty line not allowed here */
+				pos++;
+			}
+			else if(pos == 1)
+			{
+				if (sscanf(line, "%d:%d:%d%*1[,.]%d --> %d:%d:%d%*1[,.]%d",
+					&horIni, &minIni, &secIni, &milIni, &horFim, &minFim, &secFim, &milFim) != 8)
+				{
+					continue; /* Data is not in correct format */
+				}
+
+				start_ms = ((horIni * 3600 + minIni * 60 + secIni) * 1000 + milIni) * convert_fps + (delay / 90);
+				end_ms = ((horFim * 3600 + minFim * 60 + secFim) * 1000  + milFim) * convert_fps + (delay / 90);
+				pos++;
+			}
+			else if(pos == 2)
+			{
+				if(line[0] == '\n' || line[0] == '\0' || line[0] == 13 /* ^M */)
+				{
+					if(Text != NULL)
+					{
+						int sl = strlen(Text)-1;
+						Text[sl]='\0'; /* Set last to \0, to replace \n or \r if exist */
+						std::string SubText((const char*)Text);
+						m_srt_subtitle_pages.insert(subtitle_pages_map_pair_t(end_ms, subtitle_page_t(start_ms, end_ms, SubText)));
+						free(Text);
+						Text = NULL;
+					}
+					pos = 0;
+					continue;
+				}
+
+				if(!Text)
+				{
+					Text = strdup(line);
+				}
+				else
+				{
+					int length = strlen(Text) /* \0 -> \n */ + strlen(line) + 2 /* \0 */;
+					char *tmpText = Text;
+					Text = (char *)malloc(length);
+
+					strcpy(Text, tmpText);
+					strcat(Text, line);
+					free(tmpText);
+				}
+			}
+		} /* while */
+		if(Text != NULL)
+		{
+			free(Text);
+			Text = NULL;
+		}
+	}
+	subtitleStream sub;
+	sub.language_code = "SRT";
+	sub.type = stTSRT;
+	m_subtitleStreams.push_back(sub);
+}
+
+void eServiceLibpl::ReadSsaSubtitle(const char *subfile, int isASS, int delay, float convert_fps)
+{
+	int horIni, minIni, secIni, milIni, horFim, minFim, secFim, milFim;
+	char *Text = NULL;
+
+	CFile f(subfile, "rt");
+	if (f)
+	{
+		size_t bufsize = 256;
+		char *line = (char*) malloc(bufsize);
+		while (getline(&line, &bufsize, f) != -1)
+		{
+			/*
+			Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+			Dialogue: Marked=0,0:02:40.65,0:02:41.79,Wolf main,Cher,0000,0000,0000,,Hello world!
+			*/
+			if(line[0]  != 'D')
+				continue; /* Skip line without Dialogue */
+
+			int i = 0;
+			int ret = 0;
+			char *p_newline = NULL;
+			char *ptr = line;
+
+			while(i < 10 && *ptr != '\0')
+			{
+				if (*ptr == ',')
+				{
+					i++;
+				}
+				ptr++;
+				if (i == 1)
+				{
+					ret = sscanf(ptr, "%d:%d:%d.%d,%d:%d:%d.%d,", &horIni, &minIni, &secIni, &milIni, &horFim, &minFim, &secFim, &milFim);
+					i++;
+				}
+			}
+
+			if (ret != 8)
+			{
+				continue; /* Data is not in correct format */
+			}
+
+			int64_t start_ms = ((horIni * 3600 + minIni * 60 + secIni) * 1000 + milIni) * convert_fps + (delay / 90);
+			int64_t end_ms = ((horFim * 3600 + minFim * 60 + secFim) * 1000  + milFim) * convert_fps + (delay / 90);
+
+			/* standardize hard break: '\N'->'\n' http://docs.aegisub.org/3.2/ASS_Tags/ */
+			while((p_newline = strstr(ptr, "\\N")) != NULL)
+			{
+				*(p_newline + 1) = 'n';
+			}
+
+			Text = strdup(ptr);
+			int sl = strlen(Text)-1;
+			Text[sl]='\0'; /* Set last to \0, to replace \n or \r if exist */
+
+			if(Text != NULL)
+			{
+				std::string SubText((const char*)Text);
+				if (isASS)
+				{
+					m_ass_subtitle_pages.insert(subtitle_pages_map_pair_t(end_ms, subtitle_page_t(start_ms, end_ms, SubText)));
+				}
+				else
+				{
+					m_ssa_subtitle_pages.insert(subtitle_pages_map_pair_t(end_ms, subtitle_page_t(start_ms, end_ms, SubText)));
+				}
+				free(Text);
+				Text = NULL;
+			}
+		} /* while */
+	}
+	subtitleStream sub;
+	if (isASS)
+	{
+		sub.language_code = "ASS";
+		sub.type = stTASS;
+	}
+	else
+	{
+		sub.language_code = "SSA";
+		sub.type = stTSSA;
+	}
+	m_subtitleStreams.push_back(sub);
+}
+
+void eServiceLibpl::ReadTextSubtitles(const char *filename)
+{
+	int count = 0;
+	float convert_fps = 1.0;
+	int delay = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_delay");
+	int subtitle_fps = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_fps");
+
+	if (subtitle_fps > 1 && m_framerate > 0)
+	{
+		convert_fps = subtitle_fps / (double)m_framerate;
+	}
+
+	filename += 7; // remove 'file://'
+	const char *lastDot = strrchr(filename, '.');
+	if (!lastDot)
+		return;
+	char subfile[strlen(filename) + 3];
+
+	strcpy(subfile, filename);
+	strcpy(subfile + (lastDot + 1 - filename), "srt");
+	if (::access(subfile, R_OK) == 0)
+	{
+		eDebug("[eServiceLibpl::%s] add %s", __func__, subfile);
+		count++;
+		ReadSrtSubtitle(subfile, delay, convert_fps);
+	}
+
+	strcpy(subfile, filename);
+	strcpy(subfile + (lastDot + 1 - filename), "ass");
+	if (::access(subfile, R_OK) == 0)
+	{
+		eDebug("[eServiceLibpl::%s] add %s", __func__, subfile);
+		count++;
+		ReadSsaSubtitle(subfile, 0, delay, convert_fps);
+	}
+
+	strcpy(subfile, filename);
+	strcpy(subfile + (lastDot + 1 - filename), "ssa");
+	if (::access(subfile, R_OK) == 0)
+	{
+		eDebug("[eServiceLibpl::%s] add %s", __func__, subfile);
+		count++;
+		ReadSsaSubtitle(subfile, 1, delay, convert_fps);
+	}
+}
+
+void eServiceLibpl::pullTextSubtitles(int type)
+{
+	eDebug("[eServiceLibpl::%s] type %d", __func__, type);
+
+	if (type == 9)
+	{
+		m_subtitle_pages = m_srt_subtitle_pages;
+	}
+	else if (type == 8)
+	{
+		m_subtitle_pages = m_ass_subtitle_pages;
+	}
+	else
+	{
+		m_subtitle_pages = m_ssa_subtitle_pages;
+	}
+
+	m_subtitle_sync_timer->start(1, true);
 }
 
 void eServiceLibpl::pullSubtitle()
@@ -902,7 +1142,8 @@ RESULT eServiceLibpl::seekTo(pts_t to)
 	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
 
-	m_subtitle_pages.clear();
+	if (int(m_subtitleStreams[m_currentSubtitleStream].type) < 7)
+		m_subtitle_pages.clear();
 	return 0;
 }
 
@@ -913,7 +1154,8 @@ RESULT eServiceLibpl::seekRelative(int direction, pts_t to)
 	if (player && player->playback)
 		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
 
-	m_subtitle_pages.clear();
+	if (int(m_subtitleStreams[m_currentSubtitleStream].type) < 7)
+		m_subtitle_pages.clear();
 	return 0;
 }
 
@@ -1219,10 +1461,14 @@ RESULT eServiceLibpl::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack 
 		m_cachedSubtitleStream = m_currentSubtitleStream;
 		m_subtitle_widget = user;
 		
-		eDebug ("[eServiceLibpl::%s]::switched to subtitle stream %i", __func__, m_currentSubtitleStream);
+		eDebug ("[eServiceLibpl::%s] switched to subtitle stream %i, type %d", __func__, m_currentSubtitleStream, track.page_number);
 
-		if (player && player->playback)
-			player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&track.pid);
+		if (track.page_number > 6)
+		{
+			pullTextSubtitles(track.page_number);
+		}
+		else if (player && player->playback)
+				player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&track.pid);
 	}
 
 	return 0;
@@ -1251,12 +1497,14 @@ RESULT eServiceLibpl::getCachedSubtitle(struct SubtitleTrack &track)
 {
 
 	bool autoturnon = eConfigManager::getConfigBoolValue("config.subtitles.pango_autoturnon", true);
+	int m_subtitleStreams_size = (int)m_subtitleStreams.size();
 
 	if (!autoturnon)
 		return -1;
 
-	if (m_cachedSubtitleStream >= 0 && m_cachedSubtitleStream < (int)m_subtitleStreams.size())
+	if (m_cachedSubtitleStream == 100 && m_subtitleStreams_size)
 	{
+		m_cachedSubtitleStream = m_subtitleStreams_size - 1;
 		track.type = 2;
 		track.pid = m_cachedSubtitleStream;
 		track.page_number = int(m_subtitleStreams[m_cachedSubtitleStream].type);

@@ -3308,6 +3308,7 @@ class InfoBarSubtitleSupport(object):
 			self.subtitle_window = InfoBar.instance.subtitle_window
 
 		self.subtitle_window.hide()
+		self.cached_subtitle = False
 
 		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
 			{
@@ -3330,7 +3331,9 @@ class InfoBarSubtitleSupport(object):
 			return 0
 
 	def __serviceChanged(self):
-		if self.selected_subtitle:
+		if self.cached_subtitle:  # lybeplayer start play after cached subtitle enabled
+			self.cached_subtitle = False
+		elif self.selected_subtitle:
 			self.selected_subtitle = None
 			self.subtitle_window.hide()
 
