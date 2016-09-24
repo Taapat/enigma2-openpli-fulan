@@ -3342,6 +3342,7 @@ class InfoBarSubtitleSupport(object):
 			subtitle = self.getCurrentServiceSubtitle()
 			cachedsubtitle = subtitle and subtitle.getCachedSubtitle()
 			if cachedsubtitle:
+				self.cached_subtitle = True
 				self.enableSubtitle(cachedsubtitle)
 
 	def enableSubtitle(self, selectedSubtitle):
