@@ -758,7 +758,7 @@ void eServiceLibpl::ReadSsaSubtitle(const char *subfile, int isASS, int delay, i
 
 void eServiceLibpl::ReadTextSubtitles(const char *filename)
 {
-	int delay = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_delay");
+	int delay = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_delay") / 90;
 	int subtitle_fps = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_fps");
 
 	filename += 7; // remove 'file://'
@@ -816,7 +816,7 @@ void eServiceLibpl::pullSubtitle()
 {
 	Subtitle_Out_t* subOut = NULL;
 
-	int delay = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_delay");
+	int delay = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_delay") / 90;
 	int subtitle_fps = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_fps");
 
 	if (player && player->output && player->output->subtitle)
