@@ -956,15 +956,7 @@ RESULT eServiceLibpl::start()
 			m_event((iPlayableService*)this, evVideoFramerateChanged);
 		}
 		else
-		{
-			player->manager->audio->Command(player, MANAGER_GET_TRACK, &Track);
-			if (Track != NULL)
-			{
-				m_framerate = Track->frame_rate;
-			}
-			else
-				eDebug("[eServiceLibpl::%s] error in getting track info", __func__);
-		}
+			eDebug("[eServiceLibpl::%s] error in getting track info", __func__);
 
 		return 0;
 	}
@@ -1672,17 +1664,77 @@ void eServiceLibpl::setPCMDelay(int delay)
 {
 }
 
+void eServiceLibpl::videoSizeChanged()
+{
+	if (player && player->manager && player->manager->video)
+	{
+		Track_t * Track = NULL;
+		player->manager->video->Command(player, MANAGER_GET_TRACK, &Track);
+		if (Track != NULL)
+		{
+			m_width = Track->width;
+			m_height = Track->height;
+			eDebug("[eServiceLibpl::%s] width:%d height:%d", __func__, m_width, m_height);
+			m_event((iPlayableService*)this, evVideoSizeChanged);
+		}
+		else
+			eDebug("[eServiceLibpl::%s] error in getting track info", __func__);
+	}
+}
+
+void eServiceLibpl::videoFramerateChanged()
+{
+	if (player && player->manager && player->manager->video)
+	{
+		Track_t * Track = NULL;
+		player->manager->video->Command(player, MANAGER_GET_TRACK, &Track);
+		if (Track != NULL)
+		{
+			m_framerate = Track->frame_rate;
+			eDebug("[eServiceLibpl::%s] framerate:%d", __func__, m_framerate);
+			m_event((iPlayableService*)this, evVideoFramerateChanged);
+		}
+		else
+			eDebug("[eServiceLibpl::%s] error in getting track info", __func__);
+	}
+}
+
+void eServiceLibpl::videoProgressiveChanged()
+{
+	if (player && player->manager && player->manager->video)
+	{
+		Track_t * Track = NULL;
+		player->manager->video->Command(player, MANAGER_GET_TRACK, &Track);
+		if (Track != NULL)
+		{
+			m_progressive = Track->frame_rate;
+			eDebug("[eServiceLibpl::%s] progressive:%d", __func__, m_framerate);
+			m_event((iPlayableService*)this, evVideoProgressiveChanged);
+		}
+		else
+			eDebug("[eServiceLibpl::%s] error in getting track info", __func__);
+	}
+}
+
 void eServiceLibpl::gotThreadMessage(const int &msg)
 {
 	switch(msg)
 	{
 	case 0:
-		// eDebug("[eServiceLibpl::%s] pull subtitles", __func__);
 		pullSubtitle();
 		break;
 	case 1: // thread stopped
 		eDebug("[eServiceLibpl::%s] issuing eof...", __func__);
 		m_event(this, evEOF);
+		break;
+	case 2:
+		videoSizeChanged();
+		break;
+	case 3:
+		videoFramerateChanged();
+		break;
+	case 4:
+		videoProgressiveChanged();
 		break;
 	}
 }

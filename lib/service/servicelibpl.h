@@ -304,6 +304,9 @@ private:
 	void pullTextSubtitles(int type);
 	void pushSubtitles();
 	void pullSubtitle();
+	void videoSizeChanged();
+	void videoFramerateChanged();
+	void videoProgressiveChanged();
 	sourceStream m_sourceinfo;
 	gint m_width, m_height, m_framerate, m_progressive;
 };
