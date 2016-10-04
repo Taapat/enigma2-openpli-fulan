@@ -424,6 +424,9 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 				audio.pid = it->pid;
 				switch(it->type)
 				{
+				case 1:
+					audio.type = atMPEG;
+					break;
 				case 2:
 					audio.type = atMP3;
 					break;
@@ -436,6 +439,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 				case 5:
 					audio.type = atAAC;
 					break;
+				case 0:
 				case 6:
 					audio.type = atPCM;
 					break;
