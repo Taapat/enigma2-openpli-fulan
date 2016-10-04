@@ -1081,7 +1081,7 @@ RESULT eServiceLibpl::getLength(pts_t &pts)
 	{
 		length = 0;
 		player->GetPts(length);
-		if (length > 0)		
+		if (length > 0)
 			pts = length + AV_TIME_BASE / 90000;
 		else
 			return -1;
@@ -1095,7 +1095,7 @@ RESULT eServiceLibpl::seekTo(pts_t to)
 		return 0;
 
 	player->Seek((int64_t)to * (AV_TIME_BASE / 90000), false);
-	
+
 	if(m_currentSubtitleStream >= 0 && m_emb_subtitle_pages.size())
 		m_emb_subtitle_pages.clear();
 
@@ -1293,7 +1293,7 @@ std::string eServiceLibpl::getInfoString(int w)
 		m_metaCount = m_metaKeys.size();
 	}
 
-	if (m_metaCount > 0) 
+	if (m_metaCount > 0)
 	{
 		for (size_t i = 0; i < m_metaCount; i++)
 		{
