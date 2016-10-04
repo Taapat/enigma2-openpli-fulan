@@ -323,6 +323,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	m_pump(eApp, 1)
 {
 	eDebug("[eServiceLibpl::%s]", __func__);
+	m_subtitle_pages = NULL;
 	m_currentAudioStream = -1;
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = 100; /* set max subtitle stream to be 'cached'. TODO: use an actual cache. */
@@ -335,28 +336,11 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	inst_m_pump = &m_pump;
 	CONNECT(m_nownext_timer->timeout, eServiceLibpl::updateEpgCacheNowNext);
 	CONNECT(inst_m_pump->recv_msg, eServiceLibpl::gotThreadMessage);
-	m_width = m_height = m_framerate = m_progressive = -1;
+	m_width = m_height = m_aspect = m_framerate = m_progressive = -1;
 	m_state = stIdle;
 	instance = this;
 
-	player = (Context_t*) malloc(sizeof(Context_t));
-
-	if (player)
-	{
-		player->playback  = &PlaybackHandler;
-		player->output    = &OutputHandler;
-		player->container = &ContainerHandler;
-		player->manager   = &ManagerHandler;
-		eDebug("[eServiceLibpl::%s] %s", __func__, player->output->Name);
-	}
-
-	//Registration of output devices
-	if (player && player->output)
-	{
-		player->output->Command(player,OUTPUT_ADD, (void*)"audio");
-		player->output->Command(player,OUTPUT_ADD, (void*)"video");
-		player->output->Command(player,OUTPUT_ADD, (void*)"subtitle");
-	}
+	player = new Player();
 
 	//create playback path
 	char file[1023] = {""};
@@ -369,6 +353,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	|| (!strncmp("hls://", m_ref.path.c_str(), 6))
 	|| (!strncmp("hls+http://", m_ref.path.c_str(), 11))
 	|| (!strncmp("httpproxy://", m_ref.path.c_str(), 12))
+	|| (!strncmp("mms://", m_ref.path.c_str(), 6))
 	|| (!strncmp("mmsh://", m_ref.path.c_str(), 7))
 	|| (!strncmp("mmst://", m_ref.path.c_str(), 7))
 	|| (!strncmp("rtmp://", m_ref.path.c_str(), 7))
@@ -389,7 +374,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	|| (!strncmp("bluray://", m_ref.path.c_str(), 9))
 	|| (!strncmp("hls+file://", m_ref.path.c_str(), 11))
 	|| (!strncmp("myts://", m_ref.path.c_str(), 7)))
-		;
+		m_sourceinfo.is_streaming = false;
 	else
 		strcat(file, "file://");
 
@@ -423,107 +408,93 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 		strcat(file, m_ref.path.c_str());
 
 	//try to open file
-	if (player && player->playback && player->playback->Command(player, PLAYBACK_OPEN, file) >= 0)
+	if (player->Open(file, m_sourceinfo.is_streaming, ""))
 	{
-		//VIDEO
-		//We dont have to register video tracks, or do we ?
-		//AUDIO
-		if (player && player->manager && player->manager->audio)
+		eDebug("[eServiceLibpl::%s] Open file!", __func__);
+
+		std::vector<Track> tracks = player->manager.getAudioTracks();
+		if(!tracks.empty())
 		{
-			char ** TrackList = NULL;
-			player->manager->audio->Command(player, MANAGER_LIST, &TrackList);
-			if (TrackList != NULL)
+			eDebug("[eServiceLibpl::%s] Audio track list:", __func__);
+			for (std::vector<Track>::iterator it = tracks.begin(); it != tracks.end(); ++it) 
 			{
-				eDebug("[eServiceLibpl::%s] AudioTrack List:", __func__);
-				int i = 0;
-				for (i = 0; TrackList[i] != NULL; i+=2)
+				eDebug("[eServiceLibpl::%s]    Id:%i type:%i language:%s", __func__, it->pid, it->type, it->title.c_str());
+				audioStream audio;
+				audio.language_code = it->title;
+				audio.pid = it->pid;
+				switch(it->type)
 				{
-					eDebug("[eServiceLibpl::%s]\t%s - %s", __func__, TrackList[i], TrackList[i+1]);
-					audioStream audio;
-					audio.language_code = TrackList[i];
-
-					// atUnknown, atMPEG, atMP3, atAC3, atDTS, atAAC, atPCM, atOGG, atFLAC
-					if (    !strncmp("A_MPEG/L3",   TrackList[i+1], 9))
-						audio.type = atMP3;
-					else if (!strncmp("A_MP3",      TrackList[i+1], 5))
-						audio.type = atMP3;
-					else if (!strncmp("A_AC3",      TrackList[i+1], 5))
-						audio.type = atAC3;
-					else if (!strncmp("A_DTS",      TrackList[i+1], 5))
-						audio.type = atDTS;
-					else if (!strncmp("A_AAC",      TrackList[i+1], 5))
-						audio.type = atAAC;
-					else if (!strncmp("A_PCM",      TrackList[i+1], 5))
-						audio.type = atPCM;
-					else if (!strncmp("A_VORBIS",   TrackList[i+1], 8))
-						audio.type = atOGG;
-					else if (!strncmp("A_FLAC",     TrackList[i+1], 6))
-						audio.type = atFLAC;
-					else
-						audio.type = atUnknown;
-
-					m_audioStreams.push_back(audio);
-					free(TrackList[i]);
-					TrackList[i] = NULL;
-					free(TrackList[i+1]);
-					TrackList[i+1] = NULL;
+				case 2:
+					audio.type = atMP3;
+					break;
+				case 3:
+					audio.type = atAC3;
+					break;
+				case 4:
+					audio.type = atDTS;
+					break;
+				case 5:
+					audio.type = atAAC;
+					break;
+				case 6:
+					audio.type = atPCM;
+					break;
+				case 8:
+					audio.type = atFLAC;
+					break;
+				case 9:
+					audio.type = atWMA;
+					break;
+				default:
+					audio.type = atUnknown;
 				}
-				free(TrackList);
-				TrackList = NULL;
+				m_audioStreams.push_back(audio);
 			}
 		}
 
-		//SUB
-		if (player && player->manager && player->manager->subtitle)
+		tracks = player->manager.getSubtitleTracks();
+		if(!tracks.empty())
 		{
-			char ** TrackList = NULL;
-			player->manager->subtitle->Command(player, MANAGER_LIST, &TrackList);
-			if (TrackList != NULL)
+			eDebug("[eServiceLibpl::%s] Subtitle track list:", __func__);
+			for (std::vector<Track>::iterator it = tracks.begin(); it != tracks.end(); ++it) 
 			{
-				eDebug("[eServiceLibpl::%s] SubtitleTrack List:", __func__);
-				int i = 0;
-				for (i = 0; TrackList[i] != NULL; i+=2)
+				eDebug("[eServiceLibpl::%s]    Id:%i type:%i language:%s", __func__, it->pid, it->type, it->title.c_str());
+				subtitleStream subtitle;
+				subtitle.language_code = it->title;
+				subtitle.id = it->pid;
+				switch(it->type)
 				{
-					eDebug("[eServiceLibpl::%s]\t%s - %s", __func__, TrackList[i], TrackList[i+1]);
-					subtitleStream sub;
-					sub.language_code = TrackList[i];
-
-					//  stPlainText, stSSA, stSRT
-					if (     !strncmp("S_TEXT/SSA",   TrackList[i+1], 10) ||
-							!strncmp("S_SSA", TrackList[i+1], 5))
-						sub.type = stASS;
-					else if (!strncmp("S_TEXT/ASS",   TrackList[i+1], 10) ||
-							!strncmp("S_AAS", TrackList[i+1], 5))
-						sub.type = stSSA;
-					else if (!strncmp("S_TEXT/SRT",   TrackList[i+1], 10) ||
-							!strncmp("S_SRT", TrackList[i+1], 5))
-						sub.type = stSRT;
-					else
-						sub.type = stPlainText;
-
-					m_subtitleStreams.push_back(sub);
-					free(TrackList[i]);
-					TrackList[i] = NULL;
-					free(TrackList[i+1]);
-					TrackList[i+1] = NULL;
+				case 1:
+					subtitle.type = stPlainText;
+					break;
+				case 2:
+					subtitle.type = stSSA;
+					break;
+				case 3:
+					subtitle.type = stASS;
+					break;
+				case 4:
+					subtitle.type = stSRT;
+					break;
+				default:
+					subtitle.type = stUnknown;
 				}
-				free(TrackList);
-				TrackList = NULL;
+				m_subtitleStreams.push_back(subtitle);
 			}
 		}
+
 		loadCuesheet(); /* cuesheet CVR */
 
 		if (!strncmp(file, "file://", 7)) /* text subtitles */
 			ReadTextSubtitles(file);
-
-		m_event(this, evStart);
 	}
 	else
 	{
 		//Creation failed, no playback support for insert file, so send e2 EOF to stop playback
 		eDebug("[eServiceLibpl::%s] ERROR! Creation failed! No playback support for insert file!", __func__);
-		m_state = stRunning;
-		m_event(this, evEOF);
+		m_state = stStopped;
+		m_event((iPlayableService*)this, evEOF);
+		m_event((iPlayableService*)this, evUser+12);
 	}
 }
 
@@ -534,6 +505,8 @@ eServiceLibpl::~eServiceLibpl()
 
 	if (m_state == stRunning)
 		stop();
+
+	delete player;
 }
 
 void eServiceLibpl::updateEpgCacheNowNext()
@@ -633,8 +606,14 @@ void eServiceLibpl::ReadSrtSubtitle(const char *subfile, int delay, double conve
 					{
 						int sl = strlen(Text)-1;
 						Text[sl]='\0'; /* Set last to \0, to replace \n or \r if exist */
-						std::string SubText((const char*)Text);
-						m_srt_subtitle_pages.insert(subtitle_pages_map_pair_t(end_ms, subtitle_page_t(start_ms, end_ms, SubText)));
+
+						subtitleData sub;
+						sub.start_ms = start_ms;
+						sub.duration_ms = end_ms - start_ms;
+						sub.end_ms = end_ms;
+						sub.text = (const char *)Text;
+
+						m_srt_subtitle_pages.insert(subtitle_pages_map_pair(sub.end_ms, sub));
 						free(Text);
 						Text = NULL;
 					}
@@ -664,10 +643,14 @@ void eServiceLibpl::ReadSrtSubtitle(const char *subfile, int delay, double conve
 			Text = NULL;
 		}
 	}
-	subtitleStream sub;
-	sub.language_code = "SRT";
-	sub.type = stTSRT;
-	m_subtitleStreams.push_back(sub);
+
+	if(!m_srt_subtitle_pages.empty())
+	{
+		subtitleStream sub;
+		sub.language_code = "SRT";
+		sub.type = stTSRT;
+		m_subtitleStreams.push_back(sub);
+	}
 }
 
 void eServiceLibpl::ReadSsaSubtitle(const char *subfile, int isASS, int delay, double convert_fps)
@@ -728,32 +711,41 @@ void eServiceLibpl::ReadSsaSubtitle(const char *subfile, int isASS, int delay, d
 
 			if(Text != NULL)
 			{
-				std::string SubText((const char*)Text);
+				subtitleData sub;
+				sub.start_ms = start_ms;
+				sub.duration_ms = end_ms - start_ms;
+				sub.end_ms = end_ms;
+				sub.text = (const char *)Text;
+
 				if (isASS)
 				{
-					m_ass_subtitle_pages.insert(subtitle_pages_map_pair_t(end_ms, subtitle_page_t(start_ms, end_ms, SubText)));
+					m_ass_subtitle_pages.insert(subtitle_pages_map_pair(sub.end_ms, sub));
 				}
 				else
 				{
-					m_ssa_subtitle_pages.insert(subtitle_pages_map_pair_t(end_ms, subtitle_page_t(start_ms, end_ms, SubText)));
+					m_ssa_subtitle_pages.insert(subtitle_pages_map_pair(sub.end_ms, sub));
 				}
 				free(Text);
 				Text = NULL;
 			}
 		} /* while */
 	}
-	subtitleStream sub;
-	if (isASS)
+
+	if(!m_ass_subtitle_pages.empty() || !m_ssa_subtitle_pages.empty())
 	{
-		sub.language_code = "ASS";
-		sub.type = stTASS;
+		subtitleStream sub;
+		if (isASS)
+		{
+			sub.language_code = "ASS";
+			sub.type = stTASS;
+		}
+		else
+		{
+			sub.language_code = "SSA";
+			sub.type = stTSSA;
+		}
+		m_subtitleStreams.push_back(sub);
 	}
-	else
-	{
-		sub.language_code = "SSA";
-		sub.type = stTSSA;
-	}
-	m_subtitleStreams.push_back(sub);
 }
 
 void eServiceLibpl::ReadTextSubtitles(const char *filename)
@@ -802,15 +794,15 @@ void eServiceLibpl::pullTextSubtitles(int type)
 
 	if (type == 9)
 	{
-		m_subtitle_pages = m_srt_subtitle_pages;
+		m_subtitle_pages = &m_srt_subtitle_pages;
 	}
 	else if (type == 8)
 	{
-		m_subtitle_pages = m_ass_subtitle_pages;
+		m_subtitle_pages = &m_ass_subtitle_pages;
 	}
 	else
 	{
-		m_subtitle_pages = m_ssa_subtitle_pages;
+		m_subtitle_pages = &m_ssa_subtitle_pages;
 	}
 
 	m_subtitle_sync_timer->start(1, true);
@@ -818,7 +810,8 @@ void eServiceLibpl::pullTextSubtitles(int type)
 
 void eServiceLibpl::pullSubtitle()
 {
-	Subtitle_Out_t* subOut = NULL;
+	if(m_state != stRunning || player->output.embedded_subtitle.empty())
+		return;
 
 	int delay = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_delay") / 90;
 	int subtitle_fps = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_fps");
@@ -826,52 +819,38 @@ void eServiceLibpl::pullSubtitle()
 	double convert_fps = 1.0;
 		if (subtitle_fps > 1 && m_framerate > 0)
 			convert_fps = subtitle_fps / (double)m_framerate;
-	if (player && player->output && player->output->subtitle)
-	{
-		player->output->subtitle->Command(player, OUTPUT_GET_SUBTITLE_DATA, &subOut);
-	}
 
-	if (subOut == NULL)
+	eSingleLocker lock(m_subtitle_lock);
+	subtitle_pages_map::iterator current;
+	for (current = player->output.embedded_subtitle.begin(); current != player->output.embedded_subtitle.end(); current++)
 	{
-		eDebug("[eServiceLibpl::%s] ERROR in OUTPUT_GET_SUBTITLE_DATA!", __func__);
+		subtitleData sub = current->second;
+		sub.start_ms = sub.start_ms * convert_fps + delay;
+		sub.end_ms = sub.start_ms + sub.duration_ms;
+		m_emb_subtitle_pages.insert(subtitle_pages_map_pair(sub.end_ms, sub));
 	}
-	else if (subOut->data == NULL)
-	{
-		eDebug("[eServiceLibpl::%s] No subtitle text!", __func__);
-	}
-	else
-	{
-		std::string line((const char*)subOut->data);
-		int64_t start_ms = subOut->pts * convert_fps + delay;
-		int64_t end_ms = start_ms + subOut->duration;
-
-		// eDebug("[eServiceLibpl::%s] start: %d, end: %d, Text: %s", __func__, start_ms, end_ms, (const char*)subOut->data);
-		m_subtitle_pages.insert(subtitle_pages_map_pair_t(end_ms, subtitle_page_t(start_ms, end_ms, line)));
-		m_subtitle_sync_timer->start(1, true);
-	}
-
-	if (player && player->output && player->output->subtitle)
-	{
-		player->output->subtitle->Command(player, OUTPUT_DEL_SUBTITLE_DATA, NULL);
-	}
+	player->output.embedded_subtitle.clear();
+	m_subtitle_sync_timer->start(1, true);
 }
 
 void eServiceLibpl::pushSubtitles()
 {
+	if (!m_subtitle_pages)
+		return;
+
 	pts_t running_pts = 0;
 	int32_t next_timer = 0, decoder_ms, start_ms, end_ms, diff_start_ms, diff_end_ms;
-	subtitle_pages_map_t::iterator current;
+	subtitle_pages_map::const_iterator current;
 
 	if (getPlayPosition(running_pts) < 0)
 	{
-		eDebug("[eServiceLibpl::%s] getPlayPosition(running_pts) < 0", __func__);
 		next_timer = 50;
 		goto exit;
 	}
 
 	decoder_ms = running_pts / 90;
 
-	for (current = m_subtitle_pages.lower_bound(decoder_ms); current != m_subtitle_pages.end(); current++)
+	for (current = m_subtitle_pages->lower_bound(decoder_ms); current != m_subtitle_pages->end(); current++)
 	{
 		start_ms = current->second.start_ms;
 		end_ms = current->second.end_ms;
@@ -929,34 +908,18 @@ RESULT eServiceLibpl::start()
 {
 	if (m_state != stIdle)
 	{
-		eDebug("[eServiceLibpl::%s] m_state != stIdle", __func__);
+		eDebug("[eServiceLibpl::%s] state is not idle", __func__);
 		return -1;
 	}
 
-	if (player && player->output && player->playback)
+	if (player && player->output.Open() && player->Play())
 	{
 		m_state = stRunning;
 
-		player->output->Command(player, OUTPUT_OPEN, NULL);
-		player->playback->Command(player, PLAYBACK_PLAY, NULL);
 		m_event(this, evStart);
 		m_event(this, evGstreamerPlayStarted);
 		updateEpgCacheNowNext();
 		eDebug("[eServiceLibpl::%s] start %s", __func__, m_ref.path.c_str());
-
-		Track_t * Track = NULL;
-		player->manager->video->Command(player, MANAGER_GET_TRACK, &Track);
-		if (Track != NULL)
-		{
-			m_width = Track->width;
-			m_height = Track->height;
-			m_framerate = Track->frame_rate;
-			eDebug("[eServiceLibpl::%s] width:%d height:%d framerate:%d", __func__, m_width, m_height, m_framerate);
-			m_event((iPlayableService*)this, evVideoSizeChanged);
-			m_event((iPlayableService*)this, evVideoFramerateChanged);
-		}
-		else
-			eDebug("[eServiceLibpl::%s] error in getting track info", __func__);
 
 		return 0;
 	}
@@ -969,36 +932,22 @@ RESULT eServiceLibpl::stop()
 {
 	if (m_state == stIdle)
 	{
-		eDebug("[eServiceLibpl::%s] m_state == stIdle", __func__);
+		eDebug("[eServiceLibpl::%s] state is idle", __func__);
 		return -1;
 	}
 
 	if (m_state == stStopped)
+	{
+		eDebug("[eServiceLibpl::%s] state is stoped", __func__);
 		return -1;
+	}
 
 	eDebug("[eServiceLibpl::%s] stop %s", __func__, m_ref.path.c_str());
 
-	if (player && player->playback && player->output)
-	{
-		player->playback->Command(player, PLAYBACK_STOP, NULL);
-		player->output->Command(player, OUTPUT_CLOSE, NULL);
-	}
-
-	if (player && player->output)
-	{
-		player->output->Command(player,OUTPUT_DEL, (void*)"audio");
-		player->output->Command(player,OUTPUT_DEL, (void*)"video");
-		player->output->Command(player,OUTPUT_DEL, (void*)"subtitle");
-	}
-
-	if (player && player->playback)
-		player->playback->Command(player,PLAYBACK_CLOSE, NULL);
-
-	if (player)
-		free(player);
-
-	if (player != NULL)
-		player = NULL;
+	player->RequestAbort();
+	player->Stop();
+	player->output.Close();
+	player->Close();
 
 	m_state = stStopped;
 	saveCuesheet();
@@ -1056,15 +1005,13 @@ RESULT eServiceLibpl::setSlowMotion(int ratio)
 	// konfetti: in libeplayer3 we changed this because I dont like application specific stuff in a library
 	int speed = getSpeed(ratio);
 
-	if (player && player->playback && (speed != -1))
+	if (m_state == stRunning && speed != -1 && ratio > 1)
 	{
-		int result = 0;
-
-		if (ratio > 1)
-			result = player->playback->Command(player, PLAYBACK_SLOWMOTION, (void*)&speed);
-
-		if (result != 0)
+		if (player->SlowMotion(speed))
+		{
+			eDebug("[eServiceLibpl::%s] ERROR!", __func__);
 			return -1;
+		}
 	}
 
 	return 0;
@@ -1072,25 +1019,21 @@ RESULT eServiceLibpl::setSlowMotion(int ratio)
 
 RESULT eServiceLibpl::setFastForward(int ratio)
 {
-	// konfetti: in libeplayer3 we changed this because I dont like application specific stuff in a library
 	int speed = getSpeed(ratio);
 
-	if (player && player->playback && (speed != -1))
+	int res = 0;
+
+	if (m_state == stRunning && speed != -1)
 	{
-		int result = 0;
-
 		if (ratio > 1)
-			result = player->playback->Command(player, PLAYBACK_FASTFORWARD, (void*)&speed);
+			res = player->FastForward(speed);
 		else if (ratio < -1)
-		{
-			//speed = speed * -1;
-			result = player->playback->Command(player, PLAYBACK_FASTBACKWARD, (void*)&speed);
-		}
-		else
-			result = player->playback->Command(player, PLAYBACK_CONTINUE, NULL);
+			res = player->FastBackward(speed);
+		else /* speed == 1 */
+			res = player->Continue();
 
-		if (result != 0)
-			return -1;
+		if (res)
+			eDebug("[eServiceLibpl::%s] ERROR!", __func__);
 	}
 
 	return 0;
@@ -1099,24 +1042,20 @@ RESULT eServiceLibpl::setFastForward(int ratio)
 		// iPausableService
 RESULT eServiceLibpl::pause()
 {
-	if (player && player->playback)
-	{
-		player->playback->Command(player, PLAYBACK_PAUSE, NULL);
-		m_paused = true;
-	}
+	if (m_state != stRunning)
+		return 0;
 
-	return 0;
+	return player->Pause();
+	m_paused = true;
 }
 
 RESULT eServiceLibpl::unpause()
 {
-	if (player && player->playback)
-	{
-		player->playback->Command(player, PLAYBACK_CONTINUE, NULL);
-		m_paused = false;
-	}
+	if (m_state != stRunning)
+		return 0;
 
-	return 0;
+	return player->Continue();
+	m_paused = false;
 }
 
 	/* iSeekableService */
@@ -1128,32 +1067,38 @@ RESULT eServiceLibpl::seek(ePtr<iSeekableService> &ptr)
 
 RESULT eServiceLibpl::getLength(pts_t &pts)
 {
-	double length = 0;
+	if (m_state != stRunning)
+		return 0;
 
-	if (player && player->playback)
-		player->playback->Command(player, PLAYBACK_LENGTH, &length);
+	int64_t length = 0;
+	player->GetDuration(length);
 
-	if (length <= 0)
-		return -1;
-
-	pts = length * 90000;
+	if (length > 0)
+	{
+		pts = length * 90000 / AV_TIME_BASE;
+	}
+	else
+	{
+		length = 0;
+		player->GetPts(length);
+		if (length > 0)		
+			pts = length + AV_TIME_BASE / 90000;
+		else
+			return -1;
+	}
 	return 0;
 }
 
 RESULT eServiceLibpl::seekTo(pts_t to)
 {
-	float pos = (to / 90000.0) - 10;
+	if (m_state != stRunning)
+		return 0;
 
-	if (player && player->playback)
-		player->playback->Command(player, PLAYBACK_SEEK, (void*)&pos);
+	player->Seek((int64_t)to * (AV_TIME_BASE / 90000), false);
+	
+	if(m_currentSubtitleStream >= 0 && m_emb_subtitle_pages.size())
+		m_emb_subtitle_pages.clear();
 
-	if (m_currentSubtitleStream >= 0)
-	{
-		if (int(m_subtitleStreams[m_currentSubtitleStream].type) < 7)
-			m_subtitle_pages.clear();
-		else
-			m_subtitle_sync_timer->start(1, true);
-	}
 	return 0;
 }
 
@@ -1165,21 +1110,20 @@ RESULT eServiceLibpl::seekRelative(int direction, pts_t to)
 
 RESULT eServiceLibpl::getPlayPosition(pts_t &pts)
 {
-	if (player && player->playback && !player->playback->isPlaying)
+	pts = 0;
+
+	if(m_state != stRunning)
+		return -1;
+
+	if (!player->isPlaying)
 	{
 		eDebug("[eServiceLibpl::%s] !!!!EOF!!!!", __func__);
-
-		if(m_state == stRunning)
-			m_event((iPlayableService*)this, evEOF);
-
-		pts = 0;
+		m_event((iPlayableService*)this, evEOF);
 		return -1;
 	}
 
-	unsigned long long int vpts = 0;
-
-	if (player && player->playback)
-		player->playback->Command(player, PLAYBACK_PTS, &vpts);
+	int64_t vpts = 0;
+	player->GetPts(vpts);
 
 	if (vpts <= 0)
 		return -1;
@@ -1242,25 +1186,7 @@ int eServiceLibpl::getInfo(int w)
 	case sVideoWidth: return m_width;
 	case sFrameRate: return m_framerate;
 	case sProgressive: return m_progressive;
-	case sAspect:
-	{
-		if (m_height > 0 && m_width > 0)
-		{
-			float aspect = m_width / float(m_height);
-			// according to wikipedia, widescreen is when width to height is greater then 1.37:1
-			if (aspect > 1.37)
-			{
-				// WIDESCREEN values from ServiceInfo.py: 3, 4, 7, 8, 0xB, 0xC, 0xF, 0x10
-				return 3;
-			}
-			else
-			{
-				// 4:3 values from ServiceInfo.py: 1, 2, 5, 6, 9, 0xA, 0xD, 0xE
-				return 1;
-			}
-		}
-		return -1;
-	}
+	case sAspect: return m_aspect;
 	case sTagTitle:
 	case sTagArtist:
 	case sTagAlbum:
@@ -1330,51 +1256,52 @@ std::string eServiceLibpl::getInfoString(int w)
 		}
 	}
 
-	char * tag = NULL;
+	if(m_state != stRunning)
+		return "";
+
+	char tag[16] = {""};
 	switch (w)
 	{
 	case sTagTitle:
-		tag = strdup("Title");
+		strcat(tag, "title");
 		break;
 	case sTagArtist:
-		tag = strdup("Artist");
+		strcat(tag, "artist");
 		break;
 	case sTagAlbum:
-		tag = strdup("Album");
+		strcat(tag, "album");
 		break;
 	case sTagComment:
-		tag = strdup("Comment");
+		strcat(tag, "comment");
 		break;
 	case sTagTrackNumber:
-		tag = strdup("Track");
+		strcat(tag, "track");
 		break;
 	case sTagGenre:
-		tag = strdup("Genre");
+		strcat(tag, "genre");
 		break;
 	case sTagDate:
-		tag = strdup("Year");
-		break;
-	case sTagVideoCodec:
-		tag = strdup("VideoType");
-		break;
-	case sTagAudioCodec:
-		tag = strdup("AudioType");
+		strcat(tag, "date");
 		break;
 	default:
 		return "";
 	}
 
-	if (player && player->playback)
+	if (m_metaCount == 0)
 	{
-		if (player->playback->Command(player, PLAYBACK_INFO, &tag) == 0)
+		player->input.GetMetadata(m_metaKeys, m_metaValues);
+		m_metaCount = m_metaKeys.size();
+	}
+
+	if (m_metaCount > 0) 
+	{
+		for (size_t i = 0; i < m_metaCount; i++)
 		{
-			std::string res (tag);
-			free(tag);
-			return res;
+			if (strcmp(tag, m_metaKeys[i].c_str()) == 0)
+				return m_metaValues[i].c_str();
 		}
 	}
 
-	free(tag);
 	return "";
 }
 
@@ -1426,11 +1353,11 @@ RESULT eServiceLibpl::selectTrack(unsigned int i)
 
 int eServiceLibpl::selectAudioStream(int i)
 {
-	if (i != m_currentAudioStream)
+	if (m_state == stRunning && i != m_currentAudioStream)
 	{
-		if (player && player->playback)
-			player->playback->Command(player, PLAYBACK_SWITCH_AUDIO, (void*)&i);
-		m_currentAudioStream=i;
+		player->SwitchAudio(m_audioStreams[i].pid);
+		seekRelative(-1, 5000);
+		m_currentAudioStream = i;
 		return 0;
 	}
 
@@ -1476,9 +1403,8 @@ eAutoInitPtr<eServiceFactoryLibpl> init_eServiceFactoryLibpl(eAutoInitNumbers::s
 
 RESULT eServiceLibpl::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &track)
 {
-	if (m_currentSubtitleStream != track.pid)
+	if (m_state == stRunning && m_currentSubtitleStream != track.pid)
 	{
-		m_subtitle_pages.clear();
 		m_currentSubtitleStream = track.pid;
 		m_cachedSubtitleStream = m_currentSubtitleStream;
 		m_subtitle_widget = user;
@@ -1489,8 +1415,13 @@ RESULT eServiceLibpl::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack 
 		{
 			pullTextSubtitles(track.page_number);
 		}
-		else if (player && player->playback)
-				player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&track.pid);
+		else
+		{
+			m_emb_subtitle_pages.clear();
+			m_subtitle_pages = &m_emb_subtitle_pages;
+			player->SwitchSubtitle(track.magazine_number);
+			seekRelative(-1, 5000);
+		}
 	}
 
 	return 0;
@@ -1499,19 +1430,20 @@ RESULT eServiceLibpl::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack 
 RESULT eServiceLibpl::disableSubtitles()
 {
 	eDebug("[eServiceLibpl::%s]", __func__);
+
+	if(m_state != stRunning)
+		return 0;
+
+	player->SwitchSubtitle(-1);
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = m_currentSubtitleStream;
-	m_subtitle_pages.clear();
+	m_subtitle_pages = NULL;
+	m_emb_subtitle_pages.clear();
 
-	if (m_subtitle_widget) m_subtitle_widget->destroy();
+	if (m_subtitle_widget)
+		m_subtitle_widget->destroy();
 
 	m_subtitle_widget = 0;
-
-	int pid = -1;
-
-	if (player && player->playback)
-		player->playback->Command(player, PLAYBACK_SWITCH_SUBTITLE, (void*)&pid);
-
 	return 0;
 }
 
@@ -1530,7 +1462,7 @@ RESULT eServiceLibpl::getCachedSubtitle(struct SubtitleTrack &track)
 		track.type = 2;
 		track.pid = m_cachedSubtitleStream;
 		track.page_number = int(m_subtitleStreams[m_cachedSubtitleStream].type);
-		track.magazine_number = 0;
+		track.magazine_number = int(m_subtitleStreams[m_cachedSubtitleStream].id);
 		return 0;
 	}
 
@@ -1539,7 +1471,6 @@ RESULT eServiceLibpl::getCachedSubtitle(struct SubtitleTrack &track)
 
 RESULT eServiceLibpl::getSubtitleList(std::vector<struct SubtitleTrack> &subtitlelist)
 {
-	// 	eDebug("[eServiceLibpl::%s]", __func__);
 	int stream_idx = 0;
 
 	for (std::vector<subtitleStream>::iterator IterSubtitleStream(m_subtitleStreams.begin()); IterSubtitleStream != m_subtitleStreams.end(); ++IterSubtitleStream)
@@ -1547,20 +1478,20 @@ RESULT eServiceLibpl::getSubtitleList(std::vector<struct SubtitleTrack> &subtitl
 		subtype_t type = IterSubtitleStream->type;
 		switch(type)
 		{
-		case stUnknown:
-		case stVOB:
-		case stPGS:
-			break;
-		default:
-		{
-			struct SubtitleTrack track;
-			track.type = 2;
-			track.pid = stream_idx;
-			track.page_number = int(type);
-			track.magazine_number = 0;
-			track.language_code = IterSubtitleStream->language_code;
-			subtitlelist.push_back(track);
-		}
+			case stUnknown:
+			case stVOB:
+			case stPGS:
+				break;
+			default:
+			{
+				struct SubtitleTrack track;
+				track.type = 2;
+				track.pid = stream_idx;
+				track.page_number = int(type);
+				track.magazine_number = IterSubtitleStream->id;
+				track.language_code = IterSubtitleStream->language_code;
+				subtitlelist.push_back(track);
+			}
 		}
 		stream_idx++;
 	}
@@ -1666,77 +1597,34 @@ void eServiceLibpl::setPCMDelay(int delay)
 
 void eServiceLibpl::videoSizeChanged()
 {
-	if (player && player->manager && player->manager->video)
-	{
-		Track_t * Track = NULL;
-		player->manager->video->Command(player, MANAGER_GET_TRACK, &Track);
-		if (Track != NULL)
-		{
-			m_width = Track->width;
-			m_height = Track->height;
-			eDebug("[eServiceLibpl::%s] width:%d height:%d", __func__, m_width, m_height);
-			m_event((iPlayableService*)this, evVideoSizeChanged);
-		}
-		else
-			eDebug("[eServiceLibpl::%s] error in getting track info", __func__);
-	}
+	if (m_state != stRunning)
+		return;
+
+	m_width = player->output.videoInfo.width;
+	m_height = player->output.videoInfo.height;
+	m_aspect = player->output.videoInfo.aspect;
+	eDebug("[eServiceLibpl::%s] width:%d height:%d aspect:%d", __func__, m_width, m_height, m_aspect);
+	m_event((iPlayableService*)this, evVideoSizeChanged);
 }
 
 void eServiceLibpl::videoFramerateChanged()
 {
-	if (player && player->manager && player->manager->video)
-	{
-		Track_t * Track = NULL;
-		player->manager->video->Command(player, MANAGER_GET_TRACK, &Track);
-		if (Track != NULL)
-		{
-			m_framerate = Track->frame_rate;
-			eDebug("[eServiceLibpl::%s] framerate:%d", __func__, m_framerate);
-			m_event((iPlayableService*)this, evVideoFramerateChanged);
-		}
-		else
-			eDebug("[eServiceLibpl::%s] error in getting track info", __func__);
-	}
+	if (m_state != stRunning)
+		return;
+
+	m_framerate = player->output.videoInfo.frame_rate;
+	eDebug("[eServiceLibpl::%s] framerate:%d", __func__, m_framerate);
+	m_event((iPlayableService*)this, evVideoFramerateChanged);
 }
 
 void eServiceLibpl::videoProgressiveChanged()
 {
-	if (player && player->manager && player->manager->video)
-	{
-		Track_t * Track = NULL;
-		player->manager->video->Command(player, MANAGER_GET_TRACK, &Track);
-		if (Track != NULL)
-		{
-			m_progressive = Track->frame_rate;
-			eDebug("[eServiceLibpl::%s] progressive:%d", __func__, m_framerate);
-			m_event((iPlayableService*)this, evVideoProgressiveChanged);
-		}
-		else
-			eDebug("[eServiceLibpl::%s] error in getting track info", __func__);
-	}
-}
+	if (m_state != stRunning)
+		return;
 
-void eServiceLibpl::gotThreadMessage(const int &msg)
-{
-	switch(msg)
-	{
-	case 0:
-		pullSubtitle();
-		break;
-	case 1: // thread stopped
-		eDebug("[eServiceLibpl::%s] issuing eof...", __func__);
-		m_event(this, evEOF);
-		break;
-	case 2:
-		videoSizeChanged();
-		break;
-	case 3:
-		videoFramerateChanged();
-		break;
-	case 4:
-		videoProgressiveChanged();
-		break;
-	}
+	m_progressive = player->output.videoInfo.progressive;
+	eDebug("[eServiceLibpl::%s] progressive:%d", __func__, m_framerate);
+	m_event((iPlayableService*)this, evVideoProgressiveChanged);
 }
 
 /* cuesheet CVR */
@@ -1820,6 +1708,29 @@ void eServiceLibpl::saveCuesheet()
 		fclose(f);
 	}
 	m_cuesheet_changed = 0;
+}
+
+void eServiceLibpl::gotThreadMessage(const int &msg)
+{
+	switch(msg)
+	{
+	case 0:
+		pullSubtitle();
+		break;
+	case 1: // thread stopped
+		eDebug("[eServiceLibpl::%s] issuing eof...", __func__);
+		m_event(this, evEOF);
+		break;
+	case 2:
+		videoSizeChanged();
+		break;
+	case 3:
+		videoFramerateChanged();
+		break;
+	case 4:
+		videoProgressiveChanged();
+		break;
+	}
 }
 
 void libeplayerMessage(int message) // call from libeplayer

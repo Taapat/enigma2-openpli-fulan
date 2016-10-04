@@ -8,22 +8,12 @@
 #include <lib/dvb/teletext.h>
 #include <lib/gui/esubtitle.h>
 
-#include "m3u8.h"
+#include <libeplayer3/player.h>
 
-extern "C"
-{
-#ifndef __STDC_CONSTANT_MACROS
-#  define __STDC_CONSTANT_MACROS
-#endif
-#include <libeplayer3/include/common.h>
-}
+#include "m3u8.h"
 
 #define gint int
 #define gint64 int64_t
-extern OutputHandler_t		OutputHandler;
-extern PlaybackHandler_t	PlaybackHandler;
-extern ContainerHandler_t	ContainerHandler;
-extern ManagerHandler_t	ManagerHandler;
 
 class eStaticServiceLibplInfo;
 
@@ -183,6 +173,7 @@ public:
 	struct audioStream
 	{
 		audiotype_t type;
+		int pid;
 		std::string language_code; /* iso-639, if available. */
 		std::string codec; /* clear text codec description */
 		audioStream()
@@ -217,7 +208,7 @@ public:
 		gint avgOutRate;
 		gint64 bufferingLeft;
 		bufferInfo()
-			:bufferPercent(0), avgInRate(0), avgOutRate(0), bufferingLeft(-1)
+			:bufferPercent(100), avgInRate(0), avgOutRate(0), bufferingLeft(-1)
 		{
 		}
 	};
@@ -275,27 +266,21 @@ private:
 	};
 
 	int m_state;
-	Context_t * player;
+	Player *player;
 	eFixedMessagePump<int> m_pump;
 	void gotThreadMessage(const int &);
 
-	struct subtitle_page_t
-	{
-		int64_t start_ms;
-		int64_t end_ms;
-		std::string text;
-		subtitle_page_t(int64_t start_ms_in, int64_t end_ms_in, const std::string& text_in)
-			: start_ms(start_ms_in), end_ms(end_ms_in), text(text_in)
-		{
-		}
-	};
+	std::vector<std::string> m_metaKeys;
+	std::vector<std::string> m_metaValues;
+	size_t m_metaCount;
 
-	typedef std::map<int64_t, subtitle_page_t> subtitle_pages_map_t;
-	typedef std::pair<int64_t, subtitle_page_t> subtitle_pages_map_pair_t;
-	subtitle_pages_map_t m_subtitle_pages;
-	subtitle_pages_map_t m_srt_subtitle_pages;
-	subtitle_pages_map_t m_ass_subtitle_pages;
-	subtitle_pages_map_t m_ssa_subtitle_pages;
+	typedef std::map<uint32_t, subtitleData> subtitle_pages_map;
+	typedef std::pair<uint32_t, subtitleData> subtitle_pages_map_pair;
+	subtitle_pages_map const *m_subtitle_pages;
+	subtitle_pages_map m_emb_subtitle_pages;
+	subtitle_pages_map m_srt_subtitle_pages;
+	subtitle_pages_map m_ass_subtitle_pages;
+	subtitle_pages_map m_ssa_subtitle_pages;
 	ePtr<eTimer> m_subtitle_sync_timer;
 
 	void ReadSrtSubtitle(const char *subfile, int delay, double convert_fps);
@@ -308,7 +293,8 @@ private:
 	void videoFramerateChanged();
 	void videoProgressiveChanged();
 	sourceStream m_sourceinfo;
-	gint m_width, m_height, m_framerate, m_progressive;
+	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
+	eSingleLock m_subtitle_lock;
 };
 
 #endif
