@@ -1056,7 +1056,7 @@ RESULT eServiceLibpl::seekTo(pts_t to)
 	if (m_state != stRunning)
 		return 0;
 
-	player->Seek((int64_t)to * (AV_TIME_BASE / 90000), false);
+	player->Seek((int64_t)to * AV_TIME_BASE / 90000, true);
 
 	if(m_currentSubtitleStream >= 0 && m_emb_subtitle_pages.size())
 		m_emb_subtitle_pages.clear();
@@ -1066,7 +1066,14 @@ RESULT eServiceLibpl::seekTo(pts_t to)
 
 RESULT eServiceLibpl::seekRelative(int direction, pts_t to)
 {
-	seekTo(direction * to);
+	if (m_state != stRunning)
+		return 0;
+
+	player->Seek((int64_t)to * direction * AV_TIME_BASE / 90000, false);
+
+	if(m_currentSubtitleStream >= 0 && m_emb_subtitle_pages.size())
+		m_emb_subtitle_pages.clear();
+
 	return 0;
 }
 
