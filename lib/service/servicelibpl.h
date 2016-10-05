@@ -80,10 +80,6 @@ public:
 	int getBufferSize() const;
 };
 
-typedef enum { atUnknown, atMPEG, atMP3, atAC3, atDTS, atAAC, atPCM, atOGG, atFLAC, atWMA } audiotype_t;
-typedef enum { stUnknown, stPlainText, stSSA, stASS, stSRT, stVOB, stPGS, stTSSA, stTASS, stTSRT } subtype_t;
-typedef enum { ctNone, ctMPEGTS, ctMPEGPS, ctMKV, ctAVI, ctMP4, ctVCD, ctCDA, ctASF, ctOGG } containertype_t;
-
 class eServiceLibpl: public iPlayableService, public iPauseableService,
 	public iServiceInformation, public iSeekableService, public iAudioTrackSelection, public iAudioChannelSelection,
 	public iSubtitleOutput, public iStreamedService, public iAudioDelay, public Object, public iCueSheet
@@ -172,32 +168,19 @@ public:
 
 	struct audioStream
 	{
-		audiotype_t type;
+		int type;
 		int pid;
 		std::string language_code; /* iso-639, if available. */
-		std::string codec; /* clear text codec description */
 		audioStream()
-			:type(atUnknown)
 		{
 		}
 	};
 	struct subtitleStream
 	{
-		subtype_t type;
+		int type;
 		std::string language_code; /* iso-639, if available. */
 		int id;
 		subtitleStream()
-		{
-		}
-	};
-	struct sourceStream
-	{
-		audiotype_t audiotype;
-		containertype_t containertype;
-		bool is_video;
-		bool is_streaming;
-		sourceStream()
-			:audiotype(atUnknown), containertype(ctNone), is_video(false), is_streaming(false)
 		{
 		}
 	};
@@ -255,6 +238,7 @@ private:
 	eServiceReference m_ref;
 	int m_buffer_size;
 	bool m_paused;
+	bool is_streaming;
 	// cuesheet load check
 	bool m_cuesheet_loaded;
 	bufferInfo m_bufferInfo;
@@ -292,7 +276,6 @@ private:
 	void videoSizeChanged();
 	void videoFramerateChanged();
 	void videoProgressiveChanged();
-	sourceStream m_sourceinfo;
 	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
 	eSingleLock m_subtitle_lock;
 };

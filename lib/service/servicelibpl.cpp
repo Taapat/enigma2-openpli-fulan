@@ -330,6 +330,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	m_subtitle_widget = 0;
 	m_buffer_size = 5 * 1024 * 1024;
 	m_paused = false;
+	is_streaming = false;
 	m_cuesheet_loaded = false; /* cuesheet CVR */
 	m_subtitle_sync_timer = eTimer::create(eApp);
 	CONNECT(m_subtitle_sync_timer->timeout, eServiceLibpl::pushSubtitles);
@@ -369,12 +370,12 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	|| (!strncmp("tls://", m_ref.path.c_str(), 6))
 	|| (!strncmp("udp://", m_ref.path.c_str(), 6))
 	|| (!strncmp("udplite://", m_ref.path.c_str(), 10)))
-		m_sourceinfo.is_streaming = true;
+		is_streaming = true;
 	else if ((!strncmp("file://", m_ref.path.c_str(), 7))
 	|| (!strncmp("bluray://", m_ref.path.c_str(), 9))
 	|| (!strncmp("hls+file://", m_ref.path.c_str(), 11))
 	|| (!strncmp("myts://", m_ref.path.c_str(), 7)))
-		m_sourceinfo.is_streaming = false;
+		is_streaming = false;
 	else
 		strcat(file, "file://");
 
@@ -408,7 +409,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 		strcat(file, m_ref.path.c_str());
 
 	//try to open file
-	if (player->Open(file, m_sourceinfo.is_streaming, ""))
+	if (player->Open(file, is_streaming, ""))
 	{
 		eDebug("[eServiceLibpl::%s] Open file!", __func__);
 
@@ -422,36 +423,8 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 				audioStream audio;
 				audio.language_code = it->title;
 				audio.pid = it->pid;
-				switch(it->type)
-				{
-				case 1:
-					audio.type = atMPEG;
-					break;
-				case 2:
-					audio.type = atMP3;
-					break;
-				case 3:
-					audio.type = atAC3;
-					break;
-				case 4:
-					audio.type = atDTS;
-					break;
-				case 5:
-					audio.type = atAAC;
-					break;
-				case 0:
-				case 6:
-					audio.type = atPCM;
-					break;
-				case 8:
-					audio.type = atFLAC;
-					break;
-				case 9:
-					audio.type = atWMA;
-					break;
-				default:
-					audio.type = atUnknown;
-				}
+				audio.type = it->type;
+
 				m_audioStreams.push_back(audio);
 			}
 		}
@@ -466,23 +439,8 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 				subtitleStream subtitle;
 				subtitle.language_code = it->title;
 				subtitle.id = it->pid;
-				switch(it->type)
-				{
-				case 1:
-					subtitle.type = stPlainText;
-					break;
-				case 2:
-					subtitle.type = stSSA;
-					break;
-				case 3:
-					subtitle.type = stASS;
-					break;
-				case 4:
-					subtitle.type = stSRT;
-					break;
-				default:
-					subtitle.type = stUnknown;
-				}
+				subtitle.type = it->type;
+
 				m_subtitleStreams.push_back(subtitle);
 			}
 		}
@@ -652,7 +610,7 @@ void eServiceLibpl::ReadSrtSubtitle(const char *subfile, int delay, double conve
 	{
 		subtitleStream sub;
 		sub.language_code = "SRT";
-		sub.type = stTSRT;
+		sub.type = 9;
 		m_subtitleStreams.push_back(sub);
 	}
 }
@@ -741,12 +699,12 @@ void eServiceLibpl::ReadSsaSubtitle(const char *subfile, int isASS, int delay, d
 		if (isASS)
 		{
 			sub.language_code = "ASS";
-			sub.type = stTASS;
+			sub.type = 8;
 		}
 		else
 		{
 			sub.language_code = "SSA";
-			sub.type = stTSSA;
+			sub.type = 7;
 		}
 		m_subtitleStreams.push_back(sub);
 	}
@@ -1242,7 +1200,7 @@ int eServiceLibpl::getInfo(int w)
 
 std::string eServiceLibpl::getInfoString(int w)
 {
-	if ( m_sourceinfo.is_streaming )
+	if (is_streaming)
 	{
 		switch (w)
 		{
@@ -1383,20 +1341,38 @@ RESULT eServiceLibpl::getTrackInfo(struct iAudioTrackInfo &info, unsigned int i)
 {
  	if (i >= m_audioStreams.size())
 		return -2;
-	if (m_audioStreams[i].type == atMPEG)
-		info.m_description = "MPEG";
-	else if (m_audioStreams[i].type == atMP3)
-		info.m_description = "MP3";
-	else if (m_audioStreams[i].type == atAC3)
-		info.m_description = "AC3";
-	else if (m_audioStreams[i].type == atAAC)
-		info.m_description = "AAC";
-	else if (m_audioStreams[i].type == atDTS)
-		info.m_description = "DTS";
-	else if (m_audioStreams[i].type == atPCM)
-		info.m_description = "PCM";
-	else if (m_audioStreams[i].type == atOGG)
-		info.m_description = "OGG";
+
+	switch(m_audioStreams[i].type)
+	{
+		case 1:
+			info.m_description = "MPEG";
+			break;
+		case 2:
+			info.m_description = "MP3";
+			break;
+		case 3:
+			info.m_description = "AC3";
+			break;
+		case 4:
+			info.m_description = "DTS";
+			break;
+		case 5:
+			info.m_description = "AAC";
+			break;
+		case 0:
+		case 6:
+			info.m_description = "PCM";
+			break;
+		case 8:
+			info.m_description = "FLAC";
+			break;
+		case 9:
+			info.m_description = "WMA";
+			break;
+		default:
+			break;
+	}
+
 	if (info.m_language.empty())
 		info.m_language = m_audioStreams[i].language_code;
 
@@ -1479,24 +1455,14 @@ RESULT eServiceLibpl::getSubtitleList(std::vector<struct SubtitleTrack> &subtitl
 
 	for (std::vector<subtitleStream>::iterator IterSubtitleStream(m_subtitleStreams.begin()); IterSubtitleStream != m_subtitleStreams.end(); ++IterSubtitleStream)
 	{
-		subtype_t type = IterSubtitleStream->type;
-		switch(type)
-		{
-			case stUnknown:
-			case stVOB:
-			case stPGS:
-				break;
-			default:
-			{
-				struct SubtitleTrack track;
-				track.type = 2;
-				track.pid = stream_idx;
-				track.page_number = int(type);
-				track.magazine_number = IterSubtitleStream->id;
-				track.language_code = IterSubtitleStream->language_code;
-				subtitlelist.push_back(track);
-			}
-		}
+		struct SubtitleTrack track;
+		track.type = 2;
+		track.pid = stream_idx;
+		track.page_number = IterSubtitleStream->type;
+		track.magazine_number = IterSubtitleStream->id;
+		track.language_code = IterSubtitleStream->language_code;
+		subtitlelist.push_back(track);
+
 		stream_idx++;
 	}
 
