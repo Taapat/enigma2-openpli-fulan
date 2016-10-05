@@ -241,6 +241,7 @@ private:
 	bool is_streaming;
 	// cuesheet load check
 	bool m_cuesheet_loaded;
+	bool m_use_chapter_entries;
 	bufferInfo m_bufferInfo;
 	eServiceLibpl(eServiceReference ref);
 	Signal2<void, iPlayableService*, int> m_event;
@@ -276,6 +277,7 @@ private:
 	void videoSizeChanged();
 	void videoFramerateChanged();
 	void videoProgressiveChanged();
+	void getChapters();
 	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
 	eSingleLock m_subtitle_lock;
 };

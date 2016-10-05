@@ -332,6 +332,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	m_paused = false;
 	is_streaming = false;
 	m_cuesheet_loaded = false; /* cuesheet CVR */
+	m_use_chapter_entries = false; /* chapter support CVR */
 	m_subtitle_sync_timer = eTimer::create(eApp);
 	CONNECT(m_subtitle_sync_timer->timeout, eServiceLibpl::pushSubtitles);
 	inst_m_pump = &m_pump;
@@ -1604,6 +1605,39 @@ void eServiceLibpl::videoProgressiveChanged()
 	m_event((iPlayableService*)this, evVideoProgressiveChanged);
 }
 
+void eServiceLibpl::getChapters()
+{
+	eDebug("[eServiceLibpl::%s]", __func__);
+
+	if (m_state != stRunning)
+		return;
+
+	std::vector<int> positions;
+	player->GetChapters(positions);
+
+	if (!positions.empty())
+	{
+		m_use_chapter_entries = true;
+		if (m_cuesheet_loaded)
+			m_cue_entries.clear();
+
+		for (unsigned int i = 0; i < positions.size(); i++)
+		{
+			/* first chapter is movie start no cut needed */
+			if (i > 0)
+			{
+				gint type = 2;
+				gint64 pts = positions[i];
+				if (pts > 0)
+					m_cue_entries.insert(cueEntry(pts, type));
+			}
+		}
+
+		m_cuesheet_changed = 1;
+		m_event((iPlayableService*)this, evCuesheetChanged);
+	}
+}
+
 /* cuesheet CVR */
 void eServiceLibpl::loadCuesheet()
 {
@@ -1653,8 +1687,8 @@ void eServiceLibpl::saveCuesheet()
 {
 	std::string filename = m_ref.path;
 
-	/* save cuesheet only when main file is accessible. */
-	if (::access(filename.c_str(), R_OK) < 0)
+	/* save cuesheet only when main file is accessible and no libeplayer chapters avbl*/
+	if ((::access(filename.c_str(), R_OK) < 0) || m_use_chapter_entries)
 		return;
 
 	filename.append(".cuts");
@@ -1706,6 +1740,9 @@ void eServiceLibpl::gotThreadMessage(const int &msg)
 		break;
 	case 4:
 		videoProgressiveChanged();
+		break;
+	case 5:
+		getChapters();
 		break;
 	}
 }
