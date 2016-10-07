@@ -879,6 +879,37 @@ RESULT eServiceLibpl::start()
 	{
 		m_state = stRunning;
 
+		bool autoaudio = false;
+		std::string configvalue;
+		std::vector<std::string> autoaudio_languages;
+		configvalue = eConfigManager::getConfigValue("config.autolanguage.audio_autoselect1");
+		if (configvalue != "" && configvalue != "None")
+			autoaudio_languages.push_back(configvalue);
+		configvalue = eConfigManager::getConfigValue("config.autolanguage.audio_autoselect2");
+		if (configvalue != "" && configvalue != "None")
+			autoaudio_languages.push_back(configvalue);
+		configvalue = eConfigManager::getConfigValue("config.autolanguage.audio_autoselect3");
+		if (configvalue != "" && configvalue != "None")
+			autoaudio_languages.push_back(configvalue);
+		configvalue = eConfigManager::getConfigValue("config.autolanguage.audio_autoselect4");
+		if (configvalue != "" && configvalue != "None")
+			autoaudio_languages.push_back(configvalue);
+		for (int i = 0; i < m_audioStreams.size() && !autoaudio; i++)
+		{
+			if (!m_audioStreams[i].language_code.empty())
+			{
+				for (std::vector<std::string>::iterator it = autoaudio_languages.begin(); it != autoaudio_languages.end(); it++)
+				{
+					if ((*it).find(m_audioStreams[i].language_code) != std::string::npos)
+					{
+						autoaudio = true;
+						selectAudioStream(i);
+						break;
+					}
+				}
+			}
+		}
+
 		m_event(this, evStart);
 		m_event(this, evGstreamerPlayStarted);
 		updateEpgCacheNowNext();
@@ -1447,10 +1478,42 @@ RESULT eServiceLibpl::getCachedSubtitle(struct SubtitleTrack &track)
 	if (m_cachedSubtitleStream == 100 && m_subtitleStreams_size)
 	{
 		m_cachedSubtitleStream = m_subtitleStreams_size - 1;
+		if (m_subtitleStreams[m_cachedSubtitleStream].type < 7)
+		{
+			std::string configvalue;
+			std::vector<std::string> autosub_languages;
+			configvalue = eConfigManager::getConfigValue("config.autolanguage.subtitle_autoselect1");
+			if (configvalue != "" && configvalue != "None")
+				autosub_languages.push_back(configvalue);
+			configvalue = eConfigManager::getConfigValue("config.autolanguage.subtitle_autoselect2");
+			if (configvalue != "" && configvalue != "None")
+				autosub_languages.push_back(configvalue);
+			configvalue = eConfigManager::getConfigValue("config.autolanguage.subtitle_autoselect3");
+			if (configvalue != "" && configvalue != "None")
+				autosub_languages.push_back(configvalue);
+			configvalue = eConfigManager::getConfigValue("config.autolanguage.subtitle_autoselect4");
+			if (configvalue != "" && configvalue != "None")
+				autosub_languages.push_back(configvalue);
+			for (int i = 0; i < m_subtitleStreams_size && m_cachedSubtitleStream == m_subtitleStreams_size - 1; i++)
+			{
+				if (!m_subtitleStreams[i].language_code.empty())
+				{
+					for (std::vector<std::string>::iterator it2 = autosub_languages.begin(); it2 != autosub_languages.end(); it2++)
+					{
+						if ((*it2).find(m_subtitleStreams[i].language_code) != std::string::npos)
+						{
+							m_cachedSubtitleStream = i;
+							break;
+						}
+					}
+				}
+			}
+		}
+
 		track.type = 2;
 		track.pid = m_cachedSubtitleStream;
-		track.page_number = int(m_subtitleStreams[m_cachedSubtitleStream].type);
-		track.magazine_number = int(m_subtitleStreams[m_cachedSubtitleStream].id);
+		track.page_number = m_subtitleStreams[m_cachedSubtitleStream].type;
+		track.magazine_number = m_subtitleStreams[m_cachedSubtitleStream].id;
 		return 0;
 	}
 
