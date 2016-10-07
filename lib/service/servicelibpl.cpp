@@ -879,7 +879,8 @@ RESULT eServiceLibpl::start()
 	{
 		m_state = stRunning;
 
-		bool autoaudio = false;
+		int autoaudio = 0;
+		int autoaudio_level = 5;
 		std::string configvalue;
 		std::vector<std::string> autoaudio_languages;
 		configvalue = eConfigManager::getConfigValue("config.autolanguage.audio_autoselect1");
@@ -898,17 +899,21 @@ RESULT eServiceLibpl::start()
 		{
 			if (!m_audioStreams[i].language_code.empty())
 			{
-				for (std::vector<std::string>::iterator it = autoaudio_languages.begin(); it != autoaudio_languages.end(); it++)
+				int x = 1;
+				for (std::vector<std::string>::iterator it = autoaudio_languages.begin(); x < autoaudio_level && it != autoaudio_languages.end(); x++, it++)
 				{
 					if ((*it).find(m_audioStreams[i].language_code) != std::string::npos)
 					{
-						autoaudio = true;
-						selectAudioStream(i);
+						autoaudio = i;
+						autoaudio_level = x;
 						break;
 					}
 				}
 			}
 		}
+
+		if (autoaudio)
+			selectAudioStream(autoaudio);
 
 		m_event(this, evStart);
 		m_event(this, evGstreamerPlayStarted);
@@ -1480,6 +1485,7 @@ RESULT eServiceLibpl::getCachedSubtitle(struct SubtitleTrack &track)
 		m_cachedSubtitleStream = m_subtitleStreams_size - 1;
 		if (m_subtitleStreams[m_cachedSubtitleStream].type < 7)
 		{
+			int autosub_level = 5;
 			std::string configvalue;
 			std::vector<std::string> autosub_languages;
 			configvalue = eConfigManager::getConfigValue("config.autolanguage.subtitle_autoselect1");
@@ -1494,14 +1500,16 @@ RESULT eServiceLibpl::getCachedSubtitle(struct SubtitleTrack &track)
 			configvalue = eConfigManager::getConfigValue("config.autolanguage.subtitle_autoselect4");
 			if (configvalue != "" && configvalue != "None")
 				autosub_languages.push_back(configvalue);
-			for (int i = 0; i < m_subtitleStreams_size && m_cachedSubtitleStream == m_subtitleStreams_size - 1; i++)
+			for (int i = 0; i < m_subtitleStreams_size; i++)
 			{
 				if (!m_subtitleStreams[i].language_code.empty())
 				{
-					for (std::vector<std::string>::iterator it2 = autosub_languages.begin(); it2 != autosub_languages.end(); it2++)
+					int x = 1;
+					for (std::vector<std::string>::iterator it2 = autosub_languages.begin(); x < autosub_level && it2 != autosub_languages.end(); x++, it2++)
 					{
 						if ((*it2).find(m_subtitleStreams[i].language_code) != std::string::npos)
 						{
+							autosub_level = x;
 							m_cachedSubtitleStream = i;
 							break;
 						}
