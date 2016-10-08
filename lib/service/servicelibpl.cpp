@@ -428,6 +428,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 
 				m_audioStreams.push_back(audio);
 			}
+			m_currentAudioStream = 0;
 		}
 
 		tracks = player->manager.getSubtitleTracks();
@@ -913,7 +914,10 @@ RESULT eServiceLibpl::start()
 		}
 
 		if (autoaudio)
+		{
 			selectAudioStream(autoaudio);
+			m_currentAudioStream = autoaudio;
+		}
 
 		m_event(this, evStart);
 		m_event(this, evGstreamerPlayStarted);
