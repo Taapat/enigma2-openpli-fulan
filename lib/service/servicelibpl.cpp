@@ -611,7 +611,7 @@ void eServiceLibpl::ReadSrtSubtitle(const char *subfile, int delay, double conve
 	{
 		subtitleStream sub;
 		sub.language_code = "SRT";
-		sub.type = 9;
+		sub.type = 4;
 		m_subtitleStreams.push_back(sub);
 	}
 }
@@ -700,12 +700,12 @@ void eServiceLibpl::ReadSsaSubtitle(const char *subfile, int isASS, int delay, d
 		if (isASS)
 		{
 			sub.language_code = "ASS";
-			sub.type = 8;
+			sub.type = 3;
 		}
 		else
 		{
 			sub.language_code = "SSA";
-			sub.type = 7;
+			sub.type = 2;
 		}
 		m_subtitleStreams.push_back(sub);
 	}
@@ -755,11 +755,11 @@ void eServiceLibpl::pullTextSubtitles(int type)
 {
 	eDebug("[eServiceLibpl::%s] type %d", __func__, type);
 
-	if (type == 9)
+	if (type == 4)
 	{
 		m_subtitle_pages = &m_srt_subtitle_pages;
 	}
-	else if (type == 8)
+	else if (type == 2)
 	{
 		m_subtitle_pages = &m_ass_subtitle_pages;
 	}
@@ -1435,7 +1435,7 @@ RESULT eServiceLibpl::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack 
 		
 		eDebug ("[eServiceLibpl::%s] switched to subtitle stream %i, type %d", __func__, m_currentSubtitleStream, track.page_number);
 
-		if (track.page_number > 6)
+		if (track.page_number > 1)
 		{
 			pullTextSubtitles(track.page_number);
 		}
@@ -1483,7 +1483,7 @@ RESULT eServiceLibpl::getCachedSubtitle(struct SubtitleTrack &track)
 	if (m_cachedSubtitleStream == 100 && m_subtitleStreams_size)
 	{
 		m_cachedSubtitleStream = m_subtitleStreams_size - 1;
-		if (m_subtitleStreams[m_cachedSubtitleStream].type < 7)
+		if (m_subtitleStreams[m_cachedSubtitleStream].type < 2)
 		{
 			int autosub_level = 5;
 			std::string configvalue;
@@ -1697,10 +1697,8 @@ void eServiceLibpl::getChapters()
 			/* first chapter is movie start no cut needed */
 			if (i > 0)
 			{
-				gint type = 2;
-				gint64 pts = positions[i];
-				if (pts > 0)
-					m_cue_entries.insert(cueEntry(pts, type));
+				if (positions[i] > 0)
+					m_cue_entries.insert(cueEntry(positions[i], 2));
 			}
 		}
 
