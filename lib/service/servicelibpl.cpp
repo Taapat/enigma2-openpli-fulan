@@ -326,7 +326,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	m_subtitle_pages = NULL;
 	m_currentAudioStream = -1;
 	m_currentSubtitleStream = -1;
-	m_cachedSubtitleStream = 100; /* set max subtitle stream to be 'cached'. TODO: use an actual cache. */
+	m_cachedSubtitleStream = -2; /* report subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_subtitle_widget = 0;
 	m_buffer_size = 5 * 1024 * 1024;
 	m_paused = false;
@@ -1475,14 +1475,12 @@ RESULT eServiceLibpl::disableSubtitles()
 
 RESULT eServiceLibpl::getCachedSubtitle(struct SubtitleTrack &track)
 {
-
 	bool autoturnon = eConfigManager::getConfigBoolValue("config.subtitles.pango_autoturnon", true);
 	int m_subtitleStreams_size = (int)m_subtitleStreams.size();
-
 	if (!autoturnon)
 		return -1;
 
-	if (m_cachedSubtitleStream == 100 && m_subtitleStreams_size)
+	if (m_cachedSubtitleStream == -2 && m_subtitleStreams_size)
 	{
 		m_cachedSubtitleStream = m_subtitleStreams_size - 1;
 		if (m_subtitleStreams[m_cachedSubtitleStream].type < 2)
@@ -1519,14 +1517,16 @@ RESULT eServiceLibpl::getCachedSubtitle(struct SubtitleTrack &track)
 				}
 			}
 		}
+	}
 
+	if (m_cachedSubtitleStream >= 0 && m_cachedSubtitleStream < m_subtitleStreams_size)
+	{
 		track.type = 2;
 		track.pid = m_cachedSubtitleStream;
 		track.page_number = m_subtitleStreams[m_cachedSubtitleStream].type;
 		track.magazine_number = m_subtitleStreams[m_cachedSubtitleStream].id;
 		return 0;
 	}
-
 	return -1;
 }
 
