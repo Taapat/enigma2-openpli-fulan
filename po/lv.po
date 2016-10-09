@@ -8889,9 +8889,6 @@ msgstr "izslēgts"
 msgid "off or wpa2 on"
 msgstr "izslēgts vai ieslēgts wpa2"
 
-msgid "off or wpa2 on"
-msgstr "izslēgts vai ieslēgts wpa2"
-
 msgid "offset is"
 msgstr "kompensē"
 
