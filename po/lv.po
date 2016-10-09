@@ -8501,7 +8501,7 @@ msgid "education/science/factual topics (general)"
 msgstr "izglītība/zinātne/faktiskās tēmas (vispārīgi)"
 
 msgid "embedded"
-msgstr "iebūvēts"
+msgstr "iekšējais"
 
 msgid "empty"
 msgstr "tukšs"
@@ -8885,6 +8885,9 @@ msgstr "no lietotā VIENSLĀŅA datu nesēja."
 
 msgid "off"
 msgstr "izslēgts"
+
+msgid "off or wpa2 on"
+msgstr "izslēgts vai ieslēgts wpa2"
 
 msgid "off or wpa2 on"
 msgstr "izslēgts vai ieslēgts wpa2"
