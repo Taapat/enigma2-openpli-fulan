@@ -914,10 +914,7 @@ RESULT eServiceLibpl::start()
 		}
 
 		if (autoaudio)
-		{
 			selectAudioStream(autoaudio);
-			m_currentAudioStream = autoaudio;
-		}
 
 		m_event(this, evStart);
 		m_event(this, evGstreamerPlayStarted);
