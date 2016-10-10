@@ -414,7 +414,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	{
 		eDebug("[eServiceLibpl::%s] Open file!", __func__);
 
-		std::vector<Track> tracks = player->manager.getAudioTracks();
+		std::vector<Track> tracks = player->getAudioTracks();
 		if(!tracks.empty())
 		{
 			eDebug("[eServiceLibpl::%s] Audio track list:", __func__);
@@ -431,7 +431,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 			m_currentAudioStream = 0;
 		}
 
-		tracks = player->manager.getSubtitleTracks();
+		tracks = player->getSubtitleTracks();
 		if(!tracks.empty())
 		{
 			eDebug("[eServiceLibpl::%s] Subtitle track list:", __func__);
@@ -878,7 +878,7 @@ RESULT eServiceLibpl::start()
 		return -1;
 	}
 
-	if (player && player->output.Open() && player->Play())
+	if (player && player->Play())
 	{
 		m_state = stRunning;
 
@@ -948,7 +948,6 @@ RESULT eServiceLibpl::stop()
 
 	player->RequestAbort();
 	player->Stop();
-	player->output.Close();
 	player->Close();
 
 	m_state = stStopped;
