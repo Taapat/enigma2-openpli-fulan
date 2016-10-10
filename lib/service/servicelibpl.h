@@ -279,7 +279,6 @@ private:
 	void videoProgressiveChanged();
 	void getChapters();
 	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
-	eSingleLock m_subtitle_lock;
 };
 
 #endif

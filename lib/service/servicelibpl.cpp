@@ -774,7 +774,11 @@ void eServiceLibpl::pullTextSubtitles(int type)
 
 void eServiceLibpl::pullSubtitle()
 {
-	if(m_state != stRunning || player->output.embedded_subtitle.empty())
+	if(m_state != stRunning)
+		return;
+
+	subtitle_pages_map embedded_subtitle;
+	if (!player->GetSubtitles(embedded_subtitle))
 		return;
 
 	int delay = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitles_delay") / 90;
@@ -784,16 +788,14 @@ void eServiceLibpl::pullSubtitle()
 		if (subtitle_fps > 1 && m_framerate > 0)
 			convert_fps = subtitle_fps / (double)m_framerate;
 
-	eSingleLocker lock(m_subtitle_lock);
-	subtitle_pages_map::iterator current;
-	for (current = player->output.embedded_subtitle.begin(); current != player->output.embedded_subtitle.end(); current++)
+	for (subtitle_pages_map::iterator current = embedded_subtitle.begin(); current != embedded_subtitle.end(); current++)
 	{
 		subtitleData sub = current->second;
 		sub.start_ms = sub.start_ms * convert_fps + delay;
 		sub.end_ms = sub.start_ms + sub.duration_ms;
 		m_emb_subtitle_pages.insert(subtitle_pages_map_pair(sub.end_ms, sub));
 	}
-	player->output.embedded_subtitle.clear();
+	embedded_subtitle.clear();
 	m_subtitle_sync_timer->start(1, true);
 }
 
