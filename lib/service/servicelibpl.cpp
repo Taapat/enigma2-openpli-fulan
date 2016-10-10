@@ -1645,36 +1645,48 @@ void eServiceLibpl::setPCMDelay(int delay)
 {
 }
 
-void eServiceLibpl::videoSizeChanged()
+bool eServiceLibpl::getVideoInfo()
 {
 	if (m_state != stRunning)
-		return;
+		return false;
 
-	m_width = player->output.videoInfo.width;
-	m_height = player->output.videoInfo.height;
-	m_aspect = player->output.videoInfo.aspect;
-	eDebug("[eServiceLibpl::%s] width:%d height:%d aspect:%d", __func__, m_width, m_height, m_aspect);
-	m_event((iPlayableService*)this, evVideoSizeChanged);
+	DVBApiVideoInfo videoInfo;
+	player->GetVideoInfo(videoInfo);
+
+	m_width = videoInfo.width;
+	m_height = videoInfo.height;
+	m_aspect = videoInfo.aspect;
+	m_framerate = videoInfo.frame_rate;
+	m_progressive = videoInfo.progressive;
+
+	return true;
+}
+
+void eServiceLibpl::videoSizeChanged()
+{
+	if (getVideoInfo())
+	{
+		eDebug("[eServiceLibpl::%s] width:%d height:%d aspect:%d", __func__, m_width, m_height, m_aspect);
+		m_event((iPlayableService*)this, evVideoSizeChanged);
+	}
 }
 
 void eServiceLibpl::videoFramerateChanged()
 {
-	if (m_state != stRunning)
-		return;
-
-	m_framerate = player->output.videoInfo.frame_rate;
-	eDebug("[eServiceLibpl::%s] framerate:%d", __func__, m_framerate);
-	m_event((iPlayableService*)this, evVideoFramerateChanged);
+	if (getVideoInfo())
+	{
+		eDebug("[eServiceLibpl::%s] framerate:%d", __func__, m_framerate);
+		m_event((iPlayableService*)this, evVideoFramerateChanged);
+	}
 }
 
 void eServiceLibpl::videoProgressiveChanged()
 {
-	if (m_state != stRunning)
-		return;
-
-	m_progressive = player->output.videoInfo.progressive;
-	eDebug("[eServiceLibpl::%s] progressive:%d", __func__, m_framerate);
-	m_event((iPlayableService*)this, evVideoProgressiveChanged);
+	if (getVideoInfo())
+	{
+		eDebug("[eServiceLibpl::%s] progressive:%d", __func__, m_framerate);
+		m_event((iPlayableService*)this, evVideoProgressiveChanged);
+	}
 }
 
 void eServiceLibpl::getChapters()

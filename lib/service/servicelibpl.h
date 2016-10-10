@@ -274,6 +274,7 @@ private:
 	void pullTextSubtitles(int type);
 	void pushSubtitles();
 	void pullSubtitle();
+	bool getVideoInfo();
 	void videoSizeChanged();
 	void videoFramerateChanged();
 	void videoProgressiveChanged();
