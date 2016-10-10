@@ -896,7 +896,7 @@ RESULT eServiceLibpl::start()
 		configvalue = eConfigManager::getConfigValue("config.autolanguage.audio_autoselect4");
 		if (configvalue != "" && configvalue != "None")
 			autoaudio_languages.push_back(configvalue);
-		for (int i = 0; i < m_audioStreams.size() && !autoaudio; i++)
+		for (int i = 0; i < m_audioStreams.size(); i++)
 		{
 			if (!m_audioStreams[i].language_code.empty())
 			{
