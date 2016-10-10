@@ -1365,6 +1365,7 @@ int eServiceLibpl::selectAudioStream(int i)
 	if (m_state == stRunning && i != m_currentAudioStream)
 	{
 		player->SwitchAudio(m_audioStreams[i].pid);
+		seekRelative(-1, 5000);
 		m_currentAudioStream = i;
 		return 0;
 	}
@@ -1446,6 +1447,7 @@ RESULT eServiceLibpl::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack 
 			m_emb_subtitle_pages.clear();
 			m_subtitle_pages = &m_emb_subtitle_pages;
 			player->SwitchSubtitle(track.magazine_number);
+			seekRelative(-1, 5000);
 		}
 	}
 
