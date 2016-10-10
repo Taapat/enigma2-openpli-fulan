@@ -1296,7 +1296,7 @@ std::string eServiceLibpl::getInfoString(int w)
 
 	if (m_metaCount == 0)
 	{
-		player->input.GetMetadata(m_metaKeys, m_metaValues);
+		player->GetMetadata(m_metaKeys, m_metaValues);
 		m_metaCount = m_metaKeys.size();
 	}
 
