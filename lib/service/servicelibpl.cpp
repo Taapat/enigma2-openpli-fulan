@@ -898,7 +898,7 @@ RESULT eServiceLibpl::start()
 		configvalue = eConfigManager::getConfigValue("config.autolanguage.audio_autoselect4");
 		if (configvalue != "" && configvalue != "None")
 			autoaudio_languages.push_back(configvalue);
-		for (int i = 0; i < m_audioStreams.size(); i++)
+		for (unsigned int i = 0; i < m_audioStreams.size(); i++)
 		{
 			if (!m_audioStreams[i].language_code.empty())
 			{
@@ -1499,7 +1499,7 @@ RESULT eServiceLibpl::getCachedSubtitle(struct SubtitleTrack &track)
 			configvalue = eConfigManager::getConfigValue("config.autolanguage.subtitle_autoselect4");
 			if (configvalue != "" && configvalue != "None")
 				autosub_languages.push_back(configvalue);
-			for (int i = 0; i < m_subtitleStreams_size; i++)
+			for (unsigned int i = 0; i < m_subtitleStreams_size; i++)
 			{
 				if (!m_subtitleStreams[i].language_code.empty())
 				{
