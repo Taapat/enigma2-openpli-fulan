@@ -1,7 +1,7 @@
 from Screen import Screen
 from ServiceScan import ServiceScan
 from Components.config import config, ConfigSubsection, ConfigSelection, \
-	ConfigYesNo, ConfigInteger, getConfigListEntry, ConfigSlider, ConfigEnableDisable
+	ConfigYesNo, ConfigInteger, getConfigListEntry, ConfigSlider, ConfigEnableDisable, ConfigFloat
 from Components.ActionMap import NumberActionMap, ActionMap
 from Components.Sources.StaticText import StaticText
 from Components.SystemInfo import SystemInfo
@@ -894,7 +894,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 				defaultSat["modulation"] = frontendData.get("modulation", eDVBFrontendParametersSatellite.Modulation_QPSK)
 				defaultSat["orbpos"] = frontendData.get("orbital_position", 0)
 			elif ttype == "DVB-C":
-				defaultCab["frequency"] = frontendData.get("frequency", 0) / 1000
+				defaultCab["frequency"] = frontendData.get("frequency", 0)
 				defaultCab["symbolrate"] = frontendData.get("symbol_rate", 0) / 1000
 				defaultCab["inversion"] = frontendData.get("inversion", eDVBFrontendParametersCable.Inversion_Unknown)
 				defaultCab["fec"] = frontendData.get("fec_inner", eDVBFrontendParametersCable.FEC_Auto)
@@ -1011,7 +1011,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 		self.scan_sat.pls_code = ConfigInteger(default = defaultSat.get("pls_code",1), limits = (0, 262142))
 
 		# cable
-		self.scan_cab.frequency = ConfigInteger(default = defaultCab["frequency"], limits = (50, 999))
+		self.scan_cab.frequency = ConfigFloat(default = [defaultCab["frequency"] / 1000, defaultCab["frequency"] % 1000], limits = [(50, 999), (0,999)])
 		self.scan_cab.inversion = ConfigSelection(default = defaultCab["inversion"], choices = [
 			(eDVBFrontendParametersCable.Inversion_Off, _("Off")),
 			(eDVBFrontendParametersCable.Inversion_On, _("On")),
@@ -1344,7 +1344,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 
 		elif nim.isCompatible("DVB-C"):
 			if self.scan_typecable.value == "single_transponder":
-				self.addCabTransponder(tlist, self.scan_cab.frequency.value*1000,
+				self.addCabTransponder(tlist, self.scan_cab.frequency.value[0]*1000 + self.scan_cab.frequency.value[1],
 											  self.scan_cab.symbolrate.value*1000,
 											  self.scan_cab.modulation.value,
 											  self.scan_cab.fec.value,
@@ -1546,7 +1546,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 		default = None
 		list = []
 		# 0 transponder type, 1 freq, 2 sym, 3 mod, 4 fec, 5 inv, 6 sys
-		compare = [1, self.scan_cab.frequency.value*1000, self.scan_cab.symbolrate.value*1000, self.scan_cab.modulation.value, self.scan_cab.fec.value, self.scan_cab.inversion.value, self.scan_cab.system.value]
+		compare = [1, self.scan_cab.frequency.value[0]*1000 + self.scan_cab.frequency.value[1], self.scan_cab.symbolrate.value*1000, self.scan_cab.modulation.value, self.scan_cab.fec.value, self.scan_cab.inversion.value, self.scan_cab.system.value]
 		i = 0
 		index_to_scan = int(self.scan_nims.value)
 		tps = nimmanager.getTranspondersCable(index_to_scan)
