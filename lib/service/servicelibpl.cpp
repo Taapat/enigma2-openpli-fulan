@@ -328,6 +328,7 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = -2; /* report subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_subtitle_widget = 0;
+	m_metaCount = 0;
 	m_buffer_size = 5 * 1024 * 1024;
 	m_paused = false;
 	is_streaming = false;
@@ -1264,38 +1265,47 @@ std::string eServiceLibpl::getInfoString(int w)
 		}
 	}
 
-	if(m_state != stRunning)
-		return "";
-
-	char tag[16] = {""};
+	std::string tag;
 	switch (w)
 	{
 	case sTagTitle:
-		strcat(tag, "title");
+	case sTagTitleSortname:
+		tag = "title";
 		break;
 	case sTagArtist:
-		strcat(tag, "artist");
+	case sTagArtistSortname:
+		tag = "artist";
 		break;
 	case sTagAlbum:
-		strcat(tag, "album");
+		tag = "album";
 		break;
 	case sTagComment:
-		strcat(tag, "comment");
-		break;
-	case sTagTrackNumber:
-		strcat(tag, "track");
+	case sTagExtendedComment:
+		tag = "comment";
 		break;
 	case sTagGenre:
-		strcat(tag, "genre");
+		tag = "genre";
 		break;
 	case sTagDate:
-		strcat(tag, "date");
+		tag = "date";
+		break;
+	case sTagComposer:
+		tag = "composer";
+		break;
+	case sTagCopyright:
+		tag = "copyright";
+		break;
+	case sTagEncoder:
+		tag = "encoder";
+		break;
+	case sTagLanguageCode:
+		tag = "language";
 		break;
 	default:
 		return "";
 	}
 
-	if (m_metaCount == 0)
+	if (m_metaCount == 0 && m_state == stRunning)
 	{
 		player->GetMetadata(m_metaKeys, m_metaValues);
 		m_metaCount = m_metaKeys.size();
@@ -1305,7 +1315,7 @@ std::string eServiceLibpl::getInfoString(int w)
 	{
 		for (size_t i = 0; i < m_metaCount; i++)
 		{
-			if (strcmp(tag, m_metaKeys[i].c_str()) == 0)
+			if (tag == m_metaKeys[i])
 				return m_metaValues[i].c_str();
 		}
 	}
