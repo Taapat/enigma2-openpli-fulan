@@ -1251,8 +1251,6 @@ int eServiceLibpl::getInfo(int w)
 		case sTagPreviewImage:
 		case sTagAttachment:
 			return resIsPyObject;
-		case sTagNominalBitrate:
-			return atoi(getTag("variant_bitrate"));
 		case sBuffer: return m_bufferInfo.bufferPercent;
 		default:
 			return resNA;
