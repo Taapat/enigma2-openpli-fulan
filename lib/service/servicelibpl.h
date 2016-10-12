@@ -255,9 +255,7 @@ private:
 	eFixedMessagePump<int> m_pump;
 	void gotThreadMessage(const int &);
 
-	std::vector<std::string> m_metaKeys;
-	std::vector<std::string> m_metaValues;
-	size_t m_metaCount;
+	std::map<std::string, std::string> m_metaData;
 
 	typedef std::map<uint32_t, subtitleData> subtitle_pages_map;
 	typedef std::pair<uint32_t, subtitleData> subtitle_pages_map_pair;
@@ -274,6 +272,7 @@ private:
 	void pullTextSubtitles(int type);
 	void pushSubtitles();
 	void pullSubtitle();
+	std::string getTag(std::string tag);
 	bool getVideoInfo();
 	void videoSizeChanged();
 	void videoFramerateChanged();

@@ -328,7 +328,6 @@ eServiceLibpl::eServiceLibpl(eServiceReference ref):
 	m_currentSubtitleStream = -1;
 	m_cachedSubtitleStream = -2; /* report subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_subtitle_widget = 0;
-	m_metaCount = 0;
 	m_buffer_size = 5 * 1024 * 1024;
 	m_paused = false;
 	is_streaming = false;
@@ -1186,6 +1185,21 @@ RESULT eServiceLibpl::getEvent(ePtr<eServiceEvent> &evt, int nownext)
 	return 0;
 }
 
+std::string eServiceLibpl::getTag(std::string tag)
+{
+	if (m_metaData.empty() && (m_state != stRunning || !player->GetMetadata(m_metaData)))
+		return "";
+
+	if (!m_metaData.empty())
+	{
+		for (std::map<std::string, std::string>::iterator it = m_metaData.begin(); it != m_metaData.end(); ++it)
+			if (it->first == tag)
+				return it->second;
+	}
+
+	return "";
+}
+
 int eServiceLibpl::getInfo(int w)
 {
 	switch (w)
@@ -1237,6 +1251,8 @@ int eServiceLibpl::getInfo(int w)
 	case sTagPreviewImage:
 	case sTagAttachment:
 		return resIsPyObject;
+	case sTagNominalBitrate:
+		return getTag("variant_bitrate");
 	case sBuffer: return m_bufferInfo.bufferPercent;
 	default:
 		return resNA;
@@ -1251,73 +1267,47 @@ std::string eServiceLibpl::getInfoString(int w)
 	{
 		switch (w)
 		{
-		case sProvider:
-			return "IPTV";
-		case sServiceref:
-		{
-			eServiceReference ref(m_ref);
-			ref.type = eServiceFactoryLibpl::id;
-			ref.path.clear();
-			return ref.toString();
-		}
-		default:
-			break;
+			case sProvider:
+				return "IPTV";
+			case sServiceref:
+			{
+				eServiceReference ref(m_ref);
+				ref.type = eServiceFactoryLibpl::id;
+				ref.path.clear();
+				return ref.toString();
+			}
+			default:
+				break;
 		}
 	}
 
-	std::string tag;
 	switch (w)
 	{
-	case sTagTitle:
-	case sTagTitleSortname:
-		tag = "title";
-		break;
-	case sTagArtist:
-	case sTagArtistSortname:
-		tag = "artist";
-		break;
-	case sTagAlbum:
-		tag = "album";
-		break;
-	case sTagComment:
-	case sTagExtendedComment:
-		tag = "comment";
-		break;
-	case sTagGenre:
-		tag = "genre";
-		break;
-	case sTagDate:
-		tag = "date";
-		break;
-	case sTagComposer:
-		tag = "composer";
-		break;
-	case sTagCopyright:
-		tag = "copyright";
-		break;
-	case sTagEncoder:
-		tag = "encoder";
-		break;
-	case sTagLanguageCode:
-		tag = "language";
-		break;
-	default:
-		return "";
-	}
-
-	if (m_metaCount == 0 && m_state == stRunning)
-	{
-		player->GetMetadata(m_metaKeys, m_metaValues);
-		m_metaCount = m_metaKeys.size();
-	}
-
-	if (m_metaCount > 0)
-	{
-		for (size_t i = 0; i < m_metaCount; i++)
-		{
-			if (tag == m_metaKeys[i])
-				return m_metaValues[i].c_str();
-		}
+		case sTagTitle:
+		case sTagTitleSortname:
+			return getTag("title");
+		case sTagArtist:
+		case sTagArtistSortname:
+			return getTag("artist");
+		case sTagAlbum:
+			return getTag("album");
+		case sTagComment:
+		case sTagExtendedComment:
+			return getTag("comment");
+		case sTagGenre:
+			return getTag("genre");
+		case sTagDate:
+			return getTag("date");
+		case sTagComposer:
+			return getTag("composer");
+		case sTagCopyright:
+			return getTag("copyright");
+		case sTagEncoder:
+			return getTag("encoder");
+		case sTagLanguageCode:
+			return getTag("language");
+		default:
+			break;
 	}
 
 	return "";
