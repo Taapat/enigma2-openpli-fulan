@@ -1204,58 +1204,58 @@ int eServiceLibpl::getInfo(int w)
 {
 	switch (w)
 	{
-	case sServiceref: return m_ref;
-	case sVideoHeight: return m_height;
-	case sVideoWidth: return m_width;
-	case sFrameRate: return m_framerate;
-	case sProgressive: return m_progressive;
-	case sAspect: return m_aspect;
-	case sTagTitle:
-	case sTagArtist:
-	case sTagAlbum:
-	case sTagTitleSortname:
-	case sTagArtistSortname:
-	case sTagAlbumSortname:
-	case sTagDate:
-	case sTagComposer:
-	case sTagGenre:
-	case sTagComment:
-	case sTagExtendedComment:
-	case sTagLocation:
-	case sTagHomepage:
-	case sTagDescription:
-	case sTagVersion:
-	case sTagISRC:
-	case sTagOrganization:
-	case sTagCopyright:
-	case sTagCopyrightURI:
-	case sTagContact:
-	case sTagLicense:
-	case sTagLicenseURI:
-	case sTagCodec:
-	case sTagAudioCodec:
-	case sTagVideoCodec:
-	case sTagEncoder:
-	case sTagLanguageCode:
-	case sTagKeywords:
-	case sTagChannelMode:
-	case sUser+12:
-		return resIsString;
-	case sTagTrackGain:
-	case sTagTrackPeak:
-	case sTagAlbumGain:
-	case sTagAlbumPeak:
-	case sTagReferenceLevel:
-	case sTagBeatsPerMinute:
-	case sTagImage:
-	case sTagPreviewImage:
-	case sTagAttachment:
-		return resIsPyObject;
-	case sTagNominalBitrate:
-		return getTag("variant_bitrate");
-	case sBuffer: return m_bufferInfo.bufferPercent;
-	default:
-		return resNA;
+		case sServiceref: return m_ref;
+		case sVideoHeight: return m_height;
+		case sVideoWidth: return m_width;
+		case sFrameRate: return m_framerate;
+		case sProgressive: return m_progressive;
+		case sAspect: return m_aspect;
+		case sTagTitle:
+		case sTagArtist:
+		case sTagAlbum:
+		case sTagTitleSortname:
+		case sTagArtistSortname:
+		case sTagAlbumSortname:
+		case sTagDate:
+		case sTagComposer:
+		case sTagGenre:
+		case sTagComment:
+		case sTagExtendedComment:
+		case sTagLocation:
+		case sTagHomepage:
+		case sTagDescription:
+		case sTagVersion:
+		case sTagISRC:
+		case sTagOrganization:
+		case sTagCopyright:
+		case sTagCopyrightURI:
+		case sTagContact:
+		case sTagLicense:
+		case sTagLicenseURI:
+		case sTagCodec:
+		case sTagAudioCodec:
+		case sTagVideoCodec:
+		case sTagEncoder:
+		case sTagLanguageCode:
+		case sTagKeywords:
+		case sTagChannelMode:
+		case sUser+12:
+			return resIsString;
+		case sTagTrackGain:
+		case sTagTrackPeak:
+		case sTagAlbumGain:
+		case sTagAlbumPeak:
+		case sTagReferenceLevel:
+		case sTagBeatsPerMinute:
+		case sTagImage:
+		case sTagPreviewImage:
+		case sTagAttachment:
+			return resIsPyObject;
+		case sTagNominalBitrate:
+			return getTag("variant_bitrate");
+		case sBuffer: return m_bufferInfo.bufferPercent;
+		default:
+			return resNA;
 	}
 
 	return 0;
