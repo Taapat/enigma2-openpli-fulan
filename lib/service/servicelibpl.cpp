@@ -1364,6 +1364,7 @@ int eServiceLibpl::selectAudioStream(int i)
 		player->SwitchAudio(m_audioStreams[i].pid);
 		seekRelative(-1, 5000);
 		m_currentAudioStream = i;
+		m_metaData.clear();
 		return 0;
 	}
 
