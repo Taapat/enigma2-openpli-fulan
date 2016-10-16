@@ -16,6 +16,9 @@ TYPE_VALUE_DEC = 2
 TYPE_VALUE_HEX_DEC = 3
 TYPE_SLIDER = 4
 TYPE_VALUE_ORBIT_DEC = 5
+TYPE_VALUE_FREQ = 6
+TYPE_VALUE_FREQ_FLOAT = 7
+TYPE_VALUE_BITRATE = 8
 
 def to_unsigned(x):
 	return x & 0xFFFFFFFF
@@ -25,9 +28,12 @@ def ServiceInfoListEntry(a, b, valueType=TYPE_TEXT, param=4):
 	if not isinstance(b, str):
 		if valueType is TYPE_VALUE_HEX:
 			b = ("0x%0" + str(param) + "x") % to_unsigned(b)
-		elif valueType is TYPE_VALUE_DEC:
-			b = str(b)
-		elif valueType is TYPE_VALUE_HEX_DEC:
+		elif valueType is TYPE_VALUE_FREQ:
+			b = "%s MHz" % (b / 1000)
+		elif valueType is TYPE_VALUE_FREQ_FLOAT:
+			b = "%.3f MHz" % (b / 1000.0)
+		elif valueType is TYPE_VALUE_BITRATE:
+			b = "%s KSymbols/s" % (b / 1000)
 			b = ("0x%0" + str(param) + "x (%dd)") % (to_unsigned(b), b)
 		elif valueType is TYPE_VALUE_ORBIT_DEC:
 			direction = 'E'
@@ -204,8 +210,8 @@ class ServiceInfo(Screen):
 						(_("System"), frontendData["system"], TYPE_TEXT),
 						(_("Modulation"), frontendData["modulation"], TYPE_TEXT),
 						(_("Orbital position"), frontendData["orbital_position"], TYPE_VALUE_DEC),
-						(_("Frequency"), frontendData["frequency"], TYPE_VALUE_DEC),
-						(_("Symbol rate"), frontendData["symbol_rate"], TYPE_VALUE_DEC),
+						(_("Frequency"), frontendData["frequency"], TYPE_VALUE_FREQ),
+						(_("Symbol rate"), frontendData["symbol_rate"], TYPE_VALUE_BITRATE),
 						(_("Polarization"), frontendData["polarization"], TYPE_TEXT),
 						(_("Inversion"), frontendData["inversion"], TYPE_TEXT),
 						(_("FEC"), frontendData["fec_inner"], TYPE_TEXT))
@@ -220,8 +226,8 @@ class ServiceInfo(Screen):
 				return ((_("NIM"), chr(ord('A') + frontendData["tuner_number"]), TYPE_TEXT),
 						(_("Type"), frontendData["tuner_type"], TYPE_TEXT),
 						(_("Modulation"), frontendData["modulation"], TYPE_TEXT),
-						(_("Frequency"), frontendData["frequency"], TYPE_VALUE_DEC),
-						(_("Symbol rate"), frontendData["symbol_rate"], TYPE_VALUE_DEC),
+						(_("Frequency"), frontendData["frequency"], TYPE_VALUE_FREQ_FLOAT),
+						(_("Symbol rate"), frontendData["symbol_rate"], TYPE_VALUE_BITRATE),
 						(_("Inversion"), frontendData["inversion"], TYPE_TEXT),
 						(_("FEC"), frontendData["fec_inner"], TYPE_TEXT))
 			elif frontendDataOrg["tuner_type"] == "DVB-T" and frontendData["system"] == "DVB-T2":
@@ -229,7 +235,7 @@ class ServiceInfo(Screen):
 						(_("Type"), frontendData["tuner_type"], TYPE_TEXT),
 						(_("System"), frontendData["system"], TYPE_TEXT),
 						(_("Modulation"), frontendData["constellation"], TYPE_TEXT),
-						(_("Frequency"), frontendData["frequency"]/1000, TYPE_VALUE_DEC),
+						(_("Frequency"), frontendData["frequency"]/1000, TYPE_VALUE_FREQ_FLOAT),
 						(_("Bandwidth"), frontendData["bandwidth"], TYPE_VALUE_DEC),
 						(_("FEC"), frontendData["code_rate_hp"], TYPE_TEXT),
 						(_("Transmission mode"), frontendData["transmission_mode"], TYPE_TEXT),
@@ -252,7 +258,7 @@ class ServiceInfo(Screen):
 						(_("Type"), frontendData["tuner_type"], TYPE_TEXT),
 						(_("System"), frontendData["system"], TYPE_TEXT),
 						(_("Modulation"), frontendData["modulation"], TYPE_TEXT),
-						(_("Frequency"), frontendData["frequency"], TYPE_VALUE_DEC),
+						(_("Frequency"), frontendData["frequency"] / 1000, TYPE_VALUE_FREQ_FLOAT),
 						(_("Inversion"), frontendData["inversion"], TYPE_TEXT))
 		return [ ]
 
