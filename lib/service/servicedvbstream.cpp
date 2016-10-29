@@ -1,5 +1,6 @@
 #include <lib/service/servicedvbstream.h>
 #include <lib/base/eerror.h>
+#include <lib/dvb/db.h>
 #include <lib/dvb/epgcache.h>
 #include <lib/dvb/metaparser.h>
 #include <lib/base/nconfig.h>
@@ -169,6 +170,29 @@ int eDVBServiceStream::doRecord()
 	{
 		std::set<int> pids_to_record;
 
+		eServiceReferenceDVB ref = m_ref.getParentServiceReference();
+		ePtr<eDVBService> service;
+
+		if (!ref.valid())
+			ref = m_ref;
+
+		if(!eDVBDB::getInstance()->getService(ref, service))
+		{
+			// cached pids
+			for (int x = 0; x < eDVBService::cacheMax; ++x)
+			{
+				int entry = service->getCacheEntry((eDVBService::cacheID)x);
+				if (entry != -1)
+				{
+					if (eDVBService::cSUBTITLE == (eDVBService::cacheID)x)
+					{
+						entry = (entry&0xFFFF0000)>>16;
+					}
+					pids_to_record.insert(entry);
+				}
+			}
+		}
+
 		pids_to_record.insert(0); // PAT
 
 		if (program.pmtPid != -1)
@@ -276,31 +300,25 @@ int eDVBServiceStream::doRecord()
 bool eDVBServiceStream::recordCachedPids()
 {
 	eServiceReferenceDVB ref = m_ref.getParentServiceReference();
-	ePtr<eDVBResourceManager> res_mgr;
+	ePtr<eDVBService> service;
 	std::set<int> pids_to_record;
+
 	if (!ref.valid())
 		ref = m_ref;
-	if (!eDVBResourceManager::getInstance(res_mgr))
+
+	if (!eDVBDB::getInstance()->getService(ref, service) && !service->usePMT())
 	{
-		ePtr<iDVBChannelList> db;
-		if (!res_mgr->getChannelList(db))
+		// cached pids
+		for (int x = 0; x < eDVBService::cacheMax; ++x)
 		{
-			ePtr<eDVBService> service;
-			if (!db->getService(ref, service) && !service->usePMT())
+			int entry = service->getCacheEntry((eDVBService::cacheID)x);
+			if (entry != -1)
 			{
-				// cached pids
-				for (int x = 0; x < eDVBService::cacheMax; ++x)
+				if (eDVBService::cSUBTITLE == (eDVBService::cacheID)x)
 				{
-					int entry = service->getCacheEntry((eDVBService::cacheID)x);
-					if (entry != -1)
-					{
-						if (eDVBService::cSUBTITLE == (eDVBService::cacheID)x)
-						{
-							entry = (entry&0xFFFF0000)>>16;
-						}
-						pids_to_record.insert(entry);
-					}
+					entry = (entry&0xFFFF0000)>>16;
 				}
+				pids_to_record.insert(entry);
 			}
 		}
 	}
