@@ -178,9 +178,10 @@ class ServiceInfo(Screen):
 					(_("Orbital position"), frontendData["orbital_position"], TYPE_VALUE_DEC),
 					(_("Frequency & Polarization"), "%s MHz" % (frontendData["frequency"] / 1000) + " - " + frontendData["polarization"], TYPE_TEXT),
 					(_("Symbol rate & FEC"), "%s KSymb/s" % (frontendData["symbol_rate"] / 1000) + " - " + frontendData["fec_inner"], TYPE_TEXT),
-					(_("Inversion, Pilot & Roll-off"), frontendData["inversion"] + " - " + str(frontendData.get("pilot", None)) + " - " + str(frontendData.get("rolloff", None)), TYPE_TEXT))
+					(_("Inversion, Pilot & Roll-off"), frontendData["inversion"] + " - " + str(frontendData.get("pilot", None)) + " - " + str(frontendData.get("rolloff", None)), TYPE_TEXT),)
 				if frontendData["system"] == "DVB-S2":
-					data += (_("Input Stream, PLS Mode & PLS Code"), str(frontendData["is_id"], TYPE_VALUE_DEC) + " - " + str(frontendData["pls_mode"], TYPE_TEXT) + " - " + str(frontendData["pls_code"], TYPE_VALUE_DEC))
+					data += ((_("Input Stream"), frontendData["is_id"], TYPE_VALUE_DEC),
+						(_("PLS Mode & PLS Code"), str(frontendData["pls_mode"]) + " - " + str(frontendData["pls_code"]), TYPE_TEXT),)
 				return data
 			elif frontendDataOrg["tuner_type"] == "DVB-C":
 				return (tuner,
