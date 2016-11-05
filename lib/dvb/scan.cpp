@@ -1446,7 +1446,8 @@ RESULT eDVBScan::processVCT(eDVBNamespace dvbnamespace, const VirtualChannelTabl
 	for (VirtualChannelListConstIterator s(services.begin()); s != services.end(); ++s)
 	{
 		unsigned short service_id = (*s)->getServiceId();
-		SCAN_eDebugNoNewLineStart("[eDVBScan] SID %04x: ", service_id);
+		unsigned short source_id = (*s)->getSourceId();
+		SCAN_eDebugNoNewLineStart("[eDVBScan] SID %04x, source_id %04x: ", service_id, source_id);
 		bool is_crypted = (*s)->isAccessControlled();
 
 		if (is_crypted)
@@ -1461,9 +1462,19 @@ RESULT eDVBScan::processVCT(eDVBNamespace dvbnamespace, const VirtualChannelTabl
 
 		if (!(m_flags & scanOnlyFree) || !is_crypted)
 		{
+			char number[32];
 			eServiceReferenceDVB ref;
 			ePtr<eDVBService> service = new eDVBService;
 			int servicetype = -1;
+
+			if (((*s)->getMajorChannelNumber() & 0x3f0) == 0x3f0)
+			{
+				snprintf(number, sizeof(number), "%d ", (((*s)->getMajorChannelNumber() & 0x00f) << 10) | (*s)->getMinorChannelNumber());
+			}
+			else
+			{
+				snprintf(number, sizeof(number), "%d-%d ", (*s)->getMajorChannelNumber(), (*s)->getMinorChannelNumber());
+			}
 
 			switch ((*s)->getServiceType())
 			{
@@ -1481,9 +1492,12 @@ RESULT eDVBScan::processVCT(eDVBNamespace dvbnamespace, const VirtualChannelTabl
 			ref.set(chid);
 			ref.setServiceID(service_id);
 			ref.setServiceType(servicetype);
+			ref.setSourceID(source_id);
 			service->m_service_name = (*s)->getName();
 			/* strip trailing spaces */
 			service->m_service_name = service->m_service_name.erase(service->m_service_name.find_last_not_of(" ") + 1);
+			/* strip leading spaces */
+			service->m_service_name = service->m_service_name.erase(0, service->m_service_name.find_first_not_of(" "));
 
 			for (DescriptorConstIterator desc = (*s)->getDescriptors()->begin();
 					desc != (*s)->getDescriptors()->end(); ++desc)
@@ -1504,6 +1518,8 @@ RESULT eDVBScan::processVCT(eDVBNamespace dvbnamespace, const VirtualChannelTabl
 					break;
 				}
 			}
+
+			service->m_service_name = number + service->m_service_name;
 
 			if (is_crypted and !service->m_ca.size())
 				service->m_ca.push_front(0);
