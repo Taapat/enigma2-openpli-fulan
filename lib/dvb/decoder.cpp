@@ -874,7 +874,7 @@ int eTSMPEGDecoder::setState()
 	}
 	if (m_changed & changeAudio)
 	{
-		if ((m_apid >= 0) && (m_apid < 0x1FFF) && !noaudio && (m_decoder == 0))
+		if ((m_apid >= 0) && (m_apid < 0x1FFF) && !noaudio)
 		{
 			m_audio = new eDVBAudio(m_demux, m_decoder);
 			if (m_audio->startPid(m_apid, m_atype))
