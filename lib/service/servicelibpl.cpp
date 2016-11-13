@@ -956,11 +956,6 @@ RESULT eServiceLibpl::stop()
 	return 0;
 }
 
-RESULT eServiceLibpl::setTarget(int target)
-{
-	return -1;
-}
-
 RESULT eServiceLibpl::pause(ePtr<iPauseableService> &ptr)
 {
 	ptr=this;
