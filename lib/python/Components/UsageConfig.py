@@ -143,8 +143,11 @@ def InitUsageConfig():
 		("yes", _("Yes")),
 		("except", _("No, except Wakeup timer")) ])
 
-	config.usage.wakeup_menu = ConfigNothing()
-	config.usage.wakeup_enabled = ConfigYesNo(default = False)
+	config.usage.wakeup_enabled = ConfigSelection(default = "no", choices = [
+		("no", _("No")),
+		("yes", _("Yes")),
+		("standby", _("Yes, only from standby")),
+		("deepstandby", _("Yes, only from deep standby")) ])
 	config.usage.wakeup_day = ConfigSubDict()
 	config.usage.wakeup_time = ConfigSubDict()
 	for i in range(7):
@@ -581,7 +584,7 @@ def InitUsageConfig():
 		("twn hkn",_("Traditional Chinese")),
 		("ces cze", _("Czech")),
 		("dan", _("Danish")),
-		("dut ndl", _("Dutch")),
+		("dut ndl nld", _("Dutch")),
 		("eng qaa", _("English")),
 		("est", _("Estonian")),
 		("fin", _("Finnish")),

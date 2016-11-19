@@ -2843,7 +2843,6 @@ void eDVBServicePlay::updateDecoder(bool sendSeekableStateChanged)
 	if (m_decoder)
 	{
 		bool wasSeekable = m_decoder->getVideoProgressive() != -1;
-		/* use audio only if not pip */
 		if (!m_noaudio)
 		{
 			if (m_dvb_service)

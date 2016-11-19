@@ -284,6 +284,7 @@ class InfoBarShowHide(InfoBarScreenSaver):
 		for x in self.onShowHideNotifiers:
 			x(True)
 		self.startHideTimer()
+		VolumeControl.instance and VolumeControl.instance.showMute()
 
 	def __onHide(self):
 		self.__state = self.STATE_HIDDEN
