@@ -2,6 +2,8 @@
 import time
 from Directories import resolveFilename, SCOPE_CONFIG
 
+from enigma import evfd  # Used for fulan vfd
+
 PERCENTAGE_START = 0
 PERCENTAGE_END = 100
 
@@ -41,6 +43,7 @@ def profile(id):
 				perc = PERCENTAGE_START
 			try:
 				open("/proc/progress", "w").write("%d \n" % perc)
+				evfd.getInstance().vfd_write_string("-%02d-" % perc)  # Used for fulan vfd
 			except IOError:
 				pass
 
