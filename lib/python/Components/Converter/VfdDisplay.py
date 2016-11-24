@@ -128,7 +128,7 @@ class VfdDisplay(Poll, Converter, object):
 				try:
 					service = self.source.serviceref
 					if service:
-						self.num = str(service.getChannelNum())
+						self.num = '%04d' % service.getChannelNum()
 					else:
 						self.num = None
 				except:
