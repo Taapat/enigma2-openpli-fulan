@@ -85,12 +85,7 @@ class VolumeControl:
 			self.hideVolTimer.start(3000, True)
 
 	def volMute(self, showMuteSymbol=True, force=False):
-#+++>
-		if config.audio.volume.value != 0:
-			vol = config.audio.volume.value
-		else:
-			vol = self.volctrl.getVolume()
-#+++<
+		vol = self.volctrl.getVolume()
 		if vol or force:
 			self.volctrl.volumeToggleMute()
 			if self.volctrl.isMuted():
@@ -98,14 +93,8 @@ class VolumeControl:
 					self.showMute()
 					self.volumeDialog.hide()
 				self.volumeDialog.setValue(0)
-#+++>
-				self.volctrl.setVolume(0,0)
-#+++<
 			else:
 				self.muteDialog.hide()
 				self.volumeDialog.setValue(vol)
-#+++>
-				self.volctrl.setVolume(vol, vol)
-#+++<
 				self.volumeDialog.show()
 				self.hideVolTimer.start(3000, True)
