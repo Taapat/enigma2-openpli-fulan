@@ -96,6 +96,7 @@ class VolumeControl:
 			if self.volctrl.isMuted():
 				if showMuteSymbol:
 					self.showMute()
+					self.volumeDialog.hide()
 				self.volumeDialog.setValue(0)
 #+++>
 				self.volctrl.setVolume(0,0)
@@ -106,3 +107,5 @@ class VolumeControl:
 #+++>
 				self.volctrl.setVolume(vol, vol)
 #+++<
+				self.volumeDialog.show()
+				self.hideVolTimer.start(3000, True)
