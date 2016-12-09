@@ -39,7 +39,7 @@ for i in (10, 50, 100, 150, 250):
 config.hdmicec.minimum_send_interval = ConfigSelection(default = "0", choices = [("0", _("Disabled"))] + choicelist)
 choicelist = []
 for i in range(5, 65, 5):
-	choicelist.append(("%d" % i, "%d sec" % i))
+	choicelist.append(("%d" % i, _("%d sec") % i))
 config.hdmicec.repeat_wakeup_timer = ConfigSelection(default = "0", choices = [("0", _("Disabled"))] + choicelist)
 
 class HdmiCec:
@@ -67,7 +67,7 @@ class HdmiCec:
 		config.hdmicec.volume_forwarding.addNotifier(self.configVolumeForwarding)
 		config.hdmicec.enabled.addNotifier(self.configVolumeForwarding)
 		uptime = float(open("/proc/uptime", "r").read().split()[0])
-		if config.hdmicec.handle_deepstandby_events.value and uptime < 120:
+		if config.hdmicec.enabled.value and config.hdmicec.handle_deepstandby_events.value and uptime < 120:
 			filename = Directories.resolveFilename(Directories.SCOPE_CONFIG, "timers.xml")
 			try:
 				doc = xml.etree.cElementTree.parse(filename)
@@ -234,7 +234,7 @@ class HdmiCec:
 
 	def onLeaveStandby(self):
 		self.wakeupMessages()
-		if config.hdmicec.repeat_wakeup_timer.value:
+		if int(config.hdmicec.repeat_wakeup_timer.value):
 			self.repeat.startLongTimer(int(config.hdmicec.repeat_wakeup_timer.value))
 
 	def onEnterStandby(self, configElement):
@@ -286,9 +286,9 @@ class HdmiCec:
 				self.sendMessage(message.getAddress(), 'osdname')
 			elif cmd == 0x7e or cmd == 0x72: # system audio mode status
 				if data[0] == '\x01':
-					self.volumeForwardingDestination = 5; # on: send volume keys to receiver
+					self.volumeForwardingDestination = 5 # on: send volume keys to receiver
 				else:
-					self.volumeForwardingDestination = 0; # off: send volume keys to tv
+					self.volumeForwardingDestination = 0 # off: send volume keys to tv
 				if config.hdmicec.volume_forwarding.value:
 					print 'eHdmiCec: volume forwarding to device %02x enabled'%(self.volumeForwardingDestination)
 					self.volumeForwardingEnable()
