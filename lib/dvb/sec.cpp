@@ -822,7 +822,7 @@ RESULT eDVBSatelliteEquipmentControl::prepare(iDVBFrontend &frontend, const eDVB
 
 					default:
 					{
-						frontend.setData(eDVBFrontend::SATCR, 0);
+						frontend.setData(eDVBFrontend::SATCR, -1);
 						frontend.setData(eDVBFrontend::DICTION, SatCR_format_none);
 
 						eDebug("**** SatCR_format neither Unicable nor JESS!");
@@ -837,7 +837,7 @@ RESULT eDVBSatelliteEquipmentControl::prepare(iDVBFrontend &frontend, const eDVB
 			}
 			else
 			{
-				frontend.setData(eDVBFrontend::SATCR, 0);
+				frontend.setData(eDVBFrontend::SATCR, -1);
 				frontend.setData(eDVBFrontend::DICTION, SatCR_format_none);
 			}
 
