@@ -2347,6 +2347,7 @@ class InfoBarPiP:
 					self.session.pip.fixPiPSize()
 					if slist.dopipzap:
 						slist.setCurrentSelection(self.session.pip.getCurrentService())
+					slist.saveChannel(pipref)
 
 	def movePiP(self):
 		if self.pipShown():
