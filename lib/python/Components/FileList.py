@@ -47,6 +47,7 @@ EXTENSIONS = {
 		"mpeg": "movie",
 		"mpe": "movie",
 		"rm": "movie",
+		"webm": "movie",
 		"rmvb": "movie",
 		"ogm": "movie",
 		"ogv": "movie",
