@@ -246,10 +246,10 @@ public:
 	{
 		audiotype_t audiotype;
 		containertype_t containertype;
-		bool is_video;
+		bool is_audio;
 		bool is_streaming;
 		sourceStream()
-			:audiotype(atUnknown), containertype(ctNone), is_video(FALSE), is_streaming(FALSE)
+			:audiotype(atUnknown), containertype(ctNone), is_audio(FALSE), is_streaming(FALSE)
 		{
 		}
 	};
@@ -380,7 +380,7 @@ private:
 	void pullSubtitle(GstBuffer *buffer);
 	void sourceTimeout();
 	sourceStream m_sourceinfo;
-	gulong m_subs_to_pull_handler_id;
+	gulong m_subs_to_pull_handler_id, m_notify_source_handler_id, m_notify_element_added_handler_id;
 
 	RESULT seekToImpl(pts_t to);
 
