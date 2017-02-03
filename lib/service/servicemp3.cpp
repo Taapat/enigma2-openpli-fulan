@@ -68,7 +68,6 @@ typedef enum
 /* static declarations */
 static bool first_play_eServicemp3 = false;
 static GstElement *dvb_audiosink, *dvb_videosink, *dvb_subsink;
-static bool dvb_audiosink_ok, dvb_videosink_ok, dvb_subsink_ok;
 
 
 // eServiceFactoryMP3
@@ -186,13 +185,11 @@ DEFINE_REF(eServiceFactoryMP3)
 static void create_gstreamer_sinks()
 {
 	dvb_subsink = dvb_audiosink = dvb_videosink = NULL;
-	dvb_subsink_ok = dvb_audiosink_ok = dvb_videosink_ok = false;
 	dvb_audiosink = gst_element_factory_make("dvbaudiosink", NULL);
 	if(dvb_audiosink)
 	{
 		gst_object_ref_sink(dvb_audiosink);
 		eDebug("[eServiceFactoryMP3] dvb_audiosink created");
-		dvb_audiosink_ok = true;
 	}
 	else
 		eDebug("[eServiceFactoryMP3] audio_sink NOT created missing plugin dvbaudiosink");
@@ -201,7 +198,6 @@ static void create_gstreamer_sinks()
 	{
 		gst_object_ref_sink(dvb_videosink);
 		eDebug("[eServiceFactoryMP3] dvb_videosink created");
-		dvb_videosink_ok = true;
 	}
 	else
 		eDebug("[eServiceFactoryMP3] dvb_videosink NOT created missing plugin dvbvideosink");
@@ -210,7 +206,6 @@ static void create_gstreamer_sinks()
 	{
 		gst_object_ref_sink(dvb_subsink);
 		eDebug("[eServiceFactoryMP3] dvb_subsink created");
-		dvb_subsink_ok = true;
 	}
 	else
 		eDebug("[eServiceFactoryMP3] dvb_subsink NOT created missing plugin subsink");
