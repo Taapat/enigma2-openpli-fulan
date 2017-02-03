@@ -66,8 +66,7 @@ typedef enum
 } GstPlayFlags;
 
 /* static declarations */
-static bool first_play_eServicemp3 = false;
-static GstElement *dvb_audiosink, *dvb_videosink, *dvb_subsink;
+static GstElement *dvb_audiosink = NULL, *dvb_videosink = NULL, *dvb_subsink = NULL;
 
 
 // eServiceFactoryMP3
@@ -182,47 +181,39 @@ eServiceFactoryMP3::~eServiceFactoryMP3()
 
 DEFINE_REF(eServiceFactoryMP3)
 
-static void create_gstreamer_sinks()
-{
-	dvb_subsink = dvb_audiosink = dvb_videosink = NULL;
-	dvb_audiosink = gst_element_factory_make("dvbaudiosink", NULL);
-	if(dvb_audiosink)
-	{
-		gst_object_ref_sink(dvb_audiosink);
-		eDebug("[eServiceFactoryMP3] dvb_audiosink created");
-	}
-	else
-		eDebug("[eServiceFactoryMP3] audio_sink NOT created missing plugin dvbaudiosink");
-	dvb_videosink = gst_element_factory_make("dvbvideosink", NULL);
-	if(dvb_videosink)
-	{
-		gst_object_ref_sink(dvb_videosink);
-		eDebug("[eServiceFactoryMP3] dvb_videosink created");
-	}
-	else
-		eDebug("[eServiceFactoryMP3] dvb_videosink NOT created missing plugin dvbvideosink");
-	dvb_subsink = gst_element_factory_make("subsink", NULL);
-	if(dvb_subsink)
-	{
-		gst_object_ref_sink(dvb_subsink);
-		eDebug("[eServiceFactoryMP3] dvb_subsink created");
-	}
-	else
-		eDebug("[eServiceFactoryMP3] dvb_subsink NOT created missing plugin subsink");
-}
-
 	// iServiceHandler
 RESULT eServiceFactoryMP3::play(const eServiceReference &ref, ePtr<iPlayableService> &ptr)
 {
 	// check resources...
-	// creating gstreamer sinks for the very fisrt media
-	if (!first_play_eServicemp3)
+	if (!dvb_audiosink && !dvb_videosink && !dvb_subsink)
 	{
-		first_play_eServicemp3 = true;
-		create_gstreamer_sinks();
-		eDebug("[eServiceFactoryMP3] first play service");
+		// creating gstreamer sinks for the very first media
+		eDebug("[eServiceFactoryMP3] first service play");
+
+		dvb_audiosink = gst_element_factory_make("dvbaudiosink", NULL);
+		if(dvb_audiosink)
+		{
+			gst_object_ref_sink(dvb_audiosink);
+			eDebug("[eServiceFactoryMP3] dvb_audiosink created");
+		}
+
+		dvb_videosink = gst_element_factory_make("dvbvideosink", NULL);
+		if(dvb_videosink)
+		{
+			gst_object_ref_sink(dvb_videosink);
+			eDebug("[eServiceFactoryMP3] dvb_videosink created");
+		}
+
+		dvb_subsink = gst_element_factory_make("subsink", NULL);
+		if(dvb_subsink)
+		{
+			gst_object_ref_sink(dvb_subsink);
+			eDebug("[eServiceFactoryMP3] dvb_subsink created");
+		}
 	}
-	eDebug("[eServiceFactoryMP3] new play service");
+	else
+		eDebug("[eServiceFactoryMP3] play new service");
+
 	ptr = new eServiceMP3(ref);
 	return 0;
 }
