@@ -25,7 +25,7 @@
 #include <lib/base/eenv.h>
 #endif
 
-#define HTTP_TIMEOUT 10
+#define HTTP_TIMEOUT 15
 
 
 /*
@@ -647,11 +647,23 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		if(dvb_audiosink)
 		{
 			if(m_sourceinfo.is_audio)
-				g_object_set(dvb_audiosink, "sync", TRUE, NULL);
+			{
+				g_object_set(dvb_audiosink, "e2-sync", TRUE, NULL);
+				g_object_set(dvb_audiosink, "e2-async", TRUE, NULL);
+			}
+			else
+			{
+				g_object_set(dvb_audiosink, "e2-sync", FALSE, NULL);
+				g_object_set(dvb_audiosink, "e2-async", FALSE, NULL);
+			}
 			g_object_set(m_gst_playbin, "audio-sink", dvb_audiosink, NULL);
 		}
-		if(dvb_videosink)
+		if(dvb_videosink && !m_sourceinfo.is_audio)
+		{
+			g_object_set(dvb_videosink, "e2-sync", FALSE, NULL);
+			g_object_set(dvb_videosink, "e2-async", FALSE, NULL);
 			g_object_set(m_gst_playbin, "video-sink", dvb_videosink, NULL);
+		}
 		/*
 		 * avoid video conversion, let the dvbmediasink handle that using native video flag
 		 * volume control is done by hardware, do not use soft volume flag
@@ -832,7 +844,7 @@ RESULT eServiceMP3::start()
 	{
 		eDebug("[eServiceMP3] starting pipeline");
 		GstStateChangeReturn ret;
-		ret = gst_element_set_state (m_gst_playbin, GST_STATE_READY);
+		ret = gst_element_set_state (m_gst_playbin, GST_STATE_PLAYING);
 
 		switch(ret)
 		{
@@ -875,7 +887,8 @@ RESULT eServiceMP3::stop()
 	if (ret != GST_STATE_CHANGE_SUCCESS)
 		eDebug("[eServiceMP3] stop GST_STATE_NULL failure");
 
-	saveCuesheet();
+	if(!m_sourceinfo.is_streaming && !m_sourceinfo.is_audio && m_cuesheet_loaded)
+		saveCuesheet();
 	m_nownext_timer->stop();
 	/* make sure that media is stopped before proceeding further */
 	ret = gst_element_get_state(m_gst_playbin, &state, &pending, 5 * GST_SECOND);
@@ -1239,9 +1252,9 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 		}
 		else
 		{
-			g_signal_emit_by_name(dvb_videosink, "get-decoder-time", &pos);
+			g_signal_emit_by_name(dvb_audiosink, "get-decoder-time", &pos);
 			if (!GST_CLOCK_TIME_IS_VALID(pos) || 0)
-				 g_signal_emit_by_name(dvb_audiosink, "get-decoder-time", &pos);
+				 g_signal_emit_by_name(dvb_videosink, "get-decoder-time", &pos);
 			if(!GST_CLOCK_TIME_IS_VALID(pos))
 				return -1;
 		}
@@ -1698,7 +1711,7 @@ int eServiceMP3::selectAudioStream(int i)
 	g_object_get (m_gst_playbin, "current-audio", &current_audio, NULL);
 	if ( current_audio == i )
 	{
-		eDebug ("[eServiceMP3] switched to audio stream %i", current_audio);
+		eDebug ("[eServiceMP3] switched to audio stream %d", current_audio);
 		m_currentAudioStream = i;
 		return 0;
 	}
@@ -1838,7 +1851,6 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 			{
 				case GST_STATE_CHANGE_NULL_TO_READY:
 				{
-					gst_element_set_state(m_gst_playbin, GST_STATE_PLAYING);
 					m_event(this, evStart);
 				}	break;
 				case GST_STATE_CHANGE_READY_TO_PAUSED:
@@ -1858,6 +1870,8 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 						 * So as soon as gstreamer has been fixed to keep sync in sparse streams, sync needs to be re-enabled.
 						 */
 						g_object_set (dvb_subsink, "sync", FALSE, NULL);
+#else
+						g_object_set (dvb_subsink, "sync", TRUE, NULL);
 #endif
 #if 0
 						/* we should not use ts-offset to sync with the decoder time, we have to do our own decoder timekeeping */
@@ -1877,7 +1891,7 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 
 					setAC3Delay(ac3_delay);
 					setPCMDelay(pcm_delay);
-					if(!m_cuesheet_loaded) /* cuesheet CVR */
+					if(!m_sourceinfo.is_streaming && !m_sourceinfo.is_audio && !m_cuesheet_loaded) /* cuesheet CVR */
 						loadCuesheet();
 					updateEpgCacheNowNext();
 
@@ -2068,7 +2082,8 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 #if GST_VERSION_MAJOR >= 1
 		case GST_MESSAGE_TOC:
 		{
-			HandleTocEntry(msg);
+			if(!m_sourceinfo.is_audio && !m_sourceinfo.is_streaming)
+				HandleTocEntry(msg);
 			break;
 		}
 #endif
@@ -2270,11 +2285,12 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 				{
 					if (m_bufferInfo.bufferPercent == 100)
 					{
-						GstState state;
-						gst_element_get_state(m_gst_playbin, &state, NULL, 0LL);
+						GstState state, pending;
+						/* avoid setting to play while still in async state change mode */
+						gst_element_get_state(m_gst_playbin, &state, &pending, 5 * GST_SECOND);
 						if (state != GST_STATE_PLAYING)
 						{
-							eDebug("[eServiceMP3] start playing");
+							eDebug("[eServiceMP3] start playing, pending state was %s", pending == GST_STATE_VOID_PENDING ? "NO_PENDING" : "A_PENDING_STATE");
 							gst_element_set_state (m_gst_playbin, GST_STATE_PLAYING);
 						}
 						/*
