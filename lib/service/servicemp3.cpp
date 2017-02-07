@@ -658,8 +658,8 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 			}
 			else
 			{
-				g_object_set(dvb_audiosink, "e2-sync", TRUE, NULL);
-				g_object_set(dvb_audiosink, "e2-async", TRUE, NULL);
+				g_object_set(dvb_audiosink, "e2-sync", FALSE, NULL);
+				g_object_set(dvb_audiosink, "e2-async", FALSE, NULL);
 			}
 			g_object_set(m_gst_playbin, "audio-sink", dvb_audiosink, NULL);
 		}
