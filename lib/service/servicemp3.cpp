@@ -127,6 +127,7 @@ eServiceFactoryMP3::eServiceFactoryMP3()
 		extensions.push_back("ogm");
 		extensions.push_back("ogv");
 		extensions.push_back("webm");
+		extensions.push_back("m3u8");
 		extensions.push_back("stream");
 #if defined(__sh__)
 		extensions.push_back("mpeg");
@@ -480,7 +481,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_cachedSubtitleStream = -2; /* report subtitle stream to be 'cached'. TODO: use an actual cache. */
 	m_subtitle_widget = 0;
 	m_currentTrickRatio = 1.0;
-	m_buffer_size = 5 * 1024 * 1024;
+	m_buffer_size = 10LL * 1024LL * 1024LL;
 	m_ignore_buffering_messages = 0;
 	m_is_live = false;
 	m_use_prefillbuffer = false;
@@ -586,7 +587,8 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 
 		if ( m_ref.getData(7) & BUFFERING_ENABLED )
 		{
-			m_use_prefillbuffer = true;
+			if ( strcasecmp(ext, ".m3u8") != 0 )
+				m_use_prefillbuffer = true;
 			if ( m_ref.getData(7) & PROGRESSIVE_DOWNLOAD )
 			{
 				/* progressive download buffering */
@@ -634,30 +636,17 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 				g_object_set(dvb_audiosink, "e2-sync", TRUE, NULL);
 				g_object_set(dvb_audiosink, "e2-async", TRUE, NULL);
 			}
-			else if(m_sourceinfo.is_streaming)
-			{
-				g_object_set(dvb_audiosink, "e2-sync", TRUE, NULL);
-				g_object_set(dvb_audiosink, "e2-async", FALSE, NULL);
-			}
 			else
 			{
-				g_object_set(dvb_audiosink, "e2-sync", FALSE, NULL);
+				g_object_set(dvb_audiosink, "e2-sync", TRUE, NULL);
 				g_object_set(dvb_audiosink, "e2-async", FALSE, NULL);
 			}
 			g_object_set(m_gst_playbin, "audio-sink", dvb_audiosink, NULL);
 		}
 		if(dvb_videosink && !m_sourceinfo.is_audio)
 		{
-			if(m_sourceinfo.is_streaming)
-			{
-				g_object_set(dvb_videosink, "e2-sync", FALSE, NULL);
-				g_object_set(dvb_videosink, "e2-async", TRUE, NULL);
-			}
-			else
-			{
-				g_object_set(dvb_videosink, "e2-sync", FALSE, NULL);
-				g_object_set(dvb_videosink, "e2-async", FALSE, NULL);
-			}
+			g_object_set(dvb_videosink, "e2-sync", FALSE, NULL);
+			g_object_set(dvb_videosink, "e2-async", TRUE, NULL);
 			g_object_set(m_gst_playbin, "video-sink", dvb_videosink, NULL);
 		}
 		/*
@@ -683,8 +672,8 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 			 * (progressive download might not work for all formats)
 			 */
 			flags |= GST_PLAY_FLAG_BUFFERING;
-			/* increase the default 2 second / 2 MB buffer limitations to 5s / 5MB */
-			g_object_set(m_gst_playbin, "buffer-duration", 5LL * GST_SECOND, NULL);
+			/* increase the default 2 second / 2 MB buffer limitations to 10s / 10MB */
+			g_object_set(m_gst_playbin, "buffer-duration", 10LL * GST_SECOND, NULL);
 			g_object_set(m_gst_playbin, "buffer-size", m_buffer_size, NULL);
 
 			/* set network connection speed from config */
@@ -697,6 +686,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		{
 			m_subs_to_pull_handler_id = g_signal_connect (dvb_subsink, "new-buffer", G_CALLBACK (gstCBsubtitleAvail), this);
 			g_object_set (dvb_subsink, "caps", gst_caps_from_string("text/plain; text/x-plain; text/x-raw; text/x-pango-markup; subpicture/x-dvd; subpicture/x-pgs"), NULL);
+			g_object_set (dvb_subsink, "sync", TRUE, NULL);
 			g_object_set (m_gst_playbin, "text-sink", dvb_subsink, NULL);
 			g_object_set (m_gst_playbin, "current-text", m_currentSubtitleStream, NULL);
 		}
@@ -871,7 +861,7 @@ RESULT eServiceMP3::stop()
 	if (ret != GST_STATE_CHANGE_SUCCESS)
 		eDebug("[eServiceMP3] stop GST_STATE_NULL failure");
 
-	if(!m_sourceinfo.is_streaming && !m_sourceinfo.is_audio && m_cuesheet_loaded)
+	if(!m_sourceinfo.is_streaming && m_cuesheet_loaded)
 		saveCuesheet();
 	m_nownext_timer->stop();
 	/* make sure that media is stopped before proceeding further */
@@ -960,7 +950,7 @@ RESULT eServiceMP3::seekToImpl(pts_t to)
 {
 		/* convert pts to nanoseconds */
 	m_last_seek_pos = to * 11111LL;
-	if (!gst_element_seek (m_gst_playbin, m_currentTrickRatio, GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT | GST_SEEK_FLAG_SNAP_BEFORE),
+	if (!gst_element_seek (m_gst_playbin, m_currentTrickRatio, GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT),
 		GST_SEEK_TYPE_SET, m_last_seek_pos,
 		GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE))
 	{
@@ -1001,19 +991,22 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 	if (!m_gst_playbin)
 		return -1;
 	GstState state, pending;
+	GstStateChangeReturn ret;
 	if (ratio > -0.01 && ratio < 0.01)
 	{
 		gst_element_set_state(m_gst_playbin, GST_STATE_PAUSED);
 		/* pipeline sometimes block due to audio track issue off gstreamer.
 		If the pipeline is blocked up on pending state change to paused ,
-        this issue is solved be just reslecting the current audio track.*/
-		gst_element_get_state(m_gst_playbin, &state, &pending, 1 * GST_SECOND);
+		this issue is solved by seek to playposition*/
+		ret = gst_element_get_state(m_gst_playbin, &state, &pending, 500LL * GST_MSECOND);
 		if (state == GST_STATE_PLAYING && pending == GST_STATE_PAUSED)
 		{
-			if (m_currentAudioStream >= 0)
-				selectTrack(m_currentAudioStream);
-			else
-				selectTrack(0);
+			pts_t pts;
+			if (getPlayPosition(pts) >= 0)
+			{
+				eDebug("[eServiceMP3] blocked pipeline we need to flush playposition in pts at paused is %" G_GINT64_FORMAT, (gint64)pts);
+				seekTo(pts);
+			}
 		}
 		return 0;
 	}
@@ -1049,27 +1042,21 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 		*/
 		if (!strcmp(name, "filesrc") || !strcmp(name, "souphttpsrc"))
 		{
-			GstStateChangeReturn ret;
-			/* make sure that last state change was successfull */
+			/* previous state was already ok if we come here just give all elements time to unpause */
+			gst_element_set_state(m_gst_playbin, GST_STATE_PLAYING);
 			ret = gst_element_get_state(m_gst_playbin, &state, &pending, 0);
-			if (ret == GST_STATE_CHANGE_SUCCESS)
-			{
-				gst_element_set_state(m_gst_playbin, GST_STATE_PLAYING);
-				ret = gst_element_get_state(m_gst_playbin, &state, &pending, 0);
-				if (ret == GST_STATE_CHANGE_SUCCESS)
-					return 0;
-			}
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - invalid state, state:%s pending:%s ret:%s",
-				gst_element_state_get_name(state),
-				gst_element_state_get_name(pending),
-				gst_element_state_change_return_get_name(ret));
+			eDebug("[eServiceMP3] trickSeek - unpause state:%s pending:%s ret:%s",
+  				gst_element_state_get_name(state),
+  				gst_element_state_get_name(pending),
+  				gst_element_state_change_return_get_name(ret));
+			return 0;
 		}
 		else
 		{
 			eDebugNoNewLineStart("[eServiceMP3] trickSeek - source '%s' is not supported", name);
 		}
 seek_unpause:
-		eDebugNoNewLine(", doing seeking unpause\n");
+		eDebug(", doing seeking unpause");
 	}
 
 	m_currentTrickRatio = ratio;
@@ -1083,20 +1070,33 @@ seek_unpause:
 		pos = pts * 11111LL;
 	}
 
-	gst_element_get_state(m_gst_playbin, &state, &pending, 1 * GST_SECOND);
+	ret = gst_element_get_state(m_gst_playbin, &state, &pending, 2 * GST_SECOND);
 	if (state != GST_STATE_PLAYING)
+	{
+		eDebug("[eServiceMP3] trickSeek - set unpause or change playrate when gst was state:%s pending:%s ret:%s",
+				gst_element_state_get_name(state),
+				gst_element_state_get_name(pending),
+				gst_element_state_change_return_get_name(ret));
 		gst_element_set_state(m_gst_playbin, GST_STATE_PLAYING);
+	}
 
 	if (validposition)
 	{
 		if (ratio >= 0.0)
 		{
-			gst_element_seek(m_gst_playbin, ratio, GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SKIP), GST_SEEK_TYPE_SET, pos, GST_SEEK_TYPE_SET, -1);
+			gst_element_seek(m_gst_playbin, ratio, GST_FORMAT_TIME,
+				(GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_TRICKMODE | GST_SEEK_FLAG_TRICKMODE_NO_AUDIO),
+				GST_SEEK_TYPE_SET, pos, GST_SEEK_TYPE_SET, -1);
+			/* playbin needs sometimes a bit of time to have all elements in line at same render position msg async issued if ok */
+			ret = gst_element_get_state(m_gst_playbin, &state, &pending, 3 * GST_SECOND);
 		}
 		else
 		{
 			/* note that most elements will not support negative speed */
-			gst_element_seek(m_gst_playbin, ratio, GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SKIP), GST_SEEK_TYPE_SET, 0, GST_SEEK_TYPE_SET, pos);
+			gst_element_seek(m_gst_playbin, ratio, GST_FORMAT_TIME,
+				(GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_TRICKMODE | GST_SEEK_FLAG_TRICKMODE_NO_AUDIO),
+				GST_SEEK_TYPE_SET, 0, GST_SEEK_TYPE_SET, pos);
+			ret = gst_element_get_state(m_gst_playbin, &state, &pending, 3 * GST_SECOND);
 		}
 	}
 
@@ -1643,19 +1643,21 @@ int eServiceMP3::getCurrentTrack()
 
 RESULT eServiceMP3::selectTrack(unsigned int i)
 {
-	bool validposition = false;
-	pts_t ppos = 0;
-	if (getPlayPosition(ppos) >= 0)
+	if(getCurrentTrack() == (int)i)
+		return 0;
+
+	eDebug("[eServiceMP3 selectTrack %d", i);
+	if (m_paused)
 	{
-		validposition = true;
-		ppos -= 90000;
-		if (ppos < 0)
-			ppos = 0;
-	}
-	if (validposition)
-	{
-		/* flush */
-		seekTo(ppos);
+		pts_t ppos = 0;
+		if (getPlayPosition(ppos) >= 0)
+		{
+			ppos -= 90000;
+			if (ppos < 0)
+				ppos = 0;
+			//flush
+			seekTo(ppos);
+		}
 	}
 	return selectAudioStream(i);
 }
@@ -1822,8 +1824,6 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 						 * So as soon as gstreamer has been fixed to keep sync in sparse streams, sync needs to be re-enabled.
 						 */
 						g_object_set (dvb_subsink, "sync", FALSE, NULL);
-#else
-						g_object_set (dvb_subsink, "sync", TRUE, NULL);
 #endif
 #if 0
 						/* we should not use ts-offset to sync with the decoder time, we have to do our own decoder timekeeping */
@@ -1832,8 +1832,8 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 						g_object_set (G_OBJECT (subsink), "max-lateness", 0LL, NULL);
 						/* avoid prerolling (it might not be a good idea to preroll a sparse stream) */
 						g_object_set (G_OBJECT (subsink), "async", TRUE, NULL);
-#endif
 						eDebug("[eServiceMP3] subsink properties set!");
+#endif
 					}
 					/* if we are in preroll already do not check again the state */
 					if (!m_is_live)
@@ -1843,7 +1843,7 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 
 					setAC3Delay(ac3_delay);
 					setPCMDelay(pcm_delay);
-					if(!m_sourceinfo.is_streaming && !m_sourceinfo.is_audio && !m_cuesheet_loaded) /* cuesheet CVR */
+					if(!m_sourceinfo.is_streaming && !m_cuesheet_loaded) /* cuesheet CVR */
 						loadCuesheet();
 					updateEpgCacheNowNext();
 
@@ -2753,13 +2753,11 @@ RESULT eServiceMP3::enableSubtitles(iSubtitleUser *user, struct SubtitleTrack &t
 
 		eDebug ("[eServiceMP3] switched to subtitle stream %i", m_currentSubtitleStream);
 
-#ifdef GSTREAMER_SUBTITLE_SYNC_MODE_BUG
 		/*
 		 * when we're running the subsink in sync=false mode,
 		 * we have to force a seek, before the new subtitle stream will start
 		 */
 		seekRelative(-1, 90000);
-#endif
 	}
 
 	return 0;
@@ -2924,7 +2922,7 @@ void eServiceMP3::setCutList(ePyObject list)
 		pts_t pts = PyLong_AsLongLong(ppts);
 		int type = PyInt_AsLong(ptype);
 		m_cue_entries.insert(cueEntry(pts, type));
-		eDebug("[eServiceMP3] adding %08llx, %d", pts, type);
+		eDebug("[eServiceMP3] adding %" G_GINT64_FORMAT " type %d", (gint64)pts, type);
 	}
 	m_cuesheet_changed = 1;
 	m_event((iPlayableService*)this, evCuesheetChanged);
