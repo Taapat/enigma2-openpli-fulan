@@ -686,9 +686,6 @@ def InitUsageConfig():
 			os.remove(path)
 	config.mediaplayer.defaultPlayer.addNotifier(defaultPlayerChange)
 
-	config.misc.softcam_setup = ConfigSubsection()
-	config.misc.softcam_setup.extension_menu = ConfigYesNo(default = True)
-
 def updateChoices(sel, choices):
 	if choices:
 		defval = None
