@@ -5,9 +5,9 @@ def getAlternativeChannels(service):
 	return alternativeServices and alternativeServices.getContent("S", True)
 
 def CompareWithAlternatives(serviceA, serviceB):
-	return serviceA and serviceB and (\
-		serviceA == serviceB or\
-		serviceA[:6] == '1:134:' and serviceB in getAlternativeChannels(serviceA) or\
+	return serviceA and serviceB and (
+		serviceA == serviceB or
+		serviceA[:6] == '1:134:' and serviceB in getAlternativeChannels(serviceA) or
 		serviceB[:6] == '1:134:' and serviceA in getAlternativeChannels(serviceB))
 
 def GetWithAlternative(service):

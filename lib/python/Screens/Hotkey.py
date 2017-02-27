@@ -121,7 +121,7 @@ def getHotkeyFunctions():
 	pluginlist.sort(key=lambda p: p.name)
 	for plugin in pluginlist:
 		if plugin.name not in twinPlugins and plugin.path and 'selectedevent' not in plugin.__call__.func_code.co_varnames:
-			if twinPaths.has_key(plugin.path[24:]):
+			if plugin.path[24:] in twinPaths:
 				twinPaths[plugin.path[24:]] += 1
 			else:
 				twinPaths[plugin.path[24:]] = 1
@@ -131,7 +131,7 @@ def getHotkeyFunctions():
 	pluginlist.sort(key=lambda p: p.name)
 	for plugin in pluginlist:
 		if plugin.name not in twinPlugins and plugin.path:
-			if twinPaths.has_key(plugin.path[24:]):
+			if plugin.path[24:] in twinPaths:
 				twinPaths[plugin.path[24:]] += 1
 			else:
 				twinPaths[plugin.path[24:]] = 1
@@ -183,6 +183,7 @@ def getHotkeyFunctions():
 	hotkeyFunctions.append((_("Toggle HDMI In"), "Infobar/HDMIIn", "InfoBar"))
 	hotkeyFunctions.append((_("Toggle dashed flickering line for this service"), "Infobar/ToggleHideVBI", "InfoBar"))
 	hotkeyFunctions.append((_("Do nothing"), "Void", "InfoBar"))
+	hotkeyFunctions.append((_("Softcam Setup"), "Module/Screens.SoftcamSetup/SoftcamSetup", "Setup"))
 	hotkeyFunctions.append((_("HotKey Setup"), "Module/Screens.Hotkey/HotkeySetup", "Setup"))
 	hotkeyFunctions.append((_("Software update"), "Module/Screens.SoftwareUpdate/UpdatePlugin", "Setup"))
 	hotkeyFunctions.append((_("Latest Commits"), "Module/Screens.About/CommitInfo", "Setup"))
@@ -378,7 +379,7 @@ class HotkeySetupSelect(Screen):
 		functionslist = []
 		catagories = {}
 		for function in self.hotkeyFunctions:
-			if not catagories.has_key(function[2]):
+			if function[2] not in catagories:
 				catagories[function[2]] = []
 			catagories[function[2]].append(function)
 		for catagorie in sorted(list(catagories)):
@@ -484,7 +485,7 @@ class HotkeySetupSelect(Screen):
 
 class hotkeyActionMap(ActionMap):
 	def action(self, contexts, action):
-		if (action in tuple(x[1] for x in used_keys.getHotkeys()) and self.actions.has_key(action)):
+		if action in tuple(x[1] for x in used_keys.getHotkeys()) and action in self.actions:
 			res = self.actions[action](action)
 			if res is not None:
 				return res
@@ -494,7 +495,7 @@ class hotkeyActionMap(ActionMap):
 
 class helpableHotkeyActionMap(HelpableActionMap):
 	def action(self, contexts, action):
-		if (action in tuple(x[1] for x in used_keys.getHotkeys()) and self.actions.has_key(action)):
+		if action in tuple(x[1] for x in used_keys.getHotkeys()) and action in self.actions:
 			res = self.actions[action](action)
 			if res is not None:
 				return res
@@ -553,7 +554,7 @@ class InfoBarHotkey():
 				pluginlist.sort(key=lambda p: p.name)
 				for plugin in pluginlist:
 					if plugin.name not in twinPlugins and plugin.path and 'selectedevent' not in plugin.__call__.func_code.co_varnames:
-						if twinPaths.has_key(plugin.path[24:]):
+						if plugin.path[24:] in twinPaths:
 							twinPaths[plugin.path[24:]] += 1
 						else:
 							twinPaths[plugin.path[24:]] = 1
@@ -565,7 +566,7 @@ class InfoBarHotkey():
 				pluginlist.sort(key=lambda p: p.name)
 				for plugin in pluginlist:
 					if plugin.name not in twinPlugins and plugin.path:
-						if twinPaths.has_key(plugin.path[24:]):
+						if plugin.path[24:] in twinPaths:
 							twinPaths[plugin.path[24:]] += 1
 						else:
 							twinPaths[plugin.path[24:]] = 1

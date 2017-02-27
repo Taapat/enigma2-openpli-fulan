@@ -142,6 +142,13 @@ class VideoHardware:
 			print "[VideoHardware] hotplug on dvi"
 			self.on_hotplug("DVI") # must be DVI
 
+	def is24hzAvailable(self):
+		try:
+			self.has24pAvailable = os.access("/proc/stb/video/videomode_24hz", os.W_OK) and True or False
+		except IOError:
+			print "[VideoHardware] failed to read video choices 24hz ."
+			self.has24pAvailable = False
+
 	# check if a high-level mode with a given rate is available.
 	def isModeAvailable(self, port, mode, rate):
 		rate = self.rates[mode][rate]

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-04 16:57+0100\n"
+"POT-Creation-Date: 2017-02-21 21:16+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Tech <tech@openpli.org>\n"
+"Last-Translator: TechNL <tech@openpli.org>\n"
 "Language-Team: PLiteam <translators@openpli.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -263,6 +263,10 @@ msgstr[0] "%d pixelbreedte"
 msgstr[1] "%d pixels breed"
 
 #, python-format
+msgid "%d sec"
+msgstr "%d seconde"
+
+#, python-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d seconde"
@@ -356,6 +360,12 @@ msgstr "1.1"
 msgid "1.2"
 msgstr "1.2"
 
+msgid "10bit"
+msgstr "10bit"
+
+msgid "12bit"
+msgstr "12bit"
+
 msgid "13 V"
 msgstr "13V"
 
@@ -415,6 +425,9 @@ msgstr "4:3 Letterbox"
 
 msgid "4:3 PanScan"
 msgstr "4:3 PanScan"
+
+msgid "8bit"
+msgstr "8bit"
 
 msgid ": 0000 - default (disabled)"
 msgstr ":0000 - standaard (uitgeschakeld)"
@@ -1209,7 +1222,6 @@ msgstr "Sluiten"
 msgid "Close title selection"
 msgstr "Sluit titelselectie"
 
-#, fuzzy
 msgid "Code R. LP-HP & Guard Int."
 msgstr "Code R. LP-HP & Guard Int."
 
@@ -1301,27 +1313,27 @@ msgstr ""
 
 msgid "Configure the general audio delay of Dolby Digital sound tracks."
 msgstr ""
-"Met deze optie stelt u de algemene audiovertraging van Dolby digital geluid "
+"Met deze optie stel je de algemene audiovertraging van Dolby digital geluid "
 "in."
 
 msgid "Configure the general audio delay of stereo sound tracks."
 msgstr ""
-"Met deze optie stelt u de algemene audiovertraging van stereo geluid in."
+"Met deze optie stel je de algemene audiovertraging van stereo geluid in."
 
 msgid "Configure the refresh rate of the screen."
 msgstr ""
-"Met deze optie stelt u de verversingssnelheid van het scherm in.\n"
+"Met deze optie stel je de verversingssnelheid van het scherm in.\n"
 "\n"
 "U kunt kiezen voor multi, 50Hz of 60Hz."
 
 msgid "Configure the screen resolution in PC output mode."
-msgstr "Met deze optie stelt u de schermresolutie in bij de PC output modus."
+msgstr "Met deze optie stel je de schermresolutie in bij de PC output modus."
 
 msgid "Configure the sharpness of the video scaling."
 msgstr "Met deze optie stelt u scherpte van de videoconverting in."
 
 msgid "Configure the transparency of the OSD."
-msgstr "Met deze optie stelt u de transparantie van de OSD in."
+msgstr "Met deze optie stel je de transparantie van de OSD in."
 
 msgid "Configure the video output mode (or resolution)."
 msgstr ""
@@ -1376,16 +1388,14 @@ msgstr "Verbonden satellieten"
 msgid "Connected to"
 msgstr "Verbonden met"
 
-#, fuzzy
 msgid "Connected transcoding, limit - no PiP!"
 msgstr "Verbonden transcoding, beperking - geen PIP!"
 
 msgid "Console"
 msgstr "Console"
 
-#, fuzzy
 msgid "Constellation & FFT mode"
-msgstr "Constellatie & FFT modus"
+msgstr "Constellation & FFT modus"
 
 msgid "Content does not fit on DVD!"
 msgstr "De inhoud past niet op deze DVD!"
@@ -1439,6 +1449,9 @@ msgstr "DVD-ISO maken"
 
 msgid "Create new folder and exit"
 msgstr "Maak een nieuwe map en ga terug"
+
+msgid "Create seperate radio userbouquet"
+msgstr "Gescheiden radio gebruikersboeket maken"
 
 #, python-format
 msgid "Creating directory %s failed."
@@ -1762,6 +1775,9 @@ msgstr "Timer uitschakelen"
 msgid "Disabled"
 msgstr "Gedeactiveerd"
 
+msgid "Disclaimer"
+msgstr "Toon de disclaimer"
+
 msgid "Display 16:9 content as"
 msgstr "Toon 16:9 materiaal als"
 
@@ -1858,6 +1874,9 @@ msgstr "Wil je de overscan wizard sluiten?"
 
 msgid "Do you want to reboot your receiver?"
 msgstr "Wil je de ontvanger opnieuw opstarten?"
+
+msgid "Do you want to remove all the crahs logfiles"
+msgstr "Wil je alle crash logbestanden verwijderen"
 
 msgid "Do you want to remove the package:\n"
 msgstr "Wil je dit pakket verwijderen:\n"
@@ -2189,26 +2208,33 @@ msgstr "Extra begintijd om de inactiviteit sleeptimer te negeren"
 msgid "F1/F3/F4"
 msgstr "F1/F3/F4"
 
-msgid "FBC Unicable"
-msgstr "FBC Unicable"
+msgid "FBC SCR (Unicable/JESS)"
+msgstr "FBC SCR (Unicable/JESS)"
 
-msgid "FBC automatic loop through"
-msgstr "FBC automatisch doorlussen"
+msgid "FBC automatic"
+msgstr "FBC automatisch"
 
 msgid ""
-"FBC automatic loop through\n"
+"FBC automatic\n"
+"connected to"
+msgstr ""
+"FBC automatisch doorlussen\n"
+"verbonden met"
+
+#, python-format
+msgid ""
+"FBC automatic\n"
+"connected to %s"
+msgstr ""
+"FBC automatisch doorlussen\n"
+"Verbonden met %s"
+
+msgid ""
+"FBC automatic\n"
 "inactive"
 msgstr ""
 "FBC automatisch doorlussen\n"
 "uitgeschakeld"
-
-#, python-format
-msgid ""
-"FBC automatic loop through\n"
-"linked to %s"
-msgstr ""
-"FBC automatisch doorlussen\n"
-"Verbonden met %s"
 
 msgid "FEC"
 msgstr "FEC"
@@ -2356,6 +2382,13 @@ msgid "Further options"
 msgstr "Verdere opties"
 
 msgid ""
+"GUI needs a restart to apply a new language\n"
+"Do you want to restart the GUI now?"
+msgstr ""
+"De gebruikersinterface moet herstart worden om\n"
+"de nieuwe taalselectie te activeren. Nu herstarten?"
+
+msgid ""
 "GUI needs a restart to apply a new skin\n"
 "Do you want to restart the GUI now?"
 msgstr ""
@@ -2475,6 +2508,9 @@ msgstr "HD1100/HD1200/HD1265/et7x00/et8500/et7000mini"
 
 msgid "HD2400"
 msgstr "HD2400"
+
+msgid "HDMI Colordepth"
+msgstr "HDMI kleurruimte"
 
 msgid "HDMI Colorspace"
 msgstr "HDMI kleurruimte"
@@ -2945,6 +2981,9 @@ msgstr "Lock:"
 msgid "Log results to /tmp"
 msgstr "Log resultaat naar /tmp"
 
+msgid "Logfile does not exist anymore"
+msgstr "Logbestand bestaat niet meer"
+
 msgid "Long filenames"
 msgstr "Lange bestandsnamen"
 
@@ -2954,8 +2993,8 @@ msgstr "Lange toetsdruk"
 msgid "Longitude"
 msgstr "Lengtegraad"
 
-msgid "Loop through to"
-msgstr "doorlus naar"
+msgid "Loop through from"
+msgstr "doorlus van"
 
 msgid "Luxembourgish"
 msgstr "Luxemburgs"
@@ -3864,6 +3903,9 @@ msgstr "Poort D"
 msgid "Portuguese"
 msgstr "Portugees"
 
+msgid "Position"
+msgstr "Positie"
+
 msgid "Position stored at index"
 msgstr "Positie opgeslagen op index"
 
@@ -4193,6 +4235,9 @@ msgstr "Wis markeerpunt"
 msgid "Remove a nameserver entry"
 msgstr "Verwijder een nameserver ingave"
 
+msgid "Remove all logfiles"
+msgstr "Verwijder alle logbestanden"
+
 msgid "Remove bookmark"
 msgstr "Wis markeerpunt"
 
@@ -4201,6 +4246,9 @@ msgstr "Verwijder de huidig geselecteerde titel"
 
 msgid "Remove plugins"
 msgstr "Verwijderen plugins"
+
+msgid "Remove this logfile"
+msgstr "Verwijder dit logbestand"
 
 msgid "Remove title"
 msgstr "Titel verwijderen"
@@ -4372,6 +4420,15 @@ msgstr "S-Video"
 
 msgid "SCPC optimized search range"
 msgstr "SCPC geoptimaliseerd zoekbereik"
+
+msgid "SCR (Unicable/JESS)"
+msgstr "SCR (Unicable/JESS)"
+
+msgid "SCR JESS"
+msgstr "SCR JESS"
+
+msgid "SCR Unicable"
+msgstr "SCR Unicable"
 
 msgid "SINGLE LAYER DVD"
 msgstr "SINGLE LAYER DVD"
@@ -4702,7 +4759,6 @@ msgstr "Zenderinfo"
 msgid "Service info - service & PIDs"
 msgstr "Service info - service & PIDs"
 
-#, fuzzy
 msgid "Service info - tuner live values"
 msgstr "Service info - actieve tunerwaardes"
 
@@ -5079,6 +5135,9 @@ msgstr "Software update"
 msgid "Softwaremanager information"
 msgstr "Softwarebeheerinformatie"
 
+msgid "Some error occured - Please try later"
+msgstr "Fout geconstateerd - probeer het later opnieuw"
+
 msgid "Some plugins are not available:\n"
 msgstr "Enkele plugins zijn niet beschikbaar:\n"
 
@@ -5395,6 +5454,9 @@ msgstr "Zenders omwisselen"
 
 msgid "Swedish"
 msgstr "Zweeds"
+
+msgid "Switch"
+msgstr "Switch"
 
 msgid "Switch TV to correct input"
 msgstr "Schakel de TV naar de juiste ingang"
@@ -5743,9 +5805,13 @@ msgid ""
 "Don't panic please when you see values being displayed that you think look "
 "suspicious!"
 msgstr ""
-"Deze informatie is alleen voor ontwikkelaars van belang.\n"
-"Voor normale gebruikers is die niet interessant.\n"
-"Niet in paniek raken indien je vreemde zaken ziet!"
+"Deze informatie is alleen voor ontwikkelaars van belang. Voor de gewone "
+"eindgebruiker is deze informatie niet echt van belang.\n"
+"Het is niet noodzakelijk om in paniek raken indien je vreemde zaken ziet in "
+"dit overzicht. "
+
+msgid "This option allows you can config the Colordepth for UHD"
+msgstr "Deze optie maakt het mogelijk om de kleurdiepte voor UHD in te stellen"
 
 msgid "This option allows you can config the Colorspace from Auto to RGB"
 msgstr ""
@@ -5938,7 +6004,6 @@ msgstr "Schakel tussen TV/RADIO"
 msgid "Toggle a cut mark at the current position"
 msgstr "Op de huidige positie een snijmarkering aanbrengen"
 
-#, fuzzy
 msgid "Toggle dashed flickering line for this service"
 msgstr "Activeer de optie 'verberg de stippellijn' voor dit kanaal"
 
@@ -5997,6 +6062,9 @@ msgstr "Prullenbak"
 msgid "Tries left:"
 msgstr "Aantal pogingen over:"
 
+msgid "Troubleshoot"
+msgstr "Foutzoeken"
+
 msgid "Try to find used transponders in cable network.. please wait..."
 msgstr ""
 "Er wordt geprobeerd gebruikte transponders op het kabelnetwerk te vinden… "
@@ -6035,14 +6103,12 @@ msgstr "Tunerconfiguratie"
 msgid "Tuner is not supported"
 msgstr "De tuner wordt niet ondersteund"
 
-#, fuzzy
 msgid "Tuner live values"
 msgstr "Tuner live waardes"
 
 msgid "Tuner not available."
 msgstr "Tuner niet beschikbaar"
 
-#, fuzzy
 msgid "Tuner setting values"
 msgstr "Tuner setting waardes"
 
@@ -6106,15 +6172,6 @@ msgstr "Ongecodeerd"
 
 msgid "Unhide parental control services"
 msgstr "Maak het kinderslot zichtbaar"
-
-msgid "Unicable"
-msgstr "Unicable"
-
-msgid "Unicable LNB"
-msgstr "Unicable LNB"
-
-msgid "Unicable Matrix"
-msgstr "Unicable Matrix"
 
 msgid "Uninstall"
 msgstr "De-installeer"
@@ -6585,6 +6642,15 @@ msgstr "Schrijven mislukt!"
 
 msgid "Write to /tmp/positionersetup.log"
 msgstr "Schrijf naar /tmp/positionersetup.log"
+
+msgid "YCbCr420"
+msgstr "YCbCr420"
+
+msgid "YCbCr422"
+msgstr "YCbCr422"
+
+msgid "YCbCr444"
+msgstr "YCbCr444"
 
 msgid "YES"
 msgstr "JA"
@@ -7480,9 +7546,6 @@ msgstr "niet ondersteund"
 msgid "not tested"
 msgstr "niet getest"
 
-msgid "not used"
-msgstr "niet gebruikt"
-
 msgid "not_tested"
 msgstr "niet_getest"
 
@@ -7945,6 +8008,304 @@ msgstr "zap en neem op"
 msgid "zapped"
 msgstr "zapte"
 
+msgid "[REC]"
+msgstr "[REC]"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "BER"
+msgstr "BER"
+
+msgid "C"
+msgstr "C"
+
+msgid "D"
+msgstr "D"
+
+msgid "Extensions"
+msgstr "Applicaties"
+
+msgid "Info bar"
+msgstr "Informatiebalk"
+
+msgid "SNR"
+msgstr "SNR"
+
+msgid "Timeshift"
+msgstr "Timeshift"
+
+msgid "0"
+msgstr "0"
+
+msgid "1"
+msgstr "1"
+
+msgid "2"
+msgstr "2"
+
+msgid "3"
+msgstr "3"
+
+msgid "4"
+msgstr "4"
+
+msgid "5"
+msgstr "5"
+
+msgid "6"
+msgstr "6"
+
+msgid "7"
+msgstr "7"
+
+msgid "8"
+msgstr "8"
+
+msgid "9"
+msgstr "9"
+
+msgid "Channellist menu"
+msgstr "Zenderlijstmenu"
+
+msgid "Command execution..."
+msgstr "Commando uitvoeren..."
+
+msgid "Commit info"
+msgstr "Commit informatie"
+
+msgid "Continue in background"
+msgstr "Verder op de achtergrond"
+
+msgid "Downloadable plugins"
+msgstr "Beschikbare plugins"
+
+msgid "EPG selection"
+msgstr "EPG selectie"
+
+msgid "Event view"
+msgstr "Programmaoverzicht"
+
+msgid "Event view menu"
+msgstr "Programmaoverzichtsmenu"
+
+msgid "Harddisk"
+msgstr "Harde schijf"
+
+msgid "Index"
+msgstr "Index"
+
+msgid "Installing software..."
+msgstr "De software wordt geïnstalleerd..."
+
+msgid "MORE"
+msgstr "MEER"
+
+msgid "Manual scan"
+msgstr "Handmatig zoeken"
+
+msgid "Message..."
+msgstr "Bericht..."
+
+msgid "Movielist menu"
+msgstr "Opnamelijstmenu"
+
+msgid "Mute"
+msgstr "Geluid uit"
+
+msgid "NEXT"
+msgstr "VOLGENDE"
+
+msgid "NOW"
+msgstr "NU"
+
+msgid "Nameserver setup"
+msgstr "Instellingen van de nameserver"
+
+msgid "Network configuration..."
+msgstr "Netwerkconfiguratie..."
+
+msgid "Network test..."
+msgstr "Netwerktest..."
+
+msgid "Now playing"
+msgstr "Huidige weergave"
+
+msgid "OSD settings"
+msgstr "OSD instellingen"
+
+msgid "PIN code needed"
+msgstr "Pincode benodigd"
+
+msgid "Parental control services editor"
+msgstr "Kinderslot zendereditor"
+
+msgid "PiP setup"
+msgstr "PIP instellingen"
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "Reception settings"
+msgstr "Ontvangstinstellingen"
+
+msgid "Seek"
+msgstr "Zoeken"
+
+msgid "Select HDD"
+msgstr "Kies harde schijf"
+
+msgid "Select a bouquet"
+msgstr "Kies een bouquet"
+
+msgid "Select a movie"
+msgstr "Kies een opname"
+
+msgid "Select a skin"
+msgstr "Kies een skin"
+
+msgid "Select a tuner"
+msgstr "Kies een tuner"
+
+msgid "Timer edit"
+msgstr "Timer bewerken"
+
+msgid "Timeshift Live"
+msgstr "Live timeshift"
+
+msgid "Translation:"
+msgstr "Vertaling:"
+
+msgid "UnhandledKey"
+msgstr "Ongeldige toets"
+
+msgid "VideoMode"
+msgstr "VideoModus"
+
+msgid "Volume"
+msgstr "Volume"
+
+msgid "Welcome..."
+msgstr "Welkom..."
+
+msgid "config menu"
+msgstr "configuratiemenu"
+
+msgid "help..."
+msgstr "Help..."
+
+msgid "REC"
+msgstr "REC"
+
+msgid "Check the internet connection"
+msgstr "Controleer of u een internetverbinding heeft"
+
+msgid "Check the internet connection again"
+msgstr "Controleer nogmaals of u een internetverbinding heeft"
+
+msgid "Checking the internet connection"
+msgstr "Controleert de internetverbinding"
+
+msgid "Do you want to do a service scan?"
+msgstr "Wil je nu zenders gaan zoeken?"
+
+msgid "Do you want to do another manual service scan?"
+msgstr "Wil je opnieuw handmatig zoeken?"
+
+msgid "Do you want to install a channel list?"
+msgstr "Wil je een zenderlijst installeren?"
+
+msgid "Exit the wizard"
+msgstr "Wizard afsluiten"
+
+msgid "Please connect your receiver to the internet"
+msgstr "Verbind uw ontvanger aub met het internet"
+
+msgid "Please set up tuner A"
+msgstr "Stel aub Tuner A in"
+
+msgid "Please set up tuner B"
+msgstr "Instellingen voor Tuner B"
+
+msgid "Please set up tuner C"
+msgstr "Instellingen voor Tuner C"
+
+msgid "Please set up tuner D"
+msgstr "Instellingen voor Tuner D"
+
+msgid "Please set up tuner E"
+msgstr "Instellingen voor Tuner E"
+
+msgid "Please set up tuner F"
+msgstr "Instellingen voor Tuner F"
+
+msgid "Please set up tuner G"
+msgstr "Instellingen voor Tuner G"
+
+msgid "Please set up tuner H"
+msgstr "Instellingen voor Tuner H"
+
+msgid "Please set up tuner I"
+msgstr "Instellingen voor Tuner I"
+
+msgid "Please set up tuner J"
+msgstr "Instellingen voor Tuner J"
+
+msgid "Please set up tuner K"
+msgstr "K"
+
+msgid ""
+"Skip internet connection check (disables automatic package installation)"
+msgstr ""
+"Sla internet controle over (hiermee vervalt automatische installatie van "
+"pakketten)"
+
+msgid ""
+"Thank you for using the wizard. Your receiver is now ready for use.\n"
+"Press OK to start using your receiver."
+msgstr ""
+"Bedankt voor het gebruik van de wizard. Uw ontvanger is nu gebruiksklaar.\n"
+"Druk op OK om uw ontvanger in gebruik te nemen."
+
+msgid ""
+"Use the up/down keys on your remote control to select an option. After that, "
+"press OK."
+msgstr ""
+"Je kunt met de omhoog / omlaag toets op uw afstandsbediening een optie "
+"kiezen. Druk daarna op OK."
+
+msgid "Use the wizard to set up basic features"
+msgstr "Start de wizard voor de basisinstellingen"
+
+msgid ""
+"Welcome.\n"
+"\n"
+"This start wizard will guide you through the basic setup of your receiver.\n"
+"Press the OK button on your remote control to move to the next step."
+msgstr ""
+"Welkom.\n"
+"\n"
+"Deze opstarthulp voert je langs de basis instellingen van jouw ontvanger.\n"
+"Druk de OK toets op uw afstandsbediening om naar de volgende stap te gaan."
+
+msgid "What do you want to scan?"
+msgstr "Wat wil je zoeken?"
+
+msgid "Would you like to install a softcam?"
+msgstr "Wil je een softcam installeren?"
+
+msgid "Yes, do a manual scan now"
+msgstr "Ja, voer nu de handmatige zoekfunctie uit"
+
+msgid "Yes, do an automatic scan now"
+msgstr "Ja, voer nu de automatische zoekfunctie uit"
+
+msgid "Yes, do another manual scan now"
+msgstr "Ja, ik wil nogmaals handmatig zoeken"
+
+msgid "Rec"
+msgstr "Rec"
+
 msgid "Convert ext3 filesystem to ext4"
 msgstr "Converteer het bestandssysteem van ext3 naar ext4"
 
@@ -7954,9 +8315,6 @@ msgstr "Fabrieksinstellingen"
 msgid "Filesystem check"
 msgstr "Bestandssysteemcontrole"
 
-msgid "Harddisk"
-msgstr "Harde schijf"
-
 msgid "Initialization"
 msgstr "Initialiseren / formatteren"
 
@@ -7965,9 +8323,6 @@ msgstr "Invoerapparaten"
 
 msgid "Keyboard"
 msgstr "Toetsenbord..."
-
-msgid "Manual scan"
-msgstr "Handmatig zoeken"
 
 msgid "Plugins"
 msgstr "Applicaties"
@@ -7995,6 +8350,27 @@ msgstr "Tunerconfiguratie"
 
 msgid "VCR scart"
 msgstr "VCR scart"
+
+msgid "F"
+msgstr "F"
+
+msgid "G"
+msgstr "G"
+
+msgid "H"
+msgstr "H"
+
+msgid "I"
+msgstr "I"
+
+msgid "J"
+msgstr "J"
+
+msgid "TUNER:"
+msgstr "TUNER:"
+
+msgid "®"
+msgstr "®"
 
 msgid "12V output"
 msgstr "12V uitgang"
@@ -8210,6 +8586,13 @@ msgstr ""
 
 msgid "Configure if behind the subtitles a background is shown."
 msgstr "Stel in of achter de ondertitels een achtergrond moet worden getoond."
+
+msgid ""
+"Configure if service picons will be shown in display (when supported by the "
+"skin)."
+msgstr ""
+"Stel in of de picons in het display moeten worden getoond (indien dit door "
+"de skin wordt ondersteund)."
 
 msgid ""
 "Configure if service picons will be shown in the channel selection list."
@@ -8888,14 +9271,14 @@ msgstr "Aantal kanalen welke in de keuzelijst zichtbaar zijn"
 msgid "Number of repeating text on display."
 msgstr "Het aantal herhaalde teksten op het display"
 
-msgid "OSD settings"
-msgstr "OSD instellingen"
-
 msgid "Offline decode delay (ms)"
 msgstr "Vertraging voor achteraf decoderen (ms)"
 
 msgid "Position of completed timers in timerlist"
 msgstr "Positie van de uitgevoerde timers in de timerlijst"
+
+msgid "Power on display"
+msgstr "Schakel het display in"
 
 msgid "Prefer AC3 track"
 msgstr "AC3 voorkeur"
@@ -9021,8 +9404,8 @@ msgstr "De radioachtergrond weergeven"
 
 msgid "Show busy indicator when the system is busy."
 msgstr ""
-"Indien geactiveerd, dan worden de tandwielen getoond zolang er activiteiten "
-"plaats vinden."
+"Indien geactiveerd, dan wordt er zolang er activiteiten plaats vinden "
+"linksboven in beeld een animatie getoond."
 
 msgid "Show channel numbers in channel selection"
 msgstr "Toon de kanaalnummers in de zenderlijst"
@@ -9048,6 +9431,9 @@ msgstr "Informatiebalk weergeven zodra een programma begint"
 msgid "Show infobar on skip forward/backward"
 msgstr "Informatiebalk zichtbaar na overslaan, vooruit / achteruit"
 
+msgid "Show menu numbers"
+msgstr "Menu nummers tonen"
+
 msgid "Show menu paths"
 msgstr "Toon menu pad"
 
@@ -9059,6 +9445,9 @@ msgstr "Laat de opnamelengte zien in opnamelijst"
 
 msgid "Show picons in channel selection list"
 msgstr "Picons in kanalenlijst tonen"
+
+msgid "Show picons in display"
+msgstr "Picons op het display weergeven"
 
 msgid "Show positioner movement"
 msgstr "Rotorbewegingen zichtbaar"
@@ -9108,7 +9497,7 @@ msgstr ""
 "gaan."
 
 msgid "Startup to Standby"
-msgstr "Opstarten en naar standby"
+msgstr "Opstarten en ga naar standby"
 
 msgid "Subtitle alignment"
 msgstr "Uitlijning van ondertitels"
@@ -9158,6 +9547,12 @@ msgstr ""
 "ingesteld.\n"
 "\n"
 "Je kunt kiezen uit 'standaard', 'door jou gedefinieerd' of 'alfabetisch'."
+
+msgid "This option allows you to power off the display."
+msgstr "Deze instelling biedt de optie om het display uit te schakelen."
+
+msgid "This option allows you to show menu number quick links."
+msgstr "Deze instelling biedt de optie om het menu met nummers te kiezen."
 
 msgid "This option allows you to show menu paths."
 msgstr ""
@@ -9276,7 +9671,7 @@ msgid ""
 "channel selection will not close. It will only close when you select the "
 "current playing service. This is a kind of preview mode"
 msgstr ""
-"Indien geactiveerd, dan zal, indien u een keuze gemaakt heeft, het "
+"Indien geactiveerd, dan zal, indien je een keuze gemaakt hebt, het "
 "selectievenster niet sluiten maar een voorvertoning van de betreffende "
 "zender laten zien. Met tweemaal 'Ok' sluit het selectievenster weer."
 
@@ -9601,7 +9996,7 @@ msgid ""
 "When enabled, timeshift starts automatically in background after specified "
 "time."
 msgstr ""
-"Met deze optie stelt u de tijdsduur in na hoeveel tijd de timeshift "
+"Met deze optie stel je de tijdsduur in na hoeveel tijd de timeshift "
 "automatisch op de achtergrond gestart wordt.\n"
 "\n"
 "Je kunt kiezen tussen 'geen timeshift of van 0 - 5 minuten maximaal."
@@ -9644,315 +10039,38 @@ msgstr ""
 "Je kunt kiezen uit de volgende opties.\n"
 "Identiek aan de skin, 720x576, 1280x720 of 1920x1080."
 
-msgid "0"
-msgstr "0"
-
-msgid "1"
-msgstr "1"
-
-msgid "2"
-msgstr "2"
-
-msgid "3"
-msgstr "3"
-
-msgid "4"
-msgstr "4"
-
-msgid "5"
-msgstr "5"
-
-msgid "6"
-msgstr "6"
-
-msgid "7"
-msgstr "7"
-
-msgid "8"
-msgstr "8"
-
-msgid "9"
-msgstr "9"
-
-msgid "Audio"
-msgstr "Audio"
-
-msgid "Channellist menu"
-msgstr "Zenderlijstmenu"
-
-msgid "Command execution..."
-msgstr "Commando uitvoeren..."
-
-msgid "Continue in background"
-msgstr "Verder op de achtergrond"
-
-msgid "Downloadable plugins"
-msgstr "Beschikbare plugins"
-
-msgid "EPG selection"
-msgstr "EPG selectie"
-
-msgid "Event view"
-msgstr "Programmaoverzicht"
-
-msgid "Event view menu"
-msgstr "Programmaoverzichtsmenu"
-
-msgid "Index"
-msgstr "Index"
-
-msgid "Installing software..."
-msgstr "De software wordt geïnstalleerd..."
-
-msgid "MORE"
-msgstr "MEER"
-
-msgid "Message..."
-msgstr "Bericht..."
-
-msgid "Movielist menu"
-msgstr "Opnamelijstmenu"
-
-msgid "Mute"
-msgstr "Geluid uit"
-
-msgid "NEXT"
-msgstr "VOLGENDE"
-
-msgid "NOW"
-msgstr "NU"
-
-msgid "Nameserver setup"
-msgstr "Instellingen van de nameserver"
-
-msgid "Network configuration..."
-msgstr "Netwerkconfiguratie..."
-
-msgid "Network test..."
-msgstr "Netwerktest..."
-
-msgid "Now playing"
-msgstr "Huidige weergave"
-
-msgid "PIN code needed"
-msgstr "Pincode benodigd"
-
-msgid "Parental control services editor"
-msgstr "Kinderslot zendereditor"
-
-msgid "PiP setup"
-msgstr "PIP instellingen"
-
-msgid "Radio"
-msgstr "Radio"
-
-msgid "Reception settings"
-msgstr "Ontvangstinstellingen"
-
-msgid "Seek"
-msgstr "Zoeken"
-
-msgid "Select HDD"
-msgstr "Kies harde schijf"
-
-msgid "Select a bouquet"
-msgstr "Kies een bouquet"
-
-msgid "Select a movie"
-msgstr "Kies een opname"
-
-msgid "Select a skin"
-msgstr "Kies een skin"
-
-msgid "Select a tuner"
-msgstr "Kies een tuner"
-
-msgid "Timer edit"
-msgstr "Timer bewerken"
-
-msgid "Timeshift Live"
-msgstr "Live timeshift"
-
-msgid "Translation:"
-msgstr "Vertaling:"
-
-msgid "UnhandledKey"
-msgstr "Ongeldige toets"
-
-msgid "VideoMode"
-msgstr "VideoModus"
-
-msgid "Volume"
-msgstr "Volume"
-
-msgid "Welcome..."
-msgstr "Welkom..."
-
-msgid "config menu"
-msgstr "configuratiemenu"
-
-msgid "help..."
-msgstr "Help..."
-
-msgid "Rec"
-msgstr "Rec"
-
-msgid "[REC]"
-msgstr "[REC]"
-
 msgid "EtPortal"
 msgstr "EtPortal"
 
-msgid "®"
-msgstr "®"
+msgid "Refresh rate selection."
+msgstr "Herhalingsfrequentie"
 
-msgid "C"
-msgstr "C"
+msgid "Select refresh rate"
+msgstr "Selecteer herhalingsfrequentie"
 
-msgid "D"
-msgstr "D"
+msgid "Select video input with up/down buttons"
+msgstr "Selecteer video-ingang met de omhoog / omlaag toetsen"
 
-msgid "F"
-msgstr "F"
-
-msgid "G"
-msgstr "G"
-
-msgid "H"
-msgstr "H"
-
-msgid "I"
-msgstr "I"
-
-msgid "J"
-msgstr "J"
-
-msgid "TUNER:"
-msgstr "TUNER:"
-
-msgid "REC"
-msgstr "REC"
-
-msgid "BER"
-msgstr "BER"
-
-msgid "Extensions"
-msgstr "Applicaties"
-
-msgid "Info bar"
-msgstr "Informatiebalk"
-
-msgid "SNR"
-msgstr "SNR"
-
-msgid "Timeshift"
-msgstr "Timeshift"
-
-msgid "Check the internet connection"
-msgstr "Controleer of u een internetverbinding heeft"
-
-msgid "Check the internet connection again"
-msgstr "Controleer nogmaals of u een internetverbinding heeft"
-
-msgid "Checking the internet connection"
-msgstr "Controleert de internetverbinding"
-
-msgid "Do you want to do a service scan?"
-msgstr "Wil je nu zenders gaan zoeken?"
-
-msgid "Do you want to do another manual service scan?"
-msgstr "Wil je opnieuw handmatig zoeken?"
-
-msgid "Do you want to install a channel list?"
-msgstr "Wil je een zenderlijst installeren?"
-
-msgid "Exit the wizard"
-msgstr "Wizard afsluiten"
-
-msgid "Please connect your receiver to the internet"
-msgstr "Verbind uw ontvanger aub met het internet"
-
-msgid "Please set up tuner A"
-msgstr "Stel aub Tuner A in"
-
-msgid "Please set up tuner B"
-msgstr "Instellingen voor Tuner B"
-
-msgid "Please set up tuner C"
-msgstr "Instellingen voor Tuner C"
-
-msgid "Please set up tuner D"
-msgstr "Instellingen voor Tuner D"
-
-msgid "Please set up tuner E"
-msgstr "Instellingen voor Tuner E"
-
-msgid "Please set up tuner F"
-msgstr "Instellingen voor Tuner F"
-
-msgid "Please set up tuner G"
-msgstr "Instellingen voor Tuner G"
-
-msgid "Please set up tuner H"
-msgstr "Instellingen voor Tuner H"
-
-msgid "Please set up tuner I"
-msgstr "Instellingen voor Tuner I"
-
-msgid "Please set up tuner J"
-msgstr "Instellingen voor Tuner J"
-
-msgid "Please set up tuner K"
-msgstr "K"
+msgid "Select video mode"
+msgstr "Selecteer videomodus"
 
 msgid ""
-"Skip internet connection check (disables automatic package installation)"
-msgstr ""
-"Sla internet controle over (hiermee vervalt automatische installatie van "
-"pakketten)"
-
-msgid ""
-"Thank you for using the wizard. Your receiver is now ready for use.\n"
-"Press OK to start using your receiver."
-msgstr ""
-"Bedankt voor het gebruik van de wizard. Uw ontvanger is nu gebruiksklaar.\n"
-"Druk op OK om uw ontvanger in gebruik te nemen."
-
-msgid ""
-"Use the up/down keys on your remote control to select an option. After that, "
-"press OK."
-msgstr ""
-"Je kunt met de omhoog / omlaag toets op uw afstandsbediening een optie "
-"kiezen. Druk daarna op OK."
-
-msgid "Use the wizard to set up basic features"
-msgstr "Start de wizard voor de basisinstellingen"
-
-msgid ""
-"Welcome.\n"
+"Video input selection\n"
 "\n"
-"This start wizard will guide you through the basic setup of your receiver.\n"
-"Press the OK button on your remote control to move to the next step."
-msgstr ""
-"Welkom.\n"
+"Please press OK if you can see this page on your TV (or select a different "
+"input port).\n"
 "\n"
-"Deze opstarthulp voert je langs de basis instellingen van jouw ontvanger.\n"
-"Druk de OK toets op uw afstandsbediening om naar de volgende stap te gaan."
+"The next input port will be automatically probed in 20 seconds."
+msgstr ""
+"Videouitgangsselectie\n"
+"\n"
+"Druk op OK zodra je dit bericht kunt zien (of selecteer een andere "
+"uitgang).\n"
+"De volgende videooptie wordt over ongeveer 10 seconden automatisch "
+"geprobeerd."
 
-msgid "What do you want to scan?"
-msgstr "Wat wil je zoeken?"
-
-msgid "Would you like to install a softcam?"
-msgstr "Wil je een softcam installeren?"
-
-msgid "Yes, do a manual scan now"
-msgstr "Ja, voer nu de handmatige zoekfunctie uit"
-
-msgid "Yes, do an automatic scan now"
-msgstr "Ja, voer nu de automatische zoekfunctie uit"
-
-msgid "Yes, do another manual scan now"
-msgstr "Ja, ik wil nogmaals handmatig zoeken"
+msgid "Video mode selection."
+msgstr "Videomodeselectie"
 
 msgid "Configure interface"
 msgstr "Configureer interface"
@@ -10164,109 +10282,8 @@ msgstr ""
 msgid "Your receiver is shutting down. Please stand by..."
 msgstr "De ontvanger wordt uitgeschakeld. Een moment geduld AUB..."
 
-msgid "Refresh rate selection."
-msgstr "Herhalingsfrequentie"
-
-msgid "Select refresh rate"
-msgstr "Selecteer herhalingsfrequentie"
-
-msgid "Select video input with up/down buttons"
-msgstr "Selecteer video-ingang met de omhoog / omlaag toetsen"
-
-msgid "Select video mode"
-msgstr "Selecteer videomodus"
-
-msgid ""
-"Video input selection\n"
-"\n"
-"Please press OK if you can see this page on your TV (or select a different "
-"input port).\n"
-"\n"
-"The next input port will be automatically probed in 20 seconds."
-msgstr ""
-"Videouitgangsselectie\n"
-"\n"
-"Druk op OK zodra je dit bericht kunt zien (of selecteer een andere "
-"uitgang).\n"
-"De volgende videooptie wordt over ongeveer 10 seconden automatisch "
-"geprobeerd."
-
-msgid "Video mode selection."
-msgstr "Videomodeselectie"
-
 #~ msgid "%d-%b-%Y %-H:%M"
 #~ msgstr "%d-%b/%Y %-H:%M"
-
-#~ msgid "Coderate HP"
-#~ msgstr "Coderate HP"
-
-#~ msgid "Coderate LP"
-#~ msgstr "Coderate LP"
-
-#~ msgid "Constellation"
-#~ msgstr "Constellatie"
-
-#~ msgid "Diction"
-#~ msgstr "Voordracht"
-
-#~ msgid "Frontprocessor version: %d"
-#~ msgstr "Frontprocessor versie: %d"
-
-#~ msgid "Hierarchy information"
-#~ msgstr "Hiërarchie-informatie"
-
-#~ msgid ""
-#~ "Misconfigured unicable connection from tuner %s to tuner %s!\n"
-#~ "Tuner %s option \"connected to\" are disabled now"
-#~ msgstr ""
-#~ "Fout ingestelde unicable verbinding van tuner %s naar tuner %s!\n"
-#~ "Tuner %s optie \"verbonden aan\" is nu uitgeschakeld"
-
-#~ msgid "Multiplex"
-#~ msgstr "Multiplex"
-
-#~ msgid "NIM"
-#~ msgstr "NIM"
-
-#~ msgid "PIDs"
-#~ msgstr "PIDs"
-
-#~ msgid "Picon and service name"
-#~ msgstr "Picon en zendernaam"
-
-#~ msgid "SID"
-#~ msgstr "SID"
-
-#~ msgid ""
-#~ "The unicable connection setting is wrong.\n"
-#~ " Maybe recursive connection of tuners."
-#~ msgstr "De unicable instellingen zijn fout."
-
-#~ msgid "Transponder type"
-#~ msgstr "Transpondertype"
-
-#~ msgid "Tuner status"
-#~ msgstr "Tunerstatus"
-
-#~ msgid "Unicable / JESS"
-#~ msgstr "Unicable / JESS"
-
-#~ msgid "Videocodec"
-#~ msgstr "Videocodec"
-
-#~ msgid "Videoformat"
-#~ msgstr "Videoformaat"
-
-#~ msgid "Videosize"
-#~ msgstr "Videogrootte"
-
-#~ msgid "When enabled the LNB power will not be switched off in standby"
-#~ msgstr ""
-#~ "Indien geactiveerd, dan zal de spanning in standby, niet van de LNB "
-#~ "worden afgehaald."
-
-#~ msgid "When enabled the LNB toneburst will be forced"
-#~ msgstr "Indien ingeschakeld, dan wordt de LNB toneburst-optie geforceerd"
 
 #~ msgid ": %s"
 #~ msgstr ":%s"
@@ -10294,6 +10311,12 @@ msgstr "Videomodeselectie"
 #~ "Controleert tuner %d\n"
 #~ "DiSEqC poort %s voor %s"
 
+#~ msgid "Coderate HP"
+#~ msgstr "Coderate HP"
+
+#~ msgid "Coderate LP"
+#~ msgstr "Coderate LP"
+
 #~ msgid "Compensate for overscan"
 #~ msgstr "Overscan compensatie"
 
@@ -10316,6 +10339,9 @@ msgstr "Videomodeselectie"
 #~ msgid "Conflicting timer"
 #~ msgstr "Timer conflict!"
 
+#~ msgid "Constellation"
+#~ msgstr "Constellatie"
+
 #~ msgid "Could not connect to receiver .NFI image feed server:"
 #~ msgstr "Kan geen verbinding maken met .NFI Image bronserver:"
 
@@ -10327,6 +10353,9 @@ msgstr "Videomodeselectie"
 
 #~ msgid "Descramble http streams"
 #~ msgstr "Decoderen van http streams"
+
+#~ msgid "Diction"
+#~ msgstr "Voordracht"
 
 #~ msgid "Do you want to download the image to %s ?"
 #~ msgstr "Wil je de image naar %s downloaden?"
@@ -10349,6 +10378,9 @@ msgstr "Videomodeselectie"
 #~ msgid "Flashing failed"
 #~ msgstr "Flashen mislukt"
 
+#~ msgid "Frontprocessor version: %d"
+#~ msgstr "Frontprocessor versie: %d"
+
 #~ msgid "Get latest experimental image"
 #~ msgstr "Haal de laatste experimentele image"
 
@@ -10361,17 +10393,33 @@ msgstr "Videomodeselectie"
 #~ msgid "Hide CI messages"
 #~ msgstr "Verberg CI meldingen"
 
+#~ msgid "Hierarchy information"
+#~ msgstr "Hiërarchie-informatie"
+
 #~ msgid "Immediate shutdown"
 #~ msgstr "Direct uitschakelen"
 
 #~ msgid "Log results to harddisk"
 #~ msgstr "Schrijf resultaten naar de harde schijf"
 
+#~ msgid ""
+#~ "Misconfigured unicable connection from tuner %s to tuner %s!\n"
+#~ "Tuner %s option \"connected to\" are disabled now"
+#~ msgstr ""
+#~ "Fout ingestelde unicable verbinding van tuner %s naar tuner %s!\n"
+#~ "Tuner %s optie \"verbonden aan\" is nu uitgeschakeld"
+
+#~ msgid "Multiplex"
+#~ msgstr "Multiplex"
+
 #~ msgid "NFI image flashing"
 #~ msgstr "NFI image flashen"
 
 #~ msgid "NFI image flashing completed. Press Yellow to Reboot!"
 #~ msgstr "NFI image schrijven is gereed. Druk op gele toets om te herstarten!"
+
+#~ msgid "NIM"
+#~ msgstr "NIM"
 
 #~ msgid "New version:"
 #~ msgstr "Nieuwe versie:"
@@ -10381,6 +10429,12 @@ msgstr "Videomodeselectie"
 
 #~ msgid "OSD position setup"
 #~ msgstr "OSD setup positie"
+
+#~ msgid "PIDs"
+#~ msgstr "PIDs"
+
+#~ msgid "Picon and service name"
+#~ msgstr "Picon en zendernaam"
 
 #~ msgid "Please check your network settings!"
 #~ msgstr "Controleer uw netwerkinstellingen aub.!"
@@ -10408,6 +10462,9 @@ msgstr "Videomodeselectie"
 #~ msgid "Restore is running..."
 #~ msgstr "Herstellen wordt uitgevoerd..."
 
+#~ msgid "SID"
+#~ msgstr "SID"
+
 #~ msgid "Select an image to be downloaded"
 #~ msgstr "Kies de image die u wilt downloaden"
 
@@ -10420,9 +10477,6 @@ msgstr "Videomodeselectie"
 #~ msgstr ""
 #~ "Moet de USB-stick wizzard doorgaan en het imagebestand %s naar de flash "
 #~ "schrijven?"
-
-#~ msgid "Show picons in channel list"
-#~ msgstr "Toon de picons in de zenderlijst"
 
 #~ msgid "Show shutdown menu"
 #~ msgstr "Afsluitmenu weergeven"
@@ -10455,6 +10509,11 @@ msgstr "Videomodeselectie"
 
 #~ msgid "The results have been written to %s."
 #~ msgstr "De resultaten zijn bewaard op %s."
+
+#~ msgid ""
+#~ "The unicable connection setting is wrong.\n"
+#~ " Maybe recursive connection of tuners."
+#~ msgstr "De unicable instellingen zijn fout."
 
 #~ msgid ""
 #~ "The wizard found a configuration backup. Do you want to restore your old "
@@ -10510,11 +10569,43 @@ msgstr "Videomodeselectie"
 #~ "3: Wacht tot de receiver gaat opstarten en volg daarna de instructies op "
 #~ "het display op."
 
+#~ msgid "Transponder type"
+#~ msgstr "Transpondertype"
+
+#~ msgid "Tuner status"
+#~ msgstr "Tunerstatus"
+
 #~ msgid "USB stick wizard"
 #~ msgstr "USB stick wizard"
 
+#~ msgid "Unicable"
+#~ msgstr "Unicable"
+
+#~ msgid "Unicable LNB"
+#~ msgstr "Unicable LNB"
+
 #~ msgid "Unicable Martix"
 #~ msgstr "Unicable Matrix"
+
+#~ msgid "Unicable Matrix"
+#~ msgstr "Unicable Matrix"
+
+#~ msgid "Videocodec"
+#~ msgstr "Videocodec"
+
+#~ msgid "Videoformat"
+#~ msgstr "Videoformaat"
+
+#~ msgid "Videosize"
+#~ msgstr "Videogrootte"
+
+#~ msgid "When enabled the LNB power will not be switched off in standby"
+#~ msgstr ""
+#~ "Indien geactiveerd, dan zal de spanning in standby, niet van de LNB "
+#~ "worden afgehaald."
+
+#~ msgid "When enabled the LNB toneburst will be forced"
+#~ msgstr "Indien ingeschakeld, dan wordt de LNB toneburst-optie geforceerd"
 
 #~ msgid ""
 #~ "When enabled, error messages related to the Common Interface module will "
@@ -10553,3 +10644,6 @@ msgstr "Videomodeselectie"
 
 #~ msgid "currently installed image: %s"
 #~ msgstr "huidig geïnstalleerde image: %s"
+
+#~ msgid "not used"
+#~ msgstr "niet gebruikt"

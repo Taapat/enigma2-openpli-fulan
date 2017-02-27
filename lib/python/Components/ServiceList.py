@@ -215,7 +215,7 @@ class ServiceList(HTMLComponent, GUIComponent):
 		index = self.l.getNextBeginningWithChar(char)
 		indexup = self.l.getNextBeginningWithChar(char.upper())
 		if indexup is not 0:
-			if (index > indexup or index is 0):
+			if index > indexup or index is 0:
 				index = indexup
 
 		self.instance.moveSelectionTo(index)

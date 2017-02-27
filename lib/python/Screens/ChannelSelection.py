@@ -10,7 +10,7 @@ from Components.MenuList import MenuList
 from Components.ServiceEventTracker import ServiceEventTracker, InfoBarBase
 profile("ChannelSelection.py 1")
 from EpgSelection import EPGSelection
-from enigma import eServiceReference, eEPGCache, eServiceCenter, eRCInput, eTimer, eDVBDB, iPlayableService, iServiceInformation, getPrevAsciiCode, eEnv
+from enigma import eServiceReference, eEPGCache, eServiceCenter, eRCInput, eTimer, eDVBDB, iPlayableService, iServiceInformation, getPrevAsciiCode
 from Components.config import config, configfile, ConfigSubsection, ConfigText, ConfigYesNo
 from Tools.NumericalTextInput import NumericalTextInput
 profile("ChannelSelection.py 2")
@@ -36,7 +36,7 @@ from Screens.RdsDisplay import RassInteractive
 from ServiceReference import ServiceReference
 from Tools.BoundFunction import boundFunction
 from Tools import Notifications
-from Tools.Alternatives import CompareWithAlternatives, GetWithAlternative
+from Tools.Alternatives import GetWithAlternative
 from Tools.Directories import fileExists
 from Plugins.Plugin import PluginDescriptor
 from Components.PluginComponent import plugins
@@ -1228,7 +1228,7 @@ class ChannelSelectionEdit:
 			select and self.toggleMoveMarked()
 			self.saved_title = self.getTitle()
 			pos = self.saved_title.find(')')
-			self.setTitle(self.saved_title[:pos+1] + ' ' + _("[move mode]") + self.saved_title[pos+1:]);
+			self.setTitle(self.saved_title[:pos+1] + ' ' + _("[move mode]") + self.saved_title[pos+1:])
 			self.servicelist.l.setHideNumberMarker(False)
 			self.setCurrentSelection(self.servicelist.getCurrent())
 		self["Service"].editmode = True
@@ -1841,17 +1841,17 @@ class ChannelSelectionBase(Screen):
 
 	def gotoCurrentServiceOrProvider(self, ref):
 		str = ref.toString()
+		playingref = self.session.nav.getCurrentlyPlayingServiceReference()
 		if _("Providers") in str:
 			service = self.session.nav.getCurrentService()
 			if service:
 				info = service.info()
-				if info:
+				if info and playingref:
 					provider = info.getInfoString(iServiceInformation.sProvider)
-					op = int(self.session.nav.getCurrentlyPlayingServiceOrGroup().toString().split(':')[6][:-4] or "0",16)
-					refstr = '1:7:0:0:0:0:0:0:0:0:(provider == \"%s\") && (satellitePosition == %s) && %s ORDER BY name:%s' % (provider, op, self.service_types[self.service_types.rfind(':')+1:],provider)
+					op = int(playingref.toString().split(':')[6][:-4] or "0",16)
+					refstr = '1:7:0:0:0:0:0:0:0:0:(provider == \"%s\") && (satellitePosition == %s) && %s ORDER BY name:%s' % (provider, op, self.service_types[self.service_types.rfind(':')+1:], provider)
 					self.setCurrentSelection(eServiceReference(refstr))
 		elif not self.isBasePathEqual(self.bouquet_root) or self.bouquet_mark_edit == EDIT_ALTERNATIVES:
-			playingref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 			if playingref:
 				self.setCurrentSelectionAlternative(playingref)
 

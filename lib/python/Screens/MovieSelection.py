@@ -2,7 +2,6 @@ from Screen import Screen
 from Components.Button import Button
 from Components.ActionMap import HelpableActionMap, ActionMap, NumberActionMap
 from Components.ChoiceList import ChoiceList, ChoiceEntryComponent
-from Components.MenuList import MenuList
 from Components.MovieList import MovieList, resetMoviePlayState, AUDIO_EXTENSIONS, DVD_EXTENSIONS, IMAGE_EXTENSIONS, moviePlayState
 from Components.DiskInfo import DiskInfo
 from Components.Pixmap import Pixmap, MultiPixmap
@@ -76,14 +75,11 @@ try:
 except Exception as e:
 	print "[ML] BlurayPlayer not installed:", e
 	BlurayPlayer = None
-	
+
 
 def defaultMoviePath():
-	result = config.usage.default_path.value
-	if not os.path.isdir(result):
-		from Tools import Directories
-		return Directories.defaultRecordingLocation()
-	return result
+	from Tools import Directories
+	return Directories.defaultRecordingLocation(config.usage.default_path.value)
 
 def setPreferredTagEditor(te):
 	global preferredTagEditor
@@ -521,7 +517,7 @@ class MovieSelectionSummary(Screen):
 				name = ".."
 			else:
 				name = item[1].getName(item[0])
-			if (item[0].flags & eServiceReference.mustDescent):
+			if item[0].flags & eServiceReference.mustDescent:
 				if len(name) > 12:
 					name = os.path.split(os.path.normpath(name))[1]
 				name = "> " + name

@@ -52,6 +52,7 @@ def getImageTypeString():
 
 def getCPUInfoString():
 	try:
+		temperature = None
 		for line in open("/proc/cpuinfo").readlines():
 			line = [x.strip() for x in line.strip().split(":")]
 			if line[0] == "cpu type":
@@ -59,6 +60,9 @@ def getCPUInfoString():
 			elif line[0] == "bogomips":
 				cpu_speed = "%1.0f" % float(line[1])
 		return "%s %s MHz" % (processor, cpu_speed)
+		if os.path.isfile("/sys/devices/virtual/thermal/thermal_zone0/temp"):
+			temperature = int(open("/sys/devices/virtual/thermal/thermal_zone0/temp").read().strip())/1000
+		if temperature:
 	except:
 		return _("undefined")
 

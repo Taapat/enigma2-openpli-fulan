@@ -8,8 +8,8 @@ try:
 except:
 	OverscanWizard = None
 
-from Components.Pixmap import Pixmap, MovingPixmap, MultiPixmap
-from Components.config import config, ConfigBoolean, configfile, ConfigSubsection
+from Components.Pixmap import Pixmap
+from Components.config import config, ConfigBoolean, configfile
 from LanguageSelection import LanguageWizard
 import os
 
@@ -56,8 +56,8 @@ class AutoRestoreWizard(MessageBox):
 		else:
 			MessageBox.close(self)
 
-wizardManager.registerWizard(AutoRestoreWizard, config.misc.firstrun.value and checkForAvailableAutoBackup(), priority = -10)
-wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.value, priority = 5)
+wizardManager.registerWizard(AutoRestoreWizard, config.misc.languageselected.value and config.misc.firstrun.value and checkForAvailableAutoBackup(), priority=0)
+wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.value, priority=10)
 if OverscanWizard:
-	wizardManager.registerWizard(OverscanWizard, config.misc.do_overscanwizard.value, priority = 10)
-wizardManager.registerWizard(StartWizard, config.misc.firstrun.value, priority = 20)
+	wizardManager.registerWizard(OverscanWizard, config.misc.do_overscanwizard.value, priority=30)
+wizardManager.registerWizard(StartWizard, config.misc.firstrun.value, priority=40)

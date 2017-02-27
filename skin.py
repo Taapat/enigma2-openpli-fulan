@@ -216,7 +216,7 @@ def parseColor(s):
 		try:
 			return colorNames[s]
 		except:
-			raise SkinError("color '%s' must be #aarrggbb or valid named color" % (s))
+			raise SkinError("color '%s' must be #aarrggbb or valid named color" % s)
 	return gRGB(int(s[1:], 0x10))
 
 def collectAttributes(skinAttributes, node, context, skin_path_prefix=None, ignore=(), filenames=frozenset(("pixmap", "pointer", "seek_pointer", "backgroundPixmap", "selectionPixmap", "sliderPixmap", "scrollbarbackgroundPixmap"))):
@@ -260,7 +260,7 @@ def loadPixmap(path, desktop):
 		path = path[:option]
 	ptr = LoadPixmap(morphRcImagePath(path), desktop)
 	if ptr is None:
-		raise SkinError("pixmap file %s not found!" % (path))
+		raise SkinError("pixmap file %s not found!" % path)
 	return ptr
 
 class AttributeParser:
@@ -567,7 +567,7 @@ def loadSingleSkinData(desktop, skin, path_prefix):
 				print "[SKIN] bad parameter", ex
 
 	for c in skin.findall("subtitles"):
-		from enigma import eWidget, eSubtitleWidget
+		from enigma import eSubtitleWidget
 		scale = ((1,1),(1,1))
 		for substyle in c.findall("sub"):
 			get_attr = substyle.attrib.get
@@ -628,7 +628,7 @@ def loadSingleSkinData(desktop, skin, path_prefix):
 			try:
 				style.setColor(eWindowStyleSkinned.__dict__["col" + colorType], color)
 			except:
-				raise SkinError("Unknown color %s" % (colorType))
+				raise SkinError("Unknown color %s" % colorType)
 				#pass
 			#print "  color:", type, color
 		x = eWindowStyleManager.getInstance()
@@ -824,7 +824,7 @@ def readSkin(screen, skin, names, desktop):
 	if myscreen is None and getattr(screen, "skin", None):
 		skin = screen.skin
 		print "[SKIN] Parsing embedded skin", name
-		if (isinstance(skin, tuple)):
+		if isinstance(skin, tuple):
 			for s in skin:
 				candidate = xml.etree.cElementTree.fromstring(s)
 				if candidate.tag == 'screen':
@@ -916,7 +916,7 @@ def readSkin(screen, skin, names, desktop):
 
 			wrender = get_attr('render')
 			if not wrender:
-				raise SkinError("you must define a renderer with render= for source '%s'" % (wsource))
+				raise SkinError("you must define a renderer with render= for source '%s'" % wsource)
 			for converter in widget.findall("convert"):
 				ctype = converter.get('type')
 				assert ctype, "'convert'-tag needs a 'type'-attribute"

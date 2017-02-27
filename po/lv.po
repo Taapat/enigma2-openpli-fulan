@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-01 17:00+0200\n"
+"POT-Creation-Date: 2017-02-11 19:17+0200\n"
 "PO-Revision-Date: 2014-11-12 00:49+0200\n"
 "Last-Translator: Tapat <taapat@gmail.com>\n"
 "Language-Team: Taapat <taapat@gmail.com>\n"
@@ -256,6 +256,10 @@ msgstr[2] "%d minūtes"
 #, python-format
 msgid "%d minutes"
 msgstr "%d minūtes"
+
+#, python-format
+msgid "%d ms"
+msgstr "%d ms"
 
 #, python-format
 msgid "%d pixel wide"
@@ -1384,6 +1388,9 @@ msgstr "Izpilda komandu..."
 msgid "Command order"
 msgstr "Komandu secība"
 
+msgid "Commit info"
+msgstr "Izmaiņas"
+
 msgid "Common Interface"
 msgstr "Common interfeiss"
 
@@ -1459,6 +1466,9 @@ msgstr "Uzstāda vai un kādā platumā kolona tiks attēlota kanālu srakstā."
 
 msgid "Configure if behind the subtitles a background is shown."
 msgstr "Uzstāda vai subtitriem lietot tumšu fonu."
+
+msgid "Configure if service picons will be shown in display (when supported by the skin)."
+msgstr "Uzstāda vai pikonas tiks rādītas displejā (ja to atbalsta noformējums)."
 
 msgid "Configure if service picons will be shown in the channel selection list."
 msgstr "Uzstāda vai kanālu pikonas tiks rādītas kanālu sarakstā."
@@ -1818,6 +1828,9 @@ msgstr "Izveidot DVD-ISO"
 
 msgid "Create new folder and exit"
 msgstr "Izveidot jaunu mapi un iziet"
+
+msgid "Create seperate radio userbouquet"
+msgstr "Izveidot atsevišķas radio buķetes"
 
 #, python-format
 msgid "Creating directory %s failed."
@@ -2191,6 +2204,9 @@ msgstr "Izslēgts"
 msgid "Dish"
 msgstr "Šķīvis"
 
+msgid "Disclaimer"
+msgstr "Brīdinājums"
+
 msgid "Disk space to reserve for recordings (in GB)"
 msgstr "Rezerve ierakstiem diskā (GB)"
 
@@ -2302,6 +2318,9 @@ msgstr "Vai tiešām vēlaties iziet no šī veidņa?"
 
 msgid "Do you want to reboot your receiver?"
 msgstr "Vai vēlaties pārstartēt uztvērēju?"
+
+msgid "Do you want to remove all the crahs logfiles"
+msgstr "Vai vēlaties dzēst visus logfailus"
 
 msgid "Do you want to remove the package:\n"
 msgstr "Vai vēlaties dzēst pakotni:\n"
@@ -2732,26 +2751,33 @@ msgstr "F"
 msgid "F1/F3/F4"
 msgstr "F1/F3/F4"
 
-msgid "FBC Unicable"
-msgstr "FBC Unicable"
+msgid "FBC SCR (Unicable/JESS)"
+msgstr "FBC SCR (Unicable/JESS)"
 
-msgid "FBC automatic loop through"
-msgstr "FBC automātiski loop cauri"
+msgid "FBC automatic"
+msgstr "FBC automātiski"
 
 msgid ""
-"FBC automatic loop through\n"
-"inactive"
+"FBC automatic\n"
+"connected to"
 msgstr ""
-"FBC automātiski loop cauri\n"
-"neaktīvs"
+"FBC automātiski\n"
+"saistīts ar"
 
 #, python-format
 msgid ""
-"FBC automatic loop through\n"
-"linked to %s"
+"FBC automatic\n"
+"connected to %s"
 msgstr ""
-"FBC automātiski loop cauri\n"
+"FBC automātiski\n"
 "saistīts ar %s"
+
+msgid ""
+"FBC automatic\n"
+"inactive"
+msgstr ""
+"FBC automātiski\n"
+"neaktīvs"
 
 msgid "FEC"
 msgstr "FEC"
@@ -3299,6 +3325,9 @@ msgstr "Inicializēt ieraksta ierīci..."
 msgid "Input"
 msgstr "Ievade"
 
+msgid "Input "
+msgstr "Ieeja "
+
 msgid "Input Stream"
 msgstr "Ieejas straume"
 
@@ -3624,6 +3653,9 @@ msgstr "Noenkuroties:"
 msgid "Log results to /tmp"
 msgstr "Žurnalēt rezultātus /tmp"
 
+msgid "Logfile does not exist anymore"
+msgstr "Logfaili vairs neeksistē"
+
 msgid "Long filenames"
 msgstr "Garie failu vārdi"
 
@@ -3633,8 +3665,8 @@ msgstr "Ilgstoša taustiņa nospiešana"
 msgid "Longitude"
 msgstr "Garums"
 
-msgid "Loop through to"
-msgstr "Loop caur"
+msgid "Loop through from"
+msgstr "Loop cauri no"
 
 msgid "Luxembourgish"
 msgstr "Luksemburgiešu"
@@ -5127,6 +5159,9 @@ msgstr "Dzēst iezīmi"
 msgid "Remove a nameserver entry"
 msgstr "Dzēst DNS ierakstu"
 
+msgid "Remove all logfiles"
+msgstr "Dzēst visus logfailus"
+
 msgid "Remove bookmark"
 msgstr "Dzēst grāmatzīmi"
 
@@ -5141,6 +5176,9 @@ msgstr "Dzēst no miskastes pēc (dienām)"
 
 msgid "Remove plugins"
 msgstr "Dzēst spraudņus"
+
+msgid "Remove this logfile"
+msgstr "Dzēst šo logfailu"
 
 msgid "Remove title"
 msgstr "Dzēst virsrakstu"
@@ -5331,6 +5369,15 @@ msgstr "SCPC optimizēta meklēšana"
 
 msgid "SETUP"
 msgstr "IESTATĪJUMI"
+
+msgid "SCR (Unicable/JESS)"
+msgstr "SCR (Unicable/JESS"
+
+msgid "SCR JESS"
+msgstr "SCR JESS"
+
+msgid "SCR Unicable"
+msgstr "SCR Unicable"
 
 msgid "SINGLE LAYER DVD"
 msgstr "SINGLE LAYER DVD"
@@ -5968,6 +6015,9 @@ msgstr "Rādīt daudzkanālu EPG"
 msgid "Show picons in channel selection list"
 msgstr "Rādīt pikonas kanālu srakstā"
 
+msgid "Show picons in display"
+msgstr "Rādīt displejā pikonas"
+
 msgid "Show positioner movement"
 msgstr "Rādīt pozicioniera kustību"
 
@@ -6190,6 +6240,9 @@ msgstr "Programmatūras atjaunināšana"
 
 msgid "Softwaremanager information"
 msgstr "Programmatūras pārvaldnieka informācija"
+
+msgid "Some error occured - Please try later"
+msgstr "Ir gadījusies kāda kļūda - Lūdzu pamēginiet vēlāk"
 
 msgid "Some plugins are not available:\n"
 msgstr "Daži spraudņi nav pieejami:\n"
@@ -7158,6 +7211,9 @@ msgstr "Miskaste"
 msgid "Tries left:"
 msgstr "Atlikuši mēģinājumi:"
 
+msgid "Troubleshoot"
+msgstr "Informācija"
+
 msgid "Try to find used transponders in cable network.. please wait..."
 msgstr "Mēģina atrast izmantojamus transponderus kabeļu tīklā... lūdzu gaidiet..."
 
@@ -7275,12 +7331,6 @@ msgstr "Neapstrādāta poga"
 
 msgid "Unhide parental control services"
 msgstr "Parādīt servisus ar vecāku aizsardzību"
-
-msgid "Unicable"
-msgstr "Unicable"
-
-msgid "Unicable/JESS"
-msgstr "Unicable/JESS"
 
 msgid "Uninstall"
 msgstr "Atinstalēt"
@@ -8170,11 +8220,11 @@ msgid "You must switch to the service %s (%s - '%s')!\n"
 msgstr "Pārslēgsies uz kanālu %s (%s - '%s')!\n"
 
 msgid ""
-"You need a PC connected to your receiver. If you need further instructions, please visit the website http://www.dm7025.de.\n"
+"You need a PC connected to your receiver. If you need further instructions, please visit the website https://openpli.org\n"
 "Your receiver will now be halted. After you have performed the update instructions from the website, your new firmware will ask you to restore your settings."
 msgstr ""
-"Jūsu datoram jābū savienotam ar uztvērēju. Ja jums nepieciešama papildus informācija, lūdzu apmeklējiet http://openpli.org/.\n"
-"Jūsu uztvērējs tagad tiks apturēts. Pēc tam, kad ir veiktas atjaunināšanas instrukcijas no mājas lapas, jūsu jaunā programmatūra piedāvās jums atjaunot iestatījumus."
+"Jūsu datoram jābūt savienotam ar uztvērēju. Ja jums nepieciešama papildus informācija, lūdzu apmeklējiet http://openpli.org/.\n"
+"Jūsu uztvērējs tagad tiks apturēts. Pēc tam, kad būs veikta atjaunināšana, jūsu jaunā programmatūra piedāvās jums atjaunot iestatījumus."
 
 msgid "You system does not support ext4"
 msgstr "Jūsu sistēma neatbalsta ext4"

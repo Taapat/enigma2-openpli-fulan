@@ -82,7 +82,7 @@ class Satfinder(ScanSetup, ServiceScan):
 			self.feid = int(self.satfinder_scan_nims.value)
 			self.createSetup()
 			self.prepareFrontend()
-			if self.frontend == None:
+			if self.frontend is None:
 				msg = _("Tuner not available.")
 				if self.session.nav.RecordTimer.isRecording():
 					msg += _("\nRecording in progress.")
@@ -220,7 +220,7 @@ class Satfinder(ScanSetup, ServiceScan):
 	def createConfig(self, foo):
 		self.tuning_type = ConfigSelection(default = "predefined_transponder", choices = [("single_transponder", _("User defined transponder")), ("predefined_transponder", _("Predefined transponder"))])
 		self.orbital_position = 192
-		if self.frontendData and self.frontendData.has_key('orbital_position'):
+		if self.frontendData and 'orbital_position' in self.frontendData:
 			self.orbital_position = self.frontendData['orbital_position']
 		ScanSetup.createConfig(self, self.frontendData)
 

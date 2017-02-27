@@ -13,7 +13,7 @@ from Components.Console import Console
 from Plugins.Plugin import PluginDescriptor
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE
 from Tools.LoadPixmap import LoadPixmap
-from Wlan import iWlan, wpaSupplicant, iStatus, getWlanConfigName
+from Wlan import iWlan, wpaSupplicant, iStatus, getWlanConfigName, existBcmWifi
 from time import time
 import re
 
@@ -30,7 +30,6 @@ config.plugins.wlan.hiddenessid = NoSave(ConfigYesNo(default = False))
 config.plugins.wlan.encryption = NoSave(ConfigSelection(list, default = "WPA2"))
 config.plugins.wlan.wepkeytype = NoSave(ConfigSelection(weplist, default = "ASCII"))
 config.plugins.wlan.psk = NoSave(ConfigPassword(default = "", fixed_size = False))
-
 
 
 class WlanStatus(Screen):
@@ -122,24 +121,24 @@ class WlanStatus(Screen):
 						essid = _("No Connection")
 					else:
 						accesspoint = status[self.iface]["accesspoint"]
-					if self.has_key("BSSID"):
+					if "BSSID" in self:
 						self["BSSID"].setText(accesspoint)
-					if self.has_key("ESSID"):
+					if "ESSID" in self:
 						self["ESSID"].setText(essid)
 
 					quality = status[self.iface]["quality"]
-					if self.has_key("quality"):
+					if "quality" in self:
 						self["quality"].setText(quality)
 
 					if status[self.iface]["bitrate"] == '0':
 						bitrate = _("Unsupported")
 					else:
 						bitrate = str(status[self.iface]["bitrate"]) + " Mb/s"
-					if self.has_key("bitrate"):
+					if "bitrate" in self:
 						self["bitrate"].setText(bitrate)
 
 					signal = status[self.iface]["signal"]
-					if self.has_key("signal"):
+					if "signal" in self:
 						self["signal"].setText(signal)
 
 					if status[self.iface]["encryption"] == "off":
@@ -149,7 +148,7 @@ class WlanStatus(Screen):
 							encryption = _("off or wpa2 on")
 					else:
 						encryption = _("Enabled")
-					if self.has_key("enc"):
+					if "enc" in self:
 						self["enc"].setText(encryption)
 					self.updateStatusLink(status)
 
@@ -335,7 +334,7 @@ class WlanScan(Screen):
 							compList.remove(compentry)
 			for entry in compList:
 				self.cleanList.append( ( entry[0], entry[1], entry[2], entry[3], entry[4], entry[5] ) )
-				if not self.oldlist.has_key(entry[0]):
+				if entry[0] not in self.oldlist:
 					self.oldlist[entry[0]] = { 'data': entry }
 				else:
 					self.oldlist[entry[0]]['data'] = entry
@@ -384,10 +383,17 @@ def callFunction(iface):
 def configStrings(iface):
 	driver = iNetwork.detectWlanModule(iface)
 	ret = ""
-	if driver == 'madwifi' and config.plugins.wlan.hiddenessid.value:
-		ret += "\tpre-up iwconfig " + iface + " essid \"" + re.escape(config.plugins.wlan.essid.value) + "\" || true\n"
-	ret += "\tpre-up wpa_supplicant -i" + iface + " -c" + getWlanConfigName(iface) + " -B -dd -D" + driver + " || true\n"
-	ret += "\tpre-down wpa_cli -i" + iface + " terminate || true\n"
+	if existBcmWifi(iface):
+		encryption = config.plugins.wlan.encryption.value
+		psk = config.plugins.wlan.psk.value
+		essid = config.plugins.wlan.essid.value
+		ret += '\tpre-up wl-config.sh -m ' + encryption.lower() + ' -k ' + psk + ' -s "' + essid + '" \n'
+		ret += '\tpost-down wl-down.sh\n'
+	else:
+		if driver == 'madwifi' and config.plugins.wlan.hiddenessid.value:
+			ret += "\tpre-up iwconfig " + iface + " essid \"" + re.escape(config.plugins.wlan.essid.value) + "\" || true\n"
+		ret += "\tpre-up wpa_supplicant -i" + iface + " -c" + getWlanConfigName(iface) + " -B -dd -D" + driver + " || true\n"
+		ret += "\tpre-down wpa_cli -i" + iface + " terminate || true\n"
 	return ret
 
 def Plugins(**kwargs):

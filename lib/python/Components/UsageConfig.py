@@ -110,7 +110,7 @@ def InitUsageConfig():
 		("nothing", _("Do nothing")), ("move", _("Move main picture to PiP")),
 		("transponder", _("Open current transponder")), ("channellist", _("Open channel list")) ])
 
-	config.usage.default_path = ConfigText(default = resolveFilename(SCOPE_HDD))
+	config.usage.default_path = ConfigText(default = "")
 	config.usage.timer_path = ConfigText(default = "<default>")
 	config.usage.instantrec_path = ConfigText(default = "<default>")
 	config.usage.timeshift_path = ConfigText(default = "/media/hdd/")
@@ -532,6 +532,12 @@ def InitUsageConfig():
 		config.av.hdmicolordepth = ConfigSelection(default = "auto", choices={"auto": _("Auto"), "8bit": _("8bit"), "10bit": _("10bit"), "12bit": _("12bit")})
 		config.av.hdmicolordepth.addNotifier(setHaveColordepth)
 
+	if SystemInfo["HasHDMIpreemphasis"]:
+		def setHDMIpreemphasis(configElement):
+			open(SystemInfo["HasHDMIpreemphasis"], "w").write(configElement.value)
+		config.av.hdmipreemphasis = ConfigSelection(default = "off", choices = [ ("on", _("Yes")), ("off", _("No"))] )
+		config.av.hdmipreemphasis.addNotifier(setHDMIpreemphasis)
+
 	config.subtitles = ConfigSubsection()
 	config.subtitles.ttx_subtitle_colors = ConfigSelection(default = "1", choices = [
 		("0", _("original")),
@@ -612,7 +618,7 @@ def InitUsageConfig():
 		("ltz", _("Luxembourgish")),
 		("nor", _("Norwegian")),
 		("pol", _("Polish")),
-		("por dub DUB ud1", _("Portuguese")),
+		("por dub Dub DUB ud1", _("Portuguese")),
 		("fas per", _("Persian")),
 		("ron rum", _("Romanian")),
 		("rus", _("Russian")),
@@ -680,6 +686,9 @@ def InitUsageConfig():
 			os.remove(path)
 	config.mediaplayer.defaultPlayer.addNotifier(defaultPlayerChange)
 
+	config.misc.softcam_setup = ConfigSubsection()
+	config.misc.softcam_setup.extension_menu = ConfigYesNo(default = True)
+
 def updateChoices(sel, choices):
 	if choices:
 		defval = None
@@ -694,7 +703,7 @@ def updateChoices(sel, choices):
 		sel.setChoices(map(str, choices), defval)
 
 def preferredPath(path):
-	if config.usage.setup_level.index < 2 or path == "<default>":
+	if config.usage.setup_level.index < 2 or path == "<default>" or not path:
 		return None  # config.usage.default_path.value, but delay lookup until usage
 	elif path == "<current>":
 		return config.movielist.last_videodir.value
