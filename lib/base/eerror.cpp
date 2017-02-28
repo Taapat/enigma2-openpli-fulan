@@ -7,7 +7,6 @@
 #include <cstring>
 #include <unistd.h>
 #include <time.h>
-#include <stdio.h>
 
 #include <string>
 
@@ -77,7 +76,6 @@ void DumpUnfreed()
 };
 #endif
 
-int logOutputConsole = 1;
 int debugLvl = lvlDebug;
 static bool debugTime = false;
 
@@ -134,21 +132,6 @@ void retrieveLogBuffer(const char **p1, unsigned int *s1, const char **p2, unsig
 }
 
 
-void CheckPrintkLevel()
-{
-	FILE *f = fopen("/proc/sys/kernel/printk", "r");
-	if (f)
-	{
-		fscanf(f, "%u", &logOutputConsole);
-		if (logOutputConsole < 1)
-		{
-			printf("Printk level is %u, disble Enigma log in console!\n", logOutputConsole);
-		}
-		fclose(f);
-	}
-}
-
-
 extern void bsodFatal(const char *component);
 
 #define eDEBUG_BUFLEN    1024
@@ -197,8 +180,7 @@ void eDebugImpl(int flags, const char* fmt, ...)
 
 	logOutput(buf, pos);
 
-	if (logOutputConsole)
-		::write(2, buf, pos);
+	::write(2, buf, pos);
 
 	delete[] buf;
 	if (flags & _DBGFLG_FATAL)

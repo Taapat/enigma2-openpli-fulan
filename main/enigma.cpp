@@ -209,8 +209,6 @@ int main(int argc, char **argv)
 	if (getenv("ENIGMA_DEBUG_TIME"))
 		setDebugTime(atoi(getenv("ENIGMA_DEBUG_TIME")) != 0);
 
-	CheckPrintkLevel();
-
 	ePython python;
 	eMain main;
 
