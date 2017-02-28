@@ -7,7 +7,7 @@
 #include <sys/ioctl.h>
 #include <ctype.h>
 #include <sys/stat.h>
-#include  <pthread.h>
+#include <pthread.h>
 
 #include <lib/base/eerror.h>
 #include <lib/driver/vfd.h>
@@ -63,7 +63,7 @@ evfd::evfd()
 	{	char buf[2];
 		fread(&buf,sizeof(buf),1,vfd_proc);
 		vfd_type=atoi(&buf[0]);
-		fclose (vfd_proc);	    
+		fclose (vfd_proc);
 	}
 }
 
@@ -87,15 +87,16 @@ void * start_loop (void *arg)
 	//run 2 times through all icons 
 	if (vfd.getVfdType() != 4)
 	{
-	    memset(&icon_onoff,0, sizeof(icon_onoff));
-            static const unsigned char brightness[14]={1,2,3,4,5,6,7,6,5,4,3,2,1,0};
-	    for (int vloop = 0; vloop < 128; vloop++)
-	    {
-                    
-		    vfd.vfd_set_brightness(brightness[vloop%14]);
-		    usleep(75000);
-	    }
-	    vfd.vfd_set_brightness(7);
+		memset(&icon_onoff,0, sizeof(icon_onoff));
+		static const unsigned char brightness[14]={1,2,3,4,5,6,7,6,5,4,3,2,1,0};
+
+		for (int vloop = 0; vloop < 128; vloop++)
+		{
+			vfd.vfd_set_brightness(brightness[vloop%14]);
+			usleep(75000);
+		}
+
+		vfd.vfd_set_brightness(7);
 	}
 	blocked = false;
 	return NULL;
@@ -157,55 +158,55 @@ void evfd::vfd_set_icon(tvfd_icon id, bool onoff)
 
 void evfd::vfd_set_icon(tvfd_icon id, bool onoff, bool force)
 {
-    if (getVfdType() != 4)
-    {
-	icon_onoff[id] = onoff;
-	if (!blocked || force)
+	if (getVfdType() != 4)
 	{
-	    	struct set_icon_s data;
-
-		if (!startloop_running)
+		icon_onoff[id] = onoff;
+		if (!blocked || force)
 		{
-		    	memset(&data, 0, sizeof(struct set_icon_s));			
-			data.icon_nr=id;
-			data.on = onoff;
-			file_vfd = open (VFD_DEVICE, O_WRONLY);
-			ioctl(file_vfd, VFDICONDISPLAYONOFF, &data);
-			close (file_vfd);
+			struct set_icon_s data;
+
+			if (!startloop_running)
+			{
+				memset(&data, 0, sizeof(struct set_icon_s));
+				data.icon_nr=id;
+				data.on = onoff;
+				file_vfd = open (VFD_DEVICE, O_WRONLY);
+				ioctl(file_vfd, VFDICONDISPLAYONOFF, &data);
+				close (file_vfd);
+			}
 		}
 	}
-    }
-    return;
+	return;
 }
 
 void evfd::vfd_clear_icons()
 {
-    if (getVfdType() != 4)
-    {
-	for (int id = 1; id <= 45; id++)
+	if (getVfdType() != 4)
 	{
-		vfd_set_icon((tvfd_icon)id, false);
+		for (int id = 1; id <= 45; id++)
+		{
+			vfd_set_icon((tvfd_icon)id, false);
+		}
 	}
-    }
-    return;
+	return;
 }
 
 void evfd::vfd_set_brightness(unsigned char setting)
 {
-    if (getVfdType() != 4)
-    {
+	if (getVfdType() != 4)
+	{
 	struct vfd_ioctl_data data;
 
-	memset(&data, 0, sizeof(struct vfd_ioctl_data));
+		memset(&data, 0, sizeof(struct vfd_ioctl_data));
 
-	data.start = setting & 0x07;
-	data.length = 0;
+		data.start = setting & 0x07;
+		data.length = 0;
 
-	file_vfd = open (VFD_DEVICE, O_WRONLY);
-	ioctl ( file_vfd, VFDBRIGHTNESS, &data );
-	close (file_vfd);
-    }
-    return;
+		file_vfd = open (VFD_DEVICE, O_WRONLY);
+		ioctl ( file_vfd, VFDBRIGHTNESS, &data );
+		close (file_vfd);
+	}
+	return;
 }
 
 void evfd::vfd_set_light(bool onoff)
