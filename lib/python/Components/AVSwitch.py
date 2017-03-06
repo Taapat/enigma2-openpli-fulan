@@ -218,5 +218,5 @@ def InitAVSwitch():
 
 	def setVolumeStepsize(configElement):
 		eDVBVolumecontrol.getInstance().setVolumeSteps(int(configElement.value))
-	config.av.volume_stepsize = ConfigSelectionNumber(1, 10, 1, default = 5)
+	config.av.volume_stepsize = ConfigSelectionNumber(1, 10, 1, default = 2)
 	config.av.volume_stepsize.addNotifier(setVolumeStepsize)

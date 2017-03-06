@@ -38,7 +38,7 @@ eDVBVolumecontrol* eDVBVolumecontrol::getInstance()
 }
 
 eDVBVolumecontrol::eDVBVolumecontrol()
-:m_volsteps(5)
+:m_volsteps(2)
 {
 #ifdef HAVE_ALSA
 	mainVolume = NULL;
