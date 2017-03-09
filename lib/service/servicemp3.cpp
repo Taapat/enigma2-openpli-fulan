@@ -647,7 +647,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		if(dvb_videosink && !m_sourceinfo.is_audio)
 		{
 			g_object_set(dvb_videosink, "e2-sync", FALSE, NULL);
-			g_object_set(dvb_videosink, "e2-async", TRUE, NULL);
+			g_object_set(dvb_videosink, "e2-async", FALSE, NULL);
 			g_object_set(m_gst_playbin, "video-sink", dvb_videosink, NULL);
 		}
 		/*
@@ -902,7 +902,10 @@ RESULT eServiceMP3::pause()
 		return -1;
 
 	eDebug("[eServiceMP3] pause");
-	trickSeek(0.0);
+	if(!m_paused)
+		trickSeek(0.0);
+	else
+		eDebug("[eServiceMP3] Already Paused no need to pause");
 
 	return 0;
 }
@@ -999,7 +1002,7 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 		/* pipeline sometimes block due to audio track issue off gstreamer.
 		If the pipeline is blocked up on pending state change to paused ,
 		this issue is solved by seek to playposition*/
-		ret = gst_element_get_state(m_gst_playbin, &state, &pending, 2LL * GST_MSECOND);
+		ret = gst_element_get_state(m_gst_playbin, &state, &pending, 3LL * GST_MSECOND);
 		if (state == GST_STATE_PLAYING && pending == GST_STATE_PAUSED)
 		{
 			if (getPlayPosition(pts) >= 0)
