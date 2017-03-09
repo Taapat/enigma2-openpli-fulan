@@ -887,13 +887,13 @@ RESULT eServiceMP3::setSlowMotion(int ratio)
 {
 	if (!ratio)
 		return 0;
-	eDebug("[eServiceMP3] setSlowMotion ratio=%f",1.0/(gdouble)ratio);
+	eDebug("[eServiceMP3] setSlowMotion ratio=%.1f", 1.0/(gdouble)ratio);
 	return trickSeek(1.0/(gdouble)ratio);
 }
 
 RESULT eServiceMP3::setFastForward(int ratio)
 {
-	eDebug("[eServiceMP3] setFastForward ratio=%i",ratio);
+	eDebug("[eServiceMP3] setFastForward ratio=%.1f", (gdouble)ratio);
 	return trickSeek(ratio);
 }
 
@@ -958,7 +958,7 @@ RESULT eServiceMP3::seekToImpl(pts_t to)
 		/* convert pts to nanoseconds */
 	m_last_seek_pos = to * 11111LL;
 	if (!gst_element_seek (m_gst_playbin, m_currentTrickRatio, GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT),
-		GST_SEEK_TYPE_SET, m_last_seek_pos,
+		GST_SEEK_TYPE_SET, (gint64)(m_last_seek_pos * 11111LL),
 		GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE))
 	{
 		eDebug("[eServiceMP3] seekTo failed");
@@ -998,8 +998,16 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 
 	if (ratio > -0.01 && ratio < 0.01)
 	{
+		int pos_ret = -1;
+		if(m_last_seek_pos > 0)
+		{
+			pts = m_last_seek_pos;
+			pos_ret = 1;
+		}
+		else
+			pos_ret = getPlayPosition(pts);
 		gst_element_set_state(m_gst_playbin, GST_STATE_PAUSED);
-		if (getPlayPosition(pts) >= 0)
+		if (pos_ret >= 0)
 			seekTo(pts);
 		/* pipeline sometimes block due to audio track issue off gstreamer.
 		If the pipeline is blocked up on pending state change to paused ,
@@ -1007,7 +1015,7 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 		ret = gst_element_get_state(m_gst_playbin, &state, &pending, 3LL * GST_MSECOND);
 		if (state == GST_STATE_PLAYING && pending == GST_STATE_PAUSED)
 		{
-			if (getPlayPosition(pts) >= 0)
+			if (pos_ret >= 0)
 			{
 				eDebug("[eServiceMP3] blocked pipeline we need to flush playposition in pts at paused is %" G_GINT64_FORMAT, (gint64)pts);
 				seekTo(pts);
@@ -1068,7 +1076,12 @@ seek_unpause:
 
 	bool validposition = false;
 	gint64 pos = 0;
-	if (getPlayPosition(pts) >= 0)
+	if (m_last_seek_pos > 0)
+	{
+		validposition = true;
+		pos = m_last_seek_pos * 11111LL;
+	}
+	else if (getPlayPosition(pts) >= 0)
 	{
 		validposition = true;
 		pos = pts * 11111LL;
@@ -1113,8 +1126,18 @@ RESULT eServiceMP3::seekRelative(int direction, pts_t to)
 		return -1;
 
 	pts_t ppos;
-	if (getPlayPosition(ppos) < 0) return -1;
-	ppos += to * direction;
+	if (direction > 0 && m_last_seek_pos > 0)
+	{
+		ppos = m_last_seek_pos + to;
+		return seekTo(ppos);
+	}
+	else if (direction > 0)
+	{
+		if (getPlayPosition(ppos) < 0) return -1;
+		ppos += to;
+		return seekTo(ppos);
+	}
+	ppos = m_last_seek_pos - to;
 	if (ppos < 0)
 		ppos = 0;
 	return seekTo(ppos);
@@ -1249,6 +1272,7 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 
 	/* pos is in nanoseconds. we have 90 000 pts per second. */
 	pts = pos / 11111LL;
+	m_last_seek_pos = pts;
 	return 0;
 }
 
@@ -1979,7 +2003,7 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 				if(dvb_subsink)
 				{
 					if (!gst_element_seek (dvb_subsink, m_currentTrickRatio, GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
-						GST_SEEK_TYPE_SET, m_last_seek_pos,
+						GST_SEEK_TYPE_SET, (gint64)(m_last_seek_pos * 11111LL),
 						GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE))
 					{
 						eDebug("[eServiceMP3] seekToImpl subsink failed");
