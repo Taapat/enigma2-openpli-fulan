@@ -1988,7 +1988,8 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 					}
 					if (!m_first_paused)
 						m_event((iPlayableService*)this, evGstreamerPlayStarted);
-					m_first_paused = false;
+					else
+						m_first_paused = false;
 				}	break;
 				case GST_STATE_CHANGE_PLAYING_TO_PAUSED:
 				{
