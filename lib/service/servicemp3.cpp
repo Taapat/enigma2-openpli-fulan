@@ -1280,29 +1280,19 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 	if ((dvb_audiosink || dvb_videosink) && !m_paused && !m_sourceinfo.is_hls)
 	{
 		if (m_sourceinfo.is_audio)
-		{
 			g_signal_emit_by_name(dvb_audiosink, "get-decoder-time", &pos);
-			if(!GST_CLOCK_TIME_IS_VALID(pos))
-				return -1;
-		}
 		else
 		{
 			/* most stb's work better when pts is taken by audio by some video must be taken cause audio is 0 or invalid */
 			/* avoid taking the audio play position if audio sink is in state NULL */
 			if(!m_audiosink_not_running)
-			{
 				if (!GST_CLOCK_TIME_IS_VALID(pos) || 0)
 				 	g_signal_emit_by_name(dvb_audiosink, "get-decoder-time", &pos);
-				if(!GST_CLOCK_TIME_IS_VALID(pos))
-					return -1;
-			}
 			else
-			{
 				g_signal_emit_by_name(dvb_videosink, "get-decoder-time", &pos);
-				if(!GST_CLOCK_TIME_IS_VALID(pos))
-					return -1;
-			}
 		}
+		if(!GST_CLOCK_TIME_IS_VALID(pos))
+			return -1;
 	}
 #endif
 	else
