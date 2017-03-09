@@ -1222,8 +1222,7 @@ unsigned int eServiceMP3::get_pts_pcrscr(void)
 
 RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 {
-	gint64 pos;
-	pts = 0;
+	gint64 pos = 0;
 
 	if (!m_gst_playbin || m_state != stRunning)
 		return -1;
@@ -1271,8 +1270,8 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 	}
 
 	/* pos is in nanoseconds. we have 90 000 pts per second. */
-	pts = pos / 11111LL;
-	m_last_seek_pos = pts;
+	m_last_seek_pos = pos / 11111LL;
+	pts = m_last_seek_pos;
 	return 0;
 }
 

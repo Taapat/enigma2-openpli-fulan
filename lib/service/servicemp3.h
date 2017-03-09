@@ -319,7 +319,7 @@ private:
 	/* servicemMP3 chapter TOC support CVR */
 	bool m_use_chapter_entries;
 	/* last used seek position gst-1 only */
-	pts_t m_last_seek_pos;
+	gint64 m_last_seek_pos;
 	bufferInfo m_bufferInfo;
 	errorInfo m_errorInfo;
 	std::string m_download_buffer_path;
