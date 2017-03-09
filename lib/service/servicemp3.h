@@ -320,6 +320,9 @@ private:
 	bool m_use_chapter_entries;
 	/* last used seek position gst-1 only */
 	gint64 m_last_seek_pos;
+	ePtr<eTimer> m_play_position_timer;
+	void playPositionTiming();
+	bool m_use_last_seek;
 	bufferInfo m_bufferInfo;
 	errorInfo m_errorInfo;
 	std::string m_download_buffer_path;
