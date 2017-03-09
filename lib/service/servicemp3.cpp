@@ -1879,6 +1879,7 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 				GstStateChangeReturn ret;
 				case GST_STATE_CHANGE_NULL_TO_READY:
 				{
+					m_first_paused = true;
 					m_event(this, evStart);
 					if(!m_is_live)
 						gst_element_set_state (m_gst_playbin, GST_STATE_PAUSED);
