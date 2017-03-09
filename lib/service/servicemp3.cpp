@@ -687,7 +687,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		{
 			m_subs_to_pull_handler_id = g_signal_connect (dvb_subsink, "new-buffer", G_CALLBACK (gstCBsubtitleAvail), this);
 			g_object_set (dvb_subsink, "caps", gst_caps_from_string("text/plain; text/x-plain; text/x-raw; text/x-pango-markup; subpicture/x-dvd; subpicture/x-pgs"), NULL);
-			g_object_set (dvb_subsink, "sync", TRUE, NULL);
+			g_object_set (dvb_subsink, "sync", FALSE, NULL);
 			g_object_set (m_gst_playbin, "text-sink", dvb_subsink, NULL);
 			g_object_set (m_gst_playbin, "current-text", m_currentSubtitleStream, NULL);
 		}
@@ -913,6 +913,7 @@ RESULT eServiceMP3::unpause()
 	if (!m_gst_playbin || m_state != stRunning)
 		return -1;
 
+	m_decoder_time_valid_state = 0;
 	/* no need to unpase if we are not paused already */
 	if (m_currentTrickRatio == 1.0 && !m_paused)
 	{
@@ -964,6 +965,17 @@ RESULT eServiceMP3::seekToImpl(pts_t to)
 	{
 		m_event((iPlayableService*)this, evUpdatedInfo);
 	}
+	else
+	{
+		/* make sure that the seek was fully completed on all elements
+	 	* before proceeding further, this will happen when async_done is received
+	 	*/
+		gst_element_get_state(m_gst_playbin, NULL, NULL, 1LL * GST_SECOND);
+		/*eDebug("[eServiceMP3] after seek state:%s pending:%s ret:%s",
+			gst_element_state_get_name(state),
+			gst_element_state_get_name(pending),
+			gst_element_state_change_return_get_name(ret));*/
+	}
 
 	return 0;
 }
@@ -999,7 +1011,7 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 		/* pipeline sometimes block due to audio track issue off gstreamer.
 		If the pipeline is blocked up on pending state change to paused ,
 		this issue is solved by seek to playposition*/
-		ret = gst_element_get_state(m_gst_playbin, &state, &pending, 500LL * GST_MSECOND);
+		ret = gst_element_get_state(m_gst_playbin, &state, &pending, 1LL * GST_MSECOND);
 		if (state == GST_STATE_PLAYING && pending == GST_STATE_PAUSED)
 		{
 			if (getPlayPosition(pts) >= 0)
@@ -1921,8 +1933,7 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 					}
 					if (!m_first_paused)
 						m_event((iPlayableService*)this, evGstreamerPlayStarted);
-					else
-						m_first_paused = false;
+					m_first_paused = false;
 				}	break;
 				case GST_STATE_CHANGE_PLAYING_TO_PAUSED:
 				{
@@ -2250,7 +2261,7 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 						 * Ignore the first few buffering messages, giving the buffer the chance to recover
 						 * a bit, before we start handling empty buffer states again.
 						 */
-						m_ignore_buffering_messages = 5;
+						m_ignore_buffering_messages = 10;
 					}
 					else if (m_bufferInfo.bufferPercent == 0 && !m_first_paused)
 					{
@@ -2663,23 +2674,26 @@ void eServiceMP3::pushSubtitles()
 	int32_t next_timer = 0, decoder_ms, start_ms, end_ms, diff_start_ms, diff_end_ms;
 	subtitle_pages_map_t::iterator current;
 
+	m_decoder_time_valid_state = 4;
 	// wait until clock is stable
 
 	if (getPlayPosition(running_pts) < 0)
 		m_decoder_time_valid_state = 0;
+	else
+		m_prev_decoder_time = running_pts;
 
 	if (m_decoder_time_valid_state < 4)
 	{
 		m_decoder_time_valid_state++;
 
-		if (m_prev_decoder_time == running_pts)
-			m_decoder_time_valid_state = 0;
+		if (m_prev_decoder_time == running_pts && !m_paused)
+			m_decoder_time_valid_state = 1;
 
 		if (m_decoder_time_valid_state < 4)
 		{
 			//eDebug("[eServiceMP3] *** push subtitles, waiting for clock to stabilise");
 			m_prev_decoder_time = running_pts;
-			next_timer = 50;
+			next_timer = 100;
 			goto exit;
 		}
 
