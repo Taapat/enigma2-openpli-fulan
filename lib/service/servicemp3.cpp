@@ -967,8 +967,7 @@ RESULT eServiceMP3::getLength(pts_t &pts)
 
 RESULT eServiceMP3::seekToImpl(pts_t to)
 {
-		/* convert pts to nanoseconds */
-	m_last_seek_pos = to * 11111LL;
+	m_last_seek_pos = to;
 	if (!gst_element_seek (m_gst_playbin, m_currentTrickRatio, GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT),
 		GST_SEEK_TYPE_SET, (gint64)(m_last_seek_pos * 11111LL),
 		GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE))
@@ -1285,11 +1284,9 @@ RESULT eServiceMP3::getPlayPosition(pts_t &pts)
 		{
 			/* most stb's work better when pts is taken by audio by some video must be taken cause audio is 0 or invalid */
 			/* avoid taking the audio play position if audio sink is in state NULL */
-			if(!m_audiosink_not_running)
-				if (!GST_CLOCK_TIME_IS_VALID(pos) || 0)
-				 	g_signal_emit_by_name(dvb_audiosink, "get-decoder-time", &pos);
-			else
-				g_signal_emit_by_name(dvb_videosink, "get-decoder-time", &pos);
+			g_signal_emit_by_name(dvb_videosink, "get-decoder-time", &pos);
+			if(!m_audiosink_not_running && !GST_CLOCK_TIME_IS_VALID(pos) || 0)
+				 g_signal_emit_by_name(dvb_audiosink, "get-decoder-time", &pos);
 		}
 		if(!GST_CLOCK_TIME_IS_VALID(pos))
 			return -1;
