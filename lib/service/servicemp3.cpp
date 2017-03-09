@@ -1125,22 +1125,41 @@ RESULT eServiceMP3::seekRelative(int direction, pts_t to)
 	if (!m_gst_playbin)
 		return -1;
 
-	pts_t ppos;
-	if (direction > 0 && m_last_seek_pos > 0)
+	gint64 ppos = 0;
+	if (direction > 0)
 	{
-		ppos = m_last_seek_pos + to;
-		return seekTo(ppos);
+		if (m_last_seek_pos > 0)
+		{
+			ppos = m_last_seek_pos + to;
+			return seekTo(ppos);
+		}
+		else
+		{
+			if (getPlayPosition(ppos) < 0)
+				return -1;
+			ppos += to;
+			return seekTo(ppos);
+		}
 	}
-	else if (direction > 0)
+	else
 	{
-		if (getPlayPosition(ppos) < 0) return -1;
-		ppos += to;
-		return seekTo(ppos);
+		if (m_last_seek_pos > 0)
+		{
+			ppos = m_last_seek_pos - to;
+			if (ppos < 0)
+				ppos = 0;
+			return seekTo(ppos);
+		}
+		else
+		{
+			if (getPlayPosition(ppos) < 0)
+				return -1;
+			ppos -= to;
+			if (ppos < 0)
+				ppos = 0;
+			return seekTo(ppos);
+		}
 	}
-	ppos = m_last_seek_pos - to;
-	if (ppos < 0)
-		ppos = 0;
-	return seekTo(ppos);
 }
 
 gint eServiceMP3::match_sinktype(const GValue *velement, const gchar *type)
