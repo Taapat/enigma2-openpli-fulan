@@ -1869,7 +1869,7 @@ class InfoBarTimeshift:
 				self.setCurrentEventTimer()
 				self.current_timeshift_filename = ts.getTimeshiftFilename()
 				self.new_timeshift_filename = self.generateNewTimeshiftFileName()
-				self.setLCDsymbolTimeshift()
+				# self.setLCDsymbolTimeshift()
 			else:
 				print "timeshift failed"
 
@@ -1892,7 +1892,7 @@ class InfoBarTimeshift:
 			ts.stopTimeshift()
 			self.pvrStateDialog.hide()
 			self.setCurrentEventTimer()
-			self.setLCDsymbolTimeshift()
+			# self.setLCDsymbolTimeshift()
 			# disable actions
 			self.__seekableStatusChanged()
 
@@ -2019,7 +2019,7 @@ class InfoBarTimeshift:
 	def __serviceEnd(self):
 		self.saveTimeshiftFiles()
 		self.setCurrentEventTimer()
-		self.setLCDsymbolTimeshift()
+		# self.setLCDsymbolTimeshift()
 		self.timeshift_was_activated = False
 
 	def saveTimeshiftFiles(self):
