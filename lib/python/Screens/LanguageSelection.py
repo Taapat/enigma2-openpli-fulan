@@ -48,15 +48,12 @@ class LanguageSelection(Screen):
 
 	def save(self):
 		self.commit(self.run())
-		if self.oldActiveLanguage != config.osd.language.value:
-			if InfoBar.instance:
-				self.session.openWithCallback(self.restartGUI, MessageBox,_("GUI needs a restart to apply a new language\nDo you want to restart the GUI now?"), MessageBox.TYPE_YESNO, title=_("Restart GUI now?"))
-			else:
-				self.restartGUI()
+		if InfoBar.instance and self.oldActiveLanguage != config.osd.language.value:
+			self.session.openWithCallback(self.restartGUI, MessageBox,_("GUI needs a restart to apply a new language\nDo you want to restart the GUI now?"), MessageBox.TYPE_YESNO, title=_("Restart GUI now?"))
 		else:
 			self.close()
 
-	def restartGUI(self, answer=True):
+	def restartGUI(self, answer):
 		answer and self.session.open(TryQuitMainloop, 3)
 
 	def cancel(self):
