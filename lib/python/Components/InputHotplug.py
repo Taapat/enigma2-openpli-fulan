@@ -31,10 +31,7 @@ class NetlinkReader():
 	def connectionLost(self, failure):
 		# Ignore...
 		print "connectionLost?", failure
-		try:
-			self.nls.close()
-		except:
-			pass
+		self.nls.close()
 	def logPrefix(self):
 		return 'NetlinkReader'
 
