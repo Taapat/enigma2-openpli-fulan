@@ -1439,7 +1439,7 @@ class InfoBarSeek:
 		pauseable = service.pause()
 
 		if pauseable is None:
-			print "not pauseable."
+			# print "not pauseable."
 			state = self.SEEK_STATE_PLAY
 
 		self.seekstate = state
