@@ -183,6 +183,9 @@ def getHotkeyFunctions():
 	hotkeyFunctions.append((_("Toggle HDMI In"), "Infobar/HDMIIn", "InfoBar"))
 	hotkeyFunctions.append((_("Toggle dashed flickering line for this service"), "Infobar/ToggleHideVBI", "InfoBar"))
 	hotkeyFunctions.append((_("Do nothing"), "Void", "InfoBar"))
+	if SystemInfo["HasHDMI-CEC"]:
+		hotkeyFunctions.append((_("HDMI-CEC Source Active"), "Infobar/SourceActiveHdmiCec", "InfoBar"))
+		hotkeyFunctions.append((_("HDMI-CEC Source Inactive"), "Infobar/SourceInactiveHdmiCec", "InfoBar"))
 	hotkeyFunctions.append((_("HotKey Setup"), "Module/Screens.Hotkey/HotkeySetup", "Setup"))
 	hotkeyFunctions.append((_("Software update"), "Module/Screens.SoftwareUpdate/UpdatePlugin", "Setup"))
 	hotkeyFunctions.append((_("Latest Commits"), "Module/Screens.About/CommitInfo", "Setup"))
@@ -641,3 +644,15 @@ class InfoBarHotkey():
 			self.openServiceList()
 		elif hasattr(self, "showMovies"):
 			self.showMovies()
+
+
+	def SourceActiveHdmiCec(self):
+		self.setHdmiCec("sourceactive")
+
+	def SourceInactiveHdmiCec(self):
+		self.setHdmiCec("sourceinactive")
+
+	def setHdmiCec(self, cmd):
+		if config.hdmicec.enabled.value:
+			import Components.HdmiCec
+			Components.HdmiCec.hdmi_cec.sendMessage(0, cmd)
