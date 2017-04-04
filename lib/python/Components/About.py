@@ -59,6 +59,8 @@ def getCPUInfoString():
 			elif line[0] == "bogomips":
 				cpu_speed = "%1.0f" % float(line[1])
 		return "%s %s MHz" % (processor, cpu_speed)
+		if temperature:
+			return "%s %s MHz (%s) %s�C" % (processor, cpu_speed, ngettext("%d core", "%d cores", cpu_count) % cpu_count, temperature)
 	except:
 		return _("undefined")
 
